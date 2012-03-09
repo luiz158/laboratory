@@ -26,34 +26,36 @@
  */
 package br.gov.serpro.auction5.view;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
 
-import br.gov.framework.demoiselle.core.context.ContextLocator;
-import br.gov.framework.demoiselle.core.exception.ApplicationRuntimeException;
-import br.gov.framework.demoiselle.core.layer.integration.Injection;
-import br.gov.framework.demoiselle.view.faces.controller.AbstractManagedBean;
-import br.gov.sample.demoiselle.auction5.bean.Auction;
-import br.gov.sample.demoiselle.auction5.bean.Category;
-import br.gov.sample.demoiselle.auction5.bean.Item;
-import br.gov.sample.demoiselle.auction5.bean.Status;
-import br.gov.sample.demoiselle.auction5.business.IAuctionBC;
-import br.gov.sample.demoiselle.auction5.business.IItemBC;
-import br.gov.sample.demoiselle.auction5.constant.AliasNavigationRule;
-import br.gov.sample.demoiselle.auction5.message.InfoMessage;
+import br.gov.frameworkdemoiselle.message.MessageContext;
+import br.gov.frameworkdemoiselle.util.ResourceBundle;
+import br.gov.serpro.auction5.business.AuctionBC;
+import br.gov.serpro.auction5.business.ItemBC;
+import br.gov.serpro.auction5.constant.AliasNavigationRule;
+import br.gov.serpro.auction5.domain.Auction;
+import br.gov.serpro.auction5.domain.Category;
+import br.gov.serpro.auction5.domain.Item;
+import br.gov.serpro.auction5.domain.Status;
+import br.gov.serpro.auction5.exception.ApplicationRuntimeException;
 
 /**
  * @author CETEC/CTJEE
  * @see AbstractManagedBean
  */
-public class ItemMB extends AbstractManagedBean implements AliasNavigationRule {
+public class ItemMB implements Serializable, AliasNavigationRule {
 	
-	@Injection
-	protected IItemBC itemBC;
+	private static final long serialVersionUID = 1L;
+
+	@Inject
+	protected ItemBC itemBC;
 	
-	@Injection
-	protected IAuctionBC auctionBC;
+	@Inject
+	protected AuctionBC auctionBC;
 
 	private Item item = new Item();
 	private List<Item> listItem = new ArrayList<Item>();
@@ -62,13 +64,19 @@ public class ItemMB extends AbstractManagedBean implements AliasNavigationRule {
 	
 	private Auction auction;
 	private List<Auction> listAuctionsByItem;	
+	
+	@Inject
+	private ResourceBundle bundle;
+	
+	@Inject
+	private MessageContext messageContext;
 
 	public String save() {// save
 		try {
 			item = itemBC.save(item);
-			ContextLocator.getInstance().getMessageContext().addMessage(InfoMessage.ADM_ITEM_SAVE_OK);
+			messageContext.add(bundle.getString("ADM_ITEM_SAVE_OK"));
 		} catch (ApplicationRuntimeException e) {
-			ContextLocator.getInstance().getMessageContext().addMessage(e.getObjectMessage());
+			messageContext.add(e.getMessage());
 			return AliasNavigationRule.ALIAS_STAY;
 		}
 		return list();
