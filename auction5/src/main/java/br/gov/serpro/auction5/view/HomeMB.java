@@ -31,6 +31,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import br.gov.frameworkdemoiselle.stereotype.ViewController;
 import br.gov.serpro.auction5.business.AuctionBC;
 import br.gov.serpro.auction5.domain.Auction;
 
@@ -38,6 +39,7 @@ import br.gov.serpro.auction5.domain.Auction;
  * @author CETEC/CTJEE
  * @see AbstractManagedBean
  */
+@ViewController
 public class HomeMB implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -105,6 +107,10 @@ public class HomeMB implements Serializable{
 				auction.getBids().size();
 			}
 		}
+	}
+	
+	public Integer getRows() {
+		return 10;
 	}
 	
 }

@@ -64,11 +64,11 @@ public class AuctionDAO extends JPACrud<Auction, Long> {
 			"  and a.item.category = :category " +
 			"order by a.item.description";
 		
-		Query query = getEntityManager().createQuery(jpql);
+		Query query = createQuery(jpql);
 		
-		query.setParameter(0, Status.OPEN);
-		query.setParameter(1, new Date());
-		query.setParameter(2, category);
+		query.setParameter("status", Status.OPEN);
+		query.setParameter("deadline", new Date());
+		query.setParameter("category", category);
 				
 		return query.getResultList();
 	}
@@ -82,16 +82,15 @@ public class AuctionDAO extends JPACrud<Auction, Long> {
 			"  inner join auctions a on (a.id = b.auction_id) " +
 			"  where a.status = ?1 and a.mode <> ?2 " +
 			"  group by b.auction_id " +
-			"  order by count(b.id) desc " +
-			"  limit ?3) c " +
+			"  order by count(b.id) desc) c " +
 			"join auctions d on (d.id = c.auction_id) " +
 			"where d.bestbid_id is not null " +
 			"order by c.count desc";
 		
 		Query query = getEntityManager().createNativeQuery(sql, Auction.class);
 		
-		query.setParameter(0, Status.OPEN.ordinal());
-		query.setParameter(1, Mode.SELLING.ordinal());
+		query.setParameter(1, Status.OPEN.ordinal());
+		query.setParameter(2, Mode.SELLING.ordinal());
 		
 		return query.getResultList();
 	}
@@ -100,7 +99,7 @@ public class AuctionDAO extends JPACrud<Auction, Long> {
 		
         Query query = getEntityManager().createNamedQuery("newestAuctions");
 		
-		query.setParameter(0, Status.OPEN.ordinal());
+		query.setParameter(1, Status.OPEN.ordinal());
 		
 		return query.getResultList();
 	}
@@ -111,13 +110,12 @@ public class AuctionDAO extends JPACrud<Auction, Long> {
 			"from auctions " +
 			"where status = ?1 " +
 			"  and deadline - current_timestamp between '0 s' and cast(?2 as interval) " +
-			"order by deadline " +
-			"limit ?3";
+			"order by deadline ";
 		
 		Query query = getEntityManager().createNativeQuery(sql, Auction.class);
 		
-		query.setParameter(0, Status.OPEN.ordinal());
-		query.setParameter(1, seconds + " s");
+		query.setParameter(1, Status.OPEN.ordinal());
+		query.setParameter(2, seconds + " s");
 		
 		return query.getResultList();
 	}
@@ -129,15 +127,14 @@ public class AuctionDAO extends JPACrud<Auction, Long> {
 			"select d.* from (" +
 			"  select a.id, coalesce(b.amount, a.startingprice, a.sellingprice) as price " +
 			"  from auctions a left join bids b on (b.id = a.bestbid_id) " +
-			"  where a.status = :status " + 
-			"  order by 2 asc " +
-			"  limit :quantity) c " + 
+			"  where a.status = ?1 " + 
+			"  order by 2 asc) c " + 
 			"join auctions d on c.id = d.id " +
 			"order by c.price";
 		
 		Query query = getEntityManager().createNativeQuery(sql, Auction.class);
 		
-		query.setParameter(0, Status.OPEN.ordinal());
+		query.setParameter(1, Status.OPEN.ordinal());
 		
 		return query.getResultList();
 	}
@@ -146,9 +143,9 @@ public class AuctionDAO extends JPACrud<Auction, Long> {
 		
 		Query query = getEntityManager().createNamedQuery("openAuctionsByItem");
 		
-		query.setParameter(0, Status.OPEN);
-		query.setParameter(1, new Date());
-		query.setParameter(2, item);
+		query.setParameter(1, Status.OPEN);
+		query.setParameter(2, new Date());
+		query.setParameter(3, item);
 		
 		return query.getResultList();
 	}
@@ -159,7 +156,7 @@ public class AuctionDAO extends JPACrud<Auction, Long> {
 		
 		Query query = getEntityManager().createQuery(jpql);
 		
-		query.setParameter(0, item);
+		query.setParameter(1, item);
 				
 		return query.getResultList();
 	}
@@ -184,8 +181,8 @@ public class AuctionDAO extends JPACrud<Auction, Long> {
 		
 		Query query = getEntityManager().createQuery(jpql);
 		
-		query.setParameter(0, Status.OPEN);
-		query.setParameter(0, timestamp);
+		query.setParameter(1, Status.OPEN);
+		query.setParameter(2, timestamp);
 				
 		return query.getResultList();
 	}

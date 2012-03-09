@@ -28,23 +28,29 @@ package br.gov.serpro.auction5.view;
 
 import java.io.Serializable;
 
+import javax.inject.Inject;
+
+import br.gov.frameworkdemoiselle.security.SecurityContext;
+import br.gov.frameworkdemoiselle.stereotype.ViewController;
+
 /**
  * @author CETEC/CTJEE
  * @see AbstractManagedBean
  */
+@ViewController
 public class UserMB implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	
 	/**
 	 * Returns the current user name.
 	 * 
 	 * @return the user principal name
 	 */
 	public String getUserName() {
-//		return ContextLocator.getInstance().getSecurityContext()
-//				.getUserPrincipal().getName();
-//		TO DO
+		// return ContextLocator.getInstance().getSecurityContext()
+		// .getUserPrincipal().getName();
+		// TO DO
 		return "admin";
 	}
 
@@ -54,9 +60,9 @@ public class UserMB implements Serializable {
 	 * @return a boolean
 	 */
 	public boolean getIsLoggedIn() {
-//		return (ContextLocator.getInstance().getSecurityContext()
-//				.getUserPrincipal() != null);
-//		TO DO
+		// return (ContextLocator.getInstance().getSecurityContext()
+		// .getUserPrincipal() != null);
+		// TO DO
 		return true;
 	}
 
@@ -66,9 +72,9 @@ public class UserMB implements Serializable {
 	 * @return a boolean
 	 */
 	public boolean getIsRegularUser() {
-//		return ContextLocator.getInstance().getSecurityContext().isUserInRole(
-//				AliasRole.ROLE_USER);
-//		TO DO
+		// return ContextLocator.getInstance().getSecurityContext().isUserInRole(
+		// AliasRole.ROLE_USER);
+		// TO DO
 		return true;
 	}
 
@@ -78,9 +84,9 @@ public class UserMB implements Serializable {
 	 * @return a boolean
 	 */
 	public boolean getIsAdminUser() {
-//		return ContextLocator.getInstance().getSecurityContext().isUserInRole(
-//				AliasRole.ROLE_ADMIN);
-//		TO DO
+		// return ContextLocator.getInstance().getSecurityContext().isUserInRole(
+		// AliasRole.ROLE_ADMIN);
+		// TO DO
 		return true;
 	}
 

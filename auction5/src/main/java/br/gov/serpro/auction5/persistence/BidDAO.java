@@ -55,7 +55,7 @@ public class BidDAO extends JPACrud<Bid, Long> {
 		
 		Query query = getEntityManager().createQuery(jpql);
 		
-		query.setParameter(0, auction.getId());
+		query.setParameter(1, auction.getId());
 		
 		return query.getResultList();
 	}

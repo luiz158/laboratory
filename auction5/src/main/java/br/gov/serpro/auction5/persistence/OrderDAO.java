@@ -54,7 +54,7 @@ public class OrderDAO extends JPACrud<Order, Long> {
 		
 		Query query = getEntityManager().createQuery(jpql);
 		
-		query.setParameter(0, login);
+		query.setParameter(1, login);
 				
 		return query.getResultList();
 	}

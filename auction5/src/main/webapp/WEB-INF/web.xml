@@ -128,7 +128,7 @@
 		<location>/public/pages/error/global.jsp</location>
 	</error-page>
  	
-	<!-- Security Configuration -->
+	<!-- Security Configuration 
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>private</web-resource-name>
@@ -149,5 +149,6 @@
 	<security-role>
 		<role-name>*</role-name>
 	</security-role>
+	-->
 
 </web-app>

@@ -30,10 +30,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 
+import br.gov.frameworkdemoiselle.stereotype.ViewController;
 import br.gov.frameworkdemoiselle.util.Faces;
 import br.gov.serpro.auction5.business.AuctionBC;
 import br.gov.serpro.auction5.constant.AliasNavigationRule;
@@ -45,6 +47,7 @@ import br.gov.serpro.auction5.exception.ApplicationRuntimeException;
  * @author CETEC/CTJEE
  * @see AbstractManagedBean
  */
+@ViewController
 public class AuctionMB implements Serializable, AliasNavigationRule {
 
 	private static final long serialVersionUID = 1L;
@@ -58,10 +61,11 @@ public class AuctionMB implements Serializable, AliasNavigationRule {
 	private List<Category> listCategories;
 	private List<Auction> listAuctions;
 
-	public AuctionMB() {
+	@PostConstruct
+	public void init() {
 		try {
 			reloadCategories();
-			if (listCategories != null) {
+			if (!listCategories.isEmpty()) {
 				category = (Category) listCategories.get(0);
 				listAuctions = auctionBC.listOpenAuctionsByCategory(category);
 			}

@@ -32,6 +32,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import br.gov.frameworkdemoiselle.message.MessageContext;
+import br.gov.frameworkdemoiselle.stereotype.ViewController;
 import br.gov.frameworkdemoiselle.util.ResourceBundle;
 import br.gov.serpro.auction5.business.AdminBC;
 import br.gov.serpro.auction5.constant.AliasNavigationRule;
@@ -42,6 +43,7 @@ import br.gov.serpro.auction5.exception.ApplicationRuntimeException;
  * @author CETEC/CTJEE
  * @see AbstractManagedBean
  */
+@ViewController
 public class CategoryMB implements Serializable, AliasNavigationRule {
 
 	private static final long serialVersionUID = 1L;

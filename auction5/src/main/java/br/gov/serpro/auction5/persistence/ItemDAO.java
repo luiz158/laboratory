@@ -50,7 +50,7 @@ public class ItemDAO extends JPACrud<Item, Long> {
 
 	public List<Item> listByCategory(Category category) {
 		Query query = getEntityManager().createNamedQuery("itemsByCategory");
-		query.setParameter(0, category.getId());
+		query.setParameter(1, category.getId());
 		
 		return query.getResultList();
 	}

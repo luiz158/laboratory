@@ -32,6 +32,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -60,7 +61,7 @@ import javax.persistence.TemporalType;
 )
 @NamedNativeQuery(
 	name = "newestAuctions",
-	query = "select * from auctions where status = ?1 order by creation desc limit ?2",
+	query = "select * from auctions where status = ?1 order by creation desc",
 	resultClass = Auction.class
 )
 public class Auction implements Serializable {

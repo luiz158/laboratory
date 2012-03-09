@@ -35,6 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import br.gov.frameworkdemoiselle.message.MessageContext;
 import br.gov.frameworkdemoiselle.security.AuthorizationException;
+import br.gov.frameworkdemoiselle.stereotype.ViewController;
 import br.gov.frameworkdemoiselle.util.ResourceBundle;
 import br.gov.serpro.auction5.business.AuctionBC;
 import br.gov.serpro.auction5.constant.AliasNavigationRule;
@@ -47,6 +48,7 @@ import br.gov.serpro.auction5.exception.ApplicationRuntimeException;
  * @author CETEC/CTJEE
  * @see AbstractManagedBean
  */
+@ViewController
 public class BidMB implements Serializable, AliasNavigationRule {
 
 	private static final long serialVersionUID = 1L;
