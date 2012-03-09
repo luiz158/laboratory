@@ -26,29 +26,37 @@
  */
 package br.gov.serpro.auction5.view;
 
+import java.io.Serializable;
 import java.util.List;
 
+import javax.inject.Inject;
 
-import br.gov.framework.demoiselle.core.context.ContextLocator;
-import br.gov.framework.demoiselle.core.exception.ApplicationRuntimeException;
-import br.gov.framework.demoiselle.core.layer.integration.Injection;
-import br.gov.framework.demoiselle.view.faces.controller.AbstractManagedBean;
-import br.gov.sample.demoiselle.auction5.bean.Category;
-import br.gov.sample.demoiselle.auction5.business.IAdminBC;
-import br.gov.sample.demoiselle.auction5.constant.AliasNavigationRule;
-import br.gov.sample.demoiselle.auction5.message.InfoMessage;
+import br.gov.frameworkdemoiselle.message.MessageContext;
+import br.gov.frameworkdemoiselle.util.ResourceBundle;
+import br.gov.serpro.auction5.business.AdminBC;
+import br.gov.serpro.auction5.constant.AliasNavigationRule;
+import br.gov.serpro.auction5.domain.Category;
+import br.gov.serpro.auction5.exception.ApplicationRuntimeException;
 
 /**
  * @author CETEC/CTJEE
  * @see AbstractManagedBean
  */
-public class CategoryMB extends AbstractManagedBean implements AliasNavigationRule {
+public class CategoryMB implements Serializable, AliasNavigationRule {
 
-	@Injection
-	private IAdminBC adminBC;
+	private static final long serialVersionUID = 1L;
+
+	@Inject
+	private AdminBC adminBC;
 
 	private Category category;
 	private List<Category> listCategories;
+	
+	@Inject
+	private ResourceBundle bundle;
+	
+	@Inject
+	private MessageContext messageContext;
 
 	public CategoryMB() {
 		category = new Category();
@@ -71,7 +79,7 @@ public class CategoryMB extends AbstractManagedBean implements AliasNavigationRu
 		try{
 			this.listCategories = adminBC.listAllCategories();
 		} catch (ApplicationRuntimeException e) {
-			ContextLocator.getInstance().getMessageContext().addMessage(e.getObjectMessage());			
+			throw e;			
 		}
 	}
 	
@@ -94,7 +102,7 @@ public class CategoryMB extends AbstractManagedBean implements AliasNavigationRu
 	}
 
 	public String delete() {
-		ContextLocator.getInstance().getMessageContext().addMessage(InfoMessage.ADM_CATEGORY_CONFIRM_DELETE);
+		messageContext.add(bundle.getString("ADM_CATEGORY_CONFIRM_DELETE"));
 		return ALIAS_VIEW_CATEGORY;
 	}
 
@@ -112,10 +120,10 @@ public class CategoryMB extends AbstractManagedBean implements AliasNavigationRu
 	public String save() {
 		try {
 			adminBC.saveCategory(category);
-			ContextLocator.getInstance().getMessageContext().addMessage(InfoMessage.ADM_CATEGORY_SAVE_OK);
+			messageContext.add(bundle.getString("ADM_CATEGORY_SAVE_OK"));
 			updateCategoriesList();			
 		} catch (ApplicationRuntimeException e) {
-			ContextLocator.getInstance().getMessageContext().addMessage(e.getObjectMessage());
+			messageContext.add(e.getMessage());
 			return ALIAS_STAY;
 		}
 		return list();
@@ -124,10 +132,10 @@ public class CategoryMB extends AbstractManagedBean implements AliasNavigationRu
 	public String deleteConfirmed() {
 		try {
 			adminBC.removeCategory(category);
-			ContextLocator.getInstance().getMessageContext().addMessage(InfoMessage.ADM_CATEGORY_DELETE_OK);
+			messageContext.add(bundle.getString("ADM_CATEGORY_DELETE_OK"));
 			updateCategoriesList();
 		} catch (ApplicationRuntimeException e) {
-			ContextLocator.getInstance().getMessageContext().addMessage(e.getObjectMessage());
+			messageContext.add(e.getMessage());
 			return ALIAS_STAY;
 		}
 		return list();

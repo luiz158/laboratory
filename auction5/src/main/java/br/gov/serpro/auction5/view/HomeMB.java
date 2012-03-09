@@ -26,22 +26,24 @@
  */
 package br.gov.serpro.auction5.view;
 
+import java.io.Serializable;
 import java.util.List;
 
+import javax.inject.Inject;
 
-import br.gov.framework.demoiselle.core.layer.integration.Injection;
-import br.gov.framework.demoiselle.view.faces.controller.AbstractManagedBean;
-import br.gov.sample.demoiselle.auction5.bean.Auction;
-import br.gov.sample.demoiselle.auction5.business.IAuctionBC;
+import br.gov.serpro.auction5.business.AuctionBC;
+import br.gov.serpro.auction5.domain.Auction;
 
 /**
  * @author CETEC/CTJEE
  * @see AbstractManagedBean
  */
-public class HomeMB extends AbstractManagedBean {
+public class HomeMB implements Serializable{
 
-	@Injection
-	private IAuctionBC auctionBC;
+	private static final long serialVersionUID = 1L;
+
+	@Inject
+	private AuctionBC auctionBC;
 
 	private List<Auction> listNewest;
 	private List<Auction> listMostOffered;

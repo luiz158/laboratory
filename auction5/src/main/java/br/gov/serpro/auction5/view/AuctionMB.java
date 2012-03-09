@@ -26,29 +26,31 @@
  */
 package br.gov.serpro.auction5.view;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
 
-
-import br.gov.framework.demoiselle.core.exception.ApplicationRuntimeException;
-import br.gov.framework.demoiselle.core.layer.integration.Injection;
-import br.gov.framework.demoiselle.view.faces.controller.AbstractManagedBean;
-import br.gov.sample.demoiselle.auction5.bean.Auction;
-import br.gov.sample.demoiselle.auction5.bean.Category;
-import br.gov.sample.demoiselle.auction5.business.IAuctionBC;
-import br.gov.sample.demoiselle.auction5.constant.AliasNavigationRule;
+import br.gov.frameworkdemoiselle.util.Faces;
+import br.gov.serpro.auction5.business.AuctionBC;
+import br.gov.serpro.auction5.constant.AliasNavigationRule;
+import br.gov.serpro.auction5.domain.Auction;
+import br.gov.serpro.auction5.domain.Category;
+import br.gov.serpro.auction5.exception.ApplicationRuntimeException;
 
 /**
  * @author CETEC/CTJEE
  * @see AbstractManagedBean
  */
-public class AuctionMB extends AbstractManagedBean implements AliasNavigationRule {
+public class AuctionMB implements Serializable, AliasNavigationRule {
 
-	@Injection
-	private IAuctionBC auctionBC;
+	private static final long serialVersionUID = 1L;
+
+	@Inject
+	private AuctionBC auctionBC;
 	
 	private Auction auction;
 	private Category category;
@@ -64,7 +66,7 @@ public class AuctionMB extends AbstractManagedBean implements AliasNavigationRul
 				listAuctions = auctionBC.listOpenAuctionsByCategory(category);
 			}
 		} catch (ApplicationRuntimeException e) {
-			messageContext.addMessage(e.getObjectMessage());
+			throw e;
 		}
 	}
 
@@ -96,7 +98,7 @@ public class AuctionMB extends AbstractManagedBean implements AliasNavigationRul
 
 	public void actionLoadListItemsByCategory(ValueChangeEvent event) {
 		this.category = new Category();
-		this.category.setId(Short.valueOf(event.getNewValue().toString()));
+		this.category.setId(Long.valueOf(event.getNewValue().toString()));
 		this.updateData();
 	}
 
@@ -114,7 +116,7 @@ public class AuctionMB extends AbstractManagedBean implements AliasNavigationRul
 					auction.getBids().size();
 				}
 			} catch (ApplicationRuntimeException e) {
-				messageContext.addMessage(e.getObjectMessage());
+				throw e;
 			}
 		} else {
 			listAuctions = null;

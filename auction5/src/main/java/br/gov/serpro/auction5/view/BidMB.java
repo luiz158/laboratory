@@ -26,34 +26,33 @@
  */
 package br.gov.serpro.auction5.view;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-
-import br.gov.component.demoiselle.authorization.AuthorizationException;
-import br.gov.framework.demoiselle.core.context.ContextLocator;
-import br.gov.framework.demoiselle.core.exception.ApplicationRuntimeException;
-import br.gov.framework.demoiselle.core.layer.integration.Injection;
-import br.gov.framework.demoiselle.core.security.ISecurityContext;
-import br.gov.framework.demoiselle.view.faces.controller.AbstractManagedBean;
-import br.gov.sample.demoiselle.auction5.bean.Auction;
-import br.gov.sample.demoiselle.auction5.bean.Bid;
-import br.gov.sample.demoiselle.auction5.bean.audit.BidAudit;
-import br.gov.sample.demoiselle.auction5.business.IAuctionBC;
-import br.gov.sample.demoiselle.auction5.constant.AliasNavigationRule;
-import br.gov.sample.demoiselle.auction5.message.ErrorMessage;
-import br.gov.sample.demoiselle.auction5.message.InfoMessage;
+import br.gov.frameworkdemoiselle.message.MessageContext;
+import br.gov.frameworkdemoiselle.security.AuthorizationException;
+import br.gov.frameworkdemoiselle.util.ResourceBundle;
+import br.gov.serpro.auction5.business.AuctionBC;
+import br.gov.serpro.auction5.constant.AliasNavigationRule;
+import br.gov.serpro.auction5.domain.Auction;
+import br.gov.serpro.auction5.domain.Bid;
+import br.gov.serpro.auction5.domain.audit.BidAudit;
+import br.gov.serpro.auction5.exception.ApplicationRuntimeException;
 
 /**
  * @author CETEC/CTJEE
  * @see AbstractManagedBean
  */
-public class BidMB extends AbstractManagedBean implements AliasNavigationRule {
+public class BidMB implements Serializable, AliasNavigationRule {
 
-	@Injection
-	private IAuctionBC auctionBC;
+	private static final long serialVersionUID = 1L;
+
+	@Inject
+	private AuctionBC auctionBC;
 
 	private Auction auction;
 	private String userName;
@@ -63,15 +62,21 @@ public class BidMB extends AbstractManagedBean implements AliasNavigationRule {
 
 	private static final int BIDS_LIST_COUNT = 10;
 	
+	@Inject
+	private MessageContext messageContext;
+	
+	@Inject
+	private ResourceBundle bundle;
+	
 	public BidMB() {
 		try {
 			
 			// as the bean is in session scope, we'll retrieve the user once
-			ISecurityContext ctx = ContextLocator.getInstance().getSecurityContext();
-			this.userName = ctx.getUserPrincipal().getName();
+//			ISecurityContext ctx = ContextLocator.getInstance().getSecurityContext();
+//			this.userName = ctx.getUserPrincipal().getName();
 			
 		} catch (ApplicationRuntimeException e) {
-			messageContext.addMessage(e.getObjectMessage());
+			throw e;
 		}
 	}
 
@@ -101,7 +106,7 @@ public class BidMB extends AbstractManagedBean implements AliasNavigationRule {
 
 	private void reloadLastBidsList() {
 		if (this.auction != null) {
-			this.listLastBids = auctionBC.listLastBidsForAuction(this.auction, BIDS_LIST_COUNT);
+			this.listLastBids = auctionBC.listLastBidsForAuction(this.auction);
 		} else {
 			this.listLastBids = null;
 		}
@@ -133,16 +138,16 @@ public class BidMB extends AbstractManagedBean implements AliasNavigationRule {
 			BidAudit audit = createBidAudit(request);
 			
 			Bid bid = auctionBC.placeBid(this.auction, this.amount, this.userName, audit);
-			messageContext.addMessage(InfoMessage.BID_ITEM_OK);
+			messageContext.add(bundle.getString("BID_ITEM_OK"));
 			
 			this.auction.setBestBid(bid);
 			this.amount = null;
 			reloadLastBidsList();
 			
 		} catch (ApplicationRuntimeException e) {
-			messageContext.addMessage(e.getObjectMessage());
+			throw e; 
 		} catch (AuthorizationException e) {
-			messageContext.addMessage(ErrorMessage.USER_NOT_AUTHORIZED);
+			messageContext.add(bundle.getString("USER_NOT_AUTHORIZED"));
 		}
 		return ALIAS_STAY;
 	}
