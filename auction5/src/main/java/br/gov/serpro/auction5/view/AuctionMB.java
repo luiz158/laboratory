@@ -148,4 +148,8 @@ public class AuctionMB implements Serializable, AliasNavigationRule {
 		return null;
 	}
 	
+	public Integer getRows() {
+		return 10;
+	}
+	
 }
