@@ -40,6 +40,7 @@ import br.gov.serpro.auction5.domain.audit.BidAudit;
  */
 //reserved for future 2nd PU tests
 //@DefaultPersistenceUnit(name="AuditingPU")
+// TO DO
 public class BidAuditDAO extends JPACrud<BidAudit, Long> {
 
 	/**

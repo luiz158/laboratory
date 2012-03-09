@@ -68,6 +68,7 @@ public class OrderBC implements Serializable{
 
 //	@RequiredRole(roles = AliasRole.ROLE_USER)
 	public Order buyItem(Auction auction, String login) {
+//		TO DO
 		Order order = null;
 		try {
 			auction = auctionDAO.load(auction.getId());
@@ -92,6 +93,7 @@ public class OrderBC implements Serializable{
 
 //	@RequiredRole(roles = AliasRole.ROLE_USER)
 	public List<Order> listOrdersByLogin(String login) {
+//		TO DO
 		try {
 			return orderDAO.listOrdersByLogin(login);
 		} catch (Exception e) {

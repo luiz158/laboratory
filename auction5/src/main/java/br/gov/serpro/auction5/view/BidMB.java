@@ -55,7 +55,8 @@ public class BidMB implements Serializable, AliasNavigationRule {
 	private AuctionBC auctionBC;
 
 	private Auction auction;
-	private String userName;
+	// TO DO
+	private String userName = "admin";
 	private Double amount;
 	
 	private List<Bid> listLastBids;
@@ -74,6 +75,7 @@ public class BidMB implements Serializable, AliasNavigationRule {
 			// as the bean is in session scope, we'll retrieve the user once
 //			ISecurityContext ctx = ContextLocator.getInstance().getSecurityContext();
 //			this.userName = ctx.getUserPrincipal().getName();
+//			TO DO
 			
 		} catch (ApplicationRuntimeException e) {
 			throw e;

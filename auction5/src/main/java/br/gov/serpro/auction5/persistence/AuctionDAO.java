@@ -129,9 +129,9 @@ public class AuctionDAO extends JPACrud<Auction, Long> {
 			"select d.* from (" +
 			"  select a.id, coalesce(b.amount, a.startingprice, a.sellingprice) as price " +
 			"  from auctions a left join bids b on (b.id = a.bestbid_id) " +
-			"  where a.status = ?status " + //:status
+			"  where a.status = :status " + 
 			"  order by 2 asc " +
-			"  limit ?quantity) c " + //:quantity
+			"  limit :quantity) c " + 
 			"join auctions d on c.id = d.id " +
 			"order by c.price";
 		

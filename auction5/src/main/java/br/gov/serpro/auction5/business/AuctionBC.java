@@ -145,6 +145,7 @@ public class AuctionBC implements Serializable{
 
 //	@RequiredRole(roles = AliasRole.ROLE_ADMIN)
     public Auction save(Auction auction) {
+//		TO DO
 		try {
 			
 			if (auction.getId() != null) {
@@ -167,6 +168,7 @@ public class AuctionBC implements Serializable{
 	
 //	@RequiredRole(roles = AliasRole.ROLE_ADMIN)
 	public void delete(Auction auction) {
+//		TO DO
 		try {
 			
 			auction = auctionDAO.load(auction.getId());
@@ -189,6 +191,7 @@ public class AuctionBC implements Serializable{
 	
 //	@RequiredRole(roles = AliasRole.ROLE_USER)
 	public Bid placeBid(Auction auction, Double amount, String login, BidAudit audit) {
+//		TO DO
 
 		log.debug("Placing bid of " + amount + " for auction " + auction);
 		

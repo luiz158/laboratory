@@ -33,17 +33,20 @@ public interface AliasNavigationRule {
 	
 	final String ALIAS_STAY = "";
 	
-	final String ALIAS_BID = "bid";
+	final String ALIAS_BID = "/private/pages/bid.xhtml";
 	final String ALIAS_BUY = "buy";
 	
-	final String ALIAS_AUCTION = "auction";
-	final String ALIAS_ORDER   = "order";
+	final String ALIAS_AUCTION = "/private/pages/auction.xhtml";
+	final String ALIAS_ORDER   = "/private/pages/order.xhtml";
 	
-	final String ALIAS_LIST_CATEGORY = "list_category";
-	final String ALIAS_EDIT_CATEGORY = "edit_category";
-	final String ALIAS_VIEW_CATEGORY = "view_category";
-	final String ALIAS_LIST_ITEM = "list_item";
-	final String ALIAS_EDIT_ITEM = "edit_item";
-	final String ALIAS_VIEW_ITEM = "view_item";
+	final String ALIAS_LIST_ORDER = "/private/pages/order_list.xhtml";
+	
+	final String ALIAS_LIST_CATEGORY = "/private/pages/category_list.xhtml";
+	final String ALIAS_EDIT_CATEGORY = "/private/pages/category_edit.xhtml";
+	final String ALIAS_VIEW_CATEGORY = "/private/pages/category_view.xhtml";
+	
+	final String ALIAS_LIST_ITEM = "/private/pages/item_list.xhtml";
+	final String ALIAS_EDIT_ITEM = "/private/pages/item_edit.xhtml";
+	final String ALIAS_VIEW_ITEM = "/private/pages/item_view.xhtml";
 	
 }
