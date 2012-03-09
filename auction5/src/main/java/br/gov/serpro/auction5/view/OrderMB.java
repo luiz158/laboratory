@@ -26,31 +26,31 @@
  */
 package br.gov.serpro.auction5.view;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
 
-import br.gov.component.demoiselle.authorization.AuthorizationException;
-import br.gov.framework.demoiselle.core.context.ContextLocator;
-import br.gov.framework.demoiselle.core.exception.ApplicationRuntimeException;
-import br.gov.framework.demoiselle.core.layer.integration.Injection;
-import br.gov.framework.demoiselle.core.security.ISecurityContext;
-import br.gov.framework.demoiselle.view.faces.controller.AbstractManagedBean;
-import br.gov.sample.demoiselle.auction5.bean.Auction;
-import br.gov.sample.demoiselle.auction5.bean.Order;
-import br.gov.sample.demoiselle.auction5.business.IOrderBC;
-import br.gov.sample.demoiselle.auction5.constant.AliasNavigationRule;
-import br.gov.sample.demoiselle.auction5.message.ErrorMessage;
-import br.gov.sample.demoiselle.auction5.message.InfoMessage;
+import br.gov.frameworkdemoiselle.message.MessageContext;
+import br.gov.frameworkdemoiselle.security.AuthorizationException;
+import br.gov.frameworkdemoiselle.util.ResourceBundle;
+import br.gov.serpro.auction5.business.OrderBC;
+import br.gov.serpro.auction5.constant.AliasNavigationRule;
+import br.gov.serpro.auction5.domain.Auction;
+import br.gov.serpro.auction5.domain.Order;
+import br.gov.serpro.auction5.exception.ApplicationRuntimeException;
 
 /**
  * @author CETEC/CTJEE
  * @see AbstractManagedBean
  */
-public class OrderMB extends AbstractManagedBean implements AliasNavigationRule {
+public class OrderMB implements Serializable, AliasNavigationRule {
 
-	@Injection
-	private IOrderBC orderBC;
+	private static final long serialVersionUID = 1L;
+
+	@Inject
+	private OrderBC orderBC;
 	
 	private Order order;
 	private Auction auction;
@@ -58,10 +58,17 @@ public class OrderMB extends AbstractManagedBean implements AliasNavigationRule 
 
 	private List<Order> listOrders;
 	
+	@Inject
+	private MessageContext messageContext;
+	
+	@Inject
+	private ResourceBundle bundle;
+	
 	public OrderMB() {
 		// as the bean is in session scope, we'll retrieve the user once
-		ISecurityContext ctx = ContextLocator.getInstance().getSecurityContext();
-		this.userName = ctx.getUserPrincipal().getName();		
+//		ISecurityContext ctx = ContextLocator.getInstance().getSecurityContext();
+//		this.userName = ctx.getUserPrincipal().getName();	
+//		TO DO
 	}
 
 	public Order getOrder() {
@@ -111,12 +118,12 @@ public class OrderMB extends AbstractManagedBean implements AliasNavigationRule 
 		try {
 			
 			order = orderBC.buyItem(this.auction, this.userName);
-			messageContext.addMessage(InfoMessage.BUY_ITEM_OK);
+			messageContext.add(bundle.getString("BUY_ITEM_OK"));
 			
 		} catch (ApplicationRuntimeException e) {
-			messageContext.addMessage(e.getObjectMessage());
+			messageContext.add(e.getMessage());
 		} catch (AuthorizationException e) {
-			messageContext.addMessage(ErrorMessage.USER_NOT_AUTHORIZED);
+			messageContext.add(bundle.getString("USER_NOT_AUTHORIZED"));
 		}
 		return ALIAS_STAY;
 	}
@@ -134,9 +141,9 @@ public class OrderMB extends AbstractManagedBean implements AliasNavigationRule 
 		try {
 			listOrder = orderBC.listOrdersByLogin(userName);
 		} catch (ApplicationRuntimeException e) {
-			ContextLocator.getInstance().getMessageContext().addMessage(e.getObjectMessage());
+			messageContext.add(e.getMessage());
 		} catch (AuthorizationException e) {
-			ContextLocator.getInstance().getMessageContext().addMessage(ErrorMessage.USER_NOT_AUTHORIZED);
+			messageContext.add(bundle.getString("USER_NOT_AUTHORIZED"));
 		}
 		
 		return listOrder;

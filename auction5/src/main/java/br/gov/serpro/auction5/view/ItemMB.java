@@ -101,9 +101,9 @@ public class ItemMB implements Serializable, AliasNavigationRule {
 			itemBC.delete(item);
 			item = new Item();
 			item.setCategory(category);
-			ContextLocator.getInstance().getMessageContext().addMessage(InfoMessage.ADM_ITEM_DELETED_OK);
+			messageContext.add(bundle.getString("ADM_ITEM_DELETED_OK"));
 		} catch (ApplicationRuntimeException e) {
-			ContextLocator.getInstance().getMessageContext().addMessage(e.getObjectMessage());
+			messageContext.add(e.getMessage());
 			return AliasNavigationRule.ALIAS_STAY;
 		}
 		return list();
@@ -113,7 +113,7 @@ public class ItemMB implements Serializable, AliasNavigationRule {
 		try {
 			loadItemList();
 		} catch (ApplicationRuntimeException e) {
-			ContextLocator.getInstance().getMessageContext().addMessage(e.getObjectMessage());
+			messageContext.add(e.getMessage());
 			return AliasNavigationRule.ALIAS_STAY;
 		}		
 		return AliasNavigationRule.ALIAS_LIST_ITEM;
@@ -126,16 +126,16 @@ public class ItemMB implements Serializable, AliasNavigationRule {
 		try {
 			this.listItem = itemBC.filterByCategory(item);
 		} catch (ApplicationRuntimeException e) {
-			ContextLocator.getInstance().getMessageContext().addMessage(e.getObjectMessage());
+			messageContext.add(e.getMessage());
 		}	
 		if(listItem.isEmpty()){
-			ContextLocator.getInstance().getMessageContext().addMessage(InfoMessage.ADM_ITEM_LIST_LOAD_EMPITY);
+			messageContext.add(bundle.getString("ADM_ITEM_LIST_LOAD_EMPITY"));
 		}
 	}
 
 	
 	public String cancel(){
-		ContextLocator.getInstance().getMessageContext().addMessage(InfoMessage.ADM_ITEM_OPERATION_CANCELED);
+		messageContext.add(bundle.getString("ADM_ITEM_OPERATION_CANCELED"));
 		return AliasNavigationRule.ALIAS_LIST_ITEM;
 	}
 	
@@ -153,9 +153,9 @@ public class ItemMB implements Serializable, AliasNavigationRule {
 			this.auction.setStatus(Status.OPEN);			
 			this.auctionBC.save(this.auction);
 			this.auction = new Auction();
-			ContextLocator.getInstance().getMessageContext().addMessage(InfoMessage.ADM_AUCTION_SAVE_OK);
+			messageContext.add(bundle.getString("ADM_AUCTION_SAVE_OK"));
 		}catch(ApplicationRuntimeException e) {
-			ContextLocator.getInstance().getMessageContext().addMessage(e.getObjectMessage());
+			messageContext.add(e.getMessage());			
 		}
 		return "";
 	}
@@ -168,9 +168,9 @@ public class ItemMB implements Serializable, AliasNavigationRule {
 		try{	
 			this.auctionBC.delete(this.auction);
 			this.auction = new Auction();
-			ContextLocator.getInstance().getMessageContext().addMessage(InfoMessage.ADM_AUCTION_DELETED_OK);
+			messageContext.add(bundle.getString("ADM_AUCTION_DELETED_OK"));
 		}catch(ApplicationRuntimeException e) {
-			ContextLocator.getInstance().getMessageContext().addMessage(e.getObjectMessage());
+			messageContext.add(e.getMessage());
 		}
 		return "";
 	}
@@ -202,7 +202,7 @@ public class ItemMB implements Serializable, AliasNavigationRule {
 			if(listCategory==null)
 				listCategory = itemBC.listAvailableCategories();
 		}catch(ApplicationRuntimeException e){
-			ContextLocator.getInstance().getMessageContext().addMessage(e.getObjectMessage());
+			messageContext.add(e.getMessage());
 		}
 		return listCategory;
 	} 
@@ -219,7 +219,7 @@ public class ItemMB implements Serializable, AliasNavigationRule {
 		try{			
 			this.listAuctionsByItem = this.auctionBC.listOpenAuctionsByItem(item);
 		}catch(ApplicationRuntimeException e){
-			ContextLocator.getInstance().getMessageContext().addMessage(e.getObjectMessage());
+			messageContext.add(e.getMessage());
 		}
 		return this.listAuctionsByItem;
 	}

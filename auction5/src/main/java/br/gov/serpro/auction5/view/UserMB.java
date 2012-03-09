@@ -26,15 +26,15 @@
  */
 package br.gov.serpro.auction5.view;
 
-import br.gov.framework.demoiselle.core.context.ContextLocator;
-import br.gov.framework.demoiselle.view.faces.controller.AbstractManagedBean;
-import br.gov.sample.demoiselle.auction5.constant.AliasRole;
+import java.io.Serializable;
 
 /**
  * @author CETEC/CTJEE
  * @see AbstractManagedBean
  */
-public class UserMB extends AbstractManagedBean {
+public class UserMB implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Returns the current user name.
@@ -42,8 +42,10 @@ public class UserMB extends AbstractManagedBean {
 	 * @return the user principal name
 	 */
 	public String getUserName() {
-		return ContextLocator.getInstance().getSecurityContext()
-				.getUserPrincipal().getName();
+//		return ContextLocator.getInstance().getSecurityContext()
+//				.getUserPrincipal().getName();
+//		TO DO
+		return "admin";
 	}
 
 	/**
@@ -52,8 +54,10 @@ public class UserMB extends AbstractManagedBean {
 	 * @return a boolean
 	 */
 	public boolean getIsLoggedIn() {
-		return (ContextLocator.getInstance().getSecurityContext()
-				.getUserPrincipal() != null);
+//		return (ContextLocator.getInstance().getSecurityContext()
+//				.getUserPrincipal() != null);
+//		TO DO
+		return true;
 	}
 
 	/**
@@ -62,8 +66,10 @@ public class UserMB extends AbstractManagedBean {
 	 * @return a boolean
 	 */
 	public boolean getIsRegularUser() {
-		return ContextLocator.getInstance().getSecurityContext().isUserInRole(
-				AliasRole.ROLE_USER);
+//		return ContextLocator.getInstance().getSecurityContext().isUserInRole(
+//				AliasRole.ROLE_USER);
+//		TO DO
+		return true;
 	}
 
 	/**
@@ -72,8 +78,10 @@ public class UserMB extends AbstractManagedBean {
 	 * @return a boolean
 	 */
 	public boolean getIsAdminUser() {
-		return ContextLocator.getInstance().getSecurityContext().isUserInRole(
-				AliasRole.ROLE_ADMIN);
+//		return ContextLocator.getInstance().getSecurityContext().isUserInRole(
+//				AliasRole.ROLE_ADMIN);
+//		TO DO
+		return true;
 	}
 
 }
