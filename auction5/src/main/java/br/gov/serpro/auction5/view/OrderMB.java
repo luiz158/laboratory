@@ -130,7 +130,7 @@ public class OrderMB implements Serializable, AliasNavigationRule {
 
 	// TODO: ???
 	public String listUserOrders() {
-		return "list_order";
+		return ALIAS_LIST_ORDER;
 	}
 	
 	// TODO: ???
