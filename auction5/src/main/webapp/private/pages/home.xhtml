@@ -5,16 +5,14 @@
 	  xmlns:h="http://java.sun.com/jsf/html"
 	  xmlns:f="http://java.sun.com/jsf/core"
 	  xmlns:rich="http://richfaces.org/rich"
-	  xmlns:t="http://myfaces.apache.org/tomahawk"
-	  xmlns:a4j="https://ajax4jsf.dev.java.net/ajax"
-	  xmlns:demoiselle="http://www.frameworkdemoiselle.gov.br">
+	  xmlns:a4j="http://richfaces.org/a4j">
 	  
 	<ui:composition template="/public/templates/default.xhtml">
 	<ui:define name="body">
 		<h:form>
 		<rich:panel style="padding:0" headerClass="outpanelHeader">
 	        <f:facet name="header">
-	            <rich:spacer height="4" />
+	            teste
 	        </f:facet>
 	        <h2 align="center"><h:outputText value="Welcome to Auction5 Sample Application!" /></h2>
 	        
@@ -30,47 +28,47 @@
 						rowKeyVar="row" id="newestAuctionsTable" summary="List of Newest Auctions">					
 						<rich:column>
 							<f:facet name="header">
-								<t:outputText value="Product" />
+								<h:outputText value="Product" />
 							</f:facet>
-							<t:outputText styleClass="outputText" value="#{element.item.description}"/>
+							<h:outputText styleClass="outputText" value="#{element.item.description}"/>
 						</rich:column>
 						<rich:column>
 							<f:facet name="header">
-								<t:outputText value="Price" />
+								<h:outputText value="Price" />
 							</f:facet>
-							<t:outputText styleClass="outputText" value="#{element.bestBidOrStartingPrice}" rendered="#{element.auction}">
+							<h:outputText styleClass="outputText" value="#{element.bestBidOrStartingPrice}" rendered="#{element.auction}">
 								<f:convertNumber currencySymbol="$" groupingUsed="true" maxFractionDigits="2" type="currency"/>
-							</t:outputText>
-							<t:outputText rendered="#{element.auction and element.buy}"><br/></t:outputText>
-							<t:outputText styleClass="outputText" value="#{element.sellingPrice}" rendered="#{element.buy}">
+							</h:outputText>
+							<h:outputText rendered="#{element.auction and element.buy}"><br/></h:outputText>
+							<h:outputText styleClass="outputText" value="#{element.sellingPrice}" rendered="#{element.buy}">
 								<f:convertNumber currencySymbol="$" groupingUsed="true" maxFractionDigits="2" type="currency"/>
-							</t:outputText>
+							</h:outputText>
 						</rich:column>
 						<rich:column style="white-space: nowrap">
 							<f:facet name="header">
-								<t:outputText value="" />
+								<h:outputText value="" />
 							</f:facet>
 							<a4j:commandLink value="Place a Bid" action="#{bidMB.actionPreBid}" rendered="#{element.auction}">
 								<f:setPropertyActionListener target="#{bidMB.auction}" value="#{element}" />
 							</a4j:commandLink>
-							<t:outputText rendered="#{element.auction and element.buy}"><br/></t:outputText>
+							<h:outputText rendered="#{element.auction and element.buy}"><br/></h:outputText>
 							<a4j:commandLink value="Buy It Now" action="#{orderMB.actionPreOrder}" rendered="#{element.buy}">						    							
 								<f:setPropertyActionListener target="#{orderMB.auction}" value="#{element}" />
 							</a4j:commandLink>
 						</rich:column>
 						<rich:column>
 							<f:facet name="header">
-								<t:outputText value="History" />
+								<h:outputText value="History" />
 							</f:facet>
-							<t:outputText styleClass="outputText" value="#{element.numberBidsFormatted}"/>												
+							<h:outputText styleClass="outputText" value="#{element.numberBidsFormatted}"/>												
 						</rich:column>					
 						<rich:column>
 							<f:facet name="header">
-								<t:outputText value="Time Left" style="white-space: nowrap" />
+								<h:outputText value="Time Left" style="white-space: nowrap" />
 							</f:facet>
-							<t:outputText styleClass="outputText" value="#{element.deadline}">
+							<h:outputText styleClass="outputText" value="#{element.deadline}">
 								<f:converter converterId="timeLeftConverter"/>
-							</t:outputText>
+							</h:outputText>
 						</rich:column>
 					</rich:dataTable>
 	            </rich:panel>
@@ -85,47 +83,47 @@
 						rowKeyVar="row" id="mostOfferedAuctionsTable" summary="List of Most Offered Auctions">					
 						<rich:column>
 							<f:facet name="header">
-								<t:outputText value="Product" />
+								<h:outputText value="Product" />
 							</f:facet>
-							<t:outputText styleClass="outputText" value="#{element.item.description}"/>
+							<h:outputText styleClass="outputText" value="#{element.item.description}"/>
 						</rich:column>
 						<rich:column>
 							<f:facet name="header">
-								<t:outputText value="Price" />
+								<h:outputText value="Price" />
 							</f:facet>
-							<t:outputText styleClass="outputText" value="#{element.bestBidOrStartingPrice}" rendered="#{element.auction}">
+							<h:outputText styleClass="outputText" value="#{element.bestBidOrStartingPrice}" rendered="#{element.auction}">
 								<f:convertNumber currencySymbol="$" groupingUsed="true" maxFractionDigits="2" type="currency"/>
-							</t:outputText>
-							<t:outputText rendered="#{element.auction and element.buy}"><br/></t:outputText>
-							<t:outputText styleClass="outputText" value="#{element.sellingPrice}" rendered="#{element.buy}">
+							</h:outputText>
+							<h:outputText rendered="#{element.auction and element.buy}"><br/></h:outputText>
+							<h:outputText styleClass="outputText" value="#{element.sellingPrice}" rendered="#{element.buy}">
 								<f:convertNumber currencySymbol="$" groupingUsed="true" maxFractionDigits="2" type="currency"/>
-							</t:outputText>
+							</h:outputText>
 						</rich:column>
 						<rich:column style="white-space: nowrap">
 							<f:facet name="header">
-								<t:outputText value="" />
+								<h:outputText value="" />
 							</f:facet>
 							<a4j:commandLink value="Place a Bid" action="#{bidMB.actionPreBid}" rendered="#{element.auction}">
 								<f:setPropertyActionListener target="#{bidMB.auction}" value="#{element}" />
 							</a4j:commandLink>
-							<t:outputText rendered="#{element.auction and element.buy}"><br/></t:outputText>
+							<h:outputText rendered="#{element.auction and element.buy}"><br/></h:outputText>
 							<a4j:commandLink value="Buy It Now" action="#{orderMB.actionPreOrder}" rendered="#{element.buy}">						    							
 								<f:setPropertyActionListener target="#{orderMB.auction}" value="#{element}" />
 							</a4j:commandLink>
 						</rich:column>
 						<rich:column>
 							<f:facet name="header">
-								<t:outputText value="History" />
+								<h:outputText value="History" />
 							</f:facet>
-							<t:outputText styleClass="outputText" value="#{element.numberBidsFormatted}"/>												
+							<h:outputText styleClass="outputText" value="#{element.numberBidsFormatted}"/>												
 						</rich:column>					
 						<rich:column>
 							<f:facet name="header">
-								<t:outputText value="Time Left" style="white-space: nowrap" />
+								<h:outputText value="Time Left" style="white-space: nowrap" />
 							</f:facet>
-							<t:outputText styleClass="outputText" value="#{element.deadline}">
+							<h:outputText styleClass="outputText" value="#{element.deadline}">
 								<f:converter converterId="timeLeftConverter"/>
-							</t:outputText>
+							</h:outputText>
 						</rich:column>
 					</rich:dataTable>
 	            </rich:panel>
@@ -144,47 +142,47 @@
 						rowKeyVar="row" id="endingSoonAuctionsTable" summary="List of Auctions Ending Soon">					
 						<rich:column>
 							<f:facet name="header">
-								<t:outputText value="Product" />
+								<h:outputText value="Product" />
 							</f:facet>
-							<t:outputText styleClass="outputText" value="#{element.item.description}"/>
+							<h:outputText styleClass="outputText" value="#{element.item.description}"/>
 						</rich:column>
 						<rich:column>
 							<f:facet name="header">
-								<t:outputText value="Price" />
+								<h:outputText value="Price" />
 							</f:facet>
-							<t:outputText styleClass="outputText" value="#{element.bestBidOrStartingPrice}" rendered="#{element.auction}">
+							<h:outputText styleClass="outputText" value="#{element.bestBidOrStartingPrice}" rendered="#{element.auction}">
 								<f:convertNumber currencySymbol="$" groupingUsed="true" maxFractionDigits="2" type="currency"/>
-							</t:outputText>
-							<t:outputText rendered="#{element.auction and element.buy}"><br/></t:outputText>
-							<t:outputText styleClass="outputText" value="#{element.sellingPrice}" rendered="#{element.buy}">
+							</h:outputText>
+							<h:outputText rendered="#{element.auction and element.buy}"><br/></h:outputText>
+							<h:outputText styleClass="outputText" value="#{element.sellingPrice}" rendered="#{element.buy}">
 								<f:convertNumber currencySymbol="$" groupingUsed="true" maxFractionDigits="2" type="currency"/>
-							</t:outputText>
+							</h:outputText>
 						</rich:column>
 						<rich:column style="white-space: nowrap">
 							<f:facet name="header">
-								<t:outputText value="" />
+								<h:outputText value="" />
 							</f:facet>
 							<a4j:commandLink value="Place a Bid" action="#{bidMB.actionPreBid}" rendered="#{element.auction}">
 								<f:setPropertyActionListener target="#{bidMB.auction}" value="#{element}" />
 							</a4j:commandLink>
-							<t:outputText rendered="#{element.auction and element.buy}"><br/></t:outputText>
+							<h:outputText rendered="#{element.auction and element.buy}"><br/></h:outputText>
 							<a4j:commandLink value="Buy It Now" action="#{orderMB.actionPreOrder}" rendered="#{element.buy}">						    							
 								<f:setPropertyActionListener target="#{orderMB.auction}" value="#{element}" />
 							</a4j:commandLink>
 						</rich:column>
 						<rich:column>
 							<f:facet name="header">
-								<t:outputText value="History" />
+								<h:outputText value="History" />
 							</f:facet>
-							<t:outputText styleClass="outputText" value="#{element.numberBidsFormatted}"/>												
+							<h:outputText styleClass="outputText" value="#{element.numberBidsFormatted}"/>												
 						</rich:column>					
 						<rich:column>
 							<f:facet name="header">
-								<t:outputText value="Time Left" style="white-space: nowrap" />
+								<h:outputText value="Time Left" style="white-space: nowrap" />
 							</f:facet>
-							<t:outputText styleClass="outputText" value="#{element.deadline}">
+							<h:outputText styleClass="outputText" value="#{element.deadline}">
 								<f:converter converterId="timeLeftConverter"/>
-							</t:outputText>
+							</h:outputText>
 						</rich:column>
 					</rich:dataTable>
 	            </rich:panel>
@@ -199,47 +197,47 @@
 						rowKeyVar="row" id="cheapestPriceAuctionsTable" summary="List of Cheapest Price Auctions">					
 						<rich:column>
 							<f:facet name="header">
-								<t:outputText value="Product" />
+								<h:outputText value="Product" />
 							</f:facet>
-							<t:outputText styleClass="outputText" value="#{element.item.description}"/>
+							<h:outputText styleClass="outputText" value="#{element.item.description}"/>
 						</rich:column>
 						<rich:column>
 							<f:facet name="header">
-								<t:outputText value="Price" />
+								<h:outputText value="Price" />
 							</f:facet>
-							<t:outputText styleClass="outputText" value="#{element.bestBidOrStartingPrice}" rendered="#{element.auction}">
+							<h:outputText styleClass="outputText" value="#{element.bestBidOrStartingPrice}" rendered="#{element.auction}">
 								<f:convertNumber currencySymbol="$" groupingUsed="true" maxFractionDigits="2" type="currency"/>
-							</t:outputText>
-							<t:outputText rendered="#{element.auction and element.buy}"><br/></t:outputText>
-							<t:outputText styleClass="outputText" value="#{element.sellingPrice}" rendered="#{element.buy}">
+							</h:outputText>
+							<h:outputText rendered="#{element.auction and element.buy}"><br/></h:outputText>
+							<h:outputText styleClass="outputText" value="#{element.sellingPrice}" rendered="#{element.buy}">
 								<f:convertNumber currencySymbol="$" groupingUsed="true" maxFractionDigits="2" type="currency"/>
-							</t:outputText>
+							</h:outputText>
 						</rich:column>
 						<rich:column style="white-space: nowrap">
 							<f:facet name="header">
-								<t:outputText value="" />
+								<h:outputText value="" />
 							</f:facet>
 							<a4j:commandLink value="Place a Bid" action="#{bidMB.actionPreBid}" rendered="#{element.auction}">
 								<f:setPropertyActionListener target="#{bidMB.auction}" value="#{element}" />
 							</a4j:commandLink>
-							<t:outputText rendered="#{element.auction and element.buy}"><br/></t:outputText>
+							<h:outputText rendered="#{element.auction and element.buy}"><br/></h:outputText>
 							<a4j:commandLink value="Buy It Now" action="#{orderMB.actionPreOrder}" rendered="#{element.buy}">						    							
 								<f:setPropertyActionListener target="#{orderMB.auction}" value="#{element}" />
 							</a4j:commandLink>
 						</rich:column>
 						<rich:column>
 							<f:facet name="header">
-								<t:outputText value="History" />
+								<h:outputText value="History" />
 							</f:facet>
-							<t:outputText styleClass="outputText" value="#{element.numberBidsFormatted}"/>												
+							<h:outputText styleClass="outputText" value="#{element.numberBidsFormatted}"/>												
 						</rich:column>					
 						<rich:column>
 							<f:facet name="header">
-								<t:outputText value="Time Left" style="white-space: nowrap" />
+								<h:outputText value="Time Left" style="white-space: nowrap" />
 							</f:facet>
-							<t:outputText styleClass="outputText" value="#{element.deadline}">
+							<h:outputText styleClass="outputText" value="#{element.deadline}">
 								<f:converter converterId="timeLeftConverter"/>
-							</t:outputText>
+							</h:outputText>
 						</rich:column>
 					</rich:dataTable>
 	            </rich:panel>

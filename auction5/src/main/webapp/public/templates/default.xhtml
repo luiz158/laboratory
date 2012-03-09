@@ -4,11 +4,10 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:rich="http://richfaces.org/rich"
-	xmlns:t="http://myfaces.apache.org/tomahawk"
 	xmlns:a4j="https://ajax4jsf.dev.java.net/ajax"
 	xmlns:demoiselle="http://www.frameworkdemoiselle.gov.br">
 <head>
-	<title><ui:insert name="title">auction5</ui:insert></title>
+	<title><ui:insert name="title">New Auction 5</ui:insert></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
@@ -40,36 +39,36 @@
 			<td>
 				<ui:insert name="menu">
 					<h:form>
-						<rich:toolBar height="34" itemSeparator="grid" styleClass="richPanelBodyClass" >
+						<rich:toolbar height="34" itemSeparator="grid" styleClass="richPanelBodyClass" >
 						
 							<!-- if user not logged in -->
-							<rich:toolBarGroup>
+							<rich:toolbarGroup>
 								<h:commandLink value="Home" title="Home" action="home" />
 								<h:commandLink value="Sign in" title="Sign in to this application" action="HOME" rendered="#{!userMB.isLoggedIn}"/>
-							</rich:toolBarGroup>
+							</rich:toolbarGroup>
 
 							<!-- if a regular user -->
-							<rich:toolBarGroup rendered="#{userMB.isRegularUser}">
+							<rich:toolbarGroup rendered="#{userMB.isRegularUser}">
                                 <h:commandLink value="Open Auctions" action="#{auctionMB.listOpenAuctions}" title="List open auctions (F2)" id="uF2" />
                                 <h:commandLink value="My Orders" action="#{orderMB.listUserOrders}" title="List my orders (F3)" />
-                            </rich:toolBarGroup>
+                            </rich:toolbarGroup>
 
                             <!-- if a super user -->
-							<rich:toolBarGroup rendered="#{userMB.isAdminUser}">
+							<rich:toolbarGroup rendered="#{userMB.isAdminUser}">
                                 <h:commandLink value="Categories" action="#{categoryMB.list}" title="List categories (F2)" id="aF2" />
                                 <h:commandLink value="Items" action="#{itemMB.list}" title="List items (F3)" id="aF3" />
                                 <!-- 
                                 <h:commandLink value="Orders" action="#{orderMB.list}" title="List orders (F4)" id="aF4" />
                                 <h:commandLink value="Auctions" action="#{auctionMB.list}" title="List auctions (F5)" id="aF5" />
                                  -->
-                            </rich:toolBarGroup>
+                            </rich:toolbarGroup>
                             
 							<!-- if a regular or super user -->
-							<rich:toolBarGroup rendered="#{userMB.isLoggedIn}">
+							<rich:toolbarGroup rendered="#{userMB.isLoggedIn}">
 								<a4j:commandLink value="Logoff" action="#{userMB.logout}" oncomplete="javascript:logout()" title="Logoff" id="uaF12" />
-							</rich:toolBarGroup>
+							</rich:toolbarGroup>
                             
-					</rich:toolBar>
+					</rich:toolbar>
 					</h:form>
 				</ui:insert>
 			</td>
