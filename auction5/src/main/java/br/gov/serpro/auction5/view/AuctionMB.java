@@ -54,11 +54,13 @@ public class AuctionMB implements Serializable, AliasNavigationRule {
 
 	@Inject
 	private AuctionBC auctionBC;
-	
+
 	private Auction auction;
+
 	private Category category;
 
 	private List<Category> listCategories;
+
 	private List<Auction> listAuctions;
 
 	@PostConstruct
@@ -79,16 +81,16 @@ public class AuctionMB implements Serializable, AliasNavigationRule {
 	}
 
 	public List<SelectItem> getListCategories() {
-		
+
 		if (listCategories == null) {
 			reloadCategories();
 		}
-	
+
 		List<SelectItem> items = new ArrayList<SelectItem>(listCategories.size());
 		for (Category cat : listCategories) {
 			items.add(new SelectItem(cat.getId(), cat.getName()));
 		}
-		
+
 		return items;
 	}
 
@@ -105,7 +107,7 @@ public class AuctionMB implements Serializable, AliasNavigationRule {
 		this.category.setId(Long.valueOf(event.getNewValue().toString()));
 		this.updateData();
 	}
-
+	
 	public String listOpenAuctions() {
 		updateData();
 		return ALIAS_AUCTION;
@@ -147,9 +149,9 @@ public class AuctionMB implements Serializable, AliasNavigationRule {
 	public List<Auction> getList() {
 		return null;
 	}
-	
+
 	public Integer getRows() {
 		return 10;
 	}
-	
+
 }
