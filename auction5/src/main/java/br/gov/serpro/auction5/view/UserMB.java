@@ -32,6 +32,7 @@ import javax.inject.Inject;
 
 import br.gov.frameworkdemoiselle.security.SecurityContext;
 import br.gov.frameworkdemoiselle.stereotype.ViewController;
+import br.gov.serpro.auction5.constant.AliasRole;
 
 /**
  * @author CETEC/CTJEE
@@ -42,15 +43,16 @@ public class UserMB implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
+	@Inject
+	private SecurityContext securityContext;
+	
 	/**
 	 * Returns the current user name.
 	 * 
 	 * @return the user principal name
 	 */
 	public String getUserName() {
-		// return ContextLocator.getInstance().getSecurityContext()
-		// .getUserPrincipal().getName();
-		// TO DO
+		//return securityContext.getUser().getId();
 		return "admin";
 	}
 
@@ -60,9 +62,7 @@ public class UserMB implements Serializable {
 	 * @return a boolean
 	 */
 	public boolean getIsLoggedIn() {
-		// return (ContextLocator.getInstance().getSecurityContext()
-		// .getUserPrincipal() != null);
-		// TO DO
+		//return securityContext.isLoggedIn();
 		return true;
 	}
 
@@ -72,9 +72,7 @@ public class UserMB implements Serializable {
 	 * @return a boolean
 	 */
 	public boolean getIsRegularUser() {
-		// return ContextLocator.getInstance().getSecurityContext().isUserInRole(
-		// AliasRole.ROLE_USER);
-		// TO DO
+		//return securityContext.hasRole(AliasRole.ROLE_USER);
 		return true;
 	}
 
@@ -84,9 +82,7 @@ public class UserMB implements Serializable {
 	 * @return a boolean
 	 */
 	public boolean getIsAdminUser() {
-		// return ContextLocator.getInstance().getSecurityContext().isUserInRole(
-		// AliasRole.ROLE_ADMIN);
-		// TO DO
+		//return securityContext.hasRole(AliasRole.ROLE_ADMIN);
 		return true;
 	}
 
