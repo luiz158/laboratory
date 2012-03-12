@@ -29,6 +29,8 @@ package br.gov.serpro.auction5.view;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 
 import br.gov.frameworkdemoiselle.message.MessageContext;
@@ -43,6 +45,7 @@ import br.gov.serpro.auction5.exception.ApplicationRuntimeException;
  * @author CETEC/CTJEE
  * @see AbstractManagedBean
  */
+@SessionScoped
 @ViewController
 public class CategoryMB implements Serializable, AliasNavigationRule {
 
@@ -60,7 +63,8 @@ public class CategoryMB implements Serializable, AliasNavigationRule {
 	@Inject
 	private MessageContext messageContext;
 
-	public CategoryMB() {
+	@PostConstruct
+	public void init() {
 		category = new Category();
 		category.setParentCategory(new Category());
 		updateCategoriesList();

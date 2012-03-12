@@ -1,66 +1,46 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:rich="http://richfaces.org/rich" xmlns:t="http://myfaces.apache.org/tomahawk"
-	xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" xmlns:demoiselle="http://www.frameworkdemoiselle.gov.br">
-	<ui:composition template="/public/templates/default.xhtml">
-		<ui:define name="body">
-			<h:form>
-				<demoiselle:useJs all="true"/>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/public/templates/default.xhtml">
 
-				<rich:panel styleClass="richPanelStyleClass" bodyClass="richPanelBodyClass" headerClass="richPanelHeaderClass">
-					<div>
-					
-						<fieldset>
-							<legend>
-								<h:outputLabel for="categoryMB_category_parentCategory_id" styleClass="outputLabel" value="Parent Category" />
-							</legend>
-							<h:selectOneMenu id="categoryMB_category_parentCategory_id"
-										tabindex="2" value="#{categoryMB.category.parentCategory.id}">
-								<f:selectItem itemLabel="" itemValue="" />
-                                <t:selectItems value="#{categoryMB.listCategories}" var="element" itemLabel="#{element.name}" itemValue="#{element.id}"/>
-                            </h:selectOneMenu> 
-                            
-						</fieldset>
-					
-						<fieldset>
-							<legend>
-								<h:outputLabel for="Name" styleClass="outputLabel" value="Category Name" />
-							</legend>
-							<t:inputText id="Name" tabindex="1"
-								styleClass="inputText" value="#{categoryMB.category.name}" />
-						</fieldset>
-						
-						<fieldset>
-							<h:selectBooleanCheckbox id="category_active" tabindex="2" styleClass="inputText"
-								value="#{categoryMB.category.active}" title=""/>
-							<h:outputText value="Active"/>
-						</fieldset>
-						
-						<!-- 
-						<fieldset>
-							<legend>
-								<h:outputLabel for="categoryMB_category_category_id"
-									styleClass="outputLabel" value="Parent Category" />
-							</legend>
-							<h:selectOneMenu id="categoryMB_category_category_id"
-								tabindex="2" value="#{categoryMB.category.parentCategory.id}">
-                                <t:selectItems value="#{categoryMB.listCategories}" var="element" categoryLabel="#{element.name}" categoryValue="#{element.id}"/>
-                            </h:selectOneMenu>
-						</fieldset>
-						 -->
-					</div>
-					
-				</rich:panel>
+	<ui:define name="body">
+		<h:form>
+			<rich:panel styleClass="richPanelStyleClass" bodyClass="richPanelBodyClass" headerClass="richPanelHeaderClass">
+				<div>
+					<fieldset>
+						<legend>
+							<h:outputLabel for="categoryMB_category_parentCategory_id" styleClass="outputLabel" value="Parent Category" />
+						</legend>
+						<h:selectOneMenu id="categoryMB_category_parentCategory_id" tabindex="2" value="#{categoryMB.category.parentCategory.id}">
+							<f:selectItem itemLabel="" itemValue="" />
+							<f:selectItems value="#{categoryMB.listCategories}" var="element" itemLabel="#{element.name}" itemValue="#{element.id}" />
+						</h:selectOneMenu>
+					</fieldset>
 
-				<div style="padding: 10px; text-align: right;">
-					<t:commandButton title="OK" tabindex="3" action="#{categoryMB.save}"
-						styleClass="botaoComun" value="OK" id="F2" />
-					<t:commandButton title="Cancel" tabindex="4" action="#{categoryMB.cancel}"
-						styleClass="botaoComun" value="Cancel" id="F3" />
+					<fieldset>
+						<legend>
+							<h:outputLabel for="Name" styleClass="outputLabel" value="Category Name" />
+						</legend>
+						<h:inputText id="Name" tabindex="1" styleClass="inputText" value="#{categoryMB.category.name}" />
+					</fieldset>
+
+					<fieldset>
+						<h:selectBooleanCheckbox id="category_active" tabindex="2" styleClass="inputText" value="#{categoryMB.category.active}" title="" />
+						<h:outputText value="Active" />
+					</fieldset>
 				</div>
+			</rich:panel>
 
-			</h:form>
-		</ui:define>
-	</ui:composition>
+			<div style="padding: 10px; text-align: right;">
+				<h:commandButton title="OK" tabindex="3" action="#{categoryMB.save}" styleClass="botaoComun" value="OK" id="F2" />
+				<h:commandButton title="Cancel" tabindex="4" action="#{categoryMB.cancel}" styleClass="botaoComun" value="Cancel" id="F3" />
+			</div>
 
-</html>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

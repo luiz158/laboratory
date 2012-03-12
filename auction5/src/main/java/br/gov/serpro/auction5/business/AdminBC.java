@@ -46,58 +46,57 @@ public class AdminBC implements Serializable {
 
 	@Inject
 	private ResourceBundle bundle;
-	
+
 	@Inject
 	private CategoryDAO categoryDAO;
-	
+
 	public List<Category> listAllCategories() {
-		try{	
+		try {
 			return categoryDAO.findAll();
-		}catch(Exception e){
+		} catch (Exception e) {
 			throw new ApplicationRuntimeException(bundle.getString("LIST_CATEGORY_NOK"));
-		}	
+		}
 	}
 
 	public void saveCategory(Category category) {
-		try{
-			
-			if(category.getParentCategory()!=null){
-				if(category.getParentCategory().getId()==null){
-					category.setParentCategory(null);
-				}
+		try {
+
+			if (category.getParentCategory() != null
+					&& (category.getParentCategory().getId() == null || category.getParentCategory().getId() == 0)) {
+				category.setParentCategory(null);
 			}
-			
+
 			if (category.getId() != null) {
 				categoryDAO.update(category);
 			} else {
 				categoryDAO.insert(category);
 			}
-		}catch(Exception e){
+		} catch (Exception e) {
 			throw new ApplicationRuntimeException(bundle.getString("ADM_CATEGORY_SAVE_NOK"));
-		}		
+		}
 	}
 
 	public void removeCategory(Category category) {
-		try{
+		try {
 			// firstly, retrieve a category instance
 			category = categoryDAO.load(category.getId());
-			
+
 			// check whether it has children categories
 			if (!category.getChildrenCategories().isEmpty()) {
 				throw new ApplicationRuntimeException(bundle.getString("ADM_CATEGORY_DELETE_NOK_CHILDREN"));
 			}
-			
+
 			// check whether it has dependent items
 			if (!category.getItems().isEmpty()) {
 				throw new ApplicationRuntimeException(bundle.getString("ADM_CATEGORY_DELETE_NOK_ITEMS"));
 			}
-			
+
 			// finish him!
 			categoryDAO.delete(category.getId());
-			
-		}catch(Exception e){
+
+		} catch (Exception e) {
 			throw new ApplicationRuntimeException(bundle.getString("ADM_CATEGORY_DELETE_NOK"));
 		}
 	}
-	
+
 }
