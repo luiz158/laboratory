@@ -1,0 +1,66 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets" template="/template/main.xhtml">
+
+	<ui:define name="body">
+		<h:form prependId="false">
+
+			<p:toolbar>
+				<p:toolbarGroup align="left">
+					<p:commandButton value="#{messages['button.save']}" action="#{compromissoEditMB.insert}"
+						rendered="#{!compromissoEditMB.updateMode}" ajax="false" />
+					<p:commandButton value="#{messages['button.save']}" action="#{compromissoEditMB.update}"
+						rendered="#{compromissoEditMB.updateMode}" ajax="false" />
+					<p:commandButton value="#{messages['button.delete']}" onclick="confirmation.show()"
+						rendered="#{compromissoEditMB.updateMode}" type="button" immediate="true" ajax="false" />
+					<p:confirmDialog message="#{messages['label.confirm.delete']}" showEffect="bounce" hideEffect="explode"
+						header="#{messages['label.dialog.delete']}" severity="alert" widgetVar="confirmation">
+						<h:commandButton value="#{messages['button.dialog.yes']}" action="#{compromissoEditMB.delete}" immediate="true"
+							ajax="false" />
+						<h:commandButton value="#{messages['button.dialog.no']}" onclick="confirmation.hide()" type="button" />
+					</p:confirmDialog>
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<br />
+
+			<p:fieldset legend="#{messages['compromisso.label']}" toggleable="true" toggleSpeed="500">
+				<h:panelGrid id="fields" columns="3">
+					
+					<h:outputLabel value="#{messages['compromisso.label.id']}: " for="id" styleClass="text-input" />
+					<h:outputText id="id" value="#{compromissoEditMB.bean.id}" />
+					<p:message for="id" />
+					
+					<h:outputLabel value="#{messages['compromisso.label.nomeCompromisso']}: " for="nomeCompromisso" styleClass="text-input" />
+					<h:inputText id="nomeCompromisso" value="#{compromissoEditMB.bean.nomeCompromisso}"
+						title="#{messages['compromisso.alt.nomeCompromisso']}" />
+					<p:message for="nomeCompromisso" />
+					
+					<h:outputLabel value="#{messages['compromisso.label.dataVencimento']}: " for="dataVencimento" styleClass="text-input" />
+					<p:calendar id="dataVencimento" value="#{compromissoEditMB.bean.dataVencimento}"
+					   pattern="#{messages['label.date.pattern']}" navigator="true" showButtonPanel="true"
+					   locale="#{currentLocale}" title="#{messages['compromisso.alt.dataVencimento']}" />
+					   <p:message for="dataVencimento" />
+								
+					<h:outputLabel value="#{messages['compromisso.label.dataPagamento']}: " for="dataPagamento" styleClass="text-input" />
+					<p:calendar id="dataPagamento" value="#{compromissoEditMB.bean.dataPagamento}"
+					   pattern="#{messages['label.date.pattern']}" navigator="true" showButtonPanel="true"
+					   locale="#{currentLocale}" title="#{messages['compromisso.alt.dataPagamento']}" />
+					   <p:message for="dataPagamento" />
+								
+					<h:outputLabel value="#{messages['compromisso.label.valorCompromisso']}: " for="valorCompromisso" styleClass="text-input" />
+					<h:inputText id="valorCompromisso" value="#{compromissoEditMB.bean.valorCompromisso}"
+						title="#{messages['compromisso.alt.valorCompromisso']}" />
+					<p:message for="valorCompromisso" />
+					
+					<h:outputLabel value="#{messages['compromisso.label.valorPago']}: " for="valorPago" styleClass="text-input" />
+					<h:inputText id="valorPago" value="#{compromissoEditMB.bean.valorPago}"
+						title="#{messages['compromisso.alt.valorPago']}" />
+					<p:message for="valorPago" />					
+					
+				</h:panelGrid>
+			</p:fieldset>
+		</h:form>
+	</ui:define>
+</ui:composition>
