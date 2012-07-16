@@ -1,0 +1,47 @@
+<html xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:view contentType="text/html" locale="#currentLocale" />
+
+<h:head>
+	<title>Sample Two-Phase Commit</title>
+	<link type="text/css" rel="stylesheet" href="css/styles.css" />
+</h:head>
+
+<h:body style="background-color:#f1f1f1">
+	<h1> Two-Phase Commit Sample</h1><br/>
+	<h:form>
+		<p:dataTable id="gridbook" var="book" value="#{twoPhaseMB.books}">
+			<f:facet name="header">  
+           	 Book List - PostgreSQL  
+        	</f:facet>  
+			<p:column>
+				<f:facet name="header">Author</f:facet>
+				<h:outputText value="#{book.author}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">Text</f:facet>
+				<h:outputText value="#{book.title}" />
+			</p:column>
+		</p:dataTable>
+		<br/>
+		<p:dataTable id="gridauditing" var="auditing" value="#{twoPhaseMB.auditings}">
+			<f:facet name="header">  
+           	 Auditing List - MySQL  
+        	</f:facet>
+			<p:column>
+				<f:facet name="header">Title</f:facet>
+				<h:outputText value="#{auditing.value}" />
+			</p:column>
+		</p:dataTable>
+		
+		<p:commandButton value="Test 1" id="btTeste1" update="gridbook, gridauditing" actionListener="#{twoPhaseMB.addBookSuccessfully}" />
+		<p:commandButton value="Test 2" id="btTeste2" update="gridbook, gridauditing" actionListener="#{twoPhaseMB.addBookUnsuccessfully}" />
+		
+		<p:messages id="messages" showDetail="false" autoUpdate="true"/>  
+		
+	</h:form>
+</h:body>
+</html>

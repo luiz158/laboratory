@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="twophasecommit">
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <dependent-module archiveName="demoiselle-jpa-2.3.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/demoiselle-jpa/demoiselle-jpa">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="demoiselle-jta-2.3.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/demoiselle-jta/demoiselle-jta">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="demoiselle-jsf-2.3.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/demoiselle-jsf/demoiselle-jsf">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="demoiselle-core-2.3.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/demoiselle-core/demoiselle-core">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="context-root" value="twophasecommit"/>
+        <property name="java-output-path" value="/twophasecommit/target/classes"/>
+    </wb-module>
+</project-modules>
