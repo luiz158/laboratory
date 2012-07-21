@@ -34,8 +34,9 @@
 ~~ 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
 
                                     ------
-                                    Sobre o Demoiselle JUnit
+                                    Sobre o Demoiselle Objectify
 
-Sobre o Demoiselle JUnit
+Sobre o Demoiselle Objectify
 
-  O componente Demoiselle JUnit tem como principal objetivo auxiliar na utilização do JUnit na carga de testes unitários.
+  O componente Demoiselle Objectify tem como principal objetivo auxiliar na persistência de dados utilizando a
+  biblioteca Objectify, que oferece uma camada simples para manipulação de dados NoSQL no Google AppEngine.
