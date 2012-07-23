@@ -40,6 +40,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Default;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.Transaction;
@@ -51,6 +52,7 @@ import com.googlecode.objectify.ObjectifyFactory;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Query;
 
+@Default
 @RequestScoped
 public class ObjectifyProxy implements Objectify, Serializable {
 
@@ -58,7 +60,7 @@ public class ObjectifyProxy implements Objectify, Serializable {
 
 	private transient Objectify delegate;
 
-	private transient Objectify transaction;
+	// private transient Objectify transaction;
 
 	private Objectify getDelegate() {
 		if (delegate == null) {
@@ -68,13 +70,13 @@ public class ObjectifyProxy implements Objectify, Serializable {
 		return delegate;
 	}
 
-	public void newTransaction() {
-		this.transaction = ObjectifyService.beginTransaction();
-	}
-
-	private Objectify getTransaction() {
-		return this.transaction;
-	}
+	// public void newTransaction() {
+	// this.transaction = ObjectifyService.beginTransaction();
+	// }
+	//
+	// private Objectify getTransaction() {
+	// return this.transaction;
+	// }
 
 	public void setDelegate(Objectify delegate) {
 		this.delegate = delegate;
@@ -132,37 +134,37 @@ public class ObjectifyProxy implements Objectify, Serializable {
 
 	@Override
 	public <T> Key<T> put(T obj) {
-		return getTransaction().put(obj);
+		return getDelegate().put(obj);
 	}
 
 	@Override
 	public <T> Map<Key<T>, T> put(Iterable<? extends T> objs) {
-		return getTransaction().put(objs);
+		return getDelegate().put(objs);
 	}
 
 	@Override
 	public <T> Map<Key<T>, T> put(T... objs) {
-		return getTransaction().put(objs);
+		return getDelegate().put(objs);
 	}
 
 	@Override
 	public void delete(Object... keysOrEntities) {
-		getTransaction().delete(keysOrEntities);
+		getDelegate().delete(keysOrEntities);
 	}
 
 	@Override
 	public void delete(Iterable<?> keysOrEntities) {
-		getTransaction().delete(keysOrEntities);
+		getDelegate().delete(keysOrEntities);
 	}
 
 	@Override
 	public <T> void delete(Class<T> clazz, long id) {
-		getTransaction().delete(clazz, id);
+		getDelegate().delete(clazz, id);
 	}
 
 	@Override
 	public <T> void delete(Class<T> clazz, String name) {
-		getTransaction().delete(clazz, name);
+		getDelegate().delete(clazz, name);
 	}
 
 	@Override
@@ -177,13 +179,7 @@ public class ObjectifyProxy implements Objectify, Serializable {
 
 	@Override
 	public Transaction getTxn() {
-		Transaction result = null;
-
-		if (getTransaction() != null) {
-			result = getTransaction().getTxn();
-		}
-
-		return result;
+		return getDelegate().getTxn();
 	}
 
 	@Override

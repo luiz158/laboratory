@@ -39,7 +39,6 @@ package br.gov.frameworkdemoiselle.objectify.template;
 import java.util.List;
 
 import br.gov.frameworkdemoiselle.template.Crud;
-import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.frameworkdemoiselle.util.Beans;
 import br.gov.frameworkdemoiselle.util.Reflections;
 
@@ -47,7 +46,7 @@ import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Query;
 
-public class ObjectifyCrud<T, I> implements Crud<T, I> {
+public class ObjectifyCrud<T> implements Crud<T, Long> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -74,8 +73,7 @@ public class ObjectifyCrud<T, I> implements Crud<T, I> {
 	}
 
 	@Override
-	@Transactional
-	public void delete(I id) {
+	public void delete(Long id) {
 		getObjectify().delete(getEntityClass(), id);
 	}
 
@@ -86,19 +84,16 @@ public class ObjectifyCrud<T, I> implements Crud<T, I> {
 	}
 
 	@Override
-	@Transactional
 	public void insert(T entity) {
 		getObjectify().put(entity);
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
-	public T load(I id) {
+	public T load(Long id) {
 		return (T) getObjectify().get(getEntityClass(), id);
 	}
 
 	@Override
-	@Transactional
 	public void update(T entity) {
 		getObjectify().put(entity);
 	}
