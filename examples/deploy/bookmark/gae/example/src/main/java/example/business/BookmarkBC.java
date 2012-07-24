@@ -3,18 +3,15 @@ package example.business;
 import br.gov.frameworkdemoiselle.annotation.Startup;
 import br.gov.frameworkdemoiselle.stereotype.BusinessController;
 import br.gov.frameworkdemoiselle.template.DelegateCrud;
-import br.gov.frameworkdemoiselle.transaction.Transactional;
-
 import example.domain.Bookmark;
 import example.persistence.BookmarkDAO;
 
 @BusinessController
 public class BookmarkBC extends DelegateCrud<Bookmark, Long, BookmarkDAO> {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Startup
-	@Transactional
 	public void load() {
 		if (findAll().isEmpty()) {
 			insert(new Bookmark("Demoiselle Portal", "http://www.frameworkdemoiselle.gov.br"));
@@ -29,5 +26,5 @@ public class BookmarkBC extends DelegateCrud<Bookmark, Long, BookmarkDAO> {
 			insert(new Bookmark("Downloads", "http://download.frameworkdemoiselle.gov.br"));
 		}
 	}
-	
+
 }

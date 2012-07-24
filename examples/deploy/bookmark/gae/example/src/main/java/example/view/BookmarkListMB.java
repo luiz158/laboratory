@@ -9,8 +9,6 @@ import br.gov.frameworkdemoiselle.annotation.NextView;
 import br.gov.frameworkdemoiselle.annotation.PreviousView;
 import br.gov.frameworkdemoiselle.stereotype.ViewController;
 import br.gov.frameworkdemoiselle.template.AbstractListPageBean;
-import br.gov.frameworkdemoiselle.transaction.Transactional;
-
 import example.business.BookmarkBC;
 import example.domain.Bookmark;
 
@@ -29,7 +27,6 @@ public class BookmarkListMB extends AbstractListPageBean<Bookmark, Long> {
 		return this.bc.findAll();
 	}
 
-	@Transactional
 	public String deleteSelection() {
 		boolean delete;
 		for (Iterator<Long> iter = getSelection().keySet().iterator(); iter.hasNext();) {
