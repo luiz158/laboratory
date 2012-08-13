@@ -3,7 +3,6 @@
 
 	<alternatives>
 		<class>br.gov.frameworkdemoiselle.transaction.JPATransaction</class>
-		
 		<!--
 		<class>br.gov.frameworkdemoiselle.transaction.JTATransaction</class>
 		-->
