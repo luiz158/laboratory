@@ -1,4 +1,4 @@
-package examples.pagination.domain;
+package example;
 
 import java.io.Serializable;
 

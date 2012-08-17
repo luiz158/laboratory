@@ -1,20 +1,27 @@
-package examples.pagination.business;
+package example;
+
+import java.util.List;
+
+import javax.inject.Inject;
 
 import br.gov.frameworkdemoiselle.annotation.Startup;
 import br.gov.frameworkdemoiselle.stereotype.BusinessController;
-import br.gov.frameworkdemoiselle.template.DelegateCrud;
-import br.gov.frameworkdemoiselle.transaction.Transactional;
-
-import examples.pagination.domain.Bookmark;
-import examples.pagination.persistence.BookmarkDAO;
 
 @BusinessController
-public class BookmarkBC extends DelegateCrud<Bookmark, Long, BookmarkDAO> {
+public class BookmarkBC {
 	
-	private static final long serialVersionUID = 1L;
+	@Inject
+	private BookmarkDAO dao; 
+	
+	public List<Bookmark> findAll() {
+		return dao.findAll();
+	}
+	
+	public void insert(final Bookmark bean) {
+		dao.insert(bean);
+	}
 	
 	@Startup
-	@Transactional
 	public void load() {
 		if (findAll().isEmpty()) {
 			insert(new Bookmark("Demoiselle Portal", "http://www.frameworkdemoiselle.gov.br"));
