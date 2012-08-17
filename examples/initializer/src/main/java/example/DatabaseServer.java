@@ -34,20 +34,54 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package example.initializer;
+package example;
 
-import static org.junit.Assert.assertTrue;
+import static br.gov.frameworkdemoiselle.annotation.Priority.MAX_PRIORITY;
+import static br.gov.frameworkdemoiselle.annotation.Priority.MIN_PRIORITY;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.hsqldb.Server;
 
-import br.gov.frameworkdemoiselle.junit.DemoiselleRunner;
+import br.gov.frameworkdemoiselle.annotation.Priority;
+import br.gov.frameworkdemoiselle.annotation.Shutdown;
+import br.gov.frameworkdemoiselle.annotation.Startup;
 
-@RunWith(DemoiselleRunner.class)
-public class InitializerTest {
+public class DatabaseServer {
 
-	@Test
-	public void testServer() {
-		assertTrue(true);
+	private final Server server;
+	
+	public DatabaseServer() {
+		server = new Server();
+		server.setDatabaseName(0, "db");
+		server.setDatabasePath(0, "database/db");
+		server.setPort(9001);
+		server.setSilent(true);
 	}
+	
+	@Startup
+	@Priority(MAX_PRIORITY)
+	public void initServer() {
+		System.out.println("INICIANDO O SERVIDOR... ");
+		server.start();
+	}
+	
+	@Startup
+	@Priority(MIN_PRIORITY)
+	public void executeGrant() {
+		System.out.println("HABILITANDO AS PERMISSÕES");
+	}
+	
+	@Shutdown
+	@Priority(1)
+	public void removeGrant() {
+		System.out.println("DESABILITANDO AS PERMISSÕES... ");
+	}
+	
+	@Shutdown
+	@Priority(2)
+	public void stopServer() {
+		System.out.println("FINALIZANDO O SERVIDOR... ");
+		server.stop();
+	}
+	
+
 }
