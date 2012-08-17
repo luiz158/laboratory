@@ -55,8 +55,8 @@ public class MessageExample {
 	public void addMessageWithSeverity() {
 		messageContext.add(" AN INFO SEVERITY MESSAGE ADDED.", SeverityType.INFO);
 		messageContext.add(" AN WARN SEVERITY MESSAGE ADDED." , SeverityType.WARN);
-		messageContext.add("AN ERROR SEVERITY MESSAGE ADDED." , SeverityType.ERROR);
-		messageContext.add("A FATAL SEVERITY MESSAGE ADDED." , SeverityType.FATAL);
+		messageContext.add(" AN ERROR SEVERITY MESSAGE ADDED." , SeverityType.ERROR);
+		messageContext.add(" A FATAL SEVERITY MESSAGE ADDED." , SeverityType.FATAL);
 	}
 	
 	public void addMessageWithParameters() {

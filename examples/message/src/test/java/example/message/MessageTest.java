@@ -55,42 +55,41 @@ public class MessageTest {
 
 	@Inject
 	private MessageExample messageExample;
-	
+
 	@Inject
-	private MessagesDisplay messagesDisplay;	
-	
+	private MessagesDisplay messagesDisplay;
+
 	@Inject
 	private MessageContext messageContext;
-	
-	
+
 	@Before
 	public void cleanMessageContext() {
 		messageContext.clear();
 	}
-	
+
 	@After
 	public void showMessagesConsole() {
 		messagesDisplay.showMessages();
 	}
-	
+
 	@Test
 	public void addSimpleMessage() {
 		messageExample.addSimpleMessage();
 		assertTrue(true);
 	}
-	
+
 	@Test
 	public void addMessageWithSeverity() {
 		messageExample.addMessageWithSeverity();
 		assertTrue(true);
 	}
-	
+
 	@Test
 	public void addMessageWithParameters() {
 		messageExample.addMessageWithParameters();
 		assertTrue(true);
 	}
-	
+
 	@Test
 	public void addMessageWithProperties() {
 		messageExample.addMessageWithProperties();
