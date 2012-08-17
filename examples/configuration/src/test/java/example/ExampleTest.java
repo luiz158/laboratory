@@ -36,28 +36,25 @@
  */
 package example;
 
+import static org.junit.Assert.assertTrue;
+
 import javax.inject.Inject;
 
-public class Example {
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import br.gov.frameworkdemoiselle.junit.DemoiselleRunner;
+
+@RunWith(DemoiselleRunner.class)
+public class ExampleTest {
 
 	@Inject
-	private XMLConfig xml;
+	Example e;
 
-	@Inject
-	private SystemConfig system;
-
-	@Inject
-	private PropertiesConfig properties;
-
+	@Test
 	public void print() {
-		System.out.println("TITLE.............: " + xml.getTitle());
-		System.out.println("VERSION...........: " + xml.getVersion());
-		System.out.println("TEXT ALIGN........: " + properties.getAlign());
-		System.out.println("BACKGROUND COLOR..: " + properties.getBackgroundColor());
-		System.out.println("FONT COLOR........: " + properties.getFontColor());
-		System.out.println("FONT FAMILY.......: " + properties.getFontFamily());
-		System.out.println("FONT SIZE.........: " + properties.getFontSize());
-		System.out.println("OPERATING SYSTEM..: " + system.getOperatingSytem());
-		System.out.println("USER NAME.........: " + system.getUserName());
+		e.print();
+		assertTrue(true);
 	}
+
 }
