@@ -1,4 +1,4 @@
-package br.gov.frameworkdemoiselle.transacaojpa;
+package example;
 
 import static org.junit.Assert.assertEquals;
 
@@ -11,9 +11,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import example.Pessoa;
+import example.PessoaBC;
+
 import br.gov.frameworkdemoiselle.junit.DemoiselleRunner;
-import br.gov.frameworkdemoiselle.transacaojpa.business.PessoaBC;
-import br.gov.frameworkdemoiselle.transacaojpa.entity.Pessoa;
 
 @RunWith(DemoiselleRunner.class)
 public class TransacaoJPATest {
@@ -57,6 +58,5 @@ public class TransacaoJPATest {
 		
 	}
 
-	
 }
 
