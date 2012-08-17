@@ -36,41 +36,51 @@
  */
 package example;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.validation.ValidationException;
 
-@Entity
-public class Pessoa {
-	
-	@Id
-	private String cpf;
+import br.gov.frameworkdemoiselle.transaction.Transactional;
 
-	private String nome;
-	
-	public Pessoa() {
-		
+public class PersonManager {
+
+	@Inject
+	private EntityManager entityManager;
+
+	@Transactional
+	public void insert(Person... persons) {
+		for (Person person : persons) {
+			this.insert(person);
+		}
 	}
-	
-	public Pessoa(String pCpf, String pNome) {
-		cpf = pCpf;
-		nome = pNome;
+
+	@Transactional
+	public void insert(Person person) {
+		boolean exists = contains(person.getName());
+
+		entityManager.persist(person);
+
+		if (exists) {
+			throw new ValidationException("duplicated: " + person.getName());
+		}
 	}
-	
-	public String getCpf() {
-		return cpf;
+
+	public Long count() {
+		Query query = entityManager.createQuery("select count(person) from Person as person");
+		return (Long) query.getSingleResult();
 	}
-	
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
+
+	public boolean contains(String name) {
+		Query query = entityManager.createQuery("select person from Person as person where person.name = :name");
+		query.setParameter("name", name);
+
+		return !query.getResultList().isEmpty();
 	}
-	
-	public String getNome() {
-		return nome;
+
+	@Transactional
+	public void clean() {
+		Query query = entityManager.createQuery("delete from Person");
+		query.executeUpdate();
 	}
-	
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-	
-	
 }

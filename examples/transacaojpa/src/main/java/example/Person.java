@@ -36,22 +36,39 @@
  */
 package example;
 
-import br.gov.frameworkdemoiselle.stereotype.BusinessController;
-import br.gov.frameworkdemoiselle.template.DelegateCrud;
-import br.gov.frameworkdemoiselle.transaction.Transactional;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
-@BusinessController
-public class PessoaBC extends DelegateCrud<Pessoa, String, PessoaDAO> {
+@Entity
+public class Person {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue
+	private Long id;
 
-	@Transactional
-	public void insert(Pessoa bean1, Pessoa bean2){
-		super.insert(bean1);
-		super.insert(bean2);
+	private String name;
+
+	public Person() {
 	}
-	
+
+	public Person(String name) {
+		this.name = name;
+	}
+
+	public Long getId() {
+		return this.id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }
