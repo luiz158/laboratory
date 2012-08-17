@@ -43,7 +43,7 @@ import java.util.List;
 import javax.enterprise.context.RequestScoped;
 
 @RequestScoped
-public class Credentials implements Serializable {
+public class MyCredentials implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

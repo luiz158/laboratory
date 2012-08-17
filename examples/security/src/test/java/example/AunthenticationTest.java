@@ -51,7 +51,7 @@ import br.gov.frameworkdemoiselle.security.SecurityContext;
 public class AunthenticationTest {
 
 	@Inject
-	private Credentials credential;
+	private MyCredentials credential;
 
 	@Inject
 	private SecurityContext securityContext;

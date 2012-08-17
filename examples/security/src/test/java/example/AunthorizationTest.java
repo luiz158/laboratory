@@ -53,20 +53,17 @@ import br.gov.frameworkdemoiselle.util.Beans;
 @RunWith(DemoiselleRunner.class)
 public class AunthorizationTest {
 
-	// @Inject
-	// private SecurityContext securityContext;
-
 	@Inject
 	private Hello hello;
 
 	@Before
 	public void before() {
-		Credentials credentials = Beans.getReference(Credentials.class);
+		MyCredentials myCredentials = Beans.getReference(MyCredentials.class);
 
-		credentials.setUsername("santos.dumont");
-		credentials.setPassword("secret");
-		credentials.addRole("admin");
-		credentials.addRole("jedi");
+		myCredentials.setUsername("santos.dumont");
+		myCredentials.setPassword("secret");
+		myCredentials.addRole("admin");
+		myCredentials.addRole("jedi");
 
 		SecurityContext securityContext = Beans.getReference(SecurityContext.class);
 		securityContext.login();

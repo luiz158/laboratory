@@ -48,7 +48,7 @@ public class MyAuthenticator implements Authenticator {
 	private static final long serialVersionUID = 1L;
 
 	@Inject
-	private Credentials credentials;
+	private MyCredentials credentials;
 
 	private User user;
 
