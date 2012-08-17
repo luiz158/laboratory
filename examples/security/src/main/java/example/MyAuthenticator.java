@@ -36,23 +36,46 @@
  */
 package example;
 
-import br.gov.frameworkdemoiselle.security.RequiredPermission;
-import br.gov.frameworkdemoiselle.security.RequiredRole;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 
-public class Business {
+import br.gov.frameworkdemoiselle.security.Authenticator;
+import br.gov.frameworkdemoiselle.security.User;
 
-	@RequiredPermission
-	public void businessMethodOne() {
-		System.out.println("M�todo de Neg�cio 1");
+@SessionScoped
+public class MyAuthenticator implements Authenticator {
+
+	private static final long serialVersionUID = 1L;
+
+	@Inject
+	private Credentials credentials;
+
+	private User user;
+
+	@Override
+	public boolean authenticate() {
+		boolean authenticated = false;
+
+		String username = credentials.getUsername();
+		String password = credentials.getPassword();
+
+		if ("santos.dumont".equals(username) && "secret".equals(password)) {
+			user = new MyUser(credentials.getUsername());
+			user.setAttribute("roles", credentials.getRoles());
+
+			authenticated = true;
+		}
+
+		return authenticated;
 	}
 
-	@RequiredPermission(resource = "negocio", operation = "metodo2")
-	public void businessMethodTwo() {
-		System.out.println("M�todo de Neg�cio 2");
+	@Override
+	public User getUser() {
+		return user;
 	}
 
-	@RequiredRole("admin")
-	public void businessMethodThree() {
-		System.out.println("M�todo de Neg�cio 3");
+	@Override
+	public void unAuthenticate() {
+		user = null;
 	}
 }

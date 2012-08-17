@@ -36,42 +36,36 @@
  */
 package example;
 
-import java.io.Serializable;
+import java.util.List;
 
-import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 
-@SessionScoped
-public class Login implements Serializable {
+import br.gov.frameworkdemoiselle.security.Authorizer;
+import br.gov.frameworkdemoiselle.security.SecurityContext;
+
+public class MyAuthorizer implements Authorizer {
 
 	private static final long serialVersionUID = 1L;
 
-	private String login;
+	@Inject
+	private SecurityContext securityContext;
 
-	private String password;
+	@Override
+	@SuppressWarnings("unchecked")
+	public boolean hasRole(String role) {
+		List<String> roles = (List<String>) securityContext.getUser().getAttribute("roles");
 
-	private String role;
-
-	public String getRole() {
-		return role;
+		return roles.contains(role);
 	}
 
-	public void setRole(String role) {
-		this.role = role;
-	}
+	@Override
+	public boolean hasPermission(String resource, String operation) {
+		boolean permitted = false;
 
-	public String getLogin() {
-		return login;
-	}
+		if (resource.equals("Hello") && operation.equals("say1")) {
+			permitted = true;
+		}
 
-	public void setLogin(String login) {
-		this.login = login;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
+		return permitted;
 	}
 }

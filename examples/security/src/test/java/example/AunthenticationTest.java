@@ -36,72 +36,48 @@
  */
 package example;
 
-import javax.enterprise.inject.Alternative;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
+
 import javax.inject.Inject;
 
-import br.gov.frameworkdemoiselle.security.Authenticator;
-import br.gov.frameworkdemoiselle.security.User;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
-@Alternative
-public class LoginAuthenticator implements Authenticator {
+import br.gov.frameworkdemoiselle.junit.DemoiselleRunner;
+import br.gov.frameworkdemoiselle.security.SecurityContext;
 
-	private static final long serialVersionUID = 1L;
+@RunWith(DemoiselleRunner.class)
+public class AunthenticationTest {
 
 	@Inject
-	private Login credential;
+	private Credentials credential;
 
-	private User user;
+	@Inject
+	private SecurityContext securityContext;
 
-	@Override
-	public boolean authenticate() {
-		if ((credential.getLogin().equals("admin")) && (credential.getPassword().equals("admin"))) {
-			user = new User() {
-
-				@Override
-				public void setAttribute(Object key, Object value) {
-					// TODO Auto-generated method stub
-
-				}
-
-				@Override
-				public String getId() {
-					// TODO Auto-generated method stub
-					return null;
-				}
-
-				@Override
-				public Object getAttribute(Object key) {
-					// TODO Auto-generated method stub
-					return null;
-				}
-			};
-
-			return true;
-		}
-
-		// c�digo de autentica��o
-
-		// credencial -> banco (verificar usuario e senha)
-
-		// carregar um objeto do tipo User
-
-		return false;
+	@Test
+	public void isNotLogged() {
+		assertFalse(securityContext.isLoggedIn());
 	}
 
-	@Override
-	public User getUser() {
+	@Test
+	public void loginFailed() {
+		credential.setUsername("santos.dumont");
+		credential.setPassword("123");
+		securityContext.login();
 
-		// retornar o objeto User carregado no authenticate
-
-		// c�digo para retornar usu�rio logado
-		return user;
+		assertFalse(securityContext.isLoggedIn());
 	}
 
-	@Override
-	public void unAuthenticate() {
-		user = null;
+	@Test
+	public void loginSuccessful() {
+		credential.setUsername("santos.dumont");
+		credential.setPassword("secret");
+		securityContext.login();
 
-		// TODO Auto-generated method stub
+		assertTrue(securityContext.isLoggedIn());
+
+		securityContext.logout();
 	}
-
 }

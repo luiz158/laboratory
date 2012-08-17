@@ -36,89 +36,29 @@
  */
 package example;
 
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
+import br.gov.frameworkdemoiselle.security.RequiredPermission;
+import br.gov.frameworkdemoiselle.security.RequiredRole;
 
-import javax.inject.Inject;
+public class Hello {
 
-import junit.framework.Assert;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import br.gov.frameworkdemoiselle.junit.DemoiselleRunner;
-import br.gov.frameworkdemoiselle.security.AuthorizationException;
-import br.gov.frameworkdemoiselle.security.SecurityContext;
-
-@RunWith(DemoiselleRunner.class)
-public class SecurityTest {
-
-	@Inject
-	private Login credential;
-
-	@Inject
-	private SecurityContext securityContext;
-
-	@Inject
-	private Business business;
-
-	public void setUp() {
-		credential.setLogin("admin");
-		credential.setPassword("admin");
-		securityContext.login();
+	@RequiredPermission(resource = "Hello")
+	public void say1() {
+		System.out.println("Hello 1");
 	}
 
-	/* Verficar se o usu�rio est� logado */
-	@Test
-	public void isLogged() {
-		setUp();
-		assertTrue(securityContext.isLoggedIn());
+	@RequiredPermission(resource = "World", operation = "scream")
+	public void say2() {
+		System.out.println("Hello 2");
 	}
 
-	/* Verifica��o de logout */
-	@Test
-	public void isNotLogged() {
-		setUp();
-		securityContext.logout();
-		assertFalse(securityContext.isLoggedIn());
+	@RequiredRole("admin")
+	public void say3() {
+		System.out.println("Hello 3");
 	}
 
-	/*	 */
-	@Test
-	public void isLoggedFail() {
-		credential.setLogin("admin");
-		credential.setPassword("123456");
-		securityContext.login();
-		assertFalse(securityContext.isLoggedIn());
-	}
-
-	@Test(expected = AuthorizationException.class)
-	public void hasPermitionMethodOne() {
-		setUp();
-		business.businessMethodOne();
-		Assert.fail();
-	}
-
-	@Test
-	public void hasPermitionMethodTwo() {
-		setUp();
-		business.businessMethodTwo();
-		assertTrue(true);
-	}
-
-	@Test(expected = AuthorizationException.class)
-	public void hasNoRoleMethodThree() {
-		setUp();
-		credential.setRole("user");
-		business.businessMethodThree();
-		Assert.fail();
-	}
-
-	@Test
-	public void hasRoleMethodThree() {
-		setUp();
-		credential.setRole("admin");
-		business.businessMethodThree();
-		assertTrue(true);
+	@RequiredRole("jedi")
+	@RequiredPermission(resource = "World", operation = "say4")
+	public void say4() {
+		System.out.println("Hello 4");
 	}
 }

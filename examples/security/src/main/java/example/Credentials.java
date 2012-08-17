@@ -36,35 +36,44 @@
  */
 package example;
 
-import javax.enterprise.inject.Alternative;
-import javax.inject.Inject;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-import br.gov.frameworkdemoiselle.security.Authorizer;
+import javax.enterprise.context.RequestScoped;
 
-@Alternative
-public class BusinessAuthorizer implements Authorizer {
+@RequestScoped
+public class Credentials implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Inject
-	private Login login;
+	private String username;
 
-	@Override
-	public boolean hasRole(String role) {
-		if (role.equals(login.getRole())) {
-			return true;
-		} else {
-			return false;
-		}
+	private String password;
+
+	private List<String> roles = new ArrayList<String>();
+
+	public String getUsername() {
+		return username;
 	}
 
-	@Override
-	public boolean hasPermission(String resource, String operation) {
-		if (resource.equals("negocio") && operation.equals("metodo2")) {
-			return true;
-		} else {
-			return false;
-		}
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public List<String> getRoles() {
+		return roles;
+	}
+
+	public void addRole(String role) {
+		this.roles.add(role);
+	}
 }
