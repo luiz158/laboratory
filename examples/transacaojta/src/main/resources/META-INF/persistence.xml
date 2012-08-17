@@ -23,7 +23,7 @@
 	<persistence-unit name="bookmark-ds" transaction-type="JTA">
 		<jta-data-source>java:/DefaultDS</jta-data-source>
 		
-		<class>br.gov.frameworkdemoiselle.transacaojta.entity.Pessoa</class>
+		<class>example.Pessoa</class>
 
 		<properties>
 			<property name="hibernate.show_sql" value="true" />
