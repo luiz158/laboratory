@@ -49,12 +49,11 @@ import br.gov.frameworkdemoiselle.junit.DemoiselleRunner;
 public class ExampleTest {
 
 	@Inject
-	Example e;
+	private Example e;
 
 	@Test
 	public void print() {
 		e.print();
 		assertTrue(true);
 	}
-
 }
