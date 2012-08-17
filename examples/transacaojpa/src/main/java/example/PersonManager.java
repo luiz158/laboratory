@@ -39,6 +39,7 @@ package example;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.validation.ValidationException;
 
 import br.gov.frameworkdemoiselle.transaction.Transactional;
@@ -67,15 +68,17 @@ public class PersonManager {
 	}
 
 	public Long count() {
-		Query query = entityManager.createQuery("select count(person) from Person as person");
-		return (Long) query.getSingleResult();
+		TypedQuery<Long> query = entityManager.createQuery("select count(this) from Person this", Long.class);
+
+		return query.getSingleResult();
 	}
 
 	public boolean contains(String name) {
-		Query query = entityManager.createQuery("select person from Person as person where person.name = :name");
+		String jpql = "select count(this) from Person this where this.name = :name";
+		TypedQuery<Long> query = entityManager.createQuery(jpql, Long.class);
 		query.setParameter("name", name);
 
-		return !query.getResultList().isEmpty();
+		return query.getSingleResult() > 0;
 	}
 
 	@Transactional
