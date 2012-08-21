@@ -34,51 +34,26 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package example.twophasecommit;
-
- 
-import static org.junit.Assert.assertTrue;
+package example.persistence;
 
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import br.gov.frameworkdemoiselle.junit.DemoiselleRunner;
-import example.business.AuditingBC;
-import example.business.BookBC;
+import br.gov.frameworkdemoiselle.annotation.Name;
+import br.gov.frameworkdemoiselle.stereotype.PersistenceController;
+import br.gov.frameworkdemoiselle.template.JPACrud;
 import example.domain.Auditing;
-import example.domain.Book;
 
-@RunWith(DemoiselleRunner.class)
-public class BookTest {
+@PersistenceController
+public class AuditingDAO extends JPACrud<Auditing, Long> {
 
-	@Inject
-	private BookBC bookbc;
+	private static final long serialVersionUID = 1L;
 	
-	@Inject
-	private AuditingBC auditingbc;
+	@Inject @Name("database2-ds")
+	private EntityManager em;
 	
-	@Before
-	public void limparBase() {
-		for (Book b : bookbc.findAll()){
-			bookbc.delete(b.getId());
-		}
-		for(Auditing a : auditingbc.findAll()) {
-			auditingbc.delete((long) a.getId());
-		}
+	@Override
+	protected EntityManager getEntityManager() {
+		return this.em;
 	}
-	
-	@Test
-	public void addBookSuccessfully() {
-		boolean flag = false;
-		bookbc.insert(new Book("Título 1", "Autor 1"));
-		auditingbc.insert(new Auditing("Ação: Insert / Bean: Book"));
-		if (bookbc.findAll().size()==1 && auditingbc.findAll().size()==1) {
-			flag = true;
-		}
-		assertTrue(flag);
-	}
-	
 }

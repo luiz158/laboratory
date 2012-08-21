@@ -34,51 +34,16 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package example.twophasecommit;
+package example.business;
 
- 
-import static org.junit.Assert.assertTrue;
-
-import javax.inject.Inject;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import br.gov.frameworkdemoiselle.junit.DemoiselleRunner;
-import example.business.AuditingBC;
-import example.business.BookBC;
-import example.domain.Auditing;
+import br.gov.frameworkdemoiselle.stereotype.BusinessController;
+import br.gov.frameworkdemoiselle.template.DelegateCrud;
 import example.domain.Book;
+import example.persistence.BookDAO;
 
-@RunWith(DemoiselleRunner.class)
-public class BookTest {
+@BusinessController
+public class BookBC extends DelegateCrud<Book, Long, BookDAO> {
+		
+	private static final long serialVersionUID = 1L;
 
-	@Inject
-	private BookBC bookbc;
-	
-	@Inject
-	private AuditingBC auditingbc;
-	
-	@Before
-	public void limparBase() {
-		for (Book b : bookbc.findAll()){
-			bookbc.delete(b.getId());
-		}
-		for(Auditing a : auditingbc.findAll()) {
-			auditingbc.delete((long) a.getId());
-		}
-	}
-	
-	@Test
-	public void addBookSuccessfully() {
-		boolean flag = false;
-		bookbc.insert(new Book("Título 1", "Autor 1"));
-		auditingbc.insert(new Auditing("Ação: Insert / Bean: Book"));
-		if (bookbc.findAll().size()==1 && auditingbc.findAll().size()==1) {
-			flag = true;
-		}
-		assertTrue(flag);
-	}
-	
 }

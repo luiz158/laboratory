@@ -34,51 +34,51 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package example.twophasecommit;
+package example.domain;
 
- 
-import static org.junit.Assert.assertTrue;
+import java.io.Serializable;
 
-import javax.inject.Inject;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import br.gov.frameworkdemoiselle.junit.DemoiselleRunner;
-import example.business.AuditingBC;
-import example.business.BookBC;
-import example.domain.Auditing;
-import example.domain.Book;
-
-@RunWith(DemoiselleRunner.class)
-public class BookTest {
-
-	@Inject
-	private BookBC bookbc;
+@Entity
+public class Auditing implements Serializable{
 	
-	@Inject
-	private AuditingBC auditingbc;
+	private static final long serialVersionUID = 1L;
 	
-	@Before
-	public void limparBase() {
-		for (Book b : bookbc.findAll()){
-			bookbc.delete(b.getId());
-		}
-		for(Auditing a : auditingbc.findAll()) {
-			auditingbc.delete((long) a.getId());
-		}
+	@Id
+	@GeneratedValue
+	private Long id;
+	
+	@Column
+	private String value;
+
+	public Auditing() {
+		super();
 	}
 	
-	@Test
-	public void addBookSuccessfully() {
-		boolean flag = false;
-		bookbc.insert(new Book("Título 1", "Autor 1"));
-		auditingbc.insert(new Auditing("Ação: Insert / Bean: Book"));
-		if (bookbc.findAll().size()==1 && auditingbc.findAll().size()==1) {
-			flag = true;
-		}
-		assertTrue(flag);
+	public Auditing(String value) {
+		this.value = value;
 	}
 	
+	public Long getId() {
+		return id;
+	}
+
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	
+	public String getValue() {
+		return value;
+	}
+
+	
+	public void setValue(String value) {
+		this.value = value;
+	}
 }

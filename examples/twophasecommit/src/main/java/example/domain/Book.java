@@ -34,24 +34,61 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package examples;
+package example.domain;
 
-import javax.inject.Inject;
+import java.io.Serializable;
 
-import br.gov.frameworkdemoiselle.annotation.Name;
-import br.gov.frameworkdemoiselle.util.ResourceBundle;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
-public class ResourceBundleExample {
+@Entity
+public class Book implements Serializable {
 
-	@Inject
-	@Name("resourcebundlemessages")
-	private ResourceBundle resourceBundle;
-
-	public String getMessage() {
-		return resourceBundle.getString("message");
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue
+	private Long id;
+	
+	@Column
+	private String title;
+	
+	@Column
+	private String author;
+	
+	public Book() {
+		super();
 	}
 	
-	public ResourceBundle getResourceBundle() {
-		return resourceBundle;
+	public Book(String title, String author) {
+		this.title = title;
+		this.author = author;
 	}
+	
+	public Long getId() {
+		return id;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
 }
