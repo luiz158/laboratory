@@ -36,11 +36,35 @@
  */
 package example;
 
-import br.gov.frameworkdemoiselle.stereotype.PersistenceController;
-import br.gov.frameworkdemoiselle.template.JPACrud;
+import javax.inject.Inject;
+import javax.validation.ValidationException;
 
-@PersistenceController
-public class PessoaDAO extends JPACrud<Pessoa, String>{
-	
-	
+import br.gov.frameworkdemoiselle.exception.ExceptionHandler;
+import br.gov.frameworkdemoiselle.stereotype.Controller;
+
+@Controller
+public class Hello {
+
+	@Inject
+	private Printer printer;
+
+	public String say(String something) {
+		printer.print(something);
+
+		if (something.equalsIgnoreCase("Nurse")) {
+			throw new IllegalArgumentException();
+		}
+
+		return "Hello " + something;
+	}
+
+	@ExceptionHandler
+	public void handler(NullPointerException cause) {
+		throw new ValidationException(cause);
+	}
+
+	@ExceptionHandler
+	public void handler(IllegalArgumentException cause) {
+		throw new ValidationException(cause);
+	}
 }

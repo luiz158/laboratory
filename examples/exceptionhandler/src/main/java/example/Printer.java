@@ -36,41 +36,17 @@
  */
 package example;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+public class Printer {
 
-@Entity
-public class Pessoa {
-	
-	@Id
-	private String cpf;
+	public void print(String text) throws NullPointerException, IllegalArgumentException {
+		if (text == null) {
+			throw new NullPointerException();
+		}
 
-	private String nome;
-	
-	public Pessoa() {
-		
+		if (text.trim().length() == 0) {
+			throw new IllegalArgumentException();
+		}
+
+		System.out.println("Printing... " + text);
 	}
-	
-	public Pessoa(String pCpf, String pNome) {
-		cpf = pCpf;
-		nome = pNome;
-	}
-	
-	public String getCpf() {
-		return cpf;
-	}
-	
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-	
-	public String getNome() {
-		return nome;
-	}
-	
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-	
-	
 }

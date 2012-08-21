@@ -36,73 +36,62 @@
  */
 package example;
 
-import static org.junit.Assert.assertEquals;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 
 import javax.inject.Inject;
-import javax.persistence.RollbackException;
+import javax.validation.ValidationException;
 
 import junit.framework.Assert;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import example.CPFDuplicadoException;
-import example.Pessoa;
-import example.PessoaBC;
 
 import br.gov.frameworkdemoiselle.junit.DemoiselleRunner;
 
 @RunWith(DemoiselleRunner.class)
 public class ExceptionHandlerTest {
 
-	@Inject 
-	private PessoaBC pessoaBC;
+	@Inject
+	private Hello hello;
 
-	@Before
-	public void limparBase() {
-		for (Pessoa p : pessoaBC.findAll()){
-			pessoaBC.delete(p.getCpf());
-		}
-	}
-	
 	@Test
-	public void inserirUmaPessoaComSucesso() {
-		pessoaBC.insert(new Pessoa("12345678910", "João"));
-		assertEquals(1, pessoaBC.findAll().size());
-	}
-	
-	@Test
-	public void inserirPessoasComSucesso() {
-		pessoaBC.insert(new Pessoa("12345678910", "João"), new Pessoa("12345678911", "Maria"));
-		assertEquals(2, pessoaBC.findAll().size());
-	}
-	
-	@Test(expected=CPFDuplicadoException.class)
-	public void inserirPessoasComCPFIguaisComRollbackImplicito() {
-		pessoaBC.insert(new Pessoa("12345678910", "João"), new Pessoa("12345678910", "Maria"));
-		Assert.fail();
+	public void sayingHelloSuccessfuly() {
+		String greeting = hello.say("World");
+
+		Assert.assertEquals("Hello World", greeting);
 	}
 
 	@Test
-	public void inserirPessoasComCPFIguaisComRollbackExplicito() {
+	public void handlingValidationExceptionCausedByNullParameter() {
 		try {
-			pessoaBC.insert(new Pessoa("12345678910", "João"), new Pessoa("12345678910", "Maria"));
-			Assert.fail();
-		} catch(CPFDuplicadoException e) {
-			assertEquals(0, pessoaBC.findAll().size());
+			hello.say(null);
+			fail();
+
+		} catch (ValidationException cause) {
+			assertEquals(NullPointerException.class, cause.getCause().getClass());
 		}
-		
 	}
-	
-//	@Test(expected=RollbackException.class)
-//	public void inserirPessoa() {
-//		pessoaBC.insert(new Pessoa("12345678910", "João"));
-//		pessoaBC.insert(new Pessoa("12345678910", "Maria"));
-//		Assert.fail();
-//	}
-	
 
-	
+	@Test
+	public void handlingValidationExceptionCausedByEmptyParameter() {
+		try {
+			hello.say("");
+			fail();
+
+		} catch (ValidationException cause) {
+			assertEquals(IllegalArgumentException.class, cause.getCause().getClass());
+		}
+	}
+
+	@Test
+	public void handlingValidationExceptionCausedByInvalidParameter() {
+		try {
+			hello.say("Nurse");
+			fail();
+
+		} catch (ValidationException cause) {
+			assertEquals(IllegalArgumentException.class, cause.getCause().getClass());
+		}
+	}
 }
-
