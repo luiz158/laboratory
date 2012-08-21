@@ -52,34 +52,32 @@ import br.gov.frameworkdemoiselle.util.Beans;
 @RunWith(DemoiselleRunner.class)
 public class InitializerTest {
 
-	private static List<String> expected = new ArrayList<String>();
+	private static Hello hello = Beans.getReference(Hello.class);
 
-	private static Hello getHello() {
-		return Beans.getReference(Hello.class);
-	}
+	private static List<String> expected = new ArrayList<String>();
 
 	@BeforeClass
 	public static void beforeClass() {
 		expected.add("Startup: Priority Not Defined");
 		expected.add("Startup: Min Priority");
 
-		assertEquals(expected, getHello().getList());
+		assertEquals(expected, hello.getList());
 	}
 
 	@Test
 	public void enqueueingAfterStartup() {
-		getHello().say();
-		expected.add("Startup: Hello World");
+		hello.say();
+		expected.add("Hello World");
 
-		assertEquals(expected, getHello().getList());
+		assertEquals(expected, hello.getList());
 	}
 
 	@Test
 	public void enqueueingAfterStartupAgain() {
-		getHello().say();
-		expected.add("Startup: Hello World");
+		hello.say();
+		expected.add("Hello World");
 
-		assertEquals(expected, getHello().getList());
+		assertEquals(expected, hello.getList());
 	}
 
 	@AfterClass
@@ -87,6 +85,6 @@ public class InitializerTest {
 		expected.add("Shutdown: Max Priority");
 		expected.add("Shutdown: Priority 1");
 
-		assertEquals(expected, getHello().getList());
+		assertEquals(expected, hello.getList());
 	}
 }

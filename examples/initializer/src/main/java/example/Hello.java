@@ -58,7 +58,7 @@ public class Hello {
 	}
 
 	public void say() {
-		list.add("Startup: Hello World");
+		list.add("Hello World");
 	}
 
 	@Startup
