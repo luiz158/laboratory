@@ -36,30 +36,14 @@
  */
 package example;
 
-import javax.inject.Inject;
 import javax.validation.ValidationException;
 
 import br.gov.frameworkdemoiselle.exception.ExceptionHandler;
-import br.gov.frameworkdemoiselle.stereotype.Controller;
 
-@Controller
-public class Hello extends AbstractHello {
-
-	@Inject
-	private Printer printer;
-
-	public String say(String something) {
-		printer.print(something);
-
-		if (something.equalsIgnoreCase("Nurse")) {
-			throw new IllegalArgumentException();
-		}
-
-		return "Hello " + something;
-	}
+public abstract class AbstractHello {
 
 	@ExceptionHandler
-	public void handler(IllegalArgumentException cause) {
+	public void handler(NullPointerException cause) {
 		throw new ValidationException(cause);
 	}
 }
