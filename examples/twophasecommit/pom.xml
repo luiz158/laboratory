@@ -4,8 +4,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>br.gov.frameworkdemoiselle.example</groupId>
-	<artifactId>twophasecommit</artifactId>
+	<artifactId>twophasecommit-example</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 

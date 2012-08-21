@@ -42,8 +42,6 @@ import static junit.framework.Assert.fail;
 import javax.inject.Inject;
 import javax.validation.ValidationException;
 
-import junit.framework.Assert;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -59,7 +57,7 @@ public class ExceptionHandlerTest {
 	public void sayingHelloSuccessfuly() {
 		String greeting = hello.say("World");
 
-		Assert.assertEquals("Hello World", greeting);
+		assertEquals("Hello World", greeting);
 	}
 
 	@Test

@@ -39,8 +39,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>br.gov.frameworkdemoiselle.example</groupId>
-	<artifactId>configuration</artifactId>
+	<artifactId>configuration-example</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 

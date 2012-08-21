@@ -39,8 +39,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>br.gov.frameworkdemoiselle.example</groupId>
-	<artifactId>transacaojta</artifactId>
+	<artifactId>jta-transaction-example</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
