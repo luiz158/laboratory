@@ -39,49 +39,48 @@ package example;
 import static br.gov.frameworkdemoiselle.annotation.Priority.MAX_PRIORITY;
 import static br.gov.frameworkdemoiselle.annotation.Priority.MIN_PRIORITY;
 
-import org.hsqldb.Server;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.enterprise.context.ApplicationScoped;
 
 import br.gov.frameworkdemoiselle.annotation.Priority;
 import br.gov.frameworkdemoiselle.annotation.Shutdown;
 import br.gov.frameworkdemoiselle.annotation.Startup;
 
-public class DatabaseServer {
+@ApplicationScoped
+public class Hello {
 
-	private final Server server;
-	
-	public DatabaseServer() {
-		server = new Server();
-		server.setDatabaseName(0, "db");
-		server.setDatabasePath(0, "database/db");
-		server.setPort(9001);
-		server.setSilent(true);
+	private List<String> list = new ArrayList<String>();
+
+	public List<String> getList() {
+		return list;
 	}
-	
+
+	public void say() {
+		list.add("Startup: Hello World");
+	}
+
 	@Startup
-	@Priority(MAX_PRIORITY)
-	public void initServer() {
-		System.out.println("INICIANDO O SERVIDOR... ");
-		server.start();
+	public void load() {
+		list.add("Startup: Priority Not Defined");
 	}
-	
+
 	@Startup
 	@Priority(MIN_PRIORITY)
-	public void executeGrant() {
-		System.out.println("HABILITANDO AS PERMISSÕES");
+	public void loadWithMinPriority() {
+		list.add("Startup: Min Priority");
 	}
-	
+
 	@Shutdown
 	@Priority(1)
-	public void removeGrant() {
-		System.out.println("DESABILITANDO AS PERMISSÕES... ");
+	public void unload() {
+		list.add("Shutdown: Priority 1");
 	}
-	
-	@Shutdown
-	@Priority(2)
-	public void stopServer() {
-		System.out.println("FINALIZANDO O SERVIDOR... ");
-		server.stop();
-	}
-	
 
+	@Shutdown
+	@Priority(MAX_PRIORITY)
+	public void unloadWithMaxPriority() {
+		list.add("Shutdown: Max Priority");
+	}
 }

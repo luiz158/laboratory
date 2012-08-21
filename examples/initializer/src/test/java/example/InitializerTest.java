@@ -36,18 +36,57 @@
  */
 package example;
 
-import static org.junit.Assert.assertTrue;
+import static junit.framework.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import br.gov.frameworkdemoiselle.junit.DemoiselleRunner;
+import br.gov.frameworkdemoiselle.util.Beans;
 
 @RunWith(DemoiselleRunner.class)
 public class InitializerTest {
 
+	private static List<String> expected = new ArrayList<String>();
+
+	private static Hello getHello() {
+		return Beans.getReference(Hello.class);
+	}
+
+	@BeforeClass
+	public static void beforeClass() {
+		expected.add("Startup: Priority Not Defined");
+		expected.add("Startup: Min Priority");
+
+		assertEquals(expected, getHello().getList());
+	}
+
 	@Test
-	public void testServer() {
-		assertTrue(true);
+	public void enqueueingAfterStartup() {
+		getHello().say();
+		expected.add("Startup: Hello World");
+
+		assertEquals(expected, getHello().getList());
+	}
+
+	@Test
+	public void enqueueingAfterStartupAgain() {
+		getHello().say();
+		expected.add("Startup: Hello World");
+
+		assertEquals(expected, getHello().getList());
+	}
+
+	@AfterClass
+	public static void afterClass() {
+		expected.add("Shutdown: Max Priority");
+		expected.add("Shutdown: Priority 1");
+
+		assertEquals(expected, getHello().getList());
 	}
 }
