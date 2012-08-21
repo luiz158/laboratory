@@ -49,16 +49,16 @@
 
 	<modules>
 		<module>configuration</module>
-		<module>exceptionhandler</module>
+		<module>exception-handler</module>
 		<module>initializer</module>
 		<module>logger</module>
 		<module>message</module>
 		<module>pagination</module>
 		<module>parameter</module>
-		<module>resourcebundle</module>
+		<module>resource-bundle</module>
 		<module>security</module>
-		<module>transacaojpa</module>
-		<module>transacaojta</module>
+		<module>jpa-transaction</module>
+		<module>jta-transaction</module>
 		<module>twophasecommit</module>
 	</modules>
 
