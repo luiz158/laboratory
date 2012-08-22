@@ -59,7 +59,7 @@ public class JPATransactionTest {
 	private PersonManager manager;
 
 	@Inject
-	private TransactionContext transactionContext;
+	private TransactionContext context;
 
 	@Before
 	public void before() {
@@ -115,7 +115,7 @@ public class JPATransactionTest {
 		Person person1 = new Person("Alberto Santos Dumont");
 		Person person2 = new Person("Orville Wright");
 
-		Transaction transaction = transactionContext.getCurrentTransaction();
+		Transaction transaction = context.getCurrentTransaction();
 
 		transaction.begin();
 		manager.insert(person1);
@@ -132,7 +132,7 @@ public class JPATransactionTest {
 		Person person1 = new Person("Alberto Santos Dumont");
 		Person person2 = new Person("Orville Wright");
 
-		Transaction transaction = transactionContext.getCurrentTransaction();
+		Transaction transaction = context.getCurrentTransaction();
 
 		transaction.begin();
 		manager.insert(person1);

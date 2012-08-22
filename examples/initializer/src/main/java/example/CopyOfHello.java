@@ -36,59 +36,51 @@
  */
 package example;
 
-import static junit.framework.Assert.assertEquals;
+import static br.gov.frameworkdemoiselle.annotation.Priority.MAX_PRIORITY;
+import static br.gov.frameworkdemoiselle.annotation.Priority.MIN_PRIORITY;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
+import javax.enterprise.context.ApplicationScoped;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import br.gov.frameworkdemoiselle.annotation.Priority;
+import br.gov.frameworkdemoiselle.annotation.Shutdown;
+import br.gov.frameworkdemoiselle.annotation.Startup;
 
-import br.gov.frameworkdemoiselle.junit.DemoiselleRunner;
+@ApplicationScoped
+public class CopyOfHello {
 
-@RunWith(DemoiselleRunner.class)
-public class InitializerTest {
+	private List<String> list = new ArrayList<String>();
 
-	// private static Hello hello = Beans.getReference(Hello.class);
-
-	@Inject
-	private Hello hello;
-
-	private static List<String> expected = new ArrayList<String>();
-
-	@BeforeClass
-	public static void beforeClass() {
-		expected.add("Startup: Priority Not Defined");
-		expected.add("Startup: Min Priority");
-
-		// assertEquals(expected, hello.getList());
+	public List<String> getList() {
+		return list;
 	}
 
-	@Test
-	public void enqueueingAfterStartup() {
-		hello.say();
-		expected.add("Hello World");
-
-		assertEquals(expected, hello.getList());
+	public void say() {
+		list.add("Hello World");
 	}
 
-	@Test
-	public void enqueueingAfterStartupAgain() {
-		hello.say();
-		expected.add("Hello World");
-
-		assertEquals(expected, hello.getList());
+	@Startup
+	public void load() {
+		list.add("Startup: Priority Not Defined");
 	}
 
-	@AfterClass
-	public static void afterClass() {
-		expected.add("Shutdown: Max Priority");
-		expected.add("Shutdown: Priority 1");
+	@Startup
+	@Priority(MIN_PRIORITY)
+	public void loadWithMinPriority() {
+		list.add("Startup: Min Priority");
+	}
 
-		// assertEquals(expected, hello.getList());
+	@Shutdown
+	@Priority(1)
+	public void unload() {
+		list.add("Shutdown: Priority 1");
+	}
+
+	@Shutdown
+	@Priority(MAX_PRIORITY)
+	public void unloadWithMaxPriority() {
+		list.add("Shutdown: Max Priority");
 	}
 }

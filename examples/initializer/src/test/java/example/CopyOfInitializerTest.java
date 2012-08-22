@@ -51,12 +51,12 @@ import org.junit.runner.RunWith;
 import br.gov.frameworkdemoiselle.junit.DemoiselleRunner;
 
 @RunWith(DemoiselleRunner.class)
-public class InitializerTest {
+public class CopyOfInitializerTest {
 
-	// private static Hello hello = Beans.getReference(Hello.class);
+	// private static CopyOfHello hello = Beans.getReference(CopyOfHello.class);
 
 	@Inject
-	private Hello hello;
+	private CopyOfHello hello;
 
 	private static List<String> expected = new ArrayList<String>();
 
