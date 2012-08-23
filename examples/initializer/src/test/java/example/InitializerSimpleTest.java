@@ -38,57 +38,32 @@ package example;
 
 import static junit.framework.Assert.assertEquals;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.inject.Inject;
-
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import br.gov.frameworkdemoiselle.junit.DemoiselleRunner;
+import br.gov.frameworkdemoiselle.util.Beans;
 
 @RunWith(DemoiselleRunner.class)
-public class CopyOfInitializerTest {
+public class InitializerSimpleTest {
 
-	// private static CopyOfHello hello = Beans.getReference(CopyOfHello.class);
-
-	@Inject
-	private CopyOfHello hello;
-
-	private static List<String> expected = new ArrayList<String>();
+	private static Hello hello = Beans.getReference(Hello.class);
 
 	@BeforeClass
 	public static void beforeClass() {
-		expected.add("Startup: Priority Not Defined");
-		expected.add("Startup: Min Priority");
-
-		// assertEquals(expected, hello.getList());
+		assertEquals(2, hello.getList().size());
 	}
 
 	@Test
 	public void enqueueingAfterStartup() {
 		hello.say();
-		expected.add("Hello World");
-
-		assertEquals(expected, hello.getList());
-	}
-
-	@Test
-	public void enqueueingAfterStartupAgain() {
-		hello.say();
-		expected.add("Hello World");
-
-		assertEquals(expected, hello.getList());
+		assertEquals(3, hello.getList().size());
 	}
 
 	@AfterClass
 	public static void afterClass() {
-		expected.add("Shutdown: Max Priority");
-		expected.add("Shutdown: Priority 1");
-
-		// assertEquals(expected, hello.getList());
+		assertEquals(5, hello.getList().size());
 	}
 }
