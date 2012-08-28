@@ -37,38 +37,39 @@
 package example;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Pessoa {
-	
-	@Id
-	private String cpf;
+public class Person {
 
-	private String nome;
-	
-	public Pessoa() {
-		
+	@Id
+	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	private Long id;
+
+	private String name;
+
+	public Person() {
 	}
-	
-	public Pessoa(String pCpf, String pNome) {
-		cpf = pCpf;
-		nome = pNome;
+
+	public Person(String name) {
+		this.name = name;
 	}
-	
-	public String getCpf() {
-		return cpf;
+
+	public Long getId() {
+		return this.id;
 	}
-	
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
+
+	public void setId(Long id) {
+		this.id = id;
 	}
-	
-	public String getNome() {
-		return nome;
+
+	public String getName() {
+		return this.name;
 	}
-	
-	public void setNome(String nome) {
-		this.nome = nome;
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

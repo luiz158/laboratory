@@ -39,10 +39,11 @@
 
 	<!-- If you are using JBoss AS7 with JTA transaction then use this persistence-unit -->
 	<!--
+	-->
 	<persistence-unit name="bookmark-ds" transaction-type="JTA">
 		<jta-data-source>java:jboss/datasources/ExampleDS</jta-data-source>
 		
-		<class>example.Pessoa</class>
+		<class>example.Person</class>
 
 		<properties>
 			<property name="hibernate.show_sql" value="true" />
@@ -51,12 +52,10 @@
 			<property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.JBossAppServerJtaPlatform" />
 		</properties>
 	</persistence-unit>
-	-->
 
 
 	<!-- If you are using JBoss AS6 with JTA transaction then use this persistence-unit -->
 	<!--
-	-->
 	<persistence-unit name="bookmark-ds" transaction-type="JTA">
 		<jta-data-source>java:/DefaultDS</jta-data-source>
 		
@@ -69,4 +68,5 @@
 			<property name="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.JBossTransactionManagerLookup" />
 		</properties>
 	</persistence-unit>
+	-->
 </persistence>
