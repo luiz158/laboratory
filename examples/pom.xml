@@ -50,7 +50,6 @@
 	<modules>
 		<module>configuration</module>
 		<module>exception-handler</module>
-		<module>initializer</module>
 		<module>logger</module>
 		<module>message</module>
 		<module>pagination</module>
