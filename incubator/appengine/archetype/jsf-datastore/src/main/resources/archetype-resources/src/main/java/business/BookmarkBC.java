@@ -14,7 +14,7 @@ public class BookmarkBC extends DelegateCrud<Bookmark, Long, BookmarkDAO> {
 	private static final long serialVersionUID = 1L;
 	
 	@Startup
-	@Transactional
+//	@Transactional
 	public void load() {
 		if (findAll().isEmpty()) {
 			insert(new Bookmark("Demoiselle Portal", "http://www.frameworkdemoiselle.gov.br"));

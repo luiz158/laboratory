@@ -16,7 +16,7 @@ import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 
-import domain.Bookmark;
+import ${package}.domain.Bookmark;
 
 @PersistenceController
 public class BookmarkDAO implements Crud<Bookmark, Long> {

@@ -20,21 +20,21 @@ public class BookmarkEditMB extends AbstractEditPageBean<Bookmark, Long> {
 	private BookmarkBC bookmarkBC;
 
 	@Override
-	@Transactional
+//	@Transactional
 	public String delete() {
 		this.bookmarkBC.delete(getId());
 		return getPreviousView();
 	}
 
 	@Override
-	@Transactional
+//	@Transactional
 	public String insert() {
 		this.bookmarkBC.insert(getBean());
 		return getPreviousView();
 	}
 
 	@Override
-	@Transactional
+//	@Transactional
 	public String update() {
 		this.bookmarkBC.update(getBean());
 		return getPreviousView();

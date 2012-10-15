@@ -29,7 +29,7 @@ public class BookmarkListMB extends AbstractListPageBean<Bookmark, Long> {
 		return this.bc.findAll();
 	}
 
-	@Transactional
+//	@Transactional
 	public String deleteSelection() {
 		boolean delete;
 		for (Iterator<Long> iter = getSelection().keySet().iterator(); iter.hasNext();) {

@@ -45,7 +45,7 @@
 
 	<parent>
 		<groupId>br.gov.frameworkdemoiselle.component</groupId>
-		<artifactId>demoiselle-appengine-parent</artifactId>
+		<artifactId>demoiselle-appengine-archetype-parent</artifactId>
 		<version>1.0.0-ALPHA1-SNAPSHOT</version>
 		<relativePath>../../parent/archetype</relativePath>
 	</parent>
