@@ -43,14 +43,12 @@
 	<version>1.0.0-ALPHA1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-<!--
 	<parent>
 		<groupId>br.gov.frameworkdemoiselle</groupId>
 		<artifactId>demoiselle-parent</artifactId>
 		<version>7</version>
 		<relativePath>../../../../internal/parent/demoiselle</relativePath>
 	</parent>
--->
 
 	<name>Demoiselle App Engine Parent</name>
 	<description>
@@ -71,15 +69,6 @@
 
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<target>1.6</target>
-					<source>1.6</source>
-				</configuration>
-			</plugin>
-
 			<plugin>
 				<groupId>net.kindleit</groupId>
 				<artifactId>maven-gae-plugin</artifactId>
@@ -103,7 +92,7 @@
 			<dependency>
 				<groupId>com.google.appengine</groupId>
 				<artifactId>appengine-api-1.0-sdk</artifactId>
-				<version>${appengine.version}</version>
+				<version>${gae.version}</version>
 				<scope>compile</scope>
 			</dependency>
 		</dependencies>
@@ -136,7 +125,7 @@
 
 	<properties>
 		<demoiselle.framework.version>2.3.0-RC3</demoiselle.framework.version>
-		<appengine.version>1.7.2</appengine.version>
+		<gae.version>1.7.2</gae.version>
 		<kindleit.plugin.version>0.9.2</kindleit.plugin.version>
 	</properties>
 </project>
