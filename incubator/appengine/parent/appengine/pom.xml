@@ -43,12 +43,14 @@
 	<version>1.0.0-ALPHA1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
+<!--
 	<parent>
 		<groupId>br.gov.frameworkdemoiselle</groupId>
 		<artifactId>demoiselle-parent</artifactId>
 		<version>7</version>
 		<relativePath>../../../../internal/parent/demoiselle</relativePath>
 	</parent>
+-->
 
 	<name>Demoiselle App Engine Parent</name>
 	<description>
@@ -66,6 +68,28 @@
 		<name>SERPRO - Serviço Federal de Processamento de Dados</name>
 		<url>http://www.serpro.gov.br</url>
 	</organization>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<target>1.6</target>
+					<source>1.6</source>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>net.kindleit</groupId>
+				<artifactId>maven-gae-plugin</artifactId>
+				<version>${kindleit.plugin.version}</version>
+				<configuration>
+					<serverId>appengine.google.com</serverId>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
 	<dependencyManagement>
 		<dependencies>
@@ -113,5 +137,6 @@
 	<properties>
 		<demoiselle.framework.version>2.3.0-RC3</demoiselle.framework.version>
 		<appengine.version>1.7.2</appengine.version>
+		<kindleit.plugin.version>0.9.4</kindleit.plugin.version>
 	</properties>
 </project>

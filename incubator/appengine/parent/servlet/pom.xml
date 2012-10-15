@@ -43,9 +43,9 @@
 
 	<parent>
 		<groupId>br.gov.frameworkdemoiselle.component</groupId>
-		<artifactId>demoiselle-appengine-minimal-parent</artifactId>
+		<artifactId>demoiselle-appengine-parent</artifactId>
 		<version>1.0.0-ALPHA1-SNAPSHOT</version>
-		<relativePath>../minimal</relativePath>
+		<relativePath>../appengine</relativePath>
 	</parent>
 
 	<name>Demoiselle App Engine Servlet Parent</name>
@@ -81,21 +81,40 @@
 					</webResources>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+			</plugin>
 		</plugins>
 	</build>
 
 	<dependencies>
 		<dependency>
+			<groupId>br.gov.frameworkdemoiselle.component</groupId>
+			<artifactId>demoiselle-appengine-sdk</artifactId>
+			<version>1.0.0-ALPHA1-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
 			<groupId>br.gov.frameworkdemoiselle</groupId>
 			<artifactId>demoiselle-servlet</artifactId>
 			<scope>compile</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>org.jboss.weld</groupId>
 			<artifactId>weld-core</artifactId>
