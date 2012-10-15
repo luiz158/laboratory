@@ -38,51 +38,59 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>demoiselle-appengine-build</artifactId>
-	<version>1.0.0-ALPHA1-SNAPSHOT</version>
+	<artifactId>demoiselle-appengine-minimal-parent</artifactId>
 	<packaging>pom</packaging>
 
 	<parent>
-		<groupId>br.gov.frameworkdemoiselle</groupId>
-		<artifactId>demoiselle-component-build-parent</artifactId>
-		<version>2</version>
-		<relativePath>../../../internal/parent/build/component</relativePath>
+		<groupId>br.gov.frameworkdemoiselle.component</groupId>
+		<artifactId>demoiselle-appengine-parent</artifactId>
+		<version>1.0.0-ALPHA1-SNAPSHOT</version>
+		<relativePath>../appengine</relativePath>
 	</parent>
 
-	<name>Demoiselle App Engine Build Aggregator</name>
+	<name>Demoiselle Framework Minimal Parent</name>
 	<description>
+		Configurações úteis para todas as aplicações que utilizam o framework. O ideal é que toda aplicação que
+		utiliza o Demoiselle herde deste POM ou de uma de suas especializações.
 	</description>
+	<url>http://www.frameworkdemoiselle.gov.br</url>
 
-	<modules>
-		<module>impl/sdk</module>
-		<module>parent/appengine</module>
-		<module>parent/archetype</module>
-		<module>parent/minimal</module>
-		<module>archetype/jsf-datastore</module>
-		<module>archetype/rest-datastore</module>
-	</modules>
+	<licenses>
+		<license>
+			<name>GNU Lesser General Public License, Version 3</name>
+			<url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
+		</license>
+	</licenses>
+
+	<organization>
+		<name>SERPRO - Serviço Federal de Processamento de Dados</name>
+		<url>http://www.serpro.gov.br</url>
+	</organization>
 
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-assembly-plugin</artifactId>
+				<artifactId>maven-compiler-plugin</artifactId>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-deploy-plugin</artifactId>
-				<configuration>
-					<skip>true</skip>
-				</configuration>
+				<artifactId>maven-javadoc-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
 
-	<scm>
-		<connection>scm:git:git@github.com:demoiselle/${project.alias}.git</connection>
-		<developerConnection>scm:git:git@github.com:demoiselle/${project.alias}.git</developerConnection>
-		<url>http://github.com/demoiselle/${project.alias}</url>
-	</scm>
+	<dependencies>
+		<dependency>
+			<groupId>br.gov.frameworkdemoiselle</groupId>
+			<artifactId>demoiselle-core</artifactId>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
 
 	<repositories>
 		<repository>
@@ -108,16 +116,4 @@
 			</releases>
 		</repository>
 	</repositories>
-
-	<distributionManagement>
-		<site>
-			<id>demoiselle.sourceforge.net</id>
-			<url>${site.url}</url>
-		</site>
-	</distributionManagement>
-
-	<properties>
-		<project.alias>appengine</project.alias>
-		<category>Nuvem</category>
-	</properties>
 </project>

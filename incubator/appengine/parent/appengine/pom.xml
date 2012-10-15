@@ -67,6 +67,18 @@
 		<url>http://www.serpro.gov.br</url>
 	</organization>
 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>br.gov.frameworkdemoiselle</groupId>
+				<artifactId>demoiselle-framework-bom</artifactId>
+				<version>${demoiselle.framework.version}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<repositories>
 		<repository>
 			<id>sonatype-nexus-snapshots</id>
@@ -91,4 +103,8 @@
 			</releases>
 		</repository>
 	</repositories>
+
+	<properties>
+		<demoiselle.framework.version>2.3.0-RC3</demoiselle.framework.version>
+	</properties>
 </project>

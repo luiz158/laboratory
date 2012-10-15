@@ -74,18 +74,6 @@
 		</plugins>
 	</build>
 
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>br.gov.frameworkdemoiselle</groupId>
-				<artifactId>demoiselle-framework-bom</artifactId>
-				<version>${demoiselle.framework.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
-
 	<dependencies>
 	</dependencies>
 
@@ -113,8 +101,4 @@
 			</releases>
 		</repository>
 	</repositories>
-
-	<properties>
-		<demoiselle.framework.version>2.3.0-RC2-SNAPSHOT</demoiselle.framework.version>
-	</properties>
 </project>
