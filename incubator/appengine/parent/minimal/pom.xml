@@ -90,6 +90,12 @@
 			<artifactId>demoiselle-core</artifactId>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>br.gov.frameworkdemoiselle.component</groupId>
+			<artifactId>demoiselle-appengine-sdk</artifactId>
+			<version>1.0.0-ALPHA1-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 
 	<repositories>

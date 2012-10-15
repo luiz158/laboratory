@@ -76,6 +76,12 @@
 				<scope>import</scope>
 				<type>pom</type>
 			</dependency>
+			<dependency>
+				<groupId>com.google.appengine</groupId>
+				<artifactId>appengine-api-1.0-sdk</artifactId>
+				<version>${appengine.version}</version>
+				<scope>compile</scope>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -106,5 +112,6 @@
 
 	<properties>
 		<demoiselle.framework.version>2.3.0-RC3</demoiselle.framework.version>
+		<appengine.version>1.7.2</appengine.version>
 	</properties>
 </project>

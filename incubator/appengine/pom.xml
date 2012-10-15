@@ -58,6 +58,8 @@
 		<module>parent/appengine</module>
 		<module>parent/archetype</module>
 		<module>parent/minimal</module>
+		<module>parent/servlet</module>
+		<module>parent/jsf</module>
 		<module>archetype/jsf-datastore</module>
 		<module>archetype/rest-datastore</module>
 	</modules>
