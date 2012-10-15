@@ -14,25 +14,12 @@
 	<url></url>
 
 	<parent>
-		<groupId>br.gov.frameworkdemoiselle</groupId>
-		<artifactId>demoiselle-jsf-parent</artifactId>
+		<groupId>br.gov.frameworkdemoiselle.component</groupId>
+		<artifactId>demoiselle-appengine-jsf-parent</artifactId>
 		<version>#{parent.version}</version>
 	</parent>
 
 	<dependencies>
-		<dependency>
-			<groupId>br.gov.frameworkdemoiselle</groupId>
-			<artifactId>demoiselle-jpa</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<!-- If you are using a JTA transaction then use this extension -->
-		<!--
-		<dependency>
-		    <groupId>br.gov.frameworkdemoiselle</groupId>
-		    <artifactId>demoiselle-jta</artifactId>
-		    <scope>compile</scope>
-		</dependency>
-		-->
 		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
@@ -51,4 +38,12 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>sonatype-nexus-snapshots</id>
+			<name>Sonatype Nexus Snapshots</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</repository>
+	</repositories>
 </project>

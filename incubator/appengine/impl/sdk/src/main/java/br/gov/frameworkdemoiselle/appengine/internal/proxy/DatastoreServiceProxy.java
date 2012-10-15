@@ -18,7 +18,7 @@
  * or write to the Free Software Foundation, Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package br.gov.frameworkdemoiselle.appengine.internal.producer;
+package br.gov.frameworkdemoiselle.appengine.internal.proxy;
 
 import java.io.Serializable;
 import java.util.Collection;
