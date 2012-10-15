@@ -137,6 +137,6 @@
 	<properties>
 		<demoiselle.framework.version>2.3.0-RC3</demoiselle.framework.version>
 		<appengine.version>1.7.2</appengine.version>
-		<kindleit.plugin.version>0.9.4</kindleit.plugin.version>
+		<kindleit.plugin.version>0.9.2</kindleit.plugin.version>
 	</properties>
 </project>
