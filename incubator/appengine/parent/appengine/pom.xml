@@ -67,19 +67,6 @@
 		<url>http://www.serpro.gov.br</url>
 	</organization>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>net.kindleit</groupId>
-				<artifactId>maven-gae-plugin</artifactId>
-				<version>${kindleit.plugin.version}</version>
-				<configuration>
-					<serverId>appengine.google.com</serverId>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
-
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -92,7 +79,7 @@
 			<dependency>
 				<groupId>com.google.appengine</groupId>
 				<artifactId>appengine-api-1.0-sdk</artifactId>
-				<version>${gae.version}</version>
+				<version>${appengine.version}</version>
 				<scope>compile</scope>
 			</dependency>
 		</dependencies>
@@ -125,7 +112,6 @@
 
 	<properties>
 		<demoiselle.framework.version>2.3.0-RC3</demoiselle.framework.version>
-		<gae.version>1.7.2</gae.version>
-		<kindleit.plugin.version>0.9.2</kindleit.plugin.version>
+		<appengine.version>1.7.2</appengine.version>
 	</properties>
 </project>

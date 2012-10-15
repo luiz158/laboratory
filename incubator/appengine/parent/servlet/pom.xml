@@ -93,20 +93,27 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>net.kindleit</groupId>
+				<artifactId>maven-gae-plugin</artifactId>
+				<version>${kindleit.plugin.version}</version>
+				<configuration>
+					<serverId>appengine.google.com</serverId>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
 	<dependencies>
 		<dependency>
+			<groupId>br.gov.frameworkdemoiselle</groupId>
+			<artifactId>demoiselle-servlet</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
 			<groupId>br.gov.frameworkdemoiselle.component</groupId>
 			<artifactId>demoiselle-appengine-sdk</artifactId>
 			<version>1.0.0-ALPHA1-SNAPSHOT</version>
-			<scope>compile</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>br.gov.frameworkdemoiselle</groupId>
-			<artifactId>demoiselle-servlet</artifactId>
 			<scope>compile</scope>
 		</dependency>
 
@@ -161,4 +168,9 @@
 			</releases>
 		</repository>
 	</repositories>
+
+	<properties>
+		<kindleit.plugin.version>0.9.4</kindleit.plugin.version>
+		<gae.version>${appengine.version}</gae.version>
+	</properties>
 </project>
