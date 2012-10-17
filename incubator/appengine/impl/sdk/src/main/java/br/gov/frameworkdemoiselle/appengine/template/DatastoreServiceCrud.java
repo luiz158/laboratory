@@ -71,7 +71,7 @@ public class DatastoreServiceCrud<T, I> implements Crud<T, I> {
 
 	private transient Field idField;
 
-	private transient DatastoreService datastoreService;
+	private DatastoreService datastoreService;
 
 	protected DatastoreService getDatastoreService() {
 		if (this.datastoreService == null) {
@@ -132,21 +132,7 @@ public class DatastoreServiceCrud<T, I> implements Crud<T, I> {
 		}
 
 		Key key = getDatastoreService().put(entity);
-		Reflections.setFieldValue(getIdField(), bookmark, key.getId());
-	}
-
-	private Field getIdField() {
-		if (this.idField == null) {
-			for (Field field : Reflections.getNonStaticDeclaredFields(getBeanClass())) {
-				if (field.getName().equals("id")) {
-					this.idField = field;
-					break;
-				}
-			}
-		}
-
-		return this.idField;
-
+		Reflections.setFieldValue(getIdField(), bookmark, isStringId() ? key.getName() : key.getId());
 	}
 
 	@Override
@@ -155,7 +141,7 @@ public class DatastoreServiceCrud<T, I> implements Crud<T, I> {
 		return parse(entity);
 	}
 
-	private Entity loadEntity(I id) {
+	protected Entity loadEntity(I id) {
 		Entity result;
 
 		try {
@@ -186,23 +172,46 @@ public class DatastoreServiceCrud<T, I> implements Crud<T, I> {
 		}
 	}
 
-	private String getKind() {
+	protected String getKind() {
 		return getBeanClass().getSimpleName();
 	}
 
-	private Key createKey(I id) {
+	protected Key createKey(I id) {
 		return KeyFactory.createKey(getKind(), (Long) id);
 	}
 
-	private T parse(Entity entity) {
+	private Field getIdField() {
+		if (this.idField == null) {
+			for (Field field : Reflections.getNonStaticDeclaredFields(getBeanClass())) {
+				if (field.getName().equals("id")) {
+					this.idField = field;
+					break;
+				}
+			}
+			
+			validateIdField(this.idField);
+		}
+
+		return this.idField;
+	}
+	
+	private static void validateIdField(Field idField) {
+		
+	}
+
+	protected T parse(Entity entity) {
 		T result = null;
 
 		if (entity != null) {
 			result = newBeanClassInstance();
+			Key key;
 
 			for (Field field : Reflections.getNonStaticDeclaredFields(result.getClass())) {
+				key = entity.getKey();
+
 				if (field.equals(getIdField())) {
-					Reflections.setFieldValue(field, result, entity.getKey().getId());
+					Reflections.setFieldValue(field, result, isStringId() ? key.getName() : key.getId());
+
 				} else {
 					Reflections.setFieldValue(field, result, entity.getProperty(field.getName()));
 				}
@@ -212,7 +221,11 @@ public class DatastoreServiceCrud<T, I> implements Crud<T, I> {
 		return result;
 	}
 
-	private boolean setProperty(Entity entity, String property, Object value) {
+	private boolean isStringId() {
+		return getIdField().getType() == String.class;
+	}
+
+	protected boolean setProperty(Entity entity, String property, Object value) {
 		boolean updated = false;
 
 		Object currentValue = entity.getProperty(property);
