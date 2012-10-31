@@ -112,6 +112,6 @@
 
 	<properties>
 		<demoiselle.framework.version>2.3.0-RC3</demoiselle.framework.version>
-		<appengine.version>1.7.2</appengine.version>
+		<appengine.version>1.7.3</appengine.version>
 	</properties>
 </project>
