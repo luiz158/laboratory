@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding="utf-8"?>
+<authorgroup xmlns="http://docbook.org/ns/docbook" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd" version="5.0" xml:lang="pt-br">
+
+	<author>
+		<personname>Emerson Saito</personname>
+		<email>emerson.saito@serpro.gov.br</email>
+	</author>
+
+	<author>
+		<personname>Reinaldo Gil Lima de Carvalho</personname>
+		<email>reinaldoc@gmail.com</email>
+	</author>
+
+</authorgroup>
