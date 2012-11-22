@@ -116,7 +116,7 @@ public class CheckerHandler {
 	protected Collection<Method> getMethodsToSchedule() {
 		
 		final Collection<Method> list = new ArrayList<Method>();
-		final Class<?> clazz = this.checker.getClass().getSuperclass();
+		final Class<?> clazz = this.checker.getClass()/*.getSuperclass()*/;
 		
 		for (Method method : clazz.getDeclaredMethods()) {
 			if (method.isAnnotationPresent(Scheduled.class)) {
