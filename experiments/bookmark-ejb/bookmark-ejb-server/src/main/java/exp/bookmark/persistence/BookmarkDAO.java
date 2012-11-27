@@ -1,9 +1,5 @@
 package exp.bookmark.persistence;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
-
 import br.gov.frameworkdemoiselle.stereotype.PersistenceController;
 import br.gov.frameworkdemoiselle.template.JPACrud;
 import exp.bookmark.domain.Bookmark;
@@ -13,11 +9,11 @@ public class BookmarkDAO extends JPACrud<Bookmark, Long> {
 
 	private static final long serialVersionUID = 1L;
 
-	@PersistenceContext(type = PersistenceContextType.EXTENDED)
-	private EntityManager entityManager;
-
-	@Override
-	protected EntityManager getEntityManager() {
-		return entityManager;
-	}
+	// @PersistenceContext(type = PersistenceContextType.EXTENDED)
+	// private EntityManager entityManager;
+	//
+	// @Override
+	// protected EntityManager getEntityManager() {
+	// return entityManager;
+	// }
 }
