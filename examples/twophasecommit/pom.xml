@@ -50,7 +50,7 @@
 	<parent>
 		<groupId>br.gov.frameworkdemoiselle</groupId>
 		<artifactId>demoiselle-jsf-parent</artifactId>
-		<version>2.3.0-RC3</version>
+		<version>2.3.0</version>
 	</parent>
 
 	<dependencies>
@@ -78,7 +78,7 @@
 			<groupId>br.gov.frameworkdemoiselle.component</groupId>
 			<artifactId>demoiselle-junit</artifactId>
 			<scope>test</scope>
-			<version>2.3.0-RC1</version>
+			<version>2.3.0</version>
 		</dependency>
 	</dependencies>
 

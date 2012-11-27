@@ -49,11 +49,12 @@ public class BookDAO extends JPACrud<Book, Long> {
 
 	private static final long serialVersionUID = 1L;
 	
-	@Inject @Name("database1-ds")
+	@Inject
 	private EntityManager em;
 	
 	@Override
 	protected EntityManager getEntityManager() {
 		return this.em;
 	}
+	
 }

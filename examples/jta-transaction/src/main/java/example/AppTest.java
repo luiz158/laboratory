@@ -41,7 +41,7 @@ import javax.validation.ValidationException;
 
 import org.slf4j.Logger;
 
-import br.gov.frameworkdemoiselle.annotation.Startup;
+import br.gov.frameworkdemoiselle.lifecycle.Startup;
 import br.gov.frameworkdemoiselle.transaction.Transaction;
 import br.gov.frameworkdemoiselle.transaction.TransactionContext;
 
@@ -67,7 +67,6 @@ public class AppTest {
 		manager.insert(person1, person2);
 
 		if (!manager.contains("Alberto Santos Dumont") || !(manager.contains("Orville Wright"))) {
-			//System.out.println("atomicInsertSuccessful() failed");
 			logger.info("atomicInsertSuccessful() failed");
 		}
 	}
@@ -88,7 +87,6 @@ public class AppTest {
 		}
 
 		if (!Long.valueOf(1).equals(manager.count())) {
-			//System.out.println("automaticPartialRollback() failed");
 			logger.info("automaticPartialRollback() failed");
 		}
 		
@@ -109,7 +107,6 @@ public class AppTest {
 		}
 
 		if (!Long.valueOf(0).equals(manager.count())) {
-			//System.out.println("automaticPartialRollback() failed");
 			logger.info("automaticFullRollback() failed");
 		}
 	}
@@ -137,6 +134,8 @@ public class AppTest {
 	
 	@Startup
 	public void manualFullRollback() {
+		manager.clean();
+		
 		Person person1 = new Person("Alberto Santos Dumont");
 		Person person2 = new Person("Orville Wright");
 
