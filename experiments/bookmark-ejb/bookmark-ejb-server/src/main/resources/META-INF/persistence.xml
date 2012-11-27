@@ -4,7 +4,6 @@
 
 	<!-- If you are using JBoss AS7 with non JTA transaction then use this persistence-unit -->
 	<!--
-	-->
 	<persistence-unit name="bookmark-ds" transaction-type="RESOURCE_LOCAL">
 		<non-jta-data-source>java:jboss/datasources/ExampleDS</non-jta-data-source>
 
@@ -16,9 +15,11 @@
 			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
 		</properties>
 	</persistence-unit>
+	-->
 
 	<!-- If you are using JBoss AS7 with JTA transaction then use this persistence-unit -->
 	<!--
+	-->
 	<persistence-unit name="bookmark-ds" transaction-type="JTA">
 		<jta-data-source>java:jboss/datasources/ExampleDS</jta-data-source>
 		
@@ -31,7 +32,6 @@
 			<property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.JBossAppServerJtaPlatform" />
 		</properties>
 	</persistence-unit>
-	-->
 
 	<!-- If you are using JBoss AS6 with non JTA transaction then use this persistence-unit -->
 	<!--

@@ -16,23 +16,22 @@
 	<parent>
 		<groupId>br.gov.frameworkdemoiselle</groupId>
 		<artifactId>demoiselle-jsf-parent</artifactId>
-		<version>2.3.0</version>
+		<version>2.3.1-SNAPSHOT</version>
 	</parent>
 
 	<dependencies>
 		<dependency>
-			<groupId>br.gov.frameworkdemoiselle</groupId>
-			<artifactId>demoiselle-jpa</artifactId>
-			<scope>compile</scope>
+			<groupId>exp</groupId>
+			<artifactId>bookmark-ejb-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-		<!-- If you are using a JTA transaction then use this extension -->
-		<!--
+	
 		<dependency>
 		    <groupId>br.gov.frameworkdemoiselle</groupId>
 		    <artifactId>demoiselle-jta</artifactId>
 		    <scope>compile</scope>
 		</dependency>
-		-->
+
 		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>

@@ -1,8 +1,8 @@
-package exp.bookmark.domain;
+package exp.bookmark.service;
 
 import java.io.Serializable;
 
-public class Bookmark implements Serializable {
+public class BookmarkEJB implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -12,11 +12,11 @@ public class Bookmark implements Serializable {
 
 	private String link;
 
-	public Bookmark() {
+	public BookmarkEJB() {
 		super();
 	}
 
-	public Bookmark(String description, String link) {
+	public BookmarkEJB(String description, String link) {
 		this.description = description;
 		this.link = link;
 	}
