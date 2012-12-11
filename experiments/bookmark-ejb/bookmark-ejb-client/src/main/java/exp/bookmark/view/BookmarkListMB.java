@@ -5,12 +5,13 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+
 import br.gov.frameworkdemoiselle.annotation.NextView;
 import br.gov.frameworkdemoiselle.annotation.PreviousView;
 import br.gov.frameworkdemoiselle.stereotype.ViewController;
 import br.gov.frameworkdemoiselle.template.AbstractListPageBean;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
-
 import exp.bookmark.business.BookmarkBC;
 import exp.bookmark.domain.Bookmark;
 
@@ -24,8 +25,18 @@ public class BookmarkListMB extends AbstractListPageBean<Bookmark, Long> {
 	@Inject
 	private BookmarkBC bc;
 
+	@Inject
+	private Logger logger;
+
 	@Override
 	protected List<Bookmark> handleResultList() {
+
+		logger.trace("trace");
+		logger.debug("debug");
+		logger.info("info");
+		logger.warn("warn");
+		logger.error("error");
+
 		return this.bc.findAll();
 	}
 

@@ -22,7 +22,9 @@
 				</p:toolbarGroup>
 			</p:toolbar>
 
-			<p:dataTable id="list" var="bean" value="#{bookmarkListMB.resultList}">
+			<p:dataTable id="list" var="bean" value="#{bookmarkListMB.resultList}" paginator="true" rows="10"  
+                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                 rowsPerPageTemplate="5,10,15">
 				<f:facet name="header">#{messages['bookmark.list.table.title']}</f:facet>
 				<p:column style="width:5%;">
 					<h:selectBooleanCheckbox value="#{bookmarkListMB.selection[bean.id]}" />
