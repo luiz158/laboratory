@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import br.gov.frameworkdemoiselle.annotation.Startup;
+import br.gov.frameworkdemoiselle.lifecycle.Startup;
 import br.gov.frameworkdemoiselle.stereotype.BusinessController;
 
 @BusinessController

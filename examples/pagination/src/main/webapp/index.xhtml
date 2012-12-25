@@ -16,7 +16,7 @@
 				<tr valign="top">
 					<td>
 						<p:dataTable id="list" var="bean"
-							value="#{bookmarkMB.dataModel}" lazy="false" paginator="true"
+							value="#{bookmarkMB.dataModel}" lazy="true" paginator="true"
 							rows="5" pageLinks="4" first="1">
 							<f:facet name="header">Lista de links</f:facet>
 							<p:column style="width:5%;" sortBy="#{bean.id}">
