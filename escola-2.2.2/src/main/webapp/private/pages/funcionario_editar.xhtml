@@ -1,0 +1,59 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets" template="/public/templates/default.xhtml">
+
+	<ui:define name="body">
+		<h:form prependId="false" acceptcharset="ISO-8859-1">
+			<p:toolbar>
+				<p:toolbarGroup align="left">
+					<p:commandButton value="#{messages['button.save']}" action="#{funcionarioEditMB.insert}"
+						rendered="#{!funcionarioEditMB.updateMode}" ajax="false" />
+					<p:commandButton value="#{messages['button.save']}" action="#{funcionarioEditMB.update}"
+						rendered="#{funcionarioEditMB.updateMode}" ajax="false" />
+						
+					<p:commandButton value="#{messages['button.delete']}" onclick="confirmation.show()"
+						rendered="#{funcionarioEditMB.updateMode}" type="button" immediate="true" ajax="false" />
+						
+					<p:confirmDialog message="#{messages['label.confirm.delete']}" showEffect="bounce" hideEffect="explode"
+						header="#{messages['label.dialog.delete']}" severity="alert" widgetVar="confirmation">
+						<h:commandButton value="#{messages['button.dialog.yes']}" action="#{funcionarioEditMB.delete}" immediate="true"
+							actionListener="#{funcionarioListMB.clear}" ajax="false" />
+						<h:commandButton value="#{messages['button.dialog.no']}" onclick="confirmation.hide()" type="button" />
+					</p:confirmDialog>
+				</p:toolbarGroup>
+			</p:toolbar>
+			
+			<br/>
+		
+			<p:fieldset legend="#{messages['funcionario.label']}" toggleable="false" toggleSpeed="500">
+				<h:panelGrid columns="2">
+					<h:panelGrid id="fields" columns="6">
+					
+						<h:outputLabel value="#{messages['funcionario.label.id']}: " for="id" styleClass="text-input" />
+						<h:outputText id="id" value="#{funcionarioEditMB.bean.id}" />
+						<p:message for="id" />
+						
+						<h:outputLabel value="" />
+						<h:outputLabel value="" />
+						<h:outputLabel value="" />
+						
+						<h:outputLabel value="#{messages['funcionario.label.nome']}: " for="nome" styleClass="text-input" />
+						<h:inputText id="nome" value="#{funcionarioEditMB.bean.nome}" title="#{messages['funcionario.alt.nome']}" style="width:250px;" />
+						<p:message for="nome" />
+						
+						<h:outputLabel value="#{messages['funcionario.label.nascimento']}: " for="nascimento" styleClass="text-input" />
+						<p:calendar id="nascimento" value="#{funcionarioEditMB.bean.nascimento}" title="#{messages['funcionario.alt.nascimento']}" pattern="dd/MM/yyyy" style="width:250px;"/> 
+						<p:message for="nascimento" />
+						
+						<h:outputLabel value="#{messages['funcionario.label.lotacao']}: " for="lotacao" styleClass="text-input" />
+						<h:inputText id="lotacao" value="#{funcionarioEditMB.bean.lotacao}" title="#{messages['funcionario.alt.lotacao']}" style="width:250px;"/> 
+						<p:message for="lotacao" />
+						
+					</h:panelGrid>
+				</h:panelGrid>
+			</p:fieldset>
+			
+		</h:form>
+		
+	</ui:define>
+</ui:composition>

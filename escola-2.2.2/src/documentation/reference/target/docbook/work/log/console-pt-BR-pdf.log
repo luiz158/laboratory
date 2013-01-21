@@ -1,0 +1,7 @@
+2157 [main] INFO org.jboss.jdocbook.render.fop.FopConfigHelper - creating FOP user-config DOM
+21/12/2012 15:09:05 org.apache.fop.events.LoggingEventListener processEvent
+WARNING: Font "Symbol,normal,700" not found. Substituting with "Symbol,normal,400".
+21/12/2012 15:09:05 org.apache.fop.events.LoggingEventListener processEvent
+WARNING: Font "ZapfDingbats,normal,700" not found. Substituting with "ZapfDingbats,normal,400".
+21/12/2012 15:09:05 org.apache.fop.hyphenation.Hyphenator getHyphenationTree
+SEVERE: Couldn't find hyphenation pattern pt_br

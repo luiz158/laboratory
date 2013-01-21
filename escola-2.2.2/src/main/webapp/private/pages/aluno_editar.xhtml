@@ -1,0 +1,286 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets" template="/public/templates/default.xhtml">
+
+	<ui:define name="body">
+		<h:form prependId="false" enctype="multipart/form-data" acceptcharset="ISO-8859-1">
+			<p:toolbar>
+				<p:toolbarGroup align="left">
+					<p:commandButton value="#{messages['button.save']}" action="#{alunoEditMB.insert}"
+						rendered="#{!alunoEditMB.updateMode}" ajax="false" />
+					<p:commandButton value="#{messages['button.save']}" action="#{alunoEditMB.update}"
+						rendered="#{alunoEditMB.updateMode}" ajax="false" />
+						
+					<p:commandButton value="#{messages['button.delete']}" onclick="confirmation.show()"
+						rendered="#{alunoEditMB.updateMode}" type="button" immediate="true" ajax="false" />
+						
+					<p:confirmDialog message="#{messages['label.confirm.delete']}" showEffect="bounce" hideEffect="explode"
+						header="#{messages['label.dialog.delete']}" severity="alert" widgetVar="confirmation">
+						<h:commandButton value="#{messages['button.dialog.yes']}" action="#{alunoEditMB.delete}" immediate="true"
+							actionListener="#{alunoListMB.clear}" ajax="false" />
+						<h:commandButton value="#{messages['button.dialog.no']}" onclick="confirmation.hide()" type="button" />
+					</p:confirmDialog>
+				</p:toolbarGroup>
+			</p:toolbar>
+			
+			<br/>
+		
+			<p:fieldset legend="#{messages['aluno.label']}" toggleable="false" toggleSpeed="500">
+				<h:panelGrid columns="2">
+					<h:panelGrid id="fields" columns="6">
+					
+						<h:outputLabel value="#{messages['aluno.label.id']}: " for="id" styleClass="text-input" />
+						<h:outputText id="id" value="#{alunoEditMB.bean.id}" />
+						<p:message for="id" />
+						
+						<h:outputLabel value="" />
+						<h:outputLabel value="" />
+						<h:outputLabel value="" />
+	
+						<h:outputLabel value="#{messages['aluno.label.nome']}: " for="nome" styleClass="text-input" />
+						<h:inputText id="nome" value="#{alunoEditMB.bean.nome}" title="#{messages['aluno.alt.nome']}" style="width:250px;" />
+						<p:message for="nome" />
+						
+						<h:outputLabel value="#{messages['aluno.label.nascimento']}: " for="nascimento" styleClass="text-input" />
+						<p:calendar id="nascimento" value="#{alunoEditMB.bean.nascimento}" title="#{messages['aluno.alt.nascimento']}" pattern="dd/MM/yyyy" style="width:250px;"/> 
+						<p:message for="nascimento" />
+						
+						<h:outputLabel value="#{messages['aluno.label.pai']}: " for="pai" styleClass="text-input" />
+						<h:inputText id="pai" value="#{alunoEditMB.bean.pai}" title="#{messages['aluno.alt.pai']}" style="width:250px;"/> 
+						<p:message for="pai" />
+						
+						<h:outputLabel value="#{messages['aluno.label.mae']}: " for="mae" styleClass="text-input" />
+						<h:inputText id="mae" value="#{alunoEditMB.bean.mae}" title="#{messages['aluno.alt.mae']}" style="width:250px;"/> 
+						<p:message for="mae" />
+						
+						<h:outputLabel value="#{messages['usuario.label.cpf']}: " for="cpf" styleClass="text-input"/>
+						<h:inputText id="cpf" value="#{alunoEditMB.usuario.cpf}" title="#{messages['usuario.alt.cpf']}" style="width:250px;"/> 
+						<p:message for="cpf" />
+						
+						<h:outputLabel value="#{messages['usuario.label.login']}: " for="login" styleClass="text-input" />
+						<h:inputText id="login" value="#{alunoEditMB.usuario.login}" title="#{messages['usuario.alt.login']}" style="width:250px;"/> 
+						<p:message for="login" />
+						
+						<h:outputLabel value="#{messages['usuario.label.senha']}: " for="senha" styleClass="text-input" />
+						<h:inputSecret id="senha" value="#{alunoEditMB.usuario.senha}" title="#{messages['usuario.alt.senha']}" style="width:250px;"/>
+						<p:message for="senha" />
+	
+					</h:panelGrid>
+					<h:panelGrid id="photo" columns="3" rendered="#{alunoEditMB.updateMode}">
+			
+						<p:graphicImage  id="fotoImagem" value="#{alunoEditMB.foto}" style="width: 150px; height: 150px"/>
+							
+						<p:fileUpload id="fotoUpload" fileUploadListener="#{alunoEditMB.upload}" mode="advance" sizeLimit="1000000"
+									  update="messagesUpload, fotoImagem" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" label="Foto" fileLimit="1" showButtons="false" />
+									  
+						<p:growl id="messagesUpload" showDetail="true"/>  
+						<p:message for="fotoUpload" />
+						
+					</h:panelGrid>
+				</h:panelGrid>
+			</p:fieldset>
+			
+		</h:form>
+		
+		<br/>
+		
+		<h:form prependId="false">
+			<p:tabView id="tabView" rendered="#{alunoEditMB.updateMode}">	
+		
+			
+				<p:tab id="tabEnderecos" title="#{messages['endereco.tab.title']}">
+					
+					<h:panelGrid columns="2">
+						<h:panelGrid columns="9">
+							
+							<h:outputLabel value="#{messages['endereco.label.logradouro']}: " for="logradouro" styleClass="text-input" />
+							<h:inputText id="logradouro" value="#{alunoEditMB.detalheEndereco.logradouro}" />
+							<p:message for="logradouro" />
+							
+							<h:outputLabel value="#{messages['endereco.label.numero']}: " for="numero" styleClass="text-input" />
+							<h:inputText id="numero" value="#{alunoEditMB.detalheEndereco.numero}" />
+							<p:message for="numero" />
+							
+							<h:outputLabel value="#{messages['endereco.label.complemento']}: " for="complemento" styleClass="text-input" />
+							<h:inputText id="complemento" value="#{alunoEditMB.detalheEndereco.complemento}" />
+							<p:message for="complemento" />
+							
+							<h:outputLabel value="#{messages['endereco.label.bairro']}: " for="bairro" styleClass="text-input" />
+							<h:inputText id="bairro" value="#{alunoEditMB.detalheEndereco.bairro}" />
+							<p:message for="bairro" />
+							
+							<h:outputLabel value="#{messages['endereco.label.municipio']}: " for="municipio" styleClass="text-input" />
+							<h:inputText id="municipio" value="#{alunoEditMB.detalheEndereco.municipio}" />
+							<p:message for="municipio" />
+							
+							<h:outputLabel value="#{messages['endereco.label.cep']}: " for="cep" styleClass="text-input" />
+							<h:inputText id="cep" value="#{alunoEditMB.detalheEndereco.cep}" />
+							<p:message for="cep" />
+							
+						</h:panelGrid>
+						
+						<h:panelGrid columns="1">
+							<p:commandButton value="#{messages['button.edit']}" action="#{alunoEditMB.alterarEndereco}" rendered="#{alunoEditMB.detalheEndereco.id != null}" ajax="false"/>
+							<p:commandButton value="#{messages['button.add.new']}" action="#{alunoEditMB.incluirEndereco}" rendered="#{alunoEditMB.detalheEndereco.id == null}" ajax="false"/>
+						</h:panelGrid>
+					</h:panelGrid>
+					
+					<p:dataTable id="listEnderecos" var="endereco" value="#{alunoEditMB.bean.listaEndereco}">
+						
+						<p:column style="width:5%;" sortBy="#{endereco.logradouro}">
+							<f:facet name="header">#{messages['endereco.label.logradouro']}</f:facet>
+							<h:outputText value="#{endereco.logradouro}" />
+						</p:column>
+						<p:column sortBy="#{endereco.numero}">
+							<f:facet name="header">#{messages['endereco.label.numero']}</f:facet>
+							<h:outputText value="#{endereco.numero}" />
+						</p:column>
+						<p:column sortBy="#{endereco.complemento}">
+							<f:facet name="header">#{messages['endereco.label.complemento']}</f:facet>
+							<h:outputText value="#{endereco.complemento}" />
+						</p:column>
+						<p:column sortBy="#{endereco.bairro}">
+							<f:facet name="header">#{messages['endereco.label.bairro']}</f:facet>
+							<h:outputText value="#{endereco.bairro}" />
+						</p:column>
+						<p:column sortBy="#{endereco.municipio}">
+							<f:facet name="header">#{messages['endereco.label.municipio']}</f:facet>
+							<h:outputText value="#{endereco.municipio}" />
+						</p:column>
+						<p:column sortBy="#{endereco.cep}">
+							<f:facet name="header">#{messages['endereco.label.cep']}</f:facet>
+							<h:outputText value="#{endereco.cep}" />
+						</p:column>
+						
+						<p:column>
+							<f:facet name="header"></f:facet>
+							<p:commandButton action="#{alunoEditMB.removerEndereco(endereco)}" value="#{messages['button.delete']}" ajax="false"/>
+							<p:commandButton action="#{alunoEditMB.setDetalheEndereco(endereco)}" value="#{messages['button.edit']}" ajax="false"/>
+						</p:column>
+					</p:dataTable>
+						
+				</p:tab>
+	
+				<p:tab id="tabTelefones" title="#{messages['telefone.tab.title']}">
+				
+					<h:panelGrid columns="2">
+						<h:panelGrid columns="6">
+							
+							<h:outputLabel value="#{messages['telefone.label.numero']}: " for="telNumero"/>
+							<h:inputText id="telNumero" value="#{alunoEditMB.detalheTelefone.numero}" />
+							<p:message for="telNumero" />
+							
+							<h:outputLabel value="#{messages['telefone.label.tipo']}: " for="telTipo" />
+							
+							<h:selectOneMenu id="telefone_tipo" value="#{alunoEditMB.detalheTelefone.tipo}" title="Selecione o tipo do telefone">
+								<f:selectItem itemLabel="" itemValue="" />
+								<f:selectItem itemLabel="Residencial" itemValue="Residencial" />
+								<f:selectItem itemLabel="Comercial" itemValue="Comercial" />
+								<f:selectItem itemLabel="Celular" itemValue="Celular" />
+							</h:selectOneMenu>
+							
+							<p:message for="telefone_tipo" />
+							
+						</h:panelGrid>
+						
+						<h:panelGrid columns="1">
+							<p:commandButton value="#{messages['button.edit']}" action="#{alunoEditMB.alterarTelefone}" rendered="#{alunoEditMB.detalheTelefone.id != null}" ajax="false"/>
+							<p:commandButton value="#{messages['button.add.new']}" action="#{alunoEditMB.incluirTelefone}" rendered="#{alunoEditMB.detalheTelefone.id == null}" ajax="false"/>
+						</h:panelGrid>
+						
+					</h:panelGrid>
+					
+					<p:dataTable id="listTelefones" var="telefone" value="#{alunoEditMB.bean.listaTelefone}">
+						
+						<p:column style="width:25%;" sortBy="#{telefone.numero}">
+							<f:facet name="header">#{messages['telefone.label.numero']}</f:facet>
+							<h:outputText value="#{telefone.numero}" />
+						</p:column>
+						
+						<p:column style="width:25%;" sortBy="#{telefone.tipo}">
+							<f:facet name="header">#{messages['telefone.label.tipo']}</f:facet>
+							<h:outputText value="#{telefone.tipo}" />
+						</p:column>
+						
+						<p:column style="width:50%;">
+							<f:facet name="header"></f:facet>
+							<p:commandButton action="#{alunoEditMB.removerTelefone(telefone)}" value="#{messages['button.delete']}" ajax="false"/>
+							<p:commandButton action="#{alunoEditMB.setDetalheTelefone(telefone)}" value="#{messages['button.edit']}" ajax="false"/>
+						</p:column>
+						
+					</p:dataTable>
+					
+				</p:tab>
+				
+				<p:tab id="tabEmails" title="#{messages['email.tab.title']}">
+				
+					<h:panelGrid columns="2">
+						<h:panelGrid columns="3">
+							
+							<h:outputLabel value="#{messages['email.label.endereco']}: " for="email"/>
+							<h:inputText id="email" value="#{alunoEditMB.detalheEmail.endereco}" />
+							<p:message for="email" />
+							
+						</h:panelGrid>
+						
+						<h:panelGrid columns="2">
+							<p:commandButton value="#{messages['button.edit']}" action="#{alunoEditMB.alterarEmail}" rendered="#{alunoEditMB.detalheEmail.id != null}" ajax="false"/>
+							<p:commandButton value="#{messages['button.add.new']}" action="#{alunoEditMB.incluirEmail}" rendered="#{alunoEditMB.detalheEmail.id == null}" ajax="false"/>
+						</h:panelGrid>
+					</h:panelGrid>
+					
+					<p:dataTable id="listEmails" var="email" value="#{alunoEditMB.bean.listaEmail}">
+						
+						<p:column style="width:50%;" sortBy="#{email.endereco}">
+							<f:facet name="header">#{messages['email.label.endereco']}</f:facet>
+							<h:outputText value="#{email.endereco}" />
+						</p:column>
+						
+						<p:column style="width:50%;">
+							<f:facet name="header"></f:facet>
+							<p:commandButton action="#{alunoEditMB.removerEmail(email)}" value="#{messages['button.delete']}" ajax="false"/>
+							<p:commandButton action="#{alunoEditMB.setDetalheEmail(email)}" value="#{messages['button.edit']}" ajax="false"/>
+						</p:column>
+						
+					</p:dataTable>
+					
+				</p:tab>
+				
+					
+				<p:tab id="tabTurma" title="#{messages['turma.tab.title']}">
+					
+					<h:panelGrid columns="2">
+						<h:panelGrid columns="3">
+						
+							<h:outputLabel value="#{messages['turma.label.nome']}: " for="turmaNome" styleClass="text-input" />
+							<h:selectOneMenu id="turmaNome" value="#{alunoEditMB.detalheTurma.id}">
+								<f:selectItem itemLabel="" itemValue=""/>
+								<f:selectItems value="#{turmaListMB.listaTurmas}" var="turma" itemLabel="#{turma.nome}" itemValue="#{turma.id}"/>
+							</h:selectOneMenu>
+							<p:message for="turmaNome" />
+							
+						</h:panelGrid>
+						
+						<h:panelGrid columns="1">
+							<p:commandButton value="#{messages['button.add.new']}" action="#{alunoEditMB.incluirTurma}" ajax="false" />
+						</h:panelGrid>
+						
+					</h:panelGrid>
+					
+					<p:dataTable id="listTurmas" var="turma" value="#{alunoEditMB.bean.listaTurma}">
+						
+						<p:column style="width:50%;" sortBy="#{turma.nome}">
+							<f:facet name="header">#{messages['turma.label.nome']}</f:facet>
+							<h:outputText value="#{turma.nome}" />
+						</p:column>
+						<p:column style="width:50%;">
+							<f:facet name="header"></f:facet>
+							<p:commandButton action="#{alunoEditMB.removerTurma(turma)}" value="#{messages['button.delete']}" ajax="false"/>
+						</p:column>
+					</p:dataTable>
+				
+				</p:tab>
+			</p:tabView>
+		</h:form>	
+	</ui:define>
+</ui:composition>

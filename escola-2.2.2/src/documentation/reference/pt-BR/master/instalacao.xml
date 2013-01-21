@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding="utf-8"?>
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd" version="5.0" xml:lang="pt-br">
+
+	<title>Instalação</title>
+	<para>
+		No [https://github.com/demoiselle/example/escola] do projeto existem tutoriais disponíveis
+		Requisitos: Eclipse configurado com os plugins Aspectj, Maven e um cliente SVN.
+		Baixe o projeto no repositório:
+		
+		<note>
+			https://github.com/demoiselle/example/escola 
+		</note>
+	</para>
+
+	<section>
+		<title>Configuração</title>
+		<para> descrever </para>
+	</section>
+
+</chapter>

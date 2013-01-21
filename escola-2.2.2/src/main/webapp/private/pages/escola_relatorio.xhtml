@@ -1,0 +1,41 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets" template="/public/templates/default.xhtml">
+
+	<ui:define name="body">
+		<h:form>
+			<p:panelGrid columns="3">
+				<h:outputLabel value="#{messages['relatorio.alunos']}" />
+				
+				<h:commandLink value="#{messages['relatorio.pdf']}" action="#{escolaMB.gerarRelatorio}">
+					<f:param name="ReportName" value="relatorio_aluno_pdf" />
+				</h:commandLink>
+
+				<h:commandLink value="#{messages['relatorio.odf']}" action="#{escolaMB.gerarRelatorio}">
+					<f:param name="ReportName" value="relatorio_aluno_odt" />
+				</h:commandLink>
+
+				<h:outputLabel value="#{messages['relatorio.turmas']}" />
+				
+				<h:commandLink value="#{messages['relatorio.pdf']}" action="#{escolaMB.gerarRelatorio}">
+					<f:param name="ReportName" value="relatorio_turma_pdf" />
+				</h:commandLink>
+
+				<h:commandLink value="#{messages['relatorio.odf']}" action="#{escolaMB.gerarRelatorio}">
+					<f:param name="ReportName" value="relatorio_turma_odt" />
+				</h:commandLink>
+
+				<h:outputLabel value="#{messages['relatorio.professores']}" />
+				
+				<h:commandLink value="#{messages['relatorio.pdf']}" action="#{escolaMB.gerarRelatorio}">
+					<f:param name="ReportName" value="relatorio_professor_pdf" />
+				</h:commandLink>
+
+				<h:commandLink value="#{messages['relatorio.odf']}" action="#{escolaMB.gerarRelatorio}">
+					<f:param name="ReportName" value="relatorio_professor_odt" />
+				</h:commandLink>
+
+			</p:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
