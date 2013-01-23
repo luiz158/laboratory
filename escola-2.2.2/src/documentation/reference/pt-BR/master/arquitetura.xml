@@ -2,17 +2,18 @@
 <chapter xmlns="http://docbook.org/ns/docbook" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd" version="5.0" xml:lang="pt-br">
 
-	<title>Arquitetura de Referência</title>
-	<para></para>
-
-	<section>
-		<title>Arquitetura</title>
-		<para>A arquitetura da aplicação escola é referencia a arquitetura do Framework Demoiselle.</para>
-	</section>
+	<title>Caso de Uso</title>
 	
 	<section>
 		<title>Caso de Uso</title>
-		<para>A arquitetura da aplicação escola é referencia a arquitetura do Framework Demoiselle.</para>
+		<mediaobject>
+     		<imageobject role="html">
+       			<imagedata fileref="images/casodeuso.png"/>
+      		</imageobject>
+      		<imageobject role="fo">
+       			<imagedata fileref="images/casodeuso.png" scale="70"/>
+      		</imageobject>
+     	</mediaobject>
 	</section>
 
 </chapter>

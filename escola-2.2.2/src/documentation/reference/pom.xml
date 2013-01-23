@@ -46,7 +46,7 @@ ou escreva para a Fundação do Software Livre (FSF) Inc.,
 	<parent>
 		<groupId>br.gov.frameworkdemoiselle</groupId>
 		<artifactId>demoiselle-documentation-parent</artifactId>
-		<version>2</version>
+		<version>8</version>
 	</parent>
 
 	<name>Reference Documentation</name>

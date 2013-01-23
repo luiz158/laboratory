@@ -23,6 +23,7 @@
 
 	<!-- capítulos -->
 	<xi:include href="master/instalacao.xml" />
+	<xi:include href="master/funcionalidades.xml" />
 	<xi:include href="master/arquitetura.xml" />
 	<xi:include href="master/camadas.xml" />
 

@@ -7,14 +7,39 @@
 
 	<section>
 		<title>Camada de Persistência</title>
+		<mediaobject>
+			<imageobject role="html">
+	      		<imagedata fileref="images/persistence.png"/>
+	     	</imageobject>
+	     	<imageobject role="fo">
+	      		<imagedata fileref="images/persistence.png" scale="70"/>
+	     	</imageobject>
+	     </mediaobject>
+	     
 	</section>
 	
 	<section>
 		<title>Camada de Negócio</title>
+		<mediaobject>
+			<imageobject role="html">
+	      		<imagedata fileref="images/business.png"/>
+	     	</imageobject>
+	     	<imageobject role="fo">
+	      		<imagedata fileref="images/business.png" scale="70"/>
+	     	</imageobject>
+	     </mediaobject>
 	</section>
 	
 	<section>
 		<title>Camada de Visão</title>
+		<mediaobject>
+			<imageobject role="html">
+	      		<imagedata fileref="images/view.png"/>
+	     	</imageobject>
+	     	<imageobject role="fo">
+	      		<imagedata fileref="images/view.png" scale="70"/>
+	     	</imageobject>
+	     </mediaobject>
 	</section>
 	
 </chapter>
