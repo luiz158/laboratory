@@ -7,6 +7,6 @@
 		<class>br.gov.demoiselle.escola.security.Autenticador</class>
 		<class>br.gov.demoiselle.escola.security.Autorizador</class>
 		
-		<!-- <class>br.gov.demoiselle.escola.persistence.dao.FuncionarioDAOJDBC</class> -->
+		<class>br.gov.demoiselle.escola.persistence.FuncionarioDAOJDBC</class>
 	</alternatives>
 </beans>

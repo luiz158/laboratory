@@ -1,10 +1,11 @@
 package br.gov.demoiselle.escola.util;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 
 import javax.inject.Inject;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
 
 import br.gov.demoiselle.escola.config.JDBCConfig;
 import br.gov.demoiselle.escola.exception.EscolaException;
@@ -30,21 +31,15 @@ public class JDBCUtil {
 	private Connection openConnectionURL() {
 		Connection connection = null;
 
-		if (connection == null && jdbcConfig.getUrl() != null) {
-			try {
-				Class.forName(jdbcConfig.getDriver());
-				if (jdbcConfig.getUser() != null && jdbcConfig.getUser().length() > 0 
-						&& jdbcConfig.getPass() != null && jdbcConfig.getPass().length() > 0)
-					connection = DriverManager.getConnection(jdbcConfig.getUrl(), jdbcConfig.getUser(), jdbcConfig.getPass());
-				else
-					connection = DriverManager.getConnection(jdbcConfig.getUrl());
-			} 
-			catch(SQLException ex) {
-				throw new EscolaException(new DefaultMessage("Error on open JDBC connection.", ex));
-			} 
-			catch(ClassNotFoundException ex) {
-				throw new EscolaException(new DefaultMessage("Without class driver.", ex));
-			} 
+		try{
+			Context initCtx = new InitialContext();
+	
+			DataSource dataSource = (DataSource) initCtx.lookup(jdbcConfig.getJndi());
+		
+			connection = dataSource.getConnection();
+		}
+		catch(Exception e){
+			throw new EscolaException(new DefaultMessage(e.getMessage(), e));
 		}
 		
 		return connection;

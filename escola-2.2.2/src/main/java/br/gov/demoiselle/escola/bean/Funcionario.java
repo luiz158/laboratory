@@ -56,7 +56,7 @@ public class Funcionario implements Serializable{
 	@Temporal(value=TemporalType.DATE)
 	private Date nascimento;
 
-	@Column(name="lotacao", length=30)
+	@Column(name="lotacao", length=35)
 	private String lotacao;
 		
 	public Funcionario(long id, String nome, Date nascimento, String lotacao) {
