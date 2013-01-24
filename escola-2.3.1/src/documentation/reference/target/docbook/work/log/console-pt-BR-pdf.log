@@ -1,0 +1,15 @@
+2277 [main] INFO org.jboss.jdocbook.render.fop.FopConfigHelper - creating FOP user-config DOM
+24/01/2013 14:48:33 org.apache.fop.events.LoggingEventListener processEvent
+WARNING: Font "Symbol,normal,700" not found. Substituting with "Symbol,normal,400".
+24/01/2013 14:48:33 org.apache.fop.events.LoggingEventListener processEvent
+WARNING: Font "ZapfDingbats,normal,700" not found. Substituting with "ZapfDingbats,normal,400".
+24/01/2013 14:48:33 org.apache.fop.hyphenation.Hyphenator getHyphenationTree
+SEVERE: Couldn't find hyphenation pattern pt_br
+24/01/2013 14:48:35 org.apache.fop.events.LoggingEventListener processEvent
+WARNING: Line 1 of a paragraph overflows the available area by more than 50 points. (See position -1:-1)
+24/01/2013 14:48:35 org.apache.fop.events.LoggingEventListener processEvent
+WARNING: Line 1 of a paragraph overflows the available area by more than 50 points. (See position -1:-1)
+24/01/2013 14:48:35 org.apache.fop.events.LoggingEventListener processEvent
+WARNING: Line 1 of a paragraph overflows the available area by more than 50 points. (See position -1:-1)
+24/01/2013 14:48:35 org.apache.fop.events.LoggingEventListener processEvent
+WARNING: Line 1 of a paragraph overflows the available area by more than 50 points. (See position -1:-1)

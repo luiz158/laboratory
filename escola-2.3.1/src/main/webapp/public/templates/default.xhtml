@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<html xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:view contentType="text/html" locale="#currentLocale" encoding="UTF-8" />
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />  
+	<title>#{messages['main.app.title']}</title>
+	<link type="text/css" rel="stylesheet" href="css/styles.css" />
+</h:head>
+
+<h:body style="background-color:#f1f1f1">
+	
+	<table width="100%" border="0" cellpadding="0" cellspacing="0" background="./../../public/resources/images/logo-b.png">
+		<tr>
+			<td align="left">
+				<img alt="" src="./../../public/resources/images/logo-l.png"/>				
+			</td>
+			<td align="right">
+				<img alt="" src="./../../public/resources/images/logo-r.png"/>				
+			</td>
+		</tr>	
+	</table>
+	
+	<table style="width: 100%">
+		<tr>
+			<td height="20"><ui:include src="/private/pages/menu.xhtml" /></td>
+		</tr>
+		<tr valign="top">
+			<td height="400"><ui:insert name="body" /></td>
+		</tr>
+		<tr align="center">
+			<td height="20" align="center" class="text-input">#{messages['main.footer.text']}</td>
+		</tr>
+	</table>
+
+	<p:growl id="messages" globalOnly="true" />
+
+	<p:ajaxStatus style="width:16px;height:16px;">
+		<f:facet name="start">
+		</f:facet>
+
+		<f:facet name="complete">
+			<h:outputText value="" />
+		</f:facet>
+	</p:ajaxStatus>
+	<link type="text/css" rel="stylesheet" href="css/aristo/skin.css" />
+</h:body>
+</html>

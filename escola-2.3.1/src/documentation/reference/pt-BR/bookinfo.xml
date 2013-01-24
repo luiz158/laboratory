@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding="utf-8"?>
+<bookinfo xmlns="http://docbook.org/ns/docbook" version="5.0" xml:lang="pt-br" xmlns:xi="http://www.w3.org/2001/XInclude"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd">
+
+	<title>Projeto Escola</title>
+
+	<subtitle>Documentação</subtitle>
+
+	<abstract>Projeto Escola é um produto de software para aprendizagem das funcionalidades do Demoiselle Framework 2.2.2</abstract>
+
+	<titleabbrev>Projeto Escola</titleabbrev>
+
+	<xi:include href="bookinfo/revhistory.xml" />
+	<xi:include href="bookinfo/authorgroup.xml" />
+
+</bookinfo>
