@@ -1,6 +1,8 @@
 package br.gov.frameworkdemoiselle.jmx.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
@@ -16,6 +18,7 @@ public class PersistedTestClass {
 	private Long id;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	public Long getId() {
 		return id;
 	}

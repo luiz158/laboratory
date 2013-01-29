@@ -1,4 +1,4 @@
-package br.gov.frameworkdemoiselle.jmx.annotation;
+package br.gov.frameworkdemoiselle.management.annotation;
 
 import javax.management.MBeanOperationInfo;
 

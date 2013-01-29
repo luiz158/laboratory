@@ -24,10 +24,10 @@ import javax.management.ReflectionException;
 
 import br.gov.frameworkdemoiselle.DemoiselleException;
 import br.gov.frameworkdemoiselle.internal.producer.ResourceBundleProducer;
-import br.gov.frameworkdemoiselle.jmx.annotation.Managed;
-import br.gov.frameworkdemoiselle.jmx.annotation.Operation;
-import br.gov.frameworkdemoiselle.jmx.annotation.OperationParameter;
-import br.gov.frameworkdemoiselle.jmx.annotation.Property;
+import br.gov.frameworkdemoiselle.management.annotation.Managed;
+import br.gov.frameworkdemoiselle.management.annotation.Operation;
+import br.gov.frameworkdemoiselle.management.annotation.OperationParameter;
+import br.gov.frameworkdemoiselle.management.annotation.Property;
 import br.gov.frameworkdemoiselle.util.Beans;
 import br.gov.frameworkdemoiselle.util.ResourceBundle;
 

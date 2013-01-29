@@ -12,11 +12,11 @@ import javax.enterprise.inject.spi.Extension;
 import javax.enterprise.inject.spi.ProcessAnnotatedType;
 import javax.management.ObjectInstance;
 
-import br.gov.frameworkdemoiselle.jmx.annotation.Managed;
 import br.gov.frameworkdemoiselle.jmx.internal.DynamicMBeanProxy;
 import br.gov.frameworkdemoiselle.jmx.internal.MBeanHelper;
 import br.gov.frameworkdemoiselle.jmx.internal.MBeanManager;
 import br.gov.frameworkdemoiselle.lifecycle.AfterShutdownProccess;
+import br.gov.frameworkdemoiselle.management.annotation.Managed;
 import br.gov.frameworkdemoiselle.util.Beans;
 
 public class MBeanBootstrap implements Extension {

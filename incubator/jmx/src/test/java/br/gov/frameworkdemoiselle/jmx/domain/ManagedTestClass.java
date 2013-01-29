@@ -2,12 +2,12 @@ package br.gov.frameworkdemoiselle.jmx.domain;
 
 import javax.inject.Inject;
 
-import br.gov.frameworkdemoiselle.jmx.annotation.Managed;
-import br.gov.frameworkdemoiselle.jmx.annotation.Operation;
-import br.gov.frameworkdemoiselle.jmx.annotation.OperationParameter;
-import br.gov.frameworkdemoiselle.jmx.annotation.OperationType;
-import br.gov.frameworkdemoiselle.jmx.annotation.Property;
 import br.gov.frameworkdemoiselle.jmx.dao.PersistedTestClassDAO;
+import br.gov.frameworkdemoiselle.management.annotation.Managed;
+import br.gov.frameworkdemoiselle.management.annotation.Operation;
+import br.gov.frameworkdemoiselle.management.annotation.OperationParameter;
+import br.gov.frameworkdemoiselle.management.annotation.OperationType;
+import br.gov.frameworkdemoiselle.management.annotation.Property;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 
 /**
@@ -31,28 +31,32 @@ public class ManagedTestClass {
 		return atributo;
 	}
 
-	
 	public void setAtributo(String atributo) {
 		this.atributo = atributo;
 	}
 	
 	@Operation(type=OperationType.ACTION,description="Operação de teste")
+	@Transactional
 	public void operacao(@OperationParameter(name="parametro") String parametro){
 		System.out.println("Operação foi chamada");
 		
 		PersistedTestClass test = new PersistedTestClass();
-		test.setId((long)Math.random());
+		//test.setId((long)Math.random());
 		dao.insert(test);
 		
 	}
 	
+	@Operation(type=OperationType.ACTION_INFO,description="Lê uma classe")
 	@Transactional
-	@Operation(type=OperationType.ACTION,description="Salva uma classe persistida")
-	public void operacao2(@OperationParameter(name="persistedClassID",description="Classe persistida") Long idClassePersistida){
-		PersistedTestClass test = new PersistedTestClass();
-		test.setId(idClassePersistida);
-		dao.insert(test);
+	public String operacao2( @OperationParameter(name="idTest",description="ID") Long idTest ){
+		try{
+			PersistedTestClass obj = dao.load(idTest);
+			return obj.toString();
+		}
+		catch(Exception e){
+			return "Deu erro!";
+		}
 	}
 	
-	
+
 }

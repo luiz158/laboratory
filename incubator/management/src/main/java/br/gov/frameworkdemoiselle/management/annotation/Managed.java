@@ -34,7 +34,7 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package br.gov.frameworkdemoiselle.jmx.annotation;
+package br.gov.frameworkdemoiselle.management.annotation;
 
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
@@ -52,8 +52,8 @@ import javax.interceptor.InterceptorBinding;
  * Stereotype to indicate a given class is managed. What it means is that an external client can manage the application
  * this class is in by reading or writing it's attributes and calling it's operations.
  * <p>
- * Only fields annotated with {@link br.gov.frameworkdemoiselle.jmx.annotation.Property} or
- * methods annotated with {@link br.gov.frameworkdemoiselle.jmx.annotation.Operation} will be exposed
+ * Only fields annotated with {@link br.gov.frameworkdemoiselle.management.annotation.Property} or
+ * methods annotated with {@link br.gov.frameworkdemoiselle.management.annotation.Operation} will be exposed
  * to clients.</p>
  * <p>This stereotype only defines a class as managed, you need to choose an extension that will expose this managed class
  * to external clients using any technology available. One example is the Demoiselle JMX extension, that will expose
