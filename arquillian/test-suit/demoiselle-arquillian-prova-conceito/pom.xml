@@ -23,9 +23,16 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
+				<groupId>org.jboss.shrinkwrap.resolver</groupId>
+				<artifactId>shrinkwrap-resolver-bom</artifactId>
+				<version>${version.shrinkwrap.resolver}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+			<dependency>
 				<groupId>org.jboss.arquillian</groupId>
 				<artifactId>arquillian-bom</artifactId>
-				<version>1.0.3.Final</version>
+				<version>${version.arquillian}</version>
 				<scope>import</scope>
 				<type>pom</type>
 			</dependency>
@@ -43,20 +50,20 @@
 			<artifactId>primefaces</artifactId>
 			<scope>compile</scope>
 		</dependency>
-		<dependency>
-			<groupId>br.gov.frameworkdemoiselle.component</groupId>
-			<artifactId>demoiselle-junit</artifactId>
-			<version>2.3.0</version>
-			<scope>test</scope>
-		</dependency>
+		<!-- <dependency> -->
+		<!-- <groupId>br.gov.frameworkdemoiselle.component</groupId> -->
+		<!-- <artifactId>demoiselle-junit</artifactId> -->
+		<!-- <version>2.3.0</version> -->
+		<!-- <scope>test</scope> -->
+		<!-- </dependency> -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.jboss.arquillian.junit</groupId>
-			<artifactId>arquillian-junit-container</artifactId>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -66,6 +73,11 @@
 		<profile>
 			<id>arquillian-jbossas-7.1.1-managed</id>
 			<dependencies>
+				<dependency>
+					<groupId>org.jboss.arquillian.junit</groupId>
+					<artifactId>arquillian-junit-container</artifactId>
+					<scope>test</scope>
+				</dependency>
 				<dependency>
 					<groupId>org.jboss.spec</groupId>
 					<artifactId>jboss-javaee-6.0</artifactId>
@@ -91,6 +103,11 @@
 		<profile>
 			<id>arquillian-jbossas-7.1.1-remote</id>
 			<dependencies>
+				<dependency>
+					<groupId>org.jboss.arquillian.junit</groupId>
+					<artifactId>arquillian-junit-container</artifactId>
+					<scope>test</scope>
+				</dependency>
 				<dependency>
 					<groupId>org.jboss.spec</groupId>
 					<artifactId>jboss-javaee-6.0</artifactId>
@@ -131,5 +148,10 @@
 			</dependencies>
 		</profile>
 	</profiles>
+
+	<properties>
+		<version.shrinkwrap.resolver>2.0.0-alpha-7</version.shrinkwrap.resolver>
+		<version.arquillian>1.0.3.Final</version.arquillian>
+	</properties>
 
 </project>

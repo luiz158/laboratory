@@ -29,8 +29,4 @@ public class BookmarkBC extends DelegateCrud<Bookmark, Long, BookmarkDAO> {
 		}
 	}
 	
-	public void teste() {
-		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-	}
-	
 }
