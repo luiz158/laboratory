@@ -6,8 +6,17 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>br.gov.frameworkdemoiselle</groupId>
-	<artifactId>demoiselle-arquillian</artifactId>
+	<artifactId>demoiselle-arquillian-build</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>pom</packaging>
+
+	<name>Arquillian Build Aggregator</name>
+	<description>Demoiselle Arquillian Build Aggregator</description>
+
+	<modules>
+		<module>impl</module>
+		<module>parent/servlet</module>
+		<module>parent/jsf</module>
+	</modules>
 
 </project>

@@ -29,18 +29,18 @@ http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
 	</container>
 	 -->
 	
-	<container qualifier="jbossas-managed-7.1.1-final" default="true">
-        <configuration>
-            <property name="jbossHome">../../../../../../../../opt/demoiselle/server/jboss-as-7.1.1.Final</property>
-        </configuration>
-    </container>
+<!-- 	<container qualifier="jbossas-managed-7.1.1-final" default="true"> -->
+<!--         <configuration> -->
+<!--             <property name="jbossHome">../../../../../../../../opt/demoiselle/server/jboss-as-7.1.1.Final</property> -->
+<!--         </configuration> -->
+<!--     </container> -->
     
-    <container qualifier="glassfish" default="false">
-        <configuration>
-            <property name="glassFishHome">../../../../../../glassfish3</property>
-            <property name="adminHost">localhost</property>
-            <property name="adminPort">4848</property>
-        </configuration>
-    </container>
+<!--     <container qualifier="glassfish" default="false"> -->
+<!--         <configuration> -->
+<!--             <property name="glassFishHome">../../../../../../glassfish3</property> -->
+<!--             <property name="adminHost">localhost</property> -->
+<!--             <property name="adminPort">4848</property> -->
+<!--         </configuration> -->
+<!--     </container> -->
 	
 </arquillian>
