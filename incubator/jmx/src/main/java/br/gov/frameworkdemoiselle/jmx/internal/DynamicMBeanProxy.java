@@ -23,6 +23,7 @@ import javax.management.OperationsException;
 import javax.management.ReflectionException;
 
 import br.gov.frameworkdemoiselle.DemoiselleException;
+import br.gov.frameworkdemoiselle.internal.context.CustomContext;
 import br.gov.frameworkdemoiselle.internal.producer.ResourceBundleProducer;
 import br.gov.frameworkdemoiselle.management.annotation.Managed;
 import br.gov.frameworkdemoiselle.management.annotation.Operation;
@@ -58,7 +59,9 @@ public class DynamicMBeanProxy implements DynamicMBean {
 	
 	private ResourceBundle bundle = ResourceBundleProducer.create("demoiselle-jmx-bundle", Locale.getDefault());
 	
-	public DynamicMBeanProxy(Class<?> delegateClass){
+	private CustomContext mbeanContext;
+	
+	public DynamicMBeanProxy(Class<?> delegateClass, CustomContext mbeanContext){
 		if (delegateClass == null){
 			throw new NullPointerException(bundle.getString("mbean-null-class-defined"));
 		}
@@ -68,6 +71,7 @@ public class DynamicMBeanProxy implements DynamicMBean {
 		}
 		
 		this.delegateClass = delegateClass;
+		this.mbeanContext = mbeanContext;
 		managedAnnotation = this.delegateClass.getAnnotation(Managed.class);
 		
 		getterMethods = new TreeMap<String, Method>();
@@ -173,6 +177,7 @@ public class DynamicMBeanProxy implements DynamicMBean {
 	@Override
 	public Object invoke(String actionName, Object[] params, String[] signature) throws MBeanException,
 			ReflectionException {
+		
 		//Se o bean ainda não foi lido para determinar seus atributos, o faz agora.
 		if (this.delegateInfo==null){
 			initializeMBeanInfo();
@@ -180,11 +185,17 @@ public class DynamicMBeanProxy implements DynamicMBean {
 		
 		Method method = operationMethods.get(actionName);
 		if (method!=null){
+//			CustomContext context = new ThreadLocalContext(RequestScoped.class);
+//			Contexts.add(context, this.afterBeanDiscoveryEvent);
+			this.mbeanContext.setActive(true);
+			
 			Object delegate = Beans.getReference(delegateClass);
 			try {
 				return method.invoke(delegate, params);
 			} catch (Exception e) {
 				throw new MBeanException(e);
+			}finally {
+				this.mbeanContext.setActive(false);
 			}
 		}
 		else{
