@@ -1,0 +1,24 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>demoiselle-management</artifactId>
+	<name>Demoiselle Management</name>
+	<description>Classes destinadas ao Demoiselle Core que definirão as interfaces das funcionalidades de monitoramento e gerenciamento do Demoiselle.</description>
+	
+	<parent>
+		<groupId>br.gov.frameworkdemoiselle</groupId>
+		<artifactId>demoiselle-framework-parent</artifactId>
+		<version>2.3.2-SNAPSHOT</version>
+		<relativePath>../../../framework/parent/framework</relativePath>
+	</parent>
+	
+	<dependencies>
+		<dependency>
+			<groupId>br.gov.frameworkdemoiselle</groupId>
+			<artifactId>demoiselle-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+	
+</project>
