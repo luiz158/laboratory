@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding="utf-8"?>
+<revhistory xmlns="http://docbook.org/ns/docbook" version="5.0" xml:lang="pt-br"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd">
+	<revision>
+		<revnumber>1.0.0</revnumber>
+		<date></date>
+		<authorinitials>xx</authorinitials>
+		<revremark>Documentação do site atualizada.</revremark>
+	</revision>
+	<revision>
+		<revnumber>1.0.4</revnumber>
+		<date></date>
+		<authorinitials>xx</authorinitials>
+		<revremark>Inicialização do banco de dados junto com o contexto da aplicação</revremark>
+	</revision>
+	<revision>
+		<revnumber>2.2.2</revnumber>
+		<date></date>
+		<authorinitials>xx</authorinitials>
+		<revremark>Upgrade da versão do Demoiselle Famework 1.x para 2.2.2</revremark>
+	</revision>
+</revhistory>

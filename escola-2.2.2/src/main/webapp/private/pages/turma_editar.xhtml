@@ -1,0 +1,77 @@
+ <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets" template="/public/templates/default.xhtml">
+
+	<ui:define name="body">
+		<h:form prependId="false" acceptcharset="ISO-8859-1">
+			<p:toolbar>
+				<p:toolbarGroup align="left">
+					<p:commandButton value="#{messages['button.save']}" action="#{turmaEditMB.insert}"
+						rendered="#{!turmaEditMB.updateMode}" ajax="false" />
+					<p:commandButton value="#{messages['button.save']}" action="#{turmaEditMB.update}"
+						rendered="#{turmaEditMB.updateMode}" ajax="false" />
+						
+					<p:commandButton value="#{messages['button.delete']}" onclick="confirmation.show()"
+						rendered="#{turmaEditMB.updateMode}" type="button" immediate="true" ajax="false" />
+						
+					<p:confirmDialog message="#{messages['label.confirm.delete']}" showEffect="bounce" hideEffect="explode"
+						header="#{messages['label.dialog.delete']}" severity="alert" widgetVar="confirmation">
+						<h:commandButton value="#{messages['button.dialog.yes']}" action="#{turmaEditMB.delete}" immediate="true"
+							actionListener="#{turmaListMB.clear}" ajax="false" />
+						<h:commandButton value="#{messages['button.dialog.no']}" onclick="confirmation.hide()" type="button" />
+					</p:confirmDialog>
+				</p:toolbarGroup>
+			</p:toolbar>
+			
+			<br/>
+		
+			<p:fieldset legend="#{messages['turma.label']}" toggleable="false" toggleSpeed="500">
+				<h:panelGrid columns="2">
+					<h:panelGrid id="fields" columns="6">
+					
+						<h:outputLabel value="#{messages['turma.label.id']}: " for="id" styleClass="text-input" />
+						<h:outputText id="id" value="#{turmaEditMB.bean.id}" />
+						<p:message for="id" />
+						
+						<h:outputLabel value="" />
+						<h:outputLabel value="" />
+						<h:outputLabel value="" />
+						
+						<h:outputLabel value="#{messages['turma.label.nome']}: " for="nome" styleClass="text-input" />
+						<h:inputText id="nome" value="#{turmaEditMB.bean.nome}" title="#{messages['turma.alt.nome']}" style="width:250px;" />
+						<p:message for="nome" />
+						
+						<h:outputLabel value="#{messages['turma.label.local']}: " for="local" styleClass="text-input" />
+						<h:inputText id="local" value="#{turmaEditMB.bean.local}" title="#{messages['turma.alt.local']}" style="width:250px;"/> 
+						<p:message for="local" />
+						
+						<h:outputLabel value="#{messages['turma.label.horario']}: " for="horario" styleClass="text-input" />
+						<h:inputText id="horario" value="#{turmaEditMB.bean.horario}" title="#{messages['turma.alt.horario']}" style="width:250px;"/> 
+						<p:message for="horario" />
+						
+						<h:outputLabel value="#{messages['turma.label.lotacao']}: " for="lotacao" styleClass="text-input" />
+						<h:inputText id="lotacao" value="#{turmaEditMB.bean.lotacao}" title="#{messages['turma.alt.lotacao']}" style="width:250px;"/> 
+						<p:message for="lotacao" />
+						
+						<h:outputLabel value="#{messages['turma.label.professor']}: " for="professor" styleClass="text-input" />
+						<h:selectOneMenu value="#{turmaEditMB.professor.id}" id="professor">
+							<f:selectItem itemLabel="" itemValue="" />	
+							<f:selectItems value="#{professorListMB.listaProfessores}" var="professor" itemLabel="#{professor.nome}" itemValue="#{professor.id}"/>						
+						</h:selectOneMenu>
+						<p:message for="professor" />
+						
+						<h:outputLabel value="#{messages['turma.label.disciplina']}: " for="disciplina" styleClass="text-input" />
+						<h:selectOneMenu value="#{turmaEditMB.disciplina.id}" id="disciplina">
+							<f:selectItem itemLabel="" itemValue="" />	
+							<f:selectItems value="#{disciplinaListMB.listaDisciplinas}" var="disciplina" itemLabel="#{disciplina.nome}" itemValue="#{disciplina.id}"/>						
+						</h:selectOneMenu>
+						<p:message for="disciplina" />
+	
+					</h:panelGrid>
+				</h:panelGrid>
+			</p:fieldset>
+			
+		</h:form>
+		
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,49 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets" template="/public/templates/default.xhtml">
+
+	<ui:define name="body">
+		<h:form prependId="false" acceptcharset="ISO-8859-1">
+			<p:toolbar>
+				<p:toolbarGroup align="left">
+					<p:commandButton value="#{messages['button.save']}" action="#{professorEditMB.insert}"
+						rendered="#{!professorEditMB.updateMode}" ajax="false" />
+					<p:commandButton value="#{messages['button.save']}" action="#{professorEditMB.update}"
+						rendered="#{professorEditMB.updateMode}" ajax="false" />
+						
+					<p:commandButton value="#{messages['button.delete']}" onclick="confirmation.show()"
+						rendered="#{professorEditMB.updateMode}" type="button" immediate="true" ajax="false" />
+						
+					<p:confirmDialog message="#{messages['label.confirm.delete']}" showEffect="bounce" hideEffect="explode"
+						header="#{messages['label.dialog.delete']}" severity="alert" widgetVar="confirmation">
+						<h:commandButton value="#{messages['button.dialog.yes']}" action="#{professorEditMB.delete}" immediate="true"
+							actionListener="#{professorListMB.clear}" ajax="false" />
+						<h:commandButton value="#{messages['button.dialog.no']}" onclick="confirmation.hide()" type="button" />
+					</p:confirmDialog>
+				</p:toolbarGroup>
+			</p:toolbar>
+			
+			<br/>
+		
+			<p:fieldset legend="#{messages['professor.label']}" toggleable="false" toggleSpeed="500">
+				<h:panelGrid id="fields" columns="6">
+				
+					<h:outputLabel value="#{messages['professor.label.id']}: " for="id" styleClass="text-input" />
+					<h:outputText id="id" value="#{professorEditMB.bean.id}" />
+					<p:message for="id" />
+					
+					<h:outputLabel value="" />
+					<h:outputLabel value="" />
+					<h:outputLabel value="" />
+
+					<h:outputLabel value="#{messages['professor.label.nome']}: " for="nome" styleClass="text-input" />
+					<h:inputText id="nome" value="#{professorEditMB.bean.nome}" title="#{messages['professor.alt.nome']}" style="width:250px;" />
+					<p:message for="nome" />
+
+				</h:panelGrid>
+			</p:fieldset>
+			
+		</h:form>
+		
+	</ui:define>
+</ui:composition>

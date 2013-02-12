@@ -1,0 +1,104 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets" template="/public/templates/default.xhtml">
+
+	<ui:define name="body">
+		<h:form prependId="false" acceptcharset="ISO-8859-1">
+			<p:toolbar>
+				<p:toolbarGroup align="left">
+					<p:commandButton value="#{messages['button.save']}" action="#{usuarioEditMB.insert}"
+						rendered="#{!usuarioEditMB.updateMode}" ajax="false" />
+					<p:commandButton value="#{messages['button.save']}" action="#{usuarioEditMB.update}"
+						rendered="#{usuarioEditMB.updateMode}" ajax="false" />
+						
+					<p:commandButton value="#{messages['button.delete']}" onclick="confirmation.show()"
+						rendered="#{usuarioEditMB.updateMode}" type="button" immediate="true" ajax="false" />
+						
+					<p:confirmDialog message="#{messages['label.confirm.delete']}" showEffect="bounce" hideEffect="explode"
+						header="#{messages['label.dialog.delete']}" severity="alert" widgetVar="confirmation">
+						<h:commandButton value="#{messages['button.dialog.yes']}" action="#{usuarioEditMB.delete}" immediate="true"
+							actionListener="#{usuarioListMB.clear}" ajax="false" />
+						<h:commandButton value="#{messages['button.dialog.no']}" onclick="confirmation.hide()" type="button" />
+					</p:confirmDialog>
+				</p:toolbarGroup>
+			</p:toolbar>
+			
+			<br/>
+		
+			<p:fieldset legend="#{messages['usuario.label']}" toggleable="false" toggleSpeed="500">
+				<h:panelGrid columns="2">
+					<h:panelGrid id="fields" columns="6">
+					
+						<h:outputLabel value="#{messages['usuario.label.id']}: " for="id" styleClass="text-input" />
+						<h:outputText id="id" value="#{usuarioEditMB.bean.id}" />
+						<p:message for="id" />
+						
+						<h:outputLabel value="" />
+						<h:outputLabel value="" />
+						<h:outputLabel value="" />
+						
+						<h:outputLabel value="#{messages['usuario.label.nome']}: " for="nome" styleClass="text-input" />
+						<h:outputLabel id="nome" value="#{usuarioEditMB.bean.nome}" title="#{messages['usuario.alt.nome']}" style="width:250px;" />
+						<p:message for="nome" />
+						
+						<h:outputLabel value="#{messages['usuario.label.cpf']}: " for="cpf" styleClass="text-input" />
+						<h:inputText id="cpf" value="#{usuarioEditMB.bean.cpf}" title="#{messages['usuario.alt.cpf']}" style="width:250px;"/> 
+						<p:message for="cpf" />
+						
+						<h:outputLabel value="#{messages['usuario.label.senha']}: " for="senha" styleClass="text-input" />
+						<h:inputSecret id="senha" value="#{usuarioEditMB.bean.senha}" title="#{messages['usuario.alt.senha']}" style="width:250px;"/> 
+						<p:message for="senha" />
+						
+						<h:outputLabel value="#{messages['usuario.label.login']}: " for="login" styleClass="text-input" />
+						<h:inputText id="login" value="#{usuarioEditMB.bean.login}" title="#{messages['usuario.alt.login']}" style="width:250px;"/> 
+						<p:message for="login" />
+	
+					</h:panelGrid>
+				</h:panelGrid>
+			</p:fieldset>
+			
+		</h:form>
+		
+		<br/>
+		
+		<h:form prependId="false">
+			<p:tabView id="tabView" rendered="#{usuarioEditMB.updateMode}">	
+		
+				<p:tab id="tabPapeis" title="#{messages['papeis.tab.title']}">
+					
+					<h:panelGrid columns="2">
+						<h:panelGrid columns="9">
+							
+							<h:outputLabel value="#{messages['papel.label.papel']}: " for="papel" styleClass="text-input" />
+							
+							<h:selectOneMenu id="papel" value="#{usuarioEditMB.detalhePapel.papel}" >
+								<f:selectItem itemLabel="" itemValue="" />
+								<f:selectItems value="#{usuarioEditMB.listaPapeis}" var="element" itemLabel="#{element}" itemValue="#{element}"/>
+							</h:selectOneMenu>
+							<p:message for="papel" />
+							
+						</h:panelGrid>
+						
+						<h:panelGrid columns="1">
+							<p:commandButton value="#{messages['button.add.new']}" action="#{usuarioEditMB.incluirPapel}" ajax="false"/>
+						</h:panelGrid>
+					</h:panelGrid>
+					
+					<p:dataTable id="listPapeis" var="papel" value="#{usuarioEditMB.bean.listaPapeis}">
+						
+						<p:column style="width:50%;" sortBy="#{papel.papel}">
+							<f:facet name="header">#{messages['usuario.label.papel']}</f:facet>
+							<h:outputText value="#{papel.papel}" />
+						</p:column>
+						
+						<p:column>
+							<f:facet name="header"></f:facet>
+							<p:commandButton action="#{usuarioEditMB.removerPapel(papel)}" value="#{messages['button.delete']}" ajax="false"/>
+						</p:column>
+					</p:dataTable>
+						
+				</p:tab>
+			</p:tabView>
+		</h:form>	
+	</ui:define>
+</ui:composition>

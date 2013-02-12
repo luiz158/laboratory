@@ -1,0 +1,146 @@
+<?xml version='1.0' encoding="utf-8"?>
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd" version="5.0" xml:lang="pt-br">
+
+	<title>Funcionalidades Utilizadas</title>
+	<para>
+		O Projeto Escola utiliza algumas funcionalidades do Framework Demoiselle 2.2.2 que ajudam 
+		na criação e facilitam o seu desenvolvimento.
+		Abaixo temos uma breve descrição de como cada funcionalidade foi utilizada.
+	</para>
+	
+	<section>
+		<title>Funcionalidade de Exceções</title>
+		<para>
+			Foi utilizado uma Exceção de Aplicação "@ApplicationException" chamada "EscolaException" para representar todos os erros 
+			acontecidos na aplicação.
+			Uma excecão lançada na camada de Negócio ou Persistência pode ser transmitidas entre as camadas até a tela de apresentação "View"
+			sem precisar programar essa transferência de mensagens entre as camadas, o Framework Demoiselle 2 traz essa facilidade para o desenvolvedor.
+		</para>
+		<note>
+			<para>
+				Referência: 
+			</para>
+			<para>
+				<link xlink:href="http://demoiselle.sourceforge.net/docs/framework/reference/2.2.2/html/excecao.html"/>
+			</para>
+		</note>
+	</section>
+	
+	<section>
+		<title>Funcionalidade de Mensagens</title>
+		<para>
+			Com a utilização do mecanismo de Mensagens do Framework Demoiselle 2 foi possível realizar a transmissão de mensagens
+			entre as camadas.
+		</para>
+		<note>
+			<para>
+				Referência: 
+			</para>
+			<para>
+				<link xlink:href="http://demoiselle.sourceforge.net/docs/framework/reference/2.2.2/html/mensagem.html"/>
+			</para>
+		</note>
+	</section>
+	
+	<section>
+		<title>Funcionalidade de Configurações</title>
+		<para>
+			Utilizado para externalizar as configurações do JDBC (.properties) e dos Papeis dos Usuários (.xml)
+		</para>
+		<note>
+			<para>
+				Referência: 
+			</para>
+			<para>
+				<link xlink:href="http://demoiselle.sourceforge.net/docs/framework/reference/2.2.2/html/configuracao.html"/>
+			</para>
+		</note>
+	</section>
+	
+	<section>
+		<title>Funcionalidade de Segurança</title>
+		<para>
+			No Projeto Escola foi adicionado o Mecanismo de Segurança por método. Através do usuário logado na aplicação é possível saber
+			quais são seus Papeis e através dele saber se o usuário logado tem permissão de execução do método.
+			Todo o tratamento de Autenticação e Autorização do usuário é realizado pelo Framework Demoiselle.
+		</para>
+		<note>
+			<para>
+				Referência: 
+			</para>
+			<para>
+				<link xlink:href="http://demoiselle.sourceforge.net/docs/framework/reference/2.2.2/html/security.html"/>
+			</para>
+		</note>
+	</section>
+	
+	<section>
+		<title>Funcionalidade de Relatório</title>
+		<para>
+			Com a utilização do componente de relatórios do demoiselle (demoiselle-report) foi possível realizar a geração de relatórios em PDF e ODT
+			de forma simples. Através de anotações e das classes do componente o trabalho de configuração, preparação, comunicação com 
+			os arquivos .jrxml ou .jasper foram abstraídos. 
+		</para>
+		<note>
+			<para>
+				Referência: 
+			</para>
+			<para>
+				<link xlink:href="http://demoiselle.sourceforge.net/docs/components/2.2.0/html/report-master.html"/>
+			</para>
+		</note>
+	</section>
+	
+	<section>
+		<title>Funcionalidade de Transação</title>
+		<para>
+			Com a utilização de uma única anotação "@Transactional" foi possível delegar todo o trabalho de inicializar a transação, verificação da transação e 
+			encerramento da transação para que o Framework Demoiselle, diminuindo consideravelmente o tempo de desenvolvimento.
+		</para>
+		<note>
+			<para>
+				Referência: 
+			</para>
+			<para>
+				<link xlink:href="http://demoiselle.sourceforge.net/docs/what-is-new/2.0.1/html/arquitetura.html#d0e214"/>
+			</para>
+		</note>
+	</section>
+	
+	<section>
+		<title>Funcionalidade de Inicialização</title>
+		<para>
+			Onde antes se implementava "ServletContextListerner" para executar algum trecho de código após a aplicação ser inicializada, com o Mecanismo de Inicialização
+			é possível utilizar qualquer método de qualquer classe do seu projeto apenas utilizando a anotação "@Startup".
+			No Projeto Escola essa anotação foi utilizada na classe DataSampleLoader para iniciar uma carga de registros na aplicação.
+		</para>
+		<note>
+			<para>
+				Referência: 
+			</para>
+			<para>
+				<link xlink:href="http://demoiselle.sourceforge.net/docs/framework/reference/2.2.2/html/inicializacao.html"/>
+			</para>
+		</note>
+	</section>
+	
+	<section>
+		<title>Funcionalidade de E-mail</title>
+		<para>
+			Outra facilidade na forma de componente foi a utilização do componente de e-mail do Demoiselle (demoiselle-mail).
+			No Projeto Escola foi utilizado no envio de e-mail logo após o Professor cadastrar uma Nota no sistema, com poucas configurações já foi possível
+			realizar o disparo dos e-mails. 
+		</para>
+		<note>
+			<para>
+				Referência: 
+			</para>
+			<para>
+				<link xlink:href="http://demoiselle.sourceforge.net/docs/components/2.2.0/html/mail-master.html"/>
+			</para>
+		</note>
+	</section>
+
+</chapter>

@@ -1,0 +1,181 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<!-- Demoiselle Sample Copyright (c) 2009 Serpro and other contributors 
+		as indicated by the @author tag. See the copyright.txt in the distribution 
+		for a full listing of contributors. Demoiselle Sample is a set of open source 
+		Java EE project samples using the Demoiselle Framework Demoiselle Sample 
+		is released under the terms of the GPL license 3 http://www.gnu.org/licenses/gpl.html 
+		GPL License 3 This file is part of Demoiselle Sample. Demoiselle Sample is 
+		free software: you can redistribute it and/or modify it under the terms of 
+		the GNU General Public License as published by the Free Software Foundation 
+		version 3. Demoiselle Sample is distributed in the hope that it will be useful, 
+		but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY 
+		or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for 
+		more details. You should have received a copy of the GNU General Public License 
+		along with Demoiselle - Sample. If not, see <http://www.gnu.org/licenses 
+		/> -->
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>br.gov.demoiselle</groupId>
+	<artifactId>escola</artifactId>
+	<version>2.3.1</version>
+	<packaging>war</packaging>
+
+	<name>Escola</name>
+	<description>Aplicação Escola</description>
+	<url>http://demoiselle-samp.sourceforge.net/</url>
+
+
+	<parent>
+		<groupId>br.gov.frameworkdemoiselle</groupId>
+		<artifactId>demoiselle-jsf-parent</artifactId>
+		<version>2.3.1</version>
+	</parent>
+
+	<dependencies>
+		<dependency>
+			<groupId>br.gov.frameworkdemoiselle</groupId>
+			<artifactId>demoiselle-jpa</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<!-- 
+		<dependency>
+			<groupId>br.gov.frameworkdemoiselle</groupId>
+			<artifactId>demoiselle-jta</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		 -->
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		
+		<!-- 
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-api-easymock</artifactId>
+			<scope>test</scope>
+		</dependency>
+		 -->
+		 
+		 <dependency>
+			<groupId>br.gov.frameworkdemoiselle.component</groupId>
+			<artifactId>demoiselle-junit</artifactId>
+			<version>2.3.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>br.gov.frameworkdemoiselle.component</groupId>
+			<artifactId>demoiselle-report</artifactId>
+			<version>2.1.0</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>br.gov.frameworkdemoiselle.component</groupId>
+			<artifactId>demoiselle-mail</artifactId>
+			<version>2.0.0</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+
+	</dependencies>
+
+	<!-- <repositories>
+		<repository>
+			<id>demoiselle.sourceforge.net-release</id>
+			<url>http://demoiselle.sourceforge.net/repository/release</url>
+		</repository>
+	</repositories> -->
+
+
+	<organization>
+		<name>SERPRO</name>
+		<url>http://www.serpro.gov.br</url>
+	</organization>
+
+	<properties>
+		<encoding.default>UTF-8</encoding.default>
+	</properties>
+
+	<licenses>
+		<license>
+			<name>GPL</name>
+			<url>http://www.gnu.org/licenses/gpl.txt</url>
+		</license>
+	</licenses>
+
+	<mailingLists>
+		<mailingList>
+			<name>Demoiselle Users</name>
+			<archive>https://sourceforge.net/mailarchive/forum.php?forum_name=demoiselle-samp-users</archive>
+			<post>demoiselle-samp-users@lists.sourceforge.net</post>
+			<subscribe>https://lists.sourceforge.net/lists/listinfo/demoiselle-samp-users</subscribe>
+			<unsubscribe>https://lists.sourceforge.net/lists/listinfo/demoiselle-samp-users</unsubscribe>
+		</mailingList>
+	</mailingLists>
+
+	<ciManagement>
+		<system>Continuum</system>
+		<notifiers>
+			<notifier>
+				<type>mail</type>
+				<sendOnError>true</sendOnError>
+				<sendOnFailure>true</sendOnFailure>
+				<sendOnSuccess>true</sendOnSuccess>
+				<sendOnWarning>true</sendOnWarning>
+				<configuration>
+					<address>demoiselle-samp-devel@lists.sourceforge.net</address>
+				</configuration>
+			</notifier>
+		</notifiers>
+	</ciManagement>
+
+	<distributionManagement>
+		<site>
+			<id>demoiselle-samp.sourceforge.net</id>
+			<url>
+				scp://shell.sourceforge.net/home/groups/d/de/demoiselle-samp/htdocs/escola
+			</url>
+		</site>
+		<snapshotRepository>
+			<id>demoiselle.sourceforge.net</id>
+			<url>scp://shell.sourceforge.net/home/groups/d/de/demoiselle/htdocs/repository/snapshot</url>
+		</snapshotRepository>
+		<repository>
+			<id>demoiselle.sourceforge.net</id>
+			<url>scp://shell.sourceforge.net/home/groups/d/de/demoiselle/htdocs/repository/release</url>
+		</repository>
+	</distributionManagement>
+
+	<scm>
+		<connection>scm:svn:https://demoiselle-samp.svn.sourceforge.net/svnroot/demoiselle-samp/tags/escola-1.0.4</connection>
+		<url>http://demoiselle-samp.svn.sourceforge.net/viewvc/demoiselle-samp/tags/escola-1.0.4</url>
+	</scm>
+
+	<issueManagement>
+		<system>sourceforge</system>
+		<url>https://sourceforge.net/tracker/?group_id=260989</url>
+	</issueManagement>
+
+</project>

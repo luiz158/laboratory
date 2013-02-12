@@ -1,0 +1,52 @@
+@import url("seamframework.css");
+
+/* Override background image and font */
+body {
+    background-image: none; /*url(../images/frameworkdemoiselle/bkg_gradient.png);*/
+    font-family:'Lucida Grande', Geneva, Verdana, Arial, sans-serif;
+    max-width: 800px;
+}
+
+/* More sfwk styling */
+a {text-decoration:none;}
+
+h1 {
+	color:#182737;
+	font-family:'Lucida Grande',Geneva,Verdana,Arial,sans-serif;
+	font-size:2em;
+	line-height:1.2em;
+	background-image:none;
+}
+
+h2, h3, h4, h5, h6 {
+	color:#4A5D75;
+	font-family:'Lucida Grande',Geneva,Verdana,Arial,sans-serif;
+	line-height:130%;
+}
+
+pre {
+	font-family:monospace;
+	padding:15px 15px 15px 25px;
+}
+
+/* Override header images */
+#title a.site_href {
+    display:block;
+    height:100px;
+    width:800px;
+    float:left;
+    background:url(../images/frameworkdemoiselle/demoisellelogo.png) top left no-repeat;
+}
+
+/* Removes right header image */
+#title a.doc_href {
+    display:block;
+    height:100px;
+    background: none;
+}
+
+/* Override navigation images */
+.docnav li.next a strong {background-image:url(../images/frameworkdemoiselle/docbook/next.png);}
+.docnav li.previous a strong {background-image:url(../images/frameworkdemoiselle/docbook/prev.png);}
+.docnav li.home a strong {background-image:url(../images/frameworkdemoiselle/docbook/home.png);}
+.docnav li.up a strong {background-image:url(../images/frameworkdemoiselle/docbook/up.png);}

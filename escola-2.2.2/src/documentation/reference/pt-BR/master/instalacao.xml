@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding="utf-8"?>
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd" 
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	version="5.0" xml:lang="pt-br">
+
+	<title>Instalação</title>
+	<para>
+		O código fonte pode ser encontrado no repositório do GitHub no endereço 
+		<link xlink:href="https://github.com/demoiselle/laboratory/escola-2.2.2"/> 
+	</para>
+	<para>
+		Ferramentas utilizadas:
+		<itemizedlist>
+			<listitem>demoiselle-eclipse-3.7-SR2</listitem>
+			<listitem>demoiselle-workspace</listitem>
+			<listitem>demoiselle-maven2</listitem>
+			<listitem>demoiselle-maven2-local-repo</listitem>
+			<listitem>demoiselle-jboss-6.1</listitem>
+		</itemizedlist>
+	</para>
+	<para>
+		As ferramentas listadas acima fazem parte do Projeto Demoiselle Infra que pode ser encontrado no endereço 
+		<link xlink:href="http://demoiselle.sourceforge.net/infra/1.2.4" />
+	</para>
+
+</chapter>

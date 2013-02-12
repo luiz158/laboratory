@@ -1,0 +1,52 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<h:form>
+		<p:menubar>
+			<p:submenu label="#{messages['menu.aluno']}" rendered="#{usuarioMB.isAdministrador}">
+				<p:menuitem value="#{messages['menu.menuitem.new']}" url="/private/pages/aluno_editar.jsf" />
+				<p:menuitem value="#{messages['menu.menuitem.list']}" url="/private/pages/aluno_listar.jsf" />
+			</p:submenu>
+			
+			<p:submenu label="#{messages['menu.usuario']}" rendered="#{usuarioMB.isAdministrador}">
+				<p:menuitem value="#{messages['menu.menuitem.new']}" url="/private/pages/usuario_editar.jsf" />
+				<p:menuitem value="#{messages['menu.menuitem.list']}" url="/private/pages/usuario_listar.jsf" />
+			</p:submenu>
+			
+			<p:submenu label="#{messages['menu.professor']}" rendered="#{usuarioMB.isAdministrador}">
+				<p:menuitem value="#{messages['menu.menuitem.new']}" url="/private/pages/professor_editar.jsf" />
+				<p:menuitem value="#{messages['menu.menuitem.list']}" url="/private/pages/professor_listar.jsf" />
+			</p:submenu>
+			
+			<p:submenu label="#{messages['menu.disciplina']}" rendered="#{usuarioMB.isAdministrador}">
+				<p:menuitem value="#{messages['menu.menuitem.new']}" url="/private/pages/disciplina_editar.jsf" />
+				<p:menuitem value="#{messages['menu.menuitem.list']}" url="/private/pages/disciplina_listar.jsf" />
+			</p:submenu>
+			
+			<p:submenu label="#{messages['menu.turma']}" rendered="#{usuarioMB.isAdministrador}">
+				<p:menuitem value="#{messages['menu.menuitem.new']}" url="/private/pages/turma_editar.jsf" />
+				<p:menuitem value="#{messages['menu.menuitem.list']}" url="/private/pages/turma_listar.jsf" />
+			</p:submenu>
+			
+			<p:submenu label="#{messages['menu.funcionario']}" rendered="#{usuarioMB.isAdministrador}">
+				<p:menuitem value="#{messages['menu.menuitem.new']}" url="/private/pages/funcionario_editar.jsf" />
+				<p:menuitem value="#{messages['menu.menuitem.list']}" url="/private/pages/funcionario_listar.jsf" />
+			</p:submenu>
+			
+			<p:submenu label="#{messages['menu.nota.professor']}" rendered="#{usuarioMB.isAdministrador or usuarioMB.isProfessor}">
+				<p:menuitem value="#{messages['menu.menuitem.new']}" url="/private/pages/nota_editar.jsf" />
+				<p:menuitem value="#{messages['menu.menuitem.list']}" url="/private/pages/nota_listar.jsf" />
+			</p:submenu>
+			
+			<p:menuitem value="#{messages['menu.nota.aluno']}" url="/private/pages/nota_listar.jsf" rendered="#{usuarioMB.isAluno}"/>
+			
+			<p:menuitem value="#{messages['menu.relatorio']}" url="/private/pages/escola_relatorio.jsf" />
+			
+			<p:menuitem value="#{messages['menu.menuitem.quit']}" url="/public/pages/security/login.jsf" action="#{securityContext.logout}" />
+			
+
+		</p:menubar>
+	</h:form>
+
+</ui:composition>

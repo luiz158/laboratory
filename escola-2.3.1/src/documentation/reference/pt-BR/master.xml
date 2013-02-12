@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding="utf-8"?>
+<book xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd"
+	version="5.0" xml:lang="pt-br">
+
+	<xi:include href="bookinfo.xml" />
+
+	<title>Escola Titulo</title>
+
+	<preface>
+		<title>Sobre o Projeto Escola</title>
+		<para> 
+			Escola é um projeto de software construído sob o Framework Demoiselle, seu objetivo é prover uma aplicação de 
+			exemplo para estudo do framework e seus componentes. Suas funcionalidades foram projetadas de maneira que os 
+			principais recursos do framework fossem utilizados, portanto não há pretenção de criar uma ferramenta que 
+			atenda requisitos reais de uma aplicação comercial, mas um projeto que possua problemas capazes de serem 
+			resolvidos com uso do Framework Demoiselle e apresente estas soluções didaticamente.
+		</para>
+	</preface>
+
+	<toc />
+
+	<!-- capítulos -->
+	<xi:include href="master/instalacao.xml" />
+	<xi:include href="master/funcionalidades.xml" />
+	<xi:include href="master/arquitetura.xml" />
+	<xi:include href="master/camadas.xml" />
+
+</book>

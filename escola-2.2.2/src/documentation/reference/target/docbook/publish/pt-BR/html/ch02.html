@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory">Capítulo 2. Funcionalidades Utilizadas</title><link rel="stylesheet" href="css/demoiselleframework.css" type="text/css"/><meta xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" name="generator" content="DocBook XSL Stylesheets V1.74.0"/><link rel="home" href="index.html" title="Projeto Escola"/><link rel="up" href="index.html" title="Projeto Escola"/><link rel="prev" href="ch01.html" title="Capítulo 1. Instalação"/><link rel="next" href="ch03.html" title="Capítulo 3. Caso de Uso"/></head><body><p id="title"><a href="http://www.frameworkdemoiselle.gov.br" class="site_href"><strong>FrameworkDemoiselle.gov.br</strong></a><a href="http://www.frameworkdemoiselle.gov.br" class="doc_href"><strong>Community Documentation</strong></a></p><ul class="docnav"><li class="previous"><a accesskey="p" href="ch01.html"><strong>Anterior</strong></a></li><li class="next"><a accesskey="n" href="ch03.html"><strong>Próxima</strong></a></li></ul><div class="chapter" lang="pt-BR"><div class="titlepage"><div><div><h2 class="title"><a id="d4e45"/>Capítulo 2. Funcionalidades Utilizadas</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="ch02.html#d4e48">2.1. Funcionalidade de Exceções</a></span></dt><dt><span class="section"><a href="ch02.html#d4e55">2.2. Funcionalidade de Mensagens</a></span></dt><dt><span class="section"><a href="ch02.html#d4e62">2.3. Funcionalidade de Configurações</a></span></dt><dt><span class="section"><a href="ch02.html#d4e69">2.4. Funcionalidade de Segurança</a></span></dt><dt><span class="section"><a href="ch02.html#d4e76">2.5. Funcionalidade de Relatório</a></span></dt><dt><span class="section"><a href="ch02.html#d4e83">2.6. Funcionalidade de Transação</a></span></dt><dt><span class="section"><a href="ch02.html#d4e90">2.7. Funcionalidade de Inicialização</a></span></dt><dt><span class="section"><a href="ch02.html#d4e97">2.8. Funcionalidade de E-mail</a></span></dt></dl></div>
+
+	
+	<p>
+		O Projeto Escola utiliza algumas funcionalidades do Framework Demoiselle 2.2.2 que ajudam 
+		na criação e facilitam o seu desenvolvimento.
+		Abaixo temos uma breve descrição de como cada funcionalidade foi utilizada.
+	</p>
+	
+	<div class="section" lang="pt-BR"><div class="titlepage"><div><div><h2 class="title"><a id="d4e48"/>2.1. Funcionalidade de Exceções</h2></div></div></div>
+		
+		<p>
+			Foi utilizado uma Exceção de Aplicação "@ApplicationException" chamada "EscolaException" para representar todos os erros 
+			acontecidos na aplicação.
+			Uma excecão lançada na camada de Negócio ou Persistência pode ser transmitidas entre as camadas até a tela de apresentação "View"
+			sem precisar programar essa transferência de mensagens entre as camadas, o Framework Demoiselle 2 traz essa facilidade para o desenvolvedor.
+		</p>
+		<div xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="note"><h2>Nota</h2>
+			<p>
+				Referência: 
+			</p>
+			<p>
+				<a class="link" href="http://demoiselle.sourceforge.net/docs/framework/reference/2.2.2/html/excecao.html" target="">http://demoiselle.sourceforge.net/docs/framework/reference/2.2.2/html/excecao.html</a>
+			</p>
+		</div>
+	</div>
+	
+	<div class="section" lang="pt-BR"><div class="titlepage"><div><div><h2 class="title"><a id="d4e55"/>2.2. Funcionalidade de Mensagens</h2></div></div></div>
+		
+		<p>
+			Com a utilização do mecanismo de Mensagens do Framework Demoiselle 2 foi possível realizar a transmissão de mensagens
+			entre as camadas.
+		</p>
+		<div xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="note"><h2>Nota</h2>
+			<p>
+				Referência: 
+			</p>
+			<p>
+				<a class="link" href="http://demoiselle.sourceforge.net/docs/framework/reference/2.2.2/html/mensagem.html" target="">http://demoiselle.sourceforge.net/docs/framework/reference/2.2.2/html/mensagem.html</a>
+			</p>
+		</div>
+	</div>
+	
+	<div class="section" lang="pt-BR"><div class="titlepage"><div><div><h2 class="title"><a id="d4e62"/>2.3. Funcionalidade de Configurações</h2></div></div></div>
+		
+		<p>
+			Utilizado para externalizar as configurações do JDBC (.properties) e dos Papeis dos Usuários (.xml)
+		</p>
+		<div xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="note"><h2>Nota</h2>
+			<p>
+				Referência: 
+			</p>
+			<p>
+				<a class="link" href="http://demoiselle.sourceforge.net/docs/framework/reference/2.2.2/html/configuracao.html" target="">http://demoiselle.sourceforge.net/docs/framework/reference/2.2.2/html/configuracao.html</a>
+			</p>
+		</div>
+	</div>
+	
+	<div class="section" lang="pt-BR"><div class="titlepage"><div><div><h2 class="title"><a id="d4e69"/>2.4. Funcionalidade de Segurança</h2></div></div></div>
+		
+		<p>
+			No Projeto Escola foi adicionado o Mecanismo de Segurança por método. Através do usuário logado na aplicação é possível saber
+			quais são seus Papeis e através dele saber se o usuário logado tem permissão de execução do método.
+			Todo o tratamento de Autenticação e Autorização do usuário é realizado pelo Framework Demoiselle.
+		</p>
+		<div xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="note"><h2>Nota</h2>
+			<p>
+				Referência: 
+			</p>
+			<p>
+				<a class="link" href="http://demoiselle.sourceforge.net/docs/framework/reference/2.2.2/html/security.html" target="">http://demoiselle.sourceforge.net/docs/framework/reference/2.2.2/html/security.html</a>
+			</p>
+		</div>
+	</div>
+	
+	<div class="section" lang="pt-BR"><div class="titlepage"><div><div><h2 class="title"><a id="d4e76"/>2.5. Funcionalidade de Relatório</h2></div></div></div>
+		
+		<p>
+			Com a utilização do componente de relatórios do demoiselle (demoiselle-report) foi possível realizar a geração de relatórios em PDF e ODT
+			de forma simples. Através de anotações e das classes do componente o trabalho de configuração, preparação, comunicação com 
+			os arquivos .jrxml ou .jasper foram abstraídos. 
+		</p>
+		<div xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="note"><h2>Nota</h2>
+			<p>
+				Referência: 
+			</p>
+			<p>
+				<a class="link" href="http://demoiselle.sourceforge.net/docs/components/2.2.0/html/report-master.html" target="">http://demoiselle.sourceforge.net/docs/components/2.2.0/html/report-master.html</a>
+			</p>
+		</div>
+	</div>
+	
+	<div class="section" lang="pt-BR"><div class="titlepage"><div><div><h2 class="title"><a id="d4e83"/>2.6. Funcionalidade de Transação</h2></div></div></div>
+		
+		<p>
+			Com a utilização de uma única anotação "@Transactional" foi possível delegar todo o trabalho de inicializar a transação, verificação da transação e 
+			encerramento da transação para que o Framework Demoiselle, diminuindo consideravelmente o tempo de desenvolvimento.
+		</p>
+		<div xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="note"><h2>Nota</h2>
+			<p>
+				Referência: 
+			</p>
+			<p>
+				<a class="link" href="http://demoiselle.sourceforge.net/docs/what-is-new/2.0.1/html/arquitetura.html#d0e214" target="">http://demoiselle.sourceforge.net/docs/what-is-new/2.0.1/html/arquitetura.html#d0e214</a>
+			</p>
+		</div>
+	</div>
+	
+	<div class="section" lang="pt-BR"><div class="titlepage"><div><div><h2 class="title"><a id="d4e90"/>2.7. Funcionalidade de Inicialização</h2></div></div></div>
+		
+		<p>
+			Onde antes se implementava "ServletContextListerner" para executar algum trecho de código após a aplicação ser inicializada, com o Mecanismo de Inicialização
+			é possível utilizar qualquer método de qualquer classe do seu projeto apenas utilizando a anotação "@Startup".
+			No Projeto Escola essa anotação foi utilizada na classe DataSampleLoader para iniciar uma carga de registros na aplicação.
+		</p>
+		<div xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="note"><h2>Nota</h2>
+			<p>
+				Referência: 
+			</p>
+			<p>
+				<a class="link" href="http://demoiselle.sourceforge.net/docs/framework/reference/2.2.2/html/inicializacao.html" target="">http://demoiselle.sourceforge.net/docs/framework/reference/2.2.2/html/inicializacao.html</a>
+			</p>
+		</div>
+	</div>
+	
+	<div class="section" lang="pt-BR"><div class="titlepage"><div><div><h2 class="title"><a id="d4e97"/>2.8. Funcionalidade de E-mail</h2></div></div></div>
+		
+		<p>
+			Outra facilidade na forma de componente foi a utilização do componente de e-mail do Demoiselle (demoiselle-mail).
+			No Projeto Escola foi utilizado no envio de e-mail logo após o Professor cadastrar uma Nota no sistema, com poucas configurações já foi possível
+			realizar o disparo dos e-mails. 
+		</p>
+		<div xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="note"><h2>Nota</h2>
+			<p>
+				Referência: 
+			</p>
+			<p>
+				<a class="link" href="http://demoiselle.sourceforge.net/docs/components/2.2.0/html/mail-master.html" target="">http://demoiselle.sourceforge.net/docs/components/2.2.0/html/mail-master.html</a>
+			</p>
+		</div>
+	</div>
+
+</div><ul class="docnav"><li class="previous"><a accesskey="p" href="ch01.html"><strong>Anterior</strong>Capítulo 1. Instalação</a></li><li class="up"><a accesskey="u" href="#"><strong>Acima</strong></a></li><li class="home"><a accesskey="h" href="index.html"><strong>Principal</strong></a></li><li class="next"><a accesskey="n" href="ch03.html"><strong>Próxima</strong>Capítulo 3. Caso de Uso</a></li></ul></body></html>
