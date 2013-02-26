@@ -36,7 +36,7 @@ public class MBeanBootstrap implements Extension {
 	}
 	
 	public void createMBeanContext(@Observes final AfterBeanDiscovery event) {
-		mbeanContext = new ThreadLocalContext(RequestScoped.class,false,this.getClass().getCanonicalName());
+		mbeanContext = new ThreadLocalContext(RequestScoped.class,false);
 		event.addContext(mbeanContext);
 	}
 
