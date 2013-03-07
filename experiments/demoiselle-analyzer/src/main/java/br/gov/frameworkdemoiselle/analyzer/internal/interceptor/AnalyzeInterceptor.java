@@ -34,7 +34,7 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package br.gov.frameworkdemoiselle.analyser.internal.interceptor;
+package br.gov.frameworkdemoiselle.analyzer.internal.interceptor;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -52,8 +52,8 @@ import javax.interceptor.InvocationContext;
 
 import org.slf4j.Logger;
 
-import br.gov.frameworkdemoiselle.analyser.Analyze;
-import br.gov.frameworkdemoiselle.analyser.internal.configuration.AnalyzeConf;
+import br.gov.frameworkdemoiselle.analyzer.Analyze;
+import br.gov.frameworkdemoiselle.analyzer.internal.configuration.AnalyzeConf;
 import br.gov.frameworkdemoiselle.util.Reflections;
 
 @Interceptor
