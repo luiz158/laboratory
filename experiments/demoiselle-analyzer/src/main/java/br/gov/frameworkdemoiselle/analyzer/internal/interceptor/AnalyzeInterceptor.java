@@ -90,43 +90,43 @@ public class AnalyzeInterceptor implements Serializable {
 		return check(target, type, 0, 0);
 	}
 
-	private long check(Object target, Class<?> type, int tabCount, long size) throws Exception {
+	private long check(Object target, Class<?> type, int nestedCount, long size) throws Exception {
 		long result = size;
 
-		if (target != null) {
+		if (target != null && nestedCount <= conf.getMaxNestedInvocation()) {
 			if (type.getSuperclass() != null && !type.getSuperclass().equals(Object.class)) {
-				result += check(target, type.getSuperclass(), tabCount, size);
+				result += check(target, type.getSuperclass(), nestedCount, size);
 			}
 
-			buffer.append(createTab(tabCount) + type.getCanonicalName() + "\n");
+			buffer.append(createTab(nestedCount) + type.getCanonicalName() + "\n");
 
 			Object fieldValue;
 			for (Field field : Reflections.getNonStaticDeclaredFields(type)) {
 				fieldValue = getValue(field, target);
 
 				if (field.getType().isPrimitive()) {
-					result += print(field, target, tabCount);
+					result += print(field, target, nestedCount);
 
 				} else if (field.getType().isArray()) {
-					result += print(field, target, tabCount);
+					result += print(field, target, nestedCount);
 
 				} else if (fieldValue instanceof Collection<?>) {
-					result += print(field, target, tabCount);
+					result += print(field, target, nestedCount);
 
 				} else if (fieldValue instanceof Map<?, ?>) {
-					result += print(field, target, tabCount);
+					result += print(field, target, nestedCount);
 
 				} else if (field.getType().getPackage().getName().indexOf("java.lang") > -1
 						|| field.getType().getPackage().getName().indexOf("java.util") > -1) {
-					result += print(field, target, tabCount);
+					result += print(field, target, nestedCount);
 
 				} else if (fieldValue != null && field.getType().getPackage().getName().indexOf("weld") == -1) {
-					result += check(fieldValue, fieldValue.getClass(), tabCount + 1, size);
+					result += check(fieldValue, fieldValue.getClass(), nestedCount + 1, size);
 				}
 			}
 
 			// if (size >= conf.getMinSize()) {
-			buffer.append(createTab(tabCount) + "(" + result + " bytes)\n");
+			buffer.append(createTab(nestedCount) + "(" + result + " bytes)\n");
 			// }
 		}
 
