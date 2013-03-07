@@ -34,18 +34,21 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package br.gov.frameworkdemoiselle.analyser.internal.configuration;
+package br.gov.frameworkdemoiselle.analyser;
 
-import br.gov.frameworkdemoiselle.annotation.Name;
-import br.gov.frameworkdemoiselle.configuration.Configuration;
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-@Configuration(prefix = "frameworkdemoiselle.analyzer.")
-public class MemoryCheckConf {
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 
-	@Name("min.size")
-	private long minSize = 0;
+import javax.interceptor.InterceptorBinding;
 
-	public long getMinSize() {
-		return minSize;
-	}
+@Inherited
+@InterceptorBinding
+@Target({ METHOD, TYPE })
+@Retention(RUNTIME)
+public @interface Analyze {
 }

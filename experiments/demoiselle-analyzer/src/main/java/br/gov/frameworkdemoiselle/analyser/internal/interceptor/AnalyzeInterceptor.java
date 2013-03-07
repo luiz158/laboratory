@@ -52,13 +52,13 @@ import javax.interceptor.InvocationContext;
 
 import org.slf4j.Logger;
 
-import br.gov.frameworkdemoiselle.analyser.MemoryCheck;
-import br.gov.frameworkdemoiselle.analyser.internal.configuration.MemoryCheckConf;
+import br.gov.frameworkdemoiselle.analyser.Analyze;
+import br.gov.frameworkdemoiselle.analyser.internal.configuration.AnalyzeConf;
 import br.gov.frameworkdemoiselle.util.Reflections;
 
 @Interceptor
-@MemoryCheck
-public class MemoryCheckInterceptor implements Serializable {
+@Analyze
+public class AnalyzeInterceptor implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -66,7 +66,7 @@ public class MemoryCheckInterceptor implements Serializable {
 	private Logger logger;
 
 	@Inject
-	private MemoryCheckConf conf;
+	private AnalyzeConf conf;
 
 	private StringBuffer buffer;
 
