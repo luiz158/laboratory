@@ -45,14 +45,7 @@ public class AnalyzeConf {
 	@Name("min.size")
 	private long minSize = 0;
 
-	@Name("max.nested.invocation")
-	private int maxNestedInvocation = 15;
-
 	public long getMinSize() {
 		return minSize;
-	}
-
-	public int getMaxNestedInvocation() {
-		return maxNestedInvocation;
 	}
 }
