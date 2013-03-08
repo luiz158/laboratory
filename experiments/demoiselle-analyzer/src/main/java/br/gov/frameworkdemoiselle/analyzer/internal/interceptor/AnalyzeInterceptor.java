@@ -36,20 +36,18 @@
  */
 package br.gov.frameworkdemoiselle.analyzer.internal.interceptor;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.NotSerializableException;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.lang.reflect.Field;
-import java.util.Collection;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
 
+import org.apache.commons.lang.ClassUtils;
 import org.slf4j.Logger;
 
 import br.gov.frameworkdemoiselle.analyzer.Analyze;
@@ -74,63 +72,69 @@ public class AnalyzeInterceptor implements Serializable {
 	public Object manage(final InvocationContext ic) throws Exception {
 		Object result = ic.proceed();
 
-		buffer = new StringBuffer();
-		buffer.append("Verificando " + ic.getMethod() + "\n");
-		long size = check(ic.getTarget(), ic.getTarget().getClass());
-		buffer.append("Total: " + size + " bytes");
+		// buffer = new StringBuffer();
+		// buffer.append("Verificando " + ic.getMethod() + "\n");
+		long size = check(ic.getTarget());
+		// buffer.append("Total: " + size + " bytes");
 
-		if (size >= conf.getMinSize()) {
-			logger.info(buffer.toString());
-		}
+		// if (size >= conf.getMinSize()) {
+		// logger.info(buffer.toString());
+		// }
 
 		return result;
 	}
 
-	private long check(Object target, Class<?> type) throws Exception {
-		return check(target, type, 0, 0);
+	private long check(Object target) throws Exception {
+		return check(target.getClass().getCanonicalName(), target, target.getClass(), 0, 0);
 	}
 
-	private long check(Object target, Class<?> type, int nestedCount, long size) throws Exception {
+	private long check(String name, Object target, Class<?> type, int nestedCount, long size) throws Exception {
 		long result = size;
 
-		if (target != null && nestedCount <= conf.getMaxNestedInvocation()) {
-			if (type.getSuperclass() != null && !type.getSuperclass().equals(Object.class)) {
-				result += check(target, type.getSuperclass(), nestedCount, size);
-			}
+		logger.info(getTabulation(nestedCount) + name);
 
-			buffer.append(createTab(nestedCount) + type.getCanonicalName() + "\n");
+		Object value;
+		boolean found;
 
-			Object fieldValue;
-			for (Field field : Reflections.getNonStaticDeclaredFields(type)) {
-				fieldValue = getValue(field, target);
+		for (Field field : getNonStaticDeclaredFields(type)) {
+			value = getValue(field, target);
 
+			found = false;
+			if (value != null) {
 				if (field.getType().isPrimitive()) {
-					result += print(field, target, nestedCount);
+					found = true;
 
-				} else if (field.getType().isArray()) {
-					result += print(field, target, nestedCount);
+				} else if (ClassUtils.wrapperToPrimitive(field.getType()) != null) {
+					found = true;
 
-				} else if (fieldValue instanceof Collection<?>) {
-					result += print(field, target, nestedCount);
+				} else if (value instanceof String) {
+					found = true;
 
-				} else if (fieldValue instanceof Map<?, ?>) {
-					result += print(field, target, nestedCount);
+				} else if (value instanceof Class) {
+					found = true;
+				}
 
-				} else if (field.getType().getPackage().getName().indexOf("java.lang") > -1
-						|| field.getType().getPackage().getName().indexOf("java.util") > -1) {
-					result += print(field, target, nestedCount);
+				if (found) {
+					logger.info(getTabulation(nestedCount + 1) + field.getName());
 
-				} else if (fieldValue != null && field.getType().getPackage().getName().indexOf("weld") == -1) {
-					result += check(fieldValue, fieldValue.getClass(), nestedCount + 1, size);
+				} else {
+					check(field.getName(), value, field.getType(), nestedCount + 1, size);
 				}
 			}
-
-			// if (size >= conf.getMinSize()) {
-			buffer.append(createTab(nestedCount) + "(" + result + " bytes)\n");
-			// }
 		}
 
 		return result;
+	}
+
+	private List<Field> getNonStaticDeclaredFields(Class<?> type) {
+		List<Field> fields = new ArrayList<Field>();
+
+		if (type != null) {
+			fields.addAll(Arrays.asList(Reflections.getNonStaticDeclaredFields(type)));
+			fields.addAll(getNonStaticDeclaredFields(type.getSuperclass()));
+		}
+
+		return fields;
 	}
 
 	private Object getValue(Field field, Object target) throws Exception {
@@ -142,17 +146,7 @@ public class AnalyzeInterceptor implements Serializable {
 		return fieldValue;
 	}
 
-	private long print(Field field, Object target, int tabCount) throws Exception {
-		long size = sizeOf(getValue(field, target));
-
-		// if (size >= conf.getMinSize()) {
-		buffer.append(createTab(tabCount + 1) + field.getName() + " (" + size + " bytes)\n");
-		// }
-
-		return size;
-	}
-
-	private String createTab(int count) {
+	private String getTabulation(int count) {
 		String result = "";
 
 		for (int i = 0; i < (count + 1) * 4; i++) {
@@ -160,22 +154,5 @@ public class AnalyzeInterceptor implements Serializable {
 		}
 
 		return result;
-	}
-
-	private int sizeOf(Object obj) throws IOException {
-		ByteArrayOutputStream byteObject = new ByteArrayOutputStream();
-
-		try {
-			ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteObject);
-			objectOutputStream.writeObject(obj);
-			objectOutputStream.flush();
-			objectOutputStream.close();
-			byteObject.close();
-
-		} catch (NotSerializableException cause) {
-			buffer.append("Falha ao tentar serializar " + cause.getMessage() + "\n");
-		}
-
-		return byteObject.size();
 	}
 }
