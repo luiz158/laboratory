@@ -62,7 +62,7 @@ public class AnalyzeInterceptorTest {
 	}
 	
 	/**
-	 * Visiting non static declared fields including inherited fields. Complex type fields only.
+	 * Visiting non static declared fields including inherited fields. Bean type fields only.
 	 */
 	@Test
 	public void case2() {

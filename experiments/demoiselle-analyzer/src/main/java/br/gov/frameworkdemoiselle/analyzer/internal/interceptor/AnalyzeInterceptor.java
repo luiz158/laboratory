@@ -101,60 +101,79 @@ public class AnalyzeInterceptor implements Serializable {
 
 	private long check(String name, Object target, Class<?> type, int nestedCount, long size) throws Exception {
 		long result = size;
-		boolean serializable = false;
-
 		visitedInstances.add(target);
 
-		serializable |= type.isPrimitive();
-		serializable |= ClassUtils.wrapperToPrimitive(type) != null;
-		serializable |= target instanceof String;
-		serializable |= target instanceof Class;
-
-		if (serializable) {
+		if (isPrimitiveOrWrapper(type)) {
 			long objectSize = getSize(target);
 			result += objectSize;
 
 			println(getTabulation(nestedCount) + name + " (" + objectSize + ")");
 
-		} else if (target instanceof Collection<?>) {
-			println(getTabulation(nestedCount) + name);
-
-			int i = 0;
-			for (Object item : (Collection<?>) target) {
-				if (item != null) {
-					result += check(String.valueOf(i), item, item.getClass(), nestedCount + 1, size);
-				}
-				i++;
-			}
-
-			println(getTabulation(nestedCount) + "(" + result + ")");
-
-		} else if (target instanceof Map<?, ?>) {
-			println(getTabulation(nestedCount) + name);
-
-			Map<?, ?> map = (Map<?, ?>) target;
-			for (Object key : map.keySet()) {
-				if (map.get(key) != null) {
-					result += check(key.toString(), map.get(key), map.get(key).getClass(), nestedCount + 1, size);
-				}
-			}
-
-			println(getTabulation(nestedCount) + "(" + result + ")");
-
 		} else {
 			println(getTabulation(nestedCount) + name);
 
-			Object value;
-
-			for (Field field : getNonStaticDeclaredFields(type)) {
-				value = getValue(field, target);
-
-				if (value != null && !visitedInstances.contains(value)) {
-					result += check(field.getName(), value, field.getType(), nestedCount + 1, size);
-				}
+			if (target instanceof Collection<?>) {
+				result += checkCollection((Collection<?>) target, nestedCount, size);
+			} else if (target instanceof Map<?, ?>) {
+				result += checkMap((Map<?, ?>) target, nestedCount, size);
+			} else {
+				result += checkBean(target, type, nestedCount, size);
 			}
 
 			println(getTabulation(nestedCount) + "(" + result + ")");
+		}
+
+		return result;
+	}
+
+	private boolean isPrimitiveOrWrapper(Class<?> type) {
+		boolean result = false;
+
+		result |= type.isPrimitive();
+		result |= ClassUtils.wrapperToPrimitive(type) != null;
+		result |= type == String.class;
+		result |= type == Class.class;
+
+		return result;
+	}
+
+	private long checkCollection(Collection<?> target, int nestedCount, long size) throws Exception {
+		long result = size;
+
+		int i = 0;
+		for (Object item : target) {
+			if (item != null) {
+				result += check("[" + i + "]", item, item.getClass(), nestedCount + 1, size);
+			}
+			i++;
+		}
+
+		return result;
+	}
+
+	private long checkMap(Map<?, ?> target, int nestedCount, long size) throws Exception {
+		long result = size;
+
+		for (Object key : target.keySet()) {
+			if (target.get(key) != null) {
+				result += check("[" + key.toString() + "]", target.get(key), target.get(key).getClass(),
+						nestedCount + 1, size);
+			}
+		}
+
+		return result;
+	}
+
+	private long checkBean(Object target, Class<?> type, int nestedCount, long size) throws Exception {
+		long result = size;
+
+		Object value;
+		for (Field field : getNonStaticDeclaredFields(type)) {
+			value = getValue(field, target);
+
+			if (value != null && !visitedInstances.contains(value)) {
+				result += check(field.getName(), value, field.getType(), nestedCount + 1, size);
+			}
 		}
 
 		return result;
