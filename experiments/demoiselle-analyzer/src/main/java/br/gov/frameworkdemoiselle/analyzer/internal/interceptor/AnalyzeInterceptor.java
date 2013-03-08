@@ -44,6 +44,7 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -112,18 +113,32 @@ public class AnalyzeInterceptor implements Serializable {
 			value = getValue(field, target);
 
 			if (value != null) {
-				if (field.getType().isPrimitive()) {
-					serializable = true;
+				serializable |= field.getType().isPrimitive();
+				serializable |= ClassUtils.wrapperToPrimitive(field.getType()) != null;
+				serializable |= value instanceof String;
+				serializable |= value instanceof Class;
 
-				} else if (ClassUtils.wrapperToPrimitive(field.getType()) != null) {
-					serializable = true;
+				// if (field.getType().isPrimitive()) {
+				// serializable = true;
+				//
+				// } else if (ClassUtils.wrapperToPrimitive(field.getType()) != null) {
+				// serializable = true;
+				//
+				// } else if (value instanceof String) {
+				// serializable = true;
+				//
+				// } else if (value instanceof Class) {
+				// serializable = true;
 
-				} else if (value instanceof String) {
-					serializable = true;
-
-				} else if (value instanceof Class) {
-					serializable = true;
-				}
+				// if (value instanceof Collection<?>) {
+				// int i = 0;
+				// for (Object item : (Collection<?>) target) {
+				// if (item != null) {
+				// result += check(name + "[" + i + "]", item, item.getClass(), nestedCount + 1, size);
+				// }
+				// i++;
+				// }
+				// }
 
 				if (serializable) {
 					long fieldSize = getSize(value);

@@ -78,4 +78,13 @@ public class AnalyzeInterceptorTest {
 		logger.info("Running Case #3...");
 		Beans.getReference(Case3.class).go();
 	}
+	
+	/**
+	 * Visiting elements of a Collection field.
+	 */
+	@Test
+	public void case4() {
+		logger.info("Running Case #4...");
+		Beans.getReference(Case4.class).go();
+	}
 }
