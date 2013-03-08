@@ -55,7 +55,6 @@ import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
 
-import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.ClassUtils;
 import org.slf4j.Logger;
 
@@ -140,12 +139,17 @@ public class AnalyzeInterceptor implements Serializable {
 	private long checkCollection(Collection<?> target, int nestedCount, long size) throws Exception {
 		long result = size;
 
-		int i = 0;
-		for (Object item : target) {
-			if (item != null) {
-				result += check("[" + i + "]", item, item.getClass(), nestedCount + 1, size);
+		try {
+			int i = 0;
+			for (Object item : target) {
+				if (item != null) {
+					result += check("[" + i + "]", item, item.getClass(), nestedCount + 1, size);
+				}
+				i++;
 			}
-			i++;
+
+		} catch (Exception cause) {
+			println("Falha ao tentar acessar a Collection com o seguinte erro: " + cause.getMessage());
 		}
 
 		return result;
@@ -154,11 +158,16 @@ public class AnalyzeInterceptor implements Serializable {
 	private long checkMap(Map<?, ?> target, int nestedCount, long size) throws Exception {
 		long result = size;
 
-		for (Object key : target.keySet()) {
-			if (target.get(key) != null) {
-				result += check("[" + key.toString() + "]", target.get(key), target.get(key).getClass(),
-						nestedCount + 1, size);
+		try {
+			for (Object key : target.keySet()) {
+				if (target.get(key) != null) {
+					result += check("[" + key.toString() + "]", target.get(key), target.get(key).getClass(),
+							nestedCount + 1, size);
+				}
 			}
+
+		} catch (Exception cause) {
+			println("Falha ao tentar acessar o Map com o seguinte erro: " + cause.getMessage());
 		}
 
 		return result;
@@ -193,15 +202,15 @@ public class AnalyzeInterceptor implements Serializable {
 	private Object getValue(Field field, Object target) throws Exception {
 		Object fieldValue;
 
-		try {
-			fieldValue = PropertyUtils.getProperty(target, field.getName());
-
-		} catch (NoSuchMethodException cause) {
-			boolean accessible = field.isAccessible();
-			field.setAccessible(true);
-			fieldValue = field.get(target);
-			field.setAccessible(accessible);
-		}
+		// try {
+		// fieldValue = PropertyUtils.getProperty(target, field.getName());
+		//
+		// } catch (NoSuchMethodException cause) {
+		boolean accessible = field.isAccessible();
+		field.setAccessible(true);
+		fieldValue = field.get(target);
+		field.setAccessible(accessible);
+		// }
 
 		return fieldValue;
 	}
@@ -227,7 +236,7 @@ public class AnalyzeInterceptor implements Serializable {
 			byteObject.close();
 
 		} catch (NotSerializableException cause) {
-			println("Falha ao tentar serializar " + cause.getMessage() + "\n");
+			println("Falha ao tentar serializar " + cause.getMessage());
 		}
 
 		return byteObject.size();
