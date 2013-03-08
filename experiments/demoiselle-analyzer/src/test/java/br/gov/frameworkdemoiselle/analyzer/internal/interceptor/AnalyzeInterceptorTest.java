@@ -69,4 +69,13 @@ public class AnalyzeInterceptorTest {
 		logger.info("Running Case #2...");
 		Beans.getReference(Case2.class).go();
 	}
+	
+	/**
+	 * Solving circular references.
+	 */
+	@Test
+	public void case3() {
+		logger.info("Running Case #3...");
+		Beans.getReference(Case3.class).go();
+	}
 }

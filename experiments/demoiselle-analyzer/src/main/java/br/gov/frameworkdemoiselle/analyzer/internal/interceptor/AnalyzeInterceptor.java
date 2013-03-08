@@ -36,11 +36,17 @@
  */
 package br.gov.frameworkdemoiselle.analyzer.internal.interceptor;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.NotSerializableException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
@@ -66,7 +72,9 @@ public class AnalyzeInterceptor implements Serializable {
 	@Inject
 	private AnalyzeConf conf;
 
-	private StringBuffer buffer;
+	// private StringBuffer buffer;
+
+	private Set<Object> visitedInstances = new HashSet<Object>();
 
 	@AroundInvoke
 	public Object manage(final InvocationContext ic) throws Exception {
@@ -74,7 +82,9 @@ public class AnalyzeInterceptor implements Serializable {
 
 		// buffer = new StringBuffer();
 		// buffer.append("Verificando " + ic.getMethod() + "\n");
-		long size = check(ic.getTarget());
+		// long size =
+
+		check(ic.getTarget());
 		// buffer.append("Total: " + size + " bytes");
 
 		// if (size >= conf.getMinSize()) {
@@ -89,40 +99,45 @@ public class AnalyzeInterceptor implements Serializable {
 	}
 
 	private long check(String name, Object target, Class<?> type, int nestedCount, long size) throws Exception {
-		long result = size;
+		visitedInstances.add(target);
 
+		long result = size;
 		logger.info(getTabulation(nestedCount) + name);
 
 		Object value;
-		boolean found;
+		boolean serializable;
 
 		for (Field field : getNonStaticDeclaredFields(type)) {
+			serializable = false;
 			value = getValue(field, target);
 
-			found = false;
 			if (value != null) {
 				if (field.getType().isPrimitive()) {
-					found = true;
+					serializable = true;
 
 				} else if (ClassUtils.wrapperToPrimitive(field.getType()) != null) {
-					found = true;
+					serializable = true;
 
 				} else if (value instanceof String) {
-					found = true;
+					serializable = true;
 
 				} else if (value instanceof Class) {
-					found = true;
+					serializable = true;
 				}
 
-				if (found) {
-					logger.info(getTabulation(nestedCount + 1) + field.getName());
+				if (serializable) {
+					long fieldSize = getSize(value);
+					result += fieldSize;
 
-				} else {
-					check(field.getName(), value, field.getType(), nestedCount + 1, size);
+					logger.info(getTabulation(nestedCount + 1) + field.getName() + " (" + fieldSize + ")");
+
+				} else if (!visitedInstances.contains(value)) {
+					result += check(field.getName(), value, field.getType(), nestedCount + 1, size);
 				}
 			}
 		}
 
+		logger.info(getTabulation(nestedCount) + "(" + result + ")");
 		return result;
 	}
 
@@ -154,5 +169,22 @@ public class AnalyzeInterceptor implements Serializable {
 		}
 
 		return result;
+	}
+
+	private int getSize(Object target) throws IOException {
+		ByteArrayOutputStream byteObject = new ByteArrayOutputStream();
+
+		try {
+			ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteObject);
+			objectOutputStream.writeObject(target);
+			objectOutputStream.flush();
+			objectOutputStream.close();
+			byteObject.close();
+
+		} catch (NotSerializableException cause) {
+			// buffer.append("Falha ao tentar serializar " + cause.getMessage() + "\n");
+		}
+
+		return byteObject.size();
 	}
 }
