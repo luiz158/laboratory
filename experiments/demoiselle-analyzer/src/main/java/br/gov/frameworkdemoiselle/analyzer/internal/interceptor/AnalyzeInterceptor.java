@@ -47,6 +47,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -73,24 +74,22 @@ public class AnalyzeInterceptor implements Serializable {
 	@Inject
 	private AnalyzeConf conf;
 
-	// private StringBuffer buffer;
+	private StringBuffer buffer;
 
 	private Set<Object> visitedInstances = new HashSet<Object>();
 
 	@AroundInvoke
 	public Object manage(final InvocationContext ic) throws Exception {
 		Object result = ic.proceed();
+		buffer = new StringBuffer();
 
-		// buffer = new StringBuffer();
-		// buffer.append("Verificando " + ic.getMethod() + "\n");
-		// long size =
+		println("Verificando " + ic.getMethod());
+		long size = check(ic.getTarget());
+		println("Total: " + size + " bytes");
 
-		check(ic.getTarget());
-		// buffer.append("Total: " + size + " bytes");
-
-		// if (size >= conf.getMinSize()) {
-		// logger.info(buffer.toString());
-		// }
+		if (size >= conf.getMinSize()) {
+			logger.info(buffer.toString());
+		}
 
 		return result;
 	}
@@ -100,59 +99,63 @@ public class AnalyzeInterceptor implements Serializable {
 	}
 
 	private long check(String name, Object target, Class<?> type, int nestedCount, long size) throws Exception {
+		long result = size;
+		boolean serializable = false;
+
 		visitedInstances.add(target);
 
-		long result = size;
-		logger.info(getTabulation(nestedCount) + name);
+		serializable |= type.isPrimitive();
+		serializable |= ClassUtils.wrapperToPrimitive(type) != null;
+		serializable |= target instanceof String;
+		serializable |= target instanceof Class;
 
-		Object value;
-		boolean serializable;
+		if (serializable) {
+			long objectSize = getSize(target);
+			result += objectSize;
 
-		for (Field field : getNonStaticDeclaredFields(type)) {
-			serializable = false;
-			value = getValue(field, target);
+			println(getTabulation(nestedCount) + name + " (" + objectSize + ")");
 
-			if (value != null) {
-				serializable |= field.getType().isPrimitive();
-				serializable |= ClassUtils.wrapperToPrimitive(field.getType()) != null;
-				serializable |= value instanceof String;
-				serializable |= value instanceof Class;
+		} else if (target instanceof Collection<?>) {
+			println(getTabulation(nestedCount) + name);
 
-				// if (field.getType().isPrimitive()) {
-				// serializable = true;
-				//
-				// } else if (ClassUtils.wrapperToPrimitive(field.getType()) != null) {
-				// serializable = true;
-				//
-				// } else if (value instanceof String) {
-				// serializable = true;
-				//
-				// } else if (value instanceof Class) {
-				// serializable = true;
+			int i = 0;
+			for (Object item : (Collection<?>) target) {
+				if (item != null) {
+					result += check(String.valueOf(i), item, item.getClass(), nestedCount + 1, size);
+				}
+				i++;
+			}
 
-				// if (value instanceof Collection<?>) {
-				// int i = 0;
-				// for (Object item : (Collection<?>) target) {
-				// if (item != null) {
-				// result += check(name + "[" + i + "]", item, item.getClass(), nestedCount + 1, size);
-				// }
-				// i++;
-				// }
-				// }
+			println(getTabulation(nestedCount) + "(" + result + ")");
 
-				if (serializable) {
-					long fieldSize = getSize(value);
-					result += fieldSize;
+		} else if (target instanceof Map<?, ?>) {
+			println(getTabulation(nestedCount) + name);
 
-					logger.info(getTabulation(nestedCount + 1) + field.getName() + " (" + fieldSize + ")");
+			Map<?, ?> map = (Map<?, ?>) target;
+			for (Object key : map.keySet()) {
+				if (map.get(key) != null) {
+					result += check(key.toString(), map.get(key), map.get(key).getClass(), nestedCount + 1, size);
+				}
+			}
 
-				} else if (!visitedInstances.contains(value)) {
+			println(getTabulation(nestedCount) + "(" + result + ")");
+
+		} else {
+			println(getTabulation(nestedCount) + name);
+
+			Object value;
+
+			for (Field field : getNonStaticDeclaredFields(type)) {
+				value = getValue(field, target);
+
+				if (value != null && !visitedInstances.contains(value)) {
 					result += check(field.getName(), value, field.getType(), nestedCount + 1, size);
 				}
 			}
+
+			println(getTabulation(nestedCount) + "(" + result + ")");
 		}
 
-		logger.info(getTabulation(nestedCount) + "(" + result + ")");
 		return result;
 	}
 
@@ -197,9 +200,13 @@ public class AnalyzeInterceptor implements Serializable {
 			byteObject.close();
 
 		} catch (NotSerializableException cause) {
-			// buffer.append("Falha ao tentar serializar " + cause.getMessage() + "\n");
+			println("Falha ao tentar serializar " + cause.getMessage() + "\n");
 		}
 
 		return byteObject.size();
+	}
+
+	private void println(String message) {
+		buffer.append(message + "\n");
 	}
 }

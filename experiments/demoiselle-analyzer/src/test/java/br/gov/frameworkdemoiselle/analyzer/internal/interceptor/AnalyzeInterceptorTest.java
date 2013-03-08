@@ -80,7 +80,7 @@ public class AnalyzeInterceptorTest {
 	}
 	
 	/**
-	 * Visiting elements of a Collection field.
+	 * Visiting elements of a Collection or Map fields.
 	 */
 	@Test
 	public void case4() {
