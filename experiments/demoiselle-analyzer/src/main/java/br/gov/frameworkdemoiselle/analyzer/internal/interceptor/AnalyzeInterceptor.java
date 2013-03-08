@@ -249,7 +249,7 @@ public class AnalyzeInterceptor implements Serializable {
 	}
 
 	private void print(Node node) {
-		println(getTabulation(node.getLevel()) + node.getName());
+		println(getTabulation(node.getLevel()) + node.getName() + " (" + node.getSize() + " bytes)");
 
 		for (Node child : node.getChildren()) {
 			print(child);
@@ -275,7 +275,7 @@ public class AnalyzeInterceptor implements Serializable {
 
 		private final List<Node> children = new ArrayList<AnalyzeInterceptor.Node>();
 
-		private Long size;
+		private long size;
 
 		Node(String name, Class<?> type, Node parent) {
 			this.name = name;
@@ -299,16 +299,26 @@ public class AnalyzeInterceptor implements Serializable {
 			return name;
 		}
 
-		int getLevel() {
-			int level = 0;
+		long getSize() {
+			long result = this.size;
 
-			Node node = this;
-			while (node.parent != null) {
-				level++;
-				node = node.parent;
+			if (!isEnd()) {
+				for (Node child : getChildren()) {
+					result += child.getSize();
+				}
 			}
 
-			return level;
+			return result;
+		}
+
+		int getLevel() {
+			int result = 0;
+			
+			if(getParent() != null) {
+				result = getParent().getLevel() + 1;
+			}
+
+			return result;
 		}
 
 		Class<?> getType() {
@@ -324,7 +334,7 @@ public class AnalyzeInterceptor implements Serializable {
 		}
 
 		boolean isEnd() {
-			return this.children.isEmpty() && this.size != null;
+			return this.children.isEmpty() && this.size == 0;
 		}
 	}
 	//
