@@ -81,48 +81,59 @@ public class AnalyzeInterceptor implements Serializable {
 	@AroundInvoke
 	public Object manage(final InvocationContext ic) throws Exception {
 		Object result = ic.proceed();
-		buffer = new StringBuffer();
+		// buffer = new StringBuffer();
 
-		println("Verificando " + ic.getMethod());
-		long size = check(ic.getTarget());
-		println("Total: " + size + " bytes");
+		// println("Verificando " + ic.getMethod());
 
-		if (size >= conf.getMinSize()) {
-			logger.info(buffer.toString());
-		}
+		// Node root = new Node(ic.getMethod().toGenericString());
+		Node node = check(ic.getTarget());
+
+		print(node);
+
+		// println("Total: " + size + " bytes");
+
+		// if (size >= conf.getMinSize()) {
+		// logger.info(buffer.toString());
+		// }
 
 		return result;
 	}
 
-	private long check(Object target) throws Exception {
-		return check(target.getClass().getCanonicalName(), target, target.getClass(), 0, 0);
+	private Node check(Object target) throws Exception {
+		return check(target.getClass().getName(), target, target.getClass(), null);
 	}
 
-	private long check(String name, Object target, Class<?> type, int nestedCount, long size) throws Exception {
-		long result = size;
+	private Node check(String name, final Object target, final Class<?> type, Node parent) throws Exception {
+		// long result = size;
 		visitedInstances.add(target);
+		Node node = new Node(name, type, parent);
 
 		if (isPrimitiveOrWrapper(type)) {
-			long objectSize = getSize(target);
-			result += objectSize;
+			node.setSize(getSize(target));
+			//
+			// long objectSize = ;
+			// result += objectSize;
+			//
+			// new Node(name, objectSize);
 
-			println(getTabulation(nestedCount) + name + " (" + objectSize + ")");
+			// println(getTabulation(nestedCount) + name + " (" + objectSize + ")");
 
 		} else {
-			println(getTabulation(nestedCount) + name);
+			// println(getTabulation(nestedCount) + name);
 
 			if (target instanceof Collection<?>) {
-				result += checkCollection((Collection<?>) target, nestedCount, size);
+				checkCollection(name, (Collection<?>) target, node);
 			} else if (target instanceof Map<?, ?>) {
-				result += checkMap((Map<?, ?>) target, nestedCount, size);
+				checkMap(name, (Map<?, ?>) target, node);
 			} else {
-				result += checkBean(target, type, nestedCount, size);
+				checkBean(target, type, node);
 			}
 
-			println(getTabulation(nestedCount) + "(" + result + ")");
+			// println(getTabulation(nestedCount) + "(" + result + ")");
 		}
 
-		return result;
+		// return result;
+		return node;
 	}
 
 	private boolean isPrimitiveOrWrapper(Class<?> type) {
@@ -136,14 +147,12 @@ public class AnalyzeInterceptor implements Serializable {
 		return result;
 	}
 
-	private long checkCollection(Collection<?> target, int nestedCount, long size) throws Exception {
-		long result = size;
-
+	private void checkCollection(String name, Collection<?> target, Node parent) throws Exception {
 		try {
 			int i = 0;
 			for (Object item : target) {
 				if (item != null) {
-					result += check("[" + i + "]", item, item.getClass(), nestedCount + 1, size);
+					check("[" + i + "]", item, item.getClass(), parent);
 				}
 				i++;
 			}
@@ -151,41 +160,30 @@ public class AnalyzeInterceptor implements Serializable {
 		} catch (Exception cause) {
 			println("Falha ao tentar acessar a Collection com o seguinte erro: " + cause.getMessage());
 		}
-
-		return result;
 	}
 
-	private long checkMap(Map<?, ?> target, int nestedCount, long size) throws Exception {
-		long result = size;
-
+	private void checkMap(String name, Map<?, ?> target, Node parent) throws Exception {
 		try {
 			for (Object key : target.keySet()) {
 				if (target.get(key) != null) {
-					result += check("[" + key.toString() + "]", target.get(key), target.get(key).getClass(),
-							nestedCount + 1, size);
+					check("[" + key + "]", target.get(key), target.get(key).getClass(), parent);
 				}
 			}
 
 		} catch (Exception cause) {
 			println("Falha ao tentar acessar o Map com o seguinte erro: " + cause.getMessage());
 		}
-
-		return result;
 	}
 
-	private long checkBean(Object target, Class<?> type, int nestedCount, long size) throws Exception {
-		long result = size;
-
+	private void checkBean(Object target, Class<?> type, Node parent) throws Exception {
 		Object value;
 		for (Field field : getNonStaticDeclaredFields(type)) {
 			value = getValue(field, target);
 
 			if (value != null && !visitedInstances.contains(value)) {
-				result += check(field.getName(), value, field.getType(), nestedCount + 1, size);
+				check(field.getName(), value, field.getType(), parent);
 			}
 		}
-
-		return result;
 	}
 
 	private List<Field> getNonStaticDeclaredFields(Class<?> type) {
@@ -243,6 +241,112 @@ public class AnalyzeInterceptor implements Serializable {
 	}
 
 	private void println(String message) {
+		if (buffer == null) {
+			buffer = new StringBuffer();
+		}
+
 		buffer.append(message + "\n");
 	}
+
+	private void print(Node node) {
+		println(getTabulation(node.getLevel()) + node.getName());
+
+		for (Node child : node.getChildren()) {
+			print(child);
+		}
+
+		if (node.getParent() == null) {
+			logger.info(buffer.toString());
+		}
+	}
+
+	// private interface Node {
+
+	// String getName();
+	// }
+
+	private class Node {
+
+		private final String name;
+
+		private final Class<?> type;
+
+		private final Node parent;
+
+		private final List<Node> children = new ArrayList<AnalyzeInterceptor.Node>();
+
+		private Long size;
+
+		Node(String name, Class<?> type, Node parent) {
+			this.name = name;
+			this.type = type;
+			this.parent = parent;
+
+			if (this.parent != null) {
+				this.parent.addChild(this);
+			}
+		}
+
+		Node getParent() {
+			return parent;
+		}
+
+		List<Node> getChildren() {
+			return children;
+		}
+
+		String getName() {
+			return name;
+		}
+
+		int getLevel() {
+			int level = 0;
+
+			Node node = this;
+			while (node.parent != null) {
+				level++;
+				node = node.parent;
+			}
+
+			return level;
+		}
+
+		Class<?> getType() {
+			return type;
+		}
+
+		void setSize(long size) {
+			this.size = size;
+		}
+
+		void addChild(Node node) {
+			children.add(node);
+		}
+
+		boolean isEnd() {
+			return this.children.isEmpty() && this.size != null;
+		}
+	}
+	//
+	// private class NormalNode implements Node {
+	//
+	// private String name;
+	//
+	// private List<Node> children;
+	//
+	// NormalNode(String name) {
+	// this.name = name;
+	// }
+	// }
+	//
+	//
+	// private class FinalNode extends NormalNode {
+	//
+	// FinalNode(String name) {
+	// super(name);
+	// }
+	//
+	// private long size;
+	//
+	// }
 }

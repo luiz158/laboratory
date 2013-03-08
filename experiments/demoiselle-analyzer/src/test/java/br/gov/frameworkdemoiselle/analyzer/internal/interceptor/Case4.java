@@ -13,6 +13,8 @@ public class Case4 {
 
 	private Map<String, String> stringMap = new HashMap<String, String>();
 
+	private List<Map<String, String>> stringMapList = new ArrayList<Map<String, String>>();
+
 	public Case4() {
 		stringList.add("element 1");
 		stringList.add("element 2");
@@ -25,6 +27,9 @@ public class Case4 {
 		stringMap.put("key3", "value3");
 		stringMap.put("key4", "value4");
 		stringMap.put("key5", "value5");
+		
+		stringMapList.add(stringMap);
+		stringMapList.add(stringMap);
 	}
 
 	@Analyze
