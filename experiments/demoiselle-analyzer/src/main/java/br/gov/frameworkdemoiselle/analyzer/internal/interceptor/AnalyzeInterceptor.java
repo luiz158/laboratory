@@ -55,6 +55,7 @@ import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
 
+import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.ClassUtils;
 import org.slf4j.Logger;
 
@@ -171,10 +172,17 @@ public class AnalyzeInterceptor implements Serializable {
 	}
 
 	private Object getValue(Field field, Object target) throws Exception {
-		boolean accessible = field.isAccessible();
-		field.setAccessible(true);
-		Object fieldValue = field.get(target);
-		field.setAccessible(accessible);
+		Object fieldValue;
+
+		try {
+			fieldValue = PropertyUtils.getProperty(target, field.getName());
+
+		} catch (NoSuchMethodException cause) {
+			boolean accessible = field.isAccessible();
+			field.setAccessible(true);
+			fieldValue = field.get(target);
+			field.setAccessible(accessible);
+		}
 
 		return fieldValue;
 	}
