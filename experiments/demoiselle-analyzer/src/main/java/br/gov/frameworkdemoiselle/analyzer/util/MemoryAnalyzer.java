@@ -32,23 +32,13 @@ public class MemoryAnalyzer {
 
 	private static Node check(String name, final Object target, final Class<?> type, Node parent,
 			Set<Object> visitedInstances) throws Exception {
-		// long result = size;
 		visitedInstances.add(target);
 		Node node = new Node(name, type, parent);
 
 		if (isPrimitiveOrWrapper(type)) {
 			node.setSize(getSize(target));
-			//
-			// long objectSize = ;
-			// result += objectSize;
-			//
-			// new Node(name, objectSize);
-
-			// println(getTabulation(nestedCount) + name + " (" + objectSize + ")");
 
 		} else {
-			// println(getTabulation(nestedCount) + name);
-
 			if (target instanceof Collection<?>) {
 				checkCollection(name, (Collection<?>) target, node, visitedInstances);
 			} else if (target instanceof Map<?, ?>) {
@@ -56,11 +46,8 @@ public class MemoryAnalyzer {
 			} else {
 				checkBean(target, type, node, visitedInstances);
 			}
-
-			// println(getTabulation(nestedCount) + "(" + result + ")");
 		}
 
-		// return result;
 		return node;
 	}
 
@@ -131,15 +118,10 @@ public class MemoryAnalyzer {
 	private static Object getValue(Field field, Object target) throws Exception {
 		Object fieldValue;
 
-		// try {
-		// fieldValue = PropertyUtils.getProperty(target, field.getName());
-		//
-		// } catch (NoSuchMethodException cause) {
 		boolean accessible = field.isAccessible();
 		field.setAccessible(true);
 		fieldValue = field.get(target);
 		field.setAccessible(accessible);
-		// }
 
 		return fieldValue;
 	}
@@ -160,27 +142,4 @@ public class MemoryAnalyzer {
 
 		return byteObject.size();
 	}
-
-	// private static void println(String message) {
-	// if (buffer == null) {
-	// buffer = new StringBuffer();
-	// }
-	//
-	// buffer.append(message + "\n");
-	// }
-
-	// private void print(Node node) {
-	// println(getTabulation(node.getLevel()) + node.getName() + " (" + node.getSize() + " bytes)");
-	//
-	// for (Node child : node.getChildren()) {
-	// print(child);
-	// }
-	//
-	// if (node.getParent() == null) {
-	// logger.info(buffer.toString());
-	// }
-	// }
-
 }
-
-

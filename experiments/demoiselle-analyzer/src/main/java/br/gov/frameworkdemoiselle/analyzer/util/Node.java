@@ -15,7 +15,7 @@ public class Node {
 
 	private long size;
 
-	Node(String name, Class<?> type, Node parent) {
+	protected Node(String name, Class<?> type, Node parent) {
 		this.name = name;
 		this.type = type;
 		this.parent = parent;
