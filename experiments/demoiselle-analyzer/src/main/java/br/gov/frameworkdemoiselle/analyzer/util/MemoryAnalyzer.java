@@ -134,7 +134,7 @@ public class MemoryAnalyzer {
 		try {
 			result = getSizeByInstrumentation(target);
 
-		} catch (DemoiselleException cause) {
+		} catch (IllegalStateException cause) {
 			System.err.println("Estimando o tamanho do objeto com serialização.");
 
 			result = getSizeBySerialization(target);

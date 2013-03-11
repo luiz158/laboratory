@@ -5,8 +5,6 @@ import java.lang.instrument.Instrumentation;
 import javax.enterprise.inject.Default;
 import javax.enterprise.inject.Produces;
 
-import br.gov.frameworkdemoiselle.DemoiselleException;
-
 public class InstrumentationProducer {
 
 	private static Instrumentation instrumentation;
@@ -19,9 +17,9 @@ public class InstrumentationProducer {
 	@Produces
 	public Instrumentation create() {
 		if (instrumentation == null) {
-			throw new DemoiselleException("faltando: -javaassist: bla bla bla");
+			throw new IllegalStateException("faltando: -javaassist: bla bla bla"); 
 		}
-		
+
 		return instrumentation;
 	}
 }
