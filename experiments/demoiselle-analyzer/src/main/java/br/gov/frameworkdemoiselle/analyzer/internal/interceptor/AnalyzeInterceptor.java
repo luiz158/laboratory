@@ -46,7 +46,6 @@ import javax.interceptor.InvocationContext;
 import org.slf4j.Logger;
 
 import br.gov.frameworkdemoiselle.analyzer.Analyze;
-import br.gov.frameworkdemoiselle.analyzer.internal.configuration.AnalyzeConf;
 import br.gov.frameworkdemoiselle.analyzer.util.MemoryAnalyzer;
 import br.gov.frameworkdemoiselle.analyzer.util.Node;
 
@@ -59,8 +58,8 @@ public class AnalyzeInterceptor implements Serializable {
 	@Inject
 	private Logger logger;
 
-	@Inject
-	private AnalyzeConf conf;
+	// @Inject
+	// private AnalyzeConf conf;
 
 	private StringBuffer buffer;
 

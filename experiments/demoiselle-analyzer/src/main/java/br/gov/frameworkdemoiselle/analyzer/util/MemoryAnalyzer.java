@@ -2,8 +2,8 @@ package br.gov.frameworkdemoiselle.analyzer.util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.NotSerializableException;
 import java.io.ObjectOutputStream;
+import java.lang.instrument.Instrumentation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,6 +15,8 @@ import java.util.Set;
 
 import org.apache.commons.lang.ClassUtils;
 
+import br.gov.frameworkdemoiselle.DemoiselleException;
+import br.gov.frameworkdemoiselle.util.Beans;
 import br.gov.frameworkdemoiselle.util.Reflections;
 
 public class MemoryAnalyzer {
@@ -126,7 +128,27 @@ public class MemoryAnalyzer {
 		return fieldValue;
 	}
 
-	private static int getSize(Object target) throws IOException {
+	private static long getSize(Object target) throws IOException {
+		long result = 0;
+
+		try {
+			result = getSizeByInstrumentation(target);
+
+		} catch (DemoiselleException cause) {
+			System.err.println("Estimando o tamanho do objeto com serialização.");
+
+			result = getSizeBySerialization(target);
+		}
+
+		return result;
+	}
+
+	private static long getSizeByInstrumentation(Object target) {
+		Instrumentation instrumentation = Beans.getReference(Instrumentation.class);
+		return instrumentation.getObjectSize(target);
+	}
+
+	private static long getSizeBySerialization(Object target) {
 		ByteArrayOutputStream byteObject = new ByteArrayOutputStream();
 
 		try {
@@ -136,7 +158,7 @@ public class MemoryAnalyzer {
 			objectOutputStream.close();
 			byteObject.close();
 
-		} catch (NotSerializableException cause) {
+		} catch (Exception cause) {
 			// println("Falha ao tentar serializar " + cause.getMessage());
 		}
 
