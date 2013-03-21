@@ -28,9 +28,16 @@ public class DynamicMBeanProxyTest {
 
 		Assert.assertNotNull(manager);
 		Assert.assertNotNull(manager.listRegisteredMBeans());
-		Assert.assertEquals(1, manager.listRegisteredMBeans().size());
+		
+		//O componente demoiselle-jmx sempre tem pelo menos um MBean, que é
+		//o NotificationBroadcaster. Qualquer classe gerenciada criada pelo usuário
+		//será adicionada a ela, então esperamos 2 MBeans aqui.
+		Assert.assertEquals(2, manager.listRegisteredMBeans().size());
 	}
 
+	/**
+	 * Testa a invocação de operações sobre uma classe anotada com {@link Managed}. 
+	 */
 	@Test
 	public void testOperationInvocation() {
 		
