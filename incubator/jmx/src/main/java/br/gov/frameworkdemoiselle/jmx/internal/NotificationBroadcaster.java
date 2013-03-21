@@ -7,10 +7,19 @@ import javax.management.Notification;
 import javax.management.NotificationBroadcasterSupport;
 
 import br.gov.frameworkdemoiselle.jmx.configuration.JMXConfig;
+import br.gov.frameworkdemoiselle.management.notification.NotificationManager;
 import br.gov.frameworkdemoiselle.management.notification.event.NotificationEvent;
 import br.gov.frameworkdemoiselle.management.notification.qualifier.AttributeChange;
 import br.gov.frameworkdemoiselle.management.notification.qualifier.Generic;
 
+/**
+ * Implementation of the {@link NotificationBroadcaster} MBean. This MBean observes the {@link NotificationEvent} event.
+ * When the {@link NotificationManager} sends an event, the methods from this class captures the notification, converts it
+ * to a JMX notification and sends it to any management clients connected through JMX.
+ * 
+ * @author serpro
+ *
+ */
 @ApplicationScoped
 public class NotificationBroadcaster extends NotificationBroadcasterSupport implements NotificationBroadcasterMBean {
 	
