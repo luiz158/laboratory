@@ -1,6 +1,7 @@
 package br.gov.frameworkdemoiselle.jmx.internal;
 
 import java.lang.management.ManagementFactory;
+import java.util.Locale;
 
 import javax.management.MBeanServer;
 import javax.management.ObjectInstance;
@@ -11,6 +12,8 @@ import org.slf4j.Logger;
 
 import br.gov.frameworkdemoiselle.DemoiselleException;
 import br.gov.frameworkdemoiselle.internal.producer.LoggerProducer;
+import br.gov.frameworkdemoiselle.internal.producer.ResourceBundleProducer;
+import br.gov.frameworkdemoiselle.util.ResourceBundle;
 
 /**
  * Class with common tools for registering MBeans into an Managed server
@@ -20,6 +23,8 @@ import br.gov.frameworkdemoiselle.internal.producer.LoggerProducer;
 public class MBeanHelper {
 
 	private static final Logger logger = LoggerProducer.create(MBeanHelper.class);
+	
+	private static ResourceBundle bundle = ResourceBundleProducer.create("demoiselle-jmx-bundle", Locale.getDefault());
 
 	private static final MBeanServer server = ManagementFactory.getPlatformMBeanServer();
 
@@ -47,14 +52,15 @@ public class MBeanHelper {
 	 */
 	public static ObjectInstance register(final Object mbean, final String name) {
 
-		logger.info("Registering MBean [" + name + "]: " + mbean);
+		logger.info(bundle.getString("mbean-registration",name));
 
 		ObjectInstance instance = null;
 		try {
 			ObjectName objectName = new ObjectName(name);
 			instance = server.registerMBean(mbean, objectName);
 		} catch (Exception e) {
-			throw new DemoiselleException("Unable to register MBean [" + name + "]", e);
+			logger.error(bundle.getString("mbean-registration-error",name),e);
+			throw new DemoiselleException(bundle.getString("mbean-registration-error",name), e);
 		}
 
 		return instance;
@@ -68,12 +74,13 @@ public class MBeanHelper {
 	 */
 	public static void unregister(final ObjectName objectName) {
 
-		logger.info("Unregistering MBean [" + objectName + "]");
+		logger.info(bundle.getString("mbean-deregistration",objectName.getCanonicalName()));
 
 		try {
 			server.unregisterMBean(objectName);
 		} catch (Exception e) {
-			throw new DemoiselleException("Unable to unregister MBean [" + objectName + "]", e);
+			logger.error(bundle.getString("mbean-deregistration",objectName.getCanonicalName()),e);
+			throw new DemoiselleException(bundle.getString("mbean-deregistration",objectName.getCanonicalName()), e);
 		}
 	}
 

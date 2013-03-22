@@ -1,7 +1,7 @@
 package br.gov.frameworkdemoiselle.jmx.internal;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.HashMap;
 
 import javax.inject.Singleton;
 import javax.management.ObjectInstance;
@@ -9,15 +9,23 @@ import javax.management.ObjectInstance;
 @Singleton
 public class MBeanManager {
 	
-	private ArrayList<ObjectInstance> registeredMBeans = new ArrayList<ObjectInstance>();
+	private HashMap<String,ObjectInstance> registeredMBeans = new HashMap<String,ObjectInstance>();
 	
 	public void storeRegisteredMBean(ObjectInstance instance){
-		registeredMBeans.add(instance);
+		registeredMBeans.put(instance.getObjectName().getCanonicalName(),instance);
 	}
 	
-	@SuppressWarnings("unchecked")
-	public List<ObjectInstance> listRegisteredMBeans(){
-		return (List<ObjectInstance>) registeredMBeans.clone();
+	public Collection<ObjectInstance> listRegisteredMBeans(){
+		return registeredMBeans.values();
+	}
+	
+	public ObjectInstance findMBeanInstance(String name){
+		ObjectInstance instance = registeredMBeans.get(name);
+		return instance;
+	}
+	
+	public void cleanRegisteredMBeans(){
+		registeredMBeans.clear();
 	}
 
 }

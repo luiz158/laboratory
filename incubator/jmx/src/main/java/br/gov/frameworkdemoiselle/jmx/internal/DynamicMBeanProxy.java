@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.TreeMap;
 
+import javax.enterprise.context.ContextNotActiveException;
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.spi.Context;
 import javax.management.Attribute;
 import javax.management.AttributeList;
 import javax.management.AttributeNotFoundException;
@@ -22,7 +25,10 @@ import javax.management.MBeanParameterInfo;
 import javax.management.OperationsException;
 import javax.management.ReflectionException;
 
+import org.slf4j.Logger;
+
 import br.gov.frameworkdemoiselle.DemoiselleException;
+import br.gov.frameworkdemoiselle.internal.context.CustomContext;
 import br.gov.frameworkdemoiselle.internal.producer.ResourceBundleProducer;
 import br.gov.frameworkdemoiselle.management.annotation.Managed;
 import br.gov.frameworkdemoiselle.management.annotation.Operation;
@@ -56,9 +62,13 @@ public class DynamicMBeanProxy implements DynamicMBean {
 	private TreeMap<String, Method> setterMethods;
 	private TreeMap<String, Method> operationMethods;
 	
+	private Logger logger;
+	
 	private ResourceBundle bundle = ResourceBundleProducer.create("demoiselle-jmx-bundle", Locale.getDefault());
 	
-	public DynamicMBeanProxy(Class<?> delegateClass){
+	private CustomContext mbeanContext;
+	
+	public DynamicMBeanProxy(Class<?> delegateClass, CustomContext mbeanContext){
 		if (delegateClass == null){
 			throw new NullPointerException(bundle.getString("mbean-null-class-defined"));
 		}
@@ -68,11 +78,14 @@ public class DynamicMBeanProxy implements DynamicMBean {
 		}
 		
 		this.delegateClass = delegateClass;
+		this.mbeanContext = mbeanContext;
 		managedAnnotation = this.delegateClass.getAnnotation(Managed.class);
 		
 		getterMethods = new TreeMap<String, Method>();
 		setterMethods = new TreeMap<String, Method>();
 		operationMethods = new TreeMap<String, Method>();
+		
+		logger = Beans.getReference(Logger.class);
 	}
 
 	@Override
@@ -85,6 +98,7 @@ public class DynamicMBeanProxy implements DynamicMBean {
 		//Procura o método get do atributo em questão
 		Method method = getterMethods.get(attribute);
 		if (method!=null){
+			logger.debug(bundle.getString("mbean-debug-acessing-property",method.getName(),delegateClass.getCanonicalName()));
 			
 			//Obtém uma instância da classe gerenciada, lembrando que classes
 			//anotadas com @Managed são sempre Singletons.
@@ -114,6 +128,7 @@ public class DynamicMBeanProxy implements DynamicMBean {
 		//Procura o método get do atributo em questão
 		Method method = setterMethods.get(attribute.getName());
 		if (method!=null){
+			logger.debug(bundle.getString("mbean-debug-setting-property",method.getName(),delegateClass.getCanonicalName()));
 			
 			//Obtém uma instância da classe gerenciada, lembrando que classes
 			//anotadas com @Managed são sempre Singletons.
@@ -173,6 +188,7 @@ public class DynamicMBeanProxy implements DynamicMBean {
 	@Override
 	public Object invoke(String actionName, Object[] params, String[] signature) throws MBeanException,
 			ReflectionException {
+		
 		//Se o bean ainda não foi lido para determinar seus atributos, o faz agora.
 		if (this.delegateInfo==null){
 			initializeMBeanInfo();
@@ -180,15 +196,47 @@ public class DynamicMBeanProxy implements DynamicMBean {
 		
 		Method method = operationMethods.get(actionName);
 		if (method!=null){
+			logger.debug(bundle.getString("mbean-debug-invoking-operation",method.getName(),delegateClass.getCanonicalName()));
+			
+//			CustomContext context = new ThreadLocalContext(RequestScoped.class);
+//			Contexts.add(context, this.afterBeanDiscoveryEvent);
+			
+			activateContexts();
+			
 			Object delegate = Beans.getReference(delegateClass);
 			try {
 				return method.invoke(delegate, params);
 			} catch (Exception e) {
 				throw new MBeanException(e);
+			}finally {
+				deactivateContexts();
 			}
 		}
 		else{
 			throw new MBeanException( new OperationsException( bundle.getString("mbean-invoke-error", actionName) ) );
+		}
+	}
+	
+	private void activateContexts(){
+		try{
+			Beans.getBeanManager().getContext(RequestScoped.class);
+			logger.debug(bundle.getString("mbean-debug-starting-custom-context",mbeanContext.getScope().getCanonicalName(),delegateClass.getCanonicalName()));
+		}
+		catch(ContextNotActiveException e){
+			mbeanContext.setActive(true);
+		}
+	}
+	
+	private void deactivateContexts(){
+		try{
+			Context ctx = Beans.getBeanManager().getContext(RequestScoped.class);
+			if (ctx == mbeanContext){
+				mbeanContext.setActive(false);
+				logger.debug(bundle.getString("mbean-debug-stoping-custom-context",mbeanContext.getScope().getCanonicalName(),delegateClass.getCanonicalName()));
+			}
+		}
+		catch(Exception e){
+			//NOOP
 		}
 	}
 	
