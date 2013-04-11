@@ -1,5 +1,7 @@
 package br.gov.frameworkdemoiselle.management.notification;
 
+import java.io.Serializable;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
@@ -29,7 +31,8 @@ import br.gov.frameworkdemoiselle.util.Beans;
  *
  */
 @ApplicationScoped
-public class NotificationManager {
+@SuppressWarnings("serial")
+public class NotificationManager implements Serializable{
 	
 	@Inject
 	@Generic
