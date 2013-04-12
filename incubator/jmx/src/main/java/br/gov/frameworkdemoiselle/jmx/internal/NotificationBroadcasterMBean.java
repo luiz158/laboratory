@@ -8,5 +8,5 @@ package br.gov.frameworkdemoiselle.jmx.internal;
  * @author serpro
  *
  */
-public interface NotificationBroadcasterMBean {
+interface NotificationBroadcasterMBean {
 }

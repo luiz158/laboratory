@@ -20,7 +20,7 @@ import br.gov.frameworkdemoiselle.jmx.configuration.JMXConfig;
 import br.gov.frameworkdemoiselle.jmx.internal.DynamicMBeanProxy;
 import br.gov.frameworkdemoiselle.jmx.internal.MBeanHelper;
 import br.gov.frameworkdemoiselle.jmx.internal.MBeanManager;
-import br.gov.frameworkdemoiselle.jmx.internal.NotificationBroadcaster;
+import br.gov.frameworkdemoiselle.jmx.internal.NotificationEventListener;
 import br.gov.frameworkdemoiselle.lifecycle.AfterShutdownProccess;
 import br.gov.frameworkdemoiselle.management.annotation.Managed;
 import br.gov.frameworkdemoiselle.util.Beans;
@@ -66,15 +66,15 @@ public class MBeanBootstrap implements Extension {
 		MBeanManager mbeanManager = Beans.getReference(MBeanManager.class);
 		JMXConfig configuration = Beans.getReference(JMXConfig.class);
 
-		NotificationBroadcaster notificationBroadcaster = Beans.getReference(NotificationBroadcaster.class);
-		
 		StringBuffer notificationMBeanName = new StringBuffer()
 			.append( configuration.getNotificationDomain()!=null ? configuration.getNotificationDomain() : "br.gov.frameworkdemoiselle.jmx" )
 			.append(":name=")
 			.append(configuration.getNotificationMBeanName());
 		
 		if (mbeanManager.findMBeanInstance(notificationMBeanName.toString()) == null){
-			ObjectInstance instance = MBeanHelper.register(notificationBroadcaster, notificationMBeanName.toString());
+			NotificationEventListener listener = Beans.getReference(NotificationEventListener.class);
+
+			ObjectInstance instance = MBeanHelper.register(listener.createNotificationBroadcaster(), notificationMBeanName.toString());
 			mbeanManager.storeRegisteredMBean(instance);
 		}
 	}

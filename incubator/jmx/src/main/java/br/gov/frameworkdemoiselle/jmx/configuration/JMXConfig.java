@@ -1,8 +1,9 @@
 package br.gov.frameworkdemoiselle.jmx.configuration;
 
+import javax.management.NotificationBroadcaster;
+
 import br.gov.frameworkdemoiselle.annotation.Name;
 import br.gov.frameworkdemoiselle.configuration.Configuration;
-import br.gov.frameworkdemoiselle.jmx.internal.NotificationBroadcaster;
 import br.gov.frameworkdemoiselle.management.annotation.Managed;
 
 @Configuration(prefix = "frameworkdemoiselle.management.jmx.")
@@ -11,11 +12,11 @@ public class JMXConfig {
 	@Name("mbean.domain")
 	private String mbeanDomain;
 	
-	@Name("mbean.notification.domain")
+	@Name("notification.domain")
 	private String notificationDomain;
 	
-	@Name("mbean.notification.name")
-	private String notificationMBeanName = NotificationBroadcaster.class.getSimpleName();
+	@Name("notification.name")
+	private String notificationMBeanName = "NotificationBroadcaster";
 	
 	/**
 	 * </p>The domain to register all {@link Managed} classes found during boot.</p>

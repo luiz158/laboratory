@@ -1,5 +1,6 @@
 package br.gov.frameworkdemoiselle.jmx.tests.internal;
 
+import java.io.IOException;
 import java.lang.management.ManagementFactory;
 
 import javax.management.InstanceNotFoundException;
@@ -59,7 +60,22 @@ public class NotificationBroadcasterTest {
 		
 		//Manda a notificação pelo Demoiselle
 		Notification n = new Notification("Notification test successful");
+		
+		try {
+			System.in.read();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		notificationManager.sendNotification(n);
+		
+		try {
+			System.in.read();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		//Se o componente funcionou, o Demoiselle propagou a notificação para o servidor MBean e o listener preencheu
 		//o StringBuffer com nossa mensagem.

@@ -65,6 +65,32 @@ public class MBeanHelper {
 
 		return instance;
 	}
+	
+	/**
+	 * Creates and registers a managed bean of the given class type, with the specified name.
+	 * 
+	 * @param mbeanClass
+	 *            the class implementing the managed bean to register
+	 * @param name
+	 *            the name under which to register the bean
+	 * @return the object name of the mbean, for later deregistration
+	 */
+	public static ObjectInstance register (final Class<?> mbeanClass , final String name){
+		
+		logger.info(bundle.getString("mbean-registration",name));
+
+		ObjectInstance instance = null;
+		try {
+			ObjectName objectName = new ObjectName(name);
+			instance = server.createMBean(mbeanClass.getCanonicalName(), objectName);
+		} catch (Exception e) {
+			logger.error(bundle.getString("mbean-registration-error",name),e);
+			throw new DemoiselleException(bundle.getString("mbean-registration-error",name), e);
+		}
+
+		return instance;
+		
+	}
 
 	/**
 	 * Remove the registration of a bean.
