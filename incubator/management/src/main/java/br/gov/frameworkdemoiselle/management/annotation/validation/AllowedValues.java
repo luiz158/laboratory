@@ -1,7 +1,6 @@
-package br.gov.frameworkdemoiselle.management.validation;
+package br.gov.frameworkdemoiselle.management.annotation.validation;
 
 import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import java.lang.annotation.Documented;
@@ -13,7 +12,7 @@ import javax.validation.Constraint;
 import br.gov.frameworkdemoiselle.management.internal.validators.AllowedValuesValidator;
 
 @Documented
-@Target({ FIELD, METHOD })
+@Target({ FIELD})
 @Retention(RUNTIME)
 @Constraint(validatedBy = AllowedValuesValidator.class)
 /**

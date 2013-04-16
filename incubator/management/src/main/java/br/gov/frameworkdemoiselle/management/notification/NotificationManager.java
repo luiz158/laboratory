@@ -7,9 +7,9 @@ import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
-import br.gov.frameworkdemoiselle.management.notification.event.NotificationEvent;
-import br.gov.frameworkdemoiselle.management.notification.qualifier.AttributeChange;
-import br.gov.frameworkdemoiselle.management.notification.qualifier.Generic;
+import br.gov.frameworkdemoiselle.management.internal.notification.event.NotificationEvent;
+import br.gov.frameworkdemoiselle.management.internal.notification.qualifier.AttributeChange;
+import br.gov.frameworkdemoiselle.management.internal.notification.qualifier.Generic;
 import br.gov.frameworkdemoiselle.util.Beans;
 
 /**

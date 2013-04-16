@@ -1,4 +1,4 @@
-package br.gov.frameworkdemoiselle.management.notification.event;
+package br.gov.frameworkdemoiselle.management.internal.notification.event;
 
 import br.gov.frameworkdemoiselle.management.notification.Notification;
 import br.gov.frameworkdemoiselle.management.notification.NotificationManager;

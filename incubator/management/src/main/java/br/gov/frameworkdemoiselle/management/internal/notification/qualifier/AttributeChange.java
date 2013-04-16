@@ -1,4 +1,4 @@
-package br.gov.frameworkdemoiselle.management.notification.qualifier;
+package br.gov.frameworkdemoiselle.management.internal.notification.qualifier;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,8 +7,8 @@ import java.lang.annotation.Target;
 
 import javax.inject.Qualifier;
 
+import br.gov.frameworkdemoiselle.management.internal.notification.event.NotificationEvent;
 import br.gov.frameworkdemoiselle.management.notification.AttributeChangeNotification;
-import br.gov.frameworkdemoiselle.management.notification.event.NotificationEvent;
 
 /**
  * 
