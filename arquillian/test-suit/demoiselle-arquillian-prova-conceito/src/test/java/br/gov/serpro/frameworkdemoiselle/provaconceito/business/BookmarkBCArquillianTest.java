@@ -13,7 +13,7 @@ import org.junit.Test;
 import br.gov.serpro.frameworkdemoiselle.arquillian.DemoiselleArquillian;
 import br.gov.serpro.frameworkdemoiselle.provaconceito.domain.Bookmark;
 
-public class BookmarkBCTestArquillian extends DemoiselleArquillian {
+public class BookmarkBCArquillianTest extends DemoiselleArquillian {
 
 	@Inject
 	private BookmarkBC bookmarkBC;
@@ -32,7 +32,7 @@ public class BookmarkBCTestArquillian extends DemoiselleArquillian {
 		assertNotNull(listaBookmarks);
 		assertEquals(10, listaBookmarks.size());
 	}
-	
+
 	@Test
 	public void testInsert() {
 		Bookmark bookmark = new Bookmark("Demoiselle Portal", "http://www.frameworkdemoiselle.gov.br");
