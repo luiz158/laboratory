@@ -9,8 +9,10 @@ import java.util.List;
  * @author serpro
  *
  */
-public interface MonitoringExtension {
+public interface ManagementExtension {
 
 	void initialize(List<ManagedType> managedTypes);
+
+	void shutdown(List<ManagedType> managedTypes);
 
 }

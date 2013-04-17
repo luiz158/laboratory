@@ -44,7 +44,7 @@ public class MonitoringManager {
 	 * @return A list all managed types, classes annotated with {@link Managed}.
 	 *         The returned list is a shallow copy of the internal list, so you
 	 *         are free to modify it.
-	 *         
+	 * 
 	 *         TODO precisamos desse clone na lista?
 	 */
 	public List<ManagedType> getManagedTypes() {
@@ -193,23 +193,30 @@ public class MonitoringManager {
 				managedType.getCanonicalName());
 		Contexts.deactivate(ManagedContext.class);
 	}
-	
-	public void shutdown() {
-		
-		// TODO implementar...
-		
+
+	public void shutdown(Collection<Class<? extends ManagementExtension>> monitoringExtensions) {
+
+		for (Class<? extends ManagementExtension> monitoringExtensionClass : monitoringExtensions) {
+
+			ManagementExtension monitoringExtension = Beans.getReference(monitoringExtensionClass);
+
+			monitoringExtension.shutdown(this.getManagedTypes());
+
+		}
+
 	}
 
-	public void initialize(Collection<Class<? extends MonitoringExtension>> monitoringExtensions) {
-		
-		for (Class<? extends MonitoringExtension> monitoringExtensionClass : monitoringExtensions) {
-			
-			MonitoringExtension monitoringExtension = Beans.getReference(monitoringExtensionClass);
-			
+	public void initialize(Collection<Class<? extends ManagementExtension>> monitoringExtensions) {
+
+		for (Class<? extends ManagementExtension> monitoringExtensionClass : monitoringExtensions) {
+
+			ManagementExtension monitoringExtension = Beans
+					.getReference(monitoringExtensionClass);
+
 			monitoringExtension.initialize(this.getManagedTypes());
-			
+
 		}
-		
+
 	}
 
 }
