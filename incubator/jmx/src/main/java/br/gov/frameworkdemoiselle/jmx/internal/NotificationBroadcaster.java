@@ -7,8 +7,8 @@ import javax.management.Notification;
 import javax.management.NotificationBroadcasterSupport;
 
 import br.gov.frameworkdemoiselle.jmx.configuration.JMXConfig;
+import br.gov.frameworkdemoiselle.management.internal.notification.event.NotificationEvent;
 import br.gov.frameworkdemoiselle.management.notification.NotificationManager;
-import br.gov.frameworkdemoiselle.management.notification.event.NotificationEvent;
 
 /**
  * Implementation of the {@link NotificationBroadcaster} MBean.

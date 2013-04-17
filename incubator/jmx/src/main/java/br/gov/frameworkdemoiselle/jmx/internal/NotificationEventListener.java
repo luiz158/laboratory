@@ -6,10 +6,10 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 
 import br.gov.frameworkdemoiselle.jmx.configuration.JMXConfig;
+import br.gov.frameworkdemoiselle.management.internal.notification.event.NotificationEvent;
+import br.gov.frameworkdemoiselle.management.internal.notification.qualifier.AttributeChange;
+import br.gov.frameworkdemoiselle.management.internal.notification.qualifier.Generic;
 import br.gov.frameworkdemoiselle.management.notification.NotificationManager;
-import br.gov.frameworkdemoiselle.management.notification.event.NotificationEvent;
-import br.gov.frameworkdemoiselle.management.notification.qualifier.AttributeChange;
-import br.gov.frameworkdemoiselle.management.notification.qualifier.Generic;
 
 /**
  * Listens to {@link NotificationManager} notification events and proxies them
