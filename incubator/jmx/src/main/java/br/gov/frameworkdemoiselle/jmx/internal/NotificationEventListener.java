@@ -26,11 +26,11 @@ public class NotificationEventListener implements Serializable {
 	private NotificationBroadcaster notificationBroadcaster;
 	
 	public void sendNotification( @Observes @Generic NotificationEvent event , JMXConfig config ) {
-		notificationBroadcaster.sendNotification(event,config);
+		createNotificationBroadcaster().sendNotification(event,config);
 	}
 	
 	public void sendAttributeChangedMessage( @Observes @AttributeChange NotificationEvent event , JMXConfig config ) {
-		notificationBroadcaster.sendAttributeChangedMessage(event, config);
+		createNotificationBroadcaster().sendAttributeChangedMessage(event, config);
 	}
 	
 	public NotificationBroadcaster createNotificationBroadcaster(){

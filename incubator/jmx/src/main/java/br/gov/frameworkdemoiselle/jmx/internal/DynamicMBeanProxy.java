@@ -1,18 +1,9 @@
 package br.gov.frameworkdemoiselle.jmx.internal;
 
-import java.beans.IntrospectionException;
-import java.beans.PropertyDescriptor;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Map.Entry;
-import java.util.TreeMap;
 
-import javax.enterprise.context.ContextNotActiveException;
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.spi.Context;
 import javax.management.Attribute;
 import javax.management.AttributeList;
 import javax.management.AttributeNotFoundException;
@@ -23,22 +14,16 @@ import javax.management.MBeanException;
 import javax.management.MBeanInfo;
 import javax.management.MBeanOperationInfo;
 import javax.management.MBeanParameterInfo;
-import javax.management.OperationsException;
 import javax.management.ReflectionException;
 
-import org.slf4j.Logger;
-
 import br.gov.frameworkdemoiselle.DemoiselleException;
-import br.gov.frameworkdemoiselle.internal.context.CustomContext;
 import br.gov.frameworkdemoiselle.internal.producer.ResourceBundleProducer;
 import br.gov.frameworkdemoiselle.management.annotation.Managed;
-import br.gov.frameworkdemoiselle.management.annotation.Operation;
-import br.gov.frameworkdemoiselle.management.annotation.OperationParameter;
-import br.gov.frameworkdemoiselle.management.annotation.Property;
 import br.gov.frameworkdemoiselle.management.internal.ManagedType;
 import br.gov.frameworkdemoiselle.management.internal.ManagedType.FieldDetail;
 import br.gov.frameworkdemoiselle.management.internal.ManagedType.MethodDetail;
 import br.gov.frameworkdemoiselle.management.internal.ManagedType.ParameterDetail;
+import br.gov.frameworkdemoiselle.management.internal.MonitoringManager;
 import br.gov.frameworkdemoiselle.util.Beans;
 import br.gov.frameworkdemoiselle.util.ResourceBundle;
 
@@ -55,31 +40,16 @@ import br.gov.frameworkdemoiselle.util.ResourceBundle;
 public class DynamicMBeanProxy implements DynamicMBean {
 
 	private MBeanInfo delegateInfo;
-
-	private Logger logger;
+	
+	private ManagedType managedType;
 
 	private ResourceBundle bundle = ResourceBundleProducer.create("demoiselle-jmx-bundle", Locale.getDefault());
 
-	private CustomContext mbeanContext;
-
-	public DynamicMBeanProxy(Class<?> delegateClass, CustomContext mbeanContext) {
-		if (delegateClass == null) {
-			throw new NullPointerException(bundle.getString("mbean-null-class-defined"));
+	public DynamicMBeanProxy(ManagedType type) {
+		if (type == null) {
+			throw new NullPointerException(bundle.getString("mbean-null-type-defined"));
 		}
-
-		if (delegateClass.getAnnotation(Managed.class) == null) {
-			throw new DemoiselleException(bundle.getString("mbean-no-annotation-found"));
-		}
-
-		this.delegateClass = delegateClass;
-		this.mbeanContext = mbeanContext;
-		managedAnnotation = this.delegateClass.getAnnotation(Managed.class);
-
-		getterMethods = new TreeMap<String, Method>();
-		setterMethods = new TreeMap<String, Method>();
-		operationMethods = new TreeMap<String, Method>();
-
-		logger = Beans.getReference(Logger.class);
+		managedType = type;
 	}
 
 	@Override
@@ -89,24 +59,8 @@ public class DynamicMBeanProxy implements DynamicMBean {
 			initializeMBeanInfo();
 		}
 
-		// Procura o método get do atributo em questão
-		Method method = getterMethods.get(attribute);
-		if (method != null) {
-			logger.debug(bundle.getString("mbean-debug-acessing-property", method.getName(),
-					delegateClass.getCanonicalName()));
-
-			// Obtém uma instância da classe gerenciada, lembrando que classes
-			// anotadas com @Managed são sempre Singletons.
-			Object delegate = Beans.getReference(delegateClass);
-
-			try {
-				return method.invoke(delegate, (Object[]) null);
-			} catch (Exception e) {
-				throw new MBeanException(e);
-			}
-		} else {
-			throw new AttributeNotFoundException();
-		}
+		MonitoringManager manager = Beans.getReference(MonitoringManager.class);
+		return manager.getProperty(managedType, attribute);
 	}
 
 	@Override
@@ -118,25 +72,8 @@ public class DynamicMBeanProxy implements DynamicMBean {
 			initializeMBeanInfo();
 		}
 
-		// Procura o método get do atributo em questão
-		Method method = setterMethods.get(attribute.getName());
-		if (method != null) {
-			logger.debug(bundle.getString("mbean-debug-setting-property", method.getName(),
-					delegateClass.getCanonicalName()));
-
-			// Obtém uma instância da classe gerenciada, lembrando que classes
-			// anotadas com @Managed são sempre Singletons.
-			Object delegate = Beans.getReference(delegateClass);
-
-			try {
-				method.invoke(delegate, new Object[] { attribute.getValue() });
-			} catch (Exception e) {
-				throw new MBeanException(e);
-			}
-		} else {
-			throw new AttributeNotFoundException();
-		}
-
+		MonitoringManager manager = Beans.getReference(MonitoringManager.class);
+		manager.setProperty(managedType, attribute.getName(), attribute.getValue());
 	}
 
 	@Override
@@ -188,81 +125,14 @@ public class DynamicMBeanProxy implements DynamicMBean {
 			initializeMBeanInfo();
 		}
 
-		Method method = operationMethods.get(actionName);
-		if (method != null) {
-			logger.debug(bundle.getString("mbean-debug-invoking-operation", method.getName(),
-					delegateClass.getCanonicalName()));
-
-			// CustomContext context = new ThreadLocalContext(RequestScoped.class);
-			// Contexts.add(context, this.afterBeanDiscoveryEvent);
-
-			activateContexts();
-
-			Object delegate = Beans.getReference(delegateClass);
-			try {
-				return method.invoke(delegate, params);
-			} catch (Exception e) {
-				throw new MBeanException(e);
-			} finally {
-				deactivateContexts();
-			}
-		} else {
-			throw new MBeanException(new OperationsException(bundle.getString("mbean-invoke-error", actionName)));
-		}
-	}
-
-	private void activateContexts() {
-		try {
-			Beans.getBeanManager().getContext(RequestScoped.class);
-			logger.debug(bundle.getString("mbean-debug-starting-custom-context", mbeanContext.getScope()
-					.getCanonicalName(), delegateClass.getCanonicalName()));
-		} catch (ContextNotActiveException e) {
-			mbeanContext.setActive(true);
-		}
-	}
-
-	private void deactivateContexts() {
-		try {
-			Context ctx = Beans.getBeanManager().getContext(RequestScoped.class);
-			if (ctx == mbeanContext) {
-				mbeanContext.setActive(false);
-				logger.debug(bundle.getString("mbean-debug-stoping-custom-context", mbeanContext.getScope()
-						.getCanonicalName(), delegateClass.getCanonicalName()));
-			}
-		} catch (Exception e) {
-			// NOOP
-		}
+		MonitoringManager manager = Beans.getReference(MonitoringManager.class);
+		return manager.invoke(managedType, actionName, params);
 	}
 
 	/**
-	 * Returns the public getter method for a given field, or <code>null</code> if no getter method can be found.
+	 * Initialize the Managed information for this instance of Managed
 	 */
-	private Method getGetterMethod(Field field) {
-		try {
-			PropertyDescriptor pd = new PropertyDescriptor(field.getName(), delegateClass);
-			return pd.getReadMethod();
-		} catch (IntrospectionException e) {
-			return null;
-		}
-	}
-
-	/**
-	 * Returns the public setter method for a given field, or <code>null</code> if no setter method can be found.
-	 */
-	private Method getSetterMethod(Field field) {
-		try {
-			PropertyDescriptor pd = new PropertyDescriptor(field.getName(), delegateClass);
-			return pd.getWriteMethod();
-		} catch (IntrospectionException e) {
-			return null;
-		}
-	}
-
-	/**
-	 * Initialize the Managed information for this instance of Managed, by reading the delegate class methods and
-	 * identifying the ones annotated with {@link Operation} or {@link Property}.
-	 */
-	private void initializeMBeanInfo(ManagedType type) {
+	private void initializeMBeanInfo() {
 		// Aqui vamos armazenar nossos atributos
 		ArrayList<MBeanAttributeInfo> attributes = new ArrayList<MBeanAttributeInfo>();
 
@@ -270,7 +140,7 @@ public class DynamicMBeanProxy implements DynamicMBean {
 		ArrayList<MBeanOperationInfo> operations = new ArrayList<MBeanOperationInfo>();
 
 		// Oterndo fields com seus respectivos acessores
-		for (Entry<String, FieldDetail> fieldEntry : type.getFields().entrySet()) {
+		for (Entry<String, FieldDetail> fieldEntry : managedType.getFields().entrySet()) {
 
 			try {
 
@@ -280,13 +150,13 @@ public class DynamicMBeanProxy implements DynamicMBean {
 				attributes.add(attributeInfo);
 
 			} catch (javax.management.IntrospectionException e) {
-				throw new DemoiselleException(bundle.getString("mbean-introspection-error", type.getType()
+				throw new DemoiselleException(bundle.getString("mbean-introspection-error", managedType.getType()
 						.getSimpleName()));
 			}
 		}
 
 		// Para cada metodo verifica se ele está anotado com Operation e cria um MBeanOperationInfo para ele.
-		for (Entry<String, MethodDetail> methodEntry : type.getOperationMethods().entrySet()) {
+		for (Entry<String, MethodDetail> methodEntry : managedType.getOperationMethods().entrySet()) {
 
 			MethodDetail methodDetail = methodEntry.getValue();
 
@@ -315,7 +185,7 @@ public class DynamicMBeanProxy implements DynamicMBean {
 		}
 
 		// Por fim criamos nosso bean info.
-		delegateInfo = new MBeanInfo(type.getType().getCanonicalName(), type.getDescription(),
+		delegateInfo = new MBeanInfo(managedType.getType().getCanonicalName(), managedType.getDescription(),
 				attributes.toArray(new MBeanAttributeInfo[0]), null, operations.toArray(new MBeanOperationInfo[0]),
 				null);
 
