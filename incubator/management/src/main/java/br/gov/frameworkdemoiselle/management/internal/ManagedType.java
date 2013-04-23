@@ -260,12 +260,6 @@ public class ManagedType {
 			return false;
 		}
 
-		if (other instanceof ManagedType) {
-			return ((ManagedType) other).getType().equals(this.getType());
-		} else if (other instanceof Class) {
-			return this.getType().equals(other);
-		}
-
-		return false;
+		return ((ManagedType) other).getType().getCanonicalName().equals(this.getType().getCanonicalName());
 	}
 }

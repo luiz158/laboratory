@@ -12,9 +12,13 @@ import javax.management.ReflectionException;
 import org.slf4j.Logger;
 
 import br.gov.frameworkdemoiselle.DemoiselleException;
+import br.gov.frameworkdemoiselle.annotation.Name;
 import br.gov.frameworkdemoiselle.internal.context.Contexts;
 import br.gov.frameworkdemoiselle.management.annotation.Managed;
+import br.gov.frameworkdemoiselle.management.annotation.Property;
 import br.gov.frameworkdemoiselle.management.internal.ManagedType.MethodDetail;
+import br.gov.frameworkdemoiselle.management.notification.AttributeChangeNotification;
+import br.gov.frameworkdemoiselle.management.notification.NotificationManager;
 import br.gov.frameworkdemoiselle.util.Beans;
 import br.gov.frameworkdemoiselle.util.ResourceBundle;
 
@@ -32,6 +36,7 @@ public class MonitoringManager {
 	private Logger logger;
 
 	@Inject
+	@Name("demoiselle-management-bundle")
 	private ResourceBundle bundle;
 
 	private final List<ManagedType> managedTypes = new ArrayList<ManagedType>();
@@ -72,28 +77,25 @@ public class MonitoringManager {
 	 *             In case the operation doesn't exist or have a different
 	 *             signature
 	 */
-	public Object invoke(Class<?> managedType, String actionName,
+	public synchronized Object invoke(ManagedType managedType, String actionName,
 			Object[] params) {
-		final int index = managedTypes.indexOf(managedType);
+		if ( managedTypes.contains(managedType) ) {
+			activateContexts(managedType.getType());
 
-		if (index > -1) {
-			activateContexts(managedType);
+			Object delegate = Beans.getReference(managedType.getType());
 
-			ManagedType type = managedTypes.get(index);
-			Object delegate = Beans.getReference(type.getType());
-
-			MethodDetail method = type.getOperationMethods().get(actionName);
+			MethodDetail method = managedType.getOperationMethods().get(actionName);
 
 			if (method != null) {
 				try {
 					logger.debug(bundle
-							.getString("management-debug-invoking-operation"));
+							.getString("management-debug-invoking-operation",actionName,managedType.getType().getCanonicalName()));
 					return method.getMethod().invoke(delegate, params);
 				} catch (Exception e) {
 					throw new DemoiselleException(bundle.getString(
 							"management-invoke-error", actionName), e);
 				} finally {
-					deactivateContexts(managedType);
+					deactivateContexts(managedType.getType());
 				}
 			} else {
 				throw new DemoiselleException(bundle.getString(
@@ -105,73 +107,100 @@ public class MonitoringManager {
 		}
 	}
 
-	public Object getAttribute(Class<?> managedType, String attribute) {
-		final int index = managedTypes.indexOf(managedType);
-
-		if (index > -1) {
-			ManagedType type = managedTypes.get(index);
-
-			Method getterMethod = type.getGetterMethods().get(attribute);
+	/**
+	 * Retrieve the current value of a property from a managed type. Properties
+	 * are attributes annotated with {@link Property}.
+	 * 
+	 * @param managedType The type that has the property the client wants to know the value of.
+	 * @param propertyName The name of the property
+	 * @return The current value of the property
+	 */
+	public synchronized Object getProperty(ManagedType managedType, String propertyName) {
+		
+		if ( managedTypes.contains(managedType) ) {
+			Method getterMethod = managedType.getFields().get(propertyName).getGetterMethod();
 
 			if (getterMethod != null) {
 				logger.debug(bundle.getString(
 						"management-debug-acessing-property", getterMethod
-								.getName(), type.getType().getCanonicalName()));
+								.getName(), managedType.getType().getCanonicalName()));
 
-				activateContexts(managedType);
+				activateContexts(managedType.getType());
 
 				try {
-					Object delegate = Beans.getReference(type.getType());
+					Object delegate = Beans.getReference(managedType.getType());
+
 					return getterMethod.invoke(delegate, (Object[]) null);
 				} catch (Exception e) {
 					throw new DemoiselleException(bundle.getString(
 							"management-invoke-error", getterMethod.getName()),
 							e);
 				} finally {
-					deactivateContexts(managedType);
+					deactivateContexts(managedType.getType());
 				}
 			} else {
 				throw new DemoiselleException(bundle.getString(
-						"management-invoke-error", attribute));
+						"management-invoke-error", propertyName));
 			}
 		} else {
 			throw new DemoiselleException(
 					bundle.getString("management-type-not-found"));
 		}
 	}
-
-	public void setAttribute(Class<?> managedType, String attribute,
+	
+	/**
+	 * Sets a new value for a property contained inside a managed type. A property
+	 * is an attribute annotated with {@link Property}.
+	 * 
+	 * @param managedType The type that has access to the property
+	 * @param propertyName The name of the property
+	 * @param newValue The new value of the property
+	 */
+	public synchronized void setProperty(ManagedType managedType, String propertyName,
 			Object newValue) {
 
-		final int index = managedTypes.indexOf(managedType);
-
-		if (index > -1) {
-			ManagedType type = managedTypes.get(index);
-
-			// Procura o método get do atributo em questão
-			Method method = type.getSetterMethods().get(attribute);
+		if ( managedTypes.contains(managedType) ) {
+			// Procura o método set do atributo em questão
+			Method method = managedType.getFields().get(propertyName).getSetterMethod();
 			if (method != null) {
 				logger.debug(bundle.getString(
 						"management-debug-setting-property", method.getName(),
-						managedType.getCanonicalName()));
+						managedType.getType().getCanonicalName()));
 
 				// Obtém uma instância da classe gerenciada, lembrando que
 				// classes
 				// anotadas com @Managed são sempre singletons.
-				activateContexts(managedType);
+				activateContexts(managedType.getType());
 				try {
-					Object delegate = Beans.getReference(managedType);
+					Object delegate = Beans.getReference(managedType.getType());
+
+					Method getterMethod = managedType.getFields().get(propertyName).getGetterMethod();
+					Object oldValue;
+					try{
+						oldValue = getterMethod.invoke(delegate, (Object[])null);
+					}
+					catch(Exception e){
+						oldValue = null;
+					}
+
 					method.invoke(delegate, new Object[] { newValue });
+
+					//Manda uma notificação de mudança de atributo 
+					NotificationManager notificationManager = Beans.getReference(NotificationManager.class);
+					Class<? extends Object> attributeType = newValue!=null ? newValue.getClass() : null;
+					AttributeChangeNotification notification = new AttributeChangeNotification(bundle.getString(""), propertyName, attributeType, oldValue, newValue);
+					notificationManager.sendAttributeChangedMessage(notification);
+
 				} catch (Exception e) {
 					throw new DemoiselleException(bundle.getString(
 							"management-invoke-error", method.getName()), e);
 				} finally {
-					deactivateContexts(managedType);
+					deactivateContexts(managedType.getType());
 				}
 
 			} else {
 				throw new DemoiselleException(bundle.getString(
-						"management-invoke-error", attribute));
+						"management-invoke-error", propertyName));
 			}
 		} else {
 			throw new DemoiselleException(
@@ -181,16 +210,16 @@ public class MonitoringManager {
 	}
 
 	private void activateContexts(Class<?> managedType) {
-		logger.debug("management-debug-starting-custom-context",
+		logger.debug(bundle.getString("management-debug-starting-custom-context",
 				ManagedContext.class.getCanonicalName(),
-				managedType.getCanonicalName());
+				managedType.getCanonicalName()));
 		Contexts.activate(ManagedContext.class);
 	}
 
 	private void deactivateContexts(Class<?> managedType) {
-		logger.debug("management-debug-stoping-custom-context",
+		logger.debug(bundle.getString("management-debug-stoping-custom-context",
 				ManagedContext.class.getCanonicalName(),
-				managedType.getCanonicalName());
+				managedType.getCanonicalName()));
 		Contexts.deactivate(ManagedContext.class);
 	}
 

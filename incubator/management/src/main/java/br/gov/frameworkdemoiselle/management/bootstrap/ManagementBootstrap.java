@@ -3,20 +3,19 @@ package br.gov.frameworkdemoiselle.management.bootstrap;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import javax.enterprise.event.Observes;
 import javax.enterprise.inject.spi.AfterBeanDiscovery;
 import javax.enterprise.inject.spi.AfterDeploymentValidation;
 import javax.enterprise.inject.spi.AnnotatedType;
+import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
+import javax.enterprise.inject.spi.Extension;
 import javax.enterprise.inject.spi.ProcessAnnotatedType;
 
-import org.slf4j.Logger;
-
-import br.gov.frameworkdemoiselle.internal.bootstrap.AbstractStrategyBootstrap;
-import br.gov.frameworkdemoiselle.internal.bootstrap.TransactionBootstrap;
 import br.gov.frameworkdemoiselle.internal.context.Contexts;
-import br.gov.frameworkdemoiselle.internal.producer.LoggerProducer;
+import br.gov.frameworkdemoiselle.internal.context.StaticContext;
 import br.gov.frameworkdemoiselle.lifecycle.AfterShutdownProccess;
 import br.gov.frameworkdemoiselle.management.annotation.Managed;
 import br.gov.frameworkdemoiselle.management.internal.ManagedContext;
@@ -25,13 +24,15 @@ import br.gov.frameworkdemoiselle.management.internal.ManagementExtension;
 import br.gov.frameworkdemoiselle.management.internal.MonitoringManager;
 import br.gov.frameworkdemoiselle.util.Beans;
 
-public class ManagementBootstrap extends AbstractStrategyBootstrap<ManagementExtension> {
-
-	private Logger logger;
+public class ManagementBootstrap implements Extension {
 
 	protected static List<AnnotatedType<?>> types = Collections.synchronizedList(new ArrayList<AnnotatedType<?>>());
 
 	private ManagedContext managementContext;
+	private StaticContext staticContext;
+	
+	private List<Class<? extends ManagementExtension>> managementExtensionCache = Collections.synchronizedList(new ArrayList<Class<? extends ManagementExtension>>());
+	
 
 	public <T> void detectAnnotation(@Observes final ProcessAnnotatedType<T> event, final BeanManager beanManager) {
 		if (event.getAnnotatedType().isAnnotationPresent(Managed.class)) {
@@ -42,36 +43,42 @@ public class ManagementBootstrap extends AbstractStrategyBootstrap<ManagementExt
 	public void activateContexts(@Observes final AfterBeanDiscovery event) {
 		managementContext = new ManagedContext();
 		managementContext.setActive(false);
+		
+		staticContext = new StaticContext();
+		staticContext.setActive(false);
+		
 		Contexts.add(managementContext, event);
+		Contexts.add(staticContext, event);
 	}
 
-	public void registerAvailableManagedTypes(@Observes final AfterDeploymentValidation event) {
-
-		MonitoringManager manager = Beans.getReference(MonitoringManager.class);
-
+	@SuppressWarnings("unchecked")
+	public void registerAvailableManagedTypes(@Observes final AfterDeploymentValidation event,BeanManager beanManager) {
+		MonitoringManager monitoringManager = Beans.getReference(MonitoringManager.class);
 		for (AnnotatedType<?> type : types) {
 			ManagedType managedType = new ManagedType(type.getJavaClass());
-			manager.addManagedType(managedType);
+			monitoringManager.addManagedType(managedType);
 		}
-
-		manager.initialize(this.getCache());
+		
+		Set<Bean<?>> extensionBeans = beanManager.getBeans(ManagementExtension.class);
+		if (extensionBeans!=null){
+			for (Bean<?> bean : extensionBeans){
+				Class<?> extensionConcreteClass = bean.getBeanClass();
+				managementExtensionCache.add((Class<? extends ManagementExtension>) extensionConcreteClass);
+			}
+		}
+		
+		//Temporariamente ativa escopos necessários para levantar os componentes de monitoração
+		Contexts.activate(staticContext);
+		monitoringManager.initialize(managementExtensionCache);
+		Contexts.deactivate(staticContext);
 
 	}
 
 	public void unregisterAvailableManagedTypes(@Observes final AfterShutdownProccess event) {
 
 		MonitoringManager manager = Beans.getReference(MonitoringManager.class);
-		manager.shutdown(this.getCache());
+		manager.shutdown(managementExtensionCache);
 
-	}
-
-	@Override
-	protected Logger getLogger() {
-		if (logger == null) {
-			logger = LoggerProducer.create(TransactionBootstrap.class);
-		}
-
-		return logger;
 	}
 
 }
