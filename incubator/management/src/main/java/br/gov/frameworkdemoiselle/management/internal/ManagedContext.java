@@ -11,7 +11,7 @@ public class ManagedContext extends ThreadLocalContext {
 	 * Constructs a new context. This context is disabled when created.
 	 */
 	public ManagedContext() {
-		super(RequestScoped.class,false);
+		super(RequestScoped.class);
 	}
 
 }

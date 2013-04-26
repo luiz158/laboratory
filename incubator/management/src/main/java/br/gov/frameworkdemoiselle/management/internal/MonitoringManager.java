@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.management.ReflectionException;
 
@@ -13,7 +14,7 @@ import org.slf4j.Logger;
 
 import br.gov.frameworkdemoiselle.DemoiselleException;
 import br.gov.frameworkdemoiselle.annotation.Name;
-import br.gov.frameworkdemoiselle.internal.context.Contexts;
+import br.gov.frameworkdemoiselle.internal.context.ContextManager;
 import br.gov.frameworkdemoiselle.management.annotation.Managed;
 import br.gov.frameworkdemoiselle.management.annotation.Property;
 import br.gov.frameworkdemoiselle.management.internal.ManagedType.MethodDetail;
@@ -213,14 +214,16 @@ public class MonitoringManager {
 		logger.debug(bundle.getString("management-debug-starting-custom-context",
 				ManagedContext.class.getCanonicalName(),
 				managedType.getCanonicalName()));
-		Contexts.activate(ManagedContext.class);
+		
+		ContextManager.activate(ManagedContext.class,RequestScoped.class);
 	}
 
 	private void deactivateContexts(Class<?> managedType) {
 		logger.debug(bundle.getString("management-debug-stoping-custom-context",
 				ManagedContext.class.getCanonicalName(),
 				managedType.getCanonicalName()));
-		Contexts.deactivate(ManagedContext.class);
+		
+		ContextManager.deactivate(ManagedContext.class,RequestScoped.class);
 	}
 
 	public void shutdown(Collection<Class<? extends ManagementExtension>> monitoringExtensions) {

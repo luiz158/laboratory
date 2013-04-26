@@ -14,8 +14,7 @@ import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.inject.spi.Extension;
 import javax.enterprise.inject.spi.ProcessAnnotatedType;
 
-import br.gov.frameworkdemoiselle.internal.context.Contexts;
-import br.gov.frameworkdemoiselle.internal.context.StaticContext;
+import br.gov.frameworkdemoiselle.internal.context.ContextManager;
 import br.gov.frameworkdemoiselle.lifecycle.AfterShutdownProccess;
 import br.gov.frameworkdemoiselle.management.annotation.Managed;
 import br.gov.frameworkdemoiselle.management.internal.ManagedContext;
@@ -28,9 +27,6 @@ public class ManagementBootstrap implements Extension {
 
 	protected static List<AnnotatedType<?>> types = Collections.synchronizedList(new ArrayList<AnnotatedType<?>>());
 
-	private ManagedContext managementContext;
-	private StaticContext staticContext;
-	
 	private List<Class<? extends ManagementExtension>> managementExtensionCache = Collections.synchronizedList(new ArrayList<Class<? extends ManagementExtension>>());
 	
 
@@ -41,14 +37,8 @@ public class ManagementBootstrap implements Extension {
 	}
 
 	public void activateContexts(@Observes final AfterBeanDiscovery event) {
-		managementContext = new ManagedContext();
-		managementContext.setActive(false);
-		
-		staticContext = new StaticContext();
-		staticContext.setActive(false);
-		
-		Contexts.add(managementContext, event);
-		Contexts.add(staticContext, event);
+		ContextManager.initialize(event);
+		ContextManager.add(new ManagedContext(), event);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -67,11 +57,7 @@ public class ManagementBootstrap implements Extension {
 			}
 		}
 		
-		//Temporariamente ativa escopos necessários para levantar os componentes de monitoração
-		Contexts.activate(staticContext);
 		monitoringManager.initialize(managementExtensionCache);
-		Contexts.deactivate(staticContext);
-
 	}
 
 	public void unregisterAvailableManagedTypes(@Observes final AfterShutdownProccess event) {
