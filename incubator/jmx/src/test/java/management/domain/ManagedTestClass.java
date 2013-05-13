@@ -34,34 +34,38 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package br.gov.frameworkdemoiselle.jmx.internal;
+package management.domain;
 
-import java.util.Collection;
-import java.util.HashMap;
+import br.gov.frameworkdemoiselle.annotation.ManagedOperation;
+import br.gov.frameworkdemoiselle.annotation.ManagedProperty;
+import br.gov.frameworkdemoiselle.annotation.OperationParameter;
+import br.gov.frameworkdemoiselle.annotation.OperationType;
+import br.gov.frameworkdemoiselle.stereotype.ManagementController;
 
-import javax.inject.Singleton;
-import javax.management.ObjectInstance;
+/**
+ * Classe usada para testar se o registro de classes Managed
+ * como MBeans está funcionando.
+ * 
+ * @author SERPRO
+ *
+ */
+@ManagementController
+public class ManagedTestClass {
+	
+	@ManagedProperty(description="Atributo de teste para testar registro de MBean")
+	private String attribute;
 
-@Singleton
-public class MBeanManager {
-	
-	private HashMap<String,ObjectInstance> registeredMBeans = new HashMap<String,ObjectInstance>();
-	
-	public void storeRegisteredMBean(ObjectInstance instance){
-		registeredMBeans.put(instance.getObjectName().getCanonicalName(),instance);
-	}
-	
-	public Collection<ObjectInstance> listRegisteredMBeans(){
-		return registeredMBeans.values();
-	}
-	
-	public ObjectInstance findMBeanInstance(String name){
-		ObjectInstance instance = registeredMBeans.get(name);
-		return instance;
-	}
-	
-	public void cleanRegisteredMBeans(){
-		registeredMBeans.clear();
+	public String getAttribute() {
+		return attribute;
 	}
 
+	public void setAttribute(String attribute) {
+		this.attribute = attribute;
+	}
+
+	@ManagedOperation(type=OperationType.ACTION_INFO,description="Test Operation")
+	public String operation(@OperationParameter(name="parameter") String parameter){
+		return "Operation called with parameter="+parameter+". Current attribute value is "+attribute;
+	}
+	
 }

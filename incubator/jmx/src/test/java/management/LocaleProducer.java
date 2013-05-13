@@ -34,34 +34,18 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package br.gov.frameworkdemoiselle.jmx.internal;
+package management;
 
-import java.util.Collection;
-import java.util.HashMap;
+import java.util.Locale;
 
-import javax.inject.Singleton;
-import javax.management.ObjectInstance;
+import javax.enterprise.inject.Default;
+import javax.enterprise.inject.Produces;
 
-@Singleton
-public class MBeanManager {
-	
-	private HashMap<String,ObjectInstance> registeredMBeans = new HashMap<String,ObjectInstance>();
-	
-	public void storeRegisteredMBean(ObjectInstance instance){
-		registeredMBeans.put(instance.getObjectName().getCanonicalName(),instance);
-	}
-	
-	public Collection<ObjectInstance> listRegisteredMBeans(){
-		return registeredMBeans.values();
-	}
-	
-	public ObjectInstance findMBeanInstance(String name){
-		ObjectInstance instance = registeredMBeans.get(name);
-		return instance;
-	}
-	
-	public void cleanRegisteredMBeans(){
-		registeredMBeans.clear();
-	}
+public class LocaleProducer {
 
+	@Default
+	@Produces
+	public Locale create() {
+		return Locale.getDefault();
+	}
 }

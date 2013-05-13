@@ -1,3 +1,39 @@
+/*
+ * Demoiselle Framework
+ * Copyright (C) 2010 SERPRO
+ * ----------------------------------------------------------------------------
+ * This file is part of Demoiselle Framework.
+ * 
+ * Demoiselle Framework is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License version 3
+ * as published by the Free Software Foundation.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License version 3
+ * along with this program; if not,  see <http://www.gnu.org/licenses/>
+ * or write to the Free Software Foundation, Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA  02110-1301, USA.
+ * ----------------------------------------------------------------------------
+ * Este arquivo é parte do Framework Demoiselle.
+ * 
+ * O Framework Demoiselle é um software livre; você pode redistribuí-lo e/ou
+ * modificá-lo dentro dos termos da GNU LGPL versão 3 como publicada pela Fundação
+ * do Software Livre (FSF).
+ * 
+ * Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA
+ * GARANTIA; sem uma garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou
+ * APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/LGPL em português
+ * para maiores detalhes.
+ * 
+ * Você deve ter recebido uma cópia da GNU LGPL versão 3, sob o título
+ * "LICENCA.txt", junto com esse programa. Se não, acesse <http://www.gnu.org/licenses/>
+ * ou escreva para a Fundação do Software Livre (FSF) Inc.,
+ * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
+ */
 package br.gov.frameworkdemoiselle.jmx.internal;
 
 import java.util.ArrayList;
@@ -17,21 +53,21 @@ import javax.management.MBeanParameterInfo;
 import javax.management.ReflectionException;
 
 import br.gov.frameworkdemoiselle.DemoiselleException;
+import br.gov.frameworkdemoiselle.internal.management.ManagedType;
+import br.gov.frameworkdemoiselle.internal.management.ManagedType.FieldDetail;
+import br.gov.frameworkdemoiselle.internal.management.ManagedType.MethodDetail;
+import br.gov.frameworkdemoiselle.internal.management.ManagedType.ParameterDetail;
+import br.gov.frameworkdemoiselle.internal.management.Management;
 import br.gov.frameworkdemoiselle.internal.producer.ResourceBundleProducer;
-import br.gov.frameworkdemoiselle.management.annotation.Managed;
-import br.gov.frameworkdemoiselle.management.internal.ManagedType;
-import br.gov.frameworkdemoiselle.management.internal.ManagedType.FieldDetail;
-import br.gov.frameworkdemoiselle.management.internal.ManagedType.MethodDetail;
-import br.gov.frameworkdemoiselle.management.internal.ManagedType.ParameterDetail;
-import br.gov.frameworkdemoiselle.management.internal.MonitoringManager;
+import br.gov.frameworkdemoiselle.stereotype.ManagementController;
 import br.gov.frameworkdemoiselle.util.Beans;
 import br.gov.frameworkdemoiselle.util.ResourceBundle;
 
 /**
  * <p>
- * This class is a MBean that gets registered everytime you mark a class with {@link Managed}. It dynamicaly reads the
- * fields and operations contained in a {@link Managed} class and exposes them to the MBean server. Everytime a client
- * tries to call an operation or read/write a property inside a Managed class, this class will call the appropriate
+ * This class is a MBean that gets registered everytime you mark a class with {@link ManagementController}. It dynamicaly reads the
+ * fields and operations contained in a {@link ManagementController} class and exposes them to the MBean server. Everytime a client
+ * tries to call an operation or read/write a property inside a ManagementController class, this class will call the appropriate
  * method and pass the result to the MBean client.
  * </p>
  * 
@@ -59,7 +95,7 @@ public class DynamicMBeanProxy implements DynamicMBean {
 			initializeMBeanInfo();
 		}
 
-		MonitoringManager manager = Beans.getReference(MonitoringManager.class);
+		Management manager = Beans.getReference(Management.class);
 		return manager.getProperty(managedType, attribute);
 	}
 
@@ -72,7 +108,7 @@ public class DynamicMBeanProxy implements DynamicMBean {
 			initializeMBeanInfo();
 		}
 
-		MonitoringManager manager = Beans.getReference(MonitoringManager.class);
+		Management manager = Beans.getReference(Management.class);
 		manager.setProperty(managedType, attribute.getName(), attribute.getValue());
 	}
 
@@ -125,7 +161,7 @@ public class DynamicMBeanProxy implements DynamicMBean {
 			initializeMBeanInfo();
 		}
 
-		MonitoringManager manager = Beans.getReference(MonitoringManager.class);
+		Management manager = Beans.getReference(Management.class);
 		return manager.invoke(managedType, actionName, params);
 	}
 
@@ -139,7 +175,7 @@ public class DynamicMBeanProxy implements DynamicMBean {
 		// Aqui vamos armazenar nossas operações
 		ArrayList<MBeanOperationInfo> operations = new ArrayList<MBeanOperationInfo>();
 
-		// Oterndo fields com seus respectivos acessores
+		// Para cada propriedade descoberta no ManagementController, cria um attributeInfo correspondente
 		for (Entry<String, FieldDetail> fieldEntry : managedType.getFields().entrySet()) {
 
 			try {
@@ -155,7 +191,7 @@ public class DynamicMBeanProxy implements DynamicMBean {
 			}
 		}
 
-		// Para cada metodo verifica se ele está anotado com Operation e cria um MBeanOperationInfo para ele.
+		// Para cada operação descoberta no ManagementController, cria um operationInfo correspondente
 		for (Entry<String, MethodDetail> methodEntry : managedType.getOperationMethods().entrySet()) {
 
 			MethodDetail methodDetail = methodEntry.getValue();

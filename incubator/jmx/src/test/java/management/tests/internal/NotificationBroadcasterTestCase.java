@@ -1,4 +1,40 @@
-package br.gov.frameworkdemoiselle.jmx.tests.internal;
+/*
+ * Demoiselle Framework
+ * Copyright (C) 2010 SERPRO
+ * ----------------------------------------------------------------------------
+ * This file is part of Demoiselle Framework.
+ * 
+ * Demoiselle Framework is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License version 3
+ * as published by the Free Software Foundation.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License version 3
+ * along with this program; if not,  see <http://www.gnu.org/licenses/>
+ * or write to the Free Software Foundation, Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA  02110-1301, USA.
+ * ----------------------------------------------------------------------------
+ * Este arquivo é parte do Framework Demoiselle.
+ * 
+ * O Framework Demoiselle é um software livre; você pode redistribuí-lo e/ou
+ * modificá-lo dentro dos termos da GNU LGPL versão 3 como publicada pela Fundação
+ * do Software Livre (FSF).
+ * 
+ * Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA
+ * GARANTIA; sem uma garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou
+ * APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/LGPL em português
+ * para maiores detalhes.
+ * 
+ * Você deve ter recebido uma cópia da GNU LGPL versão 3, sob o título
+ * "LICENCA.txt", junto com esse programa. Se não, acesse <http://www.gnu.org/licenses/>
+ * ou escreva para a Fundação do Software Livre (FSF) Inc.,
+ * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
+ */
+package management.tests.internal;
 
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
@@ -10,19 +46,19 @@ import javax.management.ObjectInstance;
 
 import junit.framework.Assert;
 
+import org.jboss.arquillian.junit.Arquillian;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import br.gov.frameworkdemoiselle.jmx.configuration.JMXConfig;
 import br.gov.frameworkdemoiselle.jmx.internal.MBeanManager;
-import br.gov.frameworkdemoiselle.junit.DemoiselleRunner;
-import br.gov.frameworkdemoiselle.management.notification.AttributeChangeNotification;
-import br.gov.frameworkdemoiselle.management.notification.Notification;
-import br.gov.frameworkdemoiselle.management.notification.NotificationManager;
+import br.gov.frameworkdemoiselle.management.AttributeChangeNotification;
+import br.gov.frameworkdemoiselle.management.Notification;
+import br.gov.frameworkdemoiselle.management.NotificationManager;
 import br.gov.frameworkdemoiselle.util.Beans;
 
-@RunWith(DemoiselleRunner.class)
-public class NotificationBroadcasterTest {
+@RunWith(Arquillian.class)
+public class NotificationBroadcasterTestCase {
 	
 	/**
 	 * Testa o envio de uma mensagem para clientes conectados
@@ -119,7 +155,7 @@ public class NotificationBroadcasterTest {
 		
 		//Manda a notificação pelo Demoiselle
 		AttributeChangeNotification notification = new AttributeChangeNotification("Attribute Changed","name",String.class,"Demoiselle 1","Demoiselle 2");
-		notificationManager.sendAttributeChangedMessage(notification);
+		notificationManager.sendNotification(notification);
 		
 		//Se o componente funcionou, o Demoiselle propagou a notificação para o servidor MBean e o listener preencheu
 		//o StringBuffer com nossa mensagem.
