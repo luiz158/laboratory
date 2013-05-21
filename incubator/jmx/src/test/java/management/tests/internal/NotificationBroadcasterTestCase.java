@@ -36,17 +36,25 @@
  */
 package management.tests.internal;
 
-import java.io.IOException;
+import java.io.File;
 import java.lang.management.ManagementFactory;
 
 import javax.management.InstanceNotFoundException;
 import javax.management.MBeanServer;
+import javax.management.MalformedObjectNameException;
 import javax.management.NotificationListener;
 import javax.management.ObjectInstance;
+import javax.management.ObjectName;
 
 import junit.framework.Assert;
+import management.LocaleProducer;
+import management.domain.ManagedTestClass;
 
+import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.FileAsset;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -60,6 +68,19 @@ import br.gov.frameworkdemoiselle.util.Beans;
 @RunWith(Arquillian.class)
 public class NotificationBroadcasterTestCase {
 	
+	@Deployment
+	public static JavaArchive createDeployment() {
+		JavaArchive mainDeployment = ShrinkWrap.create(JavaArchive.class);
+		mainDeployment
+				.addPackages(true, "br")
+				.addAsResource(new FileAsset(new File("src/test/resources/test/beans.xml")), "beans.xml")
+				.addAsResource(new FileAsset(new File("src/test/resources/configuration/demoiselle.properties")),
+						"demoiselle.properties").addPackages(false, DynamicMBeanProxyTestCase.class.getPackage())
+				.addClasses(LocaleProducer.class, ManagedTestClass.class);
+
+		return mainDeployment;
+	}
+	
 	/**
 	 * Testa o envio de uma mensagem para clientes conectados
 	 */
@@ -71,14 +92,19 @@ public class NotificationBroadcasterTestCase {
 		MBeanServer server = ManagementFactory.getPlatformMBeanServer();
 		
 		NotificationManager notificationManager = Beans.getReference(NotificationManager.class);
-		MBeanManager mBeanManager = Beans.getReference(MBeanManager.class);
 		
 		//Aqui obtemos o MBean de notificações já registrado pelo bootstrap
 		StringBuffer notificationMBeanName = new StringBuffer()
 			.append( config.getNotificationDomain()!=null ? config.getNotificationDomain() : "br.gov.frameworkdemoiselle.jmx" )
 			.append(":name=")
 			.append( config.getNotificationMBeanName());
-		ObjectInstance instance = mBeanManager.findMBeanInstance(notificationMBeanName.toString());
+		
+		ObjectName name = null;
+		try {
+			name = new ObjectName(notificationMBeanName.toString());
+		} catch (MalformedObjectNameException e) {
+			Assert.fail();
+		}
 		
 		//StringBuffer vazio
 		StringBuffer notificationBuffer = new StringBuffer();
@@ -89,29 +115,14 @@ public class NotificationBroadcasterTestCase {
 		
 		try {
 			//Anexa o listener no servidor MBean
-			server.addNotificationListener(instance.getObjectName(),listener,null,null);
+			server.addNotificationListener(name,listener,null,null);
 		} catch (InstanceNotFoundException e) {
 			Assert.fail();
 		}
 		
 		//Manda a notificação pelo Demoiselle
 		Notification n = new Notification("Notification test successful");
-		
-		try {
-			System.in.read();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 		notificationManager.sendNotification(n);
-		
-		try {
-			System.in.read();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 		//Se o componente funcionou, o Demoiselle propagou a notificação para o servidor MBean e o listener preencheu
 		//o StringBuffer com nossa mensagem.

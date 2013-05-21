@@ -40,6 +40,7 @@ import java.util.List;
 
 import javax.management.ObjectInstance;
 
+import br.gov.frameworkdemoiselle.annotation.Name;
 import br.gov.frameworkdemoiselle.internal.management.ManagedType;
 import br.gov.frameworkdemoiselle.jmx.configuration.JMXConfig;
 import br.gov.frameworkdemoiselle.jmx.internal.DynamicMBeanProxy;
@@ -75,11 +76,14 @@ public class JMXManagementExtension implements ManagementExtension {
 
 		for (ManagedType type : managedTypes) {
 			DynamicMBeanProxy beanProxy = new DynamicMBeanProxy(type);
+			
+			Name nameAnnotation = type.getType().getAnnotation(Name.class);
+			String mbeanName = nameAnnotation != null ? nameAnnotation.value() : type.getType().getSimpleName();
 
 			StringBuffer name = new StringBuffer()
 				.append( configuration.getMbeanDomain()!=null ? configuration.getMbeanDomain() : type.getType().getPackage().getName() )
 				.append(":name=")
-				.append( configuration.getMbeanDomain()!=null ? configuration.getMbeanDomain() : type.getType().getSimpleName());
+				.append( mbeanName );
 			
 
 			if (manager.findMBeanInstance(name.toString()) == null){

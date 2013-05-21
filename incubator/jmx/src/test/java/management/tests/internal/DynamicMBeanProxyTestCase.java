@@ -52,7 +52,6 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.FileAsset;
-import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -65,25 +64,17 @@ public class DynamicMBeanProxyTestCase {
 
 	@Deployment
 	public static JavaArchive createDeployment() {
-		/*File[] libs = Maven.resolver().loadPomFromFile("pom.xml")
-				.resolve("br.gov.frameworkdemoiselle:demoiselle-core")
-				.withTransitivity().asFile();*/
-
 		JavaArchive mainDeployment = ShrinkWrap.create(JavaArchive.class);
 		mainDeployment
 				.addPackages(true, "br")
 				.addAsResource(new FileAsset(new File("src/test/resources/test/beans.xml")), "beans.xml")
 				.addAsResource(new FileAsset(new File("src/test/resources/configuration/demoiselle.properties")),
-						"demoiselle.properties")
-				.addPackages(false, DynamicMBeanProxyTestCase.class.getPackage())
-				.addClasses(LocaleProducer.class,ManagedTestClass.class);
-		
-		mainDeployment.as(ZipExporter.class).exportTo(
-			    new File("/home/81986912515/DynamicMBeanProxyTestCase.zip"), true);
+						"demoiselle.properties").addPackages(false, DynamicMBeanProxyTestCase.class.getPackage())
+				.addClasses(LocaleProducer.class, ManagedTestClass.class);
 
 		return mainDeployment;
 	}
-	
+
 	/**
 	 * Testa se o bootstrap está corretamente carregando e registrando classes anotadas com {@link Managed} como MBeans.
 	 */
@@ -99,45 +90,43 @@ public class DynamicMBeanProxyTestCase {
 		// será adicionada a ela, então esperamos 2 MBeans aqui.
 		Assert.assertEquals(2, manager.listRegisteredMBeans().size());
 	}
-	
+
 	@Test
-	public void testAttributeWrite(){
+	public void testAttributeWrite() {
 		MBeanServer server = ManagementFactory.getPlatformMBeanServer();
-		
+
 		ObjectName name = null;
 		try {
-			name = new ObjectName("br.gov.frameworkdemoiselle.jmx.domain:name=ManagedTestClass");
+			name = new ObjectName("br.gov.frameworkdemoiselle.jmx.domain:name=ManagedTest");
 		} catch (MalformedObjectNameException e) {
 			Assert.fail();
 		}
-		
-		try{
+
+		try {
 			server.setAttribute(name, new Attribute("attribute", "New Value"));
-		}
-		catch(Exception e){
-			Assert.fail();
+		} catch (Exception e) {
+			Assert.fail(e.getMessage());
 		}
 	}
-	
+
 	@Test
-	public void testAttributeRead(){
+	public void testAttributeRead() {
 		MBeanServer server = ManagementFactory.getPlatformMBeanServer();
-		
+
 		ObjectName name = null;
 		try {
-			name = new ObjectName("br.gov.frameworkdemoiselle.jmx.domain:name=ManagedTestClass");
+			name = new ObjectName("br.gov.frameworkdemoiselle.jmx.domain:name=ManagedTest");
 		} catch (MalformedObjectNameException e) {
 			Assert.fail();
 		}
-		
-		try{
+
+		try {
 			server.setAttribute(name, new Attribute("attribute", "New Value"));
-			
+
 			Object info = server.getAttribute(name, "attribute");
-			
+
 			Assert.assertEquals("New Value", info);
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 			Assert.fail();
 		}
 	}
@@ -149,18 +138,38 @@ public class DynamicMBeanProxyTestCase {
 
 		ObjectName name = null;
 		try {
-			name = new ObjectName("br.gov.frameworkdemoiselle.jmx.domain:name=ManagedTestClass");
+			name = new ObjectName("br.gov.frameworkdemoiselle.jmx.domain:name=ManagedTest");
 		} catch (MalformedObjectNameException e) {
 			Assert.fail();
 		}
 
 		try {
-			Object info = server.invoke(name, "operation", new Object[] { "Teste" }, new String[] { "String" });
-			Assert.assertEquals("Operation called with parameter=Test. Current attribute value is null", info);
+			server.setAttribute(name, new Attribute("attribute", "Defined Value"));
+
+			Object info = server.invoke(name, "operation", new Object[] { "Test" }, new String[] { "String" });
+			Assert.assertEquals("Operation called with parameter=Test. Current attribute value is Defined Value", info);
 		} catch (Exception e) {
 			Assert.fail();
 		}
 
+	}
+
+	@Test
+	public void testTryWriteOverReadOnly() {
+		MBeanServer server = ManagementFactory.getPlatformMBeanServer();
+
+		ObjectName name = null;
+		try {
+			name = new ObjectName("br.gov.frameworkdemoiselle.jmx.domain:name=ManagedTest");
+		} catch (MalformedObjectNameException e) {
+			Assert.fail();
+		}
+
+		try {
+			server.setAttribute(name, new Attribute("attribute", "New Value"));
+		} catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 }

@@ -38,6 +38,7 @@ package management.domain;
 
 import br.gov.frameworkdemoiselle.annotation.ManagedOperation;
 import br.gov.frameworkdemoiselle.annotation.ManagedProperty;
+import br.gov.frameworkdemoiselle.annotation.Name;
 import br.gov.frameworkdemoiselle.annotation.OperationParameter;
 import br.gov.frameworkdemoiselle.annotation.OperationType;
 import br.gov.frameworkdemoiselle.stereotype.ManagementController;
@@ -50,6 +51,7 @@ import br.gov.frameworkdemoiselle.stereotype.ManagementController;
  *
  */
 @ManagementController
+@Name("ManagedTest")
 public class ManagedTestClass {
 	
 	@ManagedProperty(description="Atributo de teste para testar registro de MBean")
