@@ -178,7 +178,7 @@
 	</repositories>
 
 	<properties>
-		<kindleit.plugin.version>0.9.4</kindleit.plugin.version>
+		<kindleit.plugin.version>0.9.5</kindleit.plugin.version>
 		<gae.version>${appengine.version}</gae.version>
 	</properties>
 </project>
