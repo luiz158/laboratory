@@ -61,7 +61,7 @@ public class Automovel implements Serializable {
 	@Column (length=255)
 	private String modelo;
 	
-	@Column (nullable=false, length=9)
+	@Column (nullable=false, length=8)
 	private String placa;
 	
 	@Column (nullable=false, length=255)

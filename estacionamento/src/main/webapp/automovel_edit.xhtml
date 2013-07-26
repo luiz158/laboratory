@@ -86,7 +86,7 @@
 					<h:outputLabel value="#{messages['Automovel.label.placa']}: " for="placa" styleClass="text-input" />
 					<h:inputText id="placa" value="#{automovelEditMB.bean.placa}"
 						title="#{messages['Automovel.alt.placa']}"  required="true">
-						<f:validateLength minimum = "9" maximum = "9"/>
+						<f:validateLength minimum = "8" maximum = "8"/>
 						</h:inputText>
 					<p:message for="placa" />
 					
