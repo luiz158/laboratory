@@ -7,8 +7,6 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import exp.business.FavoritoBC;
-import exp.entity.Favorito;
 import br.gov.frameworkdemoiselle.annotation.NextView;
 import br.gov.frameworkdemoiselle.annotation.PreviousView;
 import br.gov.frameworkdemoiselle.report.Report;
@@ -18,6 +16,8 @@ import br.gov.frameworkdemoiselle.stereotype.ViewController;
 import br.gov.frameworkdemoiselle.template.AbstractListPageBean;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.frameworkdemoiselle.util.FileRenderer;
+import exp.business.FavoritoBC;
+import exp.entity.Favorito;
 
 @ViewController
 @NextView("/favorito_edit.xhtml")
@@ -58,7 +58,7 @@ public class FavoritoListMB extends AbstractListPageBean<Favorito, Long> {
 
 	public String showReport() {
 		Map<String, Object> param = new HashMap<String, Object>();
-		
+
 		param.put("titulo", "Relatório de teste");
 
 		byte[] buffer = this.relatorio.export(getResultList(), param, Type.PDF);

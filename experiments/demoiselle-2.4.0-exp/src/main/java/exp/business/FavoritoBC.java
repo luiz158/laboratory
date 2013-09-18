@@ -35,6 +35,8 @@ public class FavoritoBC extends DelegateCrud<Favorito, Long, FavoritoDAO> {
 				insert(new Favorito("SVN", "http://svn.frameworkdemoiselle.gov.br"));
 				insert(new Favorito("Maven", "http://repository.frameworkdemoiselle.gov.br"));
 				insert(new Favorito("Downloads", "http://download.frameworkdemoiselle.gov.br"));
+				
+				insert(new Favorito("Google", "http://google.com", "111.111.111-11"));
 			}
 		}
 	}

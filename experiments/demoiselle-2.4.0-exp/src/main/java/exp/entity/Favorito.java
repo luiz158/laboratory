@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import br.gov.frameworkdemoiselle.validation.annotation.Cpf;
 import exp.validator.Url;
 
 @Entity
@@ -26,6 +27,10 @@ public class Favorito implements Serializable {
 	@Column
 	private String url;
 
+	@Cpf
+	@Column
+	private String cpf;
+
 	public Favorito() {
 		super();
 	}
@@ -33,6 +38,12 @@ public class Favorito implements Serializable {
 	public Favorito(String descricao, String url) {
 		this.descricao = descricao;
 		this.url = url;
+	}
+	
+	public Favorito(String descricao, String url, String cpf) {
+		this.descricao = descricao;
+		this.url = url;
+		this.cpf = cpf;
 	}
 
 	public Long getId() {
@@ -59,4 +70,11 @@ public class Favorito implements Serializable {
 		this.url = url;
 	}
 
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
 }
