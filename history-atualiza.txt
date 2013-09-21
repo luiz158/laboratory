@@ -1,0 +1,12 @@
+cd laboratory
+ls -als
+vim .git/config 
+git remote add demoiselle https://github.com/demoiselle/laboratory
+git remote -v
+git pull demoiselle master
+git status
+git push
+git status
+ls -als
+history > history-atualiza.txt
+
