@@ -15,6 +15,7 @@
 
 	<modules>
 		<module>demoiselle-arquillian-prova-conceito</module>
+		<module>demoiselle-arquillian-sonar-prova-conceito</module>
 	</modules>
 
 </project>

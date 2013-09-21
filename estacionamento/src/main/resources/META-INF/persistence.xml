@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	
+	
+		<!-- If you are using JBoss AS7 with non JTA transaction then use this persistence-unit -->
+	
+	<persistence-unit name="estacionamento-pu" transaction-type="RESOURCE_LOCAL">
+		<non-jta-data-source>java:jboss/datasources/ExampleDS</non-jta-data-source>
+
+
+		<!-- Criamos a conexão "EstacionamentoDS" para experimentar o acesso a um banco de dados específico da aplicação. Esta
+		conexão deve ser configurada no servidor. A configuração do JBoss é feita em um arquivo no padrão *-ds.xml. Como
+		queremos experimentar o Postgres, devemos criar o arquivo postgres-ds.xml na pasta {jboss.home}/server/default/deploy.
+		Para facilitar sua vida, copie o arquivo modelo na pasta src/conf daqui deste projeto.
+		Descomente o que você preferir, mas cuidado para não conflitar com a configuração anterior:  
+		
+		<jta-data-source>java:/EstacionamentoDS</jta-data-source> 	-->
+
+		<class>br.gov.serpro.lab.estacionamento.domain.Vaga</class>
+		<class>br.gov.serpro.lab.estacionamento.domain.Patio</class>
+		<class>br.gov.serpro.lab.estacionamento.domain.Estacionamento</class>
+		<class>br.gov.serpro.lab.estacionamento.domain.Cliente</class>
+		<class>br.gov.serpro.lab.estacionamento.domain.Automovel</class>
+
+		<properties>
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="false" />
+			
+			<!--  
+			Este parâmetro do Hibernate gera automaticamente as tabelas no banco de dados, porém se a conexão for JTA o Hibernate
+			vai lançar um erro informando que não pode fazer autocommit numa transação gerenciada. Apesar de aparecer como error
+			no console, na prática é apenas um warning. Para evitar isto, use conexões JPA ou não use este parâmetro e crie as
+			tabelas na mão. Se você não se incomodar com o warning, pode usar os dois em conjunto ;)  -->			
+			
+			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
+		</properties>
+	</persistence-unit>
+	
+		
+	
+	
+	<!-- If you are using Tomcat 6 / Tomcat 7 / JUnit then use this persistence-unit -->
+	<!--
+	<persistence-unit name="estacionamento-pu" transaction-type="RESOURCE_LOCAL">
+
+		<class>br.gov.serpro.lab.estacionamento.domain.Vaga</class>
+		<class>br.gov.serpro.lab.estacionamento.domain.Patio</class>
+		<class>br.gov.serpro.lab.estacionamento.domain.Estacionamento</class>
+		<class>br.gov.serpro.lab.estacionamento.domain.Cliente</class>
+		<class>br.gov.serpro.lab.estacionamento.domain.Automovel</class>
+		
+		<properties>
+			<property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver" />
+			<property name="javax.persistence.jdbc.user" value="sa" />
+			<property name="javax.persistence.jdbc.password" value="" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:hsql:." />
+			<property name="eclipselink.logging.level" value="FINE" />
+			<property name="eclipselink.ddl-generation" value="create-tables" />
+			<property name="eclipselink.ddl-generation.output-mode" value="database" />
+		</properties>
+	</persistence-unit>
+	-->
+	
+	
+</persistence>
