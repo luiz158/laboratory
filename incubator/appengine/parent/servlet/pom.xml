@@ -100,6 +100,14 @@
 				<configuration>
 					<serverId>appengine.google.com</serverId>
 				</configuration>
+				<dependencies>
+				    <dependency>
+				        <groupId>net.kindleit</groupId>
+				        <artifactId>gae-runtime</artifactId>
+				        <version>${appengine.version}</version>
+				        <type>pom</type>
+				    </dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>
@@ -170,7 +178,7 @@
 	</repositories>
 
 	<properties>
-		<kindleit.plugin.version>0.9.4</kindleit.plugin.version>
+		<kindleit.plugin.version>0.9.5</kindleit.plugin.version>
 		<gae.version>${appengine.version}</gae.version>
 	</properties>
 </project>

@@ -8,7 +8,7 @@ http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
 	<!-- Uncomment the <defaultProtocol/> element to instruct Arquillian to 
 		execute tests using the Servlet protocol. By default the JBoss AS 7 adapters 
 		use the JMX protocol -->
-	<defaultProtocol type="Servlet 3.0"/>
+<!-- 	<defaultProtocol type="Servlet 3.0"/> -->
 
 	<!-- Uncomment the <engine> element to instruct Arquillian to write the 
 		archives for each test to the target location on disk before deploying them 
@@ -29,11 +29,11 @@ http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
 	</container>
 	 -->
 	
-<!-- 	<container qualifier="jbossas-managed-7.1.1-final" default="true"> -->
-<!--         <configuration> -->
-<!--             <property name="jbossHome">../../../../../../../../opt/demoiselle/server/jboss-as-7.1.1.Final</property> -->
-<!--         </configuration> -->
-<!--     </container> -->
+	<container qualifier="jbossas-managed-7.1.1-final" default="true">
+        <configuration>
+            <property name="jbossHome">../../../../../../../../opt/demoiselle/server/jboss-as-7.1.1.Final</property>
+        </configuration>
+    </container>
     
 <!--     <container qualifier="glassfish" default="false"> -->
 <!--         <configuration> -->

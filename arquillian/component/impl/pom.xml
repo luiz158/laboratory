@@ -33,17 +33,17 @@
 		<dependency>
 			<groupId>org.jboss.arquillian.junit</groupId>
 			<artifactId>arquillian-junit-container</artifactId>
-			<scope>test</scope>
+<!-- 			<scope>test</scope> -->
 		</dependency>
 		<dependency>
 			<groupId>org.jboss.shrinkwrap.resolver</groupId>
 			<artifactId>shrinkwrap-resolver-api-maven</artifactId>
-			<scope>test</scope>
+<!-- 			<scope>test</scope> -->
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<scope>test</scope>
+<!-- 			<scope>test</scope> -->
 			<version>4.8.1</version>
 		</dependency>
 	</dependencies>

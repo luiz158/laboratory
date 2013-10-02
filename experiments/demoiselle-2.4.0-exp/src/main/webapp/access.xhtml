@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>Erro de Login</title>
+</h:head>
+	<h:body>
+		<h2>Erro de Permissão</h2>
+		<form method="post" action="j_security_check">
+			<h:messages />
+			<table align="center">
+				<tr>
+					<td colspan="2"><h2>Digite as informações de Login:</h2></td>
+				</tr>
+				<tr>
+					<td><label for="username">Login</label></td>
+					<td><input type="text" id="username" name="j_username" /></td>
+				</tr>
+				<tr>
+					<td><label for="password">Senha</label></td>
+					<td><input type="password" id="password" name="j_password" /></td>
+				</tr>
+				<tr>
+					<td colspan="2"><input type="submit" value="Tentar Novamente" /></td>
+				</tr>
+			</table>
+		</form>
+	</h:body>
+</html>

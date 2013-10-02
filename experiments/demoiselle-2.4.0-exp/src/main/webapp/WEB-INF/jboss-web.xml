@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE jboss-web PUBLIC "-//JBoss//DTD Web Application 4.2//EN" "http://www.jboss.org/j2ee/dtd/jboss-web_4_2.dtd">
+<jboss-web>
+        <!-- JBOSS AS7 -->
+        <security-domain>other</security-domain>
+        <!-- JBOSS AS6 -->
+        <!-- <security-domain>java:/jaas/teste</security-domain>  -->
+</jboss-web>
