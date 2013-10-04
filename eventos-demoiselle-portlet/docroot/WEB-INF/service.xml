@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.1.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_1_0.dtd">
+<service-builder package-path="br.gov.demoiselle.portal.evento">
+	<author>Clovis Lemes Ferreira Junior</author>
+	<namespace>demoiselle</namespace>
+
+	<entity name="EventoParticipante" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+		<column name="eventoParticipanteId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+		<column name="eventoId" type="long" />
+		<column name="nome" type="String" />
+		<column name="email" type="String" />
+		<column name="instituicaoEmpresa" type="String" />
+		
+		<column name="conviteEnviado" type="boolean"/>
+		<column name="certificadoImpresso" type="boolean"/>
+		
+		<column name="inscricaoConfirmada" type="boolean"/>
+		<column name="participacaoConfirmada" type="boolean"/>
+
+		<!-- Order -->
+		<order by="asc">
+			<order-column name="eventoId" />
+			<order-column name="nome" />
+		</order>
+
+		<!-- Finder methods -->
+		<finder name="EventoId" return-type="Collection">
+			<finder-column name="eventoId" />
+		</finder>
+		
+		<finder name="Nome" return-type="Collection">
+			<finder-column name="nome" />
+		</finder>
+		
+		<finder name="Email" return-type="Collection">
+			<finder-column name="email" />
+		</finder>
+		
+		<finder name="EventoId_Email" return-type="EventoParticipante">
+			<finder-column name="eventoId" />
+			<finder-column name="email" />
+		</finder>
+	</entity>
+	
+	<entity name="EventoConfiguracao" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+		<column name="eventoConfiguracaoId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+		<column name="eventoId" type="long" />
+		<column name="abertoAoPublico" type="boolean" />
+		<column name="cidadeDoEvento" type="String" />
+
+		<!-- Order -->
+		<order by="asc">
+			<order-column name="eventoId" />
+		</order>
+
+		<!-- Finder methods -->
+		<finder name="EventoId" return-type="Collection">
+			<finder-column name="eventoId" />
+		</finder>
+		
+	</entity>
+	
+	<entity name="EventoConvite" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+		<column name="eventoConviteId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+		<column name="eventoId" type="long" />
+		<column name="textoConvite" type="String" />
+
+		<!-- Order -->
+		<order by="asc">
+			<order-column name="eventoId" />
+		</order>
+
+		<!-- Finder methods -->
+		<finder name="EventoId" return-type="Collection">
+			<finder-column name="eventoId" />
+		</finder>
+		
+	</entity>
+</service-builder>

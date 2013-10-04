@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="br.gov.demoiselle.portal.evento.service.EventoConfiguracaoLocalService" class="br.gov.demoiselle.portal.evento.service.impl.EventoConfiguracaoLocalServiceImpl" />
+	<bean id="br.gov.demoiselle.portal.evento.service.persistence.EventoConfiguracaoPersistence" class="br.gov.demoiselle.portal.evento.service.persistence.EventoConfiguracaoPersistenceImpl" parent="basePersistence" />
+	<bean id="br.gov.demoiselle.portal.evento.service.EventoConviteLocalService" class="br.gov.demoiselle.portal.evento.service.impl.EventoConviteLocalServiceImpl" />
+	<bean id="br.gov.demoiselle.portal.evento.service.persistence.EventoConvitePersistence" class="br.gov.demoiselle.portal.evento.service.persistence.EventoConvitePersistenceImpl" parent="basePersistence" />
+	<bean id="br.gov.demoiselle.portal.evento.service.EventoParticipanteLocalService" class="br.gov.demoiselle.portal.evento.service.impl.EventoParticipanteLocalServiceImpl" />
+	<bean id="br.gov.demoiselle.portal.evento.service.persistence.EventoParticipantePersistence" class="br.gov.demoiselle.portal.evento.service.persistence.EventoParticipantePersistenceImpl" parent="basePersistence" />
+</beans>
