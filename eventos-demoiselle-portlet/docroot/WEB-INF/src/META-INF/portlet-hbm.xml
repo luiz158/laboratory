@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="false" auto-import="false">
+	<import class="br.gov.demoiselle.portal.evento.model.EventoConfiguracao" />
+	<import class="br.gov.demoiselle.portal.evento.model.EventoConvite" />
+	<import class="br.gov.demoiselle.portal.evento.model.EventoParticipante" />
+	<class name="br.gov.demoiselle.portal.evento.model.impl.EventoConfiguracaoImpl" table="demoiselle_EventoConfiguracao">
+		<cache usage="read-write" />
+		<id name="eventoConfiguracaoId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="eventoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="abertoAoPublico" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="cidadeDoEvento" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="br.gov.demoiselle.portal.evento.model.impl.EventoConviteImpl" table="demoiselle_EventoConvite">
+		<cache usage="read-write" />
+		<id name="eventoConviteId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="eventoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="textoConvite" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="br.gov.demoiselle.portal.evento.model.impl.EventoParticipanteImpl" table="demoiselle_EventoParticipante">
+		<cache usage="read-write" />
+		<id name="eventoParticipanteId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="eventoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="nome" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="email" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="instituicaoEmpresa" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="conviteEnviado" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="certificadoImpresso" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="inscricaoConfirmada" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="participacaoConfirmada" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+	</class>
+</hibernate-mapping>
