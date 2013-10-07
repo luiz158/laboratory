@@ -22,13 +22,13 @@ public class Sample {
 
 	public String getURLProtocol() {
 		String protocol = config.getUrl().getProtocol();
-		logger.info("Host: " + protocol);
+		logger.info("Protocolo: " + protocol);
 		return protocol;
 	}
 	
 	public String getURLPath() {
 		String path = config.getUrl().getPath();
-		logger.info("Host: " + path);
+		logger.info("Path: " + path);
 		return path;
 	}
 }
