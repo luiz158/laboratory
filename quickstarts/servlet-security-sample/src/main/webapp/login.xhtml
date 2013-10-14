@@ -1,0 +1,21 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+	<title>#{messages['main.app.title']}</title>
+</h:head>
+
+<h:body style="background-color:#f1f1f1">
+	<h:form>
+		
+		Mensagem de erro: <h:messages errorStyle="color:red" globalOnly="false" />
+		<br/>
+		<h:outputLabel value="Login: " style="font-weight:bold" for="login" />
+		<h:inputText id="login" value="#{credentials.username}" />
+		<br/>
+		<h:outputLabel value="Senha: " style="font-weight:bold" for="senha" />
+		<h:inputSecret id="senha" value="#{credentials.password}" />
+		<br/>
+		<h:commandButton value="Login" action="#{securityContext.login}" />
+	</h:form>
+</h:body>
+</html>
