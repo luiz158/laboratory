@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>br.gov.frameworkdemoiselle</groupId>
+    <artifactId>WebREST</artifactId>
+    <version>1.0.0</version>
+    <packaging>war</packaging>
+
+    <name>WebREST</name>
+    <description></description>
+    <url></url>
+
+    <parent>
+        <groupId>br.gov.frameworkdemoiselle</groupId>
+        <artifactId>demoiselle-jsf-parent</artifactId>
+        <version>2.3.4</version>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>br.gov.frameworkdemoiselle</groupId>
+            <artifactId>demoiselle-jpa</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <!-- If you are using a JTA transaction then use this extension -->
+        <!--
+        <dependency>
+            <groupId>br.gov.frameworkdemoiselle</groupId>
+            <artifactId>demoiselle-jta</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        -->
+
+        <dependency>
+            <groupId>br.gov.frameworkdemoiselle.component</groupId>
+            <artifactId>demoiselle-junit</artifactId>
+            <version>2.3.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-jaxrs</artifactId>
+            <version>2.3.7.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-jaxb-provider</artifactId>
+            <version>2.3.7.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-jettison-provider</artifactId>
+            <version>2.3.7.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-cdi</artifactId>
+            <version>2.3.7.Final</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+<!--            <plugin>
+                <groupId>com.sun.jersey.contribs</groupId>
+                <artifactId>maven-wadl-plugin</artifactId>
+                <version>1.17.1</version>
+                <executions>
+                    <execution>
+                        <id>generate</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <phase>javadoc</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <wadlFile>${project.build.outputDirectory}/application.wadl
+                    </wadlFile>
+                    <formatWadlFile>true</formatWadlFile>
+                    <baseUri>http://10.200.24.50:8080/${artifactId}-${version}</baseUri>
+                    <packagesResourceConfig>
+                        <param>br.gov.frameworkdemoiselle.webrest.service</param>
+                    </packagesResourceConfig>
+                    <wadlGenerators>
+                        <wadlGeneratorDescription>
+                            <className>
+                                com.sun.jersey.server.wadl.generators.WadlGeneratorApplicationDoc
+                            </className>
+                            <properties>
+                                <property>
+                                    <name>applicationDocsFile</name>
+                                    <value>${basedir}/src/main/resources/doc/application-doc.xml</value>
+                                </property>
+                            </properties>
+                        </wadlGeneratorDescription>
+                        <wadlGeneratorDescription>
+                            <className>com.sun.jersey.server.wadl.generators.WadlGeneratorGrammarsSupport
+                            </className>
+                            <properties>
+                                <property>
+                                    <name>grammarsFile</name>
+                                    <value>${basedir}/src/main/resources/doc/application-grammars.xml</value>
+                                </property>
+                            </properties>
+                        </wadlGeneratorDescription>
+                    </wadlGenerators>
+                </configuration>
+            </plugin>-->
+        </plugins>
+    </build>
+</project>
