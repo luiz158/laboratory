@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -22,15 +23,30 @@ import javax.ws.rs.core.MediaType;
  *
  * @author 70744416353
  */
-@Path("/bookmark")
+@Path("/BookmarkCrud")
 public class BookmarkService {
 
     @Inject
     BookmarkBC bbc;
 
+    /**
+     *
+     * @return
+     */
+    @GET
+    @Path("/findAllXML")
+    @Produces(MediaType.TEXT_XML)
+    public List<Bookmark> findAllXML() {
+        return bbc.findAll();
+    }
+
+    /**
+     *
+     * @return
+     */
     @GET
     @Path("/findAll")
-    @Produces(MediaType.TEXT_XML)
+    @Produces(MediaType.APPLICATION_JSON)
     public List<Bookmark> findAll() {
         return bbc.findAll();
     }
@@ -41,6 +57,4 @@ public class BookmarkService {
     public Bookmark load(@PathParam("bookmarkid") Long bookmarkid) {
         return bbc.load(bookmarkid);
     }
-
-   
 }
