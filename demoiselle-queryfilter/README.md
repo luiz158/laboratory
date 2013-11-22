@@ -1,12 +1,12 @@
-Prodepa Easy Query Filter
+Demoiselle Query Filter
 =======================
 
-O componente Prodepa Easy Query Filter (easy-query-filter) é um wrapper para a API Critéria da JPA 2.0.
+O componente Demoiselle Query Filter (demoiselle-queryfilter) é um wrapper para a construção de queries da JPA 2.0.
 Ele disponibiliza duas ferramentas principais: Uma API para *Criação de consultas* e um API para *Configuração de consultas* via anotações. 
 
 > Em próximas versões, seram disponibilizadas três implementações para as Queries: Critéria, JPAQL e SQL(native query)
 
-Iniciando com o Prodepa Easy Query Filter
+Iniciando com o Demoiselle Query Filter
 --------------------------------
 
 Neste exemplo será demonstrado como criar uma pesquisa simples utilizando objetos anotados e como complementar a consulta com a API do 
@@ -14,7 +14,7 @@ componente ou criá-la sem o uso de anotações.
 
 ###1. Criando o modelo.
 	
-Não faz parte a API do *easy-query-filter*, mas precisamos de uma Entity. Para esse howto, vamos considerar a entidade Bookmarks
+Não faz parte a API do *demoiselle-queryfilter*, mas precisamos de uma Entity. Para esse howto, vamos considerar a entidade Bookmarks
 	
 ```java
 @Entity
