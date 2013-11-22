@@ -6,7 +6,6 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
@@ -33,6442 +32,6334 @@ import br.gov.frameworkdemoiselle.prodepa.queryfilter.app.model.Person;
 import br.gov.frameworkdemoiselle.prodepa.queryfilter.app.model.Product;
 import br.gov.frameworkdemoiselle.prodepa.queryfilter.app.model.Song;
 import br.gov.frameworkdemoiselle.prodepa.queryfilter.app.model.SongType;
-import br.gov.frameworkdemoiselle.prodepa.queryfilter.filter.EasyQuery;
-import br.gov.frameworkdemoiselle.prodepa.queryfilter.filter.EasyQueryImpl;
 import br.gov.frameworkdemoiselle.prodepa.queryfilter.utiltestes.AbstractTest;
 import br.gov.frameworkdemoiselle.prodepa.queryfilter.utiltestes.CodeGenerator;
 
 public class EasyFilterTest extends AbstractTest {
 
-  @Test
-  public void testFindAll() {
+	@Test
+	public void testFindAll() {
 
-    List<Person> personsFromJPQL = getListFromJPQL("select p from Person p", Person.class);
-    assertTrue(personsFromJPQL.size() > 0);
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p", Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-    EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-    List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-    assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-    assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
 
-  }
+	}
 
-  @Test
-  public void testSingleResult() {
-    List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.id = 1", Person.class);
+	@Test
+	public void testSingleResult() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.id = 1", Person.class);
 
-    EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-    easyCriteria.andEquals("id", 1);
+		easyCriteria.andEquals("id", 1);
 
-    Person person = easyCriteria.getSingleResult();
+		Person person = easyCriteria.getSingleResult();
 
-    assertTrue(personsFromJPQL.size() == 1);
+		assertTrue(personsFromJPQL.size() == 1);
 
-    assertTrue(personsFromJPQL.get(0).equals(person));
-  }
+		assertTrue(personsFromJPQL.get(0).equals(person));
+	}
 
-  @Test
-  public void isCreatingCriteria() {
-    EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-    assertNotNull(easyCriteria);
-  }
+	@Test
+	public void isCreatingCriteria() {
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertNotNull(easyCriteria);
+	}
 
-  @Test
-  public void assertDataInDataBase() {
-    List<Person> personsFromJPQL = getListFromJPQL("select p from Person p", Person.class);
-    assertTrue(personsFromJPQL.size() > 0);
-  }
-    
-  @Test
-  public void isListingAll() {
-    List<Person> personsFromJPQL = getListFromJPQL("select p from Person p", Person.class);
-    
-    EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-    
-    List<Person> easyCriteriaResult = easyCriteria.getResultList();
-    
-    assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
-    
-    assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-  }
+	@Test
+	public void assertDataInDataBase() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p", Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
+	}
 
+	@Test
+	public void isListingAll() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p", Person.class);
 
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-    @Test
-    public void isGettingSingleResult() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.id = 1", Person.class);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.andEquals("id", 1);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        Person person = easyCriteria.getSingleResult();
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(personsFromJPQL.size() == 1);
+	@Test
+	public void isGettingSingleResult() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.id = 1", Person.class);
 
-        assertTrue(personsFromJPQL.get(0).equals(person));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.andEquals("id", 1);
 
-    @Test
-    public void isAddingOneWhereFloatEquals() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.weight = 10", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		Person person = easyCriteria.getSingleResult();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertTrue(personsFromJPQL.size() == 1);
 
-        easyCriteria.andEquals("weight", 10f);
+		assertTrue(personsFromJPQL.get(0).equals(person));
+	}
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+	@Test
+	public void isAddingOneWhereFloatEquals() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.weight = 10", Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		easyCriteria.andEquals("weight", 10f);
 
-    @Test
-    public void isAddingOneOrFloatEquals() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.weight = 10 or p.weight = 11", Person.class);
-        assertTrue(personsFromJPQL.size() > 1);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        easyCriteria.orEquals("weight", 10f, 11f);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+	@Test
+	public void isAddingOneOrFloatEquals() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.weight = 10 or p.weight = 11",
+				Person.class);
+		assertTrue(personsFromJPQL.size() > 1);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		easyCriteria.orEquals("weight", 10f, 11f);
 
-    @Test
-    public void isAddingOneWhereDoubleEquals() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.height = 11", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        easyCriteria.andEquals("height", 11d);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+	@Test
+	public void isAddingOneWhereDoubleEquals() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.height = 11", Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		easyCriteria.andEquals("height", 11d);
 
-    @Test
-    public void isAddingOneOrDoubleEquals() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.height = 10 or p.height = 11 ", Person.class);
-        assertTrue(personsFromJPQL.size() > 1);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        easyCriteria.orEquals("height", 10d, 11d);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+	@Test
+	public void isAddingOneOrDoubleEquals() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.height = 10 or p.height = 11 ",
+				Person.class);
+		assertTrue(personsFromJPQL.size() > 1);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		easyCriteria.orEquals("height", 10d, 11d);
 
-    @Test
-    public void isAddingOneWhereLongEquals() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.socialSecurityNumber = 1928371", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        easyCriteria.andEquals("socialSecurityNumber", 1928371L);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+	@Test
+	public void isAddingOneWhereLongEquals() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.socialSecurityNumber = 1928371",
+				Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		easyCriteria.andEquals("socialSecurityNumber", 1928371L);
 
-    @Test
-    public void isAddingOneOrLongEquals() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.socialSecurityNumber = 1928371 or p.socialSecurityNumber = 98723487", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        easyCriteria.orEquals("socialSecurityNumber", 1928371L, 98723487L);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+	@Test
+	public void isAddingOneOrLongEquals() {
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select p from Person p where p.socialSecurityNumber = 1928371 or p.socialSecurityNumber = 98723487",
+				Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		easyCriteria.orEquals("socialSecurityNumber", 1928371L, 98723487L);
 
-    @Test
-    public void isAddingOneWhereIntegerEquals() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.clothesInCloset = 44", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        easyCriteria.andEquals("clothesInCloset", 44);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+	@Test
+	public void isAddingOneWhereIntegerEquals() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.clothesInCloset = 44",
+				Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+		easyCriteria.andEquals("clothesInCloset", 44);
 
-    }
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-    @Test
-    public void isAddingOneOrIntegerEquals() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.clothesInCloset = 44 or p.clothesInCloset = 33", Person.class);
-        assertTrue(personsFromJPQL.size() > 1);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
 
-        easyCriteria.orEquals("clothesInCloset", 44, 33);
+	}
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+	@Test
+	public void isAddingOneOrIntegerEquals() {
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select p from Person p where p.clothesInCloset = 44 or p.clothesInCloset = 33", Person.class);
+		assertTrue(personsFromJPQL.size() > 1);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+		easyCriteria.orEquals("clothesInCloset", 44, 33);
 
-    }
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-    @Test
-    public void isWhereNotEqualsWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.name <> 'Anna'", Person.class);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        assertTrue(personsFromJPQL.size() > 0);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+	}
 
-        easyCriteria.andNotEquals("name", "Anna");
+	@Test
+	public void isWhereNotEqualsWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.name <> 'Anna'", Person.class);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		easyCriteria.andNotEquals("name", "Anna");
 
-    @Test
-    public void isOrNotEqualsWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.name <> 'Anna' or p.name <> 'Mary'", Person.class);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        assertTrue(personsFromJPQL.size() > 1);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        easyCriteria.orNotEquals("name", "Anna", "Mary");
+	@Test
+	public void isOrNotEqualsWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select p from Person p where p.name <> 'Anna' or p.name <> 'Mary'", Person.class);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(personsFromJPQL.size() > 1);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		easyCriteria.orNotEquals("name", "Anna", "Mary");
 
-    @Test
-    public void isAddingSequentialWhereIntegerEquals() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.shoesInCloset = 10 and p.clothesInCloset = 33", Person.class);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        assertTrue(personsFromJPQL.size() > 0);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        easyCriteria.andEquals("shoesInCloset", 10).andEquals("clothesInCloset", 33);
+	@Test
+	public void isAddingSequentialWhereIntegerEquals() {
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select p from Person p where p.shoesInCloset = 10 and p.clothesInCloset = 33", Person.class);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		easyCriteria.andEquals("shoesInCloset", 10).andEquals("clothesInCloset", 33);
 
-    @Test
-    public void isAddingOneWhereEqualsString() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.name = '" + CodeGenerator.PERSON01_NAME + "'", Person.class);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        assertTrue(personsFromJPQL.size() == 1);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        easyCriteria.andEquals("name", CodeGenerator.PERSON01_NAME);
+	@Test
+	public void isAddingOneWhereEqualsString() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.name = '"
+				+ CodeGenerator.PERSON01_NAME + "'", Person.class);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(personsFromJPQL.size() == 1);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		easyCriteria.andEquals("name", CodeGenerator.PERSON01_NAME);
 
-    @Test
-    public void isAddingOneOrEqualsString() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.name = '" + CodeGenerator.PERSON01_NAME + "' or p.name = '" + CodeGenerator.PERSON02_NAME + "'", Person.class);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        assertTrue(personsFromJPQL.size() > 1);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        easyCriteria.orEquals("name", CodeGenerator.PERSON01_NAME, CodeGenerator.PERSON02_NAME);
+	@Test
+	public void isAddingOneOrEqualsString() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.name = '"
+				+ CodeGenerator.PERSON01_NAME + "' or p.name = '" + CodeGenerator.PERSON02_NAME + "'", Person.class);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(personsFromJPQL.size() > 1);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		easyCriteria.orEquals("name", CodeGenerator.PERSON01_NAME, CodeGenerator.PERSON02_NAME);
 
-    @Test
-    public void isAddingSequentialWhereEqualsString() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.name = '" + CodeGenerator.PERSON01_NAME + "'" +
-                "and p.nickName = '" + CodeGenerator.PERSON01_NICKNAME + "'", Person.class);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        assertTrue(personsFromJPQL.size() == 1);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        easyCriteria.andEquals("name", CodeGenerator.PERSON01_NAME).andEquals("nickName", CodeGenerator.PERSON01_NICKNAME);
+	@Test
+	public void isAddingSequentialWhereEqualsString() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.name = '"
+				+ CodeGenerator.PERSON01_NAME + "'" + "and p.nickName = '" + CodeGenerator.PERSON01_NICKNAME + "'",
+				Person.class);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(personsFromJPQL.size() == 1);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		easyCriteria.andEquals("name", CodeGenerator.PERSON01_NAME).andEquals("nickName",
+				CodeGenerator.PERSON01_NICKNAME);
 
-    @Test
-    public void isAddingOneWhereDateEquals() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date firstJobDate = formatter.parse("1/1/2015");
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("firstJobDate", firstJobDate);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.firstJobDate = :firstJobDate", Person.class, parameters);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(personsFromJPQL.size() > 0);
+	@Test
+	public void isAddingOneWhereDateEquals() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date firstJobDate = formatter.parse("1/1/2015");
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("firstJobDate", firstJobDate);
 
-        easyCriteria.andEquals("firstJobDate", firstJobDate);
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.firstJobDate = :firstJobDate",
+				Person.class, parameters);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		easyCriteria.andEquals("firstJobDate", firstJobDate);
 
-    @Test
-    public void isAddingOneOrDateEquals() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date firstJobDate = formatter.parse("1/1/2015");
-        Date secondJobDate = formatter.parse("1/1/2016");
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("firstJobDate", firstJobDate);
-        parameters.put("secondJobDate", secondJobDate);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.firstJobDate = :firstJobDate or p.firstJobDate = :secondJobDate", Person.class, parameters);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(personsFromJPQL.size() > 1);
+	@Test
+	public void isAddingOneOrDateEquals() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date firstJobDate = formatter.parse("1/1/2015");
+		Date secondJobDate = formatter.parse("1/1/2016");
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("firstJobDate", firstJobDate);
+		parameters.put("secondJobDate", secondJobDate);
 
-        easyCriteria.orEquals("firstJobDate", firstJobDate, secondJobDate);
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select p from Person p where p.firstJobDate = :firstJobDate or p.firstJobDate = :secondJobDate",
+				Person.class, parameters);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(personsFromJPQL.size() > 1);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		easyCriteria.orEquals("firstJobDate", firstJobDate, secondJobDate);
 
-    @Test
-    public void isAddingOneWhereCalendarEquals() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = formatter.parse("1/1/2001");
-        Calendar dateOfBirth = Calendar.getInstance();
-        dateOfBirth.setTime(date);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("birthDayDate", dateOfBirth);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.birthDayDate = :birthDayDate", Person.class, parameters);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(personsFromJPQL.size() > 0);
+	@Test
+	public void isAddingOneWhereCalendarEquals() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = formatter.parse("1/1/2001");
+		Calendar dateOfBirth = Calendar.getInstance();
+		dateOfBirth.setTime(date);
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("birthDayDate", dateOfBirth);
 
-        easyCriteria.andEquals("birthDayDate", dateOfBirth);
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.birthDayDate = :birthDayDate",
+				Person.class, parameters);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		easyCriteria.andEquals("birthDayDate", dateOfBirth);
 
-    @Test
-    public void isAddingOneOrCalendarEquals() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = formatter.parse("1/1/2001");
-        Calendar dateOfBirth = Calendar.getInstance();
-        dateOfBirth.setTime(date);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        Date date2 = formatter.parse("1/1/2002");
-        Calendar dateOfBirth2 = Calendar.getInstance();
-        dateOfBirth2.setTime(date2);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("birthDayDate", dateOfBirth);
-        parameters.put("dateOfBirth2", dateOfBirth2);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.birthDayDate = :birthDayDate or p.birthDayDate = :dateOfBirth2", Person.class, parameters);
+	@Test
+	public void isAddingOneOrCalendarEquals() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = formatter.parse("1/1/2001");
+		Calendar dateOfBirth = Calendar.getInstance();
+		dateOfBirth.setTime(date);
 
-        assertTrue(personsFromJPQL.size() > 1);
+		Date date2 = formatter.parse("1/1/2002");
+		Calendar dateOfBirth2 = Calendar.getInstance();
+		dateOfBirth2.setTime(date2);
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("birthDayDate", dateOfBirth);
+		parameters.put("dateOfBirth2", dateOfBirth2);
 
-        easyCriteria.orEquals("birthDayDate", dateOfBirth, dateOfBirth2);
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select p from Person p where p.birthDayDate = :birthDayDate or p.birthDayDate = :dateOfBirth2",
+				Person.class, parameters);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(personsFromJPQL.size() > 1);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		easyCriteria.orEquals("birthDayDate", dateOfBirth, dateOfBirth2);
 
-    @Test
-    public void isAddingSequentialWhereDateEquals() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date firstJobDate = formatter.parse("1/1/2015");
-        Date firstSoccerMatchDate = formatter.parse("1/1/2013");
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("firstJobDate", firstJobDate);
-        parameters.put("firstSoccerMatchDate", firstSoccerMatchDate);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.firstJobDate = :firstJobDate and p.firstSoccerMatchDate = :firstSoccerMatchDate", Person.class,
-                parameters);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(personsFromJPQL.size() > 0);
+	@Test
+	public void isAddingSequentialWhereDateEquals() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date firstJobDate = formatter.parse("1/1/2015");
+		Date firstSoccerMatchDate = formatter.parse("1/1/2013");
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("firstJobDate", firstJobDate);
+		parameters.put("firstSoccerMatchDate", firstSoccerMatchDate);
 
-        easyCriteria.andEquals("firstJobDate", firstJobDate).andEquals("firstSoccerMatchDate", firstSoccerMatchDate);
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select p from Person p where p.firstJobDate = :firstJobDate and p.firstSoccerMatchDate = :firstSoccerMatchDate",
+				Person.class, parameters);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		easyCriteria.andEquals("firstJobDate", firstJobDate).andEquals("firstSoccerMatchDate", firstSoccerMatchDate);
 
-    @Test
-    public void isAddingSequentialWhereCalendarEquals() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date birthDay = formatter.parse("1/1/2001");
-        Date kissDate = formatter.parse("1/1/2011");
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        Calendar birthDayCalendar = Calendar.getInstance();
-        birthDayCalendar.setTime(birthDay);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        Calendar firstKiss = Calendar.getInstance();
-        firstKiss.setTime(kissDate);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("birthDay", birthDayCalendar);
-        parameters.put("firstKiss", firstKiss);
+	@Test
+	public void isAddingSequentialWhereCalendarEquals() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date birthDay = formatter.parse("1/1/2001");
+		Date kissDate = formatter.parse("1/1/2011");
 
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.birthDayDate = :birthDay and p.firstKissDate = :firstKiss", Person.class, parameters);
+		Calendar birthDayCalendar = Calendar.getInstance();
+		birthDayCalendar.setTime(birthDay);
 
-        assertTrue(personsFromJPQL.size() > 0);
+		Calendar firstKiss = Calendar.getInstance();
+		firstKiss.setTime(kissDate);
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("birthDay", birthDayCalendar);
+		parameters.put("firstKiss", firstKiss);
 
-        easyCriteria.andEquals("birthDayDate", birthDayCalendar).andEquals("firstKissDate", firstKiss);
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select p from Person p where p.birthDayDate = :birthDay and p.firstKissDate = :firstKiss",
+				Person.class, parameters);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		easyCriteria.andEquals("birthDayDate", birthDayCalendar).andEquals("firstKissDate", firstKiss);
 
-    @Test
-    public void isAddingOneWhereEqualsBoolean() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.brazilian = true", Person.class);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        assertTrue(personsFromJPQL.size() > 0);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        easyCriteria.andEquals("brazilian", true);
+	@Test
+	public void isAddingOneWhereEqualsBoolean() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.brazilian = true", Person.class);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		easyCriteria.andEquals("brazilian", true);
 
-    @Test
-    public void isAddingOneOrEqualsBoolean() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.brazilian = true or p.brazilian = false", Person.class);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        assertTrue(personsFromJPQL.size() > 1);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        easyCriteria.orEquals("brazilian", true, false);
+	@Test
+	public void isAddingOneOrEqualsBoolean() {
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select p from Person p where p.brazilian = true or p.brazilian = false", Person.class);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(personsFromJPQL.size() > 1);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		easyCriteria.orEquals("brazilian", true, false);
 
-    @Test
-    public void isAddingSequentialWhereEqualsBoolean() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.brazilian = true and p.japanese = false", Person.class);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        assertTrue(personsFromJPQL.size() > 0);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        easyCriteria.andEquals("brazilian", true).andEquals("japanese", false);
+	@Test
+	public void isAddingSequentialWhereEqualsBoolean() {
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select p from Person p where p.brazilian = true and p.japanese = false", Person.class);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		easyCriteria.andEquals("brazilian", true).andEquals("japanese", false);
 
-    @Test
-    public void isAddingObjectWhereEquals() {
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        Address address = new Address();
-        address.setId(1);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("address", address);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.address = :address", Person.class, parameters);
+	@Test
+	public void isAddingObjectWhereEquals() {
 
-        assertTrue(personsFromJPQL.size() > 0);
+		Address address = new Address();
+		address.setId(1);
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("address", address);
 
-        easyCriteria.andEquals("address", address);
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.address = :address",
+				Person.class, parameters);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		easyCriteria.andEquals("address", address);
 
-    @Test
-    public void isAddingObjectOrEquals() {
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        Address address = new Address();
-        address.setId(1);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        Address address2 = new Address();
-        address2.setId(2);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("address", address);
-        parameters.put("address2", address2);
+	@Test
+	public void isAddingObjectOrEquals() {
 
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.address = :address or p.address = :address2", Person.class, parameters);
+		Address address = new Address();
+		address.setId(1);
 
-        assertTrue(personsFromJPQL.size() > 1);
+		Address address2 = new Address();
+		address2.setId(2);
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("address", address);
+		parameters.put("address2", address2);
 
-        easyCriteria.orEquals("address", address, address2);
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select p from Person p where p.address = :address or p.address = :address2", Person.class, parameters);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(personsFromJPQL.size() > 1);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		easyCriteria.orEquals("address", address, address2);
 
-    @Test
-    public void isAddingSequentialObjectsWhereEquals() {
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        Address address = new Address();
-        address.setId(1);
-        Car car = new Car();
-        car.setId(1);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("address", address);
-        parameters.put("car", car);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.address = :address and p.car = :car", Person.class, parameters);
-        assertTrue(personsFromJPQL.size() > 0);
+	@Test
+	public void isAddingSequentialObjectsWhereEquals() {
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		Address address = new Address();
+		address.setId(1);
+		Car car = new Car();
+		car.setId(1);
 
-        easyCriteria.andEquals("address", address).andEquals("car", car);
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("address", address);
+		parameters.put("car", car);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select p from Person p where p.address = :address and p.car = :car", Person.class, parameters);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		easyCriteria.andEquals("address", address).andEquals("car", car);
 
-    @Test
-    public void isAddingSequentialWhereEquals() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date buildingDate = formatter.parse("1/1/1990");
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("buildingDate", buildingDate);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        List<Address> addressesFromJPQL = getListFromJPQL(
-                "select a from Address a where a.isOld = false and a.isYellow = true and a.id = 2 and a.streetName = 'Street B' and a.buildingDate = :buildingDate", Address.class,
-                parameters);
-        assertTrue(addressesFromJPQL.size() > 0);
-        
-        EasyQuery<Address> easyCriteria = new EasyQueryImpl<Address>(Address.class, getEntityManager());
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        easyCriteria.andEquals("id", 2).andEquals("buildingDate", buildingDate).andEquals("isOld", false).andEquals("streetName", "Street B").andEquals("isYellow", true);
+	@Test
+	public void isAddingSequentialWhereEquals() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date buildingDate = formatter.parse("1/1/1990");
 
-        List<Address> easyCriteriaResult = easyCriteria.getResultList();
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("buildingDate", buildingDate);
 
-        assertEquals(addressesFromJPQL.size(), easyCriteriaResult.size());
+		List<Address> addressesFromJPQL = getListFromJPQL(
+				"select a from Address a where a.isOld = false and a.isYellow = true and a.id = 2 and a.streetName = 'Street B' and a.buildingDate = :buildingDate",
+				Address.class, parameters);
+		assertTrue(addressesFromJPQL.size() > 0);
 
-        assertTrue(addressesFromJPQL.containsAll(easyCriteriaResult));
-    }
+		EasyQuery<Address> easyCriteria = new EasyQueryImpl<Address>(Address.class, getEntityManager());
 
-    @Test
-    public void isDoubleGreaterThanWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.height > 10.50d", Person.class);
+		easyCriteria.andEquals("id", 2).andEquals("buildingDate", buildingDate).andEquals("isOld", false)
+				.andEquals("streetName", "Street B").andEquals("isYellow", true);
 
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Address> easyCriteriaResult = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertEquals(addressesFromJPQL.size(), easyCriteriaResult.size());
 
-        easyCriteria.andGreaterThan("height", 10.50d);
+		assertTrue(addressesFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+	@Test
+	public void isDoubleGreaterThanWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.height > 10.50d", Person.class);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-    @Test
-    public void isDoubleGreaterOrEqualToWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.height >= 11.00d", Person.class);
+		easyCriteria.andGreaterThan("height", 10.50d);
 
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        easyCriteria.andGreaterOrEqualTo("height", 11.00d);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+	@Test
+	public void isDoubleGreaterOrEqualToWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.height >= 11.00d", Person.class);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-    @Test
-    public void isDoubleLessThanWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.height < 11.00d", Person.class);
+		easyCriteria.andGreaterOrEqualTo("height", 11.00d);
 
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        easyCriteria.andLessThan("height", 11.00d);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+	@Test
+	public void isDoubleLessThanWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.height < 11.00d", Person.class);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-    @Test
-    public void isDoubleLessOrEqualToWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.height <= 11.00d", Person.class);
+		easyCriteria.andLessThan("height", 11.00d);
 
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        easyCriteria.andLessOrEqualTo("height", 11.00d);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+	@Test
+	public void isDoubleLessOrEqualToWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.height <= 11.00d", Person.class);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-    @Test
-    public void isFloatGreaterThanWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.weight > 10.50f", Person.class);
+		easyCriteria.andLessOrEqualTo("height", 11.00d);
 
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        easyCriteria.andGreaterThan("weight", 10.50f);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+	@Test
+	public void isFloatGreaterThanWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.weight > 10.50f", Person.class);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-    @Test
-    public void isFloatGreaterOrEqualToWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.weight >= 11.00f", Person.class);
+		easyCriteria.andGreaterThan("weight", 10.50f);
 
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        easyCriteria.andGreaterOrEqualTo("weight", 11.00f);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+	@Test
+	public void isFloatGreaterOrEqualToWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.weight >= 11.00f", Person.class);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-    @Test
-    public void isFloatLessThanWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.weight < 11.00f", Person.class);
+		easyCriteria.andGreaterOrEqualTo("weight", 11.00f);
 
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        easyCriteria.andLessThan("weight", 11.00f);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+	@Test
+	public void isFloatLessThanWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.weight < 11.00f", Person.class);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-    @Test
-    public void isFloatLessOrEqualToWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.weight <= 10.50f", Person.class);
+		easyCriteria.andLessThan("weight", 11.00f);
 
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        easyCriteria.andLessOrEqualTo("weight", 10.50f);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+	@Test
+	public void isFloatLessOrEqualToWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.weight <= 10.50f", Person.class);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-    @Test
-    public void isLongGreaterThanWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.totalBooksOwned > 20", Person.class);
+		easyCriteria.andLessOrEqualTo("weight", 10.50f);
 
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        easyCriteria.andGreaterThan("totalBooksOwned", 20L);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+	@Test
+	public void isLongGreaterThanWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.totalBooksOwned > 20",
+				Person.class);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-    @Test
-    public void isLongGreaterOrEqualToWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.totalBooksOwned >= 20", Person.class);
+		easyCriteria.andGreaterThan("totalBooksOwned", 20L);
 
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        easyCriteria.andGreaterOrEqualTo("totalBooksOwned", 20L);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+	@Test
+	public void isLongGreaterOrEqualToWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.totalBooksOwned >= 20",
+				Person.class);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-    @Test
-    public void isLongLessThanWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.totalBooksOwned < 30", Person.class);
+		easyCriteria.andGreaterOrEqualTo("totalBooksOwned", 20L);
 
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        easyCriteria.andLessThan("totalBooksOwned", 30L);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+	@Test
+	public void isLongLessThanWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.totalBooksOwned < 30",
+				Person.class);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-    @Test
-    public void isLongLessOrEqualToWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.totalBooksOwned <= 20", Person.class);
+		easyCriteria.andLessThan("totalBooksOwned", 30L);
 
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        easyCriteria.andLessOrEqualTo("totalBooksOwned", 20L);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+	@Test
+	public void isLongLessOrEqualToWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.totalBooksOwned <= 20",
+				Person.class);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-    @Test
-    public void isIntegerGreaterThanWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.shoesInCloset > 10", Person.class);
+		easyCriteria.andLessOrEqualTo("totalBooksOwned", 20L);
 
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        easyCriteria.andGreaterThan("shoesInCloset", 10);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+	@Test
+	public void isIntegerGreaterThanWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.shoesInCloset > 10",
+				Person.class);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-    @Test
-    public void isIntegerGreaterOrEqualToWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.shoesInCloset >= 10", Person.class);
+		easyCriteria.andGreaterThan("shoesInCloset", 10);
 
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        easyCriteria.andGreaterOrEqualTo("shoesInCloset", 10);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+	@Test
+	public void isIntegerGreaterOrEqualToWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.shoesInCloset >= 10",
+				Person.class);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-    @Test
-    public void isIntegerLessThanWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.shoesInCloset < 20", Person.class);
+		easyCriteria.andGreaterOrEqualTo("shoesInCloset", 10);
 
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        easyCriteria.andLessThan("shoesInCloset", 20);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+	@Test
+	public void isIntegerLessThanWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.shoesInCloset < 20",
+				Person.class);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-    @Test
-    public void isIntegerLessOrEqualToWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.shoesInCloset <= 20", Person.class);
+		easyCriteria.andLessThan("shoesInCloset", 20);
 
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        easyCriteria.andLessOrEqualTo("shoesInCloset", 20);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+	@Test
+	public void isIntegerLessOrEqualToWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.shoesInCloset <= 20",
+				Person.class);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-    @Test
-    public void isStringGreaterThanWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.name > 'John'", Person.class);
+		easyCriteria.andLessOrEqualTo("shoesInCloset", 20);
 
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        easyCriteria.andGreaterThan("name", "John");
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+	@Test
+	public void isStringGreaterThanWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.name > 'John'", Person.class);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-    @Test
-    public void isStringGreaterOrEqualToWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.name >= 'John'", Person.class);
+		easyCriteria.andGreaterThan("name", "John");
 
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        easyCriteria.andGreaterOrEqualTo("name", "John");
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+	@Test
+	public void isStringGreaterOrEqualToWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.name >= 'John'", Person.class);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-    @Test
-    public void isStringLessThanWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.name < 'John'", Person.class);
+		easyCriteria.andGreaterOrEqualTo("name", "John");
 
-        assertTrue(personsFromJPQL.size() == 0);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        easyCriteria.andLessThan("name", "John");
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+	@Test
+	public void isStringLessThanWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.name < 'John'", Person.class);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.size() == 0);
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-    @Test
-    public void isStringLessOrEqualToWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.name <= 'John'", Person.class);
+		easyCriteria.andLessThan("name", "John");
 
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        easyCriteria.andLessOrEqualTo("name", "John");
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+	@Test
+	public void isStringLessOrEqualToWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.name <= 'John'", Person.class);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-    @Test
-    public void isDateGreaterThanWorking() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date firstJobDate = formatter.parse("01/01/2015");
+		easyCriteria.andLessOrEqualTo("name", "John");
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("firstJobDate", firstJobDate);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.firstJobDate > :firstJobDate", Person.class, parameters);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        assertTrue(personsFromJPQL.size() > 0);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+	@Test
+	public void isDateGreaterThanWorking() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date firstJobDate = formatter.parse("01/01/2015");
 
-        easyCriteria.andGreaterThan("firstJobDate", firstJobDate);
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("firstJobDate", firstJobDate);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.firstJobDate > :firstJobDate",
+				Person.class, parameters);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-    @Test
-    public void isDateGreaterOrEqualToWorking() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date firstJobDate = formatter.parse("01/01/2015");
+		easyCriteria.andGreaterThan("firstJobDate", firstJobDate);
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("firstJobDate", firstJobDate);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.firstJobDate >= :firstJobDate", Person.class, parameters);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        assertTrue(personsFromJPQL.size() > 0);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+	@Test
+	public void isDateGreaterOrEqualToWorking() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date firstJobDate = formatter.parse("01/01/2015");
 
-        easyCriteria.andGreaterOrEqualTo("firstJobDate", firstJobDate);
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("firstJobDate", firstJobDate);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.firstJobDate >= :firstJobDate",
+				Person.class, parameters);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-    @Test
-    public void isDateLessThanWorking() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date firstJobDate = formatter.parse("01/01/2015");
+		easyCriteria.andGreaterOrEqualTo("firstJobDate", firstJobDate);
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("firstJobDate", firstJobDate);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.firstJobDate < :firstJobDate", Person.class, parameters);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        assertTrue(personsFromJPQL.size() == 0);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+	@Test
+	public void isDateLessThanWorking() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date firstJobDate = formatter.parse("01/01/2015");
 
-        easyCriteria.andLessThan("firstJobDate", firstJobDate);
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("firstJobDate", firstJobDate);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.firstJobDate < :firstJobDate",
+				Person.class, parameters);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.size() == 0);
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-    @Test
-    public void isDateLessOrEqualToWorking() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date firstJobDate = formatter.parse("01/01/2015");
+		easyCriteria.andLessThan("firstJobDate", firstJobDate);
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("firstJobDate", firstJobDate);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.firstJobDate <= :firstJobDate", Person.class, parameters);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        assertTrue(personsFromJPQL.size() > 0);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+	@Test
+	public void isDateLessOrEqualToWorking() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date firstJobDate = formatter.parse("01/01/2015");
 
-        easyCriteria.andLessOrEqualTo("firstJobDate", firstJobDate);
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("firstJobDate", firstJobDate);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.firstJobDate <= :firstJobDate",
+				Person.class, parameters);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
+		easyCriteria.andLessOrEqualTo("firstJobDate", firstJobDate);
 
-    @Test
-    public void isCalendarGreaterThanWorking() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = formatter.parse("1/1/2001");
-        Calendar birthDayDate = Calendar.getInstance();
-        birthDayDate.setTime(date);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("birthDayDate", birthDayDate);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.birthDayDate > :birthDayDate", Person.class, parameters);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(personsFromJPQL.size() > 0);
+	@Test
+	public void isCalendarGreaterThanWorking() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = formatter.parse("1/1/2001");
+		Calendar birthDayDate = Calendar.getInstance();
+		birthDayDate.setTime(date);
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("birthDayDate", birthDayDate);
 
-        easyCriteria.andGreaterThan("birthDayDate", birthDayDate);
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.birthDayDate > :birthDayDate",
+				Person.class, parameters);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		easyCriteria.andGreaterThan("birthDayDate", birthDayDate);
 
-    @Test
-    public void isCalendarGreaterOrEqualToWorking() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = formatter.parse("1/1/2001");
-        Calendar birthDayDate = Calendar.getInstance();
-        birthDayDate.setTime(date);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("birthDayDate", birthDayDate);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.birthDayDate >= :birthDayDate", Person.class, parameters);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(personsFromJPQL.size() > 0);
+	@Test
+	public void isCalendarGreaterOrEqualToWorking() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = formatter.parse("1/1/2001");
+		Calendar birthDayDate = Calendar.getInstance();
+		birthDayDate.setTime(date);
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("birthDayDate", birthDayDate);
 
-        easyCriteria.andGreaterOrEqualTo("birthDayDate", birthDayDate);
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.birthDayDate >= :birthDayDate",
+				Person.class, parameters);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		easyCriteria.andGreaterOrEqualTo("birthDayDate", birthDayDate);
 
-    @Test
-    public void isCalendarLessThanWorking() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = formatter.parse("1/1/2001");
-        Calendar birthDayDate = Calendar.getInstance();
-        birthDayDate.setTime(date);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("birthDayDate", birthDayDate);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.birthDayDate < :birthDayDate", Person.class, parameters);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(personsFromJPQL.size() == 0);
+	@Test
+	public void isCalendarLessThanWorking() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = formatter.parse("1/1/2001");
+		Calendar birthDayDate = Calendar.getInstance();
+		birthDayDate.setTime(date);
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("birthDayDate", birthDayDate);
 
-        easyCriteria.andLessThan("birthDayDate", birthDayDate);
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.birthDayDate < :birthDayDate",
+				Person.class, parameters);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(personsFromJPQL.size() == 0);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		easyCriteria.andLessThan("birthDayDate", birthDayDate);
 
-    @Test
-    public void isCalendarLessOrEqualToWorking() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = formatter.parse("1/1/2001");
-        Calendar birthDayDate = Calendar.getInstance();
-        birthDayDate.setTime(date);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("birthDayDate", birthDayDate);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.birthDayDate <= :birthDayDate", Person.class, parameters);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(personsFromJPQL.size() > 0);
+	@Test
+	public void isCalendarLessOrEqualToWorking() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = formatter.parse("1/1/2001");
+		Calendar birthDayDate = Calendar.getInstance();
+		birthDayDate.setTime(date);
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("birthDayDate", birthDayDate);
 
-        easyCriteria.andLessOrEqualTo("birthDayDate", birthDayDate);
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.birthDayDate <= :birthDayDate",
+				Person.class, parameters);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		easyCriteria.andLessOrEqualTo("birthDayDate", birthDayDate);
 
-    @Test
-    public void isIntegerBetweenWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.shoesInCloset between 9 and 21", Person.class);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        assertTrue(personsFromJPQL.size() > 0);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        easyCriteria.andBetween("shoesInCloset", 9, 21);
+	@Test
+	public void isIntegerBetweenWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.shoesInCloset between 9 and 21",
+				Person.class);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		easyCriteria.andBetween("shoesInCloset", 9, 21);
 
-    @Test
-    public void isLongBetweenWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.totalBooksOwned between 19 and 31", Person.class);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        assertTrue(personsFromJPQL.size() > 0);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        easyCriteria.andBetween("totalBooksOwned", 19L, 31L);
+	@Test
+	public void isLongBetweenWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select p from Person p where p.totalBooksOwned between 19 and 31", Person.class);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		easyCriteria.andBetween("totalBooksOwned", 19L, 31L);
 
-    @Test
-    public void isStringBetweenWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.name between 'A' and 'L'", Person.class);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        assertTrue(personsFromJPQL.size() > 0);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.andBetween("name", "A", "L");
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+	@Test
+	public void isStringBetweenWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.name between 'A' and 'L'",
+				Person.class);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		assertTrue(personsFromJPQL.size() > 0);
 
-    @Test
-    public void isDateBetweenWorking() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date valueA = formatter.parse("1/1/2014");
-        Date valueB = formatter.parse("1/1/2017");
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.andBetween("name", "A", "L");
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("valueA", valueA);
-        parameters.put("valueB", valueB);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.firstJobDate between :valueA and :valueB", Person.class, parameters);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(personsFromJPQL.size() > 0);
+	@Test
+	public void isDateBetweenWorking() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date valueA = formatter.parse("1/1/2014");
+		Date valueB = formatter.parse("1/1/2017");
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("valueA", valueA);
+		parameters.put("valueB", valueB);
 
-        easyCriteria.andBetween("firstJobDate", valueA, valueB);
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select p from Person p where p.firstJobDate between :valueA and :valueB", Person.class, parameters);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		easyCriteria.andBetween("firstJobDate", valueA, valueB);
 
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-    @Test
-    public void isCalendarBetweenWorking() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date dateA = formatter.parse("5/5/2000");
-        Date dateB = formatter.parse("5/5/2003");
-        Calendar valueA = Calendar.getInstance();
-        valueA.setTime(dateA);
-        Calendar valueB = Calendar.getInstance();
-        valueB.setTime(dateB);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("valueA", valueA);
-        parameters.put("valueB", valueB);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.birthDayDate between :valueA and :valueB", Person.class, parameters);
+	@Test
+	public void isCalendarBetweenWorking() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date dateA = formatter.parse("5/5/2000");
+		Date dateB = formatter.parse("5/5/2003");
+		Calendar valueA = Calendar.getInstance();
+		valueA.setTime(dateA);
+		Calendar valueB = Calendar.getInstance();
+		valueB.setTime(dateB);
 
-        assertTrue(personsFromJPQL.size() > 0);
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("valueA", valueA);
+		parameters.put("valueB", valueB);
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select p from Person p where p.birthDayDate between :valueA and :valueB", Person.class, parameters);
 
-        easyCriteria.andBetween("birthDayDate", valueA, valueB);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		easyCriteria.andBetween("birthDayDate", valueA, valueB);
 
-    @Test
-    public void isDoubleBetweenWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.height between 9.00d and 12.00d", Person.class);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        assertTrue(personsFromJPQL.size() > 0);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+	@Test
+	public void isDoubleBetweenWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select p from Person p where p.height between 9.00d and 12.00d", Person.class);
 
-        easyCriteria.andBetween("height", 9.00d, 12.00d);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		easyCriteria.andBetween("height", 9.00d, 12.00d);
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-    @Test
-    public void isFloatBetweenWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.weight between 9.00f and 12.00f", Person.class);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        assertTrue(personsFromJPQL.size() > 0);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+	@Test
+	public void isFloatBetweenWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select p from Person p where p.weight between 9.00f and 12.00f", Person.class);
 
-        easyCriteria.andBetween("weight", 9.00f, 12.00f);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		easyCriteria.andBetween("weight", 9.00f, 12.00f);
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-    @Test
-    public void isNullWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.nickName is null", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        EasyQuery<Person> personCriteria1 = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        personCriteria1.andIsNull("nickName");
-        assertTrue(personCriteria1.getResultList().size() == personsFromJPQL.size());
-        assertTrue(personCriteria1.getResultList().containsAll(personsFromJPQL));
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        personsFromJPQL = getListFromJPQL("select p from Person p where p.birthDayDate is null", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+	@Test
+	public void isNullWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.nickName is null", Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        EasyQuery<Person> personCriteria2 = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        personCriteria2.andIsNull("birthDayDate");
-        assertTrue(personCriteria2.getResultList().size() == personsFromJPQL.size());
-        assertTrue(personCriteria2.getResultList().containsAll(personsFromJPQL));
+		EasyQuery<Person> personCriteria1 = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		personCriteria1.andIsNull("nickName");
+		assertTrue(personCriteria1.getResultList().size() == personsFromJPQL.size());
+		assertTrue(personCriteria1.getResultList().containsAll(personsFromJPQL));
 
-        personsFromJPQL = getListFromJPQL("select p from Person p where p.shoesInCloset is null", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		personsFromJPQL = getListFromJPQL("select p from Person p where p.birthDayDate is null", Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        EasyQuery<Person> personCriteria3 = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        personCriteria3.andIsNull("shoesInCloset");
-        assertTrue(personCriteria3.getResultList().size() == personsFromJPQL.size());
-        assertTrue(personCriteria3.getResultList().containsAll(personsFromJPQL));
+		EasyQuery<Person> personCriteria2 = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		personCriteria2.andIsNull("birthDayDate");
+		assertTrue(personCriteria2.getResultList().size() == personsFromJPQL.size());
+		assertTrue(personCriteria2.getResultList().containsAll(personsFromJPQL));
 
-        personsFromJPQL = getListFromJPQL("select p from Person p where p.car is null", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		personsFromJPQL = getListFromJPQL("select p from Person p where p.shoesInCloset is null", Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        EasyQuery<Person> personCriteria4 = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        personCriteria4.andIsNull("car");
-        assertTrue(personCriteria4.getResultList().size() == personsFromJPQL.size());
-        assertTrue(personCriteria4.getResultList().containsAll(personsFromJPQL));
-    }
+		EasyQuery<Person> personCriteria3 = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		personCriteria3.andIsNull("shoesInCloset");
+		assertTrue(personCriteria3.getResultList().size() == personsFromJPQL.size());
+		assertTrue(personCriteria3.getResultList().containsAll(personsFromJPQL));
 
-    @Test
-    public void isNotNullWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.nickName is not null", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		personsFromJPQL = getListFromJPQL("select p from Person p where p.car is null", Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        EasyQuery<Person> personCriteria1 = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        personCriteria1.andIsNotNull("nickName");
-        assertTrue(personCriteria1.getResultList().size() == personsFromJPQL.size());
-        assertTrue(personCriteria1.getResultList().containsAll(personsFromJPQL));
+		EasyQuery<Person> personCriteria4 = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		personCriteria4.andIsNull("car");
+		assertTrue(personCriteria4.getResultList().size() == personsFromJPQL.size());
+		assertTrue(personCriteria4.getResultList().containsAll(personsFromJPQL));
+	}
 
-        personsFromJPQL = getListFromJPQL("select p from Person p where p.birthDayDate is not null", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+	@Test
+	public void isNotNullWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.nickName is not null",
+				Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        EasyQuery<Person> personCriteria2 = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        personCriteria2.andIsNotNull("birthDayDate");
-        assertTrue(personCriteria2.getResultList().size() == personsFromJPQL.size());
-        assertTrue(personCriteria2.getResultList().containsAll(personsFromJPQL));
+		EasyQuery<Person> personCriteria1 = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		personCriteria1.andIsNotNull("nickName");
+		assertTrue(personCriteria1.getResultList().size() == personsFromJPQL.size());
+		assertTrue(personCriteria1.getResultList().containsAll(personsFromJPQL));
 
-        personsFromJPQL = getListFromJPQL("select p from Person p where p.shoesInCloset is not null", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		personsFromJPQL = getListFromJPQL("select p from Person p where p.birthDayDate is not null", Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        EasyQuery<Person> personCriteria3 = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        personCriteria3.andIsNotNull("shoesInCloset");
-        assertTrue(personCriteria3.getResultList().size() == personsFromJPQL.size());
-        assertTrue(personCriteria3.getResultList().containsAll(personsFromJPQL));
+		EasyQuery<Person> personCriteria2 = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		personCriteria2.andIsNotNull("birthDayDate");
+		assertTrue(personCriteria2.getResultList().size() == personsFromJPQL.size());
+		assertTrue(personCriteria2.getResultList().containsAll(personsFromJPQL));
 
-        personsFromJPQL = getListFromJPQL("select p from Person p where p.car is not null", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		personsFromJPQL = getListFromJPQL("select p from Person p where p.shoesInCloset is not null", Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        EasyQuery<Person> personCriteria4 = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        personCriteria4.andIsNotNull("car");
-        assertTrue(personCriteria4.getResultList().size() == personsFromJPQL.size());
-        assertTrue(personCriteria4.getResultList().containsAll(personsFromJPQL));
-    }
+		EasyQuery<Person> personCriteria3 = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		personCriteria3.andIsNotNull("shoesInCloset");
+		assertTrue(personCriteria3.getResultList().size() == personsFromJPQL.size());
+		assertTrue(personCriteria3.getResultList().containsAll(personsFromJPQL));
 
-    @Test
-    public void isListIsEmptyWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.dogs is empty", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		personsFromJPQL = getListFromJPQL("select p from Person p where p.car is not null", Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        EasyQuery<Person> personCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        personCriteria.andCollectionIsEmpty("dogs");
-        assertTrue(personCriteria.getResultList().size() == personsFromJPQL.size());
-        assertTrue(personCriteria.getResultList().containsAll(personsFromJPQL));
-    }
+		EasyQuery<Person> personCriteria4 = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		personCriteria4.andIsNotNull("car");
+		assertTrue(personCriteria4.getResultList().size() == personsFromJPQL.size());
+		assertTrue(personCriteria4.getResultList().containsAll(personsFromJPQL));
+	}
 
-    @Test
-    public void isCollectionIsEmptyWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.cats is empty", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+	@Test
+	public void isListIsEmptyWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.dogs is empty", Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        EasyQuery<Person> personCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        personCriteria.andCollectionIsEmpty("cats");
-        assertTrue(personCriteria.getResultList().size() == personsFromJPQL.size());
-        assertTrue(personCriteria.getResultList().containsAll(personsFromJPQL));
-    }
+		EasyQuery<Person> personCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		personCriteria.andCollectionIsEmpty("dogs");
+		assertTrue(personCriteria.getResultList().size() == personsFromJPQL.size());
+		assertTrue(personCriteria.getResultList().containsAll(personsFromJPQL));
+	}
 
-    @Test
-    public void isSetIsEmptyWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.certifications is empty", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+	@Test
+	public void isCollectionIsEmptyWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.cats is empty", Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        EasyQuery<Person> personCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        personCriteria.andCollectionIsEmpty("certifications");
-        assertTrue(personCriteria.getResultList().size() == personsFromJPQL.size());
-        assertTrue(personCriteria.getResultList().containsAll(personsFromJPQL));
-    }
+		EasyQuery<Person> personCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		personCriteria.andCollectionIsEmpty("cats");
+		assertTrue(personCriteria.getResultList().size() == personsFromJPQL.size());
+		assertTrue(personCriteria.getResultList().containsAll(personsFromJPQL));
+	}
 
-    @Test
-    public void isListIsNotEmptyWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.dogs is not empty", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+	@Test
+	public void isSetIsEmptyWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.certifications is empty",
+				Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        EasyQuery<Person> personCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        personCriteria.andCollectionIsNotEmpty("dogs");
-        assertTrue(personCriteria.getResultList().size() == personsFromJPQL.size());
-        assertTrue(personCriteria.getResultList().containsAll(personsFromJPQL));
-    }
+		EasyQuery<Person> personCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		personCriteria.andCollectionIsEmpty("certifications");
+		assertTrue(personCriteria.getResultList().size() == personsFromJPQL.size());
+		assertTrue(personCriteria.getResultList().containsAll(personsFromJPQL));
+	}
 
-    @Test
-    public void isCollectionIsNotEmptyWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.cats is not empty", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+	@Test
+	public void isListIsNotEmptyWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.dogs is not empty", Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        EasyQuery<Person> personCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        personCriteria.andCollectionIsNotEmpty("cats");
-        assertTrue(personCriteria.getResultList().size() == personsFromJPQL.size());
-        assertTrue(personCriteria.getResultList().containsAll(personsFromJPQL));
-    }
+		EasyQuery<Person> personCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		personCriteria.andCollectionIsNotEmpty("dogs");
+		assertTrue(personCriteria.getResultList().size() == personsFromJPQL.size());
+		assertTrue(personCriteria.getResultList().containsAll(personsFromJPQL));
+	}
 
-    @Test
-    public void isSetIsNotEmptyWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.certifications is not empty", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+	@Test
+	public void isCollectionIsNotEmptyWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.cats is not empty", Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        EasyQuery<Person> personCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        personCriteria.andCollectionIsNotEmpty("certifications");
-        assertTrue(personCriteria.getResultList().size() == personsFromJPQL.size());
-        assertTrue(personCriteria.getResultList().containsAll(personsFromJPQL));
-    }
+		EasyQuery<Person> personCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		personCriteria.andCollectionIsNotEmpty("cats");
+		assertTrue(personCriteria.getResultList().size() == personsFromJPQL.size());
+		assertTrue(personCriteria.getResultList().containsAll(personsFromJPQL));
+	}
 
-    @Test
-    public void isStringLikeWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.name like 'M%'", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+	@Test
+	public void isSetIsNotEmptyWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.certifications is not empty",
+				Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        EasyQuery<Person> personCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        personCriteria.andStringLike("name", "M%");
-        assertTrue(personCriteria.getResultList().size() == personsFromJPQL.size());
-        assertTrue(personCriteria.getResultList().containsAll(personsFromJPQL));
+		EasyQuery<Person> personCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		personCriteria.andCollectionIsNotEmpty("certifications");
+		assertTrue(personCriteria.getResultList().size() == personsFromJPQL.size());
+		assertTrue(personCriteria.getResultList().containsAll(personsFromJPQL));
+	}
 
-        personsFromJPQL = getListFromJPQL("select p from Person p where p.name like '%y'", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+	@Test
+	public void isStringLikeWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.name like 'M%'", Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        personCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        personCriteria.andStringLike("name", "%y");
-        assertTrue(personCriteria.getResultList().size() == personsFromJPQL.size());
-        assertTrue(personCriteria.getResultList().containsAll(personsFromJPQL));
-    }
+		EasyQuery<Person> personCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		personCriteria.andStringLike("name", "M%");
+		assertTrue(personCriteria.getResultList().size() == personsFromJPQL.size());
+		assertTrue(personCriteria.getResultList().containsAll(personsFromJPQL));
 
-    @Test
-    public void isStringNotLikeWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.name not like 'M%'", Person.class);
+		personsFromJPQL = getListFromJPQL("select p from Person p where p.name like '%y'", Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        EasyQuery<Person> personCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        personCriteria.andStringNotLike("name", "M%");
-        assertTrue(personCriteria.getResultList().size() == personsFromJPQL.size());
-        assertTrue(personCriteria.getResultList().containsAll(personsFromJPQL));
+		personCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		personCriteria.andStringLike("name", "%y");
+		assertTrue(personCriteria.getResultList().size() == personsFromJPQL.size());
+		assertTrue(personCriteria.getResultList().containsAll(personsFromJPQL));
+	}
 
-        personsFromJPQL = getListFromJPQL("select p from Person p where p.name not like '%y'", Person.class);
+	@Test
+	public void isStringNotLikeWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.name not like 'M%'",
+				Person.class);
 
-        personCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        personCriteria.andStringNotLike("name", "%y");
-        assertTrue(personCriteria.getResultList().size() == personsFromJPQL.size());
-        assertTrue(personCriteria.getResultList().containsAll(personsFromJPQL));
-    }
+		EasyQuery<Person> personCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		personCriteria.andStringNotLike("name", "M%");
+		assertTrue(personCriteria.getResultList().size() == personsFromJPQL.size());
+		assertTrue(personCriteria.getResultList().containsAll(personsFromJPQL));
 
-    @Test
-    public void isStringInWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.name in ('John', 'Mary')", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		personsFromJPQL = getListFromJPQL("select p from Person p where p.name not like '%y'", Person.class);
 
-        List<String> names = new ArrayList<String>();
-        names.add("John");
-        names.add("Mary");
+		personCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		personCriteria.andStringNotLike("name", "%y");
+		assertTrue(personCriteria.getResultList().size() == personsFromJPQL.size());
+		assertTrue(personCriteria.getResultList().containsAll(personsFromJPQL));
+	}
 
-        EasyQuery<Person> personCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        personCriteria.andStringIn("name", names);
-        assertTrue(personCriteria.getResultList().size() == personsFromJPQL.size());
-        assertTrue(personCriteria.getResultList().containsAll(personsFromJPQL));
-    }
+	@Test
+	public void isStringInWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.name in ('John', 'Mary')",
+				Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-    @Test
-    public void isStringNotInWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.name not in ('John', 'Mary')", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<String> names = new ArrayList<String>();
+		names.add("John");
+		names.add("Mary");
 
-        List<String> names = new ArrayList<String>();
-        names.add("John");
-        names.add("Mary");
+		EasyQuery<Person> personCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		personCriteria.andStringIn("name", names);
+		assertTrue(personCriteria.getResultList().size() == personsFromJPQL.size());
+		assertTrue(personCriteria.getResultList().containsAll(personsFromJPQL));
+	}
 
-        EasyQuery<Person> personCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        personCriteria.andStringNotIn("name", names);
-        assertTrue(personCriteria.getResultList().size() == personsFromJPQL.size());
-        assertTrue(personCriteria.getResultList().containsAll(personsFromJPQL));
-    }
+	@Test
+	public void isStringNotInWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.name not in ('John', 'Mary')",
+				Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-    @Test
-    public void isOrderByWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p order by p.shoesInCloset asc, p.name desc", Person.class);
+		List<String> names = new ArrayList<String>();
+		names.add("John");
+		names.add("Mary");
 
-        EasyQuery<Person> personCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        personCriteria.orderByAsc("shoesInCloset").orderByDesc("name");
+		EasyQuery<Person> personCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		personCriteria.andStringNotIn("name", names);
+		assertTrue(personCriteria.getResultList().size() == personsFromJPQL.size());
+		assertTrue(personCriteria.getResultList().containsAll(personsFromJPQL));
+	}
 
-        List<Person> easyCriteriaResult = personCriteria.getResultList();
+	@Test
+	public void isOrderByWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select p from Person p order by p.shoesInCloset asc, p.name desc", Person.class);
 
-        assertTrue(easyCriteriaResult.size() == personsFromJPQL.size());
-        assertTrue(easyCriteriaResult.containsAll(personsFromJPQL));
+		EasyQuery<Person> personCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		personCriteria.orderByAsc("shoesInCloset").orderByDesc("name");
 
-        for (int i = 0; i < personsFromJPQL.size(); i++) {
-            assertEquals(personsFromJPQL.get(i), easyCriteriaResult.get(i));
-        }
-    }
+		List<Person> easyCriteriaResult = personCriteria.getResultList();
 
-    @Test
-    public void isInnerJoinWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p join p.dogs d", Person.class);
+		assertTrue(easyCriteriaResult.size() == personsFromJPQL.size());
+		assertTrue(easyCriteriaResult.containsAll(personsFromJPQL));
 
-        assertTrue(personsFromJPQL.size() > 0);
+		for (int i = 0; i < personsFromJPQL.size(); i++) {
+			assertEquals(personsFromJPQL.get(i), easyCriteriaResult.get(i));
+		}
+	}
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.innerJoin("dogs");
+	@Test
+	public void isInnerJoinWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p join p.dogs d", Person.class);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.innerJoin("dogs");
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-    @Test
-    public void isInnerJoinWithDistinctWorking() {
-        List<Person> personsFromJPQLWithOutDistinct = getListFromJPQL("select p from Person p join p.dogs d", Person.class);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        List<Person> personsFromJPQL = getListFromJPQL("select distinct p from Person p join p.dogs d", Person.class);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(personsFromJPQL.size() > 0);
-        assertTrue(personsFromJPQL.size() < personsFromJPQLWithOutDistinct.size());
+	@Test
+	public void isInnerJoinWithDistinctWorking() {
+		List<Person> personsFromJPQLWithOutDistinct = getListFromJPQL("select p from Person p join p.dogs d",
+				Person.class);
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.innerJoin("dogs");
-        easyCriteria.setDistinctTrue();
+		List<Person> personsFromJPQL = getListFromJPQL("select distinct p from Person p join p.dogs d", Person.class);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(personsFromJPQL.size() > 0);
+		assertTrue(personsFromJPQL.size() < personsFromJPQLWithOutDistinct.size());
 
-        assertNotEquals(personsFromJPQLWithOutDistinct.size(), easyCriteriaResult.size());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.innerJoin("dogs");
+		easyCriteria.setDistinctTrue();
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		assertNotEquals(personsFromJPQLWithOutDistinct.size(), easyCriteriaResult.size());
 
-    @Test
-    public void isLeftJoinWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select distinct p from Person p left join p.dogs d", Person.class);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        assertTrue(personsFromJPQL.size() > 0);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.leftJoin("dogs");
-        easyCriteria.setDistinctTrue();
+	@Test
+	public void isLeftJoinWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select distinct p from Person p left join p.dogs d",
+				Person.class);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.leftJoin("dogs");
+		easyCriteria.setDistinctTrue();
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-    @Test
-    public void isLeftJoinWithDistinctWorking() {
-        List<Person> personsFromJPQLWithOutDistinct = getListFromJPQL("select p from Person p left join p.dogs d", Person.class);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        List<Person> personsFromJPQL = getListFromJPQL("select distinct p from Person p left join p.dogs d", Person.class);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(personsFromJPQL.size() > 0);
-        assertTrue(personsFromJPQL.size() < personsFromJPQLWithOutDistinct.size());
+	@Test
+	public void isLeftJoinWithDistinctWorking() {
+		List<Person> personsFromJPQLWithOutDistinct = getListFromJPQL("select p from Person p left join p.dogs d",
+				Person.class);
 
+		List<Person> personsFromJPQL = getListFromJPQL("select distinct p from Person p left join p.dogs d",
+				Person.class);
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.leftJoin("dogs");
-        easyCriteria.setDistinctTrue();
+		assertTrue(personsFromJPQL.size() > 0);
+		assertTrue(personsFromJPQL.size() < personsFromJPQLWithOutDistinct.size());
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.leftJoin("dogs");
+		easyCriteria.setDistinctTrue();
 
-        assertNotEquals(personsFromJPQLWithOutDistinct.size(), easyCriteriaResult.size());
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertNotEquals(personsFromJPQLWithOutDistinct.size(), easyCriteriaResult.size());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-    @Test
-    public void isInnerJoinFetchWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select distinct p from Person p inner join fetch p.dogs", Person.class);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(personsFromJPQL.size() > 0);
+	@Test
+	public void isInnerJoinFetchWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select distinct p from Person p inner join fetch p.dogs",
+				Person.class);
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.innerJoinFetch("dogs");
-        easyCriteria.setDistinctTrue();
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.innerJoinFetch("dogs");
+		easyCriteria.setDistinctTrue();
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-    @Test
-    public void isLeftJoinFetchWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select distinct p from Person p left join fetch p.dogs", Person.class);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(personsFromJPQL.size() > 0);
+	@Test
+	public void isLeftJoinFetchWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select distinct p from Person p left join fetch p.dogs",
+				Person.class);
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.leftJoinFetch("dogs");
-        easyCriteria.setDistinctTrue();
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.leftJoinFetch("dogs");
+		easyCriteria.setDistinctTrue();
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-    @Test
-    public void isPaginationWorking() {
-        EntityManager em = getEntityManager();
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        TypedQuery<Person> query = em.createQuery("select d from Person d", Person.class);
-        query.setFirstResult(1);
-        query.setMaxResults(1);
+	@Test
+	public void isPaginationWorking() {
+		EntityManager em = getEntityManager();
 
-        List<Person> personsFirstResult = query.getResultList();
-        query.setFirstResult(2);
-        query.setMaxResults(1);
+		TypedQuery<Person> query = em.createQuery("select d from Person d", Person.class);
+		query.setFirstResult(1);
+		query.setMaxResults(1);
 
-        List<Person> personsSecondResult = query.getResultList();
-        assertFalse(personsFirstResult.get(0).equals(personsSecondResult.get(0)));
-        assertFalse(personsSecondResult.containsAll(personsFirstResult));
+		List<Person> personsFirstResult = query.getResultList();
+		query.setFirstResult(2);
+		query.setMaxResults(1);
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.setFirstResult(1);
-        easyCriteria.setMaxResults(1);
+		List<Person> personsSecondResult = query.getResultList();
+		assertFalse(personsFirstResult.get(0).equals(personsSecondResult.get(0)));
+		assertFalse(personsSecondResult.containsAll(personsFirstResult));
 
-        List<Person> persons = easyCriteria.getResultList();
-        assertEquals(persons.size(), personsFirstResult.size());
-        assertTrue(persons.containsAll(personsFirstResult));
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.setFirstResult(1);
+		easyCriteria.setMaxResults(1);
 
-        easyCriteria.setFirstResult(2);
-        easyCriteria.setMaxResults(1);
-        persons = easyCriteria.getResultList();
+		List<Person> persons = easyCriteria.getResultList();
+		assertEquals(persons.size(), personsFirstResult.size());
+		assertTrue(persons.containsAll(personsFirstResult));
 
-        assertEquals(persons.size(), personsSecondResult.size());
-        assertTrue(persons.containsAll(personsSecondResult));
-    }
+		easyCriteria.setFirstResult(2);
+		easyCriteria.setMaxResults(1);
+		persons = easyCriteria.getResultList();
 
-    @Test
-    public void isWhereInnerJoinWorking() {
-        List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d inner join d.person p where p.name = 'John'", Dog.class);
-        assertTrue(dogsFromJPQL.size() > 0);
+		assertEquals(persons.size(), personsSecondResult.size());
+		assertTrue(persons.containsAll(personsSecondResult));
+	}
 
-        EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinEquals("person", "name", "John");
+	@Test
+	public void isWhereInnerJoinWorking() {
+		List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d inner join d.person p where p.name = 'John'",
+				Dog.class);
+		assertTrue(dogsFromJPQL.size() > 0);
 
-        List<Dog> easyCriteriaResult = easyCriteria.getResultList();
+		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		//easyCriteria.andJoinEquals("person", "name", "John");
+		easyCriteria.andEquals("person.name", "John");
 
-        assertEquals(dogsFromJPQL.size(), easyCriteriaResult.size());
+		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
-        assertTrue(dogsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		assertEquals(dogsFromJPQL.size(), easyCriteriaResult.size());
 
-    @Test(expected = IllegalStateException.class)
-    public void isExceptionThrownWhenJoinsIsEmpty() {
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        //easyCriteria.andJoinEquals("dogs", "name", "Dark");
-    }
+		assertTrue(dogsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-    @Test(expected = IllegalStateException.class)
-    public void isExceptionThrownWhenMultipleJoinsIsEmpty() {
-        EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
-        easyCriteria.andEquals("color.manufacturer", "Dark");
-    }
+	@Test(expected = IllegalStateException.class)
+	public void isExceptionThrownWhenJoinsIsEmpty() {
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		// easyCriteria.andJoinEquals("dogs", "name", "Dark");
+	}
 
-    @Test(expected = IllegalStateException.class)
-    public void isExceptionThrownWhenJoinIsNotFound() {
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.innerJoin("car");
-        //easyCriteria.andJoinEquals("dogs", "name", "Dark");
-    }
+	@Test(expected = IllegalStateException.class)
+	public void isExceptionThrownWhenMultipleJoinsIsEmpty() {
+		EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
+		easyCriteria.andEquals("color.manufacturer", "Dark");
+	}
 
-    @Test(expected = IllegalStateException.class)
-    public void isExceptionThrownWhenMultipleJoinIsNotFound() {
-        EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        easyCriteria.andEquals("color.manufacturer", "Dark");
-    }
+	@Test(expected = IllegalStateException.class)
+	public void isExceptionThrownWhenJoinIsNotFound() {
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.innerJoin("car");
+		// easyCriteria.andJoinEquals("dogs", "name", "Dark");
+	}
 
-    @Test
-    public void isWhereLeftJoinWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p left join p.dogs d where d.name = 'Fire'", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+	@Test(expected = IllegalStateException.class)
+	public void isExceptionThrownWhenMultipleJoinIsNotFound() {
+		EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		easyCriteria.andEquals("color.manufacturer", "Dark");
+	}
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+	@Test
+	public void isWhereLeftJoinWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select p from Person p left join p.dogs d where d.name = 'Fire'", Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        // Workaround for OpenJPA
-        if (isOpenJPA()){
-            easyCriteria.setDistinctTrue();
-        }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        easyCriteria.leftJoin("dogs");
-        //easyCriteria.andJoinEquals("dogs", "name", "Fire");
+		// Workaround for OpenJPA
+		if (isOpenJPA()) {
+			easyCriteria.setDistinctTrue();
+		}
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		easyCriteria.leftJoin("dogs");
+		// easyCriteria.andJoinEquals("dogs", "name", "Fire");
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-    @Test
-    public void isWhereInnerJoinFetchWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p join p.dogs d where d.name = 'Fire'", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+	@Test
+	public void isWhereInnerJoinFetchWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p join p.dogs d where d.name = 'Fire'",
+				Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        if(isOpenJPA()){
-            easyCriteria.setDistinctTrue();
-        }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        easyCriteria.innerJoinFetch("dogs");
-        //easyCriteria.andJoinEquals("dogs", "name", "Fire");
+		if (isOpenJPA()) {
+			easyCriteria.setDistinctTrue();
+		}
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		easyCriteria.innerJoinFetch("dogs");
+		// easyCriteria.andJoinEquals("dogs", "name", "Fire");
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-    @Test
-    public void isWhereJoinNotEqualsWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p join p.dogs d where d.name <> 'Fire'", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+	@Test
+	public void isWhereJoinNotEqualsWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p join p.dogs d where d.name <> 'Fire'",
+				Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        if(isOpenJPA()){
-            easyCriteria.setDistinctTrue();
-        }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        easyCriteria.innerJoinFetch("dogs");
-        //easyCriteria.andJoinNotEquals("dogs", "name", "Fire");
+		if (isOpenJPA()) {
+			easyCriteria.setDistinctTrue();
+		}
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		easyCriteria.innerJoinFetch("dogs");
+		// easyCriteria.andJoinNotEquals("dogs", "name", "Fire");
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        assertTrue(easyCriteriaResult.containsAll(personsFromJPQL));
-    }
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-    @Test
-    public void isWhereLeftJoinFetchWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p, IN(p.dogs) d  where d.name = 'Dark'", Person.class);
+		assertTrue(easyCriteriaResult.containsAll(personsFromJPQL));
+	}
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.leftJoinFetch("dogs");
-        //easyCriteria.andJoinEquals("dogs", "name", "Dark");
+	@Test
+	public void isWhereLeftJoinFetchWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p, IN(p.dogs) d  where d.name = 'Dark'",
+				Person.class);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.leftJoinFetch("dogs");
+		// easyCriteria.andJoinEquals("dogs", "name", "Dark");
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-    @Test
-    public void isJoinIntegerGreaterThanWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p join p.dogs d where d.toysTotal > 5", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+	@Test
+	public void isJoinIntegerGreaterThanWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p join p.dogs d where d.toysTotal > 5",
+				Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        // Workaround for OpenJPA
-        if (isOpenJPA()){
-            easyCriteria.setDistinctTrue();
-        }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        easyCriteria.innerJoin("dogs");
-        //easyCriteria.andJoinGreaterThan("dogs", "toysTotal", 5);
+		// Workaround for OpenJPA
+		if (isOpenJPA()) {
+			easyCriteria.setDistinctTrue();
+		}
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		easyCriteria.innerJoin("dogs");
+		// easyCriteria.andJoinGreaterThan("dogs", "toysTotal", 5);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-    @Test
-    public void isJoinIntegerGreaterOrEqualToWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select distinct p from Person p join p.dogs d where d.toysTotal >= 5", Person.class);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        // Workaround for OpenJPA
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("dogs");
-        //easyCriteria.andJoinGreaterOrEqualTo("dogs", "toysTotal", 5);
+	@Test
+	public void isJoinIntegerGreaterOrEqualToWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select distinct p from Person p join p.dogs d where d.toysTotal >= 5", Person.class);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		// Workaround for OpenJPA
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("dogs");
+		// easyCriteria.andJoinGreaterOrEqualTo("dogs", "toysTotal", 5);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-    @Test
-    public void isJoinIntegerLessThanWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select distinct p from Person p join p.dogs d where d.toysTotal < 13", Person.class);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        // Workaround for OpenJPA
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("dogs");
-        //easyCriteria.andJoinLessThan("dogs", "toysTotal", 13);
+	@Test
+	public void isJoinIntegerLessThanWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select distinct p from Person p join p.dogs d where d.toysTotal < 13", Person.class);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		// Workaround for OpenJPA
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("dogs");
+		// easyCriteria.andJoinLessThan("dogs", "toysTotal", 13);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-    @Test
-    public void isJoinIntegerLessOrEqualToWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select distinct p from Person p join p.dogs d where d.toysTotal <= 13", Person.class);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        // Workaround for OpenJPA
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("dogs");
-        //easyCriteria.andJoinLessOrEqualTo("dogs", "toysTotal", 13);
+	@Test
+	public void isJoinIntegerLessOrEqualToWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select distinct p from Person p join p.dogs d where d.toysTotal <= 13", Person.class);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		// Workaround for OpenJPA
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("dogs");
+		// easyCriteria.andJoinLessOrEqualTo("dogs", "toysTotal", 13);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-    @Test
-    public void isJoinLongGreaterThanWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p join p.dogs d where d.fleasTotal > 5", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+	@Test
+	public void isJoinLongGreaterThanWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p join p.dogs d where d.fleasTotal > 5",
+				Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        // Workaround for OpenJPA
-        if (isOpenJPA()){
-            easyCriteria.setDistinctTrue();
-        }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        easyCriteria.innerJoin("dogs");
-        //easyCriteria.andJoinGreaterThan("dogs", "fleasTotal", 5L);
+		// Workaround for OpenJPA
+		if (isOpenJPA()) {
+			easyCriteria.setDistinctTrue();
+		}
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		easyCriteria.innerJoin("dogs");
+		// easyCriteria.andJoinGreaterThan("dogs", "fleasTotal", 5L);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-    @Test
-    public void isJoinLongGreaterOrEqualToWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select distinct p from Person p join p.dogs d where d.fleasTotal >= 5", Person.class);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        // Workaround for OpenJPA
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("dogs");
-        //easyCriteria.andJoinGreaterOrEqualTo("dogs", "fleasTotal", 5L);
+	@Test
+	public void isJoinLongGreaterOrEqualToWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select distinct p from Person p join p.dogs d where d.fleasTotal >= 5", Person.class);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		// Workaround for OpenJPA
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("dogs");
+		// easyCriteria.andJoinGreaterOrEqualTo("dogs", "fleasTotal", 5L);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-    @Test
-    public void isJoinLongLessThanWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select distinct p from Person p join p.dogs d where d.fleasTotal < 13", Person.class);
+	@Test
+	public void isJoinLongLessThanWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select distinct p from Person p join p.dogs d where d.fleasTotal < 13", Person.class);
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        // Workaround for OpenJPA
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("dogs");
-        //easyCriteria.andJoinLessThan("dogs", "fleasTotal", 13L);
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		// Workaround for OpenJPA
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("dogs");
+		// easyCriteria.andJoinLessThan("dogs", "fleasTotal", 13L);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-    @Test
-    public void isJoinLongLessOrEqualToWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select distinct p from Person p join p.dogs d where d.fleasTotal <= 13", Person.class);
+	@Test
+	public void isJoinLongLessOrEqualToWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select distinct p from Person p join p.dogs d where d.fleasTotal <= 13", Person.class);
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        // Workaround for OpenJPA
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("dogs");
-        //easyCriteria.andJoinLessOrEqualTo("dogs", "fleasTotal", 13L);
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		// Workaround for OpenJPA
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("dogs");
+		// easyCriteria.andJoinLessOrEqualTo("dogs", "fleasTotal", 13L);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-    @Test
-    public void isJoinDoubleGreaterThanWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select distinct p from Person p join p.dogs d where d.weight > 5", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+	@Test
+	public void isJoinDoubleGreaterThanWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select distinct p from Person p join p.dogs d where d.weight > 5", Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        // Workaround for OpenJPA
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("dogs");
-        //easyCriteria.andJoinGreaterThan("dogs", "weight", 5.00d);
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		// Workaround for OpenJPA
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("dogs");
+		// easyCriteria.andJoinGreaterThan("dogs", "weight", 5.00d);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-    @Test
-    public void isJoinDoubleGreaterOrEqualToWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select distinct p from Person p join p.dogs d where d.weight >= 5", Person.class);
+	@Test
+	public void isJoinDoubleGreaterOrEqualToWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select distinct p from Person p join p.dogs d where d.weight >= 5", Person.class);
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        // Workaround for OpenJPA
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("dogs");
-        //easyCriteria.andJoinGreaterOrEqualTo("dogs", "weight", 5.00d);
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		// Workaround for OpenJPA
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("dogs");
+		// easyCriteria.andJoinGreaterOrEqualTo("dogs", "weight", 5.00d);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
+	@Test
+	public void isJoinDoubleLessThanWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select distinct p from Person p join p.dogs d where d.weight < 13", Person.class);
 
-    @Test
-    public void isJoinDoubleLessThanWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select distinct p from Person p join p.dogs d where d.weight < 13", Person.class);
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		// Workaround for OpenJPA
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("dogs");
+		// easyCriteria.andJoinLessThan("dogs", "weight", 13.00d);
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        // Workaround for OpenJPA
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("dogs");
-        //easyCriteria.andJoinLessThan("dogs", "weight", 13.00d);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+	@Test
+	public void isJoinDoubleLessOrEqualToWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select distinct p from Person p join p.dogs d where d.weight <= 13", Person.class);
 
-    @Test
-    public void isJoinDoubleLessOrEqualToWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select distinct p from Person p join p.dogs d where d.weight <= 13", Person.class);
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		// Workaround for OpenJPA
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("dogs");
+		// easyCriteria.andJoinLessOrEqualTo("dogs", "weight", 13.00d);
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        // Workaround for OpenJPA
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("dogs");
-        //easyCriteria.andJoinLessOrEqualTo("dogs", "weight", 13.00d);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+	@Test
+	public void isJoinFloatGreaterThanWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select distinct p from Person p join p.dogs d where d.hairSize > 5", Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-    @Test
-    public void isJoinFloatGreaterThanWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select distinct p from Person p join p.dogs d where d.hairSize > 5", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		// Workaround for OpenJPA
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("dogs");
+		// easyCriteria.andJoinGreaterThan("dogs", "hairSize", 5.00f);
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        // Workaround for OpenJPA
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("dogs");
-        //easyCriteria.andJoinGreaterThan("dogs", "hairSize", 5.00f);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+	@Test
+	public void isJoinFloatGreaterOrEqualToWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select distinct p from Person p join p.dogs d where d.hairSize >= 5", Person.class);
 
-    @Test
-    public void isJoinFloatGreaterOrEqualToWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select distinct p from Person p join p.dogs d where d.hairSize >= 5", Person.class);
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		// Workaround for OpenJPA
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("dogs");
+		// easyCriteria.andJoinGreaterOrEqualTo("dogs", "hairSize", 5.00f);
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        // Workaround for OpenJPA
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("dogs");
-        //easyCriteria.andJoinGreaterOrEqualTo("dogs", "hairSize", 5.00f);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+	@Test
+	public void isJoinFloatLessThanWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select distinct p from Person p join p.dogs d where d.hairSize < 13", Person.class);
 
-    @Test
-    public void isJoinFloatLessThanWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select distinct p from Person p join p.dogs d where d.hairSize < 13", Person.class);
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		// Workaround for OpenJPA
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("dogs");
+		// easyCriteria.andJoinLessThan("dogs", "hairSize", 13.00f);
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        // Workaround for OpenJPA
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("dogs");
-        //easyCriteria.andJoinLessThan("dogs", "hairSize", 13.00f);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+	@Test
+	public void isJoinFloatLessOrEqualToWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select distinct p from Person p join p.dogs d where d.hairSize <= 13", Person.class);
 
-    @Test
-    public void isJoinFloatLessOrEqualToWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select distinct p from Person p join p.dogs d where d.hairSize <= 13", Person.class);
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		// Workaround for OpenJPA
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("dogs");
+		// easyCriteria.andJoinLessOrEqualTo("dogs", "hairSize", 13.00f);
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        // Workaround for OpenJPA
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("dogs");
-        //easyCriteria.andJoinLessOrEqualTo("dogs", "hairSize", 13.00f);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+	@Test
+	public void isJoinDateGreaterThanWorking() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date dateOfBirth = formatter.parse("19/10/2005");
 
-    @Test
-    public void isJoinDateGreaterThanWorking() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date dateOfBirth = formatter.parse("19/10/2005");
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("dateOfBirth", dateOfBirth);
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("dateOfBirth", dateOfBirth);
+		List<Person> personFromJPQL = getListFromJPQL(
+				"select distinct p from Person p join p.dogs d where d.dateOfBirth > :dateOfBirth", Person.class,
+				parameters);
 
-        List<Person> personFromJPQL = getListFromJPQL("select distinct p from Person p join p.dogs d where d.dateOfBirth > :dateOfBirth", Person.class, parameters);
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		// Workaround for OpenJPA
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("dogs");
+		// easyCriteria.andJoinGreaterThan("dogs", "dateOfBirth", dateOfBirth);
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        // Workaround for OpenJPA
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("dogs");
-        //easyCriteria.andJoinGreaterThan("dogs", "dateOfBirth", dateOfBirth);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertEquals(personFromJPQL.size(), easyCriteriaResult.size());
 
-        assertEquals(personFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(personFromJPQL.containsAll(easyCriteriaResult));
-    }
+	@Test
+	public void isJoinDateGreaterOrEqualToWorking() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date dateOfBirth = formatter.parse("19/10/2005");
 
-    @Test
-    public void isJoinDateGreaterOrEqualToWorking() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date dateOfBirth = formatter.parse("19/10/2005");
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("dateOfBirth", dateOfBirth);
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("dateOfBirth", dateOfBirth);
+		List<Person> personFromJPQL = getListFromJPQL(
+				"select distinct p from Person p join p.dogs d where d.dateOfBirth >= :dateOfBirth", Person.class,
+				parameters);
 
-        List<Person> personFromJPQL = getListFromJPQL("select distinct p from Person p join p.dogs d where d.dateOfBirth >= :dateOfBirth", Person.class, parameters);
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		// Workaround for OpenJPA
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("dogs");
+		// easyCriteria.andJoinGreaterOrEqualTo("dogs", "dateOfBirth", dateOfBirth);
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        // Workaround for OpenJPA
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("dogs");
-        //easyCriteria.andJoinGreaterOrEqualTo("dogs", "dateOfBirth", dateOfBirth);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertEquals(personFromJPQL.size(), easyCriteriaResult.size());
 
-        assertEquals(personFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(personFromJPQL.containsAll(easyCriteriaResult));
-    }
+	@Test
+	public void isJoinDateLessThanWorking() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date dateOfBirth = formatter.parse("19/10/2005");
 
-    @Test
-    public void isJoinDateLessThanWorking() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date dateOfBirth = formatter.parse("19/10/2005");
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("dateOfBirth", dateOfBirth);
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("dateOfBirth", dateOfBirth);
+		List<Person> personFromJPQL = getListFromJPQL(
+				"select distinct p from Person p join p.dogs d where d.dateOfBirth < :dateOfBirth", Person.class,
+				parameters);
 
-        List<Person> personFromJPQL = getListFromJPQL("select distinct p from Person p join p.dogs d where d.dateOfBirth < :dateOfBirth", Person.class, parameters);
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		// Workaround for OpenJPA
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("dogs");
+		// easyCriteria.andJoinLessThan("dogs", "dateOfBirth", dateOfBirth);
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        // Workaround for OpenJPA
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("dogs");
-        //easyCriteria.andJoinLessThan("dogs", "dateOfBirth", dateOfBirth);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertEquals(personFromJPQL.size(), easyCriteriaResult.size());
 
-        assertEquals(personFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(personFromJPQL.containsAll(easyCriteriaResult));
-    }
+	@Test
+	public void isJoinDateLessOrEqualToWorking() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date dateOfBirth = formatter.parse("01/01/2009");
 
-    @Test
-    public void isJoinDateLessOrEqualToWorking() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date dateOfBirth = formatter.parse("01/01/2009");
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("dateOfBirth", dateOfBirth);
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("dateOfBirth", dateOfBirth);
+		List<Person> personFromJPQL = getListFromJPQL(
+				"select distinct p from Person p join p.dogs d where d.dateOfBirth <= :dateOfBirth", Person.class,
+				parameters);
 
-        List<Person> personFromJPQL = getListFromJPQL("select distinct p from Person p join p.dogs d where d.dateOfBirth <= :dateOfBirth", Person.class, parameters);
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		// Workaround for OpenJPA
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("dogs");
+		// easyCriteria.andJoinLessOrEqualTo("dogs", "dateOfBirth", dateOfBirth);
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        // Workaround for OpenJPA
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("dogs");
-        //easyCriteria.andJoinLessOrEqualTo("dogs", "dateOfBirth", dateOfBirth);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertEquals(personFromJPQL.size(), easyCriteriaResult.size());
 
-        assertEquals(personFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(personFromJPQL.containsAll(easyCriteriaResult));
-    }
+	@Test
+	public void isJoinCalendarGreaterThanWorking() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = formatter.parse("1/1/2001");
+		Calendar dateOfBirth = Calendar.getInstance();
+		dateOfBirth.setTime(date);
 
-    @Test
-    public void isJoinCalendarGreaterThanWorking() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = formatter.parse("1/1/2001");
-        Calendar dateOfBirth = Calendar.getInstance();
-        dateOfBirth.setTime(date);
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("birthDayDate", dateOfBirth);
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("birthDayDate", dateOfBirth);
+		List<Dog> dogsFromJPQL = getListFromJPQL(
+				"select d from Dog d join d.person p where p.birthDayDate > :birthDayDate", Dog.class, parameters);
 
-        List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where p.birthDayDate > :birthDayDate", Dog.class, parameters);
+		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinGreaterThan("person", "birthDayDate", dateOfBirth);
 
-        EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinGreaterThan("person", "birthDayDate", dateOfBirth);
+		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
-        List<Dog> easyCriteriaResult = easyCriteria.getResultList();
+		assertEquals(dogsFromJPQL.size(), easyCriteriaResult.size());
 
-        assertEquals(dogsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(dogsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(dogsFromJPQL.containsAll(easyCriteriaResult));
-    }
+	@Test
+	public void isJoinCalendarGreaterOrEqualToWorking() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = formatter.parse("1/1/2001");
+		Calendar dateOfBirth = Calendar.getInstance();
+		dateOfBirth.setTime(date);
 
-    @Test
-    public void isJoinCalendarGreaterOrEqualToWorking() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = formatter.parse("1/1/2001");
-        Calendar dateOfBirth = Calendar.getInstance();
-        dateOfBirth.setTime(date);
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("birthDayDate", dateOfBirth);
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("birthDayDate", dateOfBirth);
+		List<Dog> dogsFromJPQL = getListFromJPQL(
+				"select d from Dog d join d.person p where p.birthDayDate >= :birthDayDate", Dog.class, parameters);
 
-        List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where p.birthDayDate >= :birthDayDate", Dog.class, parameters);
+		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinGreaterOrEqualTo("person", "birthDayDate",
+		// dateOfBirth);
 
-        EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinGreaterOrEqualTo("person", "birthDayDate", dateOfBirth);
+		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
-        List<Dog> easyCriteriaResult = easyCriteria.getResultList();
+		assertEquals(dogsFromJPQL.size(), easyCriteriaResult.size());
 
-        assertEquals(dogsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(dogsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(dogsFromJPQL.containsAll(easyCriteriaResult));
-    }
+	@Test
+	public void isJoinCalendarLessThanWorking() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = formatter.parse("1/1/2001");
+		Calendar dateOfBirth = Calendar.getInstance();
+		dateOfBirth.setTime(date);
 
-    @Test
-    public void isJoinCalendarLessThanWorking() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = formatter.parse("1/1/2001");
-        Calendar dateOfBirth = Calendar.getInstance();
-        dateOfBirth.setTime(date);
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("birthDayDate", dateOfBirth);
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("birthDayDate", dateOfBirth);
+		List<Dog> dogsFromJPQL = getListFromJPQL(
+				"select d from Dog d join d.person p where p.birthDayDate < :birthDayDate", Dog.class, parameters);
 
-        List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where p.birthDayDate < :birthDayDate", Dog.class, parameters);
+		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinLessThan("person", "birthDayDate", dateOfBirth);
 
-        EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinLessThan("person", "birthDayDate", dateOfBirth);
+		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
-        List<Dog> easyCriteriaResult = easyCriteria.getResultList();
+		assertEquals(dogsFromJPQL.size(), easyCriteriaResult.size());
 
-        assertEquals(dogsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(dogsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(dogsFromJPQL.containsAll(easyCriteriaResult));
-    }
+	@Test
+	public void isJoinCalendarLessOrEqualToWorking() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = formatter.parse("1/1/2001");
+		Calendar dateOfBirth = Calendar.getInstance();
+		dateOfBirth.setTime(date);
 
-    @Test
-    public void isJoinCalendarLessOrEqualToWorking() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = formatter.parse("1/1/2001");
-        Calendar dateOfBirth = Calendar.getInstance();
-        dateOfBirth.setTime(date);
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("birthDayDate", dateOfBirth);
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("birthDayDate", dateOfBirth);
+		List<Dog> dogsFromJPQL = getListFromJPQL(
+				"select d from Dog d join d.person p where p.birthDayDate <= :birthDayDate", Dog.class, parameters);
 
-        List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where p.birthDayDate <= :birthDayDate", Dog.class, parameters);
+		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinLessOrEqualTo("person", "birthDayDate", dateOfBirth);
 
-        EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinLessOrEqualTo("person", "birthDayDate", dateOfBirth);
+		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
-        List<Dog> easyCriteriaResult = easyCriteria.getResultList();
+		assertEquals(dogsFromJPQL.size(), easyCriteriaResult.size());
 
-        assertEquals(dogsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(dogsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(dogsFromJPQL.containsAll(easyCriteriaResult));
-    }
+	@Test
+	public void isJoinStringGreaterThanWorking() {
+		List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where p.name > 'Mary'", Dog.class);
 
-    @Test
-    public void isJoinStringGreaterThanWorking() {
-        List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where p.name > 'Mary'", Dog.class);
+		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinGreaterThan("person", "name", "Mary");
 
-        EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinGreaterThan("person", "name", "Mary");
+		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
-        List<Dog> easyCriteriaResult = easyCriteria.getResultList();
+		assertEquals(dogsFromJPQL.size(), easyCriteriaResult.size());
 
-        assertEquals(dogsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(dogsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(dogsFromJPQL.containsAll(easyCriteriaResult));
-    }
+	@Test
+	public void isJoinStringGreaterOrEqualToWorking() {
+		List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where p.name >= 'Mary'",
+				Dog.class);
 
-    @Test
-    public void isJoinStringGreaterOrEqualToWorking() {
-        List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where p.name >= 'Mary'", Dog.class);
+		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinGreaterOrEqualTo("person", "name", "Mary");
 
-        EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinGreaterOrEqualTo("person", "name", "Mary");
+		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
-        List<Dog> easyCriteriaResult = easyCriteria.getResultList();
+		assertEquals(dogsFromJPQL.size(), easyCriteriaResult.size());
 
-        assertEquals(dogsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(dogsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(dogsFromJPQL.containsAll(easyCriteriaResult));
-    }
+	@Test
+	public void isJoinStringLessThanWorking() {
+		List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where p.name < 'Mary'", Dog.class);
 
-    @Test
-    public void isJoinStringLessThanWorking() {
-        List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where p.name < 'Mary'", Dog.class);
+		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinLessThan("person", "name", "Mary");
 
-        EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinLessThan("person", "name", "Mary");
+		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
-        List<Dog> easyCriteriaResult = easyCriteria.getResultList();
+		assertEquals(dogsFromJPQL.size(), easyCriteriaResult.size());
 
-        assertEquals(dogsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(dogsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(dogsFromJPQL.containsAll(easyCriteriaResult));
-    }
+	@Test
+	public void isJoinStringLessOrEqualToWorking() {
+		List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where p.name <= 'Mary'",
+				Dog.class);
 
-    @Test
-    public void isJoinStringLessOrEqualToWorking() {
-        List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where p.name <= 'Mary'", Dog.class);
+		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinLessOrEqualTo("person", "name", "Mary");
 
-        EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinLessOrEqualTo("person", "name", "Mary");
+		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
-        List<Dog> easyCriteriaResult = easyCriteria.getResultList();
+		assertEquals(dogsFromJPQL.size(), easyCriteriaResult.size());
 
-        assertEquals(dogsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(dogsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(dogsFromJPQL.containsAll(easyCriteriaResult));
-    }
+	@Test
+	public void isJoinIntegerBetweenWorking() {
+		List<Dog> personsFromJPQL = getListFromJPQL(
+				"select d from Dog d join d.person p where p.clothesInCloset between 30 and 35", Dog.class);
 
-    @Test
-    public void isJoinIntegerBetweenWorking() {
-        List<Dog> personsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where p.clothesInCloset between 30 and 35", Dog.class);
+		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinBetween("person", "clothesInCloset", 30, 35);
 
-        EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinBetween("person", "clothesInCloset", 30, 35);
+		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
-        List<Dog> easyCriteriaResult = easyCriteria.getResultList();
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+	@Test
+	public void isJoinLongBetweenWorking() {
+		List<Dog> personsFromJPQL = getListFromJPQL(
+				"select d from Dog d join d.person p where p.totalBooksOwned between 19 and 31", Dog.class);
 
-    @Test
-    public void isJoinLongBetweenWorking() {
-        List<Dog> personsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where p.totalBooksOwned between 19 and 31", Dog.class);
+		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinBetween("person", "totalBooksOwned", 19L, 31L);
 
-        EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinBetween("person", "totalBooksOwned", 19L, 31L);
+		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
-        List<Dog> easyCriteriaResult = easyCriteria.getResultList();
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+	@Test
+	public void isJoinDoubleBetweenWorking() {
+		List<Dog> personsFromJPQL = getListFromJPQL(
+				"select d from Dog d join d.person p where p.height between 9.00 and 12.00", Dog.class);
 
-    @Test
-    public void isJoinDoubleBetweenWorking() {
-        List<Dog> personsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where p.height between 9.00 and 12.00", Dog.class);
+		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinBetween("person", "height", 9.00d, 12.00d);
 
-        EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinBetween("person", "height", 9.00d, 12.00d);
+		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
-        List<Dog> easyCriteriaResult = easyCriteria.getResultList();
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+	@Test
+	public void isJoinFloatBetweenWorking() {
+		List<Dog> personsFromJPQL = getListFromJPQL(
+				"select d from Dog d join d.person p where p.weight between 9.00 and 12.00", Dog.class);
 
-    @Test
-    public void isJoinFloatBetweenWorking() {
-        List<Dog> personsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where p.weight between 9.00 and 12.00", Dog.class);
+		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinBetween("person", "weight", 9.00f, 12.00f);
 
-        EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinBetween("person", "weight", 9.00f, 12.00f);
+		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
-        List<Dog> easyCriteriaResult = easyCriteria.getResultList();
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+	@Test
+	public void isJoinStringBetweenWorking() {
+		List<Dog> personsFromJPQL = getListFromJPQL(
+				"select d from Dog d join d.person p where p.name between 'A' and 'L'", Dog.class);
 
-    @Test
-    public void isJoinStringBetweenWorking() {
-        List<Dog> personsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where p.name between 'A' and 'L'", Dog.class);
+		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinBetween("person", "name", "A", "L");
 
-        EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinBetween("person", "name", "A", "L");
+		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
-        List<Dog> easyCriteriaResult = easyCriteria.getResultList();
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+	@Test
+	public void isJoinDateBetweenWorking() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date valueA = formatter.parse("1/1/2008");
+		Date valueB = formatter.parse("1/1/2010");
 
-    @Test
-    public void isJoinDateBetweenWorking() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date valueA = formatter.parse("1/1/2008");
-        Date valueB = formatter.parse("1/1/2010");
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("valueA", valueA);
+		parameters.put("valueB", valueB);
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("valueA", valueA);
-        parameters.put("valueB", valueB);
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select distinct p from Person p join p.dogs d where d.dateOfBirth between :valueA and :valueB",
+				Person.class, parameters);
 
-        List<Person> personsFromJPQL = getListFromJPQL("select distinct p from Person p join p.dogs d where d.dateOfBirth between :valueA and :valueB", Person.class, parameters);
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		// Workaround for OpenJPA
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("dogs");
+		// easyCriteria.andJoinBetween("dogs", "dateOfBirth", valueA, valueB);
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        // Workaround for OpenJPA
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("dogs");
-        //easyCriteria.andJoinBetween("dogs", "dateOfBirth", valueA, valueB);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+	@Test
+	public void isJoinCalendarBetweenWorking() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date dateA = formatter.parse("1/1/2000");
+		Date dateB = formatter.parse("5/5/2002");
+		Calendar valueA = Calendar.getInstance();
+		valueA.setTime(dateA);
+		Calendar valueB = Calendar.getInstance();
+		valueB.setTime(dateB);
 
-    @Test
-    public void isJoinCalendarBetweenWorking() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date dateA = formatter.parse("1/1/2000");
-        Date dateB = formatter.parse("5/5/2002");
-        Calendar valueA = Calendar.getInstance();
-        valueA.setTime(dateA);
-        Calendar valueB = Calendar.getInstance();
-        valueB.setTime(dateB);
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("valueA", valueA);
+		parameters.put("valueB", valueB);
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("valueA", valueA);
-        parameters.put("valueB", valueB);
+		List<Dog> dogsFromJPQL = getListFromJPQL(
+				"select d from Dog d join d.person p where p.birthDayDate between :valueA and :valueB", Dog.class,
+				parameters);
 
-        List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where p.birthDayDate between :valueA and :valueB", Dog.class, parameters);
+		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinBetween("person", "birthDayDate", valueA, valueB);
 
-        EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinBetween("person", "birthDayDate", valueA, valueB);
+		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
-        List<Dog> easyCriteriaResult = easyCriteria.getResultList();
+		assertEquals(dogsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(dogsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertEquals(dogsFromJPQL.size(), easyCriteriaResult.size());
-        assertTrue(dogsFromJPQL.containsAll(easyCriteriaResult));
-    }
+	@Test
+	public void isJoinAttributeNullWorking() {
+		List<Car> carsFromJPQL = getListFromJPQL("select c from Car c join c.person p where p.nickName is null",
+				Car.class);
 
-    @Test
-    public void isJoinAttributeNullWorking() {
-        List<Car> carsFromJPQL = getListFromJPQL("select c from Car c join c.person p where p.nickName is null", Car.class);
+		EasyQuery<Car> carCriteria1 = new EasyQueryImpl<Car>(Car.class, getEntityManager());
+		carCriteria1.innerJoin("person");
+		// TODO carCriteria1.andJoinAttributeIsNull("person", "nickName");
+		assertTrue(carCriteria1.getResultList().size() == carsFromJPQL.size());
+		assertTrue(carCriteria1.getResultList().containsAll(carsFromJPQL));
 
-        EasyQuery<Car> carCriteria1 = new EasyQueryImpl<Car>(Car.class, getEntityManager());
-        carCriteria1.innerJoin("person");
-        //TODO carCriteria1.andJoinAttributeIsNull("person", "nickName");
-        assertTrue(carCriteria1.getResultList().size() == carsFromJPQL.size());
-        assertTrue(carCriteria1.getResultList().containsAll(carsFromJPQL));
+		carsFromJPQL = getListFromJPQL("select c from Car c join c.person p where p.birthDayDate is null", Car.class);
 
-        carsFromJPQL = getListFromJPQL("select c from Car c join c.person p where p.birthDayDate is null", Car.class);
+		EasyQuery<Car> carCriteria2 = new EasyQueryImpl<Car>(Car.class, getEntityManager());
+		carCriteria2.innerJoin("person");
+		// TODO carCriteria2.andJoinAttributeIsNull("person", "birthDayDate");
+		assertTrue(carCriteria2.getResultList().size() == carsFromJPQL.size());
+		assertTrue(carCriteria2.getResultList().containsAll(carsFromJPQL));
 
-        EasyQuery<Car> carCriteria2 = new EasyQueryImpl<Car>(Car.class, getEntityManager());
-        carCriteria2.innerJoin("person");
-      //TODO carCriteria2.andJoinAttributeIsNull("person", "birthDayDate");
-        assertTrue(carCriteria2.getResultList().size() == carsFromJPQL.size());
-        assertTrue(carCriteria2.getResultList().containsAll(carsFromJPQL));
+		carsFromJPQL = getListFromJPQL("select c from Car c join c.person p where p.clothesInCloset is null", Car.class);
 
-        carsFromJPQL = getListFromJPQL("select c from Car c join c.person p where p.clothesInCloset is null", Car.class);
+		EasyQuery<Car> carCriteria3 = new EasyQueryImpl<Car>(Car.class, getEntityManager());
+		carCriteria3.innerJoin("person");
+		// TODO carCriteria3.andJoinAttributeIsNull("person", "clothesInCloset");
+		assertTrue(carCriteria3.getResultList().size() == carsFromJPQL.size());
+		assertTrue(carCriteria3.getResultList().containsAll(carsFromJPQL));
 
-        EasyQuery<Car> carCriteria3 = new EasyQueryImpl<Car>(Car.class, getEntityManager());
-        carCriteria3.innerJoin("person");
-      //TODO carCriteria3.andJoinAttributeIsNull("person", "clothesInCloset");
-        assertTrue(carCriteria3.getResultList().size() == carsFromJPQL.size());
-        assertTrue(carCriteria3.getResultList().containsAll(carsFromJPQL));
+		List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where p.car is null", Dog.class);
 
-        List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where p.car is null", Dog.class);
+		EasyQuery<Dog> dogCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		dogCriteria.innerJoin("person");
+		// TODO dogCriteria.andJoinAttributeIsNull("person", "car");
+		assertTrue(dogCriteria.getResultList().size() == dogsFromJPQL.size());
+		assertTrue(dogCriteria.getResultList().containsAll(dogsFromJPQL));
+	}
 
-        EasyQuery<Dog> dogCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        dogCriteria.innerJoin("person");
-      //TODO dogCriteria.andJoinAttributeIsNull("person", "car");
-        assertTrue(dogCriteria.getResultList().size() == dogsFromJPQL.size());
-        assertTrue(dogCriteria.getResultList().containsAll(dogsFromJPQL));
-    }
+	@Test
+	public void isJoinAttributeNotNullWorking() {
+		List<Car> carsFromJPQL = getListFromJPQL("select c from Car c join c.person p where p.nickName is not null",
+				Car.class);
 
-    @Test
-    public void isJoinAttributeNotNullWorking() {
-        List<Car> carsFromJPQL = getListFromJPQL("select c from Car c join c.person p where p.nickName is not null", Car.class);
+		EasyQuery<Car> carCriteria1 = new EasyQueryImpl<Car>(Car.class, getEntityManager());
+		carCriteria1.innerJoin("person");
+		// TODO carCriteria1.andJoinAttributeIsNotNull("person", "nickName");
+		assertTrue(carCriteria1.getResultList().size() == carsFromJPQL.size());
+		assertTrue(carCriteria1.getResultList().containsAll(carsFromJPQL));
 
-        EasyQuery<Car> carCriteria1 = new EasyQueryImpl<Car>(Car.class, getEntityManager());
-        carCriteria1.innerJoin("person");
-      //TODO carCriteria1.andJoinAttributeIsNotNull("person", "nickName");
-        assertTrue(carCriteria1.getResultList().size() == carsFromJPQL.size());
-        assertTrue(carCriteria1.getResultList().containsAll(carsFromJPQL));
+		carsFromJPQL = getListFromJPQL("select c from Car c join c.person p where p.birthDayDate is not null",
+				Car.class);
 
-        carsFromJPQL = getListFromJPQL("select c from Car c join c.person p where p.birthDayDate is not null", Car.class);
+		EasyQuery<Car> carCriteria2 = new EasyQueryImpl<Car>(Car.class, getEntityManager());
+		carCriteria2.innerJoin("person");
+		// TODO carCriteria2.andJoinAttributeIsNotNull("person", "birthDayDate");
+		assertTrue(carCriteria2.getResultList().size() == carsFromJPQL.size());
+		assertTrue(carCriteria2.getResultList().containsAll(carsFromJPQL));
 
-        EasyQuery<Car> carCriteria2 = new EasyQueryImpl<Car>(Car.class, getEntityManager());
-        carCriteria2.innerJoin("person");
-      //TODO carCriteria2.andJoinAttributeIsNotNull("person", "birthDayDate");
-        assertTrue(carCriteria2.getResultList().size() == carsFromJPQL.size());
-        assertTrue(carCriteria2.getResultList().containsAll(carsFromJPQL));
+		carsFromJPQL = getListFromJPQL("select c from Car c join c.person p where p.clothesInCloset is not null",
+				Car.class);
 
-        carsFromJPQL = getListFromJPQL("select c from Car c join c.person p where p.clothesInCloset is not null", Car.class);
+		EasyQuery<Car> carCriteria3 = new EasyQueryImpl<Car>(Car.class, getEntityManager());
+		carCriteria3.innerJoin("person");
+		// TODO carCriteria3.andJoinAttributeIsNotNull("person", "clothesInCloset");
+		assertTrue(carCriteria3.getResultList().size() == carsFromJPQL.size());
+		assertTrue(carCriteria3.getResultList().containsAll(carsFromJPQL));
 
-        EasyQuery<Car> carCriteria3 = new EasyQueryImpl<Car>(Car.class, getEntityManager());
-        carCriteria3.innerJoin("person");
-      //TODO carCriteria3.andJoinAttributeIsNotNull("person", "clothesInCloset");
-        assertTrue(carCriteria3.getResultList().size() == carsFromJPQL.size());
-        assertTrue(carCriteria3.getResultList().containsAll(carsFromJPQL));
+		List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where p.car is not null",
+				Dog.class);
 
-        List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where p.car is not null", Dog.class);
+		EasyQuery<Dog> dogCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		dogCriteria.innerJoin("person");
+		// TODO dogCriteria.andJoinAttributeIsNotNull("person", "car");
+		assertTrue(dogCriteria.getResultList().size() == dogsFromJPQL.size());
+		assertTrue(dogCriteria.getResultList().containsAll(dogsFromJPQL));
+	}
 
-        EasyQuery<Dog> dogCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        dogCriteria.innerJoin("person");
-      //TODO dogCriteria.andJoinAttributeIsNotNull("person", "car");
-        assertTrue(dogCriteria.getResultList().size() == dogsFromJPQL.size());
-        assertTrue(dogCriteria.getResultList().containsAll(dogsFromJPQL));
-    }
+	@Test
+	public void isJoinListIsEmptyWorking() {
+		List<Car> carsFromJPQL = getListFromJPQL("select c from Car c join c.person p where p.dogs is empty", Car.class);
 
-    @Test
-    public void isJoinListIsEmptyWorking() {
-        List<Car> carsFromJPQL = getListFromJPQL("select c from Car c join c.person p where p.dogs is empty", Car.class);
+		EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinListIsEmpty("person", "dogs");
 
-        EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinListIsEmpty("person", "dogs");
+		assertTrue(easyCriteria.getResultList().size() == carsFromJPQL.size());
+		assertTrue(easyCriteria.getResultList().containsAll(carsFromJPQL));
+	}
 
-        assertTrue(easyCriteria.getResultList().size() == carsFromJPQL.size());
-        assertTrue(easyCriteria.getResultList().containsAll(carsFromJPQL));
-    }
+	@Test
+	public void isJoinCollectionIsEmptyWorking() {
+		List<Car> carsFromJPQL = getListFromJPQL("select c from Car c join c.person p where p.cats is empty", Car.class);
 
-    @Test
-    public void isJoinCollectionIsEmptyWorking() {
-        List<Car> carsFromJPQL = getListFromJPQL("select c from Car c join c.person p where p.cats is empty", Car.class);
+		EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinCollectionIsEmpty("person", "cats");
 
-        EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinCollectionIsEmpty("person", "cats");
+		assertTrue(easyCriteria.getResultList().size() == carsFromJPQL.size());
+		assertTrue(easyCriteria.getResultList().containsAll(carsFromJPQL));
+	}
 
-        assertTrue(easyCriteria.getResultList().size() == carsFromJPQL.size());
-        assertTrue(easyCriteria.getResultList().containsAll(carsFromJPQL));
-    }
+	@Test
+	public void isJoinSetIsEmptyWorking() {
+		List<Car> carsFromJPQL = getListFromJPQL("select c from Car c join c.person p where p.certifications is empty",
+				Car.class);
 
-    @Test
-    public void isJoinSetIsEmptyWorking() {
-        List<Car> carsFromJPQL = getListFromJPQL("select c from Car c join c.person p where p.certifications is empty", Car.class);
+		EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinSetIsEmpty("person", "certifications");
 
-        EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinSetIsEmpty("person", "certifications");
+		assertTrue(easyCriteria.getResultList().size() == carsFromJPQL.size());
+		assertTrue(easyCriteria.getResultList().containsAll(carsFromJPQL));
+	}
 
-        assertTrue(easyCriteria.getResultList().size() == carsFromJPQL.size());
-        assertTrue(easyCriteria.getResultList().containsAll(carsFromJPQL));
-    }
+	@Test
+	public void isJoinListIsNotEmptyWorking() {
+		List<Car> carsFromJPQL = getListFromJPQL("select c from Car c join c.person p where p.dogs is not empty",
+				Car.class);
 
-    @Test
-    public void isJoinListIsNotEmptyWorking() {
-        List<Car> carsFromJPQL = getListFromJPQL("select c from Car c join c.person p where p.dogs is not empty", Car.class);
+		EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinListIsNotEmpty("person", "dogs");
 
-        EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinListIsNotEmpty("person", "dogs");
+		assertTrue(easyCriteria.getResultList().size() == carsFromJPQL.size());
+		assertTrue(easyCriteria.getResultList().containsAll(carsFromJPQL));
+	}
 
-        assertTrue(easyCriteria.getResultList().size() == carsFromJPQL.size());
-        assertTrue(easyCriteria.getResultList().containsAll(carsFromJPQL));
-    }
+	@Test
+	public void isJoinCollectionIsNotEmptyWorking() {
+		List<Car> carsFromJPQL = getListFromJPQL("select c from Car c join c.person p where p.cats is not empty",
+				Car.class);
 
+		EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinCollectionIsNotEmpty("person", "cats");
 
-    @Test
-    public void isJoinCollectionIsNotEmptyWorking() {
-        List<Car> carsFromJPQL = getListFromJPQL("select c from Car c join c.person p where p.cats is not empty", Car.class);
+		assertTrue(easyCriteria.getResultList().size() == carsFromJPQL.size());
+		assertTrue(easyCriteria.getResultList().containsAll(carsFromJPQL));
+	}
 
-        EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinCollectionIsNotEmpty("person", "cats");
+	@Test
+	public void isJoinSetIsNotEmptyWorking() {
+		List<Car> carsFromJPQL = getListFromJPQL(
+				"select c from Car c join c.person p where p.certifications is not empty", Car.class);
 
-        assertTrue(easyCriteria.getResultList().size() == carsFromJPQL.size());
-        assertTrue(easyCriteria.getResultList().containsAll(carsFromJPQL));
-    }
+		EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinSetIsNotEmpty("person", "certifications");
 
-    @Test
-    public void isJoinSetIsNotEmptyWorking() {
-        List<Car> carsFromJPQL = getListFromJPQL("select c from Car c join c.person p where p.certifications is not empty", Car.class);
+		assertTrue(easyCriteria.getResultList().size() == carsFromJPQL.size());
+		assertTrue(easyCriteria.getResultList().containsAll(carsFromJPQL));
+	}
 
-        EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinSetIsNotEmpty("person", "certifications");
+	@Test
+	public void isJoinStringLikeWorking() {
+		List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where p.name like 'M%'",
+				Dog.class);
 
-        assertTrue(easyCriteria.getResultList().size() == carsFromJPQL.size());
-        assertTrue(easyCriteria.getResultList().containsAll(carsFromJPQL));
-    }
+		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinStringLike("person", "name", "M%");
+		assertTrue(easyCriteria.getResultList().size() == dogsFromJPQL.size());
+		assertTrue(easyCriteria.getResultList().containsAll(dogsFromJPQL));
 
-    @Test
-    public void isJoinStringLikeWorking() {
-        List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where p.name like 'M%'", Dog.class);
+		dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where p.name like '%y'", Dog.class);
 
-        EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinStringLike("person", "name", "M%");
-        assertTrue(easyCriteria.getResultList().size() == dogsFromJPQL.size());
-        assertTrue(easyCriteria.getResultList().containsAll(dogsFromJPQL));
+		easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinStringLike("person", "name", "%y");
+		assertTrue(easyCriteria.getResultList().size() == dogsFromJPQL.size());
+		assertTrue(easyCriteria.getResultList().containsAll(dogsFromJPQL));
+	}
 
-        dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where p.name like '%y'", Dog.class);
+	@Test
+	public void isJoinStringNotLikeWorking() {
+		List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where p.name not like 'M%'",
+				Dog.class);
 
-        easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinStringLike("person", "name", "%y");
-        assertTrue(easyCriteria.getResultList().size() == dogsFromJPQL.size());
-        assertTrue(easyCriteria.getResultList().containsAll(dogsFromJPQL));
-    }
+		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinStringNotLike("person", "name", "M%");
+		assertTrue(easyCriteria.getResultList().size() == dogsFromJPQL.size());
+		assertTrue(easyCriteria.getResultList().containsAll(dogsFromJPQL));
 
-    @Test
-    public void isJoinStringNotLikeWorking() {
-        List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where p.name not like 'M%'", Dog.class);
+		dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where p.name not like '%y'", Dog.class);
 
-        EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinStringNotLike("person", "name", "M%");
-        assertTrue(easyCriteria.getResultList().size() == dogsFromJPQL.size());
-        assertTrue(easyCriteria.getResultList().containsAll(dogsFromJPQL));
+		easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 
-        dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where p.name not like '%y'", Dog.class);
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinStringNotLike("person", "name", "%y");
+		assertTrue(easyCriteria.getResultList().size() == dogsFromJPQL.size());
+		assertTrue(easyCriteria.getResultList().containsAll(dogsFromJPQL));
+	}
 
-        easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+	@Test
+	public void isJoinStringInWorking() {
+		List<Dog> dogsFromJPQL = getListFromJPQL(
+				"select d from Dog d join d.person p where p.name in ('Mary', 'John')", Dog.class);
 
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinStringNotLike("person", "name", "%y");
-        assertTrue(easyCriteria.getResultList().size() == dogsFromJPQL.size());
-        assertTrue(easyCriteria.getResultList().containsAll(dogsFromJPQL));
-    }
+		List<String> names = new ArrayList<String>();
+		names.add("Mary");
+		names.add("John");
 
-    @Test
-    public void isJoinStringInWorking() {
-        List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where p.name in ('Mary', 'John')", Dog.class);
+		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinStringIn("person", "name", names);
+		assertTrue(easyCriteria.getResultList().size() == dogsFromJPQL.size());
+		assertTrue(easyCriteria.getResultList().containsAll(dogsFromJPQL));
+	}
 
-        List<String> names = new ArrayList<String>();
-        names.add("Mary");
-        names.add("John");
+	@Test
+	public void isJoinStringNotInWorking() {
+		List<Dog> dogsFromJPQL = getListFromJPQL(
+				"select d from Dog d join d.person p where p.name not in ('Mary', 'John')", Dog.class);
 
-        EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinStringIn("person", "name", names);
-        assertTrue(easyCriteria.getResultList().size() == dogsFromJPQL.size());
-        assertTrue(easyCriteria.getResultList().containsAll(dogsFromJPQL));
-    }
+		List<String> names = new ArrayList<String>();
+		names.add("Mary");
+		names.add("John");
 
-    @Test
-    public void isJoinStringNotInWorking() {
-        List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where p.name not in ('Mary', 'John')", Dog.class);
+		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinStringNotIn("person", "name", names);
+		assertTrue(easyCriteria.getResultList().size() == dogsFromJPQL.size());
+		assertTrue(easyCriteria.getResultList().containsAll(dogsFromJPQL));
+	}
 
-        List<String> names = new ArrayList<String>();
-        names.add("Mary");
-        names.add("John");
+	@Test
+	public void isBigDecimalGreaterThanWorking() {
+		List<Car> carsFromJPQL = getListFromJPQL("select c from Car c where c.weight > 20", Car.class);
 
-        EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinStringNotIn("person", "name", names);
-        assertTrue(easyCriteria.getResultList().size() == dogsFromJPQL.size());
-        assertTrue(easyCriteria.getResultList().containsAll(dogsFromJPQL));
-    }
+		EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
 
-    @Test
-    public void isBigDecimalGreaterThanWorking() {
-        List<Car> carsFromJPQL = getListFromJPQL("select c from Car c where c.weight > 20", Car.class);
+		easyCriteria.andGreaterThan("weight", new BigDecimal(20));
 
-        EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
+		List<Car> easyCriteriaResult = easyCriteria.getResultList();
 
-        easyCriteria.andGreaterThan("weight", new BigDecimal(20));
+		assertEquals(carsFromJPQL.size(), easyCriteriaResult.size());
 
-        List<Car> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(carsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertEquals(carsFromJPQL.size(), easyCriteriaResult.size());
+	@Test
+	public void isBigDecimalGreaterOrEqualToWorking() {
+		List<Car> carsFromJPQL = getListFromJPQL("select c from Car c where c.weight >= 20", Car.class);
 
-        assertTrue(carsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
 
-    @Test
-    public void isBigDecimalGreaterOrEqualToWorking() {
-        List<Car> carsFromJPQL = getListFromJPQL("select c from Car c where c.weight >= 20", Car.class);
+		easyCriteria.andGreaterOrEqualTo("weight", new BigDecimal(20));
 
-        EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
+		List<Car> easyCriteriaResult = easyCriteria.getResultList();
 
-        easyCriteria.andGreaterOrEqualTo("weight", new BigDecimal(20));
+		assertEquals(carsFromJPQL.size(), easyCriteriaResult.size());
 
-        List<Car> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(carsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertEquals(carsFromJPQL.size(), easyCriteriaResult.size());
+	@Test
+	public void isBigDecimalLessThanWorking() {
+		List<Car> carsFromJPQL = getListFromJPQL("select c from Car c where c.weight < 30", Car.class);
 
-        assertTrue(carsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
 
-    @Test
-    public void isBigDecimalLessThanWorking() {
-        List<Car> carsFromJPQL = getListFromJPQL("select c from Car c where c.weight < 30", Car.class);
+		easyCriteria.andLessThan("weight", new BigDecimal(30));
 
-        EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
+		List<Car> easyCriteriaResult = easyCriteria.getResultList();
 
-        easyCriteria.andLessThan("weight", new BigDecimal(30));
+		assertEquals(carsFromJPQL.size(), easyCriteriaResult.size());
 
-        List<Car> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(carsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertEquals(carsFromJPQL.size(), easyCriteriaResult.size());
+	@Test
+	public void isBigDecimalLessOrEqualToWorking() {
+		List<Car> carsFromJPQL = getListFromJPQL("select c from Car c where c.weight <= 30", Car.class);
 
-        assertTrue(carsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
 
-    @Test
-    public void isBigDecimalLessOrEqualToWorking() {
-        List<Car> carsFromJPQL = getListFromJPQL("select c from Car c where c.weight <= 30", Car.class);
+		easyCriteria.andLessOrEqualTo("weight", new BigDecimal(30));
 
-        EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
+		List<Car> easyCriteriaResult = easyCriteria.getResultList();
 
-        easyCriteria.andLessOrEqualTo("weight", new BigDecimal(30));
+		assertEquals(carsFromJPQL.size(), easyCriteriaResult.size());
 
-        List<Car> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(carsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertEquals(carsFromJPQL.size(), easyCriteriaResult.size());
+	@Test
+	public void isJoinBigDecimalGreaterThanWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p join p.car c where c.weight > 20",
+				Person.class);
 
-        assertTrue(carsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.innerJoin("car");
 
-    @Test
-    public void isJoinBigDecimalGreaterThanWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p join p.car c where c.weight > 20", Person.class);
+		// easyCriteria.andJoinGreaterThan("car", "weight", new BigDecimal(20));
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.innerJoin("car");
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        //easyCriteria.andJoinGreaterThan("car", "weight", new BigDecimal(20));
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+	@Test
+	public void isJoinBigDecimalGreaterOrEqualToWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p join p.car c where c.weight >= 20",
+				Person.class);
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.innerJoin("car");
 
-    @Test
-    public void isJoinBigDecimalGreaterOrEqualToWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p join p.car c where c.weight >= 20", Person.class);
+		// easyCriteria.andJoinGreaterOrEqualTo("car", "weight", new
+		// BigDecimal(20));
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.innerJoin("car");
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        //easyCriteria.andJoinGreaterOrEqualTo("car", "weight", new BigDecimal(20));
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+	@Test
+	public void isJoinBigDecimalLessThanWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p join p.car c where c.weight < 30",
+				Person.class);
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.innerJoin("car");
 
-    @Test
-    public void isJoinBigDecimalLessThanWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p join p.car c where c.weight < 30", Person.class);
+		// easyCriteria.andJoinLessThan("car", "weight", new BigDecimal(30));
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.innerJoin("car");
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        //easyCriteria.andJoinLessThan("car", "weight", new BigDecimal(30));
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+	@Test
+	public void isJoinBigDecimalLessOrEqualToWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p join p.car c where c.weight <= 30",
+				Person.class);
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.innerJoin("car");
 
-    @Test
-    public void isJoinBigDecimalLessOrEqualToWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p join p.car c where c.weight <= 30", Person.class);
+		// easyCriteria.andJoinLessOrEqualTo("car", "weight", new BigDecimal(30));
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.innerJoin("car");
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        //easyCriteria.andJoinLessOrEqualTo("car", "weight", new BigDecimal(30));
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+	@Test
+	public void isTwoOrIdsWorking() {
+		List<Song> songsFromJPQL = getListFromJPQL("select s from Song s where s.id = 1 or s.id = 2", Song.class);
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		assertTrue(songsFromJPQL.size() == 2);
 
-    @Test
-    public void isTwoOrIdsWorking() {
-        List<Song> songsFromJPQL = getListFromJPQL("select s from Song s where s.id = 1 or s.id = 2", Song.class);
+		EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
 
-        assertTrue(songsFromJPQL.size() == 2);
+		easyCriteria.orEquals("id", 1).orEquals("id", 2);
 
-        EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
+		List<Song> easyCriteriaResult = easyCriteria.getResultList();
 
-        easyCriteria.orEquals("id", 1).orEquals("id", 2);
+		assertEquals(songsFromJPQL.size(), easyCriteriaResult.size());
 
-        List<Song> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(songsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertEquals(songsFromJPQL.size(), easyCriteriaResult.size());
+	@Test
+	public void isTwoOrAttributesWorking() {
+		List<Song> songsFromJPQL = getListFromJPQL("select s from Song s where s.id = 1 or s.length = 20", Song.class);
 
-        assertTrue(songsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		assertTrue(songsFromJPQL.size() == 2);
 
-    @Test
-    public void isTwoOrAttributesWorking() {
-        List<Song> songsFromJPQL = getListFromJPQL("select s from Song s where s.id = 1 or s.length = 20", Song.class);
+		EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
 
-        assertTrue(songsFromJPQL.size() == 2);
+		easyCriteria.orEquals("id", 1).orEquals("length", 20);
 
-        EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
+		List<Song> easyCriteriaResult = easyCriteria.getResultList();
 
-        easyCriteria.orEquals("id", 1).orEquals("length", 20);
+		assertEquals(songsFromJPQL.size(), easyCriteriaResult.size());
 
-        List<Song> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(songsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertEquals(songsFromJPQL.size(), easyCriteriaResult.size());
+	@Test
+	public void isThreeOrAttributesWorking() {
+		List<Song> songsFromJPQL = getListFromJPQL(
+				"select s from Song s where s.id = 1 or s.length = 40 or s.artist = 'Group 1 Crew'", Song.class);
 
-        assertTrue(songsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		assertTrue(songsFromJPQL.size() == 3);
 
-    @Test
-    public void isThreeOrAttributesWorking() {
-        List<Song> songsFromJPQL = getListFromJPQL("select s from Song s where s.id = 1 or s.length = 40 or s.artist = 'Group 1 Crew'", Song.class);
+		EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
 
-        assertTrue(songsFromJPQL.size() == 3);
+		easyCriteria.orEquals("id", 1).orEquals("length", 40).orEquals("artist", "Group 1 Crew");
 
-        EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
+		List<Song> easyCriteriaResult = easyCriteria.getResultList();
 
-        easyCriteria.orEquals("id", 1).orEquals("length", 40).orEquals("artist", "Group 1 Crew");
+		assertEquals(songsFromJPQL.size(), easyCriteriaResult.size());
 
-        List<Song> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(songsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertEquals(songsFromJPQL.size(), easyCriteriaResult.size());
+	@Test
+	public void isThreeOrAttributesWithOneRepeatedWorking() {
+		List<Song> songsFromJPQL = getListFromJPQL(
+				"select s from Song s where (s.id = 1) or (s.id = 2) or (s.length = 40) or (s.artist = 'Group 1 Crew')",
+				Song.class);
 
-        assertTrue(songsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		assertTrue(songsFromJPQL.size() == 4);
 
-    @Test
-    public void isThreeOrAttributesWithOneRepeatedWorking() {
-        List<Song> songsFromJPQL = getListFromJPQL("select s from Song s where (s.id = 1) or (s.id = 2) or (s.length = 40) or (s.artist = 'Group 1 Crew')", Song.class);
+		EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
 
-        assertTrue(songsFromJPQL.size() == 4);
+		easyCriteria.orEquals("id", 1, 2).orEquals("length", 40).orEquals("artist", "Group 1 Crew");
 
-        EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
+		List<Song> easyCriteriaResult = easyCriteria.getResultList();
 
-        easyCriteria.orEquals("id", 1, 2).orEquals("length", 40).orEquals("artist", "Group 1 Crew");
+		assertEquals(songsFromJPQL.size(), easyCriteriaResult.size());
 
-        List<Song> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(songsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertEquals(songsFromJPQL.size(), easyCriteriaResult.size());
+	@Test
+	public void isOrAndOneEqualsWorking() {
+		List<Song> songsFromJPQL = getListFromJPQL(
+				"select s from Song s where s.artist = 'Red' and (s.id = 11 or s.id = 12 or s.id = 13)", Song.class);
 
-        assertTrue(songsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		assertTrue(songsFromJPQL.size() == 3);
 
-    @Test
-    public void isOrAndOneEqualsWorking() {
-        List<Song> songsFromJPQL = getListFromJPQL("select s from Song s where s.artist = 'Red' and (s.id = 11 or s.id = 12 or s.id = 13)", Song.class);
+		EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
 
-        assertTrue(songsFromJPQL.size() == 3);
+		easyCriteria.andEquals("artist", "Red").orEquals("id", 11, 12, 13);
 
-        EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
+		List<Song> easyCriteriaResult = easyCriteria.getResultList();
 
-        easyCriteria.andEquals("artist", "Red").orEquals("id", 11, 12, 13);
+		assertEquals(songsFromJPQL.size(), easyCriteriaResult.size());
 
-        List<Song> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(songsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertEquals(songsFromJPQL.size(), easyCriteriaResult.size());
+	@Test
+	public void isOrAndTwoEqualsWorking() {
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("type", SongType.ROCK);
 
-        assertTrue(songsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		List<Song> songsFromJPQL = getListFromJPQL(
+				"select s from Song s where s.artist = 'Red' and s.type = :type and (s.id = 11 or s.id = 12 or s.id = 13)",
+				Song.class, parameters);
 
-    @Test
-    public void isOrAndTwoEqualsWorking() {
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("type", SongType.ROCK);
+		assertTrue(songsFromJPQL.size() == 3);
 
-        List<Song> songsFromJPQL = getListFromJPQL("select s from Song s where s.artist = 'Red' and s.type = :type and (s.id = 11 or s.id = 12 or s.id = 13)", Song.class, parameters);
+		EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
 
-        assertTrue(songsFromJPQL.size() == 3);
+		easyCriteria.andEquals("artist", "Red").andEquals("type", SongType.ROCK).orEquals("id", 11, 12, 13);
 
-        EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
+		List<Song> easyCriteriaResult = easyCriteria.getResultList();
 
-        easyCriteria.andEquals("artist", "Red").andEquals("type", SongType.ROCK).orEquals("id", 11, 12, 13);
+		assertEquals(songsFromJPQL.size(), easyCriteriaResult.size());
 
-        List<Song> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(songsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertEquals(songsFromJPQL.size(), easyCriteriaResult.size());
+	@Test
+	public void isDifferentOrAndTwoEqualsWorking() {
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("type", SongType.ROCK);
 
-        assertTrue(songsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		List<Song> songsFromJPQL = getListFromJPQL(
+				"select s from Song s where s.artist = 'Red' and s.type = :type and (s.name = 'Breath Into Me' or s.id = 12)",
+				Song.class, parameters);
 
-    @Test
-    public void isDifferentOrAndTwoEqualsWorking() {
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("type", SongType.ROCK);
+		assertTrue(songsFromJPQL.size() == 2);
 
-        List<Song> songsFromJPQL = getListFromJPQL("select s from Song s where s.artist = 'Red' and s.type = :type and (s.name = 'Breath Into Me' or s.id = 12)", Song.class, parameters);
+		EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
 
-        assertTrue(songsFromJPQL.size() == 2);
+		easyCriteria.andEquals("artist", "Red").andEquals("type", SongType.ROCK).orEquals("id", 12)
+				.orEquals("name", "Breath Into Me");
 
-        EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
+		List<Song> easyCriteriaResult = easyCriteria.getResultList();
 
-        easyCriteria.andEquals("artist", "Red").andEquals("type", SongType.ROCK).orEquals("id", 12).orEquals("name", "Breath Into Me");
+		assertEquals(songsFromJPQL.size(), easyCriteriaResult.size());
 
-        List<Song> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(songsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertEquals(songsFromJPQL.size(), easyCriteriaResult.size());
+	@Test
+	public void isTwoOrGroupedInsideAndWithIntStringWorking() {
+		List<Song> songsFromJPQL = getListFromJPQL(
+				"select s from Song s where (s.id = 1 or s.id = 2) and (s.name = 'Sing Out' or s.name = 'Alive')",
+				Song.class);
 
-        assertTrue(songsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		assertTrue(songsFromJPQL.size() == 2);
 
-    @Test
-    public void isTwoOrGroupedInsideAndWithIntStringWorking() {
-        List<Song> songsFromJPQL = getListFromJPQL("select s from Song s where (s.id = 1 or s.id = 2) and (s.name = 'Sing Out' or s.name = 'Alive')", Song.class);
+		EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
 
-        assertTrue(songsFromJPQL.size() == 2);
+		easyCriteria.orEquals("id", "1").orEquals("id", "2").orEquals(2, "name", "Sing Out")
+				.orEquals(2, "name", "Alive");
 
-        EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
+		List<Song> easyCriteriaResult = easyCriteria.getResultList();
 
-        easyCriteria.orEquals("id", "1").orEquals("id", "2").orEquals(2, "name", "Sing Out").orEquals(2, "name", "Alive");
+		assertEquals(songsFromJPQL.size(), easyCriteriaResult.size());
 
-        List<Song> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(songsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertEquals(songsFromJPQL.size(), easyCriteriaResult.size());
+	@Test
+	public void isTwoOrGroupedInsideAndWithMoreAttributesWorking() {
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("type", SongType.PRAISE);
 
-        assertTrue(songsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		List<Song> songsFromJPQL = getListFromJPQL(
+				"select s from Song s where (s.totalDownloads = 20 or s.weight = 10.00) and (s.price = 20.00 or s.type = :type)",
+				Song.class, parameters);
 
-    @Test
-    public void isTwoOrGroupedInsideAndWithMoreAttributesWorking() {
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("type", SongType.PRAISE);
+		assertTrue(songsFromJPQL.size() == 2);
 
-        List<Song> songsFromJPQL = getListFromJPQL("select s from Song s where (s.totalDownloads = 20 or s.weight = 10.00) and (s.price = 20.00 or s.type = :type)", Song.class, parameters);
+		EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
 
-        assertTrue(songsFromJPQL.size() == 2);
+		easyCriteria.orEquals("totalDownloads", 20L).orEquals("weight", 10.00f).orEquals(2, "price", 20.00d)
+				.orEquals(2, "type", SongType.PRAISE);
 
-        EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
+		List<Song> easyCriteriaResult = easyCriteria.getResultList();
 
-        easyCriteria.orEquals("totalDownloads", 20L).orEquals("weight", 10.00f).orEquals(2, "price", 20.00d).orEquals(2, "type", SongType.PRAISE);
+		assertEquals(songsFromJPQL.size(), easyCriteriaResult.size());
 
-        List<Song> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(songsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertEquals(songsFromJPQL.size(), easyCriteriaResult.size());
+	@Test
+	public void addAndSeparatedByOr() {
+		List<Song> songsFromJPQL = getListFromJPQL(
+				"select s from Song s where (s.id = 1 and s.name = 'Sing Out') or (s.id = 2 and s.name = 'Alive')",
+				Song.class);
 
-        assertTrue(songsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		assertTrue(songsFromJPQL.size() == 2);
 
-    @Test
-    public void addAndSeparatedByOr() {
-        List<Song> songsFromJPQL = getListFromJPQL("select s from Song s where (s.id = 1 and s.name = 'Sing Out') or (s.id = 2 and s.name = 'Alive')", Song.class);
+		EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
 
-        assertTrue(songsFromJPQL.size() == 2);
+		easyCriteria.addAndSeparatedByOr(1, "id", 1).addAndSeparatedByOr(1, "name", "Sing Out")
+				.addAndSeparatedByOr(2, "id", 2).addAndSeparatedByOr(2, "name", "Alive");
 
-        EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
+		List<Song> easyCriteriaResult = easyCriteria.getResultList();
 
-        easyCriteria.addAndSeparatedByOr(1, "id", 1).addAndSeparatedByOr(1, "name", "Sing Out").addAndSeparatedByOr(2, "id", 2).addAndSeparatedByOr(2, "name", "Alive");
+		assertEquals(songsFromJPQL.size(), easyCriteriaResult.size());
 
-        List<Song> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(songsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertEquals(songsFromJPQL.size(), easyCriteriaResult.size());
+	@Test
+	public void addAndSeparatedByOrOtherParameters() {
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("type", SongType.PRAISE);
 
-        assertTrue(songsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		List<Song> songsFromJPQL = getListFromJPQL(
+				"select s from Song s where (s.totalDownloads = 20 and s.price = 20.00) or (s.weight = 10.00 and s.type = :type)",
+				Song.class, parameters);
 
-    @Test
-    public void addAndSeparatedByOrOtherParameters() {
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("type", SongType.PRAISE);
+		assertTrue(songsFromJPQL.size() == 2);
 
-        List<Song> songsFromJPQL = getListFromJPQL("select s from Song s where (s.totalDownloads = 20 and s.price = 20.00) or (s.weight = 10.00 and s.type = :type)", Song.class, parameters);
+		EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
 
-        assertTrue(songsFromJPQL.size() == 2);
+		easyCriteria.addAndSeparatedByOr(1, "totalDownloads", 20L).addAndSeparatedByOr(1, "price", 20.00d)
+				.addAndSeparatedByOr(2, "weight", 10.00f).addAndSeparatedByOr(2, "type", SongType.PRAISE);
 
-        EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
+		List<Song> easyCriteriaResult = easyCriteria.getResultList();
 
-        easyCriteria.addAndSeparatedByOr(1, "totalDownloads", 20L).addAndSeparatedByOr(1, "price", 20.00d).addAndSeparatedByOr(2, "weight", 10.00f).addAndSeparatedByOr(2, "type", SongType.PRAISE);
+		assertEquals(songsFromJPQL.size(), easyCriteriaResult.size());
 
-        List<Song> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(songsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertEquals(songsFromJPQL.size(), easyCriteriaResult.size());
+	@Test
+	public void addOrWithDecimal() {
+		List<Car> carsFromJPQL = getListFromJPQL("select c from Car c where c.weight = 20 or c.weight = 30", Car.class);
 
-        assertTrue(songsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		assertTrue(carsFromJPQL.size() == 3);
 
-    @Test
-    public void addOrWithDecimal() {
-        List<Car> carsFromJPQL = getListFromJPQL("select c from Car c where c.weight = 20 or c.weight = 30", Car.class);
+		EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
 
-        assertTrue(carsFromJPQL.size() == 3);
+		easyCriteria.orEquals("weight", new BigDecimal(20), new BigDecimal(30));
 
-        EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
+		List<Car> easyCriteriaResult = easyCriteria.getResultList();
 
-        easyCriteria.orEquals("weight", new BigDecimal(20), new BigDecimal(30));
+		assertEquals(carsFromJPQL.size(), easyCriteriaResult.size());
 
-        List<Car> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(carsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertEquals(carsFromJPQL.size(), easyCriteriaResult.size());
+	@Test
+	public void addBetweenWithDecimal() {
+		List<Car> carsFromJPQL = getListFromJPQL("select c from Car c where c.weight between 19 and 31", Car.class);
 
-        assertTrue(carsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		assertTrue(carsFromJPQL.size() == 3);
 
-    @Test
-    public void addBetweenWithDecimal() {
-        List<Car> carsFromJPQL = getListFromJPQL("select c from Car c where c.weight between 19 and 31", Car.class);
+		EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
 
-        assertTrue(carsFromJPQL.size() == 3);
+		easyCriteria.andBetween("weight", new BigDecimal(20), new BigDecimal(30));
 
-        EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
+		List<Car> easyCriteriaResult = easyCriteria.getResultList();
 
-        easyCriteria.andBetween("weight", new BigDecimal(20), new BigDecimal(30));
+		assertEquals(carsFromJPQL.size(), easyCriteriaResult.size());
 
-        List<Car> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(carsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertEquals(carsFromJPQL.size(), easyCriteriaResult.size());
+	@Test(expected = IllegalArgumentException.class)
+	public void isWithErrorWithNotAllowedAttributeGreaterThan() {
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.andGreaterThan("car", new Object());
+	}
 
-        assertTrue(carsFromJPQL.containsAll(easyCriteriaResult));
-    }
+	@Test(expected = IllegalArgumentException.class)
+	public void isWithErrorWithNotAllowedAttributeGreaterOrEqualTo() {
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.andGreaterOrEqualTo("car", new Object());
+	}
 
-    @Test(expected = IllegalArgumentException.class)
-    public void isWithErrorWithNotAllowedAttributeGreaterThan() {
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.andGreaterThan("car", new Object());
-    }
+	@Test(expected = IllegalArgumentException.class)
+	public void isWithErrorWithNotAllowedAttributeLessThan() {
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.andLessThan("car", new Object());
+	}
 
-    @Test(expected = IllegalArgumentException.class)
-    public void isWithErrorWithNotAllowedAttributeGreaterOrEqualTo() {
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.andGreaterOrEqualTo("car", new Object());
-    }
+	@Test(expected = IllegalArgumentException.class)
+	public void isWithErrorWithNotAllowedAttributeLessOrEqualTo() {
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.andLessOrEqualTo("car", new Object());
+	}
 
-    @Test(expected = IllegalArgumentException.class)
-    public void isWithErrorWithNotAllowedAttributeLessThan() {
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.andLessThan("car", new Object());
-    }
+	@Test(expected = IllegalArgumentException.class)
+	public void isWithErrorWithNotAllowedAttributeBetween() {
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.andBetween("car", 1, 2);
+	}
 
-    @Test(expected = IllegalArgumentException.class)
-    public void isWithErrorWithNotAllowedAttributeLessOrEqualTo() {
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.andLessOrEqualTo("car", new Object());
-    }
+	@Test(expected = IllegalArgumentException.class)
+	public void errorOnUnknownClassInnerJoin() {
+		EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
+		easyCriteria.innerJoin("invalidClass");
+	}
 
-    @Test(expected = IllegalArgumentException.class)
-    public void isWithErrorWithNotAllowedAttributeBetween() {
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.andBetween("car", 1, 2);
-    }
+	@Test(expected = IllegalArgumentException.class)
+	public void errorOnUnknownClassLeftJoin() {
+		EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
+		easyCriteria.leftJoin("invalidClass");
+	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void errorOnUnknownClassInnerFetchJoin() {
+		EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
+		easyCriteria.innerJoinFetch("invalidClass");
+	}
 
-    @Test(expected = IllegalArgumentException.class)
-    public void errorOnUnknownClassInnerJoin() {
-        EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
-        easyCriteria.innerJoin("invalidClass");
-    }
+	@Test(expected = IllegalArgumentException.class)
+	public void errorOnUnknownClassLeftFetchJoin() {
+		EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
+		easyCriteria.leftJoinFetch("invalidClass");
+	}
 
-    @Test(expected = IllegalArgumentException.class)
-    public void errorOnUnknownClassLeftJoin()  {
-        EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
-        easyCriteria.leftJoin("invalidClass");
-    }
+	@Test(expected = IllegalArgumentException.class)
+	public void errorOnUnknownJoinAttributeGreaterThan() {
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.innerJoinFetch("dogs");
+		// easyCriteria.andJoinGreaterThan("dogs", "person", "Fire");
+	}
 
-    @Test(expected = IllegalArgumentException.class)
-    public void errorOnUnknownClassInnerFetchJoin()  {
-        EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
-        easyCriteria.innerJoinFetch("invalidClass");
-    }
+	@Test(expected = IllegalArgumentException.class)
+	public void errorOnUnknownJoinAttributeGreaterOrEqualTo() {
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.leftJoinFetch("car");
+		// easyCriteria.andJoinGreaterOrEqualTo("car", "person", null);
+	}
 
-    @Test(expected = IllegalArgumentException.class)
-    public void errorOnUnknownClassLeftFetchJoin()  {
-        EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
-        easyCriteria.leftJoinFetch("invalidClass");
-    }
+	@Test(expected = IllegalArgumentException.class)
+	public void errorOnUnknownJoinAttributeLessThan() {
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.leftJoinFetch("car");
+		// easyCriteria.andJoinLessThan("car", "person", null);
+	}
 
-    @Test(expected = IllegalArgumentException.class)
-    public void errorOnUnknownJoinAttributeGreaterThan()  {
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.innerJoinFetch("dogs");
-        //easyCriteria.andJoinGreaterThan("dogs", "person", "Fire");
-    }
+	@Test(expected = IllegalArgumentException.class)
+	public void errorOnUnknownJoinAttributeLessOrEqualTo() {
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.leftJoinFetch("car");
+		// easyCriteria.andJoinLessOrEqualTo("car", "person", null);
+	}
 
-    @Test(expected = IllegalArgumentException.class)
-    public void errorOnUnknownJoinAttributeGreaterOrEqualTo()  {
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.leftJoinFetch("car");
-        //easyCriteria.andJoinGreaterOrEqualTo("car", "person", null);
-    }
+	@Test(expected = IllegalArgumentException.class)
+	public void errorOnNotAllowedCollectionIsEmpty() {
+		EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
+		easyCriteria.andCollectionIsEmpty("person");
+	}
 
-    @Test(expected = IllegalArgumentException.class)
-    public void errorOnUnknownJoinAttributeLessThan()  {
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.leftJoinFetch("car");
-        //easyCriteria.andJoinLessThan("car", "person", null);
-    }
+	@Test(expected = IllegalArgumentException.class)
+	public void errorOnNotAllowedCollectionIsNotEmpty() {
+		EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
+		easyCriteria.andCollectionIsNotEmpty("person");
+	}
 
-    @Test(expected = IllegalArgumentException.class)
-    public void errorOnUnknownJoinAttributeLessOrEqualTo()  {
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.leftJoinFetch("car");
-        //easyCriteria.andJoinLessOrEqualTo("car", "person", null);
-    }
+	@Test(expected = IllegalArgumentException.class)
+	public void errorOnJoinBetweenNotAllowedType() {
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.leftJoinFetch("car");
+		// easyCriteria.andJoinBetween("car", "person", null, null);
+	}
 
-    @Test(expected = IllegalArgumentException.class)
-    public void errorOnNotAllowedCollectionIsEmpty()  {
-        EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
-        easyCriteria.andCollectionIsEmpty("person");
-    }
+	@Test
+	public void isEqualsLowerCaseWorking() {
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.andEquals("name", CodeGenerator.PERSON01_NAME.toLowerCase());
 
-    @Test(expected = IllegalArgumentException.class)
-    public void errorOnNotAllowedCollectionIsNotEmpty()  {
-        EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
-        easyCriteria.andCollectionIsNotEmpty("person");
-    }
+		assertEquals(0, easyCriteria.getResultList().size());
 
-    @Test(expected = IllegalArgumentException.class)
-    public void errorOnJoinBetweenNotAllowedType()  {
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.leftJoinFetch("car");
-        //easyCriteria.andJoinBetween("car", "person", null, null);
-    }
+		easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.andEquals(true, "name", CodeGenerator.PERSON01_NAME.toLowerCase());
 
-    @Test
-    public void isEqualsLowerCaseWorking(){
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.andEquals("name", CodeGenerator.PERSON01_NAME.toLowerCase());
+		assertNotEquals(0, easyCriteria.getResultList().size());
+	}
 
-        assertEquals(0, easyCriteria.getResultList().size());
+	@Test(expected = IllegalArgumentException.class)
+	public void isEqualsLowerCaseThrowingException() {
+		boolean toLowerCase = true;
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.andEquals(toLowerCase, "name", 123);
+	}
 
-        easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.andEquals(true, "name", CodeGenerator.PERSON01_NAME.toLowerCase());
+	@Test
+	public void isOrEqualsWithLowerCaseWorking() {
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertNotEquals(0, easyCriteria.getResultList().size());
-    }
+		easyCriteria.orEquals("name", CodeGenerator.PERSON01_NAME.toLowerCase(),
+				CodeGenerator.PERSON02_NAME.toLowerCase());
+		assertEquals(0, easyCriteria.getResultList().size());
 
-    @Test(expected = IllegalArgumentException.class)
-    public void isEqualsLowerCaseThrowingException(){
-        boolean toLowerCase = true;
-        EasyQuery<Person> easyCriteria =
-                new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.andEquals(toLowerCase,"name", 123);
-    }
+		easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-    @Test
-    public void isOrEqualsWithLowerCaseWorking(){
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.orEquals(true, "name", CodeGenerator.PERSON01_NAME.toLowerCase(),
+				CodeGenerator.PERSON02_NAME.toLowerCase());
+		assertEquals(2, easyCriteria.getResultList().size());
+	}
 
-        easyCriteria.orEquals("name", CodeGenerator.PERSON01_NAME.toLowerCase(), CodeGenerator.PERSON02_NAME.toLowerCase());
-        assertEquals(0, easyCriteria.getResultList().size());
+	@Test(expected = IllegalArgumentException.class)
+	public void isOrEqualsWithLowerCaseExceptionWorking() {
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.orEquals(true, "name", 123, 123, 123);
+	}
 
-        easyCriteria.orEquals(true, "name", CodeGenerator.PERSON01_NAME.toLowerCase(), CodeGenerator.PERSON02_NAME.toLowerCase());
-        assertEquals(2, easyCriteria.getResultList().size());
-    }
+	@Test
+	public void isOrEqualsWithIndexLowerCaseWorking() {
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.orEquals(1, "name", CodeGenerator.PERSON01_NAME.toLowerCase()).orEquals(2, "name",
+				CodeGenerator.PERSON02_NAME.toLowerCase());
 
-    @Test(expected = IllegalArgumentException.class)
-    public void isOrEqualsWithLowerCaseExceptionWorking(){
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertEquals(0, easyCriteria.getResultList().size());
 
-        easyCriteria.orEquals(true, "name", 123, 123, 123);
-    }
+		easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.orEquals(1, "id", 1).orEquals(1, "id", 2)
+				.orEquals(2, "name", CodeGenerator.PERSON01_NAME.toLowerCase())
+				.orEquals(true, 2, "name", CodeGenerator.PERSON02_NAME.toLowerCase());
 
-    @Test
-    public void isOrEqualsWithIndexLowerCaseWorking(){
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.orEquals(1, "name", CodeGenerator.PERSON01_NAME.toLowerCase())
-                    .orEquals(2, "name", CodeGenerator.PERSON02_NAME.toLowerCase());
+		assertEquals(1, easyCriteria.getResultList().size());
 
-        assertEquals(0, easyCriteria.getResultList().size());
+		easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.orEquals(1, "id", 1).orEquals(1, "id", 2)
+				.orEquals(true, 2, "name", CodeGenerator.PERSON01_NAME.toLowerCase())
+				.orEquals(true, 2, "name", CodeGenerator.PERSON02_NAME.toLowerCase());
 
-        easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.orEquals(1, "id", 1)
-                    .orEquals(1, "id", 2)
-                    .orEquals(2, "name", CodeGenerator.PERSON01_NAME.toLowerCase())
-                    .orEquals(true, 2, "name", CodeGenerator.PERSON02_NAME.toLowerCase());
+		assertEquals(2, easyCriteria.getResultList().size());
+	}
 
-        assertEquals(1, easyCriteria.getResultList().size());
+	@Test
+	public void isNotAndEqualsWithLowerCaseWorking() {
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.orEquals(1, "id", 1)
-                    .orEquals(1, "id", 2)
-                    .orEquals(true, 2, "name", CodeGenerator.PERSON01_NAME.toLowerCase())
-                    .orEquals(true, 2, "name", CodeGenerator.PERSON02_NAME.toLowerCase());
+		easyCriteria.andEquals("name", CodeGenerator.PERSON02_NAME);
+		assertEquals(1, easyCriteria.getResultList().size());
 
-        assertEquals(2, easyCriteria.getResultList().size());
-    }
+		easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-    @Test
-    public void isNotAndEqualsWithLowerCaseWorking(){
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		TypedQuery<Person> query = getEntityManager().createQuery("select p from Person p", Person.class);
 
-        easyCriteria.andEquals("name", CodeGenerator.PERSON02_NAME);
-        assertEquals(1, easyCriteria.getResultList().size());
+		easyCriteria.andNotEquals("name", CodeGenerator.PERSON02_NAME.toLowerCase());
+		assertEquals(query.getResultList().size(), easyCriteria.getResultList().size());
 
-        easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        TypedQuery<Person> query = getEntityManager().createQuery("select p from Person p", Person.class);
+		easyCriteria.andNotEquals(true, "name", CodeGenerator.PERSON02_NAME);
+		assertEquals(query.getResultList().size() - 1, easyCriteria.getResultList().size());
+	}
 
-        easyCriteria.andNotEquals("name", CodeGenerator.PERSON02_NAME.toLowerCase());
-        assertEquals(query.getResultList().size(), easyCriteria.getResultList().size());
+	@Test(expected = IllegalArgumentException.class)
+	public void isAndNotEqualsWithLowerCaseExceptionWorking() {
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.andNotEquals(true, "name", 123);
+	}
 
-        easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+	@Test
+	public void isOrNotEqualsLowerCaseWorking() {
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.orNotEquals("name", CodeGenerator.PERSON01_NAME);
+		List<Person> resultList = easyCriteria.getResultList();
 
-        easyCriteria.andNotEquals(true, "name", CodeGenerator.PERSON02_NAME);
-        assertEquals(query.getResultList().size() - 1, easyCriteria.getResultList().size());
-    }
+		easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.orNotEquals(true, "name", CodeGenerator.PERSON01_NAME);
 
-    @Test(expected = IllegalArgumentException.class)
-    public void isAndNotEqualsWithLowerCaseExceptionWorking(){
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.andNotEquals(true, "name", 123);
-    }
+		assertEquals(easyCriteria.getResultList().size(), resultList.size());
+	}
 
-    @Test
-    public void isOrNotEqualsLowerCaseWorking() {
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.orNotEquals("name", CodeGenerator.PERSON01_NAME);
-        List<Person> resultList = easyCriteria.getResultList();
+	@Test(expected = IllegalArgumentException.class)
+	public void isOrNotEqualsLowerCaseExceptionWorking() {
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.orNotEquals(true, "name", 123);
+	}
 
-        easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.orNotEquals(true, "name", CodeGenerator.PERSON01_NAME);
+	@Test
+	public void isStringGreaterThanLowerCaseWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where LOWER(p.name) > LOWER('John')",
+				Person.class);
 
-        assertEquals(easyCriteria.getResultList().size(), resultList.size());
-    }
+		assertTrue(personsFromJPQL.size() > 0);
 
-    @Test(expected = IllegalArgumentException.class)
-    public void isOrNotEqualsLowerCaseExceptionWorking() {
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.orNotEquals(true, "name", 123);
-    }
-    @Test
-    public void isStringGreaterThanLowerCaseWorking(){
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where LOWER(p.name) > LOWER('John')", Person.class);
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertTrue(personsFromJPQL.size() > 0);
+		easyCriteria.andGreaterThan(true, "name", "John");
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        easyCriteria.andGreaterThan(true, "name", "John");
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+	@Test(expected = IllegalArgumentException.class)
+	public void isStringGreaterThanLowerCaseExceptionWorking() {
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		easyCriteria.andGreaterThan(true, "name", 123);
+	}
 
+	@Test
+	public void isStringGreaterOrEqualToLowerCaseWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where LOWER(p.name) >= 'john'",
+				Person.class);
 
-    @Test(expected = IllegalArgumentException.class)
-    public void isStringGreaterThanLowerCaseExceptionWorking(){
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertTrue(personsFromJPQL.size() > 0);
 
-        easyCriteria.andGreaterThan(true, "name", 123);
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-    @Test
-    public void isStringGreaterOrEqualToLowerCaseWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where LOWER(p.name) >= 'john'", Person.class);
+		easyCriteria.andGreaterOrEqualTo(true, "name", "john");
 
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        easyCriteria.andGreaterOrEqualTo(true, "name", "john");
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+	@Test(expected = IllegalArgumentException.class)
+	public void isStringGreaterOrEqualToLowerCaseExceptionWorking() {
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		easyCriteria.andGreaterOrEqualTo(true, "name", 123);
+	}
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+	@Test
+	public void isStringLessThanLowerCaseWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where LOWER(p.name) < 'john'",
+				Person.class);
 
-    @Test(expected = IllegalArgumentException.class)
-    public void isStringGreaterOrEqualToLowerCaseExceptionWorking() {
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertTrue(personsFromJPQL.size() == 0);
 
-        easyCriteria.andGreaterOrEqualTo(true, "name", 123);
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-    @Test
-    public void isStringLessThanLowerCaseWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where LOWER(p.name) < 'john'", Person.class);
+		easyCriteria.andLessThan(true, "name", "John");
 
-        assertTrue(personsFromJPQL.size() == 0);
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        easyCriteria.andLessThan(true, "name", "John");
+	@Test(expected = IllegalArgumentException.class)
+	public void isStringLessThanLowerCaseExceptionWorking() {
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		easyCriteria.andLessThan(true, "name", 123);
+	}
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+	@Test
+	public void isStringLessOrEqualToLowerCaseWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where lower(p.name) <= 'john'",
+				Person.class);
 
+		assertTrue(personsFromJPQL.size() > 0);
 
-    @Test(expected = IllegalArgumentException.class)
-    public void isStringLessThanLowerCaseExceptionWorking() {
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.andLessOrEqualTo(true, "name", "John");
 
-        easyCriteria.andLessThan(true, "name", 123);
-    }
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-    @Test
-    public void isStringLessOrEqualToLowerCaseWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where lower(p.name) <= 'john'", Person.class);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        assertTrue(personsFromJPQL.size() > 0);
+	@Test(expected = IllegalArgumentException.class)
+	public void isStringLessOrEqualToLowerCaseExceptionWorking() {
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.andLessOrEqualTo(true, "name", 123);
+	}
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.andLessOrEqualTo(true, "name", "John");
+	@Test
+	public void isStringBetweenLowerCaseWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select p from Person p where lower(p.name) between 'a' and 'l'", Person.class);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
+		easyCriteria.andBetween(true, "name", "A".toLowerCase(), "L".toLowerCase());
 
-    @Test(expected = IllegalArgumentException.class)
-    public void isStringLessOrEqualToLowerCaseExceptionWorking() {
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.andLessOrEqualTo(true, "name", 123);
-    }
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-    @Test
-    public void isStringBetweenLowerCaseWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where lower(p.name) between 'a' and 'l'", Person.class);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        assertTrue(personsFromJPQL.size() > 0);
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+	@Test(expected = IllegalArgumentException.class)
+	public void isStringBetweenLowerCaseExceptionParameter1Working() {
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        easyCriteria.andBetween(true, "name", "A".toLowerCase(), "L".toLowerCase());
+		easyCriteria.andBetween(true, "name", 123, "L");
+	}
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+	@Test(expected = IllegalArgumentException.class)
+	public void isStringBetweenLowerCaseExceptionParameter2Working() {
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		easyCriteria.andBetween(true, "name", "L", 123);
+	}
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+	@Test
+	public void isStringLikeLowerCaseWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where lower(p.name) like 'm%'",
+				Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-    @Test(expected = IllegalArgumentException.class)
-    public void isStringBetweenLowerCaseExceptionParameter1Working() {
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		EasyQuery<Person> personCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		personCriteria.andStringLike(true, "name", "m%");
+		assertTrue(personCriteria.getResultList().size() == personsFromJPQL.size());
+		assertTrue(personCriteria.getResultList().containsAll(personsFromJPQL));
 
-        easyCriteria.andBetween(true, "name", 123, "L");
-    }
+		personsFromJPQL = getListFromJPQL("select p from Person p where lower(p.name) like '%y'", Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-    @Test(expected = IllegalArgumentException.class)
-    public void isStringBetweenLowerCaseExceptionParameter2Working() {
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		personCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		personCriteria.andStringLike(true, "name", "%y");
+		assertTrue(personCriteria.getResultList().size() == personsFromJPQL.size());
+		assertTrue(personCriteria.getResultList().containsAll(personsFromJPQL));
+	}
 
-        easyCriteria.andBetween(true, "name", "L", 123);
-    }
+	@Test
+	public void isStringNotLikeLowerCaseWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where lower(p.name) not like 'm%'",
+				Person.class);
 
-    @Test
-    public void isStringLikeLowerCaseWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where lower(p.name) like 'm%'", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		EasyQuery<Person> personCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		personCriteria.andStringNotLike(true, "name", "m%");
+		assertTrue(personCriteria.getResultList().size() == personsFromJPQL.size());
+		assertTrue(personCriteria.getResultList().containsAll(personsFromJPQL));
 
-        EasyQuery<Person> personCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        personCriteria.andStringLike(true, "name", "m%");
-        assertTrue(personCriteria.getResultList().size() == personsFromJPQL.size());
-        assertTrue(personCriteria.getResultList().containsAll(personsFromJPQL));
+		personsFromJPQL = getListFromJPQL("select p from Person p where lower(p.name) not like '%y'", Person.class);
 
-        personsFromJPQL = getListFromJPQL("select p from Person p where lower(p.name) like '%y'", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		personCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		personCriteria.andStringNotLike(true, "name", "%y");
+		assertTrue(personCriteria.getResultList().size() == personsFromJPQL.size());
+		assertTrue(personCriteria.getResultList().containsAll(personsFromJPQL));
+	}
 
-        personCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        personCriteria.andStringLike(true, "name", "%y");
-        assertTrue(personCriteria.getResultList().size() == personsFromJPQL.size());
-        assertTrue(personCriteria.getResultList().containsAll(personsFromJPQL));
-    }
+	@Test
+	public void isStringInLowerCaseWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select p from Person p where lower(p.name) in ('john', 'mary')", Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-    @Test
-    public void isStringNotLikeLowerCaseWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where lower(p.name) not like 'm%'", Person.class);
+		List<String> names = new ArrayList<String>();
+		names.add("John");
+		names.add("Mary");
 
-        EasyQuery<Person> personCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        personCriteria.andStringNotLike(true, "name", "m%");
-        assertTrue(personCriteria.getResultList().size() == personsFromJPQL.size());
-        assertTrue(personCriteria.getResultList().containsAll(personsFromJPQL));
+		EasyQuery<Person> personCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		personCriteria.andStringIn(true, "name", names);
+		assertTrue(personCriteria.getResultList().size() == personsFromJPQL.size());
+		assertTrue(personCriteria.getResultList().containsAll(personsFromJPQL));
+	}
 
-        personsFromJPQL = getListFromJPQL("select p from Person p where lower(p.name) not like '%y'", Person.class);
+	@Test
+	public void isStringNotInLowerCaseWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select p from Person p where LOWER(p.name) not in ('john', 'mary')", Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        personCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        personCriteria.andStringNotLike(true, "name", "%y");
-        assertTrue(personCriteria.getResultList().size() == personsFromJPQL.size());
-        assertTrue(personCriteria.getResultList().containsAll(personsFromJPQL));
-    }
+		List<String> names = new ArrayList<String>();
+		names.add("John");
+		names.add("Mary");
 
-    @Test
-    public void isStringInLowerCaseWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where lower(p.name) in ('john', 'mary')", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		EasyQuery<Person> personCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		personCriteria.andStringNotIn(true, "name", names);
+		assertTrue(personCriteria.getResultList().size() == personsFromJPQL.size());
+		assertTrue(personCriteria.getResultList().containsAll(personsFromJPQL));
+	}
 
-        List<String> names = new ArrayList<String>();
-        names.add("John");
-        names.add("Mary");
+	@Test
+	public void isWhereInnerJoinLowerCaseLowerCaseWorking() {
+		List<Dog> dogsFromJPQL = getListFromJPQL(
+				"select d from Dog d inner join d.person p where lower(p.name) = 'john'", Dog.class);
+		assertTrue(dogsFromJPQL.size() > 0);
 
-        EasyQuery<Person> personCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        personCriteria.andStringIn(true, "name", names);
-        assertTrue(personCriteria.getResultList().size() == personsFromJPQL.size());
-        assertTrue(personCriteria.getResultList().containsAll(personsFromJPQL));
-    }
+		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinEquals(true, "person", "name", "John");
 
-    @Test
-    public void isStringNotInLowerCaseWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where LOWER(p.name) not in ('john', 'mary')", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
-        List<String> names = new ArrayList<String>();
-        names.add("John");
-        names.add("Mary");
+		assertEquals(dogsFromJPQL.size(), easyCriteriaResult.size());
 
-        EasyQuery<Person> personCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        personCriteria.andStringNotIn(true, "name", names);
-        assertTrue(personCriteria.getResultList().size() == personsFromJPQL.size());
-        assertTrue(personCriteria.getResultList().containsAll(personsFromJPQL));
-    }
+		assertTrue(dogsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-    @Test
-    public void isWhereInnerJoinLowerCaseLowerCaseWorking() {
-        List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d inner join d.person p where lower(p.name) = 'john'", Dog.class);
-        assertTrue(dogsFromJPQL.size() > 0);
+	@Test(expected = IllegalArgumentException.class)
+	public void isWhereInnerJoinLowerCaseLowerCaseExceptionWorking() {
+		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinEquals(true, "person", "name", 123);
+	}
 
-        EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinEquals(true, "person", "name", "John");
+	@Test
+	public void isWhereJoinNotEqualsLowerCaseWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select p from Person p join p.dogs d where lower(d.name) <> 'fire'", Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Dog> easyCriteriaResult = easyCriteria.getResultList();
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        assertEquals(dogsFromJPQL.size(), easyCriteriaResult.size());
+		if (isOpenJPA()) {
+			easyCriteria.setDistinctTrue();
+		}
 
-        assertTrue(dogsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		easyCriteria.innerJoinFetch("dogs");
+		// easyCriteria.andJoinNotEquals(true, "dogs", "name", "Fire");
 
-    @Test(expected = IllegalArgumentException.class)
-    public void isWhereInnerJoinLowerCaseLowerCaseExceptionWorking() {
-        EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinEquals(true, "person", "name", 123);
-    }
+		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
-    @Test
-    public void isWhereJoinNotEqualsLowerCaseWorking() {
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p join p.dogs d where lower(d.name) <> 'fire'", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertTrue(easyCriteriaResult.containsAll(personsFromJPQL));
+	}
 
-        if(isOpenJPA()){
-            easyCriteria.setDistinctTrue();
-        }
+	@Test(expected = IllegalArgumentException.class)
+	public void isWhereJoinNotEqualsLowerCaseExceptionWorking() {
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.innerJoinFetch("dogs");
+		// easyCriteria.andJoinNotEquals(true, "dogs", "name", 123);
+	}
 
-        easyCriteria.innerJoinFetch("dogs");
-        //easyCriteria.andJoinNotEquals(true, "dogs", "name", "Fire");
+	@Test
+	public void isJoinStringGreaterThanLowerCaseWorking() {
+		List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where lower(p.name) > 'mary'",
+				Dog.class);
 
-        List<Person> easyCriteriaResult = easyCriteria.getResultList();
+		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinGreaterThan(true,"person", "name", "Mary");
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
-        assertTrue(easyCriteriaResult.containsAll(personsFromJPQL));
-    }
+		assertEquals(dogsFromJPQL.size(), easyCriteriaResult.size());
 
-    @Test(expected = IllegalArgumentException.class)
-    public void isWhereJoinNotEqualsLowerCaseExceptionWorking() {
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.innerJoinFetch("dogs");
-        //easyCriteria.andJoinNotEquals(true, "dogs", "name", 123);
-    }
+		assertTrue(dogsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-    @Test
-    public void isJoinStringGreaterThanLowerCaseWorking() {
-        List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where lower(p.name) > 'mary'", Dog.class);
+	@Test(expected = IllegalArgumentException.class)
+	public void isJoinStringGreaterThanLowerCaseExceptionWorking() {
+		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinGreaterThan(true, "person", "name", 123);
+	}
 
-        EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinGreaterThan(true,"person", "name", "Mary");
+	@Test
+	public void isJoinStringGreaterOrEqualToLowerCaseWorking() {
+		List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where lower(p.name) >= 'mary'",
+				Dog.class);
 
-        List<Dog> easyCriteriaResult = easyCriteria.getResultList();
+		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinGreaterOrEqualTo(true, "person", "name", "Mary");
 
-        assertEquals(dogsFromJPQL.size(), easyCriteriaResult.size());
+		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
-        assertTrue(dogsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		assertEquals(dogsFromJPQL.size(), easyCriteriaResult.size());
 
-    @Test(expected = IllegalArgumentException.class)
-    public void isJoinStringGreaterThanLowerCaseExceptionWorking() {
-        EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinGreaterThan(true, "person", "name", 123);
-    }
+		assertTrue(dogsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-    @Test
-    public void isJoinStringGreaterOrEqualToLowerCaseWorking() {
-        List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where lower(p.name) >= 'mary'", Dog.class);
+	@Test(expected = IllegalArgumentException.class)
+	public void isJoinStringGreaterOrEqualToLowerCaseExceptionWorking() {
+		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinGreaterOrEqualTo(true, "person", "name", 123);
+	}
 
-        EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinGreaterOrEqualTo(true, "person", "name", "Mary");
+	@Test
+	public void isJoinStringLessThanLowerCaseWorking() {
+		List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where lower(p.name) < 'mary'",
+				Dog.class);
 
-        List<Dog> easyCriteriaResult = easyCriteria.getResultList();
+		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinLessThan(true, "person", "name", "Mary");
 
-        assertEquals(dogsFromJPQL.size(), easyCriteriaResult.size());
+		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
-        assertTrue(dogsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		assertEquals(dogsFromJPQL.size(), easyCriteriaResult.size());
 
-    @Test(expected = IllegalArgumentException.class)
-    public void isJoinStringGreaterOrEqualToLowerCaseExceptionWorking() {
-        EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinGreaterOrEqualTo(true, "person", "name", 123);
-    }
+		assertTrue(dogsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-    @Test
-    public void isJoinStringLessThanLowerCaseWorking() {
-        List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where lower(p.name) < 'mary'", Dog.class);
+	@Test(expected = IllegalArgumentException.class)
+	public void isJoinStringLessThanLowerCaseExceptionWorking() {
+		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinLessThan(true, "person", "name", 123);
+	}
 
-        EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinLessThan(true, "person", "name", "Mary");
+	@Test
+	public void isJoinStringLessOrEqualToLowerCaseWorking() {
+		List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where lower(p.name) <= 'mary'",
+				Dog.class);
 
-        List<Dog> easyCriteriaResult = easyCriteria.getResultList();
+		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinLessOrEqualTo(true, "person", "name", "Mary");
 
-        assertEquals(dogsFromJPQL.size(), easyCriteriaResult.size());
+		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
-        assertTrue(dogsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		assertEquals(dogsFromJPQL.size(), easyCriteriaResult.size());
 
-    @Test(expected = IllegalArgumentException.class)
-    public void isJoinStringLessThanLowerCaseExceptionWorking() {
-        EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinLessThan(true, "person", "name", 123);
-    }
+		assertTrue(dogsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-    @Test
-    public void isJoinStringLessOrEqualToLowerCaseWorking() {
-        List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where lower(p.name) <= 'mary'", Dog.class);
+	@Test(expected = IllegalArgumentException.class)
+	public void isJoinStringLessOrEqualToLowerCaseExceptionWorking() {
+		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinLessOrEqualTo(true, "person", "name", 1234);
+	}
 
-        EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinLessOrEqualTo(true, "person", "name", "Mary");
+	@Test
+	public void isJoinStringBetweenLowerCaseWorking() {
+		List<Dog> personsFromJPQL = getListFromJPQL(
+				"select d from Dog d join d.person p where lower(p.name) between 'a' and 'l'", Dog.class);
 
-        List<Dog> easyCriteriaResult = easyCriteria.getResultList();
+		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinBetween(true, "person", "name", "a", "l");
 
-        assertEquals(dogsFromJPQL.size(), easyCriteriaResult.size());
+		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
-        assertTrue(dogsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
 
-    @Test(expected = IllegalArgumentException.class)
-    public void isJoinStringLessOrEqualToLowerCaseExceptionWorking() {
-        EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinLessOrEqualTo(true, "person", "name", 1234);
-    }
+		assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-    @Test
-    public void isJoinStringBetweenLowerCaseWorking() {
-        List<Dog> personsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where lower(p.name) between 'a' and 'l'", Dog.class);
+	@Test(expected = IllegalArgumentException.class)
+	public void isJoinStringBetweenLowerCaseExceptionParameter1Working() {
+		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinBetween(true, "person", "name", 1, "l");
+	}
 
-        EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinBetween(true, "person", "name", "a", "l");
+	@Test(expected = IllegalArgumentException.class)
+	public void isJoinStringBetweenLowerCaseExceptionParameter2Working() {
+		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinBetween(true, "person", "name", "a", 2);
+	}
 
-        List<Dog> easyCriteriaResult = easyCriteria.getResultList();
+	@Test
+	public void isJoinStringLikeLowerCaseWorking() {
+		List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where lower(p.name) like 'm%'",
+				Dog.class);
 
-        assertEquals(personsFromJPQL.size(), easyCriteriaResult.size());
+		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinStringLike(true, "person", "name", "M%");
+		assertTrue(easyCriteria.getResultList().size() == dogsFromJPQL.size());
+		assertTrue(easyCriteria.getResultList().containsAll(dogsFromJPQL));
 
-        assertTrue(personsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where lower(p.name) like '%y'", Dog.class);
 
-    @Test(expected = IllegalArgumentException.class)
-    public void isJoinStringBetweenLowerCaseExceptionParameter1Working() {
-        EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinBetween(true, "person", "name", 1, "l");
-    }
+		easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinStringLike(true, "person", "name", "%y");
+		assertTrue(easyCriteria.getResultList().size() == dogsFromJPQL.size());
+		assertTrue(easyCriteria.getResultList().containsAll(dogsFromJPQL));
+	}
 
-    @Test(expected = IllegalArgumentException.class)
-    public void isJoinStringBetweenLowerCaseExceptionParameter2Working() {
-        EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinBetween(true, "person", "name", "a", 2);
-    }
+	@Test
+	public void isJoinStringNotLikeExceptionWorking() {
+		List<Dog> dogsFromJPQL = getListFromJPQL(
+				"select d from Dog d join d.person p where lower(p.name) not like 'm%'", Dog.class);
 
-    @Test
-    public void isJoinStringLikeLowerCaseWorking() {
-        List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where lower(p.name) like 'm%'", Dog.class);
+		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinStringNotLike(true, "person", "name", "M%");
+		assertTrue(easyCriteria.getResultList().size() == dogsFromJPQL.size());
+		assertTrue(easyCriteria.getResultList().containsAll(dogsFromJPQL));
 
-        EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinStringLike(true, "person", "name", "M%");
-        assertTrue(easyCriteria.getResultList().size() == dogsFromJPQL.size());
-        assertTrue(easyCriteria.getResultList().containsAll(dogsFromJPQL));
+		dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where lower(p.name) not like '%y'",
+				Dog.class);
 
-        dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where lower(p.name) like '%y'", Dog.class);
+		easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 
-        easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinStringLike(true, "person", "name", "%y");
-        assertTrue(easyCriteria.getResultList().size() == dogsFromJPQL.size());
-        assertTrue(easyCriteria.getResultList().containsAll(dogsFromJPQL));
-    }
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinStringNotLike(true, "person", "name", "%y");
+		assertTrue(easyCriteria.getResultList().size() == dogsFromJPQL.size());
+		assertTrue(easyCriteria.getResultList().containsAll(dogsFromJPQL));
+	}
 
-    @Test
-    public void isJoinStringNotLikeExceptionWorking() {
-        List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where lower(p.name) not like 'm%'", Dog.class);
+	@Test
+	public void isJoinStringInCaseWorking() {
+		List<String> names = new ArrayList<String>();
+		names.add("Mary");
+		names.add("John");
 
-        EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinStringNotLike(true, "person", "name", "M%");
-        assertTrue(easyCriteria.getResultList().size() == dogsFromJPQL.size());
-        assertTrue(easyCriteria.getResultList().containsAll(dogsFromJPQL));
+		List<Dog> dogsFromJPQL = getListFromJPQL(
+				"select d from Dog d join d.person p where lower(p.name) in ('mary', 'john')", Dog.class);
 
-        dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where lower(p.name) not like '%y'", Dog.class);
+		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinStringIn(true, "person", "name", names);
+		assertTrue(easyCriteria.getResultList().size() == dogsFromJPQL.size());
+		assertTrue(easyCriteria.getResultList().containsAll(dogsFromJPQL));
+	}
 
-        easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+	@Test
+	public void isJoinStringNotInExceptionWorking() {
+		List<String> names = new ArrayList<String>();
+		names.add("Mary");
+		names.add("John");
 
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinStringNotLike(true, "person", "name", "%y");
-        assertTrue(easyCriteria.getResultList().size() == dogsFromJPQL.size());
-        assertTrue(easyCriteria.getResultList().containsAll(dogsFromJPQL));
-    }
+		List<Dog> dogsFromJPQL = getListFromJPQL(
+				"select d from Dog d join d.person p where lower(p.name) not in ('mary', 'john')", Dog.class);
 
-    @Test
-    public void isJoinStringInCaseWorking() {
-        List<String> names = new ArrayList<String>();
-        names.add("Mary");
-        names.add("John");
+		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
+		easyCriteria.innerJoin("person");
+		// easyCriteria.andJoinStringNotIn(true, "person", "name", names);
+		assertTrue(easyCriteria.getResultList().size() == dogsFromJPQL.size());
+		assertTrue(easyCriteria.getResultList().containsAll(dogsFromJPQL));
+	}
 
-        List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where lower(p.name) in ('mary', 'john')", Dog.class);
+	@Test
+	public void addAndSeparatedByOrLowerCase() {
+		List<Song> songsFromJPQL = getListFromJPQL(
+				"select s from Song s where (s.id = 1 and lower(s.name) = 'sing out') or (s.id = 2 and lower(s.name) = 'alive')",
+				Song.class);
 
-        EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinStringIn(true, "person", "name", names);
-        assertTrue(easyCriteria.getResultList().size() == dogsFromJPQL.size());
-        assertTrue(easyCriteria.getResultList().containsAll(dogsFromJPQL));
-    }
+		assertTrue(songsFromJPQL.size() == 2);
 
-    @Test
-    public void isJoinStringNotInExceptionWorking() {
-        List<String> names = new ArrayList<String>();
-        names.add("Mary");
-        names.add("John");
+		EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
 
-        List<Dog> dogsFromJPQL = getListFromJPQL("select d from Dog d join d.person p where lower(p.name) not in ('mary', 'john')", Dog.class);
+		easyCriteria.addAndSeparatedByOr(1, "id", 1).addAndSeparatedByOr(true, 1, "name", "Sing Out".toLowerCase())
+				.addAndSeparatedByOr(2, "id", 2).addAndSeparatedByOr(true, 2, "name", "Alive".toLowerCase());
 
-        EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
-        easyCriteria.innerJoin("person");
-        //easyCriteria.andJoinStringNotIn(true, "person", "name", names);
-        assertTrue(easyCriteria.getResultList().size() == dogsFromJPQL.size());
-        assertTrue(easyCriteria.getResultList().containsAll(dogsFromJPQL));
-    }
+		List<Song> easyCriteriaResult = easyCriteria.getResultList();
 
-    @Test
-    public void addAndSeparatedByOrLowerCase() {
-        List<Song> songsFromJPQL = getListFromJPQL("select s from Song s where (s.id = 1 and lower(s.name) = 'sing out') or (s.id = 2 and lower(s.name) = 'alive')", Song.class);
+		assertEquals(songsFromJPQL.size(), easyCriteriaResult.size());
 
-        assertTrue(songsFromJPQL.size() == 2);
+		assertTrue(songsFromJPQL.containsAll(easyCriteriaResult));
+	}
 
-        EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
+	@Test(expected = IllegalArgumentException.class)
+	public void addAndSeparatedByOrLowerCaseException() {
+		EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
 
-        easyCriteria.addAndSeparatedByOr(1, "id", 1).addAndSeparatedByOr(true, 1, "name", "Sing Out".toLowerCase()).addAndSeparatedByOr(2, "id", 2).addAndSeparatedByOr(true, 2, "name", "Alive".toLowerCase());
+		easyCriteria.addAndSeparatedByOr(1, "id", 1).addAndSeparatedByOr(true, 1, "name", 123123)
+				.addAndSeparatedByOr(2, "id", 2).addAndSeparatedByOr(true, 2, "name", "Alive");
+	}
 
-        List<Song> easyCriteriaResult = easyCriteria.getResultList();
+	/*
+	 * @Test(expected = IllegalArgumentException.class) public void
+	 * isThrowingExceptionWhenPassingWrongArgumentToFabric(){
+	 * EasyCriteriaFactory.createQueryCriteria(getEntityManager(), Person.class, new InvalidEasyCriteriaClass()); }
+	 */
 
-        assertEquals(songsFromJPQL.size(), easyCriteriaResult.size());
+	@Test
+	public void isMultipleJoin1LevelWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p join p.car ca join ca.color co",
+				Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertTrue(songsFromJPQL.containsAll(easyCriteriaResult));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.innerJoin("car.color");
 
-    @Test(expected = IllegalArgumentException.class)
-    public void addAndSeparatedByOrLowerCaseException() {
-        EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
+		List<Person> result = easyCriteria.getResultList();
 
-        easyCriteria.addAndSeparatedByOr(1, "id", 1).addAndSeparatedByOr(true, 1, "name", 123123).addAndSeparatedByOr(2, "id", 2).addAndSeparatedByOr(true, 2, "name", "Alive");
-    }
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-    /*@Test(expected = IllegalArgumentException.class)
-    public void isThrowingExceptionWhenPassingWrongArgumentToFabric(){
-        EasyCriteriaFactory.createQueryCriteria(getEntityManager(), Person.class, new InvalidEasyCriteriaClass());
-    }*/
+	@Test
+	public void isMultipleJoin2LevelsWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select p from Person p join p.car ca join ca.color co join co.manufacturer nanu", Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.innerJoin("car.color.manufacturer");
 
-    @Test
-    public void isMultipleJoin1LevelWorking(){
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p join p.car ca join ca.color co", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Person> result = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.innerJoin("car.color");
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        List<Person> result = easyCriteria.getResultList();
+	@Test
+	public void isMultipleJoin3LevelsWorking() {
+		String query = "select p from Person p " + "join p.car ca " + "join ca.color co "
+				+ "join co.manufacturer manu " + "join manu.products pro";
+		List<Person> personsFromJPQL = getListFromJPQL(query, Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.innerJoin("car.color.manufacturer.products");
 
-    @Test
-    public void isMultipleJoin2LevelsWorking(){
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p join p.car ca join ca.color co join co.manufacturer nanu", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Person> result = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.innerJoin("car.color.manufacturer");
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        List<Person> result = easyCriteria.getResultList();
+	@Test
+	public void isMultipleJoin4LevelsWorking() {
+		String query = "select p from Person p " + "join p.car ca " + "join ca.color co "
+				+ "join co.manufacturer manu " + "join manu.products pro " + "join pro.nickNames ni  ";
+		List<Person> personsFromJPQL = getListFromJPQL(query, Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.innerJoin("car.color.manufacturer.products.nickNames");
 
-    @Test
-    public void isMultipleJoin3LevelsWorking(){
-        String query = "select p from Person p " +
-                       "join p.car ca " +
-                       "join ca.color co " +
-                       "join co.manufacturer manu " +
-                       "join manu.products pro";
-        List<Person> personsFromJPQL = getListFromJPQL(query, Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Person> result = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.innerJoin("car.color.manufacturer.products");
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        List<Person> result = easyCriteria.getResultList();
+	@Test
+	public void isMultipleJoinFetch1LevelWorking() {
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.innerJoinFetch("car.color");
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		List<Person> result = easyCriteria.getResultList();
+		assertTrue(result.size() > 0);
+	}
 
-    @Test
-    public void isMultipleJoin4LevelsWorking(){
-        String query = "select p from Person p " +
-                       "join p.car ca " +
-                       "join ca.color co " +
-                       "join co.manufacturer manu " +
-                       "join manu.products pro " +
-                       "join pro.nickNames ni  ";
-        List<Person> personsFromJPQL = getListFromJPQL(query, Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+	@Test
+	public void isMultipleJoinFetch2LevelsWorking() {
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.innerJoinFetch("car.color.manufacturer");
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.innerJoin("car.color.manufacturer.products.nickNames");
+		List<Person> result = easyCriteria.getResultList();
+		assertTrue(result.size() > 0);
+	}
 
-        List<Person> result = easyCriteria.getResultList();
+	@Test
+	public void isMultipleJoinFetch3LevelsWorking() {
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.innerJoinFetch("car.color.manufacturer.products");
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		List<Person> result = easyCriteria.getResultList();
+		assertTrue(result.size() > 0);
+	}
 
-    @Test
-    public void isMultipleJoinFetch1LevelWorking(){
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.innerJoinFetch("car.color");
+	@Test
+	public void isMultipleJoinFetch4LevelsWorking() {
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.innerJoinFetch("car.color.manufacturer.products.nickNames");
 
-        List<Person> result = easyCriteria.getResultList();
-        assertTrue(result.size() > 0);
-    }
+		List<Person> result = easyCriteria.getResultList();
+		assertTrue(result.size() > 0);
+	}
 
-    @Test
-    public void isMultipleJoinFetch2LevelsWorking(){
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.innerJoinFetch("car.color.manufacturer");
+	@Test
+	public void isMultipleLeftJoin1LevelWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select p from Person p left join p.car ca left join ca.color co", Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Person> result = easyCriteria.getResultList();
-        assertTrue(result.size() > 0);
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.leftJoin("car.color");
 
-    @Test
-    public void isMultipleJoinFetch3LevelsWorking(){
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.innerJoinFetch("car.color.manufacturer.products");
+		List<Person> result = easyCriteria.getResultList();
 
-        List<Person> result = easyCriteria.getResultList();
-        assertTrue(result.size() > 0);
-    }
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-    @Test
-    public void isMultipleJoinFetch4LevelsWorking(){
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.innerJoinFetch("car.color.manufacturer.products.nickNames");
+	@Test
+	public void isMultipleLeftJoin2LevelsWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select p from Person p left join p.car ca left join ca.color co left join co.manufacturer nanu",
+				Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Person> result = easyCriteria.getResultList();
-        assertTrue(result.size() > 0);
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.leftJoin("car.color.manufacturer");
 
-    @Test
-    public void isMultipleLeftJoin1LevelWorking(){
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p left join p.car ca left join ca.color co", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Person> result = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.leftJoin("car.color");
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        List<Person> result = easyCriteria.getResultList();
+	@Test
+	public void isMultipleLeftJoin3LevelsWorking() {
+		String query = "select p from Person p " + "left join p.car ca " + "left join ca.color co "
+				+ "left join co.manufacturer manu " + "left join manu.products pro";
+		List<Person> personsFromJPQL = getListFromJPQL(query, Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.leftJoin("car.color.manufacturer.products");
 
-    @Test
-    public void isMultipleLeftJoin2LevelsWorking(){
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p left join p.car ca left join ca.color co left join co.manufacturer nanu", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Person> result = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.leftJoin("car.color.manufacturer");
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        List<Person> result = easyCriteria.getResultList();
+	@Test
+	public void isMultipleLeftJoin4LevelsWorking() {
+		String query = "select distinct p from Person p " + "left join p.car ca " + "left join ca.color co "
+				+ "left join co.manufacturer manu " + "left join manu.products pro " + "left join pro.nickNames ni  ";
+		List<Person> personsFromJPQL = getListFromJPQL(query, Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.leftJoin("car");
+		easyCriteria.leftJoin("car.color");
+		easyCriteria.leftJoin("car.color.manufacturer");
+		easyCriteria.leftJoin("car.color.manufacturer.products");
+		easyCriteria.leftJoin("car.color.manufacturer.products.nickNames");
 
-    @Test
-    public void isMultipleLeftJoin3LevelsWorking(){
-        String query = "select p from Person p " +
-                       "left join p.car ca " +
-                       "left join ca.color co " +
-                       "left join co.manufacturer manu " +
-                       "left join manu.products pro";
-        List<Person> personsFromJPQL = getListFromJPQL(query, Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Person> result = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.leftJoin("car.color.manufacturer.products");
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        List<Person> result = easyCriteria.getResultList();
+	@Test
+	public void isMultipleMixedJoin4LevelsWorking() {
+		String query = "select distinct p from Person p " + "inner join p.car ca " + "left join ca.color co "
+				+ "left join co.manufacturer manu " + "left join manu.products pro " + "left join pro.nickNames ni  ";
+		List<Person> personsFromJPQL = getListFromJPQL(query, Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("car");
+		easyCriteria.leftJoin("car.color");
+		easyCriteria.leftJoin("car.color.manufacturer");
+		easyCriteria.leftJoin("car.color.manufacturer.products");
+		easyCriteria.leftJoin("car.color.manufacturer.products.nickNames");
 
-    @Test
-    public void isMultipleLeftJoin4LevelsWorking(){
-        String query = "select distinct p from Person p " +
-                       "left join p.car ca " +
-                       "left join ca.color co " +
-                       "left join co.manufacturer manu " +
-                       "left join manu.products pro " +
-                       "left join pro.nickNames ni  ";
-        List<Person> personsFromJPQL = getListFromJPQL(query, Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Person> result = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.leftJoin("car");
-        easyCriteria.leftJoin("car.color");
-        easyCriteria.leftJoin("car.color.manufacturer");
-        easyCriteria.leftJoin("car.color.manufacturer.products");
-        easyCriteria.leftJoin("car.color.manufacturer.products.nickNames");
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        List<Person> result = easyCriteria.getResultList();
+	@Test
+	public void isMultipleLeftJoinFetch1LevelWorking() {
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.leftJoinFetch("car.color");
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		List<Person> result = easyCriteria.getResultList();
+		assertTrue(result.size() > 0);
+	}
 
-    @Test
-    public void isMultipleMixedJoin4LevelsWorking(){
-        String query = "select distinct p from Person p " +
-                       "inner join p.car ca " +
-                       "left join ca.color co " +
-                       "left join co.manufacturer manu " +
-                       "left join manu.products pro " +
-                       "left join pro.nickNames ni  ";
-        List<Person> personsFromJPQL = getListFromJPQL(query, Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+	@Test
+	public void isMultipleLeftJoinFetch2LevelsWorking() {
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.leftJoinFetch("car.color.manufacturer");
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("car");
-        easyCriteria.leftJoin("car.color");
-        easyCriteria.leftJoin("car.color.manufacturer");
-        easyCriteria.leftJoin("car.color.manufacturer.products");
-        easyCriteria.leftJoin("car.color.manufacturer.products.nickNames");
+		List<Person> result = easyCriteria.getResultList();
+		assertTrue(result.size() > 0);
+	}
 
-        List<Person> result = easyCriteria.getResultList();
+	@Test
+	public void isMultipleLeftJoinFetch3LevelsWorking() {
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.leftJoinFetch("car.color.manufacturer.products");
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		List<Person> result = easyCriteria.getResultList();
+		assertTrue(result.size() > 0);
+	}
 
-    @Test
-    public void isMultipleLeftJoinFetch1LevelWorking(){
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.leftJoinFetch("car.color");
+	@Test
+	public void isMultipleLeftJoinFetch4LevelsWorking() {
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.leftJoinFetch("car.color.manufacturer.products.nickNames");
 
-        List<Person> result = easyCriteria.getResultList();
-        assertTrue(result.size() > 0);
-    }
+		List<Person> result = easyCriteria.getResultList();
+		assertTrue(result.size() > 0);
+	}
 
-    @Test
-    public void isMultipleLeftJoinFetch2LevelsWorking(){
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.leftJoinFetch("car.color.manufacturer");
+	@Test
+	public void isMultipleJoinWhereWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select p from Person p join p.car ca join ca.color co where co.name = 'Red'", Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Person> result = easyCriteria.getResultList();
-        assertTrue(result.size() > 0);
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.innerJoin("car.color");
+		easyCriteria.andEquals("car.color.name", "Red");
 
-    @Test
-    public void isMultipleLeftJoinFetch3LevelsWorking(){
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.leftJoinFetch("car.color.manufacturer.products");
+		List<Person> result = easyCriteria.getResultList();
 
-        List<Person> result = easyCriteria.getResultList();
-        assertTrue(result.size() > 0);
-    }
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-    @Test
-    public void isMultipleLeftJoinFetch4LevelsWorking(){
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.leftJoinFetch("car.color.manufacturer.products.nickNames");
+	@Test
+	public void isMultipleLeftJoinLevel2WhereWorking() {
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select p from Person p left join p.car ca join ca.color co where co.name = 'Red'", Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Person> result = easyCriteria.getResultList();
-        assertTrue(result.size() > 0);
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.leftJoin("car");
+		easyCriteria.innerJoin("car.color");
+		easyCriteria.andEquals("car.color.name", "Red");
 
-    @Test
-    public void isMultipleJoinWhereWorking(){
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p join p.car ca join ca.color co where co.name = 'Red'", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Person> result = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.innerJoin("car.color");
-        easyCriteria.andEquals("car.color.name", "Red");
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        List<Person> result = easyCriteria.getResultList();
+	@Test
+	public void isMultipleLeftJoinLevel3WhereWorking() {
+		String query = "select p from Person p " + "left join p.car ca " + "left join ca.color co "
+				+ "left join co.manufacturer manu " + "where manu.name = 'Company A'";
+		List<Person> personsFromJPQL = getListFromJPQL(query, Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.leftJoin("car.color.manufacturer");
+		easyCriteria.andEquals("car.color.manufacturer.name", "Company A");
 
-    @Test
-    public void isMultipleLeftJoinLevel2WhereWorking(){
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p left join p.car ca join ca.color co where co.name = 'Red'", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Person> result = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.leftJoin("car");
-        easyCriteria.innerJoin("car.color");
-        easyCriteria.andEquals("car.color.name", "Red");
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        List<Person> result = easyCriteria.getResultList();
+	@Test
+	public void isMultipleLeftJoinLevel3LowerCaseWhereWorking() {
+		String query = "select p from Person p " + "left join p.car ca " + "left join ca.color co "
+				+ "left join co.manufacturer manu " + "where lower(manu.name) = 'company b'";
+		List<Person> personsFromJPQL = getListFromJPQL(query, Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.leftJoin("car.color.manufacturer");
+		easyCriteria.andEquals(true, "car.color.manufacturer.name", "Company B".toLowerCase());
 
-    @Test
-    public void isMultipleLeftJoinLevel3WhereWorking(){
-        String query = "select p from Person p " +
-                "left join p.car ca " +
-                "left join ca.color co " +
-                "left join co.manufacturer manu " +
-                "where manu.name = 'Company A'";
-        List<Person> personsFromJPQL = getListFromJPQL(query, Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Person> result = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.leftJoin("car.color.manufacturer");
-        easyCriteria.andEquals("car.color.manufacturer.name", "Company A");
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        List<Person> result = easyCriteria.getResultList();
+	@Test
+	public void isMultipleLeftJoinLevel1LowerCaseWhereWorking() {
+		String query = "select p from Person p " + "join p.car c " + "where lower(c.name) = lower('Dark Horse')";
+		List<Person> personsFromJPQL = getListFromJPQL(query, Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.innerJoin("car");
+		easyCriteria.andEquals(true, "car.name", "Dark Horse".toLowerCase());
 
-    @Test
-    public void isMultipleLeftJoinLevel3LowerCaseWhereWorking(){
-        String query = "select p from Person p " +
-                "left join p.car ca " +
-                "left join ca.color co " +
-                "left join co.manufacturer manu " +
-                "where lower(manu.name) = 'company b'";
-        List<Person> personsFromJPQL = getListFromJPQL(query, Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Person> result = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.leftJoin("car.color.manufacturer");
-        easyCriteria.andEquals(true, "car.color.manufacturer.name", "Company B".toLowerCase());
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        List<Person> result = easyCriteria.getResultList();
+	@Test
+	public void isMultipleJoinWithEqualsInCollectionsWorking() {
+		String query = "select m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.name = 'NickName B'";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andEquals("products.nickNames.name", "NickName B");
 
-    @Test
-    public void isMultipleLeftJoinLevel1LowerCaseWhereWorking(){
-        String query = "select p from Person p " +
-                "join p.car c " +
-                "where lower(c.name) = lower('Dark Horse')";
-        List<Person> personsFromJPQL = getListFromJPQL(query, Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.innerJoin("car");
-        easyCriteria.andEquals(true, "car.name", "Dark Horse".toLowerCase());
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        List<Person> result = easyCriteria.getResultList();
+	@Test
+	public void isMultipleJoinWithEqualsLowerCaseInCollectionsWorking() {
+		String query = "select m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where lower(n.name) = lower('NickName B')";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andEquals(true, "products.nickNames.name", "NickName B".toLowerCase());
 
-    @Test
-    public void isMultipleJoinWithEqualsInCollectionsWorking(){
-        String query = "select m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.name = 'NickName B'";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andEquals("products.nickNames.name", "NickName B");
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+	@Test
+	public void isMultipleJoinWithIntegerGreaterThanWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.id > 1";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andGreaterThan("products.nickNames.id", 1);
 
-    @Test
-    public void isMultipleJoinWithEqualsLowerCaseInCollectionsWorking(){
-        String query = "select m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where lower(n.name) = lower('NickName B')";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andEquals(true, "products.nickNames.name", "NickName B".toLowerCase());
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+	@Test
+	public void isMultipleJoinWithIntegerGreaterOrEqualToWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.id >= 1";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andGreaterOrEqualTo("products.nickNames.id", 1);
 
-    @Test
-    public void isMultipleJoinWithIntegerGreaterThanWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.id > 1";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andGreaterThan("products.nickNames.id", 1);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+	@Test
+	public void isMultipleJoinWithIntegerLessThanWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.id < 2";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andLessThan("products.nickNames.id", 2);
 
-    @Test
-    public void isMultipleJoinWithIntegerGreaterOrEqualToWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.id >= 1";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andGreaterOrEqualTo("products.nickNames.id", 1);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+	@Test
+	public void isMultipleJoinWithIntegerLessOrEqualToWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.id <= 2";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andLessOrEqualTo("products.nickNames.id", 2);
 
-    @Test
-    public void isMultipleJoinWithIntegerLessThanWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.id < 2";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andLessThan("products.nickNames.id", 2);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+	@Test
+	public void isMultipleJoinWithDoubleGreaterThanWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justDouble > 1d";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andGreaterThan("products.nickNames.justDouble", 1d);
 
-    @Test
-    public void isMultipleJoinWithIntegerLessOrEqualToWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.id <= 2";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andLessOrEqualTo("products.nickNames.id", 2);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+	@Test
+	public void isMultipleJoinWithDoubleGreaterOrEqualToWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justDouble >= 1d";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andGreaterOrEqualTo("products.nickNames.justDouble", 1d);
 
-    @Test
-    public void isMultipleJoinWithDoubleGreaterThanWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justDouble > 1d";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andGreaterThan("products.nickNames.justDouble", 1d);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+	@Test
+	public void isMultipleJoinWithDoubleLessThanWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justDouble < 2d";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andLessThan("products.nickNames.justDouble", 2d);
 
-    @Test
-    public void isMultipleJoinWithDoubleGreaterOrEqualToWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justDouble >= 1d";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andGreaterOrEqualTo("products.nickNames.justDouble", 1d);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+	@Test
+	public void isMultipleJoinWithDoubleLessOrEqualToWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justDouble <= 2d";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andLessOrEqualTo("products.nickNames.justDouble", 2d);
 
-    @Test
-    public void isMultipleJoinWithDoubleLessThanWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justDouble < 2d";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andLessThan("products.nickNames.justDouble", 2d);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+	@Test
+	public void isMultipleJoinWithLongGreaterThanWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justLong > 1";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andGreaterThan("products.nickNames.justLong", 1L);
 
-    @Test
-    public void isMultipleJoinWithDoubleLessOrEqualToWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justDouble <= 2d";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andLessOrEqualTo("products.nickNames.justDouble", 2d);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+	@Test
+	public void isMultipleJoinWithLongGreaterOrEqualToWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justLong >= 1";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andGreaterOrEqualTo("products.nickNames.justLong", 1L);
 
-    @Test
-    public void isMultipleJoinWithLongGreaterThanWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justLong > 1";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andGreaterThan("products.nickNames.justLong", 1L);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+	@Test
+	public void isMultipleJoinWithLongLessThanWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justLong < 2";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andLessThan("products.nickNames.justLong", 2L);
 
-    @Test
-    public void isMultipleJoinWithLongGreaterOrEqualToWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justLong >= 1";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andGreaterOrEqualTo("products.nickNames.justLong", 1L);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+	@Test
+	public void isMultipleJoinWithLongLessOrEqualToWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justLong <= 2";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andLessOrEqualTo("products.nickNames.justLong", 2L);
 
-    @Test
-    public void isMultipleJoinWithLongLessThanWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justLong < 2";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andLessThan("products.nickNames.justLong", 2L);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+	@Test
+	public void isMultipleJoinWithFloatGreaterThanWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justFloat > 1F";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andGreaterThan("products.nickNames.justFloat", 1F);
 
-    @Test
-    public void isMultipleJoinWithLongLessOrEqualToWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justLong <= 2";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andLessOrEqualTo("products.nickNames.justLong", 2L);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+	@Test
+	public void isMultipleJoinWithFloatGreaterOrEqualToWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justFloat >= 1F";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andGreaterOrEqualTo("products.nickNames.justFloat", 1F);
 
-    @Test
-    public void isMultipleJoinWithFloatGreaterThanWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justFloat > 1F";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andGreaterThan("products.nickNames.justFloat", 1F);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+	@Test
+	public void isMultipleJoinWithFloatLessThanWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justFloat < 2F";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andLessThan("products.nickNames.justFloat", 2F);
 
-    @Test
-    public void isMultipleJoinWithFloatGreaterOrEqualToWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justFloat >= 1F";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andGreaterOrEqualTo("products.nickNames.justFloat", 1F);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+	@Test
+	public void isMultipleJoinWithFloatLessOrEqualToWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justFloat <= 2F";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andLessOrEqualTo("products.nickNames.justFloat", 2F);
 
-    @Test
-    public void isMultipleJoinWithFloatLessThanWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justFloat < 2F";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andLessThan("products.nickNames.justFloat", 2F);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+	@Test
+	public void isMultipleJoinWithBigDecimalGreaterThanWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justBigDecimal > 1";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andGreaterThan("products.nickNames.justBigDecimal", new BigDecimal(1));
 
-    @Test
-    public void isMultipleJoinWithFloatLessOrEqualToWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justFloat <= 2F";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andLessOrEqualTo("products.nickNames.justFloat", 2F);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+	@Test
+	public void isMultipleJoinWithBigDecimalGreaterOrEqualToWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justBigDecimal >= 1";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andGreaterOrEqualTo("products.nickNames.justBigDecimal", new BigDecimal(1));
 
-    @Test
-    public void isMultipleJoinWithBigDecimalGreaterThanWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justBigDecimal > 1";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andGreaterThan("products.nickNames.justBigDecimal", new BigDecimal(1));
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+	@Test
+	public void isMultipleJoinWithBigDecimalLessThanWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justBigDecimal < 2";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andLessThan("products.nickNames.justBigDecimal", new BigDecimal(2));
 
-    @Test
-    public void isMultipleJoinWithBigDecimalGreaterOrEqualToWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justBigDecimal >= 1";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andGreaterOrEqualTo("products.nickNames.justBigDecimal", new BigDecimal(1));
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+	@Test
+	public void isMultipleJoinWithBigDecimalLessOrEqualToWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justBigDecimal <= 2";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andLessOrEqualTo("products.nickNames.justBigDecimal", new BigDecimal(2));
 
-    @Test
-    public void isMultipleJoinWithBigDecimalLessThanWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justBigDecimal < 2";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andLessThan("products.nickNames.justBigDecimal", new BigDecimal(2));
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+	@Test
+	public void isMultipleJoinWithDateGreaterThanWorking() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date justDate = formatter.parse("2/2/2002");
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("justDate", justDate);
 
-    @Test
-    public void isMultipleJoinWithBigDecimalLessOrEqualToWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justBigDecimal <= 2";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justDate > :justDate";
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andLessOrEqualTo("products.nickNames.justBigDecimal", new BigDecimal(2));
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class, parameters);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andGreaterThan("products.nickNames.justDate", justDate);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-    @Test
-    public void isMultipleJoinWithDateGreaterThanWorking() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date justDate = formatter.parse("2/2/2002");
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("justDate", justDate);
+	@Test
+	public void isMultipleJoinWithDateGreaterOrEqualToWorking() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date justDate = formatter.parse("2/2/2002");
 
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justDate > :justDate";
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("justDate", justDate);
 
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class, parameters);
-        assertTrue(personsFromJPQL.size() > 0);
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justDate >= :justDate";
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andGreaterThan("products.nickNames.justDate", justDate);
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class, parameters);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andGreaterOrEqualTo("products.nickNames.justDate", justDate);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-    @Test
-    public void isMultipleJoinWithDateGreaterOrEqualToWorking() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date justDate = formatter.parse("2/2/2002");
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("justDate", justDate);
+	@Test
+	public void isMultipleJoinWithDateLessThanWorking() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date justDate = formatter.parse("2/2/2002");
 
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justDate >= :justDate";
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("justDate", justDate);
 
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class, parameters);
-        assertTrue(personsFromJPQL.size() > 0);
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justDate < :justDate";
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andGreaterOrEqualTo("products.nickNames.justDate", justDate);
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class, parameters);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andLessThan("products.nickNames.justDate", justDate);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-    @Test
-    public void isMultipleJoinWithDateLessThanWorking() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date justDate = formatter.parse("2/2/2002");
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("justDate", justDate);
+	@Test
+	public void isMultipleJoinWithDateLessOrEqualToWorking() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date justDate = formatter.parse("2/2/2002");
 
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justDate < :justDate";
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("justDate", justDate);
 
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class, parameters);
-        assertTrue(personsFromJPQL.size() > 0);
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justDate <= :justDate";
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andLessThan("products.nickNames.justDate", justDate);
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class, parameters);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andLessOrEqualTo("products.nickNames.justDate", justDate);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-    @Test
-    public void isMultipleJoinWithDateLessOrEqualToWorking() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date justDate = formatter.parse("2/2/2002");
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("justDate", justDate);
+	@Test
+	public void isMultipleJoinWithCalendarGreaterThanWorking() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = formatter.parse("2/2/2002");
+		Calendar justCalendar = Calendar.getInstance();
+		justCalendar.setTime(date);
 
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justDate <= :justDate";
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("justCalendar", justCalendar);
 
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class, parameters);
-        assertTrue(personsFromJPQL.size() > 0);
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justCalendar > :justCalendar";
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andLessOrEqualTo("products.nickNames.justDate", justDate);
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class, parameters);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andGreaterThan("products.nickNames.justCalendar", justCalendar);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-    @Test
-    public void isMultipleJoinWithCalendarGreaterThanWorking() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = formatter.parse("2/2/2002");
-        Calendar justCalendar = Calendar.getInstance();
-        justCalendar.setTime(date);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("justCalendar", justCalendar);
+	@Test
+	public void isMultipleJoinWithCalendarGreaterOrEqualToWorking() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = formatter.parse("2/2/2002");
+		Calendar justCalendar = Calendar.getInstance();
+		justCalendar.setTime(date);
 
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justCalendar > :justCalendar";
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("justCalendar", justCalendar);
 
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class, parameters);
-        assertTrue(personsFromJPQL.size() > 0);
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justCalendar >= :justCalendar";
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andGreaterThan("products.nickNames.justCalendar", justCalendar);
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class, parameters);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andGreaterOrEqualTo("products.nickNames.justCalendar", justCalendar);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-    @Test
-    public void isMultipleJoinWithCalendarGreaterOrEqualToWorking() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = formatter.parse("2/2/2002");
-        Calendar justCalendar = Calendar.getInstance();
-        justCalendar.setTime(date);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("justCalendar", justCalendar);
+	@Test
+	public void isMultipleJoinWithCalendarLessThanWorking() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = formatter.parse("2/2/2002");
+		Calendar justCalendar = Calendar.getInstance();
+		justCalendar.setTime(date);
 
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justCalendar >= :justCalendar";
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("justCalendar", justCalendar);
 
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class, parameters);
-        assertTrue(personsFromJPQL.size() > 0);
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justCalendar < :justCalendar";
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andGreaterOrEqualTo("products.nickNames.justCalendar", justCalendar);
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class, parameters);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andLessThan("products.nickNames.justCalendar", justCalendar);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-    @Test
-    public void isMultipleJoinWithCalendarLessThanWorking() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = formatter.parse("2/2/2002");
-        Calendar justCalendar = Calendar.getInstance();
-        justCalendar.setTime(date);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("justCalendar", justCalendar);
+	@Test
+	public void isMultipleJoinWithCalendarLessOrEqualToWorking() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = formatter.parse("2/2/2002");
+		Calendar justCalendar = Calendar.getInstance();
+		justCalendar.setTime(date);
 
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justCalendar < :justCalendar";
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("justCalendar", justCalendar);
 
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class, parameters);
-        assertTrue(personsFromJPQL.size() > 0);
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justCalendar <= :justCalendar";
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andLessThan("products.nickNames.justCalendar", justCalendar);
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class, parameters);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andLessOrEqualTo("products.nickNames.justCalendar", justCalendar);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-    @Test
-    public void isMultipleJoinWithCalendarLessOrEqualToWorking() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = formatter.parse("2/2/2002");
-        Calendar justCalendar = Calendar.getInstance();
-        justCalendar.setTime(date);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("justCalendar", justCalendar);
+	@Test
+	public void isMultipleJoinWithStringGreaterThanWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.name > '" + CodeGenerator.NICKNAME_B_NAME + "'";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justCalendar <= :justCalendar";
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andGreaterThan("products.nickNames.name", CodeGenerator.NICKNAME_B_NAME);
 
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class, parameters);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andLessOrEqualTo("products.nickNames.justCalendar", justCalendar);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+	@Test
+	public void isMultipleJoinWithStringGreaterOrEqualToWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.name >= '" + CodeGenerator.NICKNAME_B_NAME + "'";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
-    
-    @Test
-    public void isMultipleJoinWithStringGreaterThanWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.name > '" + CodeGenerator.NICKNAME_B_NAME + "'";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andGreaterOrEqualTo("products.nickNames.name", CodeGenerator.NICKNAME_B_NAME);
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andGreaterThan("products.nickNames.name", CodeGenerator.NICKNAME_B_NAME);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+	@Test
+	public void isMultipleJoinWithStringLessThanWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.name < '" + CodeGenerator.NICKNAME_B_NAME + "'";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-    @Test
-    public void isMultipleJoinWithStringGreaterOrEqualToWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.name >= '" + CodeGenerator.NICKNAME_B_NAME + "'";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andLessThan("products.nickNames.name", CodeGenerator.NICKNAME_B_NAME);
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andGreaterOrEqualTo("products.nickNames.name", CodeGenerator.NICKNAME_B_NAME);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+	@Test
+	public void isMultipleJoinWithStringLessOrEqualToWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.name <= '" + CodeGenerator.NICKNAME_B_NAME + "'";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-    @Test
-    public void isMultipleJoinWithStringLessThanWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.name < '" + CodeGenerator.NICKNAME_B_NAME + "'";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andLessOrEqualTo("products.nickNames.name", CodeGenerator.NICKNAME_B_NAME);
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andLessThan("products.nickNames.name", CodeGenerator.NICKNAME_B_NAME);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+	@Test
+	public void isMultipleJoinWithEqualsBooleanWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justBoolean = true";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-    @Test
-    public void isMultipleJoinWithStringLessOrEqualToWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.name <= '" + CodeGenerator.NICKNAME_B_NAME + "'";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andEquals("products.nickNames.justBoolean", true);
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andLessOrEqualTo("products.nickNames.name", CodeGenerator.NICKNAME_B_NAME);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+	@Test
+	public void isMultipleJoinWithIntegerBetweenWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.id between 1 and 2";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-    @Test
-    public void isMultipleJoinWithEqualsBooleanWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justBoolean = true";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andBetween("products.nickNames.id", 1, 2);
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andEquals("products.nickNames.justBoolean", true);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+	@Test
+	public void isMultipleJoinWithLongBetweenWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justLong between 1 and 2";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-    @Test
-    public void isMultipleJoinWithIntegerBetweenWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.id between 1 and 2";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andBetween("products.nickNames.justLong", 1, 2);
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andBetween("products.nickNames.id", 1, 2);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+	@Test
+	public void isMultipleJoinWithDoubleBetweenWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justDouble between 1d and 2d";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-    @Test
-    public void isMultipleJoinWithLongBetweenWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justLong between 1 and 2";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andBetween("products.nickNames.justDouble", 1d, 2d);
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andBetween("products.nickNames.justLong", 1, 2);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+	@Test
+	public void isMultipleJoinWithFloatBetweenWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justFloat between 1f and 2f";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-    @Test
-    public void isMultipleJoinWithDoubleBetweenWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justDouble between 1d and 2d";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andBetween("products.nickNames.justFloat", 1f, 2f);
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andBetween("products.nickNames.justDouble", 1d, 2d);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+	@Test
+	public void isMultipleJoinWithBigDecimalBetweenWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justBigDecimal between 1f and 2f";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-    @Test
-    public void isMultipleJoinWithFloatBetweenWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justFloat between 1f and 2f";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andBetween("products.nickNames.justBigDecimal", new BigDecimal(1), new BigDecimal(2));
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andBetween("products.nickNames.justFloat", 1f, 2f);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+	@Test
+	public void isMultipleJoinWithStringBetweenWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.name between 'NickName A' and 'NickName B'";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-    @Test
-    public void isMultipleJoinWithBigDecimalBetweenWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justBigDecimal between 1f and 2f";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria
+				.andBetween("products.nickNames.name", CodeGenerator.NICKNAME_A_NAME, CodeGenerator.NICKNAME_B_NAME);
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andBetween("products.nickNames.justBigDecimal", new BigDecimal(1), new BigDecimal(2));
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+	@Test
+	public void isMultipleJoinWithCalendarBetweenWorking() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = formatter.parse("1/1/2001");
+		Calendar justCalendar = Calendar.getInstance();
+		justCalendar.setTime(date);
 
-    @Test
-    public void isMultipleJoinWithStringBetweenWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.name between 'NickName A' and 'NickName B'";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		Date date2 = formatter.parse("2/2/2002");
+		Calendar justCalendar2 = Calendar.getInstance();
+		justCalendar2.setTime(date2);
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andBetween("products.nickNames.name", CodeGenerator.NICKNAME_A_NAME, CodeGenerator.NICKNAME_B_NAME);
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("justCalendarA", justCalendar);
+		parameters.put("justCalendarB", justCalendar2);
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justCalendar between :justCalendarA and :justCalendarB";
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class, parameters);
+		assertTrue(personsFromJPQL.size() > 0);
 
-    @Test
-    public void isMultipleJoinWithCalendarBetweenWorking() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = formatter.parse("1/1/2001");
-        Calendar justCalendar = Calendar.getInstance();
-        justCalendar.setTime(date);
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andBetween("products.nickNames.justCalendar", justCalendar, justCalendar2);
 
-        Date date2 = formatter.parse("2/2/2002");
-        Calendar justCalendar2 = Calendar.getInstance();
-        justCalendar2.setTime(date2);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("justCalendarA", justCalendar);
-        parameters.put("justCalendarB", justCalendar2);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justCalendar between :justCalendarA and :justCalendarB";
+	@Test
+	public void isMultipleJoinWithDateBetweenToWorking() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date justDate = formatter.parse("1/1/2001");
+		Date justDate2 = formatter.parse("2/2/2002");
 
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class, parameters);
-        assertTrue(personsFromJPQL.size() > 0);
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("justDateA", justDate);
+		parameters.put("justDateB", justDate2);
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andBetween("products.nickNames.justCalendar", justCalendar, justCalendar2);
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justDate between :justDateA and :justDateB";
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class, parameters);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andBetween("products.nickNames.justDate", justDate, justDate2);
 
-    @Test
-    public void isMultipleJoinWithDateBetweenToWorking() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date justDate = formatter.parse("1/1/2001");
-        Date justDate2 = formatter.parse("2/2/2002");
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("justDateA", justDate);
-        parameters.put("justDateB", justDate2);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justDate between :justDateA and :justDateB";
+	@Test
+	public void isMultipleJoinWithIsNullAttributeWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justString is null";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class, parameters);
-        assertTrue(personsFromJPQL.size() > 0);
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andIsNull("products.nickNames.justString");
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andBetween("products.nickNames.justDate", justDate, justDate2);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+	@Test
+	public void isMultipleJoinWithIsNotNullAttributeWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justString is not null";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-    @Test
-    public void isMultipleJoinWithIsNullAttributeWorking() {
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justString is null";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andIsNotNull("products.nickNames.justString");
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andIsNull("products.nickNames.justString");
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+	@Test
+	public void isMultipleJoinWithListIsEmptyAttributeWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justList is empty";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-    @Test
-    public void isMultipleJoinWithIsNotNullAttributeWorking() {
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justString is not null";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andCollectionIsEmpty("products.nickNames.justList");
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andIsNotNull("products.nickNames.justString");
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+	@Test
+	public void isMultipleJoinWithListIsNotEmptyAttributeWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justList is not empty";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-    @Test
-    public void isMultipleJoinWithListIsEmptyAttributeWorking() {
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justList is empty";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andCollectionIsNotEmpty("products.nickNames.justList");
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andCollectionIsEmpty("products.nickNames.justList");
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+	@Test
+	public void isMultipleJoinWithSetIsEmptyAttributeWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justSet is empty";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-    @Test
-    public void isMultipleJoinWithListIsNotEmptyAttributeWorking() {
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justList is not empty";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andCollectionIsEmpty("products.nickNames.justSet");
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andCollectionIsNotEmpty("products.nickNames.justList");
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
-    
-    @Test
-    public void isMultipleJoinWithSetIsEmptyAttributeWorking() {
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justSet is empty";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+	@Test
+	public void isMultipleJoinWithSetIsNotEmptyAttributeWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justSet is not empty";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andCollectionIsEmpty("products.nickNames.justSet");
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andCollectionIsNotEmpty("products.nickNames.justSet");
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-    @Test
-    public void isMultipleJoinWithSetIsNotEmptyAttributeWorking() {
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justSet is not empty";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+	@Test
+	public void isMultipleJoinWithCollectionIsEmptyAttributeWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justCollection is empty";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andCollectionIsNotEmpty("products.nickNames.justSet");
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andCollectionIsEmpty("products.nickNames.justCollection");
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
-    
-    @Test
-    public void isMultipleJoinWithCollectionIsEmptyAttributeWorking() {
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justCollection is empty";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andCollectionIsEmpty("products.nickNames.justCollection");
+	@Test
+	public void isMultipleJoinWithCollectionIsNotEmptyAttributeWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justCollection is not empty";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andCollectionIsNotEmpty("products.nickNames.justCollection");
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-    @Test
-    public void isMultipleJoinWithCollectionIsNotEmptyAttributeWorking() {
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justCollection is not empty";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andCollectionIsNotEmpty("products.nickNames.justCollection");
+	@Test
+	public void isMultipleJoinWithStringLikeAttributeWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.name like '% B'";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andStringLike("products.nickNames.name", "% B");
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-    @Test
-    public void isMultipleJoinWithStringLikeAttributeWorking() {
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.name like '% B'";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andStringLike("products.nickNames.name", "% B");
+	@Test
+	public void isMultipleJoinWithStringNotLikeAttributeWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.name not like '% B'";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andStringNotLike("products.nickNames.name", "% B");
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-    @Test
-    public void isMultipleJoinWithStringNotLikeAttributeWorking() {
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.name not like '% B'";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andStringNotLike("products.nickNames.name", "% B");
+	@Test
+	public void isMultipleJoinWithStringLikeLowerCaseAttributeWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where lower(n.name) like '% b'";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andStringLike(true, "products.nickNames.name", "% B".toLowerCase());
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-    @Test
-    public void isMultipleJoinWithStringLikeLowerCaseAttributeWorking() {
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where lower(n.name) like '% b'";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andStringLike(true, "products.nickNames.name", "% B".toLowerCase());
+	@Test
+	public void isMultipleJoinWithStringNotLikeLowerCaseAttributeWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where lower(n.name) not like '% b'";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andStringNotLike(true, "products.nickNames.name", "% B".toLowerCase());
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-    @Test
-    public void isMultipleJoinWithStringNotLikeLowerCaseAttributeWorking() {
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where lower(n.name) not like '% b'";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andStringNotLike(true, "products.nickNames.name", "% B".toLowerCase());
+	@Test
+	public void isMultipleJoinWithStringInAttributeWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.name in ('NickName A', 'NickName B')";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		List<String> names = new ArrayList<String>();
+		names.add("NickName A");
+		names.add("NickName B");
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andStringIn("products.nickNames.name", names);
 
-    @Test
-    public void isMultipleJoinWithStringInAttributeWorking() {
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.name in ('NickName A', 'NickName B')";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        List<String> names = new ArrayList<String>();
-        names.add("NickName A");
-        names.add("NickName B");
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andStringIn("products.nickNames.name", names);
+	@Test
+	public void isMultipleJoinWithStringNotInAttributeWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.name not in ('NickName A', 'NickName B')";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		List<String> names = new ArrayList<String>();
+		names.add("NickName A");
+		names.add("NickName B");
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andStringNotIn("products.nickNames.name", names);
 
-    @Test
-    public void isMultipleJoinWithStringNotInAttributeWorking() {
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.name not in ('NickName A', 'NickName B')";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        List<String> names = new ArrayList<String>();
-        names.add("NickName A");
-        names.add("NickName B");
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andStringNotIn("products.nickNames.name", names);
+	@Test
+	public void isMultipleJoinWithStringInLowerCaseAttributeWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where lower(n.name) in ('nickname a', 'nickname b')";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		List<String> names = new ArrayList<String>();
+		names.add("NickName A".toLowerCase());
+		names.add("NickName B".toLowerCase());
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andStringIn(true, "products.nickNames.name", names);
 
-    @Test
-    public void isMultipleJoinWithStringInLowerCaseAttributeWorking() {
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where lower(n.name) in ('nickname a', 'nickname b')";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        List<String> names = new ArrayList<String>();
-        names.add("NickName A".toLowerCase());
-        names.add("NickName B".toLowerCase());
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andStringIn(true, "products.nickNames.name", names);
+	@Test
+	public void isMultipleJoinWithStringNotInLowerCaseAttributeWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where lower(n.name) not in ('nickname a', 'nickname b')";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		List<String> names = new ArrayList<String>();
+		names.add("NickName A");
+		names.add("NickName B");
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andStringNotIn(true, "products.nickNames.name", names);
 
-    @Test
-    public void isMultipleJoinWithStringNotInLowerCaseAttributeWorking() {
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where lower(n.name) not in ('nickname a', 'nickname b')";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        List<String> names = new ArrayList<String>();
-        names.add("NickName A");
-        names.add("NickName B");
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andStringNotIn(true, "products.nickNames.name", names);
+	@Test
+	public void isMultipleJoinWithCollectionTestIsEmptyAttributeWorking() {
+		String query = "select distinct p from Product p " + "join p.nickNames n " + "join n.justCollection j "
+				+ "where j.autoRelationship is empty";
+		List<Product> personsFromJPQL = getListFromJPQL(query, Product.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		EasyQuery<Product> easyCriteria = new EasyQueryImpl<Product>(Product.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("nickNames.justCollection");
+		easyCriteria.andCollectionIsEmpty("nickNames.justCollection.autoRelationship");
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		List<Product> result = easyCriteria.getResultList();
 
-    @Test
-    public void isMultipleJoinWithCollectionTestIsEmptyAttributeWorking() {
-        String query = "select distinct p from Product p " +
-                "join p.nickNames n " +
-                "join n.justCollection j " +
-                "where j.autoRelationship is empty";
-        List<Product> personsFromJPQL = getListFromJPQL(query, Product.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        EasyQuery<Product> easyCriteria = new EasyQueryImpl<Product>(Product.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("nickNames.justCollection");
-        easyCriteria.andCollectionIsEmpty("nickNames.justCollection.autoRelationship");
+	@Test
+	public void isMultipleJoinWithOrIntegerWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.id = 1 or n.id = 2";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Product> result = easyCriteria.getResultList();
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.orEquals("products.nickNames.id", 1, 2);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-    @Test
-    public void isMultipleJoinWithOrIntegerWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.id = 1 or n.id = 2";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.orEquals("products.nickNames.id", 1, 2);
+	@Test
+	public void isMultipleJoinWithOrLongWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justLong = 1 or n.justLong = 2";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.orEquals("products.nickNames.justLong", 1L, 2L);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-    @Test
-    public void isMultipleJoinWithOrLongWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justLong = 1 or n.justLong = 2";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.orEquals("products.nickNames.justLong", 1L, 2L);
+	@Test
+	public void isMultipleJoinWithOrDoubleWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justDouble = 1d or n.justDouble = 2d";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.orEquals("products.nickNames.justDouble", 1d, 2d);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-    @Test
-    public void isMultipleJoinWithOrDoubleWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justDouble = 1d or n.justDouble = 2d";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.orEquals("products.nickNames.justDouble", 1d, 2d);
+	@Test
+	public void isMultipleJoinWithOrFloatWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justFloat = 1f or n.justFloat = 2f";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.orEquals("products.nickNames.justFloat", 1f, 2f);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-    @Test
-    public void isMultipleJoinWithOrFloatWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justFloat = 1f or n.justFloat = 2f";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.orEquals("products.nickNames.justFloat", 1f, 2f);
+	@Test
+	public void isMultipleJoinWithOrBigDecimalWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justBigDecimal = 1 or n.justBigDecimal = 2";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.orEquals("products.nickNames.justBigDecimal", new BigDecimal(1), new BigDecimal(2));
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-    @Test
-    public void isMultipleJoinWithOrBigDecimalWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justBigDecimal = 1 or n.justBigDecimal = 2";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.orEquals("products.nickNames.justBigDecimal", new BigDecimal(1), new BigDecimal(2));
+	@Test
+	public void isMultipleJoinWithOrStringWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.name = 'NickName A' or n.name = 'NickName B'";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.orEquals("products.nickNames.name", "NickName A", "NickName B");
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-    @Test
-    public void isMultipleJoinWithOrStringWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.name = 'NickName A' or n.name = 'NickName B'";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.orEquals("products.nickNames.name", "NickName A", "NickName B");
+	@Test
+	public void isMultipleJoinWithOrStringLowerCaseWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where lower(n.name) = 'nickname a' or lower(n.name) = 'nickname b'";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.orEquals(true, "products.nickNames.name", "NickName A".toLowerCase(), "NickName B".toLowerCase());
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-    @Test
-    public void isMultipleJoinWithOrStringLowerCaseWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where lower(n.name) = 'nickname a' or lower(n.name) = 'nickname b'";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.orEquals(true, "products.nickNames.name", "NickName A".toLowerCase(), "NickName B".toLowerCase());
+	@Test
+	public void isMultipleJoinWithOrDateWorking() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date justDate = formatter.parse("1/1/2001");
+		Date justDate2 = formatter.parse("2/2/2002");
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("justDateA", justDate);
+		parameters.put("justDateB", justDate2);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justDate = :justDateA or n.justDate = :justDateB";
 
-    @Test
-    public void isMultipleJoinWithOrDateWorking() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date justDate = formatter.parse("1/1/2001");
-        Date justDate2 = formatter.parse("2/2/2002");
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class, parameters);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("justDateA", justDate);
-        parameters.put("justDateB", justDate2);
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.orEquals("products.nickNames.justDate", justDate, justDate2);
 
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justDate = :justDateA or n.justDate = :justDateB";
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class, parameters);
-        assertTrue(personsFromJPQL.size() > 0);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.orEquals("products.nickNames.justDate", justDate, justDate2);
+	@Test
+	public void isMultipleJoinWithOrCalendarWorking() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = formatter.parse("1/1/2001");
+		Calendar justCalendar = Calendar.getInstance();
+		justCalendar.setTime(date);
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		Date date2 = formatter.parse("2/2/2002");
+		Calendar justCalendar2 = Calendar.getInstance();
+		justCalendar2.setTime(date2);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("justCalendarA", justCalendar);
+		parameters.put("justCalendarB", justCalendar2);
 
-    @Test
-    public void isMultipleJoinWithOrCalendarWorking() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = formatter.parse("1/1/2001");
-        Calendar justCalendar = Calendar.getInstance();
-        justCalendar.setTime(date);
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justCalendar = :justCalendarA or n.justCalendar = :justCalendarB";
 
-        Date date2 = formatter.parse("2/2/2002");
-        Calendar justCalendar2 = Calendar.getInstance();
-        justCalendar2.setTime(date2);
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class, parameters);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("justCalendarA", justCalendar);
-        parameters.put("justCalendarB", justCalendar2);
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.orEquals("products.nickNames.justCalendar", justCalendar, justCalendar2);
 
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justCalendar = :justCalendarA or n.justCalendar = :justCalendarB";
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class, parameters);
-        assertTrue(personsFromJPQL.size() > 0);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.orEquals("products.nickNames.justCalendar", justCalendar, justCalendar2);
+	@Test
+	public void isMultipleJoinWithOrWithAndWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where (n.id = 1 and n.name = 'NickName A') or (n.id = 2 and n.name = 'NickName B')";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.addAndSeparatedByOr(1, "products.nickNames.id", 1)
+				.addAndSeparatedByOr(1, "products.nickNames.name", "NickName A")
+				.addAndSeparatedByOr(2, "products.nickNames.id", 2)
+				.addAndSeparatedByOr(2, "products.nickNames.name", "NickName B");
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-    @Test
-    public void isMultipleJoinWithOrWithAndWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where (n.id = 1 and n.name = 'NickName A') or (n.id = 2 and n.name = 'NickName B')";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.addAndSeparatedByOr(1, "products.nickNames.id", 1)
-                    .addAndSeparatedByOr(1, "products.nickNames.name", "NickName A")
-                    .addAndSeparatedByOr(2, "products.nickNames.id", 2)
-                    .addAndSeparatedByOr(2, "products.nickNames.name", "NickName B");
+	@Test
+	public void isMultipleJoinWithOrWithAndLowerCaseWorking() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where (n.id = 1 and lower(n.name) = 'nickname a') or (n.id = 2 and lower(n.name) = 'nickname b')";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.addAndSeparatedByOr(1, "products.nickNames.id", 1)
+				.addAndSeparatedByOr(true, 1, "products.nickNames.name", "NickName A".toLowerCase())
+				.addAndSeparatedByOr(2, "products.nickNames.id", 2)
+				.addAndSeparatedByOr(true, 2, "products.nickNames.name", "NickName B".toLowerCase());
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-    @Test
-    public void isMultipleJoinWithOrWithAndLowerCaseWorking(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where (n.id = 1 and lower(n.name) = 'nickname a') or (n.id = 2 and lower(n.name) = 'nickname b')";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.addAndSeparatedByOr(1, "products.nickNames.id", 1)
-                    .addAndSeparatedByOr(true, 1, "products.nickNames.name", "NickName A".toLowerCase())
-                    .addAndSeparatedByOr(2, "products.nickNames.id", 2)
-                    .addAndSeparatedByOr(true, 2, "products.nickNames.name", "NickName B".toLowerCase());
+	@Test
+	public void isCountWithoutParametersWorking() {
+		String query = "select count(m) from Manufacturer m ";
+		List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		assertEquals(personsFromJPQL.get(0), easyCriteria.count());
+	}
 
-    @Test
-    public void isCountWithoutParametersWorking(){
-        String query = "select count(m) from Manufacturer m ";
-        List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
-        assertTrue(personsFromJPQL.size() > 0);
+	@Test
+	public void isExecutingQueryAndCountWithoutParametersWorking() {
+		String query = "select count(m) from Manufacturer m ";
+		List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
 
-        assertEquals(personsFromJPQL.get(0), easyCriteria.count());
-    }
+		assertSame(personsFromJPQL.get(0), easyCriteria.count());
+		List<Manufacturer> resultList = easyCriteria.getResultList();
 
-    @Test
-    public void isExecutingQueryAndCountWithoutParametersWorking(){
-        String query = "select count(m) from Manufacturer m ";
-        List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		assertEquals(resultList.size(), easyCriteria.count().intValue());
+	}
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+	@Test
+	public void isCountingAndGettingResultWithParameters1() {
+		List<Person> personsFromJPQL = getListFromJPQL(
+				"select distinct p from Person p join p.car ca join ca.color co where co.name = 'Red'", Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertSame(personsFromJPQL.get(0), easyCriteria.count());
-        List<Manufacturer> resultList = easyCriteria.getResultList();
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("car.color");
+		easyCriteria.andEquals("car.color.name", "Red");
 
-        assertEquals(resultList.size(), easyCriteria.count().intValue());
-    }
+		assertEquals(personsFromJPQL.size(), easyCriteria.count().intValue());
 
-    @Test
-    public void isCountingAndGettingResultWithParameters1(){
-        List<Person> personsFromJPQL = getListFromJPQL("select distinct p from Person p join p.car ca join ca.color co where co.name = 'Red'", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Person> result = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("car.color");
-        easyCriteria.andEquals("car.color.name", "Red");
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        assertEquals(personsFromJPQL.size(), easyCriteria.count().intValue());
+	@Test
+	public void isCountingAndGettingResultWithParameters2() {
+		String query = "select p from Person p " + "left join p.car ca " + "left join ca.color co "
+				+ "left join co.manufacturer manu " + "where manu.name = 'Company A'";
+		List<Person> personsFromJPQL = getListFromJPQL(query, Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        List<Person> result = easyCriteria.getResultList();
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.leftJoin("car.color.manufacturer");
+		easyCriteria.andEquals("car.color.manufacturer.name", "Company A");
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		assertEquals(personsFromJPQL.size(), easyCriteria.count().intValue());
 
-    @Test
-    public void isCountingAndGettingResultWithParameters2(){
-        String query = "select p from Person p " +
-                "left join p.car ca " +
-                "left join ca.color co " +
-                "left join co.manufacturer manu " +
-                "where manu.name = 'Company A'";
-        List<Person> personsFromJPQL = getListFromJPQL(query, Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Person> result = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.leftJoin("car.color.manufacturer");
-        easyCriteria.andEquals("car.color.manufacturer.name", "Company A");
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(result));
+	}
 
-        assertEquals(personsFromJPQL.size(), easyCriteria.count().intValue());
+	@Test
+	public void isCountingAndGettingResultWithParameters3() {
+		String query = "select count(m) from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.id > 1";
+		List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
+		assertTrue(personsFromJPQL.get(0) > 0);
 
-        List<Person> result = easyCriteria.getResultList();
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andGreaterThan("products.nickNames.id", 1);
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(result));
-    }
+		assertEquals(personsFromJPQL.get(0), easyCriteria.count());
+	}
 
-    @Test
-    public void isCountingAndGettingResultWithParameters3(){
-        String query = "select count(m) from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.id > 1";
-        List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
-        assertTrue(personsFromJPQL.get(0) > 0);
+	@Test
+	public void isCountingAndGettingResultWithParameters4() {
+		String query = "select distinct count(m) from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justDouble >= 1d";
+		List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
+		assertTrue(personsFromJPQL.get(0) > 0);
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andGreaterThan("products.nickNames.id", 1);
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andGreaterOrEqualTo("products.nickNames.justDouble", 1d);
 
-        assertEquals(personsFromJPQL.get(0), easyCriteria.count());
-    }
+		assertEquals(personsFromJPQL.get(0), easyCriteria.count());
+	}
 
-    @Test
-    public void isCountingAndGettingResultWithParameters4(){
-        String query = "select distinct count(m) from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justDouble >= 1d";
-        List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
-        assertTrue(personsFromJPQL.get(0) > 0);
+	@Test
+	public void isCountingAndGettingResultWithParameters5() {
+		String query = "select distinct count(m) from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justLong < 2";
+		List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
+		assertTrue(personsFromJPQL.get(0) > 0);
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andGreaterOrEqualTo("products.nickNames.justDouble", 1d);
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andLessThan("products.nickNames.justLong", 2L);
 
-        assertEquals(personsFromJPQL.get(0), easyCriteria.count());
-    }
+		assertEquals(personsFromJPQL.get(0), easyCriteria.count());
+	}
 
-    @Test
-    public void isCountingAndGettingResultWithParameters5(){
-        String query = "select distinct count(m) from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justLong < 2";
-        List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
-        assertTrue(personsFromJPQL.get(0) > 0);
+	@Test
+	public void isCountingAndGettingResultWithParameters6() {
+		String query = "select distinct count(m) from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justFloat <= 2F";
+		List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
+		assertTrue(personsFromJPQL.get(0) > 0);
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andLessThan("products.nickNames.justLong", 2L);
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andLessOrEqualTo("products.nickNames.justFloat", 2F);
 
-        assertEquals(personsFromJPQL.get(0), easyCriteria.count());
-    }
+		assertEquals(personsFromJPQL.get(0), easyCriteria.count());
+	}
 
-    @Test
-    public void isCountingAndGettingResultWithParameters6(){
-        String query = "select distinct count(m) from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justFloat <= 2F";
-        List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
-        assertTrue(personsFromJPQL.get(0) > 0);
+	@Test
+	public void isCountingAndGettingResultWithParameters7() {
+		String query = "select distinct count(m) from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justBigDecimal > 1";
+		List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
+		assertTrue(personsFromJPQL.get(0) > 0);
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andLessOrEqualTo("products.nickNames.justFloat", 2F);
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andGreaterThan("products.nickNames.justBigDecimal", new BigDecimal(1));
 
-        assertEquals(personsFromJPQL.get(0), easyCriteria.count());
-    }
+		assertEquals(personsFromJPQL.get(0), easyCriteria.count());
+	}
 
-    @Test
-    public void isCountingAndGettingResultWithParameters7(){
-        String query = "select distinct count(m) from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justBigDecimal > 1";
-        List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
-        assertTrue(personsFromJPQL.get(0) > 0);
+	@Test
+	public void isCountingAndGettingResultWithParameters8() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date justDate = formatter.parse("2/2/2002");
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andGreaterThan("products.nickNames.justBigDecimal", new BigDecimal(1));
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("justDate", justDate);
 
-        assertEquals(personsFromJPQL.get(0), easyCriteria.count());
-    }
+		String query = "select distinct count(m) from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justDate >= :justDate";
 
-    @Test
-    public void isCountingAndGettingResultWithParameters8() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date justDate = formatter.parse("2/2/2002");
+		List<Long> personsFromJPQL = getListFromJPQL(query, Long.class, parameters);
+		assertTrue(personsFromJPQL.get(0) > 0);
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("justDate", justDate);
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andGreaterOrEqualTo("products.nickNames.justDate", justDate);
 
-        String query = "select distinct count(m) from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justDate >= :justDate";
+		assertEquals(personsFromJPQL.get(0), easyCriteria.count());
+	}
 
-        List<Long> personsFromJPQL = getListFromJPQL(query, Long.class, parameters);
-        assertTrue(personsFromJPQL.get(0) > 0);
+	@Test
+	public void isCountingAndGettingResultWithParameters9() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = formatter.parse("2/2/2002");
+		Calendar justCalendar = Calendar.getInstance();
+		justCalendar.setTime(date);
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andGreaterOrEqualTo("products.nickNames.justDate", justDate);
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("justCalendar", justCalendar);
 
-        assertEquals(personsFromJPQL.get(0), easyCriteria.count());
-    }
+		String query = "select distinct count(m) from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justCalendar < :justCalendar";
 
-    @Test
-    public void isCountingAndGettingResultWithParameters9() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = formatter.parse("2/2/2002");
-        Calendar justCalendar = Calendar.getInstance();
-        justCalendar.setTime(date);
+		List<Long> personsFromJPQL = getListFromJPQL(query, Long.class, parameters);
+		assertTrue(personsFromJPQL.get(0) > 0);
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("justCalendar", justCalendar);
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andLessThan("products.nickNames.justCalendar", justCalendar);
 
-        String query = "select distinct count(m) from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justCalendar < :justCalendar";
+		assertEquals(personsFromJPQL.get(0), easyCriteria.count());
+	}
 
-        List<Long> personsFromJPQL = getListFromJPQL(query, Long.class, parameters);
-        assertTrue(personsFromJPQL.get(0) > 0);
+	@Test
+	public void isCountingAndGettingResultWithParameters10() {
+		String query = "select distinct count(m) from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.name <= '" + CodeGenerator.NICKNAME_B_NAME + "'";
+		List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andLessThan("products.nickNames.justCalendar", justCalendar);
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andLessOrEqualTo("products.nickNames.name", CodeGenerator.NICKNAME_B_NAME);
 
-        assertEquals(personsFromJPQL.get(0), easyCriteria.count());
-    }
+		assertEquals(personsFromJPQL.get(0), easyCriteria.count());
+	}
 
-    @Test
-    public void isCountingAndGettingResultWithParameters10(){
-        String query = "select distinct count(m) from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.name <= '" + CodeGenerator.NICKNAME_B_NAME + "'";
-        List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
-        assertTrue(personsFromJPQL.size() > 0);
+	@Test
+	public void isCountingAndGettingResultWithParameters11() {
+		String query = "select distinct count(m) from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justBoolean = true";
+		List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
+		assertTrue(personsFromJPQL.get(0) > 0);
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andLessOrEqualTo("products.nickNames.name", CodeGenerator.NICKNAME_B_NAME);
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andEquals("products.nickNames.justBoolean", true);
 
-        assertEquals(personsFromJPQL.get(0), easyCriteria.count());
-    }
+		assertEquals(personsFromJPQL.get(0), easyCriteria.count());
+	}
 
-    @Test
-    public void isCountingAndGettingResultWithParameters11(){
-        String query = "select distinct count(m) from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justBoolean = true";
-        List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
-        assertTrue(personsFromJPQL.get(0) > 0);
+	@Test
+	public void isCountingAndGettingResultWithParameters12() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = formatter.parse("1/1/2001");
+		Calendar justCalendar = Calendar.getInstance();
+		justCalendar.setTime(date);
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andEquals("products.nickNames.justBoolean", true);
+		Date date2 = formatter.parse("2/2/2002");
+		Calendar justCalendar2 = Calendar.getInstance();
+		justCalendar2.setTime(date2);
 
-        assertEquals(personsFromJPQL.get(0), easyCriteria.count());
-    }
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("justCalendarA", justCalendar);
+		parameters.put("justCalendarB", justCalendar2);
 
-    @Test
-    public void isCountingAndGettingResultWithParameters12() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = formatter.parse("1/1/2001");
-        Calendar justCalendar = Calendar.getInstance();
-        justCalendar.setTime(date);
+		String query = "select distinct count(m) from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justCalendar between :justCalendarA and :justCalendarB";
 
-        Date date2 = formatter.parse("2/2/2002");
-        Calendar justCalendar2 = Calendar.getInstance();
-        justCalendar2.setTime(date2);
+		List<Long> personsFromJPQL = getListFromJPQL(query, Long.class, parameters);
+		assertTrue(personsFromJPQL.get(0) > 0);
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("justCalendarA", justCalendar);
-        parameters.put("justCalendarB", justCalendar2);
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andBetween("products.nickNames.justCalendar", justCalendar, justCalendar2);
 
-        String query = "select distinct count(m) from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justCalendar between :justCalendarA and :justCalendarB";
+		assertEquals(personsFromJPQL.get(0), easyCriteria.count());
+	}
 
-        List<Long> personsFromJPQL = getListFromJPQL(query, Long.class, parameters);
-        assertTrue(personsFromJPQL.get(0) > 0);
+	@Test
+	public void isCountingAndGettingResultWithParameters13() {
+		String query = "select distinct count(m) from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justString is null";
+		List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
+		assertTrue(personsFromJPQL.get(0) > 0);
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andBetween("products.nickNames.justCalendar", justCalendar, justCalendar2);
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andIsNull("products.nickNames.justString");
 
-        assertEquals(personsFromJPQL.get(0), easyCriteria.count());
-    }
+		assertEquals(personsFromJPQL.get(0), easyCriteria.count());
+	}
 
-    @Test
-    public void isCountingAndGettingResultWithParameters13() {
-        String query = "select distinct count(m) from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justString is null";
-        List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
-        assertTrue(personsFromJPQL.get(0) > 0);
+	@Test
+	public void isCountingAndGettingResultWithParameters14() {
+		String query = "select distinct count(m) from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justString is not null";
+		List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
+		assertTrue(personsFromJPQL.get(0) > 0);
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andIsNull("products.nickNames.justString");
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andIsNotNull("products.nickNames.justString");
 
-        assertEquals(personsFromJPQL.get(0), easyCriteria.count());
-    }
+		assertEquals(personsFromJPQL.get(0), easyCriteria.count());
+	}
 
-    @Test
-    public void isCountingAndGettingResultWithParameters14() {
-        String query = "select distinct count(m) from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justString is not null";
-        List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
-        assertTrue(personsFromJPQL.get(0) > 0);
+	@Test
+	public void isCountingAndGettingResultWithParameters15() {
+		String query = "select distinct count(m) from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justList is not empty";
+		List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
+		assertTrue(personsFromJPQL.get(0) > 0);
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andIsNotNull("products.nickNames.justString");
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andCollectionIsNotEmpty("products.nickNames.justList");
 
-        assertEquals(personsFromJPQL.get(0), easyCriteria.count());
-    }
+		assertEquals(personsFromJPQL.get(0), easyCriteria.count());
+	}
 
-    @Test
-    public void isCountingAndGettingResultWithParameters15() {
-        String query = "select distinct count(m) from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justList is not empty";
-        List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
-        assertTrue(personsFromJPQL.get(0) > 0);
+	@Test
+	public void isCountingAndGettingResultWithParameters16() {
+		String query = "select distinct count(m) from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justSet is empty";
+		List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
+		assertTrue(personsFromJPQL.get(0) > 0);
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andCollectionIsNotEmpty("products.nickNames.justList");
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andCollectionIsEmpty("products.nickNames.justSet");
 
-        assertEquals(personsFromJPQL.get(0), easyCriteria.count());
-    }
+		assertEquals(personsFromJPQL.get(0), easyCriteria.count());
+	}
 
-    @Test
-    public void isCountingAndGettingResultWithParameters16() {
-        String query = "select distinct count(m) from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justSet is empty";
-        List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
-        assertTrue(personsFromJPQL.get(0) > 0);
+	@Test
+	public void isCountingAndGettingResultWithParameters17() {
+		String query = "select distinct count(m) from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.name like '% B'";
+		List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
+		assertTrue(personsFromJPQL.get(0) > 0);
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andCollectionIsEmpty("products.nickNames.justSet");
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andStringLike("products.nickNames.name", "% B");
 
-        assertEquals(personsFromJPQL.get(0), easyCriteria.count());
-    }
+		assertEquals(personsFromJPQL.get(0), easyCriteria.count());
+	}
 
+	@Test
+	public void isCountingAndGettingResultWithParameters18() {
+		String query = "select distinct count(m) from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.name not like '% B'";
+		List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
+		assertTrue(personsFromJPQL.get(0) > 0);
 
-    @Test
-    public void isCountingAndGettingResultWithParameters17() {
-        String query = "select distinct count(m) from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.name like '% B'";
-        List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
-        assertTrue(personsFromJPQL.get(0) > 0);
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andStringNotLike("products.nickNames.name", "% B");
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andStringLike("products.nickNames.name", "% B");
+		assertEquals(personsFromJPQL.get(0), easyCriteria.count());
+	}
 
-        assertEquals(personsFromJPQL.get(0), easyCriteria.count());
-    }
+	@Test
+	public void isCountingAndGettingResultWithParameters19() {
+		String query = "select distinct count(m) from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where lower(n.name) like '% b'";
+		List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
+		assertTrue(personsFromJPQL.get(0) > 0);
 
-    @Test
-    public void isCountingAndGettingResultWithParameters18() {
-        String query = "select distinct count(m) from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.name not like '% B'";
-        List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
-        assertTrue(personsFromJPQL.get(0) > 0);
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andStringLike(true, "products.nickNames.name", "% B".toLowerCase());
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andStringNotLike("products.nickNames.name", "% B");
+		assertEquals(personsFromJPQL.get(0), easyCriteria.count());
+	}
 
-        assertEquals(personsFromJPQL.get(0), easyCriteria.count());
-    }
+	@Test
+	public void isCountingAndGettingResultWithParameters20() {
+		String query = "select distinct count(m) from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where lower(n.name) not like '% b'";
+		List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
+		assertTrue(personsFromJPQL.get(0) > 0);
 
-    @Test
-    public void isCountingAndGettingResultWithParameters19() {
-        String query = "select distinct count(m) from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where lower(n.name) like '% b'";
-        List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
-        assertTrue(personsFromJPQL.get(0) > 0);
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andStringNotLike(true, "products.nickNames.name", "% B".toLowerCase());
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andStringLike(true, "products.nickNames.name", "% B".toLowerCase());
+		assertEquals(personsFromJPQL.get(0), easyCriteria.count());
+	}
 
-        assertEquals(personsFromJPQL.get(0), easyCriteria.count());
-    }
+	@Test
+	public void isCountingAndGettingResultWithParameters21() {
+		String query = "select distinct count(m) from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.name in ('NickName A', 'NickName B')";
+		List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
+		assertTrue(personsFromJPQL.get(0) > 0);
 
-    @Test
-    public void isCountingAndGettingResultWithParameters20() {
-        String query = "select distinct count(m) from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where lower(n.name) not like '% b'";
-        List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
-        assertTrue(personsFromJPQL.get(0) > 0);
+		List<String> names = new ArrayList<String>();
+		names.add("NickName A");
+		names.add("NickName B");
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andStringNotLike(true, "products.nickNames.name", "% B".toLowerCase());
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andStringIn("products.nickNames.name", names);
 
-        assertEquals(personsFromJPQL.get(0), easyCriteria.count());
-    }
+		assertEquals(personsFromJPQL.get(0), easyCriteria.count());
+	}
 
+	@Test
+	public void isCountingAndGettingResultWithParameters22() {
+		String query = "select distinct count(m) from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.name not in ('NickName A', 'NickName B')";
+		List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
+		assertTrue(personsFromJPQL.get(0) > 0);
 
-    @Test
-    public void isCountingAndGettingResultWithParameters21() {
-        String query = "select distinct count(m) from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.name in ('NickName A', 'NickName B')";
-        List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
-        assertTrue(personsFromJPQL.get(0) > 0);
+		List<String> names = new ArrayList<String>();
+		names.add("NickName A");
+		names.add("NickName B");
 
-        List<String> names = new ArrayList<String>();
-        names.add("NickName A");
-        names.add("NickName B");
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andStringNotIn("products.nickNames.name", names);
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andStringIn("products.nickNames.name", names);
+		assertEquals(personsFromJPQL.get(0), easyCriteria.count());
+	}
 
-        assertEquals(personsFromJPQL.get(0), easyCriteria.count());
-    }
+	@Test
+	public void isCountingAndGettingResultWithParameters23() {
+		String query = "select distinct count(m) from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where lower(n.name) in ('nickname a', 'nickname b')";
+		List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
+		assertTrue(personsFromJPQL.get(0) > 0);
 
-    @Test
-    public void isCountingAndGettingResultWithParameters22() {
-        String query = "select distinct count(m) from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.name not in ('NickName A', 'NickName B')";
-        List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
-        assertTrue(personsFromJPQL.get(0) > 0);
+		List<String> names = new ArrayList<String>();
+		names.add("NickName A".toLowerCase());
+		names.add("NickName B".toLowerCase());
 
-        List<String> names = new ArrayList<String>();
-        names.add("NickName A");
-        names.add("NickName B");
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andStringIn(true, "products.nickNames.name", names);
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andStringNotIn("products.nickNames.name", names);
+		assertEquals(personsFromJPQL.get(0), easyCriteria.count());
+	}
 
-        assertEquals(personsFromJPQL.get(0), easyCriteria.count());
-    }
+	@Test
+	public void isCountingAndGettingResultWithParameters24() {
+		String query = "select distinct count(m) from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where lower(n.name) not in ('nickname a', 'nickname b')";
+		List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
+		assertTrue(personsFromJPQL.get(0) > 0);
 
-    @Test
-    public void isCountingAndGettingResultWithParameters23() {
-        String query = "select distinct count(m) from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where lower(n.name) in ('nickname a', 'nickname b')";
-        List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
-        assertTrue(personsFromJPQL.get(0) > 0);
+		List<String> names = new ArrayList<String>();
+		names.add("NickName A");
+		names.add("NickName B");
 
-        List<String> names = new ArrayList<String>();
-        names.add("NickName A".toLowerCase());
-        names.add("NickName B".toLowerCase());
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.andStringNotIn(true, "products.nickNames.name", names);
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andStringIn(true, "products.nickNames.name", names);
+		assertEquals(personsFromJPQL.get(0), easyCriteria.count());
+	}
 
-        assertEquals(personsFromJPQL.get(0), easyCriteria.count());
-    }
+	@Test
+	public void isCountingAndGettingResultWithParameters25() {
+		String query = "select distinct count(p) from Product p " + "join p.nickNames n " + "join n.justCollection j "
+				+ "where j.autoRelationship is empty";
+		List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
+		assertTrue(personsFromJPQL.get(0) > 0);
 
-    @Test
-    public void isCountingAndGettingResultWithParameters24() {
-        String query = "select distinct count(m) from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where lower(n.name) not in ('nickname a', 'nickname b')";
-        List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
-        assertTrue(personsFromJPQL.get(0) > 0);
+		EasyQuery<Product> easyCriteria = new EasyQueryImpl<Product>(Product.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("nickNames.justCollection");
+		easyCriteria.andCollectionIsEmpty("nickNames.justCollection.autoRelationship");
 
-        List<String> names = new ArrayList<String>();
-        names.add("NickName A");
-        names.add("NickName B");
+		assertEquals(personsFromJPQL.get(0), easyCriteria.count());
+	}
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.andStringNotIn(true, "products.nickNames.name", names);
+	@Test
+	public void isCountingAndGettingResultWithParameters26() {
+		String query = "select distinct count(m) from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.id = 1 or n.id = 2";
+		List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
+		assertTrue(personsFromJPQL.get(0) > 0);
 
-        assertEquals(personsFromJPQL.get(0), easyCriteria.count());
-    }
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.orEquals("products.nickNames.id", 1, 2);
 
-    @Test
-    public void isCountingAndGettingResultWithParameters25() {
-        String query = "select distinct count(p) from Product p " +
-                "join p.nickNames n " +
-                "join n.justCollection j " +
-                "where j.autoRelationship is empty";
-        List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
-        assertTrue(personsFromJPQL.get(0) > 0);
+		assertEquals(personsFromJPQL.get(0), easyCriteria.count());
+	}
 
-        EasyQuery<Product> easyCriteria = new EasyQueryImpl<Product>(Product.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("nickNames.justCollection");
-        easyCriteria.andCollectionIsEmpty("nickNames.justCollection.autoRelationship");
+	@Test
+	public void isCountingAndGettingResultWithParameters27() {
+		String query = "select distinct count(m) from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where lower(n.name) = 'nickname a' or lower(n.name) = 'nickname b'";
+		List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
+		assertTrue(personsFromJPQL.get(0) > 0);
 
-        assertEquals(personsFromJPQL.get(0), easyCriteria.count());
-    }
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.orEquals(true, "products.nickNames.name", "NickName A".toLowerCase(), "NickName B".toLowerCase());
 
+		assertEquals(personsFromJPQL.get(0), easyCriteria.count());
+	}
 
-    @Test
-    public void isCountingAndGettingResultWithParameters26(){
-        String query = "select distinct count(m) from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.id = 1 or n.id = 2";
-        List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
-        assertTrue(personsFromJPQL.get(0) > 0);
+	@Test
+	public void isCountingAndGettingResultWithParameters28() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = formatter.parse("1/1/2001");
+		Calendar justCalendar = Calendar.getInstance();
+		justCalendar.setTime(date);
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.orEquals("products.nickNames.id", 1, 2);
+		Date date2 = formatter.parse("2/2/2002");
+		Calendar justCalendar2 = Calendar.getInstance();
+		justCalendar2.setTime(date2);
 
-        assertEquals(personsFromJPQL.get(0), easyCriteria.count());
-    }
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("justCalendarA", justCalendar);
+		parameters.put("justCalendarB", justCalendar2);
 
-    @Test
-    public void isCountingAndGettingResultWithParameters27(){
-        String query = "select distinct count(m) from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where lower(n.name) = 'nickname a' or lower(n.name) = 'nickname b'";
-        List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
-        assertTrue(personsFromJPQL.get(0) > 0);
+		String query = "select distinct count(m) from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justCalendar = :justCalendarA or n.justCalendar = :justCalendarB";
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.orEquals(true, "products.nickNames.name", "NickName A".toLowerCase(), "NickName B".toLowerCase());
+		List<Long> personsFromJPQL = getListFromJPQL(query, Long.class, parameters);
+		assertTrue(personsFromJPQL.get(0) > 0);
 
-        assertEquals(personsFromJPQL.get(0), easyCriteria.count());
-    }
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.orEquals("products.nickNames.justCalendar", justCalendar, justCalendar2);
 
-    @Test
-    public void isCountingAndGettingResultWithParameters28() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = formatter.parse("1/1/2001");
-        Calendar justCalendar = Calendar.getInstance();
-        justCalendar.setTime(date);
+		assertEquals(personsFromJPQL.get(0), easyCriteria.count());
+	}
 
-        Date date2 = formatter.parse("2/2/2002");
-        Calendar justCalendar2 = Calendar.getInstance();
-        justCalendar2.setTime(date2);
+	@Test
+	public void isCountingAndGettingResultWithParameters29() {
+		String query = "select distinct count(m) from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where (n.id = 1 and n.name = 'NickName A') or (n.id = 2 and n.name = 'NickName B')";
+		List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
+		assertTrue(personsFromJPQL.get(0) > 0);
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("justCalendarA", justCalendar);
-        parameters.put("justCalendarB", justCalendar2);
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.addAndSeparatedByOr(1, "products.nickNames.id", 1)
+				.addAndSeparatedByOr(1, "products.nickNames.name", "NickName A")
+				.addAndSeparatedByOr(2, "products.nickNames.id", 2)
+				.addAndSeparatedByOr(2, "products.nickNames.name", "NickName B");
 
-        String query = "select distinct count(m) from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justCalendar = :justCalendarA or n.justCalendar = :justCalendarB";
+		assertEquals(personsFromJPQL.get(0), easyCriteria.count());
+	}
 
-        List<Long> personsFromJPQL = getListFromJPQL(query, Long.class, parameters);
-        assertTrue(personsFromJPQL.get(0) > 0);
+	@Test
+	public void isCountingAndGettingResultWithParameters30() {
+		String query = "select distinct count(m) from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where (n.id = 1 and lower(n.name) = 'nickname a') or (n.id = 2 and lower(n.name) = 'nickname b')";
+		List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
+		assertTrue(personsFromJPQL.get(0) > 0);
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.orEquals("products.nickNames.justCalendar", justCalendar, justCalendar2);
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.addAndSeparatedByOr(1, "products.nickNames.id", 1)
+				.addAndSeparatedByOr(true, 1, "products.nickNames.name", "NickName A".toLowerCase())
+				.addAndSeparatedByOr(2, "products.nickNames.id", 2)
+				.addAndSeparatedByOr(true, 2, "products.nickNames.name", "NickName B".toLowerCase());
 
-        assertEquals(personsFromJPQL.get(0), easyCriteria.count());
-    }
+		assertEquals(personsFromJPQL.get(0), easyCriteria.count());
+	}
 
-    @Test
-    public void isCountingAndGettingResultWithParameters29(){
-        String query = "select distinct count(m) from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where (n.id = 1 and n.name = 'NickName A') or (n.id = 2 and n.name = 'NickName B')";
-        List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
-        assertTrue(personsFromJPQL.get(0) > 0);
+	@Test
+	public void isAbleToDoTheSameQuerySeveralTimes() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where (n.id = 1 and n.name = 'NickName A') or (n.id = 2 and n.name = 'NickName B')";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.addAndSeparatedByOr(1, "products.nickNames.id", 1)
-                .addAndSeparatedByOr(1, "products.nickNames.name", "NickName A")
-                .addAndSeparatedByOr(2, "products.nickNames.id", 2)
-                .addAndSeparatedByOr(2, "products.nickNames.name", "NickName B");
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.addAndSeparatedByOr(1, "products.nickNames.id", 1)
+				.addAndSeparatedByOr(1, "products.nickNames.name", "NickName A")
+				.addAndSeparatedByOr(2, "products.nickNames.id", 2)
+				.addAndSeparatedByOr(2, "products.nickNames.name", "NickName B");
 
-        assertEquals(personsFromJPQL.get(0), easyCriteria.count());
-    }
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-    @Test
-    public void isCountingAndGettingResultWithParameters30(){
-        String query = "select distinct count(m) from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where (n.id = 1 and lower(n.name) = 'nickname a') or (n.id = 2 and lower(n.name) = 'nickname b')";
-        List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
-        assertTrue(personsFromJPQL.get(0) > 0);
+		assertEquals(personsFromJPQL.size(), result.size());
+		assertTrue(personsFromJPQL.containsAll(easyCriteria.getResultList()));
+		assertTrue(personsFromJPQL.containsAll(easyCriteria.getResultList()));
+		assertTrue(personsFromJPQL.containsAll(easyCriteria.getResultList()));
+		assertTrue(personsFromJPQL.containsAll(easyCriteria.getResultList()));
+		assertTrue(personsFromJPQL.containsAll(easyCriteria.getResultList()));
+		assertTrue(personsFromJPQL.containsAll(easyCriteria.getResultList()));
+	}
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.addAndSeparatedByOr(1, "products.nickNames.id", 1)
-                .addAndSeparatedByOr(true, 1, "products.nickNames.name", "NickName A".toLowerCase())
-                .addAndSeparatedByOr(2, "products.nickNames.id", 2)
-                .addAndSeparatedByOr(true, 2, "products.nickNames.name", "NickName B".toLowerCase());
+	@Test
+	public void isAbleToDoTheSameCountSeveralTimes() {
+		String query = "select distinct count(m) from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where (n.id = 1 and n.name = 'NickName A') or (n.id = 2 and n.name = 'NickName B')";
+		List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
+		assertTrue(personsFromJPQL.get(0) > 0);
 
-        assertEquals(personsFromJPQL.get(0), easyCriteria.count());
-    }
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.addAndSeparatedByOr(1, "products.nickNames.id", 1)
+				.addAndSeparatedByOr(1, "products.nickNames.name", "NickName A")
+				.addAndSeparatedByOr(2, "products.nickNames.id", 2)
+				.addAndSeparatedByOr(2, "products.nickNames.name", "NickName B");
 
-    @Test
-    public void isAbleToDoTheSameQuerySeveralTimes(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where (n.id = 1 and n.name = 'NickName A') or (n.id = 2 and n.name = 'NickName B')";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		assertEquals(personsFromJPQL.get(0), easyCriteria.count());
+		assertEquals(personsFromJPQL.get(0), easyCriteria.count());
+		assertEquals(personsFromJPQL.get(0), easyCriteria.count());
+		assertEquals(personsFromJPQL.get(0), easyCriteria.count());
+		assertEquals(personsFromJPQL.get(0), easyCriteria.count());
+		assertEquals(personsFromJPQL.get(0), easyCriteria.count());
+	}
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.addAndSeparatedByOr(1, "products.nickNames.id", 1)
-                .addAndSeparatedByOr(1, "products.nickNames.name", "NickName A")
-                .addAndSeparatedByOr(2, "products.nickNames.id", 2)
-                .addAndSeparatedByOr(2, "products.nickNames.name", "NickName B");
+	@Test
+	public void isAbleToDoTheSameQueryAndCountSeveralTimes() {
+		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where (n.id = 1 and n.name = 'NickName A') or (n.id = 2 and n.name = 'NickName B')";
+		List<Manufacturer> personsFromQuery = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromQuery.size() > 0);
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.setDistinctTrue();
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.addAndSeparatedByOr(1, "products.nickNames.id", 1)
+				.addAndSeparatedByOr(1, "products.nickNames.name", "NickName A")
+				.addAndSeparatedByOr(2, "products.nickNames.id", 2)
+				.addAndSeparatedByOr(2, "products.nickNames.name", "NickName B");
 
-        assertEquals(personsFromJPQL.size(), result.size());
-        assertTrue(personsFromJPQL.containsAll(easyCriteria.getResultList()));
-        assertTrue(personsFromJPQL.containsAll(easyCriteria.getResultList()));
-        assertTrue(personsFromJPQL.containsAll(easyCriteria.getResultList()));
-        assertTrue(personsFromJPQL.containsAll(easyCriteria.getResultList()));
-        assertTrue(personsFromJPQL.containsAll(easyCriteria.getResultList()));
-        assertTrue(personsFromJPQL.containsAll(easyCriteria.getResultList()));
-    }
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-    @Test
-    public void isAbleToDoTheSameCountSeveralTimes(){
-        String query = "select distinct count(m) from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where (n.id = 1 and n.name = 'NickName A') or (n.id = 2 and n.name = 'NickName B')";
-        List<Long> personsFromJPQL = getListFromJPQL(query, Long.class);
-        assertTrue(personsFromJPQL.get(0) > 0);
+		assertEquals(personsFromQuery.size(), result.size());
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.addAndSeparatedByOr(1, "products.nickNames.id", 1)
-                .addAndSeparatedByOr(1, "products.nickNames.name", "NickName A")
-                .addAndSeparatedByOr(2, "products.nickNames.id", 2)
-                .addAndSeparatedByOr(2, "products.nickNames.name", "NickName B");
+		String countQuery = "select distinct count(m) from Manufacturer m " + "join m.products p "
+				+ "join p.nickNames n "
+				+ "where (n.id = 1 and n.name = 'NickName A') or (n.id = 2 and n.name = 'NickName B')";
+		List<Long> personsFromTotal = getListFromJPQL(countQuery, Long.class);
+		assertTrue(personsFromTotal.get(0) > 0);
 
-        assertEquals(personsFromJPQL.get(0), easyCriteria.count());
-        assertEquals(personsFromJPQL.get(0), easyCriteria.count());
-        assertEquals(personsFromJPQL.get(0), easyCriteria.count());
-        assertEquals(personsFromJPQL.get(0), easyCriteria.count());
-        assertEquals(personsFromJPQL.get(0), easyCriteria.count());
-        assertEquals(personsFromJPQL.get(0), easyCriteria.count());
-    }
+		assertEquals(personsFromTotal.get(0), easyCriteria.count());
+		assertTrue(personsFromQuery.containsAll(easyCriteria.getResultList()));
+		assertEquals(personsFromTotal.get(0), easyCriteria.count());
+		assertTrue(personsFromQuery.containsAll(easyCriteria.getResultList()));
+		assertEquals(personsFromTotal.get(0), easyCriteria.count());
+		assertTrue(personsFromQuery.containsAll(easyCriteria.getResultList()));
+		assertEquals(personsFromTotal.get(0), easyCriteria.count());
+		assertTrue(personsFromQuery.containsAll(easyCriteria.getResultList()));
+		assertEquals(personsFromTotal.get(0), easyCriteria.count());
+		assertTrue(personsFromQuery.containsAll(easyCriteria.getResultList()));
+	}
 
-    @Test
-    public void isAbleToDoTheSameQueryAndCountSeveralTimes(){
-        String query = "select distinct m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where (n.id = 1 and n.name = 'NickName A') or (n.id = 2 and n.name = 'NickName B')";
-        List<Manufacturer> personsFromQuery = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromQuery.size() > 0);
+	@Test
+	public void isOrderByWithMultipleJoinWorking01() {
+		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p join p.dogs d order by d.name",
+				Person.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.setDistinctTrue();
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.addAndSeparatedByOr(1, "products.nickNames.id", 1)
-                .addAndSeparatedByOr(1, "products.nickNames.name", "NickName A")
-                .addAndSeparatedByOr(2, "products.nickNames.id", 2)
-                .addAndSeparatedByOr(2, "products.nickNames.name", "NickName B");
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		easyCriteria.innerJoin("dogs");
+		easyCriteria.orderByAsc("dogs.name");
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		List<Person> result = easyCriteria.getResultList();
 
-        assertEquals(personsFromQuery.size(), result.size());
+		assertEquals(personsFromJPQL.size(), result.size());
 
-        String countQuery= "select distinct count(m) from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where (n.id = 1 and n.name = 'NickName A') or (n.id = 2 and n.name = 'NickName B')";
-        List<Long> personsFromTotal = getListFromJPQL(countQuery, Long.class);
-        assertTrue(personsFromTotal.get(0) > 0);
+		for (int i = 0; i < personsFromJPQL.size(); i++) {
+			assertEquals(personsFromJPQL.get(i), result.get(i));
+		}
+	}
 
+	@Test
+	public void isOrderByWithMultipleJoinWorking02() {
+		String query = "select m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where (n.id = 1 and n.name = 'NickName A') or (n.id = 2 and n.name = 'NickName B') "
+				+ "order by n.name DESC";
+		List<Manufacturer> personsFromQuery = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromQuery.size() > 0);
 
-        assertEquals(personsFromTotal.get(0), easyCriteria.count());
-        assertTrue(personsFromQuery.containsAll(easyCriteria.getResultList()));
-        assertEquals(personsFromTotal.get(0), easyCriteria.count());
-        assertTrue(personsFromQuery.containsAll(easyCriteria.getResultList()));
-        assertEquals(personsFromTotal.get(0), easyCriteria.count());
-        assertTrue(personsFromQuery.containsAll(easyCriteria.getResultList()));
-        assertEquals(personsFromTotal.get(0), easyCriteria.count());
-        assertTrue(personsFromQuery.containsAll(easyCriteria.getResultList()));
-        assertEquals(personsFromTotal.get(0), easyCriteria.count());
-        assertTrue(personsFromQuery.containsAll(easyCriteria.getResultList()));
-    }
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.addAndSeparatedByOr(1, "products.nickNames.id", 1)
+				.addAndSeparatedByOr(1, "products.nickNames.name", "NickName A")
+				.addAndSeparatedByOr(2, "products.nickNames.id", 2)
+				.addAndSeparatedByOr(2, "products.nickNames.name", "NickName B");
+		easyCriteria.orderByDesc("products.nickNames.name");
 
-    @Test
-    public void isOrderByWithMultipleJoinWorking01(){
-        List<Person> personsFromJPQL = getListFromJPQL("select p from Person p join p.dogs d order by d.name", Person.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-        easyCriteria.innerJoin("dogs");
-        easyCriteria.orderByAsc("dogs.name");
+		assertEquals(personsFromQuery.size(), result.size());
 
-        List<Person> result = easyCriteria.getResultList();
+		for (int i = 0; i < personsFromQuery.size(); i++) {
+			assertEquals(personsFromQuery.get(i), result.get(i));
+		}
+	}
 
-        assertEquals(personsFromJPQL.size(), result.size());
+	@Test
+	public void isOrderByWithMultipleJoinWorking03() {
+		String query = "select m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where (n.id = 1 and lower(n.name) = 'nickname a') or (n.id = 2 and lower(n.name) = 'nickname b') "
+				+ "order by n.name desc";
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        for (int i = 0; i < personsFromJPQL.size(); i++) {
-            assertEquals(personsFromJPQL.get(i), result.get(i));
-        }
-    }
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.addAndSeparatedByOr(1, "products.nickNames.id", 1)
+				.addAndSeparatedByOr(true, 1, "products.nickNames.name", "NickName A".toLowerCase())
+				.addAndSeparatedByOr(2, "products.nickNames.id", 2)
+				.addAndSeparatedByOr(true, 2, "products.nickNames.name", "NickName B".toLowerCase());
+		easyCriteria.orderByDesc("products.nickNames.name");
 
-    @Test
-    public void isOrderByWithMultipleJoinWorking02(){
-        String query = "select m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where (n.id = 1 and n.name = 'NickName A') or (n.id = 2 and n.name = 'NickName B') " +
-                "order by n.name DESC";
-        List<Manufacturer> personsFromQuery = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromQuery.size() > 0);
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.addAndSeparatedByOr(1, "products.nickNames.id", 1)
-                .addAndSeparatedByOr(1, "products.nickNames.name", "NickName A")
-                .addAndSeparatedByOr(2, "products.nickNames.id", 2)
-                .addAndSeparatedByOr(2, "products.nickNames.name", "NickName B");
-        easyCriteria.orderByDesc("products.nickNames.name");
+		assertEquals(personsFromJPQL.size(), result.size());
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		for (int i = 0; i < personsFromJPQL.size(); i++) {
+			assertEquals(personsFromJPQL.get(i), result.get(i));
+		}
+	}
 
-        assertEquals(personsFromQuery.size(), result.size());
+	@Test
+	public void isOrderByWithMultipleJoinWorking04() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = formatter.parse("1/1/2001");
+		Calendar justCalendar = Calendar.getInstance();
+		justCalendar.setTime(date);
 
-        for (int i = 0; i < personsFromQuery.size(); i++) {
-            assertEquals(personsFromQuery.get(i), result.get(i));
-        }
-    }
+		Date date2 = formatter.parse("2/2/2002");
+		Calendar justCalendar2 = Calendar.getInstance();
+		justCalendar2.setTime(date2);
 
-    @Test
-    public void isOrderByWithMultipleJoinWorking03(){
-        String query = "select m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where (n.id = 1 and lower(n.name) = 'nickname a') or (n.id = 2 and lower(n.name) = 'nickname b') " +
-                "order by n.name desc";
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
-        assertTrue(personsFromJPQL.size() > 0);
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("justCalendarA", justCalendar);
+		parameters.put("justCalendarB", justCalendar2);
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.addAndSeparatedByOr(1, "products.nickNames.id", 1)
-                .addAndSeparatedByOr(true, 1, "products.nickNames.name", "NickName A".toLowerCase())
-                .addAndSeparatedByOr(2, "products.nickNames.id", 2)
-                .addAndSeparatedByOr(true, 2, "products.nickNames.name", "NickName B".toLowerCase());
-        easyCriteria.orderByDesc("products.nickNames.name");
+		String query = "select m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
+				+ "where n.justCalendar = :justCalendarA or n.justCalendar = :justCalendarB " + "order by n.name desc";
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class, parameters);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        assertEquals(personsFromJPQL.size(), result.size());
+		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
+		easyCriteria.innerJoin("products.nickNames");
+		easyCriteria.orEquals("products.nickNames.justCalendar", justCalendar, justCalendar2);
+		easyCriteria.orderByDesc("products.nickNames.name");
 
-        for (int i = 0; i < personsFromJPQL.size(); i++) {
-            assertEquals(personsFromJPQL.get(i), result.get(i));
-        }
-    }
+		List<Manufacturer> result = easyCriteria.getResultList();
 
-    @Test
-    public void isOrderByWithMultipleJoinWorking04() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = formatter.parse("1/1/2001");
-        Calendar justCalendar = Calendar.getInstance();
-        justCalendar.setTime(date);
+		assertEquals(personsFromJPQL.size(), result.size());
 
-        Date date2 = formatter.parse("2/2/2002");
-        Calendar justCalendar2 = Calendar.getInstance();
-        justCalendar2.setTime(date2);
+		for (int i = 0; i < personsFromJPQL.size(); i++) {
+			assertEquals(personsFromJPQL.get(i), result.get(i));
+		}
+	}
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("justCalendarA", justCalendar);
-        parameters.put("justCalendarB", justCalendar2);
+	@Test
+	public void isEqualsCompositeKeyWorking() {
+		EmbeddedIdDummy idDummy = new EmbeddedIdDummy(1, "01 Key 1");
 
-        String query = "select m from Manufacturer m " +
-                "join m.products p " +
-                "join p.nickNames n " +
-                "where n.justCalendar = :justCalendarA or n.justCalendar = :justCalendarB " +
-                "order by n.name desc";
+		if (isOpenJPA()) {
+			// there is a OpenJPA bug for this:
+			// https://issues.apache.org/jira/browse/OPENJPA-1806
+			return;
+		}
 
-        List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class, parameters);
-        assertTrue(personsFromJPQL.size() > 0);
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("idDummy", idDummy);
+		String query = "select e from EntityEmbeddedId e where e.id = :idDummy ";
+		List<EntityEmbeddedId> personsFromJPQL = getListFromJPQL(query, EntityEmbeddedId.class, parameters);
+		assertTrue(personsFromJPQL.size() > 0);
 
-        EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
-        easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.orEquals("products.nickNames.justCalendar", justCalendar, justCalendar2);
-        easyCriteria.orderByDesc("products.nickNames.name");
+		EasyQuery<EntityEmbeddedId> easyCriteria = new EasyQueryImpl<EntityEmbeddedId>(EntityEmbeddedId.class,
+				getEntityManager());
+		easyCriteria.andEquals("id", idDummy);
 
-        List<Manufacturer> result = easyCriteria.getResultList();
+		List<EntityEmbeddedId> resultList = easyCriteria.getResultList();
 
-        assertEquals(personsFromJPQL.size(), result.size());
+		assertEquals(personsFromJPQL.size(), resultList.size());
+		assertTrue(personsFromJPQL.containsAll(resultList));
+	}
 
-        for (int i = 0; i < personsFromJPQL.size(); i++) {
-            assertEquals(personsFromJPQL.get(i), result.get(i));
-        }
-    }
-
-    @Test
-    public void isEqualsCompositeKeyWorking(){
-        EmbeddedIdDummy idDummy = new EmbeddedIdDummy(1, "01 Key 1");
-
-        if(isOpenJPA()){
-            // there is a OpenJPA bug for this: https://issues.apache.org/jira/browse/OPENJPA-1806
-            return;
-        }
-
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("idDummy", idDummy);
-        String query = "select e from EntityEmbeddedId e where e.id = :idDummy ";
-        List<EntityEmbeddedId> personsFromJPQL = getListFromJPQL(query, EntityEmbeddedId.class, parameters);
-        assertTrue(personsFromJPQL.size() > 0);
-
-        EasyQuery<EntityEmbeddedId> easyCriteria = new EasyQueryImpl<EntityEmbeddedId>(EntityEmbeddedId.class, getEntityManager());
-        easyCriteria.andEquals("id", idDummy);
-
-        List<EntityEmbeddedId> resultList = easyCriteria.getResultList();
-
-        assertEquals(personsFromJPQL.size(), resultList.size());
-        assertTrue(personsFromJPQL.containsAll(resultList));
-    }
-	
-	
-  
-  
-  
-  /*
-   * 
-   public void isCreatingAbstractClasses(){
-        new EasyCriteriaFactory(){};
-
-        new PredicateCreator(){};
-
-        new EntityPathHelper(){};
-    }
- 
-  private <T> EasyQuery<T> createCriteria(Class<T> classToUse) {
-        EntityManager em = getEntityManager();
-
-        return EasyCriteriaFactory.createQueryCriteria(em, classToUse);
-    }
-
-    protected  <T> List<T> getListFromJPQL(String query, Class<T> classToUse) {
-        return getListFromJPQL(query, classToUse, null);
-    }
-
-    private <T> List<T> getListFromJPQL(String query, Class<T> classToUse, Map<String, Object> parameters) {
-        EntityManager em = getEntityManager();
-
-        TypedQuery<T> typedQuery = em.createQuery(query, classToUse);
-
-        if (parameters != null) {
-            populateQueryParameters(typedQuery, parameters);
-        }
-
-        return typedQuery.getResultList();
-    }
-
-    private <T> void populateQueryParameters(TypedQuery<T> query, Map<String, Object> parameters) {
-
-        for (Map.Entry<String, Object> entry : parameters.entrySet()) {
-            query.setParameter(entry.getKey(), entry.getValue());
-        }
-    }
-
-    protected static void generateData() {
-        CodeGenerator.generateData(getEntityManagerFactory());
-    }
-    */
+	/*
+	 * public void isCreatingAbstractClasses(){ new EasyCriteriaFactory(){}; new PredicateCreator(){}; new
+	 * EntityPathHelper(){}; } private <T> EasyQuery<T> createCriteria(Class<T> classToUse) { EntityManager em =
+	 * getEntityManager(); return EasyCriteriaFactory.createQueryCriteria(em, classToUse); } protected <T> List<T>
+	 * getListFromJPQL(String query, Class<T> classToUse) { return getListFromJPQL(query, classToUse, null); } private
+	 * <T> List<T> getListFromJPQL(String query, Class<T> classToUse, Map<String, Object> parameters) { EntityManager em
+	 * = getEntityManager(); TypedQuery<T> typedQuery = em.createQuery(query, classToUse); if (parameters != null) {
+	 * populateQueryParameters(typedQuery, parameters); } return typedQuery.getResultList(); } private <T> void
+	 * populateQueryParameters(TypedQuery<T> query, Map<String, Object> parameters) { for (Map.Entry<String, Object>
+	 * entry : parameters.entrySet()) { query.setParameter(entry.getKey(), entry.getValue()); } } protected static void
+	 * generateData() { CodeGenerator.generateData(getEntityManagerFactory()); }
+	 */
 }

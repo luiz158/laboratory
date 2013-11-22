@@ -11,6 +11,16 @@ import javax.persistence.Query;
 import br.gov.frameworkdemoiselle.prodepa.queryfilter.annotations.metadata.AndConditionType;
 import br.gov.frameworkdemoiselle.prodepa.queryfilter.exception.EasyQueryFilterException;
 
+/**
+ * 
+ * TODO Descrever essa classe
+ * 
+ * TODO Refatorar essa classe para que ela fique mais simples
+ * 
+ * @author thiago
+ *
+ * @param <T>
+ */
 @SuppressWarnings("unchecked")
 public class EasyQueryImpl<T> implements EasyQuery<T> {
 
@@ -33,6 +43,7 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 	private String rootAlias;
 
 	private List<String> joins;
+	private Map<String, String> joinsPaths;
 
 	private Class<T> returnClass;
 
@@ -52,6 +63,7 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 		this.rootAlias = "_" + beanClass.getSimpleName().toLowerCase();
 
 		this.joins = new ArrayList<String>();
+		this.joinsPaths = new HashMap<String, String>();
 		
 		this.andConditions = new ArrayList<EasyQueryImpl<T>.Condition>();
 		this.orConditions = new ArrayList<EasyQueryImpl<T>.Condition>();
@@ -77,6 +89,7 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 	public List<T> getResultList() {
 		// TODO Caso não haja resultSetColumns ou ???, o resultado será simples
 		buildQuery();
+		
 		return (List<T>) query.getResultList();
 	}
 
@@ -274,7 +287,10 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 
 	public EasyQuery<T> innerJoin(String joinName) {
 		// Acho que será o
-		this.joins.add(" INNER JOIN " + this.rootAlias + "." + joinName);
+		this.joins.add(" INNER JOIN " + this.rootAlias + "." + joinName + " " + "_"+joinName.toLowerCase().replace(".","_"));
+		
+		this.joinsPaths.put(joinName, "_"+joinName.toLowerCase());
+		
 		return this;
 	}
 
@@ -335,6 +351,8 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 
 		query = em.createQuery(fillStringQuery());
 
+		
+		putParams();
 		// TODO Alguma coisa aki ?
 
 	}
@@ -396,6 +414,8 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 	
 	private void buidAnds(StringBuilder q) {
 
+		//TODO refatorar!!!!!!!!!!!!!!!!!
+		
 		for (Condition c : andConditions) {
 			if (this.conditionsCount == 0) {
 				q.append(" WHERE ");
@@ -404,14 +424,31 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 			}
 
 			// TODO e as JOINS ?
-
-			q.append(this.rootAlias + c.getAttribute() + " " + c.getType().getOperator() + " :" + c.getAttribute());
+			
+			if(c.getAttribute().contains(".")) {
+				String join = c.getAttribute().split("\\.")[0];
+				
+				if(!this.joinsPaths.containsKey(join)) {
+					//TODO throw - o join é invalido 
+				}
+				
+				q.append(c.getAttribute().replace(join, this.joinsPaths.get(join)) + " " + c.getType().getOperator() + " :" + c.getAttribute().replace(".", "_"));
+				
+			} else {
+				q.append(this.rootAlias +"."+ c.getAttribute() + " " + c.getType().getOperator() + " :" + c.getAttribute());
+			}
+			
+			this.params.put(c.getAttribute().replace(".", "_"), c.getValue()); //TODO Pode ser que sejam valorA e valorB
+			
 			this.conditionsCount++;
 		}
 
 	}
 
 	private void buildOrs(StringBuilder q) {
+		
+		//TODO Não implementado ainda
+		
 		for (Condition c : orConditions) {
 			if (this.conditionsCount == 0) {
 				q.append(" WHERE ");
@@ -428,6 +465,14 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 		}
 		for (String o : ascOrderByConditions) {
 
+		}
+	}
+	
+	private void putParams() {
+		for(String p : this.params.keySet()) {
+			
+			//TODO Tratar tipo: Data, etc
+			query.setParameter(p, this.params.get(p));
 		}
 	}
 

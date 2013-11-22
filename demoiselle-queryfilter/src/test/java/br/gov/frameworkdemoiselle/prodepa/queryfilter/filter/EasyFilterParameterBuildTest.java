@@ -5,7 +5,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
@@ -39,8 +38,6 @@ import br.gov.frameworkdemoiselle.prodepa.queryfilter.app.model.Product;
 import br.gov.frameworkdemoiselle.prodepa.queryfilter.app.model.Song;
 import br.gov.frameworkdemoiselle.prodepa.queryfilter.app.model.SongType;
 import br.gov.frameworkdemoiselle.prodepa.queryfilter.exception.EasyQueryFilterException;
-import br.gov.frameworkdemoiselle.prodepa.queryfilter.filter.EasyQuery;
-import br.gov.frameworkdemoiselle.prodepa.queryfilter.filter.EasyQueryImpl;
 import br.gov.frameworkdemoiselle.prodepa.queryfilter.types.Range;
 import br.gov.frameworkdemoiselle.prodepa.queryfilter.utiltestes.AbstractTest;
 import br.gov.frameworkdemoiselle.prodepa.queryfilter.utiltestes.CodeGenerator;

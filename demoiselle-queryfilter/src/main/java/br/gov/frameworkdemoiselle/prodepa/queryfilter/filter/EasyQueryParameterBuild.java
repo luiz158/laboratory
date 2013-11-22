@@ -160,7 +160,6 @@ public class EasyQueryParameterBuild<T> {
           criteria.setMaxResults((Integer.parseInt(value.toString())));
         }
       }
-      
     }
   }
 
