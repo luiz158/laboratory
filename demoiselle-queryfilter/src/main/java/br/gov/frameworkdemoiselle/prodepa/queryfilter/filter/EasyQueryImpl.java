@@ -10,6 +10,7 @@ import javax.persistence.Query;
 
 import br.gov.frameworkdemoiselle.prodepa.queryfilter.annotations.metadata.AndConditionType;
 import br.gov.frameworkdemoiselle.prodepa.queryfilter.exception.EasyQueryFilterException;
+import br.gov.frameworkdemoiselle.prodepa.queryfilter.util.StringUtil;
 
 /**
  * 
@@ -29,6 +30,8 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 	private EntityManager em;
 
 	private Query query;
+	
+	private StringBuilder bQuery;
 
 	private List<Condition> andConditions;
 
@@ -51,6 +54,8 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 
 	// Controles
 	private Integer conditionsCount;
+	private Boolean distinctTrue = false;
+	private String distinctON = null; //TODO Procurar forma de se fazer isso.
 
 	private static final Boolean toLowerCaseDefaultValeu = true;
 
@@ -287,9 +292,9 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 
 	public EasyQuery<T> innerJoin(String joinName) {
 		// Acho que será o
-		this.joins.add(" INNER JOIN " + this.rootAlias + "." + joinName + " " + "_"+joinName.toLowerCase().replace(".","_"));
+		this.joins.add(" INNER JOIN " + this.rootAlias + "." + joinName + " " + StringUtil.castToAliasName(joinName));
 		
-		this.joinsPaths.put(joinName, "_"+joinName.toLowerCase());
+		this.joinsPaths.put(joinName, StringUtil.castToAliasName(joinName));
 		
 		return this;
 	}
@@ -329,7 +334,7 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 	 */
 
 	public EasyQuery<T> setDistinctTrue() {
-		// TODO Auto-generated method stub
+		this.distinctTrue = true;
 		return this;
 	}
 
@@ -350,37 +355,38 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 	private void buildQuery() {
 
 		query = em.createQuery(fillStringQuery());
-
-		
 		putParams();
-		// TODO Alguma coisa aki ?
-
+		// TODO Alguma coisa mais aki ?
 	}
 
 	private String fillStringQuery() {
 
-		StringBuilder q = new StringBuilder();
+		this.bQuery = new StringBuilder();
 
-		buildSelect(q);
+		buildSelect();
 		
-		buildFrom(q);
+		buildFrom();
 		
-		buildJoins(q);
+		buildJoins();
 		
-		buidAnds(q);
+		buidAnds();
 
-		buildOrs(q);
+		buildOrs();
 
-		buildOrderes(q);
+		buildOrderes(this.bQuery);
 
-		System.out.println(q.toString());
-		return q.toString();
+		System.out.println(this.bQuery.toString());
+		return this.bQuery.toString();
 	}
 
-	private void buildSelect(StringBuilder q) {
+	private void buildSelect() {
 		if (this.returnClass == null && this.resultColumns == null) {
 
-			q.append("SELECT " + this.rootAlias);
+			if(this.distinctTrue) {
+				this.bQuery.append("SELECT DISTINCT " + this.rootAlias);
+			} else {
+				this.bQuery.append("SELECT " + this.rootAlias);
+			}
 
 		} else {
 
@@ -390,70 +396,93 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 
 			} else {
 				// As colunas do retorno foram definidas
-				q.append("SELECT ");
+				if(this.distinctTrue) {
+					this.bQuery.append("SELECT DISTINCT ");
+				} else {
+					this.bQuery.append("SELECT ");
+				}
 				String v = "";
 				for (String col : this.resultColumns) {
-					q.append(col + v);
+					this.bQuery.append(col + v);
 					v = ",";
 				}
 			}
 		}
 	}
 
-	private void buildFrom(StringBuilder q) {
-		q.append(" FROM " + this.beanClass.getSimpleName() + " " + this.rootAlias);
+	private void buildFrom() {
+		this.bQuery.append(" FROM " + this.beanClass.getSimpleName() + " " + this.rootAlias);
 	}
 
-	private void buildJoins(StringBuilder q) {
+	private void buildJoins() {
 		for (String join : this.joins) {
 			
-			q.append(" " + join);
+			this.bQuery.append(" " + join);
 			
 		}
 	}
 	
-	private void buidAnds(StringBuilder q) {
+	private void buidAnds() {
 
 		//TODO refatorar!!!!!!!!!!!!!!!!!
 		
 		for (Condition c : andConditions) {
 			if (this.conditionsCount == 0) {
-				q.append(" WHERE ");
+				this.bQuery.append(" WHERE ");
 			} else {
-				q.append(" AND ");
+				this.bQuery.append(" AND ");
 			}
 
 			// TODO e as JOINS ?
 			
 			if(c.getAttribute().contains(".")) {
+				
+				//TODO BUG isso não está funcionando para joins em multiplos níveis
 				String join = c.getAttribute().split("\\.")[0];
 				
 				if(!this.joinsPaths.containsKey(join)) {
 					//TODO throw - o join é invalido 
 				}
 				
-				q.append(c.getAttribute().replace(join, this.joinsPaths.get(join)) + " " + c.getType().getOperator() + " :" + c.getAttribute().replace(".", "_"));
+				if(c.getType().equals(AndConditionType.BETWEEN)) {
+					this.bQuery.append(c.getAttribute().replace(join, this.joinsPaths.get(join)) + " " + c.getType().getOperator() + " :" + StringUtil.castToParamName(c.getAttribute()) + "_A AND " + StringUtil.castToParamName(c.getAttribute()) + "_B");
+				} else {
+					this.bQuery.append(c.getAttribute().replace(join, this.joinsPaths.get(join)) + " " + c.getType().getOperator() + " :" + StringUtil.castToParamName(c.getAttribute()));
+				}
+				
 				
 			} else {
-				q.append(this.rootAlias +"."+ c.getAttribute() + " " + c.getType().getOperator() + " :" + c.getAttribute());
+				
+				if(c.getType().equals(AndConditionType.BETWEEN)) {
+					this.bQuery.append(this.rootAlias +"."+ c.getAttribute() + " " + c.getType().getOperator() + " :" + c.getAttribute() + "_A AND :" +  c.getAttribute() + "_B");
+				} else {
+					this.bQuery.append(this.rootAlias +"."+ c.getAttribute() + " " + c.getType().getOperator() + " :" + c.getAttribute());
+				}
+				
 			}
 			
-			this.params.put(c.getAttribute().replace(".", "_"), c.getValue()); //TODO Pode ser que sejam valorA e valorB
+			if(c.getType().equals(AndConditionType.BETWEEN)) {
+				this.params.put(StringUtil.castToParamName(c.getAttribute())+ "_A", c.getValue());
+				this.params.put(StringUtil.castToParamName(c.getAttribute())+ "_B", c.getValueB());
+			} else {
+				this.params.put(c.getAttribute().replace(".", "_"), c.getValue()); //TODO Pode ser que sejam valorA e valorB
+				
+			}
 			
 			this.conditionsCount++;
 		}
 
 	}
 
-	private void buildOrs(StringBuilder q) {
+	private void buildOrs() {
 		
 		//TODO Não implementado ainda
 		
 		for (Condition c : orConditions) {
 			if (this.conditionsCount == 0) {
-				q.append(" WHERE ");
+				this.bQuery.append(" WHERE ");
 			} else {
-				q.append(" AND ");
+				this.bQuery.append(" AND ");
 			}
 			this.conditionsCount++;
 		}
@@ -525,4 +554,10 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 		}
 	}
 
+	@Override
+	public String toString() {
+		
+		return super.toString();
+	}
+	
 }

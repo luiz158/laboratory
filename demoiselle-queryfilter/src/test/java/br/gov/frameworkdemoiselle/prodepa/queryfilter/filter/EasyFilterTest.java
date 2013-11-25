@@ -37,6 +37,13 @@ import br.gov.frameworkdemoiselle.prodepa.queryfilter.utiltestes.CodeGenerator;
 
 public class EasyFilterTest extends AbstractTest {
 
+	
+	@Test
+	public void isCreatingCriteria() {
+		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
+		assertNotNull(easyCriteria);
+	}
+	
 	@Test
 	public void testFindAll() {
 
@@ -66,12 +73,6 @@ public class EasyFilterTest extends AbstractTest {
 		assertTrue(personsFromJPQL.size() == 1);
 
 		assertTrue(personsFromJPQL.get(0).equals(person));
-	}
-
-	@Test
-	public void isCreatingCriteria() {
-		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-		assertNotNull(easyCriteria);
 	}
 
 	@Test
@@ -2488,7 +2489,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinBetween("person", "weight", 9.00f, 12.00f);
+		easyCriteria.andBetween("person.weight", 9.00f, 12.00f);
 
 		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
