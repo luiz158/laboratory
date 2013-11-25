@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -125,14 +126,14 @@ public class EasyFilterTest extends AbstractTest {
 	}
 
 	@Test
-	public void isAddingOneOrFloatEquals() {
+	public void isOrFloatInWorking() {
 		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.weight = 10 or p.weight = 11",
 				Person.class);
 		assertTrue(personsFromJPQL.size() > 1);
 
 		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-		easyCriteria.orEquals("weight", 10f, 11f);
+		easyCriteria.orIn("weight", Arrays.asList(10f, 11f));
 
 		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -158,14 +159,14 @@ public class EasyFilterTest extends AbstractTest {
 	}
 
 	@Test
-	public void isAddingOneOrDoubleEquals() {
+	public void isAddingOneOrDoubleIN() {
 		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.height = 10 or p.height = 11 ",
 				Person.class);
 		assertTrue(personsFromJPQL.size() > 1);
 
 		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-		easyCriteria.orEquals("height", 10d, 11d);
+		easyCriteria.orIn("height", Arrays.asList(10d, 11d));
 
 		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -192,7 +193,7 @@ public class EasyFilterTest extends AbstractTest {
 	}
 
 	@Test
-	public void isAddingOneOrLongEquals() {
+	public void isAddingOneOrLongIN() {
 		List<Person> personsFromJPQL = getListFromJPQL(
 				"select p from Person p where p.socialSecurityNumber = 1928371 or p.socialSecurityNumber = 98723487",
 				Person.class);
@@ -200,7 +201,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-		easyCriteria.orEquals("socialSecurityNumber", 1928371L, 98723487L);
+		easyCriteria.orIn("socialSecurityNumber", Arrays.asList(1928371L, 98723487L));
 
 		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -228,14 +229,14 @@ public class EasyFilterTest extends AbstractTest {
 	}
 
 	@Test
-	public void isAddingOneOrIntegerEquals() {
+	public void isAddingOneOrIntegerIN() {
 		List<Person> personsFromJPQL = getListFromJPQL(
 				"select p from Person p where p.clothesInCloset = 44 or p.clothesInCloset = 33", Person.class);
 		assertTrue(personsFromJPQL.size() > 1);
 
 		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-		easyCriteria.orEquals("clothesInCloset", 44, 33);
+		easyCriteria.orIn("clothesInCloset", Arrays.asList(44, 33));
 
 		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -317,7 +318,7 @@ public class EasyFilterTest extends AbstractTest {
 	}
 
 	@Test
-	public void isAddingOneOrEqualsString() {
+	public void isAddingOneOrStringIN() {
 		List<Person> personsFromJPQL = getListFromJPQL("select p from Person p where p.name = '"
 				+ CodeGenerator.PERSON01_NAME + "' or p.name = '" + CodeGenerator.PERSON02_NAME + "'", Person.class);
 
@@ -325,7 +326,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-		easyCriteria.orEquals("name", CodeGenerator.PERSON01_NAME, CodeGenerator.PERSON02_NAME);
+		easyCriteria.orIn("name", Arrays.asList(CodeGenerator.PERSON01_NAME, CodeGenerator.PERSON02_NAME));
 
 		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -379,7 +380,7 @@ public class EasyFilterTest extends AbstractTest {
 	}
 
 	@Test
-	public void isAddingOneOrDateEquals() throws ParseException {
+	public void isAddingOneOrDateIN() throws ParseException {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		Date firstJobDate = formatter.parse("1/1/2015");
 		Date secondJobDate = formatter.parse("1/1/2016");
@@ -396,7 +397,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-		easyCriteria.orEquals("firstJobDate", firstJobDate, secondJobDate);
+		easyCriteria.orIn("firstJobDate", Arrays.asList(firstJobDate, secondJobDate));
 
 		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -432,7 +433,7 @@ public class EasyFilterTest extends AbstractTest {
 	}
 
 	@Test
-	public void isAddingOneOrCalendarEquals() throws ParseException {
+	public void isAddingOneOrCalendarIn() throws ParseException {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		Date date = formatter.parse("1/1/2001");
 		Calendar dateOfBirth = Calendar.getInstance();
@@ -454,7 +455,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-		easyCriteria.orEquals("birthDayDate", dateOfBirth, dateOfBirth2);
+		easyCriteria.orIn("birthDayDate", Arrays.asList(dateOfBirth, dateOfBirth2));
 
 		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -1756,7 +1757,6 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		//easyCriteria.andJoinEquals("person", "name", "John");
 		easyCriteria.andEquals("person.name", "John");
 
 		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
@@ -1769,7 +1769,7 @@ public class EasyFilterTest extends AbstractTest {
 	@Test(expected = IllegalStateException.class)
 	public void isExceptionThrownWhenJoinsIsEmpty() {
 		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-		// easyCriteria.andJoinEquals("dogs", "name", "Dark");
+		easyCriteria.andEquals("dogs.name", "Dark");
 	}
 
 	@Test(expected = IllegalStateException.class)
@@ -1782,7 +1782,7 @@ public class EasyFilterTest extends AbstractTest {
 	public void isExceptionThrownWhenJoinIsNotFound() {
 		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 		easyCriteria.innerJoin("car");
-		// easyCriteria.andJoinEquals("dogs", "name", "Dark");
+		easyCriteria.andEquals("dogs.name", "Dark");
 	}
 
 	@Test(expected = IllegalStateException.class)
@@ -1806,7 +1806,7 @@ public class EasyFilterTest extends AbstractTest {
 		}
 
 		easyCriteria.leftJoin("dogs");
-		// easyCriteria.andJoinEquals("dogs", "name", "Fire");
+		easyCriteria.andEquals("dogs.name", "Fire");
 
 		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -1828,7 +1828,7 @@ public class EasyFilterTest extends AbstractTest {
 		}
 
 		easyCriteria.innerJoinFetch("dogs");
-		// easyCriteria.andJoinEquals("dogs", "name", "Fire");
+		easyCriteria.andEquals("dogs.name", "Fire");
 
 		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -1850,7 +1850,7 @@ public class EasyFilterTest extends AbstractTest {
 		}
 
 		easyCriteria.innerJoinFetch("dogs");
-		// easyCriteria.andJoinNotEquals("dogs", "name", "Fire");
+		easyCriteria.andNotEquals("dogs.name", "Fire");
 
 		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -1866,7 +1866,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 		easyCriteria.leftJoinFetch("dogs");
-		// easyCriteria.andJoinEquals("dogs", "name", "Dark");
+		easyCriteria.andEquals("dogs.name", "Dark");
 
 		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -1889,7 +1889,7 @@ public class EasyFilterTest extends AbstractTest {
 		}
 
 		easyCriteria.innerJoin("dogs");
-		// easyCriteria.andJoinGreaterThan("dogs", "toysTotal", 5);
+		easyCriteria.andGreaterThan("dogs.toysTotal", 5);
 
 		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -1907,7 +1907,7 @@ public class EasyFilterTest extends AbstractTest {
 		// Workaround for OpenJPA
 		easyCriteria.setDistinctTrue();
 		easyCriteria.innerJoin("dogs");
-		// easyCriteria.andJoinGreaterOrEqualTo("dogs", "toysTotal", 5);
+		easyCriteria.andGreaterOrEqualTo("dogs.toysTotal", 5);
 
 		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -1925,7 +1925,7 @@ public class EasyFilterTest extends AbstractTest {
 		// Workaround for OpenJPA
 		easyCriteria.setDistinctTrue();
 		easyCriteria.innerJoin("dogs");
-		// easyCriteria.andJoinLessThan("dogs", "toysTotal", 13);
+		easyCriteria.andLessThan("dogs.toysTotal", 13);
 
 		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -1943,7 +1943,7 @@ public class EasyFilterTest extends AbstractTest {
 		// Workaround for OpenJPA
 		easyCriteria.setDistinctTrue();
 		easyCriteria.innerJoin("dogs");
-		// easyCriteria.andJoinLessOrEqualTo("dogs", "toysTotal", 13);
+		easyCriteria.andLessOrEqualTo("dogs.toysTotal", 13);
 
 		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -1966,7 +1966,7 @@ public class EasyFilterTest extends AbstractTest {
 		}
 
 		easyCriteria.innerJoin("dogs");
-		// easyCriteria.andJoinGreaterThan("dogs", "fleasTotal", 5L);
+		easyCriteria.andGreaterThan("dogs.fleasTotal", 5L);
 
 		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -1984,7 +1984,7 @@ public class EasyFilterTest extends AbstractTest {
 		// Workaround for OpenJPA
 		easyCriteria.setDistinctTrue();
 		easyCriteria.innerJoin("dogs");
-		// easyCriteria.andJoinGreaterOrEqualTo("dogs", "fleasTotal", 5L);
+		easyCriteria.andGreaterOrEqualTo("dogs.fleasTotal", 5L);
 
 		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -2002,7 +2002,7 @@ public class EasyFilterTest extends AbstractTest {
 		// Workaround for OpenJPA
 		easyCriteria.setDistinctTrue();
 		easyCriteria.innerJoin("dogs");
-		// easyCriteria.andJoinLessThan("dogs", "fleasTotal", 13L);
+		easyCriteria.andLessThan("dogs.fleasTotal", 13L);
 
 		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -2020,7 +2020,7 @@ public class EasyFilterTest extends AbstractTest {
 		// Workaround for OpenJPA
 		easyCriteria.setDistinctTrue();
 		easyCriteria.innerJoin("dogs");
-		// easyCriteria.andJoinLessOrEqualTo("dogs", "fleasTotal", 13L);
+		easyCriteria.andLessOrEqualTo("dogs.fleasTotal", 13L);
 
 		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -2039,7 +2039,7 @@ public class EasyFilterTest extends AbstractTest {
 		// Workaround for OpenJPA
 		easyCriteria.setDistinctTrue();
 		easyCriteria.innerJoin("dogs");
-		// easyCriteria.andJoinGreaterThan("dogs", "weight", 5.00d);
+		easyCriteria.andGreaterThan("dogs.weight", 5.00d);
 
 		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -2057,7 +2057,7 @@ public class EasyFilterTest extends AbstractTest {
 		// Workaround for OpenJPA
 		easyCriteria.setDistinctTrue();
 		easyCriteria.innerJoin("dogs");
-		// easyCriteria.andJoinGreaterOrEqualTo("dogs", "weight", 5.00d);
+		easyCriteria.andGreaterOrEqualTo("dogs.weight", 5.00d);
 
 		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -2075,7 +2075,7 @@ public class EasyFilterTest extends AbstractTest {
 		// Workaround for OpenJPA
 		easyCriteria.setDistinctTrue();
 		easyCriteria.innerJoin("dogs");
-		// easyCriteria.andJoinLessThan("dogs", "weight", 13.00d);
+		easyCriteria.andLessThan("dogs.weight", 13.00d);
 
 		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -2093,7 +2093,7 @@ public class EasyFilterTest extends AbstractTest {
 		// Workaround for OpenJPA
 		easyCriteria.setDistinctTrue();
 		easyCriteria.innerJoin("dogs");
-		// easyCriteria.andJoinLessOrEqualTo("dogs", "weight", 13.00d);
+		easyCriteria.andLessOrEqualTo("dogs.weight", 13.00d);
 
 		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -2112,7 +2112,7 @@ public class EasyFilterTest extends AbstractTest {
 		// Workaround for OpenJPA
 		easyCriteria.setDistinctTrue();
 		easyCriteria.innerJoin("dogs");
-		// easyCriteria.andJoinGreaterThan("dogs", "hairSize", 5.00f);
+		easyCriteria.andGreaterThan("dogs.hairSize", 5.00f);
 
 		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -2130,7 +2130,7 @@ public class EasyFilterTest extends AbstractTest {
 		// Workaround for OpenJPA
 		easyCriteria.setDistinctTrue();
 		easyCriteria.innerJoin("dogs");
-		// easyCriteria.andJoinGreaterOrEqualTo("dogs", "hairSize", 5.00f);
+		easyCriteria.andGreaterOrEqualTo("dogs.hairSize", 5.00f);
 
 		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -2148,7 +2148,7 @@ public class EasyFilterTest extends AbstractTest {
 		// Workaround for OpenJPA
 		easyCriteria.setDistinctTrue();
 		easyCriteria.innerJoin("dogs");
-		// easyCriteria.andJoinLessThan("dogs", "hairSize", 13.00f);
+		easyCriteria.andLessThan("dogs.hairSize", 13.00f);
 
 		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -2166,7 +2166,7 @@ public class EasyFilterTest extends AbstractTest {
 		// Workaround for OpenJPA
 		easyCriteria.setDistinctTrue();
 		easyCriteria.innerJoin("dogs");
-		// easyCriteria.andJoinLessOrEqualTo("dogs", "hairSize", 13.00f);
+		easyCriteria.andLessOrEqualTo("dogs.hairSize", 13.00f);
 
 		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -2191,7 +2191,7 @@ public class EasyFilterTest extends AbstractTest {
 		// Workaround for OpenJPA
 		easyCriteria.setDistinctTrue();
 		easyCriteria.innerJoin("dogs");
-		// easyCriteria.andJoinGreaterThan("dogs", "dateOfBirth", dateOfBirth);
+		easyCriteria.andGreaterThan("dogs.dateOfBirth", dateOfBirth);
 
 		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -2216,7 +2216,7 @@ public class EasyFilterTest extends AbstractTest {
 		// Workaround for OpenJPA
 		easyCriteria.setDistinctTrue();
 		easyCriteria.innerJoin("dogs");
-		// easyCriteria.andJoinGreaterOrEqualTo("dogs", "dateOfBirth", dateOfBirth);
+		easyCriteria.andGreaterOrEqualTo("dogs.dateOfBirth", dateOfBirth);
 
 		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -2241,7 +2241,7 @@ public class EasyFilterTest extends AbstractTest {
 		// Workaround for OpenJPA
 		easyCriteria.setDistinctTrue();
 		easyCriteria.innerJoin("dogs");
-		// easyCriteria.andJoinLessThan("dogs", "dateOfBirth", dateOfBirth);
+		easyCriteria.andLessThan("dogs.dateOfBirth", dateOfBirth);
 
 		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -2266,7 +2266,7 @@ public class EasyFilterTest extends AbstractTest {
 		// Workaround for OpenJPA
 		easyCriteria.setDistinctTrue();
 		easyCriteria.innerJoin("dogs");
-		// easyCriteria.andJoinLessOrEqualTo("dogs", "dateOfBirth", dateOfBirth);
+		easyCriteria.andLessOrEqualTo("dogs.dateOfBirth", dateOfBirth);
 
 		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -2290,7 +2290,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinGreaterThan("person", "birthDayDate", dateOfBirth);
+		easyCriteria.andGreaterThan("person.birthDayDate", dateOfBirth);
 
 		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -2314,8 +2314,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinGreaterOrEqualTo("person", "birthDayDate",
-		// dateOfBirth);
+		easyCriteria.andGreaterOrEqualTo("person.birthDayDate", dateOfBirth);
 
 		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -2339,7 +2338,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinLessThan("person", "birthDayDate", dateOfBirth);
+		easyCriteria.andLessThan("person.birthDayDate", dateOfBirth);
 
 		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -2363,7 +2362,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinLessOrEqualTo("person", "birthDayDate", dateOfBirth);
+		easyCriteria.andLessOrEqualTo("person.birthDayDate", dateOfBirth);
 
 		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -2378,7 +2377,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinGreaterThan("person", "name", "Mary");
+		easyCriteria.andGreaterThan("person.name", "Mary");
 
 		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -2394,7 +2393,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinGreaterOrEqualTo("person", "name", "Mary");
+		easyCriteria.andGreaterOrEqualTo("person.name", "Mary");
 
 		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -2409,7 +2408,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinLessThan("person", "name", "Mary");
+		easyCriteria.andLessThan("person.name", "Mary");
 
 		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -2425,7 +2424,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinLessOrEqualTo("person", "name", "Mary");
+		easyCriteria.andLessOrEqualTo("person.name", "Mary");
 
 		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -2441,7 +2440,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinBetween("person", "clothesInCloset", 30, 35);
+		easyCriteria.andBetween("person.clothesInCloset", 30, 35);
 
 		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -2457,7 +2456,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinBetween("person", "totalBooksOwned", 19L, 31L);
+		easyCriteria.andBetween("person.totalBooksOwned", 19L, 31L);
 
 		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -2473,7 +2472,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinBetween("person", "height", 9.00d, 12.00d);
+		easyCriteria.andBetween("person.height", 9.00d, 12.00d);
 
 		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -2505,7 +2504,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinBetween("person", "name", "A", "L");
+		easyCriteria.andBetween("person.name", "A", "L");
 
 		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -2532,7 +2531,7 @@ public class EasyFilterTest extends AbstractTest {
 		// Workaround for OpenJPA
 		easyCriteria.setDistinctTrue();
 		easyCriteria.innerJoin("dogs");
-		// easyCriteria.andJoinBetween("dogs", "dateOfBirth", valueA, valueB);
+		easyCriteria.andBetween("dogs.dateOfBirth", valueA, valueB);
 
 		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -2561,7 +2560,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinBetween("person", "birthDayDate", valueA, valueB);
+		easyCriteria.andBetween("person.birthDayDate", valueA, valueB);
 
 		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -2612,16 +2611,16 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Car> carCriteria1 = new EasyQueryImpl<Car>(Car.class, getEntityManager());
 		carCriteria1.innerJoin("person");
-		// TODO carCriteria1.andJoinAttributeIsNotNull("person", "nickName");
+		carCriteria1.andIsNotNull("person.nickName");
+		
 		assertTrue(carCriteria1.getResultList().size() == carsFromJPQL.size());
 		assertTrue(carCriteria1.getResultList().containsAll(carsFromJPQL));
 
-		carsFromJPQL = getListFromJPQL("select c from Car c join c.person p where p.birthDayDate is not null",
-				Car.class);
+		carsFromJPQL = getListFromJPQL("select c from Car c join c.person p where p.birthDayDate is not null", Car.class);
 
 		EasyQuery<Car> carCriteria2 = new EasyQueryImpl<Car>(Car.class, getEntityManager());
 		carCriteria2.innerJoin("person");
-		// TODO carCriteria2.andJoinAttributeIsNotNull("person", "birthDayDate");
+		carCriteria2.andIsNotNull("person.birthDayDate");
 		assertTrue(carCriteria2.getResultList().size() == carsFromJPQL.size());
 		assertTrue(carCriteria2.getResultList().containsAll(carsFromJPQL));
 
@@ -2630,7 +2629,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Car> carCriteria3 = new EasyQueryImpl<Car>(Car.class, getEntityManager());
 		carCriteria3.innerJoin("person");
-		// TODO carCriteria3.andJoinAttributeIsNotNull("person", "clothesInCloset");
+		carCriteria3.andIsNotNull("person.clothesInCloset");
 		assertTrue(carCriteria3.getResultList().size() == carsFromJPQL.size());
 		assertTrue(carCriteria3.getResultList().containsAll(carsFromJPQL));
 
@@ -2639,7 +2638,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Dog> dogCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		dogCriteria.innerJoin("person");
-		// TODO dogCriteria.andJoinAttributeIsNotNull("person", "car");
+		dogCriteria.andIsNotNull("person.car");
 		assertTrue(dogCriteria.getResultList().size() == dogsFromJPQL.size());
 		assertTrue(dogCriteria.getResultList().containsAll(dogsFromJPQL));
 	}
@@ -2650,7 +2649,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinListIsEmpty("person", "dogs");
+		//easyCriteria.andJoinListIsEmpty("person", "dogs");
 
 		assertTrue(easyCriteria.getResultList().size() == carsFromJPQL.size());
 		assertTrue(easyCriteria.getResultList().containsAll(carsFromJPQL));
@@ -2662,7 +2661,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinCollectionIsEmpty("person", "cats");
+		easyCriteria.andCollectionIsEmpty("person.cats");
 
 		assertTrue(easyCriteria.getResultList().size() == carsFromJPQL.size());
 		assertTrue(easyCriteria.getResultList().containsAll(carsFromJPQL));
@@ -2675,7 +2674,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinSetIsEmpty("person", "certifications");
+		easyCriteria.andCollectionIsEmpty("person.certifications");
 
 		assertTrue(easyCriteria.getResultList().size() == carsFromJPQL.size());
 		assertTrue(easyCriteria.getResultList().containsAll(carsFromJPQL));
@@ -2688,7 +2687,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinListIsNotEmpty("person", "dogs");
+		//easyCriteria.andJoinListIsNotEmpty("person", "dogs");
 
 		assertTrue(easyCriteria.getResultList().size() == carsFromJPQL.size());
 		assertTrue(easyCriteria.getResultList().containsAll(carsFromJPQL));
@@ -2701,7 +2700,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinCollectionIsNotEmpty("person", "cats");
+		easyCriteria.andCollectionIsNotEmpty("person.cats");
 
 		assertTrue(easyCriteria.getResultList().size() == carsFromJPQL.size());
 		assertTrue(easyCriteria.getResultList().containsAll(carsFromJPQL));
@@ -2714,7 +2713,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinSetIsNotEmpty("person", "certifications");
+		//easyCriteria.andJoinSetIsNotEmpty("person", "certifications");
 
 		assertTrue(easyCriteria.getResultList().size() == carsFromJPQL.size());
 		assertTrue(easyCriteria.getResultList().containsAll(carsFromJPQL));
@@ -2727,7 +2726,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinStringLike("person", "name", "M%");
+		easyCriteria.andStringLike("person.name", "M%");
 		assertTrue(easyCriteria.getResultList().size() == dogsFromJPQL.size());
 		assertTrue(easyCriteria.getResultList().containsAll(dogsFromJPQL));
 
@@ -2735,7 +2734,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinStringLike("person", "name", "%y");
+		easyCriteria.andStringLike("person.name", "%y");
 		assertTrue(easyCriteria.getResultList().size() == dogsFromJPQL.size());
 		assertTrue(easyCriteria.getResultList().containsAll(dogsFromJPQL));
 	}
@@ -2747,7 +2746,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinStringNotLike("person", "name", "M%");
+		easyCriteria.andStringNotLike("person.name", "M%");
 		assertTrue(easyCriteria.getResultList().size() == dogsFromJPQL.size());
 		assertTrue(easyCriteria.getResultList().containsAll(dogsFromJPQL));
 
@@ -2757,7 +2756,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		easyCriteria.setDistinctTrue();
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinStringNotLike("person", "name", "%y");
+		easyCriteria.andStringNotLike("person.name", "%y");
 		assertTrue(easyCriteria.getResultList().size() == dogsFromJPQL.size());
 		assertTrue(easyCriteria.getResultList().containsAll(dogsFromJPQL));
 	}
@@ -2773,7 +2772,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinStringIn("person", "name", names);
+		easyCriteria.andStringIn("person.name", names);
 		assertTrue(easyCriteria.getResultList().size() == dogsFromJPQL.size());
 		assertTrue(easyCriteria.getResultList().containsAll(dogsFromJPQL));
 	}
@@ -2789,7 +2788,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinStringNotIn("person", "name", names);
+		easyCriteria.andStringNotIn("person.name", names);
 		assertTrue(easyCriteria.getResultList().size() == dogsFromJPQL.size());
 		assertTrue(easyCriteria.getResultList().containsAll(dogsFromJPQL));
 	}
@@ -2862,7 +2861,7 @@ public class EasyFilterTest extends AbstractTest {
 		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 		easyCriteria.innerJoin("car");
 
-		// easyCriteria.andJoinGreaterThan("car", "weight", new BigDecimal(20));
+		easyCriteria.andGreaterThan("car.weight", new BigDecimal(20));
 
 		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -2879,8 +2878,7 @@ public class EasyFilterTest extends AbstractTest {
 		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 		easyCriteria.innerJoin("car");
 
-		// easyCriteria.andJoinGreaterOrEqualTo("car", "weight", new
-		// BigDecimal(20));
+		easyCriteria.andGreaterOrEqualTo("car.weight", new BigDecimal(20));
 
 		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -2897,7 +2895,7 @@ public class EasyFilterTest extends AbstractTest {
 		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 		easyCriteria.innerJoin("car");
 
-		// easyCriteria.andJoinLessThan("car", "weight", new BigDecimal(30));
+		easyCriteria.andLessThan("car.weight", new BigDecimal(30));
 
 		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -2914,7 +2912,7 @@ public class EasyFilterTest extends AbstractTest {
 		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 		easyCriteria.innerJoin("car");
 
-		// easyCriteria.andJoinLessOrEqualTo("car", "weight", new BigDecimal(30));
+		easyCriteria.andLessOrEqualTo("car.weight", new BigDecimal(30));
 
 		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -3111,7 +3109,7 @@ public class EasyFilterTest extends AbstractTest {
 		EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
 
 		easyCriteria.addAndSeparatedByOr(1, "id", 1).addAndSeparatedByOr(1, "name", "Sing Out")
-				.addAndSeparatedByOr(2, "id", 2).addAndSeparatedByOr(2, "name", "Alive");
+				    .addAndSeparatedByOr(2, "id", 2).addAndSeparatedByOr(2, "name", "Alive");
 
 		List<Song> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -3235,28 +3233,28 @@ public class EasyFilterTest extends AbstractTest {
 	public void errorOnUnknownJoinAttributeGreaterThan() {
 		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 		easyCriteria.innerJoinFetch("dogs");
-		// easyCriteria.andJoinGreaterThan("dogs", "person", "Fire");
+		easyCriteria.andGreaterThan("dogs.person", "Fire");
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void errorOnUnknownJoinAttributeGreaterOrEqualTo() {
 		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 		easyCriteria.leftJoinFetch("car");
-		// easyCriteria.andJoinGreaterOrEqualTo("car", "person", null);
+		easyCriteria.andGreaterOrEqualTo("car.person", null);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void errorOnUnknownJoinAttributeLessThan() {
 		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 		easyCriteria.leftJoinFetch("car");
-		// easyCriteria.andJoinLessThan("car", "person", null);
+		easyCriteria.andLessThan("car.person", null);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void errorOnUnknownJoinAttributeLessOrEqualTo() {
 		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 		easyCriteria.leftJoinFetch("car");
-		// easyCriteria.andJoinLessOrEqualTo("car", "person", null);
+		easyCriteria.andLessOrEqualTo("car.person", null);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -3275,7 +3273,7 @@ public class EasyFilterTest extends AbstractTest {
 	public void errorOnJoinBetweenNotAllowedType() {
 		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 		easyCriteria.leftJoinFetch("car");
-		// easyCriteria.andJoinBetween("car", "person", null, null);
+		easyCriteria.andBetween("car.person", null, null);
 	}
 
 	@Test
@@ -3303,13 +3301,13 @@ public class EasyFilterTest extends AbstractTest {
 		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
 		easyCriteria.orEquals("name", CodeGenerator.PERSON01_NAME.toLowerCase(),
-				CodeGenerator.PERSON02_NAME.toLowerCase());
+								      CodeGenerator.PERSON02_NAME.toLowerCase());
 		assertEquals(0, easyCriteria.getResultList().size());
 
 		easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
 		easyCriteria.orEquals(true, "name", CodeGenerator.PERSON01_NAME.toLowerCase(),
-				CodeGenerator.PERSON02_NAME.toLowerCase());
+											 CodeGenerator.PERSON02_NAME.toLowerCase());
 		assertEquals(2, easyCriteria.getResultList().size());
 	}
 
@@ -3593,7 +3591,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinEquals(true, "person", "name", "John");
+		easyCriteria.andEquals(true, "person.name", "John");
 
 		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -3606,7 +3604,7 @@ public class EasyFilterTest extends AbstractTest {
 	public void isWhereInnerJoinLowerCaseLowerCaseExceptionWorking() {
 		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinEquals(true, "person", "name", 123);
+		easyCriteria.andEquals(true, "person.name", 123);
 	}
 
 	@Test
@@ -3622,7 +3620,7 @@ public class EasyFilterTest extends AbstractTest {
 		}
 
 		easyCriteria.innerJoinFetch("dogs");
-		// easyCriteria.andJoinNotEquals(true, "dogs", "name", "Fire");
+		easyCriteria.andNotEquals(true, "dogs.name", "Fire");
 
 		List<Person> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -3635,7 +3633,7 @@ public class EasyFilterTest extends AbstractTest {
 	public void isWhereJoinNotEqualsLowerCaseExceptionWorking() {
 		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 		easyCriteria.innerJoinFetch("dogs");
-		// easyCriteria.andJoinNotEquals(true, "dogs", "name", 123);
+		easyCriteria.andNotEquals(true, "dogs.name", 123);
 	}
 
 	@Test
@@ -3645,7 +3643,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinGreaterThan(true,"person", "name", "Mary");
+		easyCriteria.andGreaterThan(true,"person.name", "Mary");
 
 		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -3658,7 +3656,7 @@ public class EasyFilterTest extends AbstractTest {
 	public void isJoinStringGreaterThanLowerCaseExceptionWorking() {
 		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinGreaterThan(true, "person", "name", 123);
+		easyCriteria.andGreaterThan(true, "person.name", 123);
 	}
 
 	@Test
@@ -3668,7 +3666,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinGreaterOrEqualTo(true, "person", "name", "Mary");
+		easyCriteria.andGreaterOrEqualTo(true, "person.name", "Mary");
 
 		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -3681,7 +3679,7 @@ public class EasyFilterTest extends AbstractTest {
 	public void isJoinStringGreaterOrEqualToLowerCaseExceptionWorking() {
 		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinGreaterOrEqualTo(true, "person", "name", 123);
+		easyCriteria.andGreaterOrEqualTo(true, "person.name", 123);
 	}
 
 	@Test
@@ -3691,7 +3689,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinLessThan(true, "person", "name", "Mary");
+		easyCriteria.andLessThan(true, "person.name", "Mary");
 
 		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -3704,7 +3702,7 @@ public class EasyFilterTest extends AbstractTest {
 	public void isJoinStringLessThanLowerCaseExceptionWorking() {
 		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinLessThan(true, "person", "name", 123);
+		easyCriteria.andLessThan(true, "person.name", 123);
 	}
 
 	@Test
@@ -3714,7 +3712,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinLessOrEqualTo(true, "person", "name", "Mary");
+		easyCriteria.andLessOrEqualTo(true, "person.name", "Mary");
 
 		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -3727,7 +3725,7 @@ public class EasyFilterTest extends AbstractTest {
 	public void isJoinStringLessOrEqualToLowerCaseExceptionWorking() {
 		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinLessOrEqualTo(true, "person", "name", 1234);
+		easyCriteria.andLessOrEqualTo(true, "person.name", 1234);
 	}
 
 	@Test
@@ -3737,7 +3735,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinBetween(true, "person", "name", "a", "l");
+		easyCriteria.andBetween(true, "person.name", "a", "l");
 
 		List<Dog> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -3750,14 +3748,14 @@ public class EasyFilterTest extends AbstractTest {
 	public void isJoinStringBetweenLowerCaseExceptionParameter1Working() {
 		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinBetween(true, "person", "name", 1, "l");
+		easyCriteria.andBetween(true, "person.name", 1, "l");
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void isJoinStringBetweenLowerCaseExceptionParameter2Working() {
 		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinBetween(true, "person", "name", "a", 2);
+		easyCriteria.andBetween(true, "person.name", "a", 2);
 	}
 
 	@Test
@@ -3767,7 +3765,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinStringLike(true, "person", "name", "M%");
+		easyCriteria.andStringLike(true, "person.name", "M%");
 		assertTrue(easyCriteria.getResultList().size() == dogsFromJPQL.size());
 		assertTrue(easyCriteria.getResultList().containsAll(dogsFromJPQL));
 
@@ -3775,7 +3773,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinStringLike(true, "person", "name", "%y");
+		easyCriteria.andStringLike(true, "person.name", "%y");
 		assertTrue(easyCriteria.getResultList().size() == dogsFromJPQL.size());
 		assertTrue(easyCriteria.getResultList().containsAll(dogsFromJPQL));
 	}
@@ -3787,7 +3785,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinStringNotLike(true, "person", "name", "M%");
+		easyCriteria.andStringNotLike(true, "person.name", "M%");
 		assertTrue(easyCriteria.getResultList().size() == dogsFromJPQL.size());
 		assertTrue(easyCriteria.getResultList().containsAll(dogsFromJPQL));
 
@@ -3798,7 +3796,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		easyCriteria.setDistinctTrue();
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinStringNotLike(true, "person", "name", "%y");
+		easyCriteria.andStringNotLike(true, "person.name", "%y");
 		assertTrue(easyCriteria.getResultList().size() == dogsFromJPQL.size());
 		assertTrue(easyCriteria.getResultList().containsAll(dogsFromJPQL));
 	}
@@ -3814,7 +3812,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinStringIn(true, "person", "name", names);
+		easyCriteria.andStringIn(true, "person.name", names);
 		assertTrue(easyCriteria.getResultList().size() == dogsFromJPQL.size());
 		assertTrue(easyCriteria.getResultList().containsAll(dogsFromJPQL));
 	}
@@ -3830,7 +3828,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Dog> easyCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		// easyCriteria.andJoinStringNotIn(true, "person", "name", names);
+		easyCriteria.andStringNotIn(true, "person.name", names);
 		assertTrue(easyCriteria.getResultList().size() == dogsFromJPQL.size());
 		assertTrue(easyCriteria.getResultList().containsAll(dogsFromJPQL));
 	}
@@ -4093,7 +4091,7 @@ public class EasyFilterTest extends AbstractTest {
 	}
 
 	@Test
-	public void isMultipleJoinWhereWorking() {
+	public void isMultipleJoinWhereWorking() {  //TODO Bom Teste
 		List<Person> personsFromJPQL = getListFromJPQL(
 				"select p from Person p join p.car ca join ca.color co where co.name = 'Red'", Person.class);
 		assertTrue(personsFromJPQL.size() > 0);
@@ -4817,8 +4815,8 @@ public class EasyFilterTest extends AbstractTest {
 
 	@Test
 	public void isMultipleJoinWithStringLessThanWorking() {
-		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
-				+ "where n.name < '" + CodeGenerator.NICKNAME_B_NAME + "'";
+		String query = "select distinct m from Manufacturer m join m.products p join p.nickNames n "
+				       + "where n.name < '" + CodeGenerator.NICKNAME_B_NAME + "'";
 		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
 		assertTrue(personsFromJPQL.size() > 0);
 

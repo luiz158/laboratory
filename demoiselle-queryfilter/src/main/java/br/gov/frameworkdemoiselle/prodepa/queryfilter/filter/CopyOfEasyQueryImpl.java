@@ -8,22 +8,7 @@ import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import br.gov.frameworkdemoiselle.prodepa.queryfilter.conditions.BetweenCondition;
-import br.gov.frameworkdemoiselle.prodepa.queryfilter.conditions.EqualsCondition;
-import br.gov.frameworkdemoiselle.prodepa.queryfilter.conditions.GreaterOrEqualsCondition;
-import br.gov.frameworkdemoiselle.prodepa.queryfilter.conditions.GreaterThanCondition;
-import br.gov.frameworkdemoiselle.prodepa.queryfilter.conditions.InCondition;
-import br.gov.frameworkdemoiselle.prodepa.queryfilter.conditions.IsEmptyCondition;
-import br.gov.frameworkdemoiselle.prodepa.queryfilter.conditions.IsNotEmptyCondition;
-import br.gov.frameworkdemoiselle.prodepa.queryfilter.conditions.IsNotNullCondition;
-import br.gov.frameworkdemoiselle.prodepa.queryfilter.conditions.IsNullCondition;
-import br.gov.frameworkdemoiselle.prodepa.queryfilter.conditions.LikeCondition;
-import br.gov.frameworkdemoiselle.prodepa.queryfilter.conditions.LowerOrEqualsCondition;
-import br.gov.frameworkdemoiselle.prodepa.queryfilter.conditions.LowerThanCondition;
-import br.gov.frameworkdemoiselle.prodepa.queryfilter.conditions.NotEqualsCondition;
-import br.gov.frameworkdemoiselle.prodepa.queryfilter.conditions.NotInCondition;
-import br.gov.frameworkdemoiselle.prodepa.queryfilter.conditions.NotLikeCondition;
-import br.gov.frameworkdemoiselle.prodepa.queryfilter.conditions.commons.AbstractCondition;
+import br.gov.frameworkdemoiselle.prodepa.queryfilter.annotations.metadata.AndConditionType;
 import br.gov.frameworkdemoiselle.prodepa.queryfilter.exception.EasyQueryFilterException;
 import br.gov.frameworkdemoiselle.prodepa.queryfilter.util.StringUtil;
 
@@ -38,7 +23,7 @@ import br.gov.frameworkdemoiselle.prodepa.queryfilter.util.StringUtil;
  * @param <T>
  */
 @SuppressWarnings("unchecked")
-public class EasyQueryImpl<T> implements EasyQuery<T> {
+public class CopyOfEasyQueryImpl<T> implements EasyQuery<T> {
 
 	private Class<T> beanClass;
 
@@ -48,9 +33,9 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 	
 	private StringBuilder bQuery;
 
-	private List<AbstractCondition> andConditions;
+	private List<Condition> andConditions;
 
-	private List<AbstractCondition> orConditions;
+	private List<Condition> orConditions;
 
 	private List<String> ascOrderByConditions;
 
@@ -69,46 +54,32 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 
 	// Controles
 	private Integer conditionsCount;
-	
-	private Boolean countingTrue;
-	private Boolean distinctTrue;
+	private Boolean distinctTrue = false;
 	private String distinctON = null; //TODO Procurar forma de se fazer isso.
 
-	private static final Boolean toLowerCaseDefaultValeu = false;
+	private static final Boolean toLowerCaseDefaultValeu = true;
 
-	public EasyQueryImpl(Class<T> beanClass, EntityManager em) {
+	public CopyOfEasyQueryImpl(Class<T> beanClass, EntityManager em) {
 		super();
 
 		this.beanClass = beanClass;
 		this.em = em;
 
-		this.rootAlias = beanClass.getSimpleName().substring(0, 1).toLowerCase();
+		this.rootAlias = "_" + beanClass.getSimpleName().toLowerCase();
 
 		this.joins = new ArrayList<String>();
 		this.joinsPaths = new HashMap<String, String>();
 		
-		this.andConditions = new ArrayList<AbstractCondition>();
-		this.orConditions = new ArrayList<AbstractCondition>();
+		this.andConditions = new ArrayList<CopyOfEasyQueryImpl<T>.Condition>();
+		this.orConditions = new ArrayList<CopyOfEasyQueryImpl<T>.Condition>();
 
 		this.ascOrderByConditions = new ArrayList<String>();
 		this.descOrderByConditions = new ArrayList<String>();
 
 		this.params = new HashMap<String, Object>();
-		
-		this.countingTrue = false;
-		this.distinctTrue = false;
-		this.distinctON = null;
-		
+
 		this.conditionsCount = 0;
 
-	}
-	
-	private void initializeControls() {
-		this.countingTrue = false;
-		//this.distinctTrue = false;
-		//this.distinctON = null;
-		
-		this.conditionsCount = 0;
 	}
 
 	public void setResultClass(Class<?> resultClass) {
@@ -117,14 +88,13 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 
 	public void setResultColumns(String[] columns) {
 		// TODO Deve haver um modo melhor para converter String[] para List<String>
-		initializeControls();
 		this.resultColumns = columns;
 	}
 
 	public List<T> getResultList() {
 		// TODO Caso não haja resultSetColumns ou ???, o resultado será simples
-		initializeControls();
 		buildQuery();
+		
 		return (List<T>) query.getResultList();
 	}
 
@@ -135,10 +105,8 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 	}
 
 	public Long count() {
-		this.countingTrue = true;
-		buildQuery();
-		this.countingTrue = false;
-		return (Long) query.getSingleResult();
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	public EasyQuery<T> addAnnotatedFilter(Object filter) throws EasyQueryFilterException {
@@ -157,8 +125,7 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 	}
 
 	public EasyQuery<T> andEquals(boolean toLowerCase, String attributeName, Object value) {
-		andConditions.add(new EqualsCondition(getAttributePath(attributeName), value, toLowerCase, this.conditionsCount));
-		this.conditionsCount ++;
+		andConditions.add(new Condition(AndConditionType.EQUAL, attributeName, value, toLowerCase));
 		return this;
 	}
 
@@ -167,8 +134,7 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 	}
 
 	public EasyQuery<T> andNotEquals(boolean toLowerCase, String attributeName, Object value) {
-		andConditions.add(new NotEqualsCondition(getAttributePath(attributeName), value, toLowerCase, this.conditionsCount));
-		this.conditionsCount ++;
+		andConditions.add(new Condition(AndConditionType.NOT_EQUALS, attributeName, value, toLowerCase));
 		return this;
 	}
 
@@ -177,8 +143,7 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 	}
 
 	public EasyQuery<T> andGreaterThan(boolean toLowerCase, String attributeName, Object value) {
-		andConditions.add(new GreaterThanCondition(getAttributePath(attributeName), value, toLowerCase, this.conditionsCount));
-		this.conditionsCount ++;
+		andConditions.add(new Condition(AndConditionType.GT, attributeName, value, toLowerCase));
 		return this;
 	}
 
@@ -187,8 +152,7 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 	}
 
 	public EasyQuery<T> andGreaterOrEqualTo(boolean toLowerCase, String attributeName, Object value) {
-		andConditions.add(new GreaterOrEqualsCondition(getAttributePath(attributeName), value, toLowerCase, this.conditionsCount));
-		this.conditionsCount ++;
+		andConditions.add(new Condition(AndConditionType.GE, attributeName, value, toLowerCase));
 		return this;
 	}
 
@@ -197,8 +161,7 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 	}
 
 	public EasyQuery<T> andLessThan(boolean toLowerCase, String attributeName, Object value) {
-		andConditions.add(new LowerThanCondition(getAttributePath(attributeName), value, toLowerCase, this.conditionsCount));
-		this.conditionsCount ++;
+		andConditions.add(new Condition(AndConditionType.LT, attributeName, value, toLowerCase));
 		return this;
 	}
 
@@ -207,8 +170,7 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 	}
 
 	public EasyQuery<T> andLessOrEqualTo(boolean toLowerCase, String attributeName, Object value) {
-		andConditions.add(new LowerOrEqualsCondition(getAttributePath(attributeName), value, toLowerCase, this.conditionsCount));
-		this.conditionsCount ++;
+		andConditions.add(new Condition(AndConditionType.LE, attributeName, value, toLowerCase));
 		return this;
 	}
 
@@ -217,32 +179,27 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 	}
 
 	public EasyQuery<T> andBetween(boolean toLowerCase, String attributeName, Object valueA, Object valueB) {
-		andConditions.add(new BetweenCondition(getAttributePath(attributeName), valueA, valueB, toLowerCase, this.conditionsCount));
-		this.conditionsCount ++;
+		andConditions.add(new Condition(AndConditionType.BETWEEN, attributeName, valueA, valueB, toLowerCase));
 		return this;
 	}
 
 	public EasyQuery<T> andIsNull(String attributeName) {
-		andConditions.add(new IsNullCondition(getAttributePath(attributeName), this.conditionsCount));
-		this.conditionsCount ++;
+		andConditions.add(new Condition(AndConditionType.IS_NULL, attributeName, null, null));
 		return this;
 	}
 
 	public EasyQuery<T> andIsNotNull(String attributeName) {
-		andConditions.add(new IsNotNullCondition(getAttributePath(attributeName), this.conditionsCount));
-		this.conditionsCount ++;
+		andConditions.add(new Condition(AndConditionType.IS_NOT_NULL, attributeName, null, null));
 		return this;
 	}
 
 	public EasyQuery<T> andCollectionIsEmpty(String collectionName) {
-		andConditions.add(new IsEmptyCondition(getAttributePath(collectionName), this.conditionsCount));
-		this.conditionsCount ++;
+		// TODO Auto-generated method stub
 		return this;
 	}
 
 	public EasyQuery<T> andCollectionIsNotEmpty(String collectionName) {
-		andConditions.add(new IsNotEmptyCondition(getAttributePath(collectionName), this.conditionsCount));
-		this.conditionsCount ++;
+		// TODO Auto-generated method stub
 		return this;
 	}
 
@@ -251,8 +208,7 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 	}
 
 	public EasyQuery<T> andStringLike(boolean toLowerCase, String attributeName, String value) {
-		andConditions.add(new LikeCondition(getAttributePath(attributeName), value, toLowerCase, this.conditionsCount));
-		this.conditionsCount ++;
+		andConditions.add(new Condition(AndConditionType.LIKE, attributeName, value, toLowerCase));
 		return this;
 	}
 
@@ -261,8 +217,7 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 	}
 
 	public EasyQuery<T> andStringNotLike(boolean toLowerCase, String attributeName, String value) {
-		andConditions.add(new NotLikeCondition(getAttributePath(attributeName), value, toLowerCase, this.conditionsCount));
-		this.conditionsCount ++;
+		andConditions.add(new Condition(AndConditionType.NOT_LIKE, attributeName, value, toLowerCase));
 		return this;
 	}
 
@@ -272,8 +227,7 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 
 	public EasyQuery<T> andStringIn(boolean toLowerCase, String attributeName, List<String> values) {
 		// TODO Acho que falta algo aki
-		andConditions.add(new InCondition(getAttributePath(attributeName), values, toLowerCase, this.conditionsCount));
-		this.conditionsCount ++;
+		andConditions.add(new Condition(AndConditionType.IN, attributeName, values, toLowerCase));
 		return this;
 	}
 
@@ -282,8 +236,7 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 	}
 
 	public EasyQuery<T> andStringNotIn(boolean toLowerCase, String attributeName, List<String> values) {
-		andConditions.add(new NotInCondition(getAttributePath(attributeName), values, toLowerCase, this.conditionsCount));
-		this.conditionsCount ++;
+		andConditions.add(new Condition(AndConditionType.NOT_IN, attributeName, values, toLowerCase));
 		return this;
 	}
 
@@ -302,133 +255,62 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 	 */
 
 	public EasyQuery<T> orEquals(String attributeName, Object... values) {
-		orEquals(toLowerCaseDefaultValeu, attributeName, values);
+		// TODO Auto-generated method stub
 		return this;
 	}
 
-	public EasyQuery<T> orEquals(boolean toLowerCase, String attributeName, Object... value) {
-		for (Object object : value) {
-			orConditions.add(new EqualsCondition(getAttributePath(attributeName), object, toLowerCase, this.conditionsCount));
-			this.conditionsCount ++;
-		}
+	public EasyQuery<T> orEquals(boolean toLowerCase, String attributeName, Object... values) {
+		// TODO Auto-generated method stub
 		return this;
 	}
 
 	public EasyQuery<T> orEquals(int index, String attributeName, Object... values) {
 		// TODO Auto-generated method stub
-		//TODO copiar logica do orEquals
 		return this;
 	}
 
 	public EasyQuery<T> orEquals(boolean toLowerCase, int index, String attributeName, Object... values) {
 		// TODO Auto-generated method stub
 		// orConditions.put(OrConditionType.EQUAL, new Condition(attributeName, value));
-		//TODO copiar logica do orEquals
+
 		return this;
 	}
 
 	public EasyQuery<T> orNotEquals(String attributeName, Object... values) {
-		orNotEquals(toLowerCaseDefaultValeu, attributeName, values);
-		//TODO copiar logica do orEquals
+		// TODO Auto-generated method stub
 		return this;
 	}
 
 	public EasyQuery<T> orNotEquals(boolean toLowerCase, String attributeName, Object... values) {
-		orConditions.add(new NotEqualsCondition(getAttributePath(attributeName), values, toLowerCase, this.conditionsCount));
-		this.conditionsCount ++;
+		// TODO Auto-generated method stub
 		return this;
 	}
-	
-	public EasyQuery<T> orIn(String attributeName, List<?> values) {
-		orIn(toLowerCaseDefaultValeu, attributeName, values);
-		return this;
-	}
-	
-	public EasyQuery<T> orIn(boolean toLowerCase, String attributeName, List<?> values) {
-		orConditions.add(new InCondition(getAttributePath(attributeName), values, toLowerCase, this.conditionsCount));
-		this.conditionsCount ++;
-		return this;
-	}
-	
-	public EasyQuery<T> orNotIn(String attributeName, List<?> values) {
-		orNotIn(toLowerCaseDefaultValeu, attributeName, values);
-		return this;
-	}
-	  
-	public EasyQuery<T> orNotIn(boolean toLowerCase, String attributeName, List<?> values) {
-		orConditions.add(new InCondition(getAttributePath(attributeName), values, toLowerCase, this.conditionsCount));
-		this.conditionsCount ++;
-		return this;
-	}
-	  
 
 	/**
 	 * JOINS Clausules
 	 */
 
 	public EasyQuery<T> innerJoin(String joinName) {
-		//TODO Esta bem complicado...........
+		// Acho que será o
+		this.joins.add(" INNER JOIN " + this.rootAlias + "." + joinName + " " + StringUtil.castToAliasName(joinName));
 		
-		this.joins.add(" INNER JOIN " + this.rootAlias + "." + joinName + " " + StringUtil.castToAliasName(joinName.toString()));
-		
-		this.joinsPaths.put(joinName.toString(), StringUtil.castToAliasName(joinName.toString()));
-		
-		/*
-		String[] paths = joinName.split("\\.");
-		
-		for (int i = 0; i < paths.length; i++) {
-			
-			StringBuilder joinB = new StringBuilder();
-			for (int j = 0; j <= i; j++) {
-				joinB.append(paths[j]);
-				joinB.append(".");
-			}
-			
-			joinB.delete(joinB.length() -1 , joinB.length());
-			
-			String join = null;
-			if(this.joinsPaths.containsKey(joinB.toString())) {
-				join = this.joinsPaths.get(joinB).toString();
-			} else {
-				join = joinB.toString();
-			}
-			
-			this.joins.add(" INNER JOIN " + this.rootAlias + "." + join + " " + StringUtil.castToAliasName(join.toString()));
-			
-			this.joinsPaths.put(join.toString(), StringUtil.castToAliasName(join.toString()));
-		}
-		*/
+		this.joinsPaths.put(joinName, StringUtil.castToAliasName(joinName));
 		
 		return this;
 	}
 
 	public EasyQuery<T> leftJoin(String joinName) {
-		
-		//TODO Compartilhar logica com INNER JOIN
-		
-		this.joins.add(" LEFT JOIN " + this.rootAlias + "." + joinName + " " + StringUtil.castToAliasName(joinName.toString()));
-		
-		this.joinsPaths.put(joinName.toString(), StringUtil.castToAliasName(joinName.toString()));
-		
+		this.joins.add(" LEFT JOIN " + this.rootAlias + "." + joinName);
 		return this;
 	}
 
 	public EasyQuery<T> innerJoinFetch(String joinName) {
-		
-		//TODO Compartilhar logica com INNER JOIN
-		
-		this.joins.add(" INNER JOIN FETCH " + this.rootAlias + "." + joinName + " " + StringUtil.castToAliasName(joinName.toString()));
-		
-		this.joinsPaths.put(joinName.toString(), StringUtil.castToAliasName(joinName.toString()));
+		this.joins.add(" INNER JOIN FETCH " + this.rootAlias + "." + joinName);
 		return this;
 	}
 
 	public EasyQuery<T> leftJoinFetch(String joinName) {
-		
-		//TODO Compartilhar logica com INNER JOIN
-		this.joins.add(" LEFT JOIN FETCH " + this.rootAlias + "." + joinName + " " + StringUtil.castToAliasName(joinName.toString()));
-		
-		this.joinsPaths.put(joinName.toString(), StringUtil.castToAliasName(joinName.toString()));
+		this.joins.add(" LEFT JOIN FETCH " + this.rootAlias + "." + joinName);
 		return this;
 	}
 
@@ -491,19 +373,15 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 
 		buildOrs();
 
-		buildOrderes();
+		buildOrderes(this.bQuery);
 
 		System.out.println(this.bQuery.toString());
 		return this.bQuery.toString();
 	}
 
 	private void buildSelect() {
-		
 		if (this.returnClass == null && this.resultColumns == null) {
 
-			if(this.countingTrue) {
-				this.bQuery.append("SELECT COUNT( " + this.rootAlias + ") ");
-			} else 
 			if(this.distinctTrue) {
 				this.bQuery.append("SELECT DISTINCT " + this.rootAlias);
 			} else {
@@ -518,9 +396,6 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 
 			} else {
 				// As colunas do retorno foram definidas
-				if(this.countingTrue) {
-					this.bQuery.append("SELECT COUNT( " + this.rootAlias + ") ");
-				} else
 				if(this.distinctTrue) {
 					this.bQuery.append("SELECT DISTINCT ");
 				} else {
@@ -549,77 +424,77 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 	
 	private void buidAnds() {
 
-		for (AbstractCondition c : andConditions) {
-			
-			if (c.getSequence() == 0) {
+		//TODO refatorar!!!!!!!!!!!!!!!!!
+		
+		for (Condition c : andConditions) {
+			if (this.conditionsCount == 0) {
 				this.bQuery.append(" WHERE ");
 			} else {
 				this.bQuery.append(" AND ");
 			}
+
+			// TODO e as JOINS ?
 			
-			this.bQuery.append(c.getFragment());
-			this.params.putAll(c.getFragmentParams());
+			if(c.getAttribute().contains(".")) {
+				
+				//TODO BUG isso não está funcionando para joins em multiplos níveis
+				String join = c.getAttribute().split("\\.")[0];
+				
+				if(!this.joinsPaths.containsKey(join)) {
+					//TODO throw - o join é invalido 
+				}
+				
+				if(c.getType().equals(AndConditionType.BETWEEN)) {
+					this.bQuery.append(c.getAttribute().replace(join, this.joinsPaths.get(join)) + " " + c.getType().getOperator() + " :" + StringUtil.castToParamName(c.getAttribute()) + "_A AND " + StringUtil.castToParamName(c.getAttribute()) + "_B");
+				} else {
+					this.bQuery.append(c.getAttribute().replace(join, this.joinsPaths.get(join)) + " " + c.getType().getOperator() + " :" + StringUtil.castToParamName(c.getAttribute()));
+				}
+				
+				
+			} else {
+				
+				if(c.getType().equals(AndConditionType.BETWEEN)) {
+					this.bQuery.append(this.rootAlias +"."+ c.getAttribute() + " " + c.getType().getOperator() + " :" + c.getAttribute() + "_A AND :" +  c.getAttribute() + "_B");
+				} else {
+					this.bQuery.append(this.rootAlias +"."+ c.getAttribute() + " " + c.getType().getOperator() + " :" + c.getAttribute());
+				}
+				
+			}
+			
+			if(c.getType().equals(AndConditionType.BETWEEN)) {
+				this.params.put(StringUtil.castToParamName(c.getAttribute())+ "_A", c.getValue());
+				this.params.put(StringUtil.castToParamName(c.getAttribute())+ "_B", c.getValueB());
+			} else {
+				this.params.put(c.getAttribute().replace(".", "_"), c.getValue()); //TODO Pode ser que sejam valorA e valorB
+				
+			}
+			
+			this.conditionsCount++;
 		}
 
 	}
 
 	private void buildOrs() {
-		Boolean envolver = andConditions.size() > 0 && orConditions.size() > 0; 
-		if(envolver) {
-			this.bQuery.append(" ( ");
-		}
 		
-		for (AbstractCondition c : orConditions) {
-			
-			if (c.getSequence() == 0) {
+		//TODO Não implementado ainda
+		
+		for (Condition c : orConditions) {
+			if (this.conditionsCount == 0) {
 				this.bQuery.append(" WHERE ");
 			} else {
-				this.bQuery.append(" OR ");
+				this.bQuery.append(" AND ");
 			}
-			
-			this.bQuery.append(c.getFragment());
-			this.params.putAll(c.getFragmentParams());
-		}
-		if(envolver) {
-			this.bQuery.append(" ) ");
+			this.conditionsCount++;
 		}
 	}
 
-	private void buildOrderes() {
-		
-		if(!ascOrderByConditions.isEmpty() || !descOrderByConditions.isEmpty()) {
-			this.bQuery.append(" ORDER ");
-		}
-		
+	private void buildOrderes(StringBuilder q) {
 		for (String o : ascOrderByConditions) {
-			this.bQuery.append(o + " ASC, ");
-		}
-		for (String o : descOrderByConditions) {
-			this.bQuery.append(o + " DESC, ");
-		}
-		
-		if(!ascOrderByConditions.isEmpty() || !descOrderByConditions.isEmpty()) {
-			this.bQuery.delete(this.bQuery.length() - 1, this.bQuery.length());
-		}
-		
-	}
-	
-	private String getAttributePath(String attribute) {
-		
-		if(attribute.contains(".")) {
 
-			String path = attribute.substring(0, attribute.lastIndexOf("."));
-			
-			if(this.joinsPaths.containsKey(path)) {
-				return attribute.replace(path, this.joinsPaths.get(path));
-			} else {
-				throw new IllegalArgumentException("O join \"" + path + "\" não exite");
-			}
-			
-		} else {
-			return this.rootAlias + "." + attribute;
 		}
-		
+		for (String o : ascOrderByConditions) {
+
+		}
 	}
 	
 	private void putParams() {
@@ -630,7 +505,7 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 		}
 	}
 
-	/*private class Condition {
+	private class Condition {
 
 		private AndConditionType type;
 
@@ -677,12 +552,38 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 		public Object getValueB() {
 			return valueB;
 		}
-	}*/
+	}
 
 	@Override
 	public String toString() {
 		
 		return super.toString();
 	}
+
+
+	@Override
+	public EasyQuery<T> orNotIn(String attributeName, List<?> values) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public EasyQuery<T> orNotIn(boolean toLowerCase, String attributeName, List<?> values) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public EasyQuery<T> orIn(String attributeName, List<?> values) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public EasyQuery<T> orIn(boolean toLowerCase, String attributeName, List<?> values) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 }

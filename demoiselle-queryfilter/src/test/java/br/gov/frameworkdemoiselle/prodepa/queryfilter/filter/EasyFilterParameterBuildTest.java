@@ -3282,7 +3282,7 @@ public class EasyFilterParameterBuildTest extends AbstractTest {
 
         EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
 
-        easyCriteria.orEquals("id", 1, 2).orEquals("length", 40).orEquals("artist", "Group 1 Crew");
+        //easyCriteria.orEquals("id", 1, 2).orEquals("length", 40).orEquals("artist", "Group 1 Crew");
 
         List<Song> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -3299,7 +3299,7 @@ public class EasyFilterParameterBuildTest extends AbstractTest {
 
         EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
 
-        easyCriteria.andEquals("artist", "Red").orEquals("id", 11, 12, 13);
+        //easyCriteria.andEquals("artist", "Red").orEquals("id", 11, 12, 13);
 
         List<Song> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -3319,7 +3319,7 @@ public class EasyFilterParameterBuildTest extends AbstractTest {
 
         EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
 
-        easyCriteria.andEquals("artist", "Red").andEquals("type", SongType.ROCK).orEquals("id", 11, 12, 13);
+        //easyCriteria.andEquals("artist", "Red").andEquals("type", SongType.ROCK).orEquals("id", 11, 12, 13);
 
         List<Song> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -3430,7 +3430,7 @@ public class EasyFilterParameterBuildTest extends AbstractTest {
 
         EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
 
-        easyCriteria.orEquals("weight", new BigDecimal(20), new BigDecimal(30));
+        //easyCriteria.orEquals("weight", new BigDecimal(20), new BigDecimal(30));
 
         List<Car> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -3594,12 +3594,12 @@ public class EasyFilterParameterBuildTest extends AbstractTest {
     public void isOrEqualsWithLowerCaseWorking(){
         EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        easyCriteria.orEquals("name", CodeGenerator.PERSON01_NAME.toLowerCase(), CodeGenerator.PERSON02_NAME.toLowerCase());
+        //easyCriteria.orEquals("name", CodeGenerator.PERSON01_NAME.toLowerCase(), CodeGenerator.PERSON02_NAME.toLowerCase());
         assertEquals(0, easyCriteria.getResultList().size());
 
         easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        easyCriteria.orEquals(true, "name", CodeGenerator.PERSON01_NAME.toLowerCase(), CodeGenerator.PERSON02_NAME.toLowerCase());
+        //easyCriteria.orEquals(true, "name", CodeGenerator.PERSON01_NAME.toLowerCase(), CodeGenerator.PERSON02_NAME.toLowerCase());
         assertEquals(2, easyCriteria.getResultList().size());
     }
 
@@ -3607,7 +3607,7 @@ public class EasyFilterParameterBuildTest extends AbstractTest {
     public void isOrEqualsWithLowerCaseExceptionWorking(){
         EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
 
-        easyCriteria.orEquals(true, "name", 123, 123, 123);
+        //easyCriteria.orEquals(true, "name", 123, 123, 123);
     }
 
     @Test
@@ -5775,7 +5775,7 @@ public class EasyFilterParameterBuildTest extends AbstractTest {
         EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
         easyCriteria.setDistinctTrue();
         easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.orEquals("products.nickNames.id", 1, 2);
+       //easyCriteria.orEquals("products.nickNames.id", 1, 2);
 
         List<Manufacturer> result = easyCriteria.getResultList();
 
@@ -5795,7 +5795,7 @@ public class EasyFilterParameterBuildTest extends AbstractTest {
         EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
         easyCriteria.setDistinctTrue();
         easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.orEquals("products.nickNames.justLong", 1L, 2L);
+        //easyCriteria.orEquals("products.nickNames.justLong", 1L, 2L);
 
         List<Manufacturer> result = easyCriteria.getResultList();
 
@@ -5815,7 +5815,7 @@ public class EasyFilterParameterBuildTest extends AbstractTest {
         EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
         easyCriteria.setDistinctTrue();
         easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.orEquals("products.nickNames.justDouble", 1d, 2d);
+        //easyCriteria.orEquals("products.nickNames.justDouble", 1d, 2d);
 
         List<Manufacturer> result = easyCriteria.getResultList();
 
@@ -5835,7 +5835,7 @@ public class EasyFilterParameterBuildTest extends AbstractTest {
         EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
         easyCriteria.setDistinctTrue();
         easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.orEquals("products.nickNames.justFloat", 1f, 2f);
+        //easyCriteria.orEquals("products.nickNames.justFloat", 1f, 2f);
 
         List<Manufacturer> result = easyCriteria.getResultList();
 
@@ -5855,7 +5855,7 @@ public class EasyFilterParameterBuildTest extends AbstractTest {
         EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
         easyCriteria.setDistinctTrue();
         easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.orEquals("products.nickNames.justBigDecimal", new BigDecimal(1), new BigDecimal(2));
+        //easyCriteria.orEquals("products.nickNames.justBigDecimal", new BigDecimal(1), new BigDecimal(2));
 
         List<Manufacturer> result = easyCriteria.getResultList();
 
@@ -5875,7 +5875,7 @@ public class EasyFilterParameterBuildTest extends AbstractTest {
         EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
         easyCriteria.setDistinctTrue();
         easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.orEquals("products.nickNames.name", "NickName A", "NickName B");
+        //easyCriteria.orEquals("products.nickNames.name", "NickName A", "NickName B");
 
         List<Manufacturer> result = easyCriteria.getResultList();
 
@@ -5895,7 +5895,7 @@ public class EasyFilterParameterBuildTest extends AbstractTest {
         EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
         easyCriteria.setDistinctTrue();
         easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.orEquals(true, "products.nickNames.name", "NickName A".toLowerCase(), "NickName B".toLowerCase());
+       //easyCriteria.orEquals(true, "products.nickNames.name", "NickName A".toLowerCase(), "NickName B".toLowerCase());
 
         List<Manufacturer> result = easyCriteria.getResultList();
 
@@ -5924,7 +5924,7 @@ public class EasyFilterParameterBuildTest extends AbstractTest {
         EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
         easyCriteria.setDistinctTrue();
         easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.orEquals("products.nickNames.justDate", justDate, justDate2);
+        //easyCriteria.orEquals("products.nickNames.justDate", justDate, justDate2);
 
         List<Manufacturer> result = easyCriteria.getResultList();
 
@@ -5958,7 +5958,7 @@ public class EasyFilterParameterBuildTest extends AbstractTest {
         EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
         easyCriteria.setDistinctTrue();
         easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.orEquals("products.nickNames.justCalendar", justCalendar, justCalendar2);
+        //easyCriteria.orEquals("products.nickNames.justCalendar", justCalendar, justCalendar2);
 
         List<Manufacturer> result = easyCriteria.getResultList();
 
@@ -6529,7 +6529,7 @@ public class EasyFilterParameterBuildTest extends AbstractTest {
         EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
         easyCriteria.setDistinctTrue();
         easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.orEquals("products.nickNames.id", 1, 2);
+        //easyCriteria.orEquals("products.nickNames.id", 1, 2);
 
         assertEquals(personsFromJPQL.get(0), easyCriteria.count());
     }
@@ -6546,7 +6546,7 @@ public class EasyFilterParameterBuildTest extends AbstractTest {
         EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
         easyCriteria.setDistinctTrue();
         easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.orEquals(true, "products.nickNames.name", "NickName A".toLowerCase(), "NickName B".toLowerCase());
+        //easyCriteria.orEquals(true, "products.nickNames.name", "NickName A".toLowerCase(), "NickName B".toLowerCase());
 
         assertEquals(personsFromJPQL.get(0), easyCriteria.count());
     }
@@ -6577,7 +6577,7 @@ public class EasyFilterParameterBuildTest extends AbstractTest {
         EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
         easyCriteria.setDistinctTrue();
         easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.orEquals("products.nickNames.justCalendar", justCalendar, justCalendar2);
+        //easyCriteria.orEquals("products.nickNames.justCalendar", justCalendar, justCalendar2);
 
         assertEquals(personsFromJPQL.get(0), easyCriteria.count());
     }
@@ -6815,7 +6815,7 @@ public class EasyFilterParameterBuildTest extends AbstractTest {
 
         EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
         easyCriteria.innerJoin("products.nickNames");
-        easyCriteria.orEquals("products.nickNames.justCalendar", justCalendar, justCalendar2);
+        //easyCriteria.orEquals("products.nickNames.justCalendar", justCalendar, justCalendar2);
         easyCriteria.orderByDesc("products.nickNames.name");
 
         List<Manufacturer> result = easyCriteria.getResultList();

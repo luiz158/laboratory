@@ -8,6 +8,6 @@ public class StringUtil {
 	}
 	
 	public static String castToParamName(String name) {
-		return name.toLowerCase().replace(".","_");
+		return name.replace(".","_");
 	}
 }

@@ -754,6 +754,15 @@ public interface EasyQuery<T> {
    */
   public EasyQuery<T> andStringNotIn(boolean toLowerCase, String attributeName, List<String> values);
 
+  
+  public EasyQuery<T> orNotIn(String attributeName, List<?> values);
+  
+  public EasyQuery<T> orNotIn(boolean toLowerCase, String attributeName, List<?> values);
+  
+  public EasyQuery<T> orIn(String attributeName, List<?> values);
+  
+  public EasyQuery<T> orIn(boolean toLowerCase, String attributeName, List<?> values);
+  
   /**
    * Will order your query result. A JPQL like bellow might be created: <br/><br/>
    * <code>select p from Person p order by p.name asc</code> <br/><br/>

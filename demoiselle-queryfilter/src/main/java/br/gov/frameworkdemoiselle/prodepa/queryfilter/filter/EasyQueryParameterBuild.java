@@ -294,11 +294,11 @@ public class EasyQueryParameterBuild<T> {
       criteria.andIsNotNull(attributeName);
     } else
 
-    if (AndConditionType.LIST_IS_EMPTY.equals(type)) {
+    if (AndConditionType.IS_EMPTY.equals(type)) {
       criteria.andCollectionIsEmpty(attributeName);
     } else
 
-    if (AndConditionType.LIST_IS_NOT_EMPTY.equals(type)) {
+    if (AndConditionType.IS_NOT_EMPTY.equals(type)) {
       criteria.andCollectionIsNotEmpty(attributeName);
     } else
 
