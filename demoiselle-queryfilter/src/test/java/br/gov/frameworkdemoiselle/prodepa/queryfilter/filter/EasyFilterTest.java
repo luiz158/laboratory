@@ -2575,7 +2575,8 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Car> carCriteria1 = new EasyQueryImpl<Car>(Car.class, getEntityManager());
 		carCriteria1.innerJoin("person");
-		// TODO carCriteria1.andJoinAttributeIsNull("person", "nickName");
+		carCriteria1.andIsNull("person.nickName");
+		
 		assertTrue(carCriteria1.getResultList().size() == carsFromJPQL.size());
 		assertTrue(carCriteria1.getResultList().containsAll(carsFromJPQL));
 
@@ -2583,7 +2584,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Car> carCriteria2 = new EasyQueryImpl<Car>(Car.class, getEntityManager());
 		carCriteria2.innerJoin("person");
-		// TODO carCriteria2.andJoinAttributeIsNull("person", "birthDayDate");
+		carCriteria2.andIsNull("person.birthDayDate");
 		assertTrue(carCriteria2.getResultList().size() == carsFromJPQL.size());
 		assertTrue(carCriteria2.getResultList().containsAll(carsFromJPQL));
 
@@ -2591,7 +2592,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Car> carCriteria3 = new EasyQueryImpl<Car>(Car.class, getEntityManager());
 		carCriteria3.innerJoin("person");
-		// TODO carCriteria3.andJoinAttributeIsNull("person", "clothesInCloset");
+		carCriteria3.andIsNull("person.clothesInCloset");
 		assertTrue(carCriteria3.getResultList().size() == carsFromJPQL.size());
 		assertTrue(carCriteria3.getResultList().containsAll(carsFromJPQL));
 
@@ -2599,7 +2600,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Dog> dogCriteria = new EasyQueryImpl<Dog>(Dog.class, getEntityManager());
 		dogCriteria.innerJoin("person");
-		// TODO dogCriteria.andJoinAttributeIsNull("person", "car");
+		dogCriteria.andIsNull("person.car");
 		assertTrue(dogCriteria.getResultList().size() == dogsFromJPQL.size());
 		assertTrue(dogCriteria.getResultList().containsAll(dogsFromJPQL));
 	}
@@ -2649,7 +2650,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		//easyCriteria.andJoinListIsEmpty("person", "dogs");
+		easyCriteria.andCollectionIsEmpty("person.dogs");
 
 		assertTrue(easyCriteria.getResultList().size() == carsFromJPQL.size());
 		assertTrue(easyCriteria.getResultList().containsAll(carsFromJPQL));
@@ -2713,7 +2714,7 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Car> easyCriteria = new EasyQueryImpl<Car>(Car.class, getEntityManager());
 		easyCriteria.innerJoin("person");
-		//easyCriteria.andJoinSetIsNotEmpty("person", "certifications");
+		easyCriteria.andCollectionIsNotEmpty("person.certifications");
 
 		assertTrue(easyCriteria.getResultList().size() == carsFromJPQL.size());
 		assertTrue(easyCriteria.getResultList().containsAll(carsFromJPQL));
@@ -3065,8 +3066,10 @@ public class EasyFilterTest extends AbstractTest {
 
 		EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
 
-		easyCriteria.orEquals("id", "1").orEquals("id", "2").orEquals(2, "name", "Sing Out")
-				.orEquals(2, "name", "Alive");
+		easyCriteria.orEquals("id", "1")
+					.orEquals("id", "2")
+					.orEquals(2, "name", "Sing Out")
+					.orEquals(2, "name", "Alive");
 
 		List<Song> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -3124,15 +3127,18 @@ public class EasyFilterTest extends AbstractTest {
 		parameters.put("type", SongType.PRAISE);
 
 		List<Song> songsFromJPQL = getListFromJPQL(
-				"select s from Song s where (s.totalDownloads = 20 and s.price = 20.00) or (s.weight = 10.00 and s.type = :type)",
+				"select s from Song s where (s.totalDownloads = 20 and s.price = 20.00) "
+									   +"or (s.weight = 10.00 and s.type = :type)",
 				Song.class, parameters);
 
 		assertTrue(songsFromJPQL.size() == 2);
 
 		EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
 
-		easyCriteria.addAndSeparatedByOr(1, "totalDownloads", 20L).addAndSeparatedByOr(1, "price", 20.00d)
-				.addAndSeparatedByOr(2, "weight", 10.00f).addAndSeparatedByOr(2, "type", SongType.PRAISE);
+		easyCriteria.addAndSeparatedByOr(1, "totalDownloads", 20L)
+					.addAndSeparatedByOr(1, "price", 20.00d)
+					.addAndSeparatedByOr(2, "weight", 10.00f)
+					.addAndSeparatedByOr(2, "type", SongType.PRAISE);
 
 		List<Song> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -3321,8 +3327,8 @@ public class EasyFilterTest extends AbstractTest {
 	@Test
 	public void isOrEqualsWithIndexLowerCaseWorking() {
 		EasyQuery<Person> easyCriteria = new EasyQueryImpl<Person>(Person.class, getEntityManager());
-		easyCriteria.orEquals(1, "name", CodeGenerator.PERSON01_NAME.toLowerCase()).orEquals(2, "name",
-				CodeGenerator.PERSON02_NAME.toLowerCase());
+		easyCriteria.orEquals(1, "name", CodeGenerator.PERSON01_NAME.toLowerCase())
+					.orEquals(2, "name", CodeGenerator.PERSON02_NAME.toLowerCase());
 
 		assertEquals(0, easyCriteria.getResultList().size());
 
@@ -3844,7 +3850,7 @@ public class EasyFilterTest extends AbstractTest {
 		EasyQuery<Song> easyCriteria = new EasyQueryImpl<Song>(Song.class, getEntityManager());
 
 		easyCriteria.addAndSeparatedByOr(1, "id", 1).addAndSeparatedByOr(true, 1, "name", "Sing Out".toLowerCase())
-				.addAndSeparatedByOr(2, "id", 2).addAndSeparatedByOr(true, 2, "name", "Alive".toLowerCase());
+				    .addAndSeparatedByOr(2, "id", 2).addAndSeparatedByOr(true, 2, "name", "Alive".toLowerCase());
 
 		List<Song> easyCriteriaResult = easyCriteria.getResultList();
 
@@ -4895,7 +4901,7 @@ public class EasyFilterTest extends AbstractTest {
 		EasyQuery<Manufacturer> easyCriteria = new EasyQueryImpl<Manufacturer>(Manufacturer.class, getEntityManager());
 		easyCriteria.setDistinctTrue();
 		easyCriteria.innerJoin("products.nickNames");
-		easyCriteria.andBetween("products.nickNames.justLong", 1, 2);
+		easyCriteria.andBetween("products.nickNames.justLong", 1l, 2l);
 
 		List<Manufacturer> result = easyCriteria.getResultList();
 
@@ -5297,8 +5303,10 @@ public class EasyFilterTest extends AbstractTest {
 
 	@Test
 	public void isMultipleJoinWithStringInLowerCaseAttributeWorking() {
-		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
-				+ "where lower(n.name) in ('nickname a', 'nickname b')";
+		String query = "select distinct m from Manufacturer m " 
+					+ "join m.products p " 
+					+ "join p.nickNames n "
+					+ "where lower(n.name) in ('nickname a', 'nickname b')";
 		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class);
 		assertTrue(personsFromJPQL.size() > 0);
 
@@ -6185,7 +6193,8 @@ public class EasyFilterTest extends AbstractTest {
 	@Test
 	public void isAbleToDoTheSameQueryAndCountSeveralTimes() {
 		String query = "select distinct m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
-				+ "where (n.id = 1 and n.name = 'NickName A') or (n.id = 2 and n.name = 'NickName B')";
+				     + "where (n.id = 1 and n.name = 'NickName A') or (n.id = 2 and n.name = 'NickName B')";
+		
 		List<Manufacturer> personsFromQuery = getListFromJPQL(query, Manufacturer.class);
 		assertTrue(personsFromQuery.size() > 0);
 
@@ -6202,8 +6211,9 @@ public class EasyFilterTest extends AbstractTest {
 		assertEquals(personsFromQuery.size(), result.size());
 
 		String countQuery = "select distinct count(m) from Manufacturer m " + "join m.products p "
-				+ "join p.nickNames n "
-				+ "where (n.id = 1 and n.name = 'NickName A') or (n.id = 2 and n.name = 'NickName B')";
+						  + "join p.nickNames n "
+						  + "where (n.id = 1 and n.name = 'NickName A') or (n.id = 2 and n.name = 'NickName B')";
+		
 		List<Long> personsFromTotal = getListFromJPQL(countQuery, Long.class);
 		assertTrue(personsFromTotal.get(0) > 0);
 
@@ -6303,8 +6313,11 @@ public class EasyFilterTest extends AbstractTest {
 		parameters.put("justCalendarA", justCalendar);
 		parameters.put("justCalendarB", justCalendar2);
 
-		String query = "select m from Manufacturer m " + "join m.products p " + "join p.nickNames n "
-				+ "where n.justCalendar = :justCalendarA or n.justCalendar = :justCalendarB " + "order by n.name desc";
+		String query = "select m from Manufacturer m " 
+					   + "join m.products p " 
+					   + "join p.nickNames n "
+					   + "where n.justCalendar = :justCalendarA or n.justCalendar = :justCalendarB " 
+					   + "order by n.name desc";
 
 		List<Manufacturer> personsFromJPQL = getListFromJPQL(query, Manufacturer.class, parameters);
 		assertTrue(personsFromJPQL.size() > 0);

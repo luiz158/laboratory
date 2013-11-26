@@ -17,14 +17,22 @@ public class BetweenCondition extends AbstractCondition {
 
 	@Override
 	public String getFragment() {
-		String f = getAttribute() + " " + getType().getOperator() + " :_" + getSequence() + "_A AND :_" +  getSequence() + "_B";
-		return f;
+		if(getToLowerCase()) {
+			return "LOWER("+getAttribute() + ") " + getType().getOperator() + " :p" + getSequence() + "_A AND :p" +  getSequence() + "_B";
+		} else {
+			return getAttribute() + " " + getType().getOperator() + " :p" + getSequence() + "_A AND :p" +  getSequence() + "_B";
+		}
 	}
 	
 	@Override
 	public Map<String, Object> getFragmentParams() {
-		putParam("_"+getSequence()+ "_A", getValue());
-		putParam("_"+getSequence()+ "_B", getValueB());
+		if(getToLowerCase() && (getValue() instanceof String)) {
+			putParam("p"+getSequence()+ "_A", ((String) getValue()).toLowerCase());
+			putParam("p"+getSequence()+ "_B", ((String) getValueB()).toLowerCase());
+		} else {
+			putParam("p"+getSequence()+ "_A", getValue());
+			putParam("p"+getSequence()+ "_B", getValueB());
+		}
 		
 		return getParams();
 	}

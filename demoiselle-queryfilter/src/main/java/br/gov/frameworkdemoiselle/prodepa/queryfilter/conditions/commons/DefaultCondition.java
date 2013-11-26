@@ -14,9 +14,9 @@ public class DefaultCondition extends AbstractCondition {
 	@Override
 	public String getFragment() {
 		if(getToLowerCase()) {
-			return "LOWER(" + getAttribute() + ") " + getType().getOperator() + " :_" + getSequence();
+			return "LOWER(" + getAttribute() + ") " + getType().getOperator() + " :p" + getSequence();
 		} else {
-			return getAttribute() + " " + getType().getOperator() + " :_" + getSequence();
+			return getAttribute() + " " + getType().getOperator() + " :p" + getSequence();
 		}
 	}
 	
@@ -24,12 +24,12 @@ public class DefaultCondition extends AbstractCondition {
 	public Map<String, Object> getFragmentParams() {
 		if(getToLowerCase()) {
 			if(getValue() instanceof String) {
-				putParam("_"+getSequence().toString(), ((String) getValue()).toLowerCase());
+				putParam("p"+getSequence().toString(), ((String) getValue()).toLowerCase());
 			} else {
-				putParam("_"+getSequence().toString(), getValue());
+				putParam("p"+getSequence().toString(), getValue());
 			}
 		} else {
-			putParam("_"+getSequence().toString(), getValue());
+			putParam("p"+getSequence().toString(), getValue());
 		}
 		return getParams();
 	}

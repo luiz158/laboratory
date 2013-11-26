@@ -69,6 +69,8 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 
 	// Controles
 	private Integer conditionsCount;
+	private Integer firstResult;
+	private Integer maxResults;
 	
 	private Boolean countingTrue;
 	private Boolean distinctTrue;
@@ -289,6 +291,10 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 
 	public EasyQuery<T> addAndSeparatedByOr(int index, String attributeName, Object value) {
 		// TODO Auto-generated method stub
+		
+		//TODO Está muitro complicado. Pensar uma estratégia melhor. Talves: StartAndGruop, StartORGroup.....
+		//Seria muito bom criar estrutura recursiva para adicionar ANDs ou ORs dentro do grupo
+		
 		return this;
 	}
 
@@ -306,9 +312,9 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 		return this;
 	}
 
-	public EasyQuery<T> orEquals(boolean toLowerCase, String attributeName, Object... value) {
-		for (Object object : value) {
-			orConditions.add(new EqualsCondition(getAttributePath(attributeName), object, toLowerCase, this.conditionsCount));
+	public EasyQuery<T> orEquals(boolean toLowerCase, String attributeName, Object... values) {
+		for (Object value : values) {
+			orConditions.add(new EqualsCondition(getAttributePath(attributeName), value, toLowerCase, this.conditionsCount));
 			this.conditionsCount ++;
 		}
 		return this;
@@ -316,26 +322,26 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 
 	public EasyQuery<T> orEquals(int index, String attributeName, Object... values) {
 		// TODO Auto-generated method stub
-		//TODO copiar logica do orEquals
+		//TODO Pendente desse negocio de index
 		return this;
 	}
 
 	public EasyQuery<T> orEquals(boolean toLowerCase, int index, String attributeName, Object... values) {
 		// TODO Auto-generated method stub
-		// orConditions.put(OrConditionType.EQUAL, new Condition(attributeName, value));
-		//TODO copiar logica do orEquals
+		//TODO Pendente desse negocio de index
 		return this;
 	}
 
 	public EasyQuery<T> orNotEquals(String attributeName, Object... values) {
 		orNotEquals(toLowerCaseDefaultValeu, attributeName, values);
-		//TODO copiar logica do orEquals
 		return this;
 	}
 
 	public EasyQuery<T> orNotEquals(boolean toLowerCase, String attributeName, Object... values) {
-		orConditions.add(new NotEqualsCondition(getAttributePath(attributeName), values, toLowerCase, this.conditionsCount));
-		this.conditionsCount ++;
+		for (Object value : values) {
+			orConditions.add(new NotEqualsCondition(getAttributePath(attributeName), value, toLowerCase, this.conditionsCount));
+			this.conditionsCount ++;
+		}
 		return this;
 	}
 	
@@ -367,69 +373,94 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 	 */
 
 	public EasyQuery<T> innerJoin(String joinName) {
-		//TODO Esta bem complicado...........
 		
-		this.joins.add(" INNER JOIN " + this.rootAlias + "." + joinName + " " + StringUtil.castToAliasName(joinName.toString()));
+		addJoinUtil(joinName, "INNER JOIN");
 		
-		this.joinsPaths.put(joinName.toString(), StringUtil.castToAliasName(joinName.toString()));
+		/*String[] paths = joinName.split("\\.");
 		
-		/*
-		String[] paths = joinName.split("\\.");
+		StringBuilder tmpPath = new StringBuilder();
 		
-		for (int i = 0; i < paths.length; i++) {
-			
-			StringBuilder joinB = new StringBuilder();
-			for (int j = 0; j <= i; j++) {
-				joinB.append(paths[j]);
-				joinB.append(".");
+		int i = 1;
+		for (String j : paths) {
+			StringBuilder b = new StringBuilder(); 
+			b.append(" INNER JOIN " + rootAlias);
+			if(i > 1) {
+				b.append(i-1);
+				tmpPath.append(".");
 			}
 			
-			joinB.delete(joinB.length() -1 , joinB.length());
+			b.append("."+ j + " "+rootAlias + (i) + " ");
+			tmpPath.append(j);
 			
-			String join = null;
-			if(this.joinsPaths.containsKey(joinB.toString())) {
-				join = this.joinsPaths.get(joinB).toString();
-			} else {
-				join = joinB.toString();
-			}
+			this.joins.add(b.toString());
 			
-			this.joins.add(" INNER JOIN " + this.rootAlias + "." + join + " " + StringUtil.castToAliasName(join.toString()));
-			
-			this.joinsPaths.put(join.toString(), StringUtil.castToAliasName(join.toString()));
-		}
-		*/
+			this.joinsPaths.put(tmpPath.toString(), this.rootAlias + i);
+
+			i++;
+		}*/
+		
 		
 		return this;
 	}
 
 	public EasyQuery<T> leftJoin(String joinName) {
 		
-		//TODO Compartilhar logica com INNER JOIN
+		addJoinUtil(joinName, "LEFT JOIN");
 		
-		this.joins.add(" LEFT JOIN " + this.rootAlias + "." + joinName + " " + StringUtil.castToAliasName(joinName.toString()));
+		//this.joins.add(" LEFT JOIN " + this.rootAlias + "." + joinName + " " + StringUtil.castToAliasName(joinName.toString()));
 		
-		this.joinsPaths.put(joinName.toString(), StringUtil.castToAliasName(joinName.toString()));
+		//this.joinsPaths.put(joinName.toString(), StringUtil.castToAliasName(joinName.toString()));
 		
 		return this;
 	}
 
 	public EasyQuery<T> innerJoinFetch(String joinName) {
 		
-		//TODO Compartilhar logica com INNER JOIN
+		addJoinUtil(joinName, "INNER JOIN FETCH");
 		
-		this.joins.add(" INNER JOIN FETCH " + this.rootAlias + "." + joinName + " " + StringUtil.castToAliasName(joinName.toString()));
+		//this.joins.add(" INNER JOIN FETCH " + this.rootAlias + "." + joinName + " " + StringUtil.castToAliasName(joinName.toString()));
 		
-		this.joinsPaths.put(joinName.toString(), StringUtil.castToAliasName(joinName.toString()));
+		//this.joinsPaths.put(joinName.toString(), StringUtil.castToAliasName(joinName.toString()));
+		
 		return this;
 	}
 
 	public EasyQuery<T> leftJoinFetch(String joinName) {
 		
-		//TODO Compartilhar logica com INNER JOIN
-		this.joins.add(" LEFT JOIN FETCH " + this.rootAlias + "." + joinName + " " + StringUtil.castToAliasName(joinName.toString()));
+		addJoinUtil(joinName, "LEFT JOIN FETCH");
 		
-		this.joinsPaths.put(joinName.toString(), StringUtil.castToAliasName(joinName.toString()));
+		//this.joins.add(" LEFT JOIN FETCH " + this.rootAlias + "." + joinName + " " + StringUtil.castToAliasName(joinName.toString()));
+		
+		//this.joinsPaths.put(joinName.toString(), StringUtil.castToAliasName(joinName.toString()));
 		return this;
+	}
+	
+	
+	private void addJoinUtil(String joinName, String joinPrefix) {
+		//TODO Esta bem complicado...........
+		
+		String[] paths = joinName.split("\\.");
+		
+		StringBuilder tmpPath = new StringBuilder();
+		
+		int i = 1;
+		for (String j : paths) {
+			StringBuilder b = new StringBuilder(); 
+			b.append(" " + joinPrefix + " " + rootAlias);
+			if(i > 1) {
+				b.append(i-1);
+				tmpPath.append(".");
+			}
+			
+			b.append("."+ j + " "+rootAlias + (i) + " ");
+			tmpPath.append(j);
+			
+			this.joins.add(b.toString());
+			
+			this.joinsPaths.put(tmpPath.toString(), this.rootAlias + i);
+
+			i++;
+		}
 	}
 
 
@@ -458,11 +489,13 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 
 	public EasyQuery<T> setFirstResult(int firstResult) {
 		// TODO Auto-generated method stub
+		
+		this.firstResult = firstResult;
 		return this;
 	}
 
 	public EasyQuery<T> setMaxResults(int maxResults) {
-		// TODO Auto-generated method stub
+		this.maxResults = maxResults;
 		return this;
 	}
 
@@ -474,6 +507,7 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 
 		query = em.createQuery(fillStringQuery());
 		putParams();
+		configurePagination();
 		// TODO Alguma coisa mais aki ?
 	}
 
@@ -541,9 +575,7 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 
 	private void buildJoins() {
 		for (String join : this.joins) {
-			
 			this.bQuery.append(" " + join);
-			
 		}
 	}
 	
@@ -564,9 +596,12 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 	}
 
 	private void buildOrs() {
+		
+		int orIndex = 0;
+		
 		Boolean envolver = andConditions.size() > 0 && orConditions.size() > 0; 
 		if(envolver) {
-			this.bQuery.append(" ( ");
+			this.bQuery.append(" AND ( "); //TODO Será um AND ou um OR
 		}
 		
 		for (AbstractCondition c : orConditions) {
@@ -574,11 +609,15 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 			if (c.getSequence() == 0) {
 				this.bQuery.append(" WHERE ");
 			} else {
-				this.bQuery.append(" OR ");
+				if(orIndex != 0) {
+					this.bQuery.append(" OR ");
+				}
 			}
 			
 			this.bQuery.append(c.getFragment());
 			this.params.putAll(c.getFragmentParams());
+			
+			orIndex ++;
 		}
 		if(envolver) {
 			this.bQuery.append(" ) ");
@@ -588,21 +627,35 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 	private void buildOrderes() {
 		
 		if(!ascOrderByConditions.isEmpty() || !descOrderByConditions.isEmpty()) {
-			this.bQuery.append(" ORDER ");
+			this.bQuery.append(" ORDER BY ");
 		}
 		
 		for (String o : ascOrderByConditions) {
-			this.bQuery.append(o + " ASC, ");
+			if(o.contains(".")) {
+				this.bQuery.append(replaceJoinPathOnProperty(o) + " ASC, ");
+			} else {
+				this.bQuery.append(o + " ASC, ");
+			}
 		}
 		for (String o : descOrderByConditions) {
-			this.bQuery.append(o + " DESC, ");
+			this.bQuery.append(replaceJoinPathOnProperty(o) + " DESC, ");
 		}
 		
 		if(!ascOrderByConditions.isEmpty() || !descOrderByConditions.isEmpty()) {
-			this.bQuery.delete(this.bQuery.length() - 1, this.bQuery.length());
+			this.bQuery.deleteCharAt(this.bQuery.lastIndexOf(","));
 		}
-		
 	}
+	
+	private void configurePagination() { 
+		if(this.maxResults != null && this.firstResult != null) {
+			query.setMaxResults(this.maxResults);
+			query.setFirstResult(this.firstResult);
+		} else {
+			//TODO tratar configuracoes erradas
+		}
+	}
+	
+	/*Utilitarios*/
 	
 	private String getAttributePath(String attribute) {
 		
@@ -613,7 +666,7 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 			if(this.joinsPaths.containsKey(path)) {
 				return attribute.replace(path, this.joinsPaths.get(path));
 			} else {
-				throw new IllegalArgumentException("O join \"" + path + "\" não exite");
+				throw new IllegalStateException("O join \"" + path + "\" não exite");
 			}
 			
 		} else {
@@ -629,55 +682,19 @@ public class EasyQueryImpl<T> implements EasyQuery<T> {
 			query.setParameter(p, this.params.get(p));
 		}
 	}
-
-	/*private class Condition {
-
-		private AndConditionType type;
-
-		private String attribute;
-
-		private Object value;
-
-		private Object valueB;
-
-		private Boolean toLowerCase;
-
-		public Condition(AndConditionType type, String attribute, Object value, Boolean toLowerCase) {
-			super();
-			this.toLowerCase = toLowerCase;
-			this.attribute = attribute;
-			this.value = value;
-			this.type = type;
+	
+	private String replaceJoinPathOnProperty(String property) {
+		
+		if(property.contains(".")) {
+			
+			int i = property.lastIndexOf(".");
+			
+			return this.joinsPaths.get(property.substring(0, i)) + property.substring(i);
+			
+		} else {
+			return property;
 		}
-
-		public Condition(AndConditionType type, String attribute, Object value, Object valueB, Boolean toLowerCase) {
-			super();
-			this.toLowerCase = toLowerCase;
-			this.attribute = attribute;
-			this.value = value;
-			this.type = type;
-		}
-
-		public Boolean getToLowerCase() {
-			return toLowerCase;
-		}
-
-		public String getAttribute() {
-			return attribute;
-		}
-
-		public Object getValue() {
-			return value;
-		}
-
-		public AndConditionType getType() {
-			return type;
-		}
-
-		public Object getValueB() {
-			return valueB;
-		}
-	}*/
+	}
 
 	@Override
 	public String toString() {

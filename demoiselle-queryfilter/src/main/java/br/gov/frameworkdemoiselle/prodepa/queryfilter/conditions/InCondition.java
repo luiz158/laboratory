@@ -1,5 +1,6 @@
 package br.gov.frameworkdemoiselle.prodepa.queryfilter.conditions;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import br.gov.frameworkdemoiselle.prodepa.queryfilter.annotations.metadata.AndConditionType;
@@ -14,7 +15,30 @@ public class InCondition extends DefaultCondition {
 	
 	@Override
 	public String getFragment() {
-		return getAttribute() + " " + getType().getOperator() + " ( :_" + getSequence() + " )";
+		if(getToLowerCase()) {
+			
+			Boolean isString = false;
+			if(getValue() instanceof List) {
+
+				if(((List<?>) getValue()).get(0) instanceof String) {
+					isString = true;
+				}
+						
+			} else {
+				if(getValue() instanceof String) {
+					isString = true;
+				}
+			}
+			
+			if(isString) {
+				return "LOWER( "+getAttribute() + ") " + getType().getOperator() + " ( :p" + getSequence() + " )";
+			} else {
+				return getAttribute() + " " + getType().getOperator() + " ( :p" + getSequence() + " )";
+			}
+			
+		} else {
+			return getAttribute() + " " + getType().getOperator() + " ( :p" + getSequence() + " )";
+		}
 	}
 
 }
