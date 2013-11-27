@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>example</groupId>
+	<artifactId>debug-war</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<parent>
+		<groupId>br.gov.frameworkdemoiselle</groupId>
+		<artifactId>demoiselle-jsf-parent</artifactId>
+		<version>2.4.0</version>
+	</parent>
+
+	<dependencies>
+		<dependency>
+			<groupId>br.gov.frameworkdemoiselle</groupId>
+			<artifactId>demoiselle-jpa</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<!-- If you are using a JTA transaction then use this extension -->
+		<!--
+		<dependency>
+		    <groupId>br.gov.frameworkdemoiselle</groupId>
+		    <artifactId>demoiselle-jta</artifactId>
+		    <scope>compile</scope>
+		</dependency>
+		-->
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>br.gov.frameworkdemoiselle.component</groupId>
+			<artifactId>demoiselle-junit</artifactId>
+			<version>2.3.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.googlecode.mavenfilesync</groupId>
+				<artifactId>maven-filesync-plugin</artifactId>
+				<version>1.0.0</version>
+				<configuration>
+					<defaultDestination>${jboss.home}/standalone/deployments/${ear.name}.ear/${war.name}.war/WEB-INF/classes</defaultDestination>
+					<mappings>
+						<mapping>
+							<sourceFolder>src/main/resources</sourceFolder>
+						</mapping>
+						<mapping>
+							<sourceFolder>src/main/webapp</sourceFolder>
+							<destinationFolder>${jboss.home}/standalone/deployments/${ear.name}.ear/${war.name}.war</destinationFolder>
+							<exclPatternList>
+								<exclude>WEB-INF/</exclude>
+							</exclPatternList>
+						</mapping>
+						<mapping>
+							<sourceFolder>target/classes</sourceFolder>
+							<inclPatternList>
+								<include>**/*.class</include>
+							</inclPatternList>
+							<exclPatternList>
+								<exclude>**/*Test*</exclude>
+								<exclude>**/*.html</exclude>
+							</exclPatternList>
+						</mapping>
+						<mapping>
+							<sourceFolder>.</sourceFolder>
+							<destinationFolder>${jboss.home}/standalone/deployments</destinationFolder>
+							<inclPatternList>
+								<include>debug-ear.ear.dodeploy</include>
+							</inclPatternList>
+						</mapping>
+					</mappings>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<properties>
+		<jboss.home>/home/81986912515/jboss-eap-6.0</jboss.home>
+		<ear.name>debug-ear</ear.name>
+		<war.name>debug-war</war.name>
+	</properties>
+</project>

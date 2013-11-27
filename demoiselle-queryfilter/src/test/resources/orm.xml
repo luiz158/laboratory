@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd"
+                 version="1.0">
+
+    <entity class="br.gov.frameworkdemoiselle.prodepa.queryfilter.app.model.Person"/>
+    <entity class="br.gov.frameworkdemoiselle.prodepa.queryfilter.app.model.Address"/>
+    <entity class="br.gov.frameworkdemoiselle.prodepa.queryfilter.app.model.Car"/>
+    <entity class="br.gov.frameworkdemoiselle.prodepa.queryfilter.app.model.Dog"/>
+    <entity class="br.gov.frameworkdemoiselle.prodepa.queryfilter.app.model.Cat"/>
+    <entity class="br.gov.frameworkdemoiselle.prodepa.queryfilter.app.model.Certification"/>
+    <entity class="br.gov.frameworkdemoiselle.prodepa.queryfilter.app.model.Song"/>
+    <entity class="br.gov.frameworkdemoiselle.prodepa.queryfilter.app.model.Color"/>
+    <entity class="br.gov.frameworkdemoiselle.prodepa.queryfilter.app.model.Manufacturer"/>
+    <entity class="br.gov.frameworkdemoiselle.prodepa.queryfilter.app.model.Product"/>
+    <entity class="br.gov.frameworkdemoiselle.prodepa.queryfilter.app.model.NickName"/>
+    <entity class="br.gov.frameworkdemoiselle.prodepa.queryfilter.app.model.DummyEntity"/>
+    <entity class="br.gov.frameworkdemoiselle.prodepa.queryfilter.app.model.EntityEmbeddedId"/>
+    <embeddable class="br.gov.frameworkdemoiselle.prodepa.queryfilter.app.model.EmbeddedIdDummy" />
+
+</entity-mappings>
