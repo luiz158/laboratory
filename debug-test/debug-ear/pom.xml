@@ -114,7 +114,7 @@
 	</build>
 
 	<properties>
-		<jboss.home>/home/81986912515/jboss-eap-6.0</jboss.home>
+		<jboss.home>/home/81986912515/jboss-eap-6.1</jboss.home>
 		<ear.name>debug-ear</ear.name>
 		<war.name>debug-war</war.name>
 	</properties>
