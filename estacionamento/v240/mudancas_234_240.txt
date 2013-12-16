@@ -1,0 +1,46 @@
+2.3.4 -> 2.4.0
+
+alterar o beans.xml
+
+
+import br.gov.frameworkdemoiselle.transaction.TransactionException; - Não existe
+
+Deprecated
+messageContext.add(InfoMessages.AUTOMOVEL_INSERT_OK
+messageContext.add(InfoMessages.AUTOMOVEL_INSERT_OK.getText()
+
+Return 
+void -> Object <Pojo>
+public Automovel insert(Automovel automovel) {
+
+return automovel;
+
+Return 
+void -> Object <Pojo>
+public Automovel update(Automovel automovel) {
+
+return automovel;
+
+
+Authenticator 
+
+
+@Override
+	public void unAuthenticate() {
+		
+	}
+
+
+public boolean authenticate() {
+
+public void authenticate() {
+
+public void unauthenticate() throws Exception {
+
+
+@Override
+	protected void handleLoad() {
+		setBean(this."Pojo"BC.load(getId()));
+	}
+
+
