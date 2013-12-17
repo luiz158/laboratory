@@ -32,9 +32,7 @@ package br.gov.serpro.lab.estacionamento.view;
 
 import java.util.Iterator;
 import java.util.List;
-
 import javax.inject.Inject;
-
 import br.gov.frameworkdemoiselle.annotation.NextView;
 import br.gov.frameworkdemoiselle.annotation.PreviousView;
 import br.gov.frameworkdemoiselle.stereotype.ViewController;

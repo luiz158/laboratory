@@ -75,7 +75,7 @@ public class EstacionamentoBC extends DelegateCrud<Estacionamento, Long, Estacio
 		// true
 		if (config.isLoadInitialData()) {
 			if (findAll().isEmpty()) {
-				insert(new Estacionamento("Demoiselle Park", "62569285000133"));
+				insert(new Estacionamento("Demoiselle Park", "42070027000109", " 0775037176397"));
 			}
 		}
 	}

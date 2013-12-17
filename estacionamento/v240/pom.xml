@@ -34,7 +34,7 @@
 		<dependency>
 			<groupId>br.gov.frameworkdemoiselle.component</groupId>
 			<artifactId>demoiselle-report</artifactId>
-			<version>2.1.0</version>
+			<version>2.2.0</version>
 			<scope>compile</scope>
 		</dependency>
 		<!-- <dependency> <groupId>br.gov.frameworkdemoiselle.component</groupId> 
@@ -52,6 +52,12 @@
 			<groupId>br.gov.frameworkdemoiselle.component</groupId>
 			<artifactId>demoiselle-junit</artifactId>
 			<version>2.3.0</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
 			<scope>test</scope>
 		</dependency>
 

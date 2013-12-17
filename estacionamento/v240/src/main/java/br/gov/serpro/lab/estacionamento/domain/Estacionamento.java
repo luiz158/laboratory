@@ -70,14 +70,16 @@ public class Estacionamento implements Serializable {
 		super();
 	}
 
-	public Estacionamento(final String nome, final String cnpj) {
+	public Estacionamento(String nome, String cnpj, String inscricaoEstadual) {
 		this.nome = nome;
 		this.cnpj = cnpj;
+		this.inscricaoEstadual = inscricaoEstadual;
 	}
 
-	public Estacionamento(final String nome, final String cnpj, final List<Patio> patios) {
+	public Estacionamento(String nome, String cnpj, String inscricaoEstadual, List<Patio> patios) {
 		this.nome = nome;
 		this.cnpj = cnpj;
+		this.inscricaoEstadual = inscricaoEstadual;
 		this.patios = patios;
 	}
 

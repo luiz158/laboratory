@@ -79,6 +79,12 @@
 						<f:validateLength minimum = "14" maximum = "14"/>												
 					</h:inputText>
 					<p:message for="cnpj" />
+					
+					<h:outputLabel value="#{messages['Estacionamento.label.inscricaoEstadual']}: " for="inscricaoEstadual" styleClass="text-input" />
+					<h:inputText maxlength="13" id="inscricaoEstadual" value="#{estacionamentoEditMB.bean.inscricaoEstadual}" title="#{messages['Estacionamento.alt.inscricaoEstadual']}" required="true">
+						<f:validateLength minimum = "13" maximum = "13"/>												
+					</h:inputText>
+					<p:message for="cnpj" />
 								
 				</h:panelGrid>
 			</p:fieldset>
@@ -90,6 +96,11 @@
 								<f:facet name="header">#{messages['Patio.label.local']}</f:facet>
 								<h:inputText id="local" value="#{patio.local}" required="true" />
 								<p:message for="local" />
+							</p:column>
+							<p:column>
+								<f:facet name="header">#{messages['Patio.label.cep']}</f:facet>
+								<h:inputText id="cep" value="#{patio.cep}" required="true" />
+								<p:message for="cep" />
 							</p:column>
 							<p:column>
 								<f:facet name="header">#{messages['label.action']}</f:facet>

@@ -43,7 +43,7 @@
 		<h:form>
 			<p:toolbar>
 				<p:toolbarGroup align="left">
-					<p:commandButton title="#{messages['button.new']}" icon="ui-icon-document" action="#{patioListMB.getNextView}"
+					<p:commandButton title="#{messages['button.new']}" icon="ui-icon-document" action="#{patioListMB.getNextView()}"
 						actionListener="#{patioListMB.clear}" ajax="false" />
 
 					<p:commandButton title="#{messages['button.delete']}" icon="ui-icon-trash" onclick="confirmation.show()"
@@ -65,7 +65,7 @@
 				</p:column>
 				
 				<p:column style="width:5%;" sortBy="#{bean.id}">
-					<h:commandLink action="#{patioListMB.getNextView}" actionListener="#{patioListMB.clear}">
+					<h:commandLink action="#{patioListMB.getNextView()}" actionListener="#{patioListMB.clear}">
 						<f:facet name="header">#{messages['Patio.label.id']}</f:facet>
 						<h:outputText value="#{bean.id}" />
 						<f:param name="id" value="#{bean.id}" />
@@ -76,7 +76,7 @@
 						
 				<p:column sortBy="#{bean.local}">
 					<f:facet name="header">#{messages['Patio.label.local']}</f:facet>
-					<h:commandLink action="#{patioListMB.getNextView}" actionListener="#{patioListMB.clear}">
+					<h:commandLink action="#{patioListMB.getNextView()}" actionListener="#{patioListMB.clear}">
 						<h:outputText value="#{bean.local}" />
 						<f:param name="id" value="#{bean.id}" />
 					</h:commandLink>

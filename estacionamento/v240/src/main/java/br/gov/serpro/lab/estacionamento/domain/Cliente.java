@@ -58,7 +58,6 @@ public class Cliente implements Serializable {
 	private String cpf;
 
 	@Column
-	// @Email
 	private String email;
 
 	@Column
@@ -76,33 +75,33 @@ public class Cliente implements Serializable {
 	private List<Automovel> automoveis = new ArrayList<Automovel>();
 	
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinTable(name = "tb_cliente_endereco", joinColumns = @JoinColumn(name = "id_cliente"), inverseJoinColumns = @JoinColumn(name = "cod_endereco"))
+	@JoinTable(name = "tb_cliente_endereco", joinColumns = @JoinColumn(name = "id_cliente"), 
+				inverseJoinColumns = @JoinColumn(name = "cod_endereco"))
 	private List<Endereco> enderecos = new ArrayList<Endereco>();
 
 	public Cliente() {
 		super();
 	}
 
-	public Cliente(final String nome, final String documento, final String telefone) {
+	public Cliente(String nome, String cpf, String email, String tituloEleitor, String documento, String telefone) {
 		this.nome = nome;
+		this.cpf = cpf;
+		this.email = email;
+		this.tituloEleitor = tituloEleitor;
 		this.documento = documento;
 		this.telefone = telefone;
 	}
 
-	public Cliente(final String nome, final String documento, final String telefone, final List<Automovel> automoveis, final List<Endereco> enderecos) {
+	public Cliente(String nome, String cpf, String email, String tituloEleitor, String documento, String telefone,
+					List<Automovel> automoveis, List<Endereco> enderecos) {
 		this.nome = nome;
+		this.cpf = cpf;
+		this.email = email;
+		this.tituloEleitor = tituloEleitor;
 		this.documento = documento;
 		this.telefone = telefone;
 		this.automoveis = automoveis;
 		this.enderecos = enderecos;
-	}
-
-	public void addAutomovel(final Automovel automovel) {
-		this.automoveis.add(automovel);
-	}
-
-	public List<Automovel> getAutomoveis() {
-		return this.automoveis;
 	}
 
 	public String getCpf() {
@@ -132,42 +131,47 @@ public class Cliente implements Serializable {
 	public String getTituloEleitor() {
 		return this.tituloEleitor;
 	}
-
-	public void setAutomoveis(final List<Automovel> automoveis) {
-		this.automoveis = automoveis;
+	
+	public List<Automovel> getAutomoveis() {
+		return this.automoveis;
 	}
-
-	public void setCpf(final String cpf) {
-		this.cpf = cpf;
-	}
-
-	public void setDocumento(final String documento) {
-		this.documento = documento;
-	}
-
-	public void setEmail(final String email) {
-		this.email = email;
-	}
-
-	public void setId(final Long id) {
-		this.id = id;
-	}
-
-	public void setNome(final String nome) {
-		this.nome = nome;
-	}
-
-	public void setTelefone(final String telefone) {
-		this.telefone = telefone;
-	}
-
-	public void setTituloEleitor(final String tituloEleitor) {
-		this.tituloEleitor = tituloEleitor;
-	}
-
+	
 	public List<Endereco> getEnderecos() {
 		return this.enderecos;
 	}
+
+	public void setAutomoveis(List<Automovel> automoveis) {
+		this.automoveis = automoveis;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public void setDocumento(String documento) {
+		this.documento = documento;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+	public void setTituloEleitor(String tituloEleitor) {
+		this.tituloEleitor = tituloEleitor;
+	}
+	
 
 	public void setEnderecos(List<Endereco> enderecos) {
 		this.enderecos = enderecos;

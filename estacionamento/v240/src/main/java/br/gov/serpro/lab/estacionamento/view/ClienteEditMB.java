@@ -102,7 +102,7 @@ public class ClienteEditMB extends AbstractEditPageBean<Cliente, Long> {
 	}
 
 	public void addAutomovel() {
-		getBean().addAutomovel(new Automovel());
+		getBean().getAutomoveis().add(new Automovel());
 	}
 
 	public void deleteAutomovel() {

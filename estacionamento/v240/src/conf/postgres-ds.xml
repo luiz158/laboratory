@@ -16,7 +16,7 @@
 <datasources>
   <local-tx-datasource>
     <jndi-name>estacionamentoDS</jndi-name>
-    <connection-url>jdbc:postgresql://10.200.189.47:5432/estacionamento</connection-url>
+    <connection-url>jdbc:postgresql://localhost:5432/estacionamento</connection-url>
     <driver-class>org.postgresql.Driver</driver-class>
     <user-name>estacionamento</user-name>
     <password>estacionamento</password>

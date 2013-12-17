@@ -41,12 +41,9 @@
 
 	<ui:define name="body">
 		<h:form>
-		<!--  	<h:commandLink action="#{estacionamentoListMB.getNextView}" actionListener="#{estacionamentoListMB.clear}"  >
-						<h:outputText value="vai IE" />
-			</h:commandLink> -->
 			<p:toolbar>
 				<p:toolbarGroup align="left">
-					<p:commandButton title="#{messages['button.new']}" icon="ui-icon-document" action="#{estacionamentoListMB.getNextView}"
+					<p:commandButton title="#{messages['button.new']}" icon="ui-icon-document" action="#{estacionamentoListMB.getNextView()}"
 						actionListener="#{estacionamentoListMB.clear}" ajax="false" />
 
 					<p:commandButton title="#{messages['button.delete']}" icon="ui-icon-trash" onclick="confirmation.show()"
@@ -74,7 +71,7 @@
 						
 				<p:column sortBy="#{bean.nome}">
 					<f:facet name="header">#{messages['Estacionamento.label.nome']}</f:facet>
-					<h:commandLink action="#{estacionamentoListMB.getNextView}" actionListener="#{estacionamentoListMB.clear}">
+					<h:commandLink action="#{estacionamentoListMB.getNextView()}" actionListener="#{estacionamentoListMB.clear}">
 						<h:outputText value="#{bean.nome}" />
 						<f:param name="id" value="#{bean.id}" />
 					</h:commandLink>
@@ -82,8 +79,16 @@
 						
 				<p:column sortBy="#{bean.cnpj}">
 					<f:facet name="header">#{messages['Estacionamento.label.cnpj']}</f:facet>
-					<h:commandLink action="#{estacionamentoListMB.getNextView}" actionListener="#{estacionamentoListMB.clear}">
+					<h:commandLink action="#{estacionamentoListMB.getNextView()}" actionListener="#{estacionamentoListMB.clear}">
 						<h:outputText value="#{bean.cnpj}" />
+						<f:param name="id" value="#{bean.id}" />
+					</h:commandLink>
+				</p:column>
+				
+				<p:column sortBy="#{bean.inscricaoEstadual}">
+					<f:facet name="header">#{messages['Estacionamento.label.inscricaoEstadual']}</f:facet>
+					<h:commandLink action="#{estacionamentoListMB.getNextView()}" actionListener="#{estacionamentoListMB.clear}">
+						<h:outputText value="#{bean.inscricaoEstadual}" />
 						<f:param name="id" value="#{bean.id}" />
 					</h:commandLink>
 				</p:column>

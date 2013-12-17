@@ -34,18 +34,16 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import javax.inject.Inject;
-
 import br.gov.frameworkdemoiselle.annotation.NextView;
 import br.gov.frameworkdemoiselle.annotation.PreviousView;
+import br.gov.frameworkdemoiselle.message.MessageContext;
 import br.gov.frameworkdemoiselle.report.Report;
 import br.gov.frameworkdemoiselle.report.Type;
 import br.gov.frameworkdemoiselle.report.annotation.Path;
 import br.gov.frameworkdemoiselle.stereotype.ViewController;
 import br.gov.frameworkdemoiselle.template.AbstractListPageBean;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
-import br.gov.frameworkdemoiselle.util.Faces;
 import br.gov.frameworkdemoiselle.util.FileRenderer;
 import br.gov.serpro.lab.estacionamento.business.ClienteBC;
 import br.gov.serpro.lab.estacionamento.domain.Cliente;
@@ -58,7 +56,6 @@ public class ClienteListMB extends AbstractListPageBean<Cliente, Long> {
 	private static final long serialVersionUID = 1L;
 
 	@Inject
-	//@Path("reports/clientes.jrxml")
 	@Path("reports/clientes.jasper")
 	private Report relatorio;
 
@@ -67,6 +64,9 @@ public class ClienteListMB extends AbstractListPageBean<Cliente, Long> {
 
 	@Inject
 	private ClienteBC clienteBC;
+	
+	@Inject
+	private MessageContext messageContext;
 
 	@Transactional
 	public String deleteSelection() {
@@ -82,14 +82,15 @@ public class ClienteListMB extends AbstractListPageBean<Cliente, Long> {
 		return getPreviousView();
 	}
 
+	
 	public String exibirRelatorioGeral() {
 		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("titulo", "Relatório de Clientes");
+		param.put("T\u00EDtulo", "Listagem de Clientes");
 		try {
 			byte[] buffer = this.relatorio.export(getResultList(), param, Type.PDF);
 			this.renderer.render(buffer, FileRenderer.ContentType.PDF, "relatorio.pdf");
 		} catch (Exception e) {
-			Faces.addMessage(e);
+			messageContext.add(e.getMessage(), e);
 		}
 		return getNextView();
 	}

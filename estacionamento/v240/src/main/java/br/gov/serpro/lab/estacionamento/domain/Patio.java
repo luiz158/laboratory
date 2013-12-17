@@ -65,16 +65,18 @@ public class Patio implements Serializable {
 		super();
 	}
 
-	public Patio(final String local) {
+	public Patio(String local, String cep) {
 		this.local = local;
+		this.cep = cep;
 	}
 
-	public Patio(final String local, final List<Vaga> vagas) {
+	public Patio(String local, String cep, List<Vaga> vagas) {
 		this.local = local;
+		this.cep = cep;
 		this.vagas = vagas;
 	}
 
-	public void addVaga(final Vaga vaga) {
+	public void addVaga(Vaga vaga) {
 		this.vagas.add(vaga);
 	}
 
@@ -98,23 +100,23 @@ public class Patio implements Serializable {
 		return this.vagas;
 	}
 
-	public void setCep(final String cep) {
+	public void setCep(String cep) {
 		this.cep = cep;
 	}
 
-	public void setEstacionamento(final Estacionamento estacionamento) {
+	public void setEstacionamento(Estacionamento estacionamento) {
 		this.estacionamento = estacionamento;
 	}
 
-	public void setId(final Long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public void setLocal(final String local) {
+	public void setLocal(String local) {
 		this.local = local;
 	}
 
-	public void setVagas(final List<Vaga> vagas) {
+	public void setVagas(List<Vaga> vagas) {
 		this.vagas = vagas;
 	}
 }

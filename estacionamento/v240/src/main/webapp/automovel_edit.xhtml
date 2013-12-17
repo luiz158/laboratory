@@ -101,7 +101,7 @@
 					</p:selectOneMenu>
 					<p:message for="tipo" />
 					
-					<h:outputLabel value="#{messages['Cliente.label']}: " for="cliente" styleClass="text-input" />
+					<h:outputLabel value="#{messages['cliente.label']}: " for="cliente" styleClass="text-input" />
 					<p:selectOneMenu id="cliente" value="#{automovelEditMB.bean.cliente}" converter="ConversorCliente" effect="fade" var="p" filter="true" filterMatchMode="startsWith">
 					    <f:selectItem itemLabel="Selecione" itemValue="" />
 						<f:selectItems value="#{automovelEditMB.clientes}" var="varCliente" itemLabel="#{varCliente.nome}" itemValue="#{varCliente}" />

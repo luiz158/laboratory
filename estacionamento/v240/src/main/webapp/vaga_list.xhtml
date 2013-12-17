@@ -43,7 +43,7 @@
 		<h:form>
 			<p:toolbar>
 				<p:toolbarGroup align="left">
-					<p:commandButton title="#{messages['button.new']}" icon="ui-icon-document" action="#{vagaListMB.getNextView}"
+					<p:commandButton title="#{messages['button.new']}" icon="ui-icon-document" action="#{vagaListMB.getNextView()}"
 						actionListener="#{vagaListMB.clear}" ajax="false" />
 
 					<p:commandButton title="#{messages['button.delete']}" icon="ui-icon-trash" onclick="confirmation.show()"
@@ -71,7 +71,7 @@
 				
 				<p:column style="width:5%;" sortBy="#{bean.id}">
 					<f:facet name="header">#{messages['Vaga.label.id']}</f:facet>
-					<h:commandLink action="#{vagaListMB.getNextView}" actionListener="#{vagaListMB.clear}">
+					<h:commandLink action="#{vagaListMB.getNextView()}" actionListener="#{vagaListMB.clear}">
 						<h:outputText value="#{bean.id}" />
 						<f:param name="id" value="#{bean.id}" />
 					</h:commandLink>
@@ -79,7 +79,7 @@
 						
 				<p:column sortBy="#{bean.porte}">
 					<f:facet name="header">#{messages['Vaga.label.porte']}</f:facet>
-					<h:commandLink action="#{vagaListMB.getNextView}" actionListener="#{vagaListMB.clear}">
+					<h:commandLink action="#{vagaListMB.getNextView()}" actionListener="#{vagaListMB.clear}">
 						<h:outputText value="#{messages[bean.porte]}" />
 						<f:param name="id" value="#{bean.id}" />
 					</h:commandLink>
@@ -87,7 +87,7 @@
 				
 				<p:column sortBy="#{bean.automovel}">
 					<f:facet name="header">#{messages['Vaga.label.automovel']}</f:facet>
-					<h:commandLink action="#{vagaListMB.getNextView}" actionListener="#{vagaListMB.clear}">
+					<h:commandLink action="#{vagaListMB.getNextView()}" actionListener="#{vagaListMB.clear}">
 						<h:outputText value="#{bean.automovel.placa}" />
 						<f:param name="id" value="#{bean.id}" />
 					</h:commandLink>
@@ -95,7 +95,7 @@
 						
 				<p:column sortBy="#{bean.dataHoraEntrada}">
 					<f:facet name="header">#{messages['Vaga.label.dataHoraEntrada']}</f:facet>
-					<h:commandLink action="#{vagaListMB.getNextView}" actionListener="#{vagaListMB.clear}">
+					<h:commandLink action="#{vagaListMB.getNextView()}" actionListener="#{vagaListMB.clear}">
 						<h:outputText value="#{bean.dataHoraEntrada}">
 						 	<f:convertDateTime pattern="#{messages['label.datetime.pattern']}" />
 						</h:outputText>  
@@ -105,7 +105,7 @@
 						
 				<p:column sortBy="#{bean.dataHoraSaida}">
 					<f:facet name="header">#{messages['Vaga.label.dataHoraSaida']}</f:facet>
-					<h:commandLink action="#{vagaListMB.getNextView}" actionListener="#{vagaListMB.clear}">
+					<h:commandLink action="#{vagaListMB.getNextView()}" actionListener="#{vagaListMB.clear}">
 						<h:outputText value="#{bean.dataHoraSaida}">
 							<f:convertDateTime pattern="#{messages['label.datetime.pattern']}" />
 						</h:outputText>
@@ -115,7 +115,7 @@
 						
 				<p:column sortBy="#{bean.coberta}">
 					<f:facet name="header">#{messages['Vaga.label.coberta']}</f:facet>
-					<h:commandLink action="#{vagaListMB.getNextView}" actionListener="#{vagaListMB.clear}">
+					<h:commandLink action="#{vagaListMB.getNextView()}" actionListener="#{vagaListMB.clear}">
 						<h:outputText value="#{bean.coberta == true ? messages['value.yes']: messages['value.no'] }"/>
 						<f:param name="id" value="#{bean.id}" />
 					</h:commandLink>

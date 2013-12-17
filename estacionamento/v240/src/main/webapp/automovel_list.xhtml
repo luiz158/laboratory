@@ -43,7 +43,7 @@
 		<h:form>
 			<p:toolbar>
 				<p:toolbarGroup align="left">
-					<p:commandButton title="#{messages['button.new']}" icon="ui-icon-document" action="#{automovelListMB.getNextView}"
+					<p:commandButton title="#{messages['button.new']}" icon="ui-icon-document" action="#{automovelListMB.getNextView()}"
 						actionListener="#{automovelListMB.clear}" ajax="false" />
 
 					<p:commandButton title="#{messages['button.delete']}" icon="ui-icon-trash" onclick="confirmation.show()"
@@ -71,7 +71,7 @@
 						
 				<p:column sortBy="#{bean.marca}">
 					<f:facet name="header">#{messages['Automovel.label.marca']}</f:facet>
-					<h:commandLink action="#{automovelListMB.getNextView}" actionListener="#{automovelListMB.clear}">
+					<h:commandLink action="#{automovelListMB.getNextView()}" actionListener="#{automovelListMB.clear}">
 						<h:outputText value="#{bean.marca}" />
 						<f:param name="id" value="#{bean.id}" />
 					</h:commandLink>
@@ -79,7 +79,7 @@
 						
 				<p:column sortBy="#{bean.modelo}">
 					<f:facet name="header">#{messages['Automovel.label.modelo']}</f:facet>
-					<h:commandLink action="#{automovelListMB.getNextView}" actionListener="#{automovelListMB.clear}">
+					<h:commandLink action="#{automovelListMB.getNextView()}" actionListener="#{automovelListMB.clear}">
 						<h:outputText value="#{bean.modelo}" />
 						<f:param name="id" value="#{bean.id}" />
 					</h:commandLink>
@@ -87,7 +87,7 @@
 						
 				<p:column sortBy="#{bean.placa}">
 					<f:facet name="header">#{messages['Automovel.label.placa']}</f:facet>
-					<h:commandLink action="#{automovelListMB.getNextView}" actionListener="#{automovelListMB.clear}">
+					<h:commandLink action="#{automovelListMB.getNextView()}" actionListener="#{automovelListMB.clear}">
 						<h:outputText value="#{bean.placa}" />
 						<f:param name="id" value="#{bean.id}" />
 					</h:commandLink>
@@ -95,7 +95,7 @@
 						
 				<p:column sortBy="#{bean.tamanho}">
 					<f:facet name="header">#{messages['Automovel.label.tamanho']}</f:facet>
-					<h:commandLink action="#{automovelListMB.getNextView}" actionListener="#{automovelListMB.clear}">
+					<h:commandLink action="#{automovelListMB.getNextView()}" actionListener="#{automovelListMB.clear}">
 						<h:outputText value="#{messages[bean.tamanho]}" />
 						<f:param name="id" value="#{bean.id}" />
 					</h:commandLink>
@@ -103,7 +103,7 @@
 						
 				<p:column sortBy="#{bean.tipo}">
 					<f:facet name="header">#{messages['Automovel.label.tipo']}</f:facet>
-					<h:commandLink action="#{automovelListMB.getNextView}" actionListener="#{automovelListMB.clear}">
+					<h:commandLink action="#{automovelListMB.getNextView()}" actionListener="#{automovelListMB.clear}">
 						<h:outputText value="#{messages[bean.tipo]}" />
 						<f:param name="id" value="#{bean.id}" />
 					</h:commandLink>
@@ -111,7 +111,7 @@
 				
 				<p:column sortBy="#{bean.cliente.nome}">
 					<f:facet name="header">Dono</f:facet>
-					<h:commandLink action="#{automovelListMB.getNextView}" actionListener="#{automovelListMB.clear}">
+					<h:commandLink action="#{automovelListMB.getNextView()}" actionListener="#{automovelListMB.clear}">
 						<h:outputText value="#{bean.cliente.nome}" />
 						<f:param name="id" value="#{bean.id}" />
 					</h:commandLink>

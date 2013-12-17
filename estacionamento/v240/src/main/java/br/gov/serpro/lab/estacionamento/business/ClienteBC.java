@@ -37,6 +37,5 @@ import br.gov.serpro.lab.estacionamento.persistence.ClienteDAO;
 
 @BusinessController
 public class ClienteBC extends DelegateCrud<Cliente, Long, ClienteDAO> {
-	
 	private static final long serialVersionUID = 1L;
 }

@@ -36,7 +36,6 @@ import java.util.ResourceBundle;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import br.gov.frameworkdemoiselle.exception.ExceptionHandler;
-import br.gov.frameworkdemoiselle.lifecycle.Startup;
 import br.gov.frameworkdemoiselle.message.MessageContext;
 import br.gov.frameworkdemoiselle.message.SeverityType;
 //import br.gov.frameworkdemoiselle.security.RequiredPermission;
@@ -44,7 +43,6 @@ import br.gov.frameworkdemoiselle.message.SeverityType;
 import br.gov.frameworkdemoiselle.stereotype.BusinessController;
 import br.gov.frameworkdemoiselle.template.DelegateCrud;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
-import br.gov.serpro.lab.estacionamento.config.EstacionamentoConfig;
 import br.gov.serpro.lab.estacionamento.domain.Automovel;
 import br.gov.serpro.lab.estacionamento.domain.AutomovelTamanho;
 import br.gov.serpro.lab.estacionamento.domain.AutomovelTipo;
@@ -56,9 +54,6 @@ import br.gov.serpro.lab.estacionamento.persistence.AutomovelDAO;
 public class AutomovelBC extends DelegateCrud<Automovel, Long, AutomovelDAO> {
 
 	private static final long serialVersionUID = 1L;
-
-	@Inject
-	private EstacionamentoConfig config;
 
 	@Inject
 	private MessageContext messageContext;
@@ -95,19 +90,6 @@ public class AutomovelBC extends DelegateCrud<Automovel, Long, AutomovelDAO> {
 		}
 
 		return autoTamanhos;
-	}
-
-	@Startup
-	@Transactional
-	public void startup() {
-		
-		// Para ativar essa configuração modifique o valor em estacionamento.properties -> general.loadInitialData =
-		// true
-		if (config.isLoadInitialData()) {
-			if (findAll().isEmpty()) {
-				insert(new Automovel("VW", "Gol", "AAA-0000", AutomovelTamanho.MEDIUM, AutomovelTipo.CAR));
-			}
-		}
 	}
 
 	@Override
