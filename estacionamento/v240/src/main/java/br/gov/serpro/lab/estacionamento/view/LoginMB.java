@@ -33,6 +33,7 @@ package br.gov.serpro.lab.estacionamento.view;
 import javax.inject.Inject;
 
 import br.gov.frameworkdemoiselle.annotation.NextView;
+import br.gov.frameworkdemoiselle.message.MessageContext;
 import br.gov.frameworkdemoiselle.security.SecurityContext;
 import br.gov.frameworkdemoiselle.stereotype.ViewController;
 import br.gov.frameworkdemoiselle.template.AbstractPageBean;
@@ -51,13 +52,22 @@ public class LoginMB extends AbstractPageBean{
 	private EstacionamentoCredentials credentials;
 	
 	@Inject
-	private SecurityContext context;
+	private SecurityContext securityContext;
+	
+	@Inject
+	private MessageContext messageContext;
 	
 	public String doLogin() {
-		credentials.setUsername(this.getUsuario());
-		credentials.setPassword(this.senha);
-		context.login();
-		return getNextView();
+		try {
+			credentials.setUsername(this.getUsuario());
+			credentials.setPassword(this.senha);
+			securityContext.login();
+			return getNextView();
+		}catch (Exception e) {
+			messageContext.add(e.getMessage());
+			//AuthenticationException
+			return "";
+		}		
 	}
 
 	public void setUsuario(String usuario) {
@@ -77,7 +87,7 @@ public class LoginMB extends AbstractPageBean{
 	}
 	
 	public void doLogout() {
-		context.logout();
+		securityContext.logout();
 	}
 	
 

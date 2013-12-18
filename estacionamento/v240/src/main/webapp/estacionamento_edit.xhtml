@@ -49,7 +49,7 @@
 					<p:commandButton value="#{messages['button.save']}" action="#{estacionamentoEditMB.update}"
 						rendered="#{estacionamentoEditMB.updateMode}" ajax="false" />
 					<p:commandButton value="#{messages['button.delete']}" onclick="confirmation.show()"
-						rendered="#{estacionamentoEditMB.updateMode}" type="button" immediate="true" ajax="false" />
+						rendered="#{estacionamentoEditMB.updateMode}" type="button" immediate="true" ajax="false" disabled="#{!securityContext.hasRole('gerente')}"/>
 					<p:confirmDialog message="#{messages['label.confirm.delete']}" showEffect="bounce" hideEffect="explode"
 						header="#{messages['label.dialog.delete']}" severity="alert" widgetVar="confirmation">
 						<h:commandButton value="#{messages['button.dialog.yes']}" action="#{estacionamentoEditMB.delete}" immediate="true"
@@ -104,7 +104,7 @@
 							</p:column>
 							<p:column>
 								<f:facet name="header">#{messages['label.action']}</f:facet>
-								<p:commandButton value="#{messages['button.delete']}" action="#{estacionamentoEditMB.deletePatio}" ajax="false"/>
+								<p:commandButton value="#{messages['button.delete']}" action="#{estacionamentoEditMB.deletePatio}" ajax="false" disabled="#{!securityContext.hasRole('gerente')}"/>
 							</p:column>
 						</p:dataTable>
 						</h:panelGrid>

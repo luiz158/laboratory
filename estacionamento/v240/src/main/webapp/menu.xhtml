@@ -39,14 +39,13 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<h:form>
-		<p:menubar>
+		<p:menubar rendered="#{securityContext.loggedIn}">
 		
 			<p:submenu label="#{messages['menu.Estacionamento']}">
-				<p:menuitem value="#{messages['menu.menuitem.new']}" url="/estacionamento_edit.jsf"></p:menuitem>
+				<p:menuitem value="#{messages['menu.menuitem.new']}" url="/estacionamento_edit.jsf" rendered="#{securityContext.hasPermission('estacionamento', 'insert')}" ></p:menuitem>
 				<p:menuitem value="#{messages['menu.menuitem.list']}" url="/estacionamento_list.jsf"></p:menuitem>
 			</p:submenu>
-
-
+			
 			<p:submenu label="#{messages['menu.Patio']}">
 				<p:menuitem value="#{messages['menu.menuitem.list']}" url="/patio_list.jsf"></p:menuitem>
 			</p:submenu>
@@ -56,17 +55,17 @@
 			</p:submenu>
 	
 			<p:submenu label="#{messages['menu.cliente']}">
-				<p:menuitem value="#{messages['menu.menuitem.new']}" url="/cliente_edit.jsf"></p:menuitem>
+				<p:menuitem value="#{messages['menu.menuitem.new']}" url="/cliente_edit.jsf" rendered="#{securityContext.hasPermission('cliente', 'insert')}"></p:menuitem>
 				<p:menuitem value="#{messages['menu.menuitem.list']}" url="/cliente_list.jsf"></p:menuitem>
 			</p:submenu>
  		
 			<p:submenu label="#{messages['menu.endereco']}">
-				<p:menuitem value="#{messages['menu.menuitem.new']}" url="/endereco_edit.jsf"></p:menuitem>
+				<p:menuitem value="#{messages['menu.menuitem.new']}" url="/endereco_edit.jsf" rendered="#{securityContext.hasPermission('endereco', 'insert')}"></p:menuitem>
 				<p:menuitem value="#{messages['menu.menuitem.list']}" url="/endereco_list.jsf"></p:menuitem>
 			</p:submenu>
 			 
 			<p:submenu label="#{messages['menu.Automovel']}">
-				<p:menuitem value="#{messages['menu.menuitem.new']}" url="/automovel_edit.jsf"></p:menuitem>
+				<p:menuitem value="#{messages['menu.menuitem.new']}" url="/automovel_edit.jsf" rendered="#{securityContext.hasPermission('automovel', 'insert')}"></p:menuitem>
 				<p:menuitem value="#{messages['menu.menuitem.list']}" url="/automovel_list.jsf"></p:menuitem>
 			</p:submenu>
 			

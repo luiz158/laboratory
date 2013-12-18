@@ -30,64 +30,75 @@
  */
 package br.gov.serpro.lab.estacionamento.security;
 
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
-
+import br.gov.frameworkdemoiselle.security.AuthenticationException;
 import br.gov.frameworkdemoiselle.security.Authenticator;
 import br.gov.frameworkdemoiselle.security.User;
+import br.gov.frameworkdemoiselle.util.ResourceBundle;
 
-public class EstacionamentoAuthenticator  implements Authenticator {
+@SessionScoped
+public class EstacionamentoAuthenticator implements Authenticator {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	
-	
+
 	@Inject
 	private EstacionamentoCredentials credentials;
 
+	@Inject
+	private ResourceBundle bundle;
+
+	private static boolean authenticated;
+
 	@Override
-	public void authenticate() {
+	public void authenticate() throws Exception {
+
 		String username = credentials.getUsername();
 		String password = credentials.getPassword();
-
-		boolean authenticated = false;
 
 		if (username.equals("gerente") && password.equals("gerente")) {
 			authenticated = true;
 		} else if (username.equals("atendente") && password.equals("atendente")) {
 			authenticated = true;
 		}
+		if (!authenticated) {
+			throw new AuthenticationException(
+					bundle.getString("usuarioNaoAutenticado"));
+		}
 
 	}
-	
 
 	@Override
 	public User getUser() {
-		return new User() {
 
-			private static final long serialVersionUID = 1L;
+		if (authenticated) {
 
-			@Override
-			public String getId() {
-				return credentials.getUsername();
-			}
+			return new User() {
 
-			@Override
-			public void setAttribute(Object key, Object value) {
-			}
+				private static final long serialVersionUID = 1L;
 
-			@Override
-			public Object getAttribute(Object key) {
-				return null;
-			}
-		};
+				@Override
+				public String getId() {
+					return credentials.getUsername();
+				}
+
+				@Override
+				public void setAttribute(Object key, Object value) {
+				}
+
+				@Override
+				public Object getAttribute(Object key) {
+					return null;
+				}
+			};
+		}else{
+			return null;
+		}
+
 	}
 
 	@Override
 	public void unauthenticate() throws Exception {
-		// TODO Auto-generated method stub
 		credentials.clear();
 	}
-
 }

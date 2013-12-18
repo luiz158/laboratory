@@ -47,7 +47,7 @@
 						actionListener="#{automovelListMB.clear}" ajax="false" />
 
 					<p:commandButton title="#{messages['button.delete']}" icon="ui-icon-trash" onclick="confirmation.show()"
-						type="button" immediate="true" ajax="false" /> 
+						type="button" immediate="true" ajax="false" disabled="#{!securityContext.hasRole('gerente')}" /> 
 
 					<p:confirmDialog message="#{messages['label.confirm.delete']}" showEffect="bounce" hideEffect="explode"
 						header="#{messages['label.dialog.alert']}!" severity="alert" widgetVar="confirmation">

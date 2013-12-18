@@ -38,8 +38,9 @@ import javax.inject.Inject;
 import br.gov.frameworkdemoiselle.exception.ExceptionHandler;
 import br.gov.frameworkdemoiselle.message.MessageContext;
 import br.gov.frameworkdemoiselle.message.SeverityType;
-//import br.gov.frameworkdemoiselle.security.RequiredPermission;
-//import br.gov.frameworkdemoiselle.security.RequiredRole;
+import br.gov.frameworkdemoiselle.security.AuthorizationException;
+import br.gov.frameworkdemoiselle.security.RequiredPermission;
+import br.gov.frameworkdemoiselle.security.RequiredRole;
 import br.gov.frameworkdemoiselle.stereotype.BusinessController;
 import br.gov.frameworkdemoiselle.template.DelegateCrud;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
@@ -67,7 +68,7 @@ public class AutomovelBC extends DelegateCrud<Automovel, Long, AutomovelDAO> {
 	}
 
 	@ExceptionHandler
-	public void seguranca(SecurityException cause) {
+	public void seguranca(AuthorizationException cause) {
 		messageContext.add(ErrorMessages.ACESSO_NOK.getText(), cause.getMessage());
 	}
 
@@ -95,8 +96,7 @@ public class AutomovelBC extends DelegateCrud<Automovel, Long, AutomovelDAO> {
 	@Override
 	@Transactional
 	// Não é possível com JAAS.
-	// @RequiredPermission(resource = "automovel", operation = "insert")
-	
+	@RequiredPermission(resource = "automovel", operation = "insert")	
 	//@RequiredRole({"gerente","atendente"})
 	public Automovel insert(Automovel automovel) {
 		try {
@@ -111,7 +111,7 @@ public class AutomovelBC extends DelegateCrud<Automovel, Long, AutomovelDAO> {
 	@Override
 	@Transactional
 	// Não é possível com JAAS.
-	//@RequiredPermission(resource = "automovel", operation = "update")
+	@RequiredPermission(resource = "automovel", operation = "update")
 	//@RequiredRole({"gerente","atendente"})
 	public Automovel update(Automovel automovel) {
 		try {
@@ -125,7 +125,7 @@ public class AutomovelBC extends DelegateCrud<Automovel, Long, AutomovelDAO> {
 
 	@Override
 	@Transactional
-	//@RequiredRole("gerente")
+	@RequiredRole("gerente")
 	public void delete(Long id) {
 		try {
 			super.delete(id);

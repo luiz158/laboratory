@@ -34,8 +34,8 @@ import javax.inject.Inject;
 import br.gov.frameworkdemoiselle.exception.ExceptionHandler;
 import br.gov.frameworkdemoiselle.message.MessageContext;
 import br.gov.frameworkdemoiselle.message.SeverityType;
-//import br.gov.frameworkdemoiselle.security.RequiredPermission;
-//import br.gov.frameworkdemoiselle.security.RequiredRole;
+import br.gov.frameworkdemoiselle.security.RequiredPermission;
+import br.gov.frameworkdemoiselle.security.RequiredRole;
 import br.gov.frameworkdemoiselle.stereotype.BusinessController;
 import br.gov.frameworkdemoiselle.template.DelegateCrud;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
@@ -66,7 +66,7 @@ public class PatioBC extends DelegateCrud<Patio, Long, PatioDAO> {
 	@Override
 	@Transactional
 	// Não é possível com JAAS
-	//@RequiredPermission(resource = "patio", operation = "insert")
+	@RequiredPermission(resource = "patio", operation = "insert")
 	//@RequiredRole({"gerente","atendente"})
 	public Patio insert(Patio patio) {
 		try {
@@ -81,7 +81,7 @@ public class PatioBC extends DelegateCrud<Patio, Long, PatioDAO> {
 	@Override
 	@Transactional
 	// Não é possível com JAAS
-	// @RequiredPermission(resource = "patio", operation = "update")
+	 @RequiredPermission(resource = "patio", operation = "update")
 	//@RequiredRole({"gerente","atendente"})
 	public Patio update(Patio patio) {
 		try {
@@ -95,7 +95,7 @@ public class PatioBC extends DelegateCrud<Patio, Long, PatioDAO> {
 
 	@Override
 	@Transactional
-	//@RequiredRole("gerente")
+	@RequiredRole("gerente")
 	public void delete(Long id) {
 		try {
 			super.delete(id);

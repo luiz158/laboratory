@@ -35,8 +35,8 @@ import br.gov.frameworkdemoiselle.exception.ExceptionHandler;
 import br.gov.frameworkdemoiselle.lifecycle.Startup;
 import br.gov.frameworkdemoiselle.message.MessageContext;
 import br.gov.frameworkdemoiselle.message.SeverityType;
-//import br.gov.frameworkdemoiselle.security.RequiredPermission;
-//import br.gov.frameworkdemoiselle.security.RequiredRole;
+import br.gov.frameworkdemoiselle.security.RequiredPermission;
+import br.gov.frameworkdemoiselle.security.RequiredRole;
 import br.gov.frameworkdemoiselle.stereotype.BusinessController;
 import br.gov.frameworkdemoiselle.template.DelegateCrud;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
@@ -83,7 +83,7 @@ public class EstacionamentoBC extends DelegateCrud<Estacionamento, Long, Estacio
 	@Override
 	@Transactional
 	// Não é possível com JAAS.
-	//@RequiredPermission(resource = "estacionamento", operation = "insert")
+	@RequiredPermission(resource = "estacionamento", operation = "insert")
 	//@RequiredRole({"gerente","atendente"})
 	public Estacionamento insert(Estacionamento estacionamento) {
 		try {
@@ -98,7 +98,7 @@ public class EstacionamentoBC extends DelegateCrud<Estacionamento, Long, Estacio
 	@Override
 	@Transactional
 	// Não é possível com JAAS.
-	//@RequiredPermission(resource = "estacionamento", operation = "update")
+	@RequiredPermission(resource = "estacionamento", operation = "update")
 	//@RequiredRole({"gerente","atendente"})
 	public Estacionamento update(Estacionamento estacionamento) {
 		try {
@@ -112,7 +112,7 @@ public class EstacionamentoBC extends DelegateCrud<Estacionamento, Long, Estacio
 
 	@Override
 	@Transactional
-	//@RequiredRole("gerente")
+	@RequiredRole("gerente")
 	public void delete(Long id) {
 		try {
 			super.delete(id);

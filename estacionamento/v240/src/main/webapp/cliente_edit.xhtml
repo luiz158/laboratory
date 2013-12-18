@@ -57,7 +57,7 @@
 					<p:commandButton value="#{messages['button.delete']}"
 						onclick="confirmation.show()"
 						rendered="#{clienteEditMB.updateMode}" type="button"
-						immediate="true" ajax="false" />
+						immediate="true" ajax="false" disabled="#{!securityContext.hasRole('gerente')}" />
 					<p:confirmDialog message="#{messages['label.confirm.delete']}"
 						showEffect="bounce" hideEffect="explode"
 						header="#{messages['label.dialog.delete']}" severity="alert"
@@ -179,7 +179,7 @@
 						<p:column>
 							<f:facet name="header">#{messages['label.action']}</f:facet>
 							<p:commandButton value="#{messages['button.delete']}"
-								action="#{clienteEditMB.deleteAutomovel}" ajax="false" />
+								action="#{clienteEditMB.deleteAutomovel}" ajax="false" disabled="#{!securityContext.hasRole('gerente')}" />
 						</p:column>
 					</p:dataTable>
 				</h:panelGrid>

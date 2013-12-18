@@ -46,25 +46,8 @@ public Estacionamento update(Estacionamento estacionamento) {
 Atualizada versão do Demoiselle-Report para 2.2.0, pois gerava um erro de EL.
 
 
-Authenticator 
+Na classe Authenticator 
 
+o método public void unAuthenticate()  mudou para public void unauthenticate() throws Exception 
 
-@Override
-	public void unAuthenticate() {
-		
-	}
-
-
-public boolean authenticate() {
-
-public void authenticate() {
-
-public void unauthenticate() throws Exception {
-
-
-@Override
-	protected void handleLoad() {
-		setBean(this."Pojo"BC.load(getId()));
-	}
-
-
+O método public boolean authenticate() mudou para public void authenticate() throws Exception

@@ -100,7 +100,7 @@
 							</p:column>
 							<p:column>
 								<f:facet name="header">#{messages['label.action']}</f:facet>
-								<p:commandButton value="#{messages['button.delete']}" action="#{patioEditMB.deleteVaga}" ajax="false" />
+								<p:commandButton value="#{messages['button.delete']}" action="#{patioEditMB.deleteVaga}" ajax="false" disabled="#{!securityContext.hasRole('gerente')}" />
 							</p:column>
 						</p:dataTable>
 						</h:panelGrid>
