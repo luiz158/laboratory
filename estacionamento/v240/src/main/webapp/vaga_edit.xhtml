@@ -44,8 +44,18 @@
 
 			<p:toolbar>
 				<p:toolbarGroup align="left">
+					<p:commandButton value="#{messages['button.save']}" action="#{vagaEditMB.insert}"
+						rendered="#{!vagaEditMB.updateMode}" ajax="false" />
 					<p:commandButton value="#{messages['button.save']}" action="#{vagaEditMB.update}"
 						rendered="#{vagaEditMB.updateMode}" ajax="false" />
+					<p:commandButton value="#{messages['button.delete']}" onclick="confirmation.show()"
+						rendered="#{vagaEditMB.updateMode}" type="button" immediate="true" ajax="false" disabled="#{!securityContext.hasRole('gerente')}"/>
+					<p:confirmDialog message="#{messages['label.confirm.delete']}" showEffect="bounce" hideEffect="explode"
+						header="#{messages['label.dialog.delete']}" severity="alert" widgetVar="confirmation">
+						<h:commandButton value="#{messages['button.dialog.yes']}" action="#{vagaEditMB.delete}" immediate="true"
+							ajax="false" />
+						<h:commandButton value="#{messages['button.dialog.no']}" onclick="confirmation.hide()" type="button" />
+					</p:confirmDialog>
 				</p:toolbarGroup>
 			</p:toolbar>
 
@@ -69,7 +79,7 @@
 					<h:outputLabel value="#{messages['patio.label']}: " for="patio" styleClass="text-input" />
 					<h:selectOneMenu id="patio" value="#{vagaEditMB.bean.patio}" effect="fade" converter="ConversorPatio">
 						<f:selectItem itemLabel="Selecione" itemValue="" />
-						<f:selectItems value="#{vagaEditMB.patios}" var="varPatio" itemLabel="#{varPatio.local}" itemValue="#{varPatio}" />
+						<f:selectItems value="#{vagaEditMB.patios}" var="varPatio" itemLabel="#{varPatio.estacionamento.nome}/#{varPatio.local}" itemValue="#{varPatio}" />
 					</h:selectOneMenu>
 					<p:message for="patio" />
 					
@@ -99,7 +109,6 @@
 								<f:selectItem itemValue="False" itemLabel="#{messages['value.no']}" />
 					</h:selectOneMenu>
 					<p:message for="SelectOneMenuCoberta" />	
-					
 					
 				</h:panelGrid>
 			</p:fieldset>

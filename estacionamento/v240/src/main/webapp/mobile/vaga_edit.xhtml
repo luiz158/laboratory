@@ -10,25 +10,24 @@
 		<pm:view id="main">
 			<pm:header title="Edição de vaga" swatch="b">
 				<f:facet name="left">
-					<p:button style="width:10; height:30; border:1px solid #000;" 
+					<h:button style="width:10; height:30; border:1px solid #000;" 
 						value="#{messages['button.back']}" icon="back"
 						href="#{vagaEditMB.previousView}"/>
 				</f:facet>
 				<f:facet name="right">
-					<p:button value="#{messages['main.app.title']}" icon="home"
+					<h:button value="#{messages['main.app.title']}" icon="home"
 								 href="./navigator.jsf"/>
 				 </f:facet>
 			</pm:header>
 			<pm:content>
 				<h:form>
 					<pm:buttonGroup orientation="horizontal" >
-						<h:commandButton value="#{messages['button.save']}"
-							action="#{vagaEditMB.update}" icon="check"
-							iconPosition="center" />
-						<h:commandButton value="#{messages['button.delete']}"
-							action="#{vagaEditMB.delete}"
-							rendered="#{vagaEditMB.updateMode}" icon="delete"
-							iconPosition="center" />
+						<h:commandButton value="#{messages['button.save']}" action="#{vagaEditMB.insert}"
+						rendered="#{!vagaEditMB.updateMode}" ajax="false" />
+					<h:commandButton value="#{messages['button.save']}" action="#{vagaEditMB.update}"
+						rendered="#{vagaEditMB.updateMode}" ajax="false" />
+					<h:commandButton value="#{messages['button.delete']}" action="#{vagaEditMB.delete}"
+						rendered="#{vagaEditMB.updateMode}" immediate="true" ajax="false" disabled="#{!securityContext.hasRole('gerente')}"/>
 					</pm:buttonGroup>
 					
 					<h:outputLabel value="#{messages['vaga.label.id']}: " for="id" styleClass="text-input" />										
@@ -54,7 +53,7 @@
 					<h:outputLabel value="#{messages['patio.label']}: " for="patio" styleClass="text-input" />
 				    <h:selectOneMenu id="patio" value="#{vagaEditMB.bean.patio}"  converter="ConversorPatio">
 						<f:selectItem itemLabel="Selecione" itemValue="" />
-						<f:selectItems value="#{vagaEditMB.patios}" var="varPatio" itemLabel="#{varPatio.local}"  itemValue="#{varPatio}" />						
+						<f:selectItems value="#{vagaEditMB.patios}" var="varPatio" itemLabel="#{varPatio.estacionamento.nome} / #{varPatio.local}"  itemValue="#{varPatio}" />						
 					</h:selectOneMenu>
 					<h:message for="patio" />
 					

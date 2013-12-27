@@ -77,7 +77,7 @@ public class EstacionamentoEditMB extends AbstractEditPageBean<Estacionamento, L
 	}
 	
 	public void addPatio() {
-		getBean().addPatio(new Patio());
+		getBean().getPatios().add(new Patio());
 	}
 
 	public void deletePatio() {

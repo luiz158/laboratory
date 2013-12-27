@@ -90,7 +90,8 @@ public class EstacionamentoBC extends DelegateCrud<Estacionamento, Long, Estacio
 			super.insert(estacionamento);
 			messageContext.add(InfoMessages.ESTACIONAMENTO_INSERT_OK.getText(), estacionamento.getNome());
 		} catch (Exception te) {
-			messageContext.add(ErrorMessages.ESTACIONAMENTO_INSERT_NOK.getText(), te.getMessage(), SeverityType.ERROR);
+			te.printStackTrace();
+			messageContext.add(ErrorMessages.ESTACIONAMENTO_INSERT_NOK.getText(), te.getMessage(), SeverityType.ERROR);			
 		}
 		return estacionamento;
 	}

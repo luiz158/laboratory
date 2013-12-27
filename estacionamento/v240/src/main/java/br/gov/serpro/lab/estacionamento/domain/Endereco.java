@@ -43,7 +43,7 @@ public class Endereco implements Serializable {
 	
 	@Id
 	@Column(name = "cod_endereco")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue
 	private Long codigo;
 	
 	@Column

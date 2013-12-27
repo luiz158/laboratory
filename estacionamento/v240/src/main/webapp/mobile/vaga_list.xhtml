@@ -22,7 +22,7 @@
 				<pm:content>
 					<h:form>
 						<p:dataList id="list" var="bean" value="#{vagaListMB.resultList}">
-							<h:outputText styleClass="ui-li-count" value="#{bean.patio.local}" />							
+							<h:outputText styleClass="ui-li-count" value="#{bean.patio.estacionamento.nome} / #{bean.patio.local}" />							
 							<h:commandLink value="#{bean.automovel.placa}" action="#{vagaListMB.getNextView}">
 								<f:param name="id" value="#{bean.id}" />
 							</h:commandLink>								

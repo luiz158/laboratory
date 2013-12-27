@@ -23,13 +23,17 @@
 			<pm:content>
 				<h:form>
 					<pm:buttonGroup orientation="horizontal">
-						<h:commandButton value="#{messages['button.save']}"
-							action="#{clienteEditMB.update}" icon="check"
-							iconPosition="center" />
-						<h:commandButton value="#{messages['button.delete']}"
-							action="#{clienteEditMB.delete}"
-							rendered="#{clienteEditMB.updateMode}" icon="delete"
-							iconPosition="center" />
+					<h:commandButton value="#{messages['button.save']}"
+						action="#{clienteEditMB.insert}"
+						rendered="#{!clienteEditMB.updateMode}" ajax="false" />
+					<h:commandButton value="#{messages['button.save']}"
+						action="#{clienteEditMB.update}"
+						rendered="#{clienteEditMB.updateMode}" ajax="false" />
+					<h:commandButton value="#{messages['button.delete']}"
+						action="#{clienteEditMB.delete}"
+						rendered="#{clienteEditMB.updateMode}" 
+						immediate="true" ajax="false" disabled="#{!securityContext.hasRole('gerente')}" />					
+					</p:confirmDialog>
 					</pm:buttonGroup>
 					<h:outputLabel value="#{messages['cliente.label.id']}:" for="id" styleClass="text-input" />
 					<h:outputText id="id" value="#{clienteEditMB.bean.id}" />
@@ -57,58 +61,29 @@
 						 <p:outputPanel>
 							<p:commandButton value="#{messages['button.new']}"
 								action="#{clienteEditMB.addAutomovel}" update="listAutomovel" />
-							<p:dataTable id="listAutomovel" var="automovel"
-								value="#{clienteEditMB.automoveis}" rowIndexVar="index">
-								<f:attribute name="columnToggle" value="true" />
-								<p:column>
-									<h:outputLabel value="#{messages['automovel.label.id']}: "
-										for="id" styleClass="text-input" />
-									<h:outputText id="id" value="#{automovel.id}" />
-									<h:message for="id" />
-								</p:column>
-								<p:column>
-									<h:outputLabel value="#{messages['automovel.label.marca']}: "
-										for="marca" styleClass="text-input" />
-									<h:inputText id="marca" value="#{automovel.marca}"
-										title="#{messages['automovel.alt.marca']}" />
-									<h:message for="marca" />
-								</p:column>
-								<p:column>
-									<h:outputLabel value="#{messages['automovel.label.modelo']}: "
-										for="modelo" styleClass="text-input" />
-									<h:inputText id="modelo" value="#{automovel.modelo}"
-										title="#{messages['automovel.alt.modelo']}" />
-									<h:message for="modelo" />
-								</p:column>
-								<p:column>
-									<h:outputLabel value="#{messages['automovel.label.placa']}: "
-										for="placa" styleClass="text-input" />
-									<h:inputText id="placa" value="#{automovel.placa}"
-										title="#{messages['automovel.alt.placa']}" />
-									<h:message for="placa" />
-								</p:column>
-								<p:column>
-									<h:outputLabel value="#{messages['automovel.label.tamanho']}: "
-										for="tamanho" styleClass="text-input" />
-									<h:selectOneMenu id="tamanho" value="#{automovel.tamanho}">
-										<f:selectItems value="#{automovelEditMB.automovelTamanhos}" />
-									</h:selectOneMenu>
-									<h:message for="tamanho" />
-								</p:column>
-								<p:column>
-									<h:outputLabel value="#{messages['automovel.label.tipo']}: "
-										for="tipo" styleClass="text-input" />
-									<h:selectOneMenu id="tipo" value="#{automovel.tipo}">
-										<f:selectItems value="#{automovelEditMB.automovelTipos}" />
-									</h:selectOneMenu>
-									<h:message for="tipo" />
-								</p:column>
-								<p:column>
-									<f:facet name="header">#{messages['label.action']}</f:facet>
-									<p:commandButton value="#{messages['button.delete']}"
-										action="#{clienteEditMB.deleteAutomovel}" />
-								</p:column>
-							</p:dataTable>
+							<p:dataTable id="listAutomovel" var="automovel"	value="#{clienteEditMB.automoveis}" rowIndexVar="index">
+						<f:attribute name="columnToggle" value="true" />
+						<p:column>
+							<f:facet name="header">#{messages['automovel.label.marca']}</f:facet>
+							<h:outputText id="marca" value="#{automovel.marca}"/>					
+						</p:column>
+						<p:column>
+						<f:facet name="header">#{messages['automovel.label.modelo']}</f:facet>
+							<h:outputText value="#{automovel.modelo}" />
+						</p:column>
+						<p:column>
+						<f:facet name="header">#{messages['automovel.label.placa']}</f:facet>
+							<h:outputText value="#{automovel.placa}" />							
+						</p:column>
+						<p:column>
+						<f:facet name="header">#{messages['automovel.label.tamanho']}</f:facet>
+							<h:outputText value="#{messages[automovel.tamanho]}" /> 
+						</p:column>
+						<p:column>
+							<f:facet name="header">#{messages['automovel.label.tipo']}</f:facet>
+							<h:outputText value="#{messages[automovel.tipo]}" />
+						</p:column>
+					</p:dataTable>
 							</p:outputPanel>
 						</h:panelGrid>
 					</p:panel>			

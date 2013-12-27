@@ -46,7 +46,7 @@ public class Cliente implements Serializable {
 
 	@Id
 	@Column(name = "id_cliente")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue
 	private Long id;
 
 	@Column(length = 255)
@@ -70,7 +70,7 @@ public class Cliente implements Serializable {
 	@Column(nullable = false, length = 15)
 	private String telefone;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval=true)
 	@JoinColumn(name = "cliente_fk")
 	private List<Automovel> automoveis;
 	

@@ -4,25 +4,6 @@
 	
 	
 	<persistence-unit name="estacionamento-pu" transaction-type="RESOURCE_LOCAL">
-		<non-jta-data-source>java:jboss/datasources/BancoUmDS</non-jta-data-source>  
- 		
-		<class>br.gov.serpro.lab.estacionamento.domain.Vaga</class>
-		<class>br.gov.serpro.lab.estacionamento.domain.Patio</class>
-		<class>br.gov.serpro.lab.estacionamento.domain.Estacionamento</class>
-		<class>br.gov.serpro.lab.estacionamento.domain.Cliente</class>
-		<class>br.gov.serpro.lab.estacionamento.domain.Automovel</class>
-		<class>br.gov.serpro.lab.estacionamento.domain.Endereco</class>
-
-	<properties>
-			<property name="hibernate.show_sql" value="true" />
-			<property name="hibernate.format_sql" value="true" />
-			<property name="hibernate.hbm2ddl.auto" value="update" />
-			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>		
-		</properties>
-	</persistence-unit>  
-	
-	<!-- 
-	<persistence-unit name="estacionamento-pu" transaction-type="RESOURCE_LOCAL">
 		<non-jta-data-source>java:jboss/datasources/ExampleDS</non-jta-data-source>
 
 		<class>br.gov.serpro.lab.estacionamento.domain.Vaga</class>
@@ -39,7 +20,6 @@
 			<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
 		</properties>
 	</persistence-unit>
-	 -->
 	
 	
 	<!-- If you are using Tomcat 6 / Tomcat 7 / JUnit then use this persistence-unit -->

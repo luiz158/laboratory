@@ -75,7 +75,6 @@
 			<p:fieldset legend="#{messages['cliente.label']}" toggleable="true"
 				toggleSpeed="500">
 				<h:panelGrid id="fields" columns="3" cellpadding="2" cellspacing="4">
-
 					<h:outputLabel value="#{messages['cliente.label.id']}: " for="id"
 						styleClass="text-input" />
 					<h:outputText id="id" value="#{clienteEditMB.bean.id}" />
@@ -125,65 +124,7 @@
 					<p:message for="email" />
 
 				</h:panelGrid>
-			</p:fieldset>
-			<p:fieldset legend="#{messages['menu.automovel']}" toggleable="true"
-				toggleSpeed="500">
-				<h:panelGrid id="fieldsAutomoveis" columns="1">
-					<p:commandButton value="#{messages['button.add']}"
-						action="#{clienteEditMB.addAutomovel}" update="listAutomovel" />
-					<p:dataTable id="listAutomovel" var="automovel"
-						value="#{clienteEditMB.automoveis}" rowIndexVar="index">
-						<p:column>
-							<h:outputLabel value="#{messages['automovel.label.marca']}: "
-								for="marca" styleClass="text-input" />
-							<h:inputText id="marca" value="#{automovel.marca}"
-								title="#{messages['automovel.alt.marca']}" required="true">
-								<f:validateLength minimum="2" maximum="255" />
-							</h:inputText>
-							<p:message for="marca" />
-						</p:column>
-						<p:column>
-							<h:outputLabel value="#{messages['automovel.label.modelo']}: "
-								for="modelo" styleClass="text-input" />
-							<h:inputText id="modelo" value="#{automovel.modelo}"
-								title="#{messages['automovel.alt.modelo']}" required="true">
-								<f:validateLength minimum="2" maximum="255" />
-							</h:inputText>
-							<p:message for="modelo" />
-						</p:column>
-						<p:column>
-							<h:outputLabel value="#{messages['automovel.label.placa']}: "
-								for="placa" styleClass="text-input" />
-							<h:inputText id="placa" value="#{automovel.placa}"
-								title="#{messages['automovel.alt.placa']}" required="true">
-								<f:validateLength minimum="8" maximum="8" />
-							</h:inputText>
-							<p:message for="placa" />
-						</p:column>
-						<p:column>
-							<h:outputLabel value="#{messages['automovel.label.tamanho']}: "
-								for="tamanho" styleClass="text-input" />
-							<h:selectOneMenu id="tamanho" value="#{automovel.tamanho}">
-								<f:selectItems value="#{clienteEditMB.automovelTamanhos}" />
-							</h:selectOneMenu>
-							<p:message for="tamanho" />
-						</p:column>
-						<p:column>
-							<h:outputLabel value="#{messages['automovel.label.tipo']}: "
-								for="tipo" styleClass="text-input" />
-							<h:selectOneMenu id="tipo" value="#{automovel.tipo}">
-								<f:selectItems value="#{clienteEditMB.automovelTipos}" />
-							</h:selectOneMenu>
-							<p:message for="tipo" />
-						</p:column>
-						<p:column>
-							<f:facet name="header">#{messages['label.action']}</f:facet>
-							<p:commandButton value="#{messages['button.delete']}"
-								action="#{clienteEditMB.deleteAutomovel}" ajax="false" disabled="#{!securityContext.hasRole('gerente')}" />
-						</p:column>
-					</p:dataTable>
-				</h:panelGrid>
-			</p:fieldset>
+			</p:fieldset>			
 			<p:fieldset legend="#{messages['menu.endereco']}" toggleable="true">
 				<p:pickList id="pickListEndereco" value="#{clienteEditMB.enderecoList}"
 					var="varEndereco" effect="bounce" itemValue="#{varEndereco}"
@@ -194,6 +135,34 @@
 					<f:facet name="targetCaption">#{messages['menu.cliente']} / #{messages['menu.endereco']}</f:facet>
 					<p:ajax  event="transfer" listener="#{clienteEditMB.onTransfer}" update="pickListEndereco" />   
 				</p:pickList>
+			</p:fieldset>
+			<p:fieldset legend="#{messages['menu.automovel']}" toggleable="true"
+				toggleSpeed="500">
+				<h:panelGrid id="fieldsAutomoveis" columns="1">
+					<p:dataTable id="listAutomovel" var="automovel"	value="#{clienteEditMB.automoveis}" rowIndexVar="index">
+						<f:attribute name="columnToggle" value="true" />
+						<p:column>
+							<f:facet name="header">#{messages['automovel.label.marca']}</f:facet>
+							<h:outputText id="marca" value="#{automovel.marca}"/>					
+						</p:column>
+						<p:column>
+						<f:facet name="header">#{messages['automovel.label.modelo']}</f:facet>
+							<h:outputText value="#{automovel.modelo}" />
+						</p:column>
+						<p:column>
+						<f:facet name="header">#{messages['automovel.label.placa']}</f:facet>
+							<h:outputText value="#{automovel.placa}" />							
+						</p:column>
+						<p:column>
+						<f:facet name="header">#{messages['automovel.label.tamanho']}</f:facet>
+							<h:outputText value="#{messages[automovel.tamanho]}" /> 
+						</p:column>
+						<p:column>
+							<f:facet name="header">#{messages['automovel.label.tipo']}</f:facet>
+							<h:outputText value="#{messages[automovel.tipo]}" />
+						</p:column>
+					</p:dataTable>
+				</h:panelGrid>
 			</p:fieldset>
 		</h:form>
 	</ui:define>

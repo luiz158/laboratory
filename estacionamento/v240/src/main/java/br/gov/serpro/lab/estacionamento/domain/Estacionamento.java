@@ -32,11 +32,10 @@ package br.gov.serpro.lab.estacionamento.domain;
 
 import java.io.Serializable;
 import java.util.*;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import br.gov.frameworkdemoiselle.validation.PatternInscricaoEstadual;
 import br.gov.frameworkdemoiselle.validation.annotation.Cnpj;
-import br.gov.frameworkdemoiselle.validation.annotation.InscricaoEstadual;
 
 @Entity
 @Table(name = "tb_estacionamento")
@@ -46,7 +45,7 @@ public class Estacionamento implements Serializable {
 
 	@Id
 	@Column(name = "id_estacionamento")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue
 	private Long id;
 
 	@Column(length = 255)
@@ -59,13 +58,12 @@ public class Estacionamento implements Serializable {
 	private String cnpj;
 
 	@Column
-	@InscricaoEstadual(pattern = PatternInscricaoEstadual.DISTRITO_FEDERAL)
 	private String inscricaoEstadual;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval=true)
 	@JoinColumn(name = "estacionamento_fk")
-	private List<Patio> patios;
-
+	private List<Patio> patios = new ArrayList<Patio>();
+		
 	public Estacionamento() {
 		super();
 	}
@@ -81,11 +79,7 @@ public class Estacionamento implements Serializable {
 		this.cnpj = cnpj;
 		this.inscricaoEstadual = inscricaoEstadual;
 		this.patios = patios;
-	}
-
-	public void addPatio(final Patio patio) {
-		this.patios.add(patio);
-	}
+	}	
 
 	public String getCnpj() {
 		return this.cnpj;
@@ -107,7 +101,7 @@ public class Estacionamento implements Serializable {
 		return this.patios;
 	}
 
-	public void setCnpj(final String cnpj) {
+	public void setCnpj(String cnpj) {
 		this.cnpj = cnpj;
 	}
 
@@ -115,15 +109,15 @@ public class Estacionamento implements Serializable {
 		this.id = id;
 	}
 
-	public void setInscricaoEstadual(final String inscricaoEstadual) {
+	public void setInscricaoEstadual(String inscricaoEstadual) {
 		this.inscricaoEstadual = inscricaoEstadual;
 	}
 
-	public void setNome(final String nome) {
+	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
-	public void setPatios(final List<Patio> patios) {
+	public void setPatios(List<Patio> patios) {
 		this.patios = patios;
 	}
 

@@ -41,7 +41,7 @@ public class Automovel implements Serializable {
 
 	@Id
 	@Column(name="id_automovel")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue
 	private Long id;
 	
 	@Column (length=255)

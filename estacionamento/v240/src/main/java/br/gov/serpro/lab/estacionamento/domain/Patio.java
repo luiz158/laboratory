@@ -33,6 +33,7 @@ package br.gov.serpro.lab.estacionamento.domain;
 import java.io.Serializable;
 import java.util.*;
 import javax.persistence.*;
+
 import br.gov.frameworkdemoiselle.validation.annotation.Cep;
 
 @Entity
@@ -43,7 +44,7 @@ public class Patio implements Serializable {
 
 	@Id
 	@Column(name = "id_patio")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue 
 	private Long id;
 
 	@Column
@@ -57,7 +58,7 @@ public class Patio implements Serializable {
 	@JoinColumn(name = "estacionamento_fk")
 	private Estacionamento estacionamento;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval=true)
 	@JoinColumn(name = "patio_fk")
 	private List<Vaga> vagas;
 

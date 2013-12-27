@@ -42,7 +42,7 @@ public class Vaga implements Serializable {
 	
 	@Id
 	@Column(name="id_vaga")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue
 	private Long id;
 	
 	@Column (nullable=false)
@@ -63,7 +63,7 @@ public class Vaga implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
 	private Date dataHoraSaida;
 	
-	@ManyToOne  
+	@ManyToOne
 	@JoinColumn(name="patio_fk")  
 	private Patio patio;  
 	

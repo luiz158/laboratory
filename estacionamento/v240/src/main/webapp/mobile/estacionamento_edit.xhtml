@@ -23,13 +23,12 @@
 			<pm:content>
 				<h:form>
 					<pm:buttonGroup orientation="horizontal" >
-						<h:commandButton value="#{messages['button.save']}"
-							action="#{estacionamentoEditMB.update}" icon="check"
-							iconPosition="center" />
-						<h:commandButton value="#{messages['button.delete']}"
-							action="#{estacionamentoEditMB.delete}"
-							rendered="#{estacionamentoEditMB.updateMode}" icon="delete"
-							iconPosition="center" />
+					<h:commandButton id="insert" value="#{messages['button.save']}" action="#{automovelEditMB.insert}"
+						rendered="#{!automovelEditMB.updateMode}" ajax="false" />
+					<h:commandButton id="update" value="#{messages['button.update']}" action="#{automovelEditMB.update}"
+						rendered="#{automovelEditMB.updateMode}"  ajax="false" />
+					<h:commandButton id="delete"  value="#{messages['button.delete']}" action="#{automovelEditMB.delete}"
+						rendered="#{automovelEditMB.updateMode}"  immediate="true" ajax="false" disabled="#{!securityContext.hasRole('gerente')}" />										
 					</pm:buttonGroup>
 					<h:outputLabel value="#{messages['estacionamento.label.id']}: " for="id" styleClass="text-input" />
 					<h:outputText id="id" value="#{estacionamentoEditMB.bean.id}" />
@@ -39,39 +38,28 @@
 						title="#{messages['estacionamento.alt.nome']}" />
 					<h:message for="nome" />
 					<h:outputLabel value="#{messages['estacionamento.label.cnpj']}: " for="cnpj" styleClass="text-input" />
-					<h:inputText id="cnpj" value="#{estacionamentoEditMB.bean.cnpj}"
-						title="#{messages['estacionamento.alt.cnpj']}" />
+					<h:inputText id="cnpj" value="#{estacionamentoEditMB.bean.cnpj}" required="true"
+						title="#{messages['estacionamento.alt.cnpj']}"> <f:validateLength minimum="14" maximum="14" /> </h:inputText>
 					<p:message for="cnpj" />
 					<h:outputLabel value="#{messages['estacionamento.label.inscricaoEstadual']}: " for="inscricaoEstadual" styleClass="text-input" />
-					<h:inputText id="inscricaoEstadual" value="#{estacionamentoEditMB.bean.inscricaoEstadual}"
-						title="#{messages['estacionamento.alt.inscricaoEstadual']}" />
+					<h:inputText id="inscricaoEstadual" value="#{estacionamentoEditMB.bean.inscricaoEstadual}" required="true"
+						title="#{messages['estacionamento.alt.inscricaoEstadual']}"> <f:validateLength minimum="13" maximum="13" />
+						</h:inputText>
 					<h:message for="inscricaoEstadual" />
 					
 					<p:panel header="#{messages['patio.label']}" toggleable="true" toggleSpeed="500">	 
 						<h:panelGrid id="fieldspatio" columns="1">
-						<p:outputPanel>
-						<p:commandButton value="#{messages['button.new']}" action="#{estacionamentoEditMB.addPatio}" update="listPatio"/>
-							<p:dataTable id="listPatio" var="patio" value="#{estacionamentoEditMB.patios}" rowIndexVar="index">
-								<f:attribute name="columnToggle" value="true" />					
+						<p:outputPanel>						
+							<p:dataTable id="listPatio" var="patio" value="#{estacionamentoEditMB.patios}">
+								<f:attribute name="columnToggle" value="true" />
 								<p:column>
-							 		<h:outputLabel value="#{messages['patio.label.id']}: " for="id" styleClass="text-input" />
-						   			<h:outputText id="id" value="#{patio.id}" />
-						   			<h:message for="id" />
-						 		</p:column>
+									<f:facet name="header">#{messages['patio.label.local']}</f:facet>
+									<h:outputText id="local" value="#{patio.local}"/>
+								</p:column>
 								<p:column>
-							 		<h:outputLabel value="#{messages['patio.label.local']}: " for="local" styleClass="text-input" />
-						   			<h:inputText id="local" value="#{patio.local}"	title="#{messages['patio.alt.local']}" />
-						   		<h:message for="local" />
-						 		</p:column>
-								<p:column>
-							 		<h:outputLabel value="#{messages['patio.label.cep']}: " for="cep" styleClass="text-input" />
-						   			<h:inputText id="cep" value="#{patio.cep}"  title="#{messages['patio.alt.cep']}" />
-						   			<h:message for="cep" />
-						 		</p:column>
-					   			<p:column>
-						   			<f:facet name="header">#{messages['label.action']}</f:facet>
-						   			<h:commandButton value="#{messages['button.delete']}" action="#{estacionamentoEditMB.deletePatio}"/>
-					   			</p:column>
+									<f:facet name="header">#{messages['patio.label.cep']}</f:facet>
+									<h:outputText id="cep" value="#{patio.cep}"/>
+								</p:column>
 							</p:dataTable>
 						</p:outputPanel>
 						</h:panelGrid>

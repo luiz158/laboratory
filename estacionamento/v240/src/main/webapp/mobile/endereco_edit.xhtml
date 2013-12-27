@@ -23,13 +23,12 @@
 			<pm:content>
 				<h:form>
 					<pm:buttonGroup orientation="horizontal" >
-						<h:commandButton value="#{messages['button.save']}"
-							action="#{enderecoEditMB.update}" icon="check"
-							iconPosition="center" />
-						<h:commandButton value="#{messages['button.delete']}"
-							action="#{enderecoEditMB.delete}"
-							rendered="#{enderecoEditMB.updateMode}" icon="delete"
-							iconPosition="center" />
+					<h:commandButton value="#{messages['button.save']}" action="#{enderecoEditMB.insert}"
+						rendered="#{!enderecoEditMB.updateMode}" ajax="false" />
+					<h:commandButton value="#{messages['button.save']}" action="#{enderecoEditMB.update}"
+						rendered="#{enderecoEditMB.updateMode}" ajax="false" />
+					<h:commandButton value="#{messages['button.delete']}" action="#{enderecoEditMB.delete}"
+						rendered="#{enderecoEditMB.updateMode}" immediate="true" ajax="false" disabled="#{!securityContext.hasRole('gerente')}"/>
 					</pm:buttonGroup>
 					
 					<h:outputLabel value="#{messages['endereco.label.codigo']}: " for="codigo" styleClass="text-input" />										
