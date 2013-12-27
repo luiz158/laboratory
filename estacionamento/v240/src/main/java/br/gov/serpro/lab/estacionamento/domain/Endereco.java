@@ -31,7 +31,6 @@
 package br.gov.serpro.lab.estacionamento.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 import br.gov.frameworkdemoiselle.validation.annotation.Cep;
@@ -61,7 +60,7 @@ public class Endereco implements Serializable {
 	private String cep;
 	
 	@ManyToMany(mappedBy="enderecos")
-	private List<Cliente> clientes = new ArrayList<Cliente>();
+	private List<Cliente> clientes;
 	
 	public Endereco (){
 		super();

@@ -61,44 +61,44 @@
 
 			<br />
 
-			<p:fieldset legend="#{messages['Estacionamento.label']}" toggleable="true" toggleSpeed="500">
+			<p:fieldset legend="#{messages['estacionamento.label']}" toggleable="true" toggleSpeed="500">
 				<h:panelGrid id="fields" columns="3" cellpadding="2" cellspacing="4">
 					
-					<h:outputLabel value="#{messages['Estacionamento.label.id']}: " for="id" styleClass="text-input" />
+					<h:outputLabel value="#{messages['estacionamento.label.id']}: " for="id" styleClass="text-input" />
 					<h:outputText id="id" value="#{estacionamentoEditMB.bean.id}" />
 					<p:message for="id" />
 					
-					<h:outputLabel value="#{messages['Estacionamento.label.nome']}: " for="nome" styleClass="text-input" />
-					<h:inputText id="nome" value="#{estacionamentoEditMB.bean.nome}"  title="#{messages['Estacionamento.alt.nome']}" required="true">
+					<h:outputLabel value="#{messages['estacionamento.label.nome']}: " for="nome" styleClass="text-input" />
+					<h:inputText id="nome" value="#{estacionamentoEditMB.bean.nome}"  title="#{messages['estacionamento.alt.nome']}" required="true">
 							<f:validateLength minimum = "3" maximum = "255"/>
 					</h:inputText>
 					<p:message for="nome" />
 					
-					<h:outputLabel value="#{messages['Estacionamento.label.cnpj']}: " for="cnpj" styleClass="text-input" />
-					<h:inputText maxlength="14" id="cnpj" value="#{estacionamentoEditMB.bean.cnpj}" title="#{messages['Estacionamento.alt.cnpj']}" required="true">
+					<h:outputLabel value="#{messages['estacionamento.label.cnpj']}: " for="cnpj" styleClass="text-input" />
+					<h:inputText maxlength="14" id="cnpj" value="#{estacionamentoEditMB.bean.cnpj}" title="#{messages['estacionamento.alt.cnpj']}" required="true">
 						<f:validateLength minimum = "14" maximum = "14"/>												
 					</h:inputText>
 					<p:message for="cnpj" />
 					
-					<h:outputLabel value="#{messages['Estacionamento.label.inscricaoEstadual']}: " for="inscricaoEstadual" styleClass="text-input" />
-					<h:inputText maxlength="13" id="inscricaoEstadual" value="#{estacionamentoEditMB.bean.inscricaoEstadual}" title="#{messages['Estacionamento.alt.inscricaoEstadual']}" required="true">
+					<h:outputLabel value="#{messages['estacionamento.label.inscricaoEstadual']}: " for="inscricaoEstadual" styleClass="text-input" />
+					<h:inputText maxlength="13" id="inscricaoEstadual" value="#{estacionamentoEditMB.bean.inscricaoEstadual}" title="#{messages['estacionamento.alt.inscricaoEstadual']}" required="true">
 						<f:validateLength minimum = "13" maximum = "13"/>												
 					</h:inputText>
 					<p:message for="cnpj" />
 								
 				</h:panelGrid>
 			</p:fieldset>
-					<p:fieldset legend="#{messages['menu.Patio']}" toggleable="true" toggleSpeed="500">
+					<p:fieldset legend="#{messages['menu.patio']}" toggleable="true" toggleSpeed="500">
 						<h:panelGrid id="fieldsPatios" columns="1">
 							<p:commandButton value="#{messages['button.add']}" action="#{estacionamentoEditMB.addPatio}" update="listPatio" />
 							<p:dataTable id="listPatio" var="patio" value="#{estacionamentoEditMB.patios}" rowIndexVar="index">
 							<p:column>
-								<f:facet name="header">#{messages['Patio.label.local']}</f:facet>
+								<f:facet name="header">#{messages['patio.label.local']}</f:facet>
 								<h:inputText id="local" value="#{patio.local}" required="true" />
 								<p:message for="local" />
 							</p:column>
 							<p:column>
-								<f:facet name="header">#{messages['Patio.label.cep']}</f:facet>
+								<f:facet name="header">#{messages['patio.label.cep']}</f:facet>
 								<h:inputText id="cep" value="#{patio.cep}" required="true" />
 								<p:message for="cep" />
 							</p:column>

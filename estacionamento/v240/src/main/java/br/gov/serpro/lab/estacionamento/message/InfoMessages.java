@@ -35,24 +35,24 @@ import br.gov.frameworkdemoiselle.message.Message;
 
 public interface InfoMessages {
 	
-    final Message AUTOMOVEL_DELETE_OK = new DefaultMessage("{Automovel-delete-ok}");
-    final Message AUTOMOVEL_INSERT_OK = new DefaultMessage("{Automovel-insert-ok}");
-    final Message AUTOMOVEL_UPDATE_OK = new DefaultMessage("{Automovel-update-ok}");
+    final Message AUTOMOVEL_DELETE_OK = new DefaultMessage("{automovel-delete-ok}");
+    final Message AUTOMOVEL_INSERT_OK = new DefaultMessage("{automovel-insert-ok}");
+    final Message AUTOMOVEL_UPDATE_OK = new DefaultMessage("{automovel-update-ok}");
 
-    final Message CLIENTE_DELETE_OK = new DefaultMessage("{Cliente-delete-ok}");
-    final Message CLIENTE_INSERT_OK = new DefaultMessage("{Cliente-insert-ok}");
-    final Message CLIENTE_UPDATE_OK = new DefaultMessage("{Cliente-update-ok}");
+    final Message CLIENTE_DELETE_OK = new DefaultMessage("{cliente-delete-ok}");
+    final Message CLIENTE_INSERT_OK = new DefaultMessage("{cliente-insert-ok}");
+    final Message CLIENTE_UPDATE_OK = new DefaultMessage("{cliente-update-ok}");
 
-    final Message ESTACIONAMENTO_DELETE_OK = new DefaultMessage("{Estacionamento-delete-ok}");
-    final Message ESTACIONAMENTO_INSERT_OK = new DefaultMessage("{Estacionamento-insert-ok}");
-    final Message ESTACIONAMENTO_UPDATE_OK = new DefaultMessage("{Estacionamento-update-ok}");
+    final Message ESTACIONAMENTO_DELETE_OK = new DefaultMessage("{estacionamento-delete-ok}");
+    final Message ESTACIONAMENTO_INSERT_OK = new DefaultMessage("{estacionamento-insert-ok}");
+    final Message ESTACIONAMENTO_UPDATE_OK = new DefaultMessage("{estacionamento-update-ok}");
 
-    final Message PATIO_DELETE_OK = new DefaultMessage("{Patio-delete-ok}");
-    final Message PATIO_INSERT_OK = new DefaultMessage("{Patio-insert-ok}");
-    final Message PATIO_UPDATE_OK = new DefaultMessage("{Patio-update-ok}");
+    final Message PATIO_DELETE_OK = new DefaultMessage("{patio-delete-ok}");
+    final Message PATIO_INSERT_OK = new DefaultMessage("{patio-insert-ok}");
+    final Message PATIO_UPDATE_OK = new DefaultMessage("{patio-update-ok}");
 
-    final Message VAGA_DELETE_OK = new DefaultMessage("{Vaga-delete-ok}");
-    final Message VAGA_INSERT_OK = new DefaultMessage("{Vaga-insert-ok}");
-    final Message VAGA_UPDATE_OK = new DefaultMessage("{Vaga-update-ok}");
+    final Message VAGA_DELETE_OK = new DefaultMessage("{vaga-delete-ok}");
+    final Message VAGA_INSERT_OK = new DefaultMessage("{vaga-insert-ok}");
+    final Message VAGA_UPDATE_OK = new DefaultMessage("{vaga-update-ok}");
 
 }

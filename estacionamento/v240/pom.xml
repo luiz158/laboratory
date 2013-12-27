@@ -20,7 +20,14 @@
 
 
 
-	<dependencies>
+	<dependencies>		
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces-mobile</artifactId>
+			<version>0.9.4</version>
+		</dependency>
+		
+		
 		<!-- Demoiselle Extensions -->
 		<dependency>
 			<groupId>br.gov.frameworkdemoiselle</groupId>

@@ -61,41 +61,41 @@
 
 			<br />
 
-			<p:fieldset legend="#{messages['Automovel.label']}" toggleable="true" toggleSpeed="500">
+			<p:fieldset legend="#{messages['automovel.label']}" toggleable="true" toggleSpeed="500">
 				<h:panelGrid id="fields" columns="3">
 					
-					<h:outputLabel value="#{messages['Automovel.label.id']}: " for="id" styleClass="text-input" />
+					<h:outputLabel value="#{messages['automovel.label.id']}: " for="id" styleClass="text-input" />
 					<h:outputText id="id" value="#{automovelEditMB.bean.id}" />
 					<p:message for="id" />
 					
-					<h:outputLabel value="#{messages['Automovel.label.marca']}: " for="marca" styleClass="text-input" />
+					<h:outputLabel value="#{messages['automovel.label.marca']}: " for="marca" styleClass="text-input" />
 					<h:inputText id="marca" value="#{automovelEditMB.bean.marca}"
-						title="#{messages['Automovel.alt.marca']}" required="true">
+						title="#{messages['automovel.alt.marca']}" required="true">
 						  <f:validateLength minimum = "2" maximum = "255"/>
 						</h:inputText>
 					<p:message for="marca" />
 					
-					<h:outputLabel value="#{messages['Automovel.label.modelo']}: " for="modelo" styleClass="text-input" />
+					<h:outputLabel value="#{messages['automovel.label.modelo']}: " for="modelo" styleClass="text-input" />
 					<h:inputText id="modelo" value="#{automovelEditMB.bean.modelo}"
-						title="#{messages['Automovel.alt.modelo']}" required="true">
+						title="#{messages['automovel.alt.modelo']}" required="true">
 						 <f:validateLength minimum = "2" maximum = "255"/>
 						</h:inputText>
 					<p:message for="modelo" />
 					
-					<h:outputLabel value="#{messages['Automovel.label.placa']}: " for="placa" styleClass="text-input" />
+					<h:outputLabel value="#{messages['automovel.label.placa']}: " for="placa" styleClass="text-input" />
 					<h:inputText id="placa" value="#{automovelEditMB.bean.placa}"
-						title="#{messages['Automovel.alt.placa']}"  required="true">
+						title="#{messages['automovel.alt.placa']}"  required="true">
 						<f:validateLength minimum = "8" maximum = "8"/>
 						</h:inputText>
 					<p:message for="placa" />
 					
-					<h:outputLabel value="#{messages['Automovel.label.tamanho']}: " for="tamanho" styleClass="text-input" />
+					<h:outputLabel value="#{messages['automovel.label.tamanho']}: " for="tamanho" styleClass="text-input" />
 					<p:selectOneMenu id="tamanho" value="#{automovelEditMB.bean.tamanho}" effect="fade">
 							<f:selectItems value="#{automovelEditMB.automovelTamanhos}" />
 					</p:selectOneMenu>
 					<p:message for="tamanho" />
 						
-					<h:outputLabel value="#{messages['Automovel.label.tipo']}: " for="tipo" styleClass="text-input" />
+					<h:outputLabel value="#{messages['automovel.label.tipo']}: " for="tipo" styleClass="text-input" />
 					<p:selectOneMenu id="tipo" value="#{automovelEditMB.bean.tipo}" effect="fade">
 							<f:selectItems value="#{automovelEditMB.automovelTipos}" />
 					</p:selectOneMenu>

@@ -45,8 +45,8 @@ import br.gov.serpro.lab.estacionamento.business.AutomovelBC;
 import br.gov.serpro.lab.estacionamento.domain.Automovel;
 
 @ViewController
-@NextView("./automovel_edit.xhtml")
-@PreviousView("./automovel_list.xhtml")
+@NextView("./automovel_edit.jsf")
+@PreviousView("./automovel_list.jsf")
 public class AutomovelListMB extends AbstractListPageBean<Automovel, Long> {
 
 	private static final long serialVersionUID = 1L;

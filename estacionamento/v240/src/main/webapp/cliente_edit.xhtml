@@ -72,61 +72,61 @@
 
 			<br />
 
-			<p:fieldset legend="#{messages['Cliente.label']}" toggleable="true"
+			<p:fieldset legend="#{messages['cliente.label']}" toggleable="true"
 				toggleSpeed="500">
 				<h:panelGrid id="fields" columns="3" cellpadding="2" cellspacing="4">
 
-					<h:outputLabel value="#{messages['Cliente.label.id']}: " for="id"
+					<h:outputLabel value="#{messages['cliente.label.id']}: " for="id"
 						styleClass="text-input" />
 					<h:outputText id="id" value="#{clienteEditMB.bean.id}" />
 					<p:message for="id" />
 
-					<h:outputLabel value="#{messages['Cliente.label.nome']}: "
+					<h:outputLabel value="#{messages['cliente.label.nome']}: "
 						for="nome" styleClass="text-input" />
 					<h:inputText id="nome" value="#{clienteEditMB.bean.nome}"
-						title="#{messages['Cliente.alt.nome']}" required="true">
+						title="#{messages['cliente.alt.nome']}" required="true">
 						<f:validateLength minimum="3" maximum="255" />
 					</h:inputText>
 					<p:message for="nome" />
 
-					<h:outputLabel value="#{messages['Cliente.label.documento']}: "
+					<h:outputLabel value="#{messages['cliente.label.documento']}: "
 						for="documento" styleClass="text-input" />
 					<h:inputText id="documento" value="#{clienteEditMB.bean.documento}"
-						title="#{messages['Cliente.alt.documento']}" required="true">
+						title="#{messages['cliente.alt.documento']}" required="true">
 						<f:validateLength minimum="1" maximum="25" />
 					</h:inputText>
 					<p:message for="documento" />
 
-					<h:outputLabel value="#{messages['Cliente.label.telefone']}: "
+					<h:outputLabel value="#{messages['cliente.label.telefone']}: "
 						for="telefone" styleClass="text-input" />
 					<h:inputText id="telefone" value="#{clienteEditMB.bean.telefone}"
-						title="#{messages['Cliente.alt.telefone']}" required="true">
+						title="#{messages['cliente.alt.telefone']}" required="true">
 						<f:validateLength minimum="8" maximum="15" />
 					</h:inputText>
 					<p:message for="telefone" />
 
-					<h:outputLabel value="#{messages['Cliente.label.cpf']}: " for="cpf"
+					<h:outputLabel value="#{messages['cliente.label.cpf']}: " for="cpf"
 						styleClass="text-input" />
 					<h:inputText id="cpf" value="#{clienteEditMB.bean.cpf}"
-						title="#{messages['Cliente.alt.cpf']}" required="true" />
+						title="#{messages['cliente.alt.cpf']}" required="true" />
 					<p:message for="cpf" />
 
-					<h:outputLabel value="#{messages['Cliente.label.tituloEleitor']}: "
+					<h:outputLabel value="#{messages['cliente.label.tituloEleitor']}: "
 						for="tituloEleitor" styleClass="text-input" />
 					<h:inputText id="tituloEleitor"
 						value="#{clienteEditMB.bean.tituloEleitor}"
-						title="#{messages['Cliente.alt.tituloEleitor']}" required="true" />
+						title="#{messages['cliente.alt.tituloEleitor']}" required="true" />
 					<p:message for="tituloEleitor" />
 
-					<h:outputLabel value="#{messages['Cliente.label.email']}: "
+					<h:outputLabel value="#{messages['cliente.label.email']}: "
 						for="email" styleClass="text-input" />
 					<h:inputText id="email" value="#{clienteEditMB.bean.email}"
-						title="#{messages['Cliente.alt.email']}" required="true" />
+						title="#{messages['cliente.alt.email']}" required="true" />
 					<p:message for="email" />
 
 				</h:panelGrid>
 			</p:fieldset>
-			<p:fieldset legend="#{messages['menu.Automovel']}" toggleable="true"
+			<p:fieldset legend="#{messages['menu.automovel']}" toggleable="true"
 				toggleSpeed="500">
 				<h:panelGrid id="fieldsAutomoveis" columns="1">
 					<p:commandButton value="#{messages['button.add']}"
@@ -134,34 +134,34 @@
 					<p:dataTable id="listAutomovel" var="automovel"
 						value="#{clienteEditMB.automoveis}" rowIndexVar="index">
 						<p:column>
-							<h:outputLabel value="#{messages['Automovel.label.marca']}: "
+							<h:outputLabel value="#{messages['automovel.label.marca']}: "
 								for="marca" styleClass="text-input" />
 							<h:inputText id="marca" value="#{automovel.marca}"
-								title="#{messages['Automovel.alt.marca']}" required="true">
+								title="#{messages['automovel.alt.marca']}" required="true">
 								<f:validateLength minimum="2" maximum="255" />
 							</h:inputText>
 							<p:message for="marca" />
 						</p:column>
 						<p:column>
-							<h:outputLabel value="#{messages['Automovel.label.modelo']}: "
+							<h:outputLabel value="#{messages['automovel.label.modelo']}: "
 								for="modelo" styleClass="text-input" />
 							<h:inputText id="modelo" value="#{automovel.modelo}"
-								title="#{messages['Automovel.alt.modelo']}" required="true">
+								title="#{messages['automovel.alt.modelo']}" required="true">
 								<f:validateLength minimum="2" maximum="255" />
 							</h:inputText>
 							<p:message for="modelo" />
 						</p:column>
 						<p:column>
-							<h:outputLabel value="#{messages['Automovel.label.placa']}: "
+							<h:outputLabel value="#{messages['automovel.label.placa']}: "
 								for="placa" styleClass="text-input" />
 							<h:inputText id="placa" value="#{automovel.placa}"
-								title="#{messages['Automovel.alt.placa']}" required="true">
+								title="#{messages['automovel.alt.placa']}" required="true">
 								<f:validateLength minimum="8" maximum="8" />
 							</h:inputText>
 							<p:message for="placa" />
 						</p:column>
 						<p:column>
-							<h:outputLabel value="#{messages['Automovel.label.tamanho']}: "
+							<h:outputLabel value="#{messages['automovel.label.tamanho']}: "
 								for="tamanho" styleClass="text-input" />
 							<h:selectOneMenu id="tamanho" value="#{automovel.tamanho}">
 								<f:selectItems value="#{clienteEditMB.automovelTamanhos}" />
@@ -169,7 +169,7 @@
 							<p:message for="tamanho" />
 						</p:column>
 						<p:column>
-							<h:outputLabel value="#{messages['Automovel.label.tipo']}: "
+							<h:outputLabel value="#{messages['automovel.label.tipo']}: "
 								for="tipo" styleClass="text-input" />
 							<h:selectOneMenu id="tipo" value="#{automovel.tipo}">
 								<f:selectItems value="#{clienteEditMB.automovelTipos}" />

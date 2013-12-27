@@ -29,8 +29,7 @@ public class EnderecoBCTest {
 	@Test
 	public void testInsert() {
 				
-		// modifique para inserir dados conforme o construtor
-		Endereco endereco = new Endereco("logradouro","cidade","estado","cep",null);
+		Endereco endereco = new Endereco("logradouro","cidade","UF","00000-000",null);
 		enderecoBC.insert(endereco);
 		List<Endereco> listOfEndereco = enderecoBC.findAll();
 		assertNotNull(listOfEndereco);
@@ -40,8 +39,7 @@ public class EnderecoBCTest {
 	@Test
 	public void testDelete() {
 		
-		// modifique para inserir dados conforme o construtor
-		Endereco endereco = new Endereco("logradouro","cidade","estado","cep",null);
+		Endereco endereco = new Endereco("logradouro","cidade","UF","00000-000",null);
 		enderecoBC.insert(endereco);
 		
 		List<Endereco> listOfEndereco = enderecoBC.findAll();
@@ -55,23 +53,21 @@ public class EnderecoBCTest {
 	
 	@Test
 	public void testUpdate() {
-		// modifique para inserir dados conforme o construtor
-		Endereco endereco = new Endereco("logradouro","cidade","estado","cep",null);
+		
+		Endereco endereco = new Endereco("logradouro","cidade","UF","00000-000",null);
 		enderecoBC.insert(endereco);
 		
 		List<Endereco> listOfEndereco = enderecoBC.findAll();
 		Endereco endereco2 = (Endereco)listOfEndereco.get(0);
 		assertNotNull(listOfEndereco);
 
-		// alterar para tratar uma propriedade existente na Entidade Endereco
-		// endereco2.setUmaPropriedade("novo valor");
+		 endereco2.setLogradouro("novo valor");
 		enderecoBC.update(endereco2);
 		
 		listOfEndereco = enderecoBC.findAll();
 		Endereco endereco3 = (Endereco)listOfEndereco.get(0);
 		
-		// alterar para tratar uma propriedade existente na Entidade Endereco
-		// assertEquals("novo valor", endereco3.getUmaPropriedade());
+		assertEquals("novo valor", endereco3.getLogradouro());
 	}
 
 }

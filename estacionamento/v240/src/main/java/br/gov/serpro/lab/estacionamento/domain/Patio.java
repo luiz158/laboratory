@@ -43,7 +43,7 @@ public class Patio implements Serializable {
 
 	@Id
 	@Column(name = "id_patio")
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 
 	@Column
@@ -59,7 +59,7 @@ public class Patio implements Serializable {
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "patio_fk")
-	private List<Vaga> vagas = new ArrayList<Vaga>();
+	private List<Vaga> vagas;
 
 	public Patio() {
 		super();
@@ -70,11 +70,12 @@ public class Patio implements Serializable {
 		this.cep = cep;
 	}
 
-	public Patio(String local, String cep, List<Vaga> vagas) {
+	public Patio(String local, String cep, Estacionamento estacionamento, List<Vaga> vagas) {
 		this.local = local;
 		this.cep = cep;
+		this.estacionamento = estacionamento;
 		this.vagas = vagas;
-	}
+	}	
 
 	public void addVaga(Vaga vaga) {
 		this.vagas.add(vaga);

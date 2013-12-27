@@ -46,7 +46,7 @@ import br.gov.serpro.lab.estacionamento.domain.Patio;
 import br.gov.serpro.lab.estacionamento.domain.Vaga;
 
 @ViewController
-@PreviousView("./patio_list.xhtml")
+@PreviousView("./patio_list.jsf")
 public class PatioEditMB extends AbstractEditPageBean<Patio, Long> {
 
 	private static final long serialVersionUID = 1L;

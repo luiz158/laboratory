@@ -44,8 +44,8 @@ import br.gov.serpro.lab.estacionamento.business.VagaBC;
 import br.gov.serpro.lab.estacionamento.domain.Vaga;
 
 @ViewController
-@NextView("./vaga_edit.xhtml")
-@PreviousView("./vaga_list.xhtml")
+@NextView("./vaga_edit.jsf")
+@PreviousView("./vaga_list.jsf")
 public class VagaListMB extends AbstractListPageBean<Vaga, Long> {
 
 	private static final long serialVersionUID = 1L;

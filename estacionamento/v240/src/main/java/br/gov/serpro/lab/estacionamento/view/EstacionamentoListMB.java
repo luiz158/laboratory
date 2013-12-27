@@ -42,8 +42,8 @@ import br.gov.serpro.lab.estacionamento.business.EstacionamentoBC;
 import br.gov.serpro.lab.estacionamento.domain.Estacionamento;
 
 @ViewController
-@NextView("./estacionamento_edit.xhtml")
-@PreviousView("./estacionamento_list.xhtml")
+@NextView("./estacionamento_edit.jsf")
+@PreviousView("./estacionamento_list.jsf")
 public class EstacionamentoListMB extends AbstractListPageBean<Estacionamento, Long> {
 
 	private static final long serialVersionUID = 1L;

@@ -64,7 +64,7 @@ public class Estacionamento implements Serializable {
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "estacionamento_fk")
-	private List<Patio> patios = new ArrayList<Patio>();
+	private List<Patio> patios;
 
 	public Estacionamento() {
 		super();

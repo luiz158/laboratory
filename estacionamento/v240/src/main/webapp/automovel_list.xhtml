@@ -59,18 +59,18 @@
 				</p:toolbarGroup>
 			</p:toolbar>
 			<p:dataTable id="list" var="bean" value="#{automovelListMB.resultList}">
-				<f:facet name="header">#{messages['Automovel.list.table.title']}</f:facet>
+				<f:facet name="header">#{messages['automovel.list.table.title']}</f:facet>
 				<p:column style="width:5%;">
 					<h:selectBooleanCheckbox value="#{automovelListMB.selection[bean.id]}" />
 				</p:column>
 				
 				<p:column style="width:5%;" sortBy="#{bean.id}">
-					<f:facet name="header">#{messages['Automovel.label.id']}</f:facet>
+					<f:facet name="header">#{messages['automovel.label.id']}</f:facet>
 					<h:outputText value="#{bean.id}" />
 				</p:column>
 						
 				<p:column sortBy="#{bean.marca}">
-					<f:facet name="header">#{messages['Automovel.label.marca']}</f:facet>
+					<f:facet name="header">#{messages['automovel.label.marca']}</f:facet>
 					<h:commandLink action="#{automovelListMB.getNextView()}" actionListener="#{automovelListMB.clear}">
 						<h:outputText value="#{bean.marca}" />
 						<f:param name="id" value="#{bean.id}" />
@@ -78,7 +78,7 @@
 				</p:column>
 						
 				<p:column sortBy="#{bean.modelo}">
-					<f:facet name="header">#{messages['Automovel.label.modelo']}</f:facet>
+					<f:facet name="header">#{messages['automovel.label.modelo']}</f:facet>
 					<h:commandLink action="#{automovelListMB.getNextView()}" actionListener="#{automovelListMB.clear}">
 						<h:outputText value="#{bean.modelo}" />
 						<f:param name="id" value="#{bean.id}" />
@@ -86,7 +86,7 @@
 				</p:column>
 						
 				<p:column sortBy="#{bean.placa}">
-					<f:facet name="header">#{messages['Automovel.label.placa']}</f:facet>
+					<f:facet name="header">#{messages['automovel.label.placa']}</f:facet>
 					<h:commandLink action="#{automovelListMB.getNextView()}" actionListener="#{automovelListMB.clear}">
 						<h:outputText value="#{bean.placa}" />
 						<f:param name="id" value="#{bean.id}" />
@@ -94,7 +94,7 @@
 				</p:column>
 						
 				<p:column sortBy="#{bean.tamanho}">
-					<f:facet name="header">#{messages['Automovel.label.tamanho']}</f:facet>
+					<f:facet name="header">#{messages['automovel.label.tamanho']}</f:facet>
 					<h:commandLink action="#{automovelListMB.getNextView()}" actionListener="#{automovelListMB.clear}">
 						<h:outputText value="#{messages[bean.tamanho]}" />
 						<f:param name="id" value="#{bean.id}" />
@@ -102,7 +102,7 @@
 				</p:column>
 						
 				<p:column sortBy="#{bean.tipo}">
-					<f:facet name="header">#{messages['Automovel.label.tipo']}</f:facet>
+					<f:facet name="header">#{messages['automovel.label.tipo']}</f:facet>
 					<h:commandLink action="#{automovelListMB.getNextView()}" actionListener="#{automovelListMB.clear}">
 						<h:outputText value="#{messages[bean.tipo]}" />
 						<f:param name="id" value="#{bean.id}" />

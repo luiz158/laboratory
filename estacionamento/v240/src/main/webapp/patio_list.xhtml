@@ -59,14 +59,14 @@
 				</p:toolbarGroup>
 			</p:toolbar>
 			<p:dataTable id="list" var="bean" value="#{patioListMB.resultList}">
-				<f:facet name="header">#{messages['Patio.list.table.title']}</f:facet>
+				<f:facet name="header">#{messages['patio.list.table.title']}</f:facet>
 				<p:column style="width:5%;">
 					<h:selectBooleanCheckbox value="#{patioListMB.selection[bean.id]}"></h:selectBooleanCheckbox>
 				</p:column>
 				
 				<p:column style="width:5%;" sortBy="#{bean.id}">
 					<h:commandLink action="#{patioListMB.getNextView()}" actionListener="#{patioListMB.clear}">
-						<f:facet name="header">#{messages['Patio.label.id']}</f:facet>
+						<f:facet name="header">#{messages['patio.label.id']}</f:facet>
 						<h:outputText value="#{bean.id}" />
 						<f:param name="id" value="#{bean.id}" />
 						</h:commandLink>
@@ -75,7 +75,7 @@
 				
 						
 				<p:column sortBy="#{bean.local}">
-					<f:facet name="header">#{messages['Patio.label.local']}</f:facet>
+					<f:facet name="header">#{messages['patio.label.local']}</f:facet>
 					<h:commandLink action="#{patioListMB.getNextView()}" actionListener="#{patioListMB.clear}">
 						<h:outputText value="#{bean.local}" />
 						<f:param name="id" value="#{bean.id}" />
@@ -83,7 +83,7 @@
 				</p:column>
 						
 				<p:column sortBy="#{bean.estacionamento.nome}">
-					<f:facet name="header">#{messages['Patio.label.estacionamento']}</f:facet>
+					<f:facet name="header">#{messages['patio.label.estacionamento']}</f:facet>
 						<h:outputText value="#{bean.estacionamento.nome}" />					
 				</p:column>
 						

@@ -40,7 +40,7 @@ import br.gov.frameworkdemoiselle.template.AbstractPageBean;
 import br.gov.serpro.lab.estacionamento.security.EstacionamentoCredentials;
 
 @ViewController
-@NextView("./index.xhtml")
+@NextView("./welcome.jsf")
 public class LoginMB extends AbstractPageBean{
 
 	private static final long serialVersionUID = 1L;

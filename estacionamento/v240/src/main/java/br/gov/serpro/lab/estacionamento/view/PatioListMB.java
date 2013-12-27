@@ -44,8 +44,8 @@ import br.gov.serpro.lab.estacionamento.business.PatioBC;
 import br.gov.serpro.lab.estacionamento.domain.Patio;
 
 @ViewController
-@NextView("./patio_edit.xhtml")
-@PreviousView("./patio_list.xhtml")
+@NextView("./patio_edit.jsf")
+@PreviousView("./patio_list.jsf")
 public class PatioListMB extends AbstractListPageBean<Patio, Long> {
 
 	private static final long serialVersionUID = 1L;

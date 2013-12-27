@@ -38,25 +38,25 @@ public interface ErrorMessages {
     final Message NULL_POINTER = new DefaultMessage("{error-null-pointer}");
     final Message ACESSO_NOK = new DefaultMessage("{acesso-nok}");
 	
-    final Message AUTOMOVEL_DELETE_NOK = new DefaultMessage("{Automovel-delete-nok}");
-    final Message AUTOMOVEL_INSERT_NOK = new DefaultMessage("{Automovel-insert-nok}");
-    final Message AUTOMOVEL_UPDATE_NOK = new DefaultMessage("{Automovel-update-nok}");
+    final Message AUTOMOVEL_DELETE_NOK = new DefaultMessage("{automovel-delete-nok}");
+    final Message AUTOMOVEL_INSERT_NOK = new DefaultMessage("{automovel-insert-nok}");
+    final Message AUTOMOVEL_UPDATE_NOK = new DefaultMessage("{automovel-update-nok}");
 
-    final Message CLIENTE_DELETE_NOK = new DefaultMessage("{Cliente-delete-nok}");
-    final Message CLIENTE_INSERT_NOK = new DefaultMessage("{Cliente-insert-nok}");
-    final Message CLIENTE_UPDATE_NOK = new DefaultMessage("{Cliente-update-nok}");
+    final Message CLIENTE_DELETE_NOK = new DefaultMessage("{cliente-delete-nok}");
+    final Message CLIENTE_INSERT_NOK = new DefaultMessage("{cliente-insert-nok}");
+    final Message CLIENTE_UPDATE_NOK = new DefaultMessage("{cliente-update-nok}");
 
-    final Message ESTACIONAMENTO_DELETE_NOK = new DefaultMessage("{Estacionamento-delete-nok}");
-    final Message ESTACIONAMENTO_INSERT_NOK = new DefaultMessage("{Estacionamento-insert-nok}");
-    final Message ESTACIONAMENTO_UPDATE_NOK = new DefaultMessage("{Estacionamento-update-nok}");
+    final Message ESTACIONAMENTO_DELETE_NOK = new DefaultMessage("{estacionamento-delete-nok}");
+    final Message ESTACIONAMENTO_INSERT_NOK = new DefaultMessage("{estacionamento-insert-nok}");
+    final Message ESTACIONAMENTO_UPDATE_NOK = new DefaultMessage("{estacionamento-update-nok}");
 
-    final Message PATIO_DELETE_NOK = new DefaultMessage("{Patio-delete-nok}");
-    final Message PATIO_INSERT_NOK = new DefaultMessage("{Patio-insert-nok}");
-    final Message PATIO_UPDATE_NOK = new DefaultMessage("{Patio-update-nok}");
+    final Message PATIO_DELETE_NOK = new DefaultMessage("{patio-delete-nok}");
+    final Message PATIO_INSERT_NOK = new DefaultMessage("{patio-insert-nok}");
+    final Message PATIO_UPDATE_NOK = new DefaultMessage("{patio-update-nok}");
 
-    final Message VAGA_DELETE_NOK = new DefaultMessage("{Vaga-delete-nok}");
-    final Message VAGA_INSERT_NOK = new DefaultMessage("{Vaga-insert-nok}");
-    final Message VAGA_UPDATE_NOK = new DefaultMessage("{Vaga-update-nok}");
+    final Message VAGA_DELETE_NOK = new DefaultMessage("{vaga-delete-nok}");
+    final Message VAGA_INSERT_NOK = new DefaultMessage("{vaga-insert-nok}");
+    final Message VAGA_UPDATE_NOK = new DefaultMessage("{vaga-update-nok}");
 	
 
 }

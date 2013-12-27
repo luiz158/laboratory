@@ -45,7 +45,7 @@ public class EstacionamentoConfig implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-    @Name("app.title")
+    @Name("appTitle")
     private String applicationTitle;
 
     @NotNull

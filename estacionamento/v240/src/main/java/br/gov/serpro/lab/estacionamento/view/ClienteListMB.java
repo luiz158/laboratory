@@ -49,8 +49,8 @@ import br.gov.serpro.lab.estacionamento.business.ClienteBC;
 import br.gov.serpro.lab.estacionamento.domain.Cliente;
 
 @ViewController
-@NextView("./cliente_edit.xhtml")
-@PreviousView("./cliente_list.xhtml")
+@NextView("./cliente_edit.jsf")
+@PreviousView("./cliente_list.jsf")
 public class ClienteListMB extends AbstractListPageBean<Cliente, Long> {
 
 	private static final long serialVersionUID = 1L;

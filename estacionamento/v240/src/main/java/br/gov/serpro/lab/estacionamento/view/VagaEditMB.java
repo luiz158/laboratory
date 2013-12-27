@@ -40,15 +40,13 @@ import br.gov.serpro.lab.estacionamento.business.*;
 import br.gov.serpro.lab.estacionamento.domain.*;
 
 @ViewController
-@PreviousView("./vaga_list.xhtml")
+@PreviousView("./vaga_list.jsf")
 public class VagaEditMB extends AbstractEditPageBean<Vaga, Long> {
 
 	private static final long serialVersionUID = 1L;
 	
 	private boolean editMode=false;
 	
-	private Long automovelID;
-		
 	@Inject 
 	private AutomovelBC automovelBC;
 
@@ -77,7 +75,6 @@ public class VagaEditMB extends AbstractEditPageBean<Vaga, Long> {
 	@Override
 	@Transactional
 	public String update() {		
-		getBean().setAutomovel(this.automovelBC.load(this.automovelID));
 		this.vagaBC.update(getBean());
 		return getPreviousView();
 	}
@@ -90,15 +87,7 @@ public class VagaEditMB extends AbstractEditPageBean<Vaga, Long> {
     public void setEditMode(boolean editMode) {  
 		   this.editMode = editMode;  
 	}
-
-	public Long getAutomovelID() {
-		return automovelID;
-	}
-
-	public void setAutomovelID(Long automovelID) {
-		this.automovelID = automovelID;
-	}  
-	
+		
 	public List<Patio> getPatios (){
 		return patioBC.findAll();
 	}
@@ -106,5 +95,9 @@ public class VagaEditMB extends AbstractEditPageBean<Vaga, Long> {
 	@Override
 	protected Vaga handleLoad(Long id) {
 		return this.vagaBC.load(id);
-	}	
+	}
+	
+	public List<Automovel> getAutomovelList (){
+		return this.automovelBC.findAll();
+	}
 }

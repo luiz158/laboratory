@@ -78,6 +78,15 @@ public class Automovel implements Serializable {
 		this.tipo = tipo;		
 	}
 	
+	public Automovel(String marca, String modelo, String placa, AutomovelTamanho tamanho, AutomovelTipo  tipo, Cliente cliente) {
+		this.marca = marca;
+		this.modelo =  modelo;
+		this.placa = placa;
+		this.tamanho = tamanho;
+		this.tipo = tipo;
+		this.cliente = cliente;
+	}
+	
 	public void setId(Long id) {
 		this.id = id;
 	}

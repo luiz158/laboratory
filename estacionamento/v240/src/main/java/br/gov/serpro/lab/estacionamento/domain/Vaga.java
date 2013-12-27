@@ -46,7 +46,7 @@ public class Vaga implements Serializable {
 	private Long id;
 	
 	@Column (nullable=false)
-	private boolean coberta;
+	private Boolean coberta;
 	
 	@Column (nullable=false, length=255)
 	private String porte;
@@ -71,12 +71,20 @@ public class Vaga implements Serializable {
 		super();
 	}
 	
-	public Vaga(boolean coberta, String porte, Automovel automovel, Date dataHoraEntrada, Date dataHoraSaida) {
+	public Vaga(Boolean coberta, String porte, Date dataHoraEntrada, Date dataHoraSaida) {
+		this.coberta = coberta; 
+		this.porte = porte;
+		this.dataHoraEntrada = dataHoraEntrada;
+		this.dataHoraSaida = dataHoraSaida;
+	}
+	
+	public Vaga(Boolean coberta, String porte, Automovel automovel, Date dataHoraEntrada, Date dataHoraSaida, Patio patio) {
 		this.coberta = coberta; 
 		this.porte = porte;
 		this.automovel = automovel;
 		this.dataHoraEntrada = dataHoraEntrada;
 		this.dataHoraSaida = dataHoraSaida;
+		this.patio = patio;
 	}
 
 	public void setId(Long id) {
@@ -87,11 +95,11 @@ public class Vaga implements Serializable {
 		return id;
 	}
 
-	public void setCoberta(boolean coberta) {
+	public void setCoberta(Boolean coberta) {
 		this.coberta = coberta;
 	}
 
-	public boolean isCoberta() {
+	public Boolean getCoberta() {
 		return coberta;
 	}
 

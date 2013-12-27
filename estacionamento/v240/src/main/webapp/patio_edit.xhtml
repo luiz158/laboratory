@@ -51,25 +51,25 @@
 
 			<br />
 
-			<p:fieldset legend="#{messages['Patio.label']}" toggleable="true" toggleSpeed="500">
+			<p:fieldset legend="#{messages['patio.label']}" toggleable="true" toggleSpeed="500">
 				<h:panelGrid id="fields" columns="3">
 					
 
-					<h:outputLabel value="#{messages['Patio.label.id']}: " for="id" styleClass="text-input" />
+					<h:outputLabel value="#{messages['patio.label.id']}: " for="id" styleClass="text-input" />
 					<h:outputText id="id" value="#{patioEditMB.bean.id}" />
 					<p:message for="id" />
 					
-					<h:outputLabel value="#{messages['Patio.label.local']}: " for="local" styleClass="text-input" />
+					<h:outputLabel value="#{messages['patio.label.local']}: " for="local" styleClass="text-input" />
 					<h:inputText id="local" value="#{patioEditMB.bean.local}"
-						title="#{messages['Patio.alt.local']}" required="true" />
+						title="#{messages['patio.alt.local']}" required="true" />
 					<p:message for="local" />					
 
-					<h:outputLabel value="#{messages['Patio.label.cep']}: " for="cep" styleClass="text-input" />
+					<h:outputLabel value="#{messages['patio.label.cep']}: " for="cep" styleClass="text-input" />
 					<h:inputText id="cep" value="#{patioEditMB.bean.cep}"
-						title="#{messages['Patio.alt.cep']}" required="true" />
+						title="#{messages['patio.alt.cep']}" required="true" />
 					<p:message for="cep" />	
 					
-					<h:outputLabel value="#{messages['Patio.label.estacionamento']}: " for="estacionamento" styleClass="text-input" />
+					<h:outputLabel value="#{messages['patio.label.estacionamento']}: " for="estacionamento" styleClass="text-input" />
 					<p:selectOneMenu id="estacionamento" value="#{patioEditMB.bean.estacionamento}" effect="fade" converter="ConversorEstacionamento">
 						<f:selectItem itemLabel="Selecione" itemValue="" />
 						<f:selectItems value="#{patioEditMB.estacionamentos}" var="varEstacionamento" itemLabel="#{varEstacionamento.nome}" itemValue="#{varEstacionamento}" />						  
@@ -78,21 +78,25 @@
 					
 				</h:panelGrid>
 			</p:fieldset>
-			<p:fieldset legend="#{messages['menu.Vaga']}" toggleable="true" toggleSpeed="500">
+			<p:fieldset legend="#{messages['menu.vaga']}" toggleable="true" toggleSpeed="500">
 						<h:panelGrid id="fieldsVagas" columns="1">
 							<p:commandButton value="#{messages['button.add']}" action="#{patioEditMB.addVaga}" update="listVaga" />
 							<p:dataTable id="listVaga" var="vaga" value="#{patioEditMB.vagas}" rowIndexVar="index">
+							<p:column>							
+							<h:outputLabel value="#{messages['vaga.label.id']}: " for="idVaga"/>
+							<h:outputText id="idVaga" value="#{vaga.id}" />
+							<p:message for="idVaga" />
+							</p:column>
 							<p:column>
-								<f:facet name="header">#{messages['Vaga.label.porte']}</f:facet>
+								<f:facet name="header">#{messages['vaga.label.porte']}</f:facet>
 								<h:selectOneMenu id="SelectOneMenuPorte" required="True" value="#{vaga.porte}" immediate="false">
 										<f:selectItem itemValue="SMALL"  itemLabel="#{messages['SMALL']}" />
 										<f:selectItem itemValue="MEDIUM" itemLabel="#{messages['MEDIUM']}" />
 										<f:selectItem itemValue="LARGE" itemLabel="#{messages['LARGE']}" />
-								</h:selectOneMenu>
-								
+								</h:selectOneMenu>								
 							</p:column>
 							<p:column>
-								<f:facet name="header">#{messages['Vaga.label.coberta']}</f:facet> 
+								<f:facet name="header">#{messages['vaga.label.coberta']}</f:facet> 
 									<h:selectOneMenu id="SelectOneMenuCoberta" required="True" value="#{vaga.coberta}" immediate="false">
 										<f:selectItem itemValue="True"  itemLabel="#{messages['value.yes']}" />
 										<f:selectItem itemValue="False" itemLabel="#{messages['value.no']}" />

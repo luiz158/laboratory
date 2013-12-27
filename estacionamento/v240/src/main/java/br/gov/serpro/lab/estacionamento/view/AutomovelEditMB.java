@@ -42,7 +42,7 @@ import br.gov.serpro.lab.estacionamento.domain.*;
 
 
 @ViewController
-@PreviousView("./automovel_list.xhtml")
+@PreviousView("./automovel_list.jsf")
 public class AutomovelEditMB extends AbstractEditPageBean<Automovel, Long> {
 
 	private static final long serialVersionUID = 1L;

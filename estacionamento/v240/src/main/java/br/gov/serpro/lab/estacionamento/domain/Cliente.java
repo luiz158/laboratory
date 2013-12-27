@@ -72,12 +72,12 @@ public class Cliente implements Serializable {
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "cliente_fk")
-	private List<Automovel> automoveis = new ArrayList<Automovel>();
+	private List<Automovel> automoveis;
 	
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name = "tb_cliente_endereco", joinColumns = @JoinColumn(name = "id_cliente"), 
 				inverseJoinColumns = @JoinColumn(name = "cod_endereco"))
-	private List<Endereco> enderecos = new ArrayList<Endereco>();
+	private List<Endereco> enderecos;
 
 	public Cliente() {
 		super();

@@ -59,18 +59,18 @@
 				</p:toolbarGroup>
 			</p:toolbar>
 			<p:dataTable id="list" var="bean" value="#{estacionamentoListMB.resultList}">
-				<f:facet name="header">#{messages['Estacionamento.list.table.title']}</f:facet>
+				<f:facet name="header">#{messages['estacionamento.list.table.title']}</f:facet>
 				<p:column style="width:5%;">
 					<h:selectBooleanCheckbox value="#{estacionamentoListMB.selection[bean.id]}"></h:selectBooleanCheckbox>
 				</p:column>
 				
 				<p:column style="width:5%;" sortBy="#{bean.id}">
-					<f:facet name="header">#{messages['Estacionamento.label.id']}</f:facet>
+					<f:facet name="header">#{messages['estacionamento.label.id']}</f:facet>
 					<h:outputText value="#{bean.id}" />
 				</p:column>
 						
 				<p:column sortBy="#{bean.nome}">
-					<f:facet name="header">#{messages['Estacionamento.label.nome']}</f:facet>
+					<f:facet name="header">#{messages['estacionamento.label.nome']}</f:facet>
 					<h:commandLink action="#{estacionamentoListMB.getNextView()}" actionListener="#{estacionamentoListMB.clear}">
 						<h:outputText value="#{bean.nome}" />
 						<f:param name="id" value="#{bean.id}" />
@@ -78,7 +78,7 @@
 				</p:column>
 						
 				<p:column sortBy="#{bean.cnpj}">
-					<f:facet name="header">#{messages['Estacionamento.label.cnpj']}</f:facet>
+					<f:facet name="header">#{messages['estacionamento.label.cnpj']}</f:facet>
 					<h:commandLink action="#{estacionamentoListMB.getNextView()}" actionListener="#{estacionamentoListMB.clear}">
 						<h:outputText value="#{bean.cnpj}" />
 						<f:param name="id" value="#{bean.id}" />
@@ -86,7 +86,7 @@
 				</p:column>
 				
 				<p:column sortBy="#{bean.inscricaoEstadual}">
-					<f:facet name="header">#{messages['Estacionamento.label.inscricaoEstadual']}</f:facet>
+					<f:facet name="header">#{messages['estacionamento.label.inscricaoEstadual']}</f:facet>
 					<h:commandLink action="#{estacionamentoListMB.getNextView()}" actionListener="#{estacionamentoListMB.clear}">
 						<h:outputText value="#{bean.inscricaoEstadual}" />
 						<f:param name="id" value="#{bean.id}" />
