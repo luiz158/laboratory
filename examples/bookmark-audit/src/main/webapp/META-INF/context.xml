@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context antiJARLocking="true" path="/BookmarkAudit">
+  <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="20" maxIdle="10" maxWait="-1" name="audit" password="" type="javax.sql.DataSource" url="jdbc:mysql://10.200.24.49:3306/audit?zeroDateTimeBehavior=convertToNull" username="root"/>
+</Context>

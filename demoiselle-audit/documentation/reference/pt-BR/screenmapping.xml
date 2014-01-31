@@ -1,0 +1,282 @@
+<?xml version='1.0' encoding="iso-8859-1"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" []>
+<chapter id="behave-screenmapping">
+	<title>Mapeamento de Classes</title>
+
+	<para>
+		Esta seção apresenta um roteiro para criação de scripts visuais.
+	</para>
+	<section>
+		<title>Capturando os objetos da tela a serem utilizados</title>
+		<para>
+			O primeiro passo na criação de um script no Demoiselle-Behave e
+			a escolha dos objetos visuais que
+			serão utilizados.
+			Os objetos poderão
+			ser identificados de diversas formas como Id,XPath ou CSS. Estas
+			diferentes formas de encontrar
+			um objeto na tela são denominadas
+			localizadores.
+			Neste tutorial serão utilizadas algumas ferramentas de
+			apoio para escolha
+			dos objetos. De forma exemplificativa
+			o tutorial
+			apresentará um
+			exemplo onde o usuário irá buscar uma informação na
+			página do
+			SERPRO(www.serpro.gov.br).
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/localizadores.png" align="center"
+						format="PNG" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/localizadores.png" align="center"
+						format="PNG" />
+				</imageobject>
+				<caption>
+					<para>Localizadores.
+					</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+			O próximo passo é utilizar uma ferramenta de apoio para escolher
+			os objetos. O XPath Checker e o FirePath são ferramentas que permitem
+			obter o Xpath de objetos na tela
+			(https://addons.mozilla.org/pt-br/firefox/addon/xpath-checker/)(https://addons.mozilla.org/en-US/firefox/addon/firepath/).
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/xpathchecker.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/xpathchecker.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<caption>
+					<para>Ferramenta XPather
+					</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/firepath.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/firepath.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<caption>
+					<para>Ferramenta XPather
+					</para>
+				</caption>
+			</mediaobject>
+		</para>
+
+		<para>
+			Após instalação das ferramentas de apoio devem ser escolhido os
+			objetos que devem interagir com a tela. De forma a exemplificar
+			o
+			processo será realizada uma pesquisa na página do SERPRO
+			(www.serpro.gov.br). Sera selecionado o campo de busca e o botão de
+			pesquisa.
+			Utilizando o firepath é identificado o id do campo de
+			pesquisa.
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/paginaserproreduzida.png"
+						align="center" format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/paginaserproreduzida.png"
+						align="center" format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<caption>
+					<para>Utilizando firepath para descobrir xpath de objeto
+					</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+			Uma vez utilizado o firepath descobre-se que o xpath do campo de
+			busca possui o valor
+			<emphasis>.//*[@id='searchGadget']</emphasis>
+			e o xpath
+			do botão de busca possui o valor
+			<emphasis>.//*[@id='livesearch0']/div/input[1]</emphasis>
+			.
+		</para>
+	</section>
+	<section>
+		<title>Classe de Mapeamento</title>
+		<para>
+			O próximo passo é implementar uma classe com o mapeamento dos
+			objetos a serem testados e seus idenficadores.
+
+		</para>
+		<programlisting>package packageName;
+
+import br.gov.frameworkdemoiselle.behave.annotation.ElementLocatorType;
+import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
+import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
+import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
+
+@ScreenMap(name = "Tela Inicial", location = "https://www.serpro.gov.br")
+public class MyPage {
+
+	@ElementMap(name = "Campo de Busca", locatorType = ElementLocatorType.XPath, locator = ".//*[@id='searchGadget']")
+	private TextField searchField;
+
+	@ElementMap(name = "Estou com sorte", locatorType = ElementLocatorType.XPath, locator = ".//*[@id='livesearch0']/div/input[1]")
+	private Button button;
+
+}</programlisting>
+		<para>
+			O motor do framework escolhe automaticamente que ação será
+			realizada dependendo do tipo de objeto aplicado ao elemento
+			da
+			interface gráfica. No exemplo acima o tipo Button indica que a ação
+			de clique deve ser realizada.
+		</para>
+		<para>
+			Outros tipos de elementos são CheckBox, Link, Radio, Screen,
+			Select e TextField.
+			Para cada elemento visual foi criada uma interface
+			que é implementada por uma classe que define como a ação deve ser
+			realizada.
+		</para>
+		<programlisting>package br.gov.frameworkdemoiselle.behave.runner.ui;
+
+import br.gov.frameworkdemoiselle.behave.runner.ui.base.BaseUI;
+
+public interface Radio extends BaseUI {
+
+	public void click();
+	
+}</programlisting>
+		<para>
+			A seguir segue implementação da classe Radio para Web utilizando
+			Selenium.
+		</para>
+		<programlisting>package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
+
+import br.gov.frameworkdemoiselle.behave.runner.ui.Radio;
+
+public class WebRadio extends WebBase implements Radio {
+
+	public void click() {
+		waitElement(0);
+
+		getElements().get(0).click();
+	}
+
+}</programlisting>
+		<para>
+			A implementação da classe para a interface visual é configurada
+			utilizando o conceito de SPI no framework.
+			Para cada interface existe
+			um arquivo que indica que implementação sera
+			escolhida para cada
+			interface.
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/services.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/services.png" align="center"
+						format="PNG" />
+				</imageobject>
+				<caption>
+					<para>Escolhendo o arquétipo jbehave-selenium-archetype.
+					</para>
+				</caption>
+			</mediaobject>
+		</para>
+	</section>
+	
+	<section>
+		<title>Mapeamento Parametrizável</title>
+		<para>
+			É possível por meio de frases pré definidas parametrizar o locator.
+		</para>
+		<para>
+			Em uma determinada situação é necessário que seja selecionado um botão que esta presente em uma linha que possue na sua primeira coluna a palavra "Brasil", para facilitar esta tarefa foram criados os locators parametrizáveis.
+			O primeiro passo é criar o mapeamento na classe como mostra o exemplo a abaixo.
+		</para>
+		<programlisting>@ElementMap(name = "Excluir", locatorType = ElementLocatorType.XPath, locator = "(//tr[contains(@id, 'tr-identification')][.//text()='<citetitle>%param1%</citetitle>']//button)[1]")
+private Button botao;</programlisting>
+		<para>
+			Perceba que no locator existe o trecho <citetitle>%param1%</citetitle>, esse é o identificador para que na história seja passada algum texto para ser inserido neste local, como por exemplo:
+			
+			
+		</para>
+		<programlisting>Quando clico em "Excluir" referente a "<citetitle>Brasil</citetitle>"</programlisting>
+		<para>
+			Também é possível passar mais de um parâmetro para a frase como no exemplo abaixo (os valores devem ser separados por vírgula):			
+		</para>
+		<programlisting>// Mapeamento do Campo
+@ElementMap(name = "Excluir", locatorType = ElementLocatorType.XPath, locator = "(//tr[contains(@id, '<citetitle>%param1%</citetitle>')][.//text()='<citetitle>%param2%</citetitle>']//button)[1]")
+private Button botao;
+
+// Frase na história
+Quando clico em "Excluir" referente a "<citetitle>obra, valor</citetitle>"</programlisting>
+		<para>
+			As seguintes frases permitem a parametrização do texto do locator:
+			<itemizedlist>
+				<listitem>
+					Quando clico em "Name" referente a "Param1,Param2..."
+				</listitem>
+				<listitem>
+					Quando seleciono a opção "Name" referente a "Param1,Param2..."
+				</listitem>
+				<listitem>
+					Quando clico na linha da tabela "Name" referente a "Param1,Param2..."
+				</listitem>				
+			</itemizedlist>
+		</para>
+	</section>
+	
+	<section>
+		<title>Composição de Telas (Embedded Screens)</title>
+		<para>
+			O framework fornece uma anotação (@Embedded) que permite que sejam reutilizadas telas dentro de outras telas.
+			Como exemplo vamos utilizar uma tela de login abaixo:
+		</para>
+		<programlisting>@ScreenMap(name = "Tela de Login", location = "/")
+public class LoginPage {
+
+	@ElementMap(name = "Campo Usuário", locatorType = ElementLocatorType.XPath, locator = "(//input[contains(@id, 'formLogin')][contains(@type, 'text')])[1]")
+	private TextField campoUsuario;
+
+	@ElementMap(name = "Campo Senha", locatorType = ElementLocatorType.XPath, locator = "(//input[contains(@id, 'formLogin')][contains(@type, 'password')])[1]")
+	private TextField campoSenha;
+
+	@ElementMap(name = "Entrar", locatorType = ElementLocatorType.XPath, locator = "(//button[contains(@id, 'formLogin')][contains(@type, 'submit')])[1]")
+	private Button botaoEnviar;
+
+}</programlisting>
+		<para>
+			Se a tela de login fosse utilizada em várias partes públicas do sistema bastaria que em qualquer <citetitle>ScreenMap</citetitle> criassemos um atributo da seguinte maneira: 
+		</para>
+		<programlisting><citetitle>@Embedded</citetitle>
+private LoginPage loginPage;</programlisting>
+		<para>
+			Isso fará com que a tela de login seja incorporada na tela que possuir o atributo com a anotação.
+		</para>		
+	</section>
+</chapter>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Demoiselle Framework
+ Copyright (C) 2014 SERPRO
+ ============================================================================
+ This file is part of Demoiselle Framework.
+ 
+ Demoiselle Framework is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public License version 3
+ as published by the Free Software Foundation.
+ 
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ 
+ You should have received a copy of the GNU Lesser General Public License version 3
+ along with this program; if not,  see <http://www.gnu.org/licenses />
+ or write to the Free Software Foundation, Inc., 51 Franklin Street,
+ Fifth Floor, Boston, MA  02110-1301, USA.
+ ============================================================================
+ Este arquivo é parte do Framework Demoiselle.
+ 
+ O Framework Demoiselle é um software livre; você pode redistribuí-lo e/ou
+ modificá-lo dentro dos termos da GNU LGPL versão 3 como publicada pela Fundação
+ do Software Livre (FSF).
+ 
+ Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA
+ GARANTIA; sem uma garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou
+ APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/LGPL em português
+ para maiores detalhes.
+ 
+ Você deve ter recebido uma cópia da GNU LGPL versão 3, sob o título
+ "LICENCA.txt", junto com esse programa. Se não, acesse <http://www.gnu.org/licenses />
+ ou escreva para a Fundação do Software Livre (FSF) Inc.,
+ 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
+-->
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>br.gov.frameworkdemoiselle.serpro</groupId>
+    <artifactId>BookmarkAudit</artifactId>
+    <version>1.0.0</version>
+    <packaging>war</packaging>
+
+    <name>BookmarkAudit</name>
+    <description></description>
+    <url></url>
+
+    <parent>
+        <groupId>br.gov.frameworkdemoiselle</groupId>
+        <artifactId>demoiselle-jsf-parent</artifactId>
+        <version>2.4.0</version>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>br.gov.frameworkdemoiselle</groupId>
+            <artifactId>demoiselle-jpa</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <!-- If you are using a JTA transaction then use this extension -->
+        <!--
+        <dependency>
+            <groupId>br.gov.frameworkdemoiselle</groupId>
+            <artifactId>demoiselle-jta</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        -->
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>br.gov.frameworkdemoiselle.component</groupId>
+            <artifactId>demoiselle-junit</artifactId>
+            <version>2.3.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <scope>test</scope>
+        </dependency>
+        
+        <!-- Componente do Demoiselle Audit -->
+        <dependency>
+            <groupId>br.gov.frameworkdemoiselle.component.audit</groupId>
+            <artifactId>demoiselle-audit-auditors-persistence</artifactId>
+            <version>1.0.0-beta</version>
+        </dependency>
+        <dependency>
+        	<groupId>br.gov.frameworkdemoiselle.component.audit</groupId>
+        	<artifactId>demoiselle-audit-processors-rest</artifactId>
+        	<version>1.0.0-beta</version>
+        </dependency>
+        
+        
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.27</version>
+        </dependency>
+    </dependencies>
+</project>
