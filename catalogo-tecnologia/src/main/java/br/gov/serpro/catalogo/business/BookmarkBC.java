@@ -4,8 +4,7 @@ import br.gov.frameworkdemoiselle.lifecycle.Startup;
 import br.gov.frameworkdemoiselle.stereotype.BusinessController;
 import br.gov.frameworkdemoiselle.template.DelegateCrud;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
-
-import br.gov.serpro.catalogo.domain.Bookmark;
+import br.gov.serpro.catalogo.entity.Bookmark;
 import br.gov.serpro.catalogo.persistence.BookmarkDAO;
 
 @BusinessController

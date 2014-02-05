@@ -1,4 +1,4 @@
-package br.gov.serpro.catalogo.domain;
+package br.gov.serpro.catalogo.entity;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
