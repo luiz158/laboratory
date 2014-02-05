@@ -3,32 +3,32 @@
  Copyright (C) 2014 SERPRO
  ============================================================================
  This file is part of Demoiselle Framework.
- 
+
  Demoiselle Framework is free software; you can redistribute it and/or
  modify it under the terms of the GNU Lesser General Public License version 3
  as published by the Free Software Foundation.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU Lesser General Public License version 3
  along with this program; if not,  see <http://www.gnu.org/licenses />
  or write to the Free Software Foundation, Inc., 51 Franklin Street,
  Fifth Floor, Boston, MA  02110-1301, USA.
  ============================================================================
  Este arquivo é parte do Framework Demoiselle.
- 
+
  O Framework Demoiselle é um software livre; você pode redistribuí-lo e/ou
  modificá-lo dentro dos termos da GNU LGPL versão 3 como publicada pela Fundação
  do Software Livre (FSF).
- 
+
  Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA
  GARANTIA; sem uma garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou
  APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/LGPL em português
  para maiores detalhes.
- 
+
  Você deve ter recebido uma cópia da GNU LGPL versão 3, sob o título
  "LICENCA.txt", junto com esse programa. Se não, acesse <http://www.gnu.org/licenses />
  ou escreva para a Fundação do Software Livre (FSF) Inc.,
@@ -48,10 +48,10 @@
 	</properties>
 
 	<parent>
-        <groupId>br.gov.frameworkdemoiselle</groupId>
-        <artifactId>demoiselle-jsf-parent</artifactId>
-        <version>2.4.0</version>
-    </parent>
+            <groupId>br.gov.frameworkdemoiselle</groupId>
+            <artifactId>demoiselle-jsf-parent</artifactId>
+            <version>2.4.0</version>
+        </parent>
 
 	<name>Demoiselle Audit Dashboard</name>
 
@@ -68,7 +68,7 @@
 		<name>SERPRO - Serviço Federal de Processamento de Dados</name>
 		<url>http://www.serpro.gov.br</url>
 	</organization>
-	
+
 	<repositories>
         <repository>
             <id>prime-repo</id>
@@ -109,20 +109,20 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.6</version>
-		</dependency>
-        <dependency>
+		<groupId>mysql</groupId>
+		<artifactId>mysql-connector-java</artifactId>
+		<version>5.1.6</version>
+	</dependency>
+        <!--        <dependency>
             <groupId>br.gov.frameworkdemoiselle.component</groupId>
             <artifactId>demoiselle-mail</artifactId>
             <version>2.0.3-SNAPSHOT</version>
-        </dependency>
+        </dependency>-->
         <dependency>
-	        <groupId>org.primefaces.extensions</groupId>
-	        <artifactId>primefaces-extensions</artifactId>
-	        <version>1.1.0</version>
-	    </dependency>
+	    <groupId>org.primefaces.extensions</groupId>
+	    <artifactId>primefaces-extensions</artifactId>
+	    <version>1.1.0</version>
+	</dependency>
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
@@ -150,19 +150,19 @@
             <version>1.0.0-beta</version>
         </dependency>
         <dependency>
-			<groupId>commons-collections</groupId>
-			<artifactId>commons-collections</artifactId>
-			<version>3.2.1</version>
-		</dependency>
-		
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>3.2.1</version>
+	</dependency>
+
     </dependencies>
 
-    <!-- <profiles>
+       <profiles>
        <profile>
-        When built in OpenShift the 'openshift' profile will be used when invoking mvn.
-        Use this profile for any OpenShift specific customization your app will need.
-        By default that is to put the resulting archive into the 'deployments' folder.
-        http://maven.apache.org/guides/mini/guide-building-for-different-environments.html
+        <!-- When built in OpenShift the 'openshift' profile will be used when invoking mvn. -->
+        <!-- Use this profile for any OpenShift specific customization your app will need. -->
+        <!-- By default that is to put the resulting archive into the 'deployments' folder. -->
+        <!-- http://maven.apache.org/guides/mini/guide-building-for-different-environments.html -->
         <id>openshift</id>
         <build>
            <finalName>exemplo</finalName>
@@ -178,7 +178,8 @@
            </plugins>
          </build>
        </profile>
-     </profiles>-->
+     </profiles>
+
 
     <build>
         <finalName>${project.artifactId}</finalName>
