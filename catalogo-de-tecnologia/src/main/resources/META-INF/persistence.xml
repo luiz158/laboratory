@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+  <!-- JBoss 7 Persistence-unit configuration -->
+  <persistence-unit name="catalogoTecnologia-ds" transaction-type="JTA">
+<!--    <provider>org.hibernate.ejb.HibernatePersistence</provider>-->
+    <jta-data-source>java:jboss/datasources/catalogoDS</jta-data-source>
+    <class>br.gov.frameworkdemoiselle.domain.Recurso</class>
+    <class>br.gov.frameworkdemoiselle.domain.Usuario</class>
+    <class>br.gov.frameworkdemoiselle.domain.UsuarioRecurso</class>
+<!--    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <shared-cache-mode>ALL</shared-cache-mode>-->
+    <properties>
+      <property name="hibernate.show_sql" value="none"/>
+      <property name="hibernate.format_sql" value="true"/>
+      <property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.JBossAppServerJtaPlatform"/>
+      <property name="hibernate.cache.use_second_level_cache" value="true"/>
+      <!--
+      <property name="hibernate.default_schema" value="catalogoTecnologia"/>
+      <property name="hibernate.default_catalog" value="catalogoTecnologia"/>
+       -->
+      <property name="hibernate.hbm2ddl.auto" value="update"/>
+    </properties>
+  </persistence-unit>
+</persistence>
