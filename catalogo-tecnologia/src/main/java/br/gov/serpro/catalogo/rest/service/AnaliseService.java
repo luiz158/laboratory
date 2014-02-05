@@ -17,7 +17,6 @@ import br.gov.serpro.catalogo.persistence.AnaliseDAO;
 
 @ValidateRequest
 @Path("/api/analise")
-// @Consumes(APPLICATION_JSON)
 @Produces(APPLICATION_JSON)
 public class AnaliseService {
 
@@ -30,5 +29,4 @@ public class AnaliseService {
 		analiseDAO.insert(analise);
 		return analise.getId();
 	}
-
 }

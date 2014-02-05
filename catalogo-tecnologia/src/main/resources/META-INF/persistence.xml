@@ -5,7 +5,6 @@
 	<persistence-unit name="pu" transaction-type="JTA">
 		<jta-data-source>java:jboss/datasources/ExampleDS</jta-data-source>
 
-		<class>br.gov.serpro.catalogo.entity.Bookmark</class>
 		<class>br.gov.serpro.catalogo.entity.Analise</class>
 
 		<properties>
