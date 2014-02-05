@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+	<!-- If you are using tomcat6/tomcat7/gae then uncomment this listener -->
+	<!-- <listener> <listener-class>org.jboss.weld.environment.servlet.Listener</listener-class> 
+		</listener> -->
+
+	<!-- <listener> <listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class> 
+		</listener> -->
+
+	<!-- If you are using servlet 2.5 then uncomment this listener -->
+	<!-- <listener> <listener-class>br.gov.frameworkdemoiselle.util.ServletListener</listener-class> 
+		</listener> <filter> <filter-name>Demoiselle Servlet Filter</filter-name> 
+		<filter-class>br.gov.frameworkdemoiselle.util.ServletFilter</filter-class> 
+		</filter> <filter-mapping> <filter-name>Demoiselle Servlet Filter</filter-name> 
+		<url-pattern>/*</url-pattern> </filter-mapping> -->
+	<context-param>
+		<param-name>primefaces.THEME</param-name>
+		<param-value>bootstrap</param-value>
+	</context-param>
+
+	<servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.jsf</url-pattern>
+	</servlet-mapping>
+	<security-constraint>
+		<display-name>Restrict raw XHTML Documents</display-name>
+		<web-resource-collection>
+			<web-resource-name>XHTML</web-resource-name>
+			<url-pattern>*.xhtml</url-pattern>
+		</web-resource-collection>
+		<auth-constraint />
+	</security-constraint>
+
+	<!-- <filter> <filter-name>CharacterEncodingFilter</filter-name> <filter-class>br.org.guddi.view.filter.CharacterEncodingFilter</filter-class> 
+		</filter> <filter-mapping> <filter-name>CharacterEncodingFilter</filter-name> 
+		<url-pattern>*.jsf</url-pattern> </filter-mapping> -->
+
+	<!-- Mapping for ConsultaService endpoint -->
+	<!-- <servlet> <servlet-name>ConsultaService</servlet-name> <servlet-class>br.org.guddi.service.Consulta</servlet-class> 
+		</servlet> <servlet-mapping> <servlet-name>ConsultaService</servlet-name> 
+		<url-pattern>/ConsultaService</url-pattern> </servlet-mapping> -->
+	<!-- <context-param> <param-name>org.apache.myfaces.ERROR_HANDLING</param-name> 
+		<param-value>false</param-value> </context-param> -->
+	<!-- <error-page> <exception-type>javax.faces.application.ViewExpiredException</exception-type> 
+		<location>/login.jsf</location> </error-page> -->
+	<error-page>
+		<error-code>404</error-code>
+		<location>/404.jsf</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/500.jsf</location>
+	</error-page>
+	<!-- <error-page> <exception-type>br.gov.frameworkdemoiselle.security.AuthorizationException</exception-type> 
+		<location>/login.jsf</location> </error-page> -->
+
+</web-app>

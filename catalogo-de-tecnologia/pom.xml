@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>br.gov.frameworkdemoiselle</groupId>
+    <artifactId>catalogoTecnologia</artifactId>
+    <version>1.0.0</version>
+    <packaging>war</packaging>
+
+    <name>Catalogo de Tecnologia</name>
+    <description>Catalogo de Tecnologia</description>
+    <url></url>
+
+    <parent>
+        <groupId>br.gov.frameworkdemoiselle</groupId>
+        <artifactId>demoiselle-jsf-parent</artifactId>
+        <version>2.4.0</version>
+    </parent>
+
+<!--
+    <scm>
+      <connection>scm:git:git@github.com:catalogoTecnologia/app.git</connection>
+      <developerConnection>scm:git:git@github.com:catalogoTecnologia/app.git</developerConnection>
+      <url>https://github.com/catalogoTecnologia/app.git</url>
+      <tag>HEAD</tag>
+    </scm>
+
+    <issueManagement>
+      <system>JIRA</system>
+      <url>http://jira.codehaus.org/browse/SONARPLUGINS/component/14305</url>
+    </issueManagement>
+
+    <ciManagement>
+      <system>Bamboo</system>
+      <url>http://ci.codehaus.org/browse/SONAR-SCMACTIVITY</url>
+    </ciManagement>-->
+
+    <repositories>
+        <repository>
+            <id>prime-repo</id>
+            <name>PrimeFaces Maven Repository</name>
+            <url>http://repository.primefaces.org</url>
+            <layout>default</layout>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+                <groupId>org.primefaces</groupId>
+                <artifactId>primefaces-mobile</artifactId>
+                <version>0.9.3</version>
+        </dependency>
+        <dependency>
+            <groupId>br.gov.frameworkdemoiselle</groupId>
+            <artifactId>demoiselle-jpa</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- If you are using a JTA transaction then use this extension -->
+        <dependency>
+            <groupId>br.gov.frameworkdemoiselle</groupId>
+            <artifactId>demoiselle-jta</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.primefaces.extensions</groupId>
+            <artifactId>all-themes</artifactId>
+            <scope>compile</scope>
+            <version>1.0.8</version>
+        </dependency>
+
+        <dependency>
+            <groupId>br.gov.frameworkdemoiselle.component</groupId>
+            <artifactId>demoiselle-junit</artifactId>
+            <version>2.3.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.1-902.jdbc4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>br.gov.frameworkdemoiselle.component</groupId>
+            <artifactId>demoiselle-mail</artifactId>
+            <version>2.0.3-SNAPSHOT</version>
+        </dependency>
+
+<!--        <dependency>
+            <groupId>br.gov.frameworkdemoiselle.serpro</groupId>
+            <artifactId>demoiselle-audit</artifactId>
+            <version>1.0.0</version>
+        </dependency>-->
+    </dependencies>
+
+    <profiles>
+       <profile>
+        <!-- When built in OpenShift the 'openshift' profile will be used when invoking mvn. -->
+        <!-- Use this profile for any OpenShift specific customization your app will need. -->
+        <!-- By default that is to put the resulting archive into the 'deployments' folder. -->
+        <!-- http://maven.apache.org/guides/mini/guide-building-for-different-environments.html -->
+        <id>openshift</id>
+        <build>
+           <finalName>exemplo</finalName>
+           <plugins>
+             <plugin>
+               <artifactId>maven-war-plugin</artifactId>
+               <version>2.1.1</version>
+               <configuration>
+                 <outputDirectory>deployments</outputDirectory>
+                 <warName>ROOT</warName>
+               </configuration>
+             </plugin>
+           </plugins>
+         </build>
+       </profile>
+     </profiles>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.jboss.as.plugins</groupId>
+                <artifactId>jboss-as-maven-plugin</artifactId>
+                <version>7.4.Final</version>
+            </plugin>
+        </plugins>
+<!--        <plugins>
+            <plugin>
+                <groupId>org.jboss.as.plugins</groupId>
+                <artifactId>jboss-as-maven-plugin</artifactId>
+                <version>7.4.Final</version>
+                <executions>
+                     Undeploy the application on clean
+                    <execution>
+                        <id>undeploy</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>undeploy</goal>
+                        </goals>
+                        <configuration>
+                            <ignoreMissingDeployment>true</ignoreMissingDeployment>
+                        </configuration>
+                    </execution>
+
+                     Deploy the JDBC library
+                    <execution>
+                        <id>deploy-driver</id>
+                        <phase>install</phase>
+                        <configuration>
+                            <groupId>postgresql</groupId>
+                            <artifactId>postgresql</artifactId>
+                            <name>postgresql.jar</name>
+                        </configuration>
+                        <goals>
+                            <goal>deploy-artifact</goal>
+                        </goals>
+                    </execution>
+
+                     Add a data source
+                    <execution>
+                        <id>add-datasource</id>
+                        <phase>install</phase>
+                        <configuration>
+                            <address>subsystem=datasources,data-source=myDatasource</address>
+                            <resource>
+                                <enableResource>true</enableResource>
+                                <properties>
+                                    <connection-url>jdbc:postgresql://localhost/guddi</connection-url>
+                                    <jndi-name>java:jboss/datasources/guddiDS</jndi-name>
+                                    <enabled>true</enabled>
+                                    <enable>true</enable>
+                                    <pool-name>guddiDS</pool-name>
+                                    <user-name>postgres</user-name>
+                                    <password>serpro</password>
+                                    <driver-name>postgresql.jar</driver-name>
+                                    <use-ccm>false</use-ccm>
+                                </properties>
+                            </resource>
+                        </configuration>
+                        <goals>
+                            <goal>add-resource</goal>
+                        </goals>
+                    </execution>
+
+                     Add an XA datasource
+                    <execution>
+                        <id>add-xa-datasource</id>
+                        <phase>install</phase>
+                        <configuration>
+                            <address>subsystem=datasources</address>
+                            <resources>
+                                <resource>
+                                    <address>xa-data-source=java:jboss/datasources/guddiDS</address>
+                                    <enableResource>true</enableResource>
+                                    <properties>
+                                        <xa-datasource-class>org.postgresql.xa.PGXADataSource</xa-datasource-class>
+                                        <jndi-name>java:jboss/datasources/guddiDS</jndi-name>
+                                        <enabled>true</enabled>
+                                        <pool-name>guddiDS</pool-name>
+                                        <driver-name>postgresql.jar</driver-name>
+
+                                    </properties>
+                                     Add the XA data source properties. The nested addresses will prepended the address above.
+                                    <resources>
+                                        <resource>
+                                            <address>
+                                                xa-datasource-properties=DatabaseName
+                                            </address>
+                                            <properties>
+                                                <value>guddi</value>
+                                            </properties>
+                                        </resource>
+                                        <resource>
+                                            <address>
+                                                xa-datasource-properties=ServerName
+                                            </address>
+                                            <properties>
+                                                <value>localhost</value>
+                                            </properties>
+                                        </resource>
+                                        <resource>
+                                            <address>
+                                                xa-datasource-properties=User
+                                            </address>
+                                            <properties>
+                                                <value>postgres</value>
+                                            </properties>
+                                        </resource>
+                                        <resource>
+                                            <address>
+                                                xa-datasource-properties=Password
+                                            </address>
+                                            <properties>
+                                                <value>serpro</value>
+                                            </properties>
+                                        </resource>
+                                    </resources>
+                                </resource>
+                            </resources>
+                        </configuration>
+                        <goals>
+                            <goal>add-resource</goal>
+                        </goals>
+                    </execution>
+
+                     Deploy the application on install
+                    <execution>
+                        <id>deploy</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>-->
+    </build>
+</project>

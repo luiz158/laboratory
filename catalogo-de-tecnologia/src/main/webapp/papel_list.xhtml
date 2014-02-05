@@ -1,0 +1,28 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets" template="/template/main.xhtml">
+
+	<ui:define name="crud">
+		<h:form>
+
+			<fieldset>
+				<div class="widget first">
+					<div class="head">
+						<h5 class="iFrames">#{messages['papel.list.table.title']}</h5>
+					</div>
+
+                                    <p:dataTable id="list" var="bean" value="#{papelMB.resultListRoles}">
+
+						<p:column>
+							<f:facet name="header">#{messages['papel.label.descricao']}</f:facet>
+							<h:outputText value="#{bean}" />
+						</p:column>
+
+					</p:dataTable>
+				</div>
+			</fieldset>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
