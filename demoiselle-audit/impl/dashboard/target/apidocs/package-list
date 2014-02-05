@@ -1,9 +1,0 @@
-br.gov.frameworkdemoiselle.component.audit.dashboard.business
-br.gov.frameworkdemoiselle.component.audit.dashboard.constant
-br.gov.frameworkdemoiselle.component.audit.dashboard.domain
-br.gov.frameworkdemoiselle.component.audit.dashboard.persistence
-br.gov.frameworkdemoiselle.component.audit.dashboard.security
-br.gov.frameworkdemoiselle.component.audit.dashboard.service
-br.gov.frameworkdemoiselle.component.audit.dashboard.util
-br.gov.frameworkdemoiselle.component.audit.dashboard.view
-br.gov.frameworkdemoiselle.component.audit.dashboard.view.filter
