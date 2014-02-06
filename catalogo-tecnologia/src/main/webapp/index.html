@@ -14,19 +14,25 @@
 			<div class="form-group">
 				<label for="detalhamento">Detalhamento da Demanda</label>
 				<input type="text" id="detalhamento" ng-model="analise.detalhamento">
-				<span id="msg-detalhamento" class="text-danger"></span>
+				<span id="detalhamento-message" class="text-danger"></span>
 			</div>
 		</div>
-		<button ng-click="salvar()">Salvar</button>
+		<button ng-click="salvar()">Salvar</button>{{analise.detalhamento}}
 	</div>
 	
-	{{analise.detalhamento}}
+	<ul>
+		<li ng-repeat="a in analises">{{a.detalhamento}} 
+			<a ng-click="excluir(a.id)">excluir</a>
+		</li>
+	</ul>
+	
+	
+	
 	
 	<script src="js/lib/angular.min.js"></script>
 	<script src="js/lib/angular-route.min.js"></script>
 	<script src="js/app.js"></script>
-	<script src="js/controllers.js"></script>
-	<script src="js/services.js"></script>
+	<script src="js/analise-controller.js"></script>
 	<script src="js/lib/jquery-1.10.2.js"></script>
 	<script src="js/lib/bootstrap.min.js"></script>
 </body>
