@@ -41,7 +41,7 @@
 
     <groupId>br.gov.frameworkdemoiselle.component.audit</groupId>
     <artifactId>demoiselle-audit-parent</artifactId>
-    <version>1.0.0-beta</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <parent>
@@ -67,7 +67,7 @@
     </organization>
 
     <properties>
-        <audit.release.version>1.0.0-beta</audit.release.version>
+        <audit.release.version>1.0.0-SNAPSHOT</audit.release.version>
         <release.goals>deploy wagon:upload site site:deploy</release.goals>
     </properties>
 
