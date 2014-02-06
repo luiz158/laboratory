@@ -21,8 +21,10 @@
 	</div>
 	
 	<ul>
-		<li ng-repeat="a in analises">{{a.detalhamento}} 
-			<a ng-click="excluir(a.id)">excluir</a>
+		<li ng-repeat="a in analises">
+		<a ng-click="editar(a)">{{a.detalhamento}}</a>
+		<a ng-click="excluir(a.id)">excluir</a>
+			
 		</li>
 	</ul>
 	

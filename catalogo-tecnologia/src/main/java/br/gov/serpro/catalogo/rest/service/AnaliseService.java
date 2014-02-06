@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -44,5 +45,17 @@ public class AnaliseService {
 	@GET
 	public List<Analise> listar() {
 		return analiseDAO.findAll();
+	}
+	
+	@PUT
+	@Transactional
+	public void alterar(@Valid Analise analise) {
+		analiseDAO.update(analise);
+	}
+	
+	@GET
+	@Path("/{id}")
+	public Analise carregar(@NotNull @PathParam("id") Long id) {
+		return analiseDAO.load(id);
 	}
 }
