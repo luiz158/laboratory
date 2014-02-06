@@ -50,6 +50,7 @@
     </description>
 
     <modules>
+        <module>parent/audit</module>
         <module>impl/core</module>
         <module>impl/processors/rest</module>
         <module>impl/auditors/persistence</module>
