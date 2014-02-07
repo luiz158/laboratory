@@ -3,22 +3,54 @@
 /* Controllers */
 var controllers = angular.module('catalogo.controllers', []);
 
-controllers.controller('Analise', function Analise($scope, $http) {
+controllers.controller('AnaliseList',
+		function Analise($scope, $http, $location) {
 
-	$scope.analise = {};
-	$scope.analise.detalhamento = "...";
-	$scope.analises = [];
+			function carregarAnalises() {
+				$http.get('api/analise').success(function(data) {
+					$scope.analises = data;
+				});
+			}
 
-	function carregarAnalises() {
-		$scope.analise = {};
-		$http.get('api/analise').success(function(data) {
-			$scope.analises = data;
+			$scope.novo = function() {
+				$location.path('/analise/edit');
+			};
+
+			$scope.editar = function(analise) {
+				$location.path('/analise/edit/' + analise.id);
+			};
+
+			$scope.excluir = function(id) {
+				$http({
+					url : 'api/analise/' + id,
+					method : "DELETE"
+
+				}).success(function(data) {
+					carregarAnalises();
+
+				}).error(function(data, status) {
+				});
+			};
+
+			carregarAnalises();
 		});
+
+controllers.controller('AnaliseEdit', function Analise($scope, $http,
+		$location, $routeParams) {
+
+	var id = $routeParams.id;
+
+	if (id) {
+		$http.get('api/analise/' + id).success(function(data) {
+			$scope.analise = data;
+		});
+	} else {
+		$scope.analise = {};
 	}
 
 	$scope.salvar = function() {
 		console.log("AnaliseController " + $scope.analise);
-
+		$("[id$='-message']").text("");
 		$http({
 			url : 'api/analise',
 			method : $scope.analise.id ? "PUT" : "POST",
@@ -27,10 +59,8 @@ controllers.controller('Analise', function Analise($scope, $http) {
 				'Content-Type' : 'application/json;charset=utf8'
 			}
 
-		}).success(function(data) {
-			$("[id$='-message']").text("");
-			carregarAnalises();
-
+		}).success(function(data) {			
+			$location.path('analise');
 		}).error(
 				function(data, status) {
 					if (status = 412) {
@@ -40,23 +70,7 @@ controllers.controller('Analise', function Analise($scope, $http) {
 						});
 					}
 				});
+
 	};
 
-	$scope.editar = function(analise) {
-		$scope.analise = analise;
-	};
-
-	$scope.excluir = function(id) {
-		$http({
-			url : 'api/analise/' + id,
-			method : "DELETE"
-
-		}).success(function(data) {
-			carregarAnalises();
-
-		}).error(function(data, status) {
-		});
-	};
-
-	carregarAnalises();
 });
