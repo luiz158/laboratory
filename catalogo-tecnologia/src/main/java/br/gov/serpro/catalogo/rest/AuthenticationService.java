@@ -1,4 +1,4 @@
-package br.gov.serpro.catalogo.rest.service;
+package br.gov.serpro.catalogo.rest;
 
 import javax.inject.Inject;
 import javax.ws.rs.FormParam;
