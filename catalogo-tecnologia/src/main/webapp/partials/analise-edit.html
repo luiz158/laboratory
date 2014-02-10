@@ -6,8 +6,6 @@
 		<label for="detalhamento">Id:</label> <input class="form-control" disabled=disabled type="text" id="id" ng-model="analise.id">
 	</div>
 	
-	<input type="text" class="form-control" id="situacao" ng-model="analise.situacao">
-	
 	<div class="form-group">
 		<label for="demandante">Demandante:</label> <input type="text" class="form-control" id="demandante" ng-model="analise.demandante"> <span
 			id="demandante-message" class="text-danger"></span>
@@ -19,17 +17,17 @@
 	</div>
 
 	<div class="form-group">
-		<label for="situacao">Situação:</label> <span ng-analise-situacao situacao="{{analise.situacao}}"></span> | {{analise.situacao}}
+		<label for="situacao">Situação:</label> <span ng-analise-situacao situacao="{{analise.situacao}}"></span>
 	</div>
-
+	
 	<button class="btn btn-primary" ng-click="salvar()">
 		<i class="fa fa-save"> </i> Salvar
 	</button>
 	<span ng-if="analise.situacao == 'Rascunho'">
-	<button class="btn btn-success btn" ng-click="salvar()">
+	<button class="btn btn-success btn" ng-click="aprovar(true)">
 		<i class="fa fa-thumbs-o-up"> </i> Aprovar
 	</button>
-	<button class="btn btn-danger" ng-click="salvar()">
+	<button class="btn btn-danger" ng-click="aprovar(false)">
 		<i class="fa fa-thumbs-o-down"> </i> Reprovar
 	</button>
 	</span>
