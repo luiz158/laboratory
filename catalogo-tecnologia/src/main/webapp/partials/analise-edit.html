@@ -6,7 +6,7 @@
 	<form name="formAnalise" role="form">
 		<ul class="nav nav-tabs" ng:init="selected=1">
 			<li class="ng-class: selected == 1 ? 'active':'';"><a ng:click="selected=1">Análise</a></li>
-			<li class="ng-class: selected == 2 ? 'active':'';"><a ng:click="selected=2">Próxima Fase</a></li>
+			<li class="ng-class: selected == 2 ? 'active':'';" ng-show="analise.situacao != 'Rascunho'"><a ng:click="selected=2">Próxima Fase</a></li>
 			<li class="ng-class: selected == 3 ? 'active':'';"><a ng:click="selected=3">Anexos</a></li>
 		</ul>
 
@@ -105,21 +105,22 @@
 
 				<div class="form-group">
 					<label for="justificativaProximaFase">Justificativa:</label>
-					<textarea rows="4" class="form-control" id="justificativaProximaFase" ng-model="analise.justificativaProximaFase" required></textarea>
+					<textarea rows="4" class="form-control" id="justificativaProximaFase" ng-model="analise.justificativaProximaFase"></textarea>
 					<span id="justificativaProximaFase-message" class="text-danger"></span>
 				</div>
 
 				<div class="form-group row">
 					<div class="col-md-6">
-						<label for="detalhamento">Gestor da Próxima Fase:</label> <input class="form-control" required type="text" id="id" ng-model="analise.gestorProximaFase">
+						<label for="detalhamento">Gestor da Próxima Fase:</label> <input class="form-control" type="text" id="id"
+							ng-model="analise.gestorProximaFase">
 					</div>
 					<div class="col-md-6">
-						<label for="detalhamento">Área:</label> <input class="form-control" required type="text" id="id" ng-model="analise.areaGestorProximaFase">
+						<label for="detalhamento">Área:</label> <input class="form-control" type="text" id="id" ng-model="analise.areaGestorProximaFase">
 					</div>
 				</div>
 			</div>
 		</div>
-
+		
 		<!-- Anexos -->
 		<div ng:show="selected == 3" class="panel panel-default">
 			<div class="panel-body">
