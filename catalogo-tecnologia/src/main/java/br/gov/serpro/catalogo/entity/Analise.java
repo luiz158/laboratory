@@ -34,6 +34,8 @@ public class Analise {
 	
 	private String origemReferencia;
 	
+	private String justificativa;
+	
 	//@NotNull
 	private Date dataAnalise;
 	
@@ -43,6 +45,10 @@ public class Analise {
 	@NotEmpty
 	private String areaGestorAnalise;
 	
+	private String gestorProximaFase;
+	
+	private String areaGestorProximaFase;
+		
 	public String getDetalhamento() {
 		return detalhamento;
 	}
@@ -123,6 +129,30 @@ public class Analise {
 	
 	public void setAreaGestorAnalise(String areaGestorAnalise) {
 		this.areaGestorAnalise = areaGestorAnalise;
+	}
+
+	public String getJustificativa() {
+		return justificativa;
+	}
+
+	public void setJustificativa(String justificativa) {
+		this.justificativa = justificativa;
+	}
+
+	public String getGestorProximaFase() {
+		return gestorProximaFase;
+	}
+
+	public void setGestorProximaFase(String gestorProximaFase) {
+		this.gestorProximaFase = gestorProximaFase;
+	}
+
+	public String getAreaGestorProximaFase() {
+		return areaGestorProximaFase;
+	}
+
+	public void setAreaGestorProximaFase(String areaGestorProximaFase) {
+		this.areaGestorProximaFase = areaGestorProximaFase;
 	}
 
 }
