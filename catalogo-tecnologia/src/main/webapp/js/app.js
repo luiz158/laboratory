@@ -8,8 +8,9 @@ angular.module('catalogo', [
   'catalogo.directives'
 ]).
 config(['$routeProvider', function($routeProvider) {
-	  $routeProvider.when('/analise', {templateUrl: 'partials/analise-listar.html', controller: 'AnaliseList'});
-	  $routeProvider.when('/analise/edit', {templateUrl: 'partials/analise-edit.html', controller: 'AnaliseEdit'});
-	  $routeProvider.when('/analise/edit/:id', {templateUrl: 'partials/analise-edit.html', controller: 'AnaliseEdit'});
-	  //$routeProvider.otherwise({templateUrl: 'partials/analise-listar.html'});
-	}]);
+  $routeProvider.when('/login', {templateUrl: 'partials/login.html', controller: 'Login'});
+  $routeProvider.when('/analise', {templateUrl: 'partials/analise-listar.html', controller: 'AnaliseList'});
+  $routeProvider.when('/analise/edit', {templateUrl: 'partials/analise-edit.html', controller: 'AnaliseEdit'});
+  $routeProvider.when('/analise/edit/:id', {templateUrl: 'partials/analise-edit.html', controller: 'AnaliseEdit'});
+  //$routeProvider.otherwise({templateUrl: 'partials/analise-listar.html'});
+}]);
