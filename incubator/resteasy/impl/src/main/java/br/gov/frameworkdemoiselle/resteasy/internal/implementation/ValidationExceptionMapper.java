@@ -1,4 +1,4 @@
-package br.gov.serpro.catalogo.rest.mapper;
+package br.gov.frameworkdemoiselle.resteasy.internal.implementation;
 
 import static javax.servlet.http.HttpServletResponse.SC_PRECONDITION_FAILED;
 
@@ -8,10 +8,9 @@ import javax.ws.rs.ext.Provider;
 
 import org.hibernate.validator.method.MethodConstraintViolationException;
 
-import br.gov.serpro.catalogo.exception.ValidationException;
+import br.gov.frameworkdemoiselle.resteasy.util.ValidationException;
 
 @Provider
-@SuppressWarnings("deprecation")
 public class ValidationExceptionMapper implements ExceptionMapper<javax.validation.ValidationException> {
 
 	@Override

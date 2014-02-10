@@ -5,7 +5,8 @@
 angular.module('catalogo', [
   'ngRoute',
   'catalogo.controllers',
-  'catalogo.directives'
+  'catalogo.directives',
+  'mgcrea.ngStrap'
 ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/login', {templateUrl: 'partials/login.html', controller: 'Login'});

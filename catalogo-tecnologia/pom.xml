@@ -43,6 +43,12 @@
 			<artifactId>demoiselle-jta</artifactId>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>br.gov.frameworkdemoiselle.component</groupId>
+			<artifactId>demoiselle-resteasy</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
 		
 		<!-- Apache Commons container provided dependencies-->
 		<dependency>
@@ -83,6 +89,14 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>sonatype-nexus-snapshots</id>
+			<name>Sonatype Nexus Snapshots</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</repository>
+	</repositories>
 
 	<properties>
 		<jboss.as.version>7.2.0.Final</jboss.as.version>

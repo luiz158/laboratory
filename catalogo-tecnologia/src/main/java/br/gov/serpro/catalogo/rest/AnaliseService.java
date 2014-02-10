@@ -1,4 +1,4 @@
-package br.gov.serpro.catalogo.rest.service;
+package br.gov.serpro.catalogo.rest;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 

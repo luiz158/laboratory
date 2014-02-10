@@ -3,6 +3,8 @@ package br.gov.serpro.catalogo.entity;
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.GenerationType.SEQUENCE;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -27,6 +29,19 @@ public class Analise {
 	@NotNull
 	@Enumerated(STRING)
 	private Situacao situacao;
+	
+	private String codigoReferencia;
+	
+	private String origemReferencia;
+	
+	//@NotNull
+	private Date dataAnalise;
+	
+	@NotEmpty
+	private String gestorAnalise;
+	
+	@NotEmpty
+	private String areaGestorAnalise;
 	
 	public String getDetalhamento() {
 		return detalhamento;
@@ -58,6 +73,56 @@ public class Analise {
 
 	public void setSituacao(Situacao situacao) {
 		this.situacao = situacao;
+	}
+
+	
+	public String getCodigoReferencia() {
+		return codigoReferencia;
+	}
+
+	
+	public void setCodigoReferencia(String codigoReferencia) {
+		this.codigoReferencia = codigoReferencia;
+	}
+
+	
+	public String getOrigemReferencia() {
+		return origemReferencia;
+	}
+
+	
+	public void setOrigemReferencia(String origemReferencia) {
+		this.origemReferencia = origemReferencia;
+	}
+
+	
+	public Date getDataAnalise() {
+		return dataAnalise;
+	}
+
+	
+	public void setDataAnalise(Date dataAnalise) {
+		this.dataAnalise = dataAnalise;
+	}
+
+	
+	public String getGestorAnalise() {
+		return gestorAnalise;
+	}
+
+	
+	public void setGestorAnalise(String gestorAnalise) {
+		this.gestorAnalise = gestorAnalise;
+	}
+
+	
+	public String getAreaGestorAnalise() {
+		return areaGestorAnalise;
+	}
+
+	
+	public void setAreaGestorAnalise(String areaGestorAnalise) {
+		this.areaGestorAnalise = areaGestorAnalise;
 	}
 
 }
