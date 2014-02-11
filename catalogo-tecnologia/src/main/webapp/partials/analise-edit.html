@@ -5,16 +5,21 @@
 
 	<form name="formAnalise" role="form">
 		<ul class="nav nav-tabs" ng:init="selected=1">
-			<li class="ng-class: selected == 1 ? 'active':'';"><a ng:click="selected=1">Análise</a></li>
-			<li class="ng-class: selected == 2 ? 'active':'';" ng-show="analise.situacao != 'Rascunho'"><a ng:click="selected=2">Próxima Fase</a></li>
-			<li class="ng-class: selected == 3 ? 'active':'';"><a ng:click="selected=3">Anexos</a></li>
+			<li class="ng-class: selected == 1 ? 'active':'';"><a
+				ng:click="selected=1">Análise</a></li>
+			<li class="ng-class: selected == 2 ? 'active':'';"
+				ng-show="analise.situacao != 'Rascunho'"><a
+				ng:click="selected=2">Próxima Fase</a></li>
+			<li class="ng-class: selected == 3 ? 'active':'';"><a
+				ng:click="selected=3">Anexos</a></li>
 		</ul>
 
 		<div class="panel panel-default" ng:show="selected == 1">
 			<div class="panel-body">
 				<div class="form-group row">
 					<div class="col-md-6">
-						<label for="detalhamento">Id:</label> <input class="form-control" disabled=disabled type="text" id="id" ng-model="analise.id">
+						<label for="detalhamento">Id:</label> <input class="form-control"
+							disabled=disabled type="text" id="id" ng-model="analise.id">
 					</div>
 					<!--<div class="col-md-6">
 						<label for="situacao">Situação:</label><br> <span class="btn-group" ng-analise-situacao-button situacao="{{analise.situacao}}"
@@ -26,7 +31,8 @@
 				</div>
 				<div class="form-group row">
 					<div class="col-md-6">
-						<label for="detalhamento">Referência:</label> <select class="form-control" ng-model="analise.origemReferencia">
+						<label for="detalhamento">Referência:</label> <select
+							class="form-control" ng-model="analise.origemReferencia">
 							<option>--</option>
 							<option>ALM</option>
 							<option>SPECX</option>
@@ -37,18 +43,23 @@
 						</select>
 					</div>
 					<div class="col-md-6">
-						<label for="detalhamento">Código:</label> <input class="form-control" type="text" id="id" ng-model="analise.codigoReferencia">
+						<label for="detalhamento">Código:</label> <input
+							class="form-control" type="text" id="id"
+							ng-model="analise.codigoReferencia">
 					</div>
 				</div>
 
 				<div class="form-group">
-					<label for="demandante">Demandante:</label> <input type="text" class="form-control" id="demandante" ng-model="analise.demandante" required>
-					<span id="demandante-message" class="text-danger"></span>
+					<label for="demandante">Demandante:</label> <input type="text"
+						class="form-control" id="demandante" ng-model="analise.demandante"
+						required> <span id="demandante-message"
+						class="text-danger"></span>
 				</div>
 
 				<div class="form-group">
 					<label for="detalhamento">Detalhamento:</label>
-					<textarea rows="4" class="form-control" id="detalhamento" ng-model="analise.detalhamento" required></textarea>
+					<textarea rows="4" class="form-control" id="detalhamento"
+						ng-model="analise.detalhamento" required></textarea>
 					<span id="detalhamento-message" class="text-danger"></span>
 				</div>
 
@@ -56,26 +67,38 @@
 				<div class="form-group row">
 					<div class="col-md-6">
 						<div date-picker="start"></div>
-						<label class="dataAnalise"><i class="fa fa-calendar"></i> Data da Análise <small>(dd/mm/aaaa)</small>:</label> <input type="text"
-							class="form-control" id="dataAnalise" name="dataAnalise" ng-model="analise.dataAnalise" data-date-type="number" data-min-date="01/01/2010"
-							data-max-date="today" data-autoclose="1" data-date-format="dd/MM/yyyy" bs-datepicker>
+						<label class="dataAnalise"><i class="fa fa-calendar"></i>
+							Data da Análise <small>(dd/mm/aaaa)</small>:</label> <input type="text"
+							class="form-control" id="dataAnalise" name="dataAnalise"
+							ng-model="analise.dataAnalise" data-date-type="number"
+							data-min-date="01/01/2010" data-max-date="today"
+							data-autoclose="1" data-date-format="dd/MM/yyyy" bs-datepicker>
 					</div>
 				</div>
 
 				<div class="form-group row">
 					<div class="col-md-6">
-						<label for="detalhamento">Gestor da Análise:</label> <input class="form-control" required type="text" id="id" ng-model="analise.gestorAnalise">
+						<label for="detalhamento">Gestor da Análise:</label> <input
+							class="form-control" required type="text" id="id"
+							ng-model="analise.gestorAnalise">
 					</div>
 					<div class="col-md-6">
-						<label for="detalhamento">Área:</label> <input class="form-control" required type="text" id="id" ng-model="analise.areaGestorAnalise">
+						<label for="detalhamento">Área:</label> <input
+							class="form-control" required type="text" id="id"
+							ng-model="analise.areaGestorAnalise">
 					</div>
 				</div>
 
 				<div class="form-group">
-					<label for="situacao">Situação:</label><br> <span id="situacao" class="btn-group" ng-analise-situacao-button situacao="{{analise.situacao}}"
-						aprovar="aprovar(true)">
-						<li ng-if="analise.situacao != 'Aprovado'"><a ng-click="aprovar(true)"><i class="fa fa-thumbs-o-up"> </i> Aprovar</a></li>
-						<li ng-if="analise.situacao != 'Reprovado'"><a ng-click="aprovar(false)"><i class="fa fa-thumbs-o-down"> </i> Rejeitar</a></li>
+					<label for="situacao">Situação:</label><br> <span
+						id="situacao" class="btn-group" ng-analise-situacao-button
+						situacao="{{analise.situacao}}" aprovar="aprovar(true)">
+						<li ng-if="analise.situacao != 'Aprovado'"><a
+							ng-click="aprovar(true)"><i class="fa fa-thumbs-o-up"> </i>
+								Aprovar</a></li>
+						<li ng-if="analise.situacao != 'Reprovado'"><a
+							ng-click="aprovar(false)"><i class="fa fa-thumbs-o-down">
+							</i> Rejeitar</a></li>
 					</span>
 				</div>
 
@@ -83,7 +106,8 @@
 				<div ng-if="analise.situacao != 'Rascunho'">
 					<div class="form-group">
 						<label for="justificativa">Justificativa:</label>
-						<textarea rows="4" class="form-control" id="justificativa" ng-model="analise.justificativa" required></textarea>
+						<textarea rows="4" class="form-control" id="justificativa"
+							ng-model="analise.justificativa" required></textarea>
 						<span id="justificativa-message" class="text-danger"></span>
 					</div>
 				</div>
@@ -95,7 +119,8 @@
 		<div ng:show="selected == 2" class="panel panel-default">
 			<div class="panel-body">
 				<div class="form-group">
-					<label for="proximaFase">Próxima fase a ser executada:</label> <select class="form-control" ng-model="analise.proximaFase">
+					<label for="proximaFase">Próxima fase a ser executada:</label> <select
+						class="form-control" ng-model="analise.proximaFase">
 						<option>Prospecção</option>
 						<option>Internalização</option>
 						<option>Sustentação</option>
@@ -105,40 +130,45 @@
 
 				<div class="form-group">
 					<label for="justificativaProximaFase">Justificativa:</label>
-					<textarea rows="4" class="form-control" id="justificativaProximaFase" ng-model="analise.justificativaProximaFase"></textarea>
+					<textarea rows="4" class="form-control"
+						id="justificativaProximaFase"
+						ng-model="analise.justificativaProximaFase"></textarea>
 					<span id="justificativaProximaFase-message" class="text-danger"></span>
 				</div>
 
 				<div class="form-group row">
 					<div class="col-md-6">
-						<label for="detalhamento">Gestor da Próxima Fase:</label> <input class="form-control" type="text" id="id"
+						<label for="detalhamento">Gestor da Próxima Fase:</label> <input
+							class="form-control" type="text" id="id"
 							ng-model="analise.gestorProximaFase">
 					</div>
 					<div class="col-md-6">
-						<label for="detalhamento">Área:</label> <input class="form-control" type="text" id="id" ng-model="analise.areaGestorProximaFase">
+						<label for="detalhamento">Área:</label> <input
+							class="form-control" type="text" id="id"
+							ng-model="analise.areaGestorProximaFase">
 					</div>
-				</div>
-			</div>
-		</div>
-		
-		<!-- Anexos -->
-		<div ng:show="selected == 3" class="panel panel-default">
-			<div class="panel-body">
-				<div ng-controller="MyCtrl">
-					<input type="text" ng-model="myModelObj"> <input type="file" ng-file-select="onFileSelect($files)"> <input type="file"
-						ng-file-select="onFileSelect($files)" multiple>
-					<div ng-file-drop="onFileSelect($files)" ng-file-drag-over-class="optional-css-class" ng-show="dropSupported">drop files here</div>
-					<div ng-file-drop-available="dropSupported=true" ng-show="!dropSupported">HTML5 Drop File is not supported!</div>
-					<button ng-click="upload.abort()">Cancel Upload</button>
 				</div>
 			</div>
 		</div>
 
+		<!-- Anexos -->
+		<div ng:show="selected == 3" class="panel panel-default">
+			<div class="panel-body">
+				<input type="text" ng-model="anexos"> 
+				<input type="file" ng-file-select="onFileSelect($files)"> <br>
+				<button ng-click="upload.abort()">Cancelar anexo</button>
+
+
+			</div>
+		</div>
+
 		<div>
-			<button class="btn btn-primary" ng-click="salvar()" ng-disabled="formAnalise.$invalid">
+			<button class="btn btn-primary" ng-click="salvar()"
+				ng-disabled="formAnalise.$invalid">
 				<i class="fa fa-save"> </i> Salvar
 			</button>
-			<a class="btn btn-inverse pull-right" href="#/analise"><i class="fa fa-long-arrow-left"></i> Voltar</a>
+			<a class="btn btn-inverse pull-right" href="#/analise"><i
+				class="fa fa-long-arrow-left"></i> Voltar</a>
 		</div>
 
 	</form>
