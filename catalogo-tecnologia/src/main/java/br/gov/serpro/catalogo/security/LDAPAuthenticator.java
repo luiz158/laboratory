@@ -1,6 +1,5 @@
 package br.gov.serpro.catalogo.security;
 
-import java.security.Principal;
 import java.util.Hashtable;
 
 import javax.enterprise.context.SessionScoped;
@@ -29,7 +28,7 @@ public class LDAPAuthenticator implements Authenticator {
 	@Inject
 	private Credentials credentials;
 
-	private Principal user;
+	private User user;
 
 	@Inject
 	private LDAPConfig ldapConfig;
@@ -59,10 +58,10 @@ public class LDAPAuthenticator implements Authenticator {
 
 	@Override
 	public br.gov.frameworkdemoiselle.security.User getUser() {
-		return (br.gov.frameworkdemoiselle.security.User) user;
+		return user.parse();
 	}
 
-	private Principal createUser(Attributes attributes) throws NamingException {
+	private User createUser(Attributes attributes) throws NamingException {
 		User result = new User();
 
 		result.setName(attributes.get("uid").get().toString());
