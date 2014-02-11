@@ -11,12 +11,20 @@ controllers.controller('Auth', function Auth($scope, $http, $location, AuthServi
 		console.log('----------SUCESSO----------')
 	}
 	
+	function sucessologout(){
+		console.log('----------SAIR----------')
+	}
+	
 	function erro(data){
 		console.log('----------ERRO----------')
 	}
 	
 	$scope.entrar = function() {
 		AuthService.login($scope.formData, sucesso, erro);
+	}
+	
+	$scope.sair = function() {
+		AuthService.logout(sucessologout);
 	}
 	
 	$scope.isLoggedIn = function(){

@@ -225,7 +225,7 @@
                 <!-- /.dropdown -->
                  <li class="dropdown" ng-controller="Auth">
                  		<a href="#/login" ng-if="!isLoggedIn()">Login</a>
-                 		<a href="#/login" ng-if="isLoggedIn()">Nome do Capeta</a>
+                 		<a style="cursor: pointer" ng-click="sair()" ng-if="isLoggedIn()">Sair</a>
                  		<!-- 
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <span><i class="fa fa-user fa-fw"></i> Serge <i class="fa fa-caret-down"></i></span> 

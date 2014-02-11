@@ -1,11 +1,9 @@
 package br.gov.serpro.catalogo.entity;
 
 import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.codehaus.jackson.map.annotate.JsonSerialize;
-import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
-
-//@JsonPropertyOrder({ "username" })
 public class User implements Principal {
 
 	private Integer id;
@@ -25,7 +23,6 @@ public class User implements Principal {
 		this.name = name;
 	}
 
-	//@JsonSerialize(include = Inclusion.NON_NULL)
 	public Integer getId() {
 		return id;
 	}
@@ -34,7 +31,6 @@ public class User implements Principal {
 		this.id = id;
 	}
 
-	@Override
 	public String getName() {
 		return name;
 	}
@@ -119,5 +115,37 @@ public class User implements Principal {
 			return false;
 		}
 		return true;
+	}
+	
+	public br.gov.frameworkdemoiselle.security.User parse() {
+		br.gov.frameworkdemoiselle.security.User user = new br.gov.frameworkdemoiselle.security.User() {
+
+			private static final long serialVersionUID = 1L;
+
+			private Map<Object, Object> attrs = new HashMap<Object, Object>();
+
+			@Override
+			public String getId() {
+				return name;
+			}
+
+			@Override
+			public Object getAttribute(Object key) {
+				return this.attrs.get(key);
+			}
+
+			@Override
+			public void setAttribute(Object key, Object value) {
+				this.attrs.put(key, value);
+			}
+
+			@Override
+			public String toString() {
+				return this.getId();
+			}
+		};
+		user.setAttribute("id", this.id);
+
+		return user;
 	}
 }

@@ -9,6 +9,8 @@ services.factory(
 	    	
 	    	var logado = false;
 	    	
+	    	
+	    	
 	        return {
 	            login: function (credential, callback, errorCallback) {
 	            	console.log('--------CREDENTIAL----------');
@@ -26,6 +28,19 @@ services.factory(
 	                }).error(function (response) {
 	                	logado = false;
 	                    errorCallback(response.data);
+	                });
+	            },
+	            logout: function (callback){
+	            	console.log('--------LOGOUT----------');
+	            	$http({
+	                    url: 'api/auth',
+	                    method: "DELETE",
+	                    headers: {
+	                        'Content-Type': 'application/json;charset=utf8'
+	                    }
+	                }).success(function (response) {
+	                	logado = false;
+	                    callback(response.data);
 	                });
 	            },
 	            isLoggedIn: function(){
