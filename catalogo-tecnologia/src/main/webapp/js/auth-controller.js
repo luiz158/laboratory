@@ -5,23 +5,22 @@ var controllers = angular.module('catalogo.controllers');
 
 controllers.controller('Auth', function Auth($scope, $http, $location, AuthService) {
 
-	var logado = "";
+	console.log('Instanciando Auth Controller');
 	
 	function sucesso(data){
 		console.log('----------SUCESSO----------')
-		console.log(data);
-		logado = true;
 	}
 	
 	function erro(data){
 		console.log('----------ERRO----------')
-		console.log(data);
-		logado = false;
 	}
 	
 	$scope.entrar = function() {
 		AuthService.login($scope.formData, sucesso, erro);
-		console.log(logado);
+	}
+	
+	$scope.isLoggedIn = function(){
+		return AuthService.isLoggedIn();
 	}
 });
 

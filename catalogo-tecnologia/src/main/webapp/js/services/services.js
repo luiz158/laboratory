@@ -6,6 +6,9 @@ var services = angular.module('catalogo.services', []);
 services.factory(
 	    'AuthService',
 	    function ($http) {
+	    	
+	    	var logado = false;
+	    	
 	        return {
 	            login: function (credential, callback, errorCallback) {
 	            	console.log('--------CREDENTIAL----------');
@@ -18,10 +21,15 @@ services.factory(
 	                        'Content-Type': 'application/json;charset=utf8'
 	                    }
 	                }).success(function (response) {
+	                	logado = true;
 	                    callback(response.data);
 	                }).error(function (response) {
+	                	logado = false;
 	                    errorCallback(response.data);
 	                });
+	            },
+	            isLoggedIn: function(){
+	            	return logado;
 	            }
 	        }
 	    });
