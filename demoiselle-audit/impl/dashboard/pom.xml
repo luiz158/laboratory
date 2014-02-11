@@ -37,7 +37,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>demoiselle-audit-dashboard</artifactId>
+         <groupId>br.gov.frameworkdemoiselle</groupId>
+	<artifactId>dashboard</artifactId>
 	<packaging>war</packaging>
 	<version>1.0.0-SNAPSHOT</version>
 
@@ -69,7 +70,7 @@
 		<url>http://www.serpro.gov.br</url>
 	</organization>
 
-	<repositories>
+    <repositories>
         <repository>
             <id>prime-repo</id>
             <name>PrimeFaces Maven Repository</name>
@@ -86,11 +87,11 @@
         </dependency>
 
         <!-- If you are using a JTA transaction then use this extension -->
-<!--         <dependency> -->
-<!--             <groupId>br.gov.frameworkdemoiselle</groupId> -->
-<!--             <artifactId>demoiselle-jta</artifactId> -->
-<!--             <scope>compile</scope> -->
-<!--         </dependency> -->
+<!--         <dependency>
+             <groupId>br.gov.frameworkdemoiselle</groupId>
+             <artifactId>demoiselle-jta</artifactId>
+             <scope>compile</scope>
+         </dependency>-->
         <dependency>
             <groupId>org.primefaces.extensions</groupId>
             <artifactId>all-themes</artifactId>
@@ -109,11 +110,11 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-		<groupId>mysql</groupId>
-		<artifactId>mysql-connector-java</artifactId>
-		<version>5.1.6</version>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.6</version>
 	</dependency>
-        <!--        <dependency>
+<!--        <dependency>
             <groupId>br.gov.frameworkdemoiselle.component</groupId>
             <artifactId>demoiselle-mail</artifactId>
             <version>2.0.3-SNAPSHOT</version>
@@ -132,18 +133,21 @@
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-jaxrs</artifactId>
-            <version>3.0.5.Final</version>
+            <version>2.3.2.Final</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-jaxb-provider</artifactId>
-            <version>3.0.5.Final</version>
+            <version>2.3.2.Final</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-cdi</artifactId>
-            <version>3.0.5.Final</version>
+            <version>2.3.2.Final</version>
         </dependency>
+
+   <!-- multipart/form-data and multipart/mixed support -->
+
         <dependency>
             <groupId>br.gov.frameworkdemoiselle.component.audit</groupId>
             <artifactId>demoiselle-audit-core</artifactId>
@@ -165,11 +169,11 @@
         <!-- http://maven.apache.org/guides/mini/guide-building-for-different-environments.html -->
         <id>openshift</id>
         <build>
-           <finalName>exemplo</finalName>
+           <finalName>dashboard</finalName>
            <plugins>
              <plugin>
                <artifactId>maven-war-plugin</artifactId>
-               <version>2.1.1</version>
+               <version>2.4</version>
                <configuration>
                  <outputDirectory>deployments</outputDirectory>
                  <warName>ROOT</warName>
@@ -180,145 +184,4 @@
        </profile>
      </profiles>
 
-
-    <build>
-        <finalName>${project.artifactId}</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.jboss.as.plugins</groupId>
-                <artifactId>jboss-as-maven-plugin</artifactId>
-                <version>7.5.Final</version>
-            </plugin>
-        </plugins>
-<!--        <plugins>
-            <plugin>
-                <groupId>org.jboss.as.plugins</groupId>
-                <artifactId>jboss-as-maven-plugin</artifactId>
-                <version>7.4.Final</version>
-                <executions>
-                     Undeploy the application on clean
-                    <execution>
-                        <id>undeploy</id>
-                        <phase>clean</phase>
-                        <goals>
-                            <goal>undeploy</goal>
-                        </goals>
-                        <configuration>
-                            <ignoreMissingDeployment>true</ignoreMissingDeployment>
-                        </configuration>
-                    </execution>
-
-                     Deploy the JDBC library
-                    <execution>
-                        <id>deploy-driver</id>
-                        <phase>install</phase>
-                        <configuration>
-                            <groupId>postgresql</groupId>
-                            <artifactId>postgresql</artifactId>
-                            <name>postgresql.jar</name>
-                        </configuration>
-                        <goals>
-                            <goal>deploy-artifact</goal>
-                        </goals>
-                    </execution>
-
-                     Add a data source
-                    <execution>
-                        <id>add-datasource</id>
-                        <phase>install</phase>
-                        <configuration>
-                            <address>subsystem=datasources,data-source=myDatasource</address>
-                            <resource>
-                                <enableResource>true</enableResource>
-                                <properties>
-                                    <connection-url>jdbc:postgresql://localhost/guddi</connection-url>
-                                    <jndi-name>java:jboss/datasources/guddiDS</jndi-name>
-                                    <enabled>true</enabled>
-                                    <enable>true</enable>
-                                    <pool-name>guddiDS</pool-name>
-                                    <user-name>postgres</user-name>
-                                    <password>serpro</password>
-                                    <driver-name>postgresql.jar</driver-name>
-                                    <use-ccm>false</use-ccm>
-                                </properties>
-                            </resource>
-                        </configuration>
-                        <goals>
-                            <goal>add-resource</goal>
-                        </goals>
-                    </execution>
-
-                     Add an XA datasource
-                    <execution>
-                        <id>add-xa-datasource</id>
-                        <phase>install</phase>
-                        <configuration>
-                            <address>subsystem=datasources</address>
-                            <resources>
-                                <resource>
-                                    <address>xa-data-source=java:jboss/datasources/guddiDS</address>
-                                    <enableResource>true</enableResource>
-                                    <properties>
-                                        <xa-datasource-class>org.postgresql.xa.PGXADataSource</xa-datasource-class>
-                                        <jndi-name>java:jboss/datasources/guddiDS</jndi-name>
-                                        <enabled>true</enabled>
-                                        <pool-name>guddiDS</pool-name>
-                                        <driver-name>postgresql.jar</driver-name>
-
-                                    </properties>
-                                     Add the XA data source properties. The nested addresses will prepended the address above.
-                                    <resources>
-                                        <resource>
-                                            <address>
-                                                xa-datasource-properties=DatabaseName
-                                            </address>
-                                            <properties>
-                                                <value>guddi</value>
-                                            </properties>
-                                        </resource>
-                                        <resource>
-                                            <address>
-                                                xa-datasource-properties=ServerName
-                                            </address>
-                                            <properties>
-                                                <value>localhost</value>
-                                            </properties>
-                                        </resource>
-                                        <resource>
-                                            <address>
-                                                xa-datasource-properties=User
-                                            </address>
-                                            <properties>
-                                                <value>postgres</value>
-                                            </properties>
-                                        </resource>
-                                        <resource>
-                                            <address>
-                                                xa-datasource-properties=Password
-                                            </address>
-                                            <properties>
-                                                <value>serpro</value>
-                                            </properties>
-                                        </resource>
-                                    </resources>
-                                </resource>
-                            </resources>
-                        </configuration>
-                        <goals>
-                            <goal>add-resource</goal>
-                        </goals>
-                    </execution>
-
-                     Deploy the application on install
-                    <execution>
-                        <id>deploy</id>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>deploy</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>-->
-    </build>
 </project>

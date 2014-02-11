@@ -29,7 +29,7 @@ Você poderá criar o seu próprio ponto de extensão, podendo ser um JMS, FTP, 
 <parent>
     <groupId>br.gov.frameworkdemoiselle.component.audit</groupId>
     <artifactId>demoiselle-audit-parent</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.0-SNAPSHOT</version>
 </parent>
 ```
 
@@ -66,7 +66,7 @@ Se você tiver interesse em auditar, por exemplo a camada de visão do JSF, voc�
 <parent>
     <groupId>br.gov.frameworkdemoiselle.component.audit</groupId>
     <artifactId>demoiselle-audit-parent</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.0-SNAPSHOT</version>
 </parent>
 ```
 
@@ -101,14 +101,14 @@ Em seu projeto que você deseja auditar, você deve adicionar no seu pom.xml no 
     <dependency>
         <groupId>br.gov.frameworkdemoiselle.component.audit</groupId>
         <artifactId>demoiselle-audit-auditors-persistence</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.0-SNAPSHOT</version>
     </dependency>
     <dependency>
        	<groupId>br.gov.frameworkdemoiselle.component.audit</groupId>
       	<artifactId>demoiselle-audit-processors-rest</artifactId>
-       	<version>1.0.0</version>
+       	<version>1.0.0-SNAPSHOT</version>
     </dependency>
-    ...  
+    ...
 </dependencies>
 ```
 
@@ -124,7 +124,7 @@ frameworkdemoiselle.audit.system                    | Nome do seu Sistema
 frameworkdemoiselle.audit.scheduler.repeat.interval | Intervalo de tempo em milisegundos para o reprocessamento das trilhas
 frameworkdemoiselle.audit.scheduler.start.time      | Tempo em milisegundos de quando será executado o primeiro reprocessamento após o inicio da aplicação
 frameworkdemoiselle.audit.folder.fail.objects       | Pasta onde a aplicação terá direito de escrita e leitura para o armazenamento das trilhas que apresentaram problemas no processamento
- 
+
 Para o RESTProcessor você deverá adicionar a seguinte linha:
 
 Propriedade                         | Valor
@@ -147,11 +147,11 @@ public class BookmarkBC extends DelegateCrud<Bookmark, Long, BookmarkDAO> {
     @Transactional
     @Audit(description = "Carga Automática")
     public void load() {
-    
+
         for (Bookmark bookmark : findAll()) {
             delete(bookmark.getId());
         }
-        
+
         if (findAll().isEmpty()) {
             insert(new Bookmark("Demoiselle Portal", "http://www.frameworkdemoiselle.gov.br"));
             ...
@@ -184,7 +184,7 @@ Para facilitar a busca de informações do que foi feito no sistema contruímos 
 - Visão da Pessoa que se aprofunda no Sistema e a Funcionalidade executada;
 - Visão de Funcionalidade que se aprofunda no Sistema e a Pessoa que executou;
 - Visão de Rastreamento que através de filtros como Sistema, Objeto e Identificador do Objeto mostrar o histórico de operações realizadas no Objeto;
- 
+
 O Dashboard também fornece um serviço de REST para o Processor RESTProcessor, caso você utilize este processor no seu projeto e não queira implementar seu próprio serviço de REST você poderá utilizar o Dashboard para essa finalidade.
 
 ### Como instalar o Dashboard
@@ -208,7 +208,7 @@ Você encontrará no link https://github.com/demoiselle/laboratory/tree/master/e
 Por se tratar de um componente de auditoria alguns pontos devem ser observados:
 
 - O servidor onde serão armazenadas as trilhas de auditoria deverá ser blindado e com acesso restrito para que seja garantida a confiabilidade das informações armazenadas;
-- Seguir as recomendações do NIST no link 
+- Seguir as recomendações do NIST no link
 http://csrc.nist.gov/publications/nistpubs/800-92/SP800-92.pdf
 
 ## Links úteis
@@ -234,7 +234,7 @@ A publicar
 ## Problemas Conhecidos
 
 - Métodos encadeados com @Audit retorna apenas a descrição do primeiro método anotado com @Audit;
- 
+
 ## Contribuindo
 
 Faça um clone do projeto e ajude a crescer esse projeto :)

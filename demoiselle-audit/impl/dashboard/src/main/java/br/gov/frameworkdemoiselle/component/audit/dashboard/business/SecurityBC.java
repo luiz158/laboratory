@@ -52,9 +52,9 @@ import br.gov.frameworkdemoiselle.component.audit.dashboard.util.Trololo;
 import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
 import br.gov.frameworkdemoiselle.lifecycle.Startup;
 import br.gov.frameworkdemoiselle.stereotype.BusinessController;
+import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.frameworkdemoiselle.util.ResourceBundle;
 import java.util.Date;
-import org.codehaus.jackson.map.SerializerFactory.Config;
 
 /**
  *
@@ -83,6 +83,7 @@ public class SecurityBC implements Serializable {
     private TrailBC trailBC;
 
     @Startup
+    @Transactional
     public void bootstrap() {
         try {
 
