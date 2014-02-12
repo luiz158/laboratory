@@ -61,6 +61,8 @@ controllers.controller('AnaliseEdit', function Analise($scope, $http,
 			}
 
 		}).success(function(data) {
+			$scope.msgTipo = 'OK';
+			$scope.msgTexto = 'Salvou beleza';
 			$location.path('analise');
 		}).error(
 				function(data, status) {

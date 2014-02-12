@@ -2,9 +2,30 @@
 	<h1 class="page-header">
 		Análise <small>listagem</small>
 	</h1>
+
+	<div ng-controller="AlertController">
+		<div ng-repeat="alert in alerts" class="alert alert-{{alert.type}} alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			{{alert.msg}} 
+		</div>
+		<!-- <button class='btn' ng-click="addAlert('danger','another alert',1000)">Add Alert</button> -->
+	</div>
+
+	<!-- 
+	<div class="alert alert-success alert-dismissable" ng-show="msgTipo == 'OK'">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		<strong>OK!</strong> {{msgTexto}}
+	</div>
+	<div class="alert alert-danger alert-dismissable" ng-show="msgTipo == 'ERRO'">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		<strong>ERRO!</strong> {{msgTexto}}
+	</div>
+ 	-->
+ 	
 	<button class="btn btn-primary" ng-click="novo()">
 		<i class="fa fa-plus-circle"> </i> Novo
 	</button>
+
 	<div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
 		<table class="table table-striped table-bordered table-hover dataTable no-footer" id="dataTables-example" aria-describedby="dataTables-example_info">
 			<thead>
@@ -32,6 +53,4 @@
 			</tbody>
 		</table>
 	</div>
-	
-	
 </div>

@@ -92,7 +92,7 @@
 				<div class="form-group">
 					<label for="situacao">Situação:</label><br> <span
 						id="situacao" class="btn-group" ng-analise-situacao-button
-						situacao="{{analise.situacao}}" aprovar="aprovar(true)">
+						situacao="{{analise.situacao}}">
 						<li ng-if="analise.situacao != 'Aprovado'"><a
 							ng-click="aprovar(true)"><i class="fa fa-thumbs-o-up"> </i>
 								Aprovar</a></li>
@@ -116,7 +116,7 @@
 		</div>
 
 		<!-- Próxima fase -->
-		<div ng:show="selected == 2" class="panel panel-default">
+		<div ng-if="selected == 2" class="panel panel-default">
 			<div class="panel-body">
 				<div class="form-group">
 					<label for="proximaFase">Próxima fase a ser executada:</label> <select
@@ -132,7 +132,8 @@
 					<label for="justificativaProximaFase">Justificativa:</label>
 					<textarea rows="4" class="form-control"
 						id="justificativaProximaFase"
-						ng-model="analise.justificativaProximaFase"></textarea>
+						ng-model="analise.justificativaProximaFase"
+						required></textarea>
 					<span id="justificativaProximaFase-message" class="text-danger"></span>
 				</div>
 
@@ -171,8 +172,7 @@
 		</div>
 
 		<div>
-			<button class="btn btn-primary" ng-click="salvar()"
-				ng-disabled="formAnalise.$invalid">
+			<button class="btn btn-primary" ng-click="salvar()">
 				<i class="fa fa-save"> </i> Salvar
 			</button>
 			<a class="btn btn-inverse pull-right" href="#/analise"><i

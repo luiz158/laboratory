@@ -21,7 +21,7 @@ diretivas.directive('ngAnaliseSituacao', function() {
 		    		var labelType = 'label-success';
 		    		var icon = 'fa-thumbs-o-up';
 		    	} else 
-		    	if (situacao == 'Reprovado') {
+		    	if (situacao == 'Rejeitado') {
 		    		var labelType = 'label-danger';
 		    		var icon = 'fa-thumbs-o-down';
 		    	}
@@ -38,8 +38,7 @@ diretivas.directive('ngAnaliseSituacaoButton', function() {
 		//restrict: 'C',
 	    //require: '^ngSituacao',
 	    scope: {
-	      situacao: '@',
-	      aprovar: '&aprovar'
+	      situacao: '@'
 	    },	
 	    transclude: true,
 	    template: '<a data-toggle="dropdown" class="btn btn-sm  dropdown-toggle">'+
