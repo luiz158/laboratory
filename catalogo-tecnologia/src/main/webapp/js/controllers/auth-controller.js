@@ -9,10 +9,12 @@ controllers.controller('Auth', function Auth($scope, $http, $location, AuthServi
 	
 	function sucesso(data){
 		console.log('----------SUCESSO----------')
+		$location.path("/analise");
 	}
 	
 	function sucessologout(){
 		console.log('----------SAIR----------')
+		$location.path("/login");
 	}
 	
 	function erro(data){

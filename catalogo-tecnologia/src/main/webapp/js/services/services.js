@@ -3,15 +3,26 @@
 /* Services */
 var services = angular.module('catalogo.services', []);
 
-services.factory(
-	    'AuthService',
-	    function ($http) {
+services.factory('AuthService',function ($http) {
 	    	
-	    	var logado = false;
-	    	
-	    	
-	    	
-	        return {
+			var logado = false;
+			
+			$http({
+				url : "api/auth",
+				method : "GET"
+			}).success(function(response){
+				console.log('sucesso init auth service');
+				if (response != null && response != ""){
+					console.log(response);
+					logado = true;
+				}
+			}).error(function(response){
+				console.log('erro init auth service');
+			});
+
+			console.log('')
+			
+	    	return {
 	            login: function (credential, callback, errorCallback) {
 	            	console.log('--------CREDENTIAL----------');
 	            	console.log(credential);
@@ -48,10 +59,7 @@ services.factory(
 	            }
 	        }
 	    });
-/*,
-						
-						
-						logout : function(callback, errorCallback) {
+/*					logout : function(callback, errorCallback) {
 							$http(
 									{
 										url : getBaseUrl() + '/api/auth',
