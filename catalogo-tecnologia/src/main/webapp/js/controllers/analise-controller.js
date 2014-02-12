@@ -36,7 +36,7 @@ controllers.controller('AnaliseList',
 		});
 
 controllers.controller('AnaliseEdit', function Analise($scope, $http,
-		$location, $routeParams, $upload) {
+		$location, $routeParams, $upload/*, AlertController*/) {
 
 	var id = $routeParams.id;
 
@@ -61,8 +61,7 @@ controllers.controller('AnaliseEdit', function Analise($scope, $http,
 			}
 
 		}).success(function(data) {
-			$scope.msgTipo = 'OK';
-			$scope.msgTexto = 'Salvou beleza';
+			//AlertController.addAlert('success','Salvou beleza');
 			$location.path('analise');
 		}).error(
 				function(data, status) {

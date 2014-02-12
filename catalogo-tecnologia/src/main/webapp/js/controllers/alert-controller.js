@@ -24,12 +24,6 @@ controllers.controller('AlertController', function AlertController($scope) {
 			}, timeout);
 		}*/		
 	};
-
-	/*
-	$scope.closeAlert = function(index) {
-		$scope.alerts.splice(index, 1);
-	};
-	*/
 	
 	$scope.closeAlert = function(alert) {
 		return this.closeAlertIdx($rootScope.alerts.indexOf(alert));
