@@ -3,7 +3,8 @@ var diretivas = angular.module('catalogo.directives', []);
 
 diretivas.directive('ngAnaliseSituacao', function() {
 
-	  return {
+	
+	  return {	 		  
 		//restrict: 'C',
 	    //require: '^ngSituacao',
 	    scope: {
