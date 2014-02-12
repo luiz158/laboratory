@@ -13,6 +13,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -20,6 +21,7 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
 import org.apache.commons.io.IOUtils;
+import org.jboss.resteasy.annotations.providers.multipart.PartType;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 import org.jboss.resteasy.spi.validation.ValidateRequest;
@@ -35,6 +37,35 @@ public class AnexoService {
 
 	@Inject
 	private AnexoDAO anexoDAO;
+	
+	
+//	public class Test{
+//		
+//		@FormParam("anexo")
+//		private byte[] anexo;
+//		
+//		@PartType("application/json")
+//		@FormParam("analise")
+//		private Analise analise;
+//
+//		public byte[] getAnexo() {
+//			return anexo;
+//		}
+//		public void setAnexo(byte[] anexo) {
+//			this.anexo = anexo;
+//		}
+//
+//		public Analise getAnalise() {
+//			return analise;
+//		}
+//
+//		public void setAnalise(Analise analise) {
+//			this.analise = analise;
+//		}
+//		
+//	}
+	
+	
 	
 	@POST
 	@Transactional
