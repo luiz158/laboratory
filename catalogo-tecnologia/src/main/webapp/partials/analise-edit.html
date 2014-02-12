@@ -153,9 +153,8 @@
 
 		<!-- Anexos -->
 		<div ng:show="selected == 3" class="panel panel-default">
-			<div class="panel-body">
-				<!-- input type="text" ng-model="anexos"--> 
-				<input type="file" ng-model="anexos" ng-file-select="onFileSelect($files)" class="form-control">	
+			<div class="panel-body" ng-controller="AnexoCtrl" ng-init="init(1)">
+				<input type="file" ng-file-select="onFileSelect($files)" class="form-control">	
 				<br>			
 				<div>
 					<div class="progress">
@@ -163,10 +162,42 @@
 						 		role="progressbar" aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100" 
 						       	style="width: {{progress}}%">
 						    <span class="sr-only">{{progress}}%</span>
-						  </div>				
+						  </div>
+						  <button class="btn btn-danger btn-xs pull-right" ng-click="upload.abort()"> <i class="fa fa-times-circle"></i> cancelar</button>				
 					</div>					
-					<button class="btn btn-danger btn-xs pull-right" ng-click="upload.abort()"> <i class="fa fa-times-circle"></i> cancelar</button>
+					
 				</div>
+				<br/>		
+				
+				<div class="panel panel-default">
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Nome</th>
+                                            <th>Tipo</th>
+                                            <th>Ação</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="a in anexos">
+                                            <td>{{a.id}}</td>
+                                            <td>{{a.nomeArquivo}}</td>
+                                            <td>{{a.tipoArquivo}}</td>
+                                            <td>---</td>
+                                        </tr>                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+				
+				
 			</div>
 		</div>
 

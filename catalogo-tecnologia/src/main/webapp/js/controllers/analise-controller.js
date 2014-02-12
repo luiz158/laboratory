@@ -36,9 +36,12 @@ controllers.controller('AnaliseList',
 		});
 
 controllers.controller('AnaliseEdit', function Analise($scope, $http,
-		$location, $routeParams, $upload) {
+		$location, $routeParams, $upload, $rootScope) {
 
 	var id = $routeParams.id;
+	
+	// Necessário para compartilhar entre os controladores: Anexo, Colaboradores...
+	$rootScope.demandaId = id;
 
 	if (id) {
 		$http.get('api/analise/' + id).success(function(data) {
