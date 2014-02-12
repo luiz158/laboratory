@@ -48,6 +48,17 @@ controllers.controller('AnexoCtrl', function AnexoCtrl($scope, $rootScope, $http
 		}
 	};
 	
+	$scope.excluir = function(id) {
+		$http({
+			url : 'api/anexo/' + id,
+			method : "DELETE"
+
+		}).success(function(data) {
+			carregarAnexos();
+		}).error(function(data, status) {
+		});
+	};
+	
 	function carregarAnexos() {
 		$http.get('api/anexo/'+$rootScope.demandaId+'/'+$scope.fase).success(function(data) {
 			console.log(data);
