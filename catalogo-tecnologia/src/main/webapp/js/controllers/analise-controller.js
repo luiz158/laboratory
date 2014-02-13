@@ -82,32 +82,4 @@ controllers.controller('AnaliseEdit', function Analise($scope, $http,
 		// $scope.salvar();
 	};
 
-	$scope.onFileSelect = function($files) {
-		$scope.progress = 0;
-		// $files: an array of files selected, each file has name, size, and
-		// type.
-		for (var i = 0; i < $files.length; i++) {
-			var file = $files[i];
-			console.log(file);
-			console.log($scope.anexos);
-			$scope.upload = $upload.upload({
-				url : 'api/anexo',
-				method : 'POST',
-				data : {
-					analise : $scope.analise
-				},
-				file : file,
-				fileFormDataName: 'anexo'
-			}).progress(
-				function(evt) {
-					$scope.progress = parseInt(100.0 * evt.loaded / evt.total);
-					$scope.$apply();
-					console.log('percent: '+ $scope.progress);
-			}).success(function(data, status, headers, config) {
-				console.log(data);
-				$scope.progress = 0;
-			});
-		}
-	};
-
 });

@@ -3,25 +3,22 @@
 /* Controllers */
 var controllers = angular.module('catalogo.controllers');
 
+/*"Para o funcionamento deste controlador é preciso disponibilizar o id da demanda em $rootScope.demandaId"*/
 controllers.controller('AnexoCtrl', function AnexoCtrl($scope, $rootScope, $http,
 		$location, $routeParams, $upload) {
 	
+	
 	$scope.anexo = {};
-		
+	$scope.progress = 0;
+	
 	$scope.init = function(fase){
 		$scope.fase = fase;
 		carregarAnexos();
 	};	
 		
 	$scope.onFileSelect = function($files) {
-		$scope.progress = 0;
-		
-		console.log($rootScope.demandaId);
-		
 		for (var i = 0; i < $files.length; i++) {
 			var file = $files[i];
-			console.log(file);
-			console.log($scope.anexos);
 			$scope.upload = $upload.upload({
 				url : 'api/anexo',
 				method : 'POST',
@@ -31,6 +28,7 @@ controllers.controller('AnexoCtrl', function AnexoCtrl($scope, $rootScope, $http
 						fase: $scope.fase,
 						nomeArquivo: file.name,
 						tipoArquivo: file.type,
+						tamanhoArquivo: file.size,
 					}
 				},
 				file : file,
@@ -38,11 +36,9 @@ controllers.controller('AnexoCtrl', function AnexoCtrl($scope, $rootScope, $http
 			}).progress(
 				function(evt) {
 					$scope.progress = parseInt(100.0 * evt.loaded / evt.total);
-					$scope.$apply();
-					console.log('percent: '+ $scope.progress);
+					//$scope.$apply();
 			}).success(function(data, status, headers, config) {
-				console.log(data);
-				$scope.progress = 0;
+				$scope.progress = 0;				
 				carregarAnexos();
 			});
 		}
@@ -52,7 +48,6 @@ controllers.controller('AnexoCtrl', function AnexoCtrl($scope, $rootScope, $http
 		$http({
 			url : 'api/anexo/' + id,
 			method : "DELETE"
-
 		}).success(function(data) {
 			carregarAnexos();
 		}).error(function(data, status) {
@@ -61,7 +56,6 @@ controllers.controller('AnexoCtrl', function AnexoCtrl($scope, $rootScope, $http
 	
 	function carregarAnexos() {
 		$http.get('api/anexo/'+$rootScope.demandaId+'/'+$scope.fase).success(function(data) {
-			console.log(data);
 			$scope.anexos = data;
 		});
 	}

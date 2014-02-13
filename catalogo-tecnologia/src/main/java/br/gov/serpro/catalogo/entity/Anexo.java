@@ -27,6 +27,8 @@ public class Anexo {
 	
 	private String tipoArquivo;
 	
+	private Integer tamanhoArquivo;
+	
 
 	public String getNomeArquivo() {
 		return nomeArquivo;
@@ -74,6 +76,14 @@ public class Anexo {
 
 	public void setFase(Integer fase) {
 		this.fase = fase;
+	}
+
+	public Integer getTamanhoArquivo() {
+		return tamanhoArquivo;
+	}
+
+	public void setTamanhoArquivo(Integer tamanhoArquivo) {
+		this.tamanhoArquivo = tamanhoArquivo;
 	}
 	
 	

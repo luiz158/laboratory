@@ -7,6 +7,7 @@ angular.module('catalogo', [
   'catalogo.controllers',
   'catalogo.directives',
   'catalogo.services',
+  'catalogo.filters',
   'angularFileUpload',
   'mgcrea.ngStrap'
 ]).
