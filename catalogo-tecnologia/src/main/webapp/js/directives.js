@@ -68,3 +68,22 @@ diretivas.directive('ngAnaliseSituacaoButton', function() {
 	    }
 	  };
 	});
+
+diretivas.directive('ngAnexos', function() {	
+	  return {
+		restrict: 'E',
+	    scope: {
+	        fase: '=fase'
+	    },
+	    templateUrl: 'directives/anexo.html',	    
+	    link: function(scope, elem, $attrs) {}
+	  };
+	});
+
+
+diretivas.directive('ngAlerts', function() {	
+	  return {
+		restrict: 'E',
+	    templateUrl: 'directives/alerts.html'	    
+	  };
+	});

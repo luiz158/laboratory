@@ -3,12 +3,8 @@
 		Análise <small>listagem</small>
 	</h1>
 
-	<div ng-controller="AlertController">
-		<div ng-repeat="alert in alerts" class="alert alert-{{alert.type}} alert-dismissable">
-			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-			{{alert.msg}} 
-		</div>
-		<!-- <button class='btn' ng-click="addAlert('danger','another alert',1000)">Add Alert</button> -->
+	<div>
+		<ng-alerts></ng-alerts>
 	</div>
 
 	<!-- 

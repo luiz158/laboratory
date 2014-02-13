@@ -3,8 +3,6 @@
 /* Controllers */
 var controllers = angular.module('catalogo.controllers');
 
-controllers.controller('DashboardCtrl',
-		function DashboardCtrl($scope) {
-
-			
-		});
+controllers.controller('RootController', function RootController($rootScope, AlertService) {
+	$rootScope.closeAlert = AlertService.closeAlert; 
+});

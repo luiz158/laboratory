@@ -153,22 +153,8 @@
 		</div>
 
 		<!-- Anexos -->
-		<div ng:show="selected == 3" class="panel panel-default">
-			<div class="panel-body">
-				<!-- input type="text" ng-model="anexos"--> 
-				<input type="file" ng-model="anexos" ng-file-select="onFileSelect($files)" class="form-control">	
-				<br>			
-				<div>
-					<div class="progress">
-						 <div class="progress-bar progress-bar-success" 
-						 		role="progressbar" aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100" 
-						       	style="width: {{progress}}%">
-						    <span class="sr-only">{{progress}}%</span>
-						  </div>				
-					</div>					
-					<button class="btn btn-danger btn-xs pull-right" ng-click="upload.abort()"> <i class="fa fa-times-circle"></i> cancelar</button>
-				</div>
-			</div>
+		<div ng:show="selected == 3 && analise.id" class="panel panel-default">
+			<ng-anexos fase="1" demanda="analise.id"></ng-anexos>
 		</div>
 
 		<div>
