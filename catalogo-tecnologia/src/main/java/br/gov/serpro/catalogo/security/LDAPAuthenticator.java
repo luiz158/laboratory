@@ -57,12 +57,14 @@ public class LDAPAuthenticator implements Authenticator {
 	}
 
 	@Override
-	public br.gov.frameworkdemoiselle.security.User getUser() {
+	public User getUser() {
+		/*
 		if (user == null){
 			return null;
 		} else {
 			return user.parse();
-		}
+		}*/
+		return user;
 	}
 
 	private User createUser(Attributes attributes) throws NamingException {

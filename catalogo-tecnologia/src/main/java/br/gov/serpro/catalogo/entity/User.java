@@ -1,11 +1,65 @@
 package br.gov.serpro.catalogo.entity;
 
-import java.security.Principal;
-import java.util.HashMap;
-import java.util.Map;
 
-public class User implements Principal {
+public class User implements br.gov.frameworkdemoiselle.security.User {
 
+	private static final long serialVersionUID = 1L;
+	
+	private String name;
+
+	private String displayName;
+
+	private String email;
+
+	private String telephoneNumber;
+
+	@Override
+	public String getId() {
+		return name;
+	}
+
+	@Override
+	public Object getAttribute(Object key) {
+		return null;
+	}
+
+	@Override
+	public void setAttribute(Object key, Object value) {
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDisplayName() {
+		return displayName;
+	}
+
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getTelephoneNumber() {
+		return telephoneNumber;
+	}
+
+	public void setTelephoneNumber(String telephoneNumber) {
+		this.telephoneNumber = telephoneNumber;
+	}
+	
+	/*
 	private Long id;
 
 	private String name;
@@ -153,4 +207,5 @@ public class User implements Principal {
 
 		return user;
 	}
+	*/
 }
