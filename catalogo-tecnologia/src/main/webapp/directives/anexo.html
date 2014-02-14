@@ -1,0 +1,45 @@
+<div class="panel-body">
+	<div class="panel-body" ng-controller="AnexoCtrl" ng-init="init(fase)">
+		<input type="file" ng-file-select="onFileSelect($files)" multiple class="form-control"> <br>
+		<div>
+			<div class="progress">
+				<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100"
+					style="width: {{progress">
+					<span class="sr-only">{{progress}}%</span>
+				</div>
+				<button class="btn btn-danger btn-xs pull-right" ng-click="upload.abort()">
+					<i class="fa fa-times-circle"></i> cancelar
+				</button>
+			</div>
+		</div>
+		<br />
+		<div class="panel panel-default">
+			<!-- /.panel-heading -->
+			<div class="panel-body">
+				<div class="table-responsive">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>Arquivo</th>
+								<th>Tamanho</th>
+								<th>Ação</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="a in anexos">
+								<td><a ng-href="api/anexo/{{a.id}}">{{a.nomeArquivo}}</a></td>
+								<td>{{a.tamanhoArquivo | tamanho}}</td>
+								<td><a ng-href="api/anexo/{{a.id}}" class="btn btn-primary btn-xs"><i class="fa fa-download"></i> download</a> <a ng-click="excluir(a.id)"
+									class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> excluir</a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<!-- /.table-responsive -->
+			</div>
+			<!-- /.panel-body -->
+		</div>
+
+
+	</div>
+</div>

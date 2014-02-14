@@ -1,0 +1,6 @@
+/login/target/
+/WebSOAP/target/
+/WebREST/target/
+/demoiselle-audit/target/
+/demoiselle-easyqueryfilter/target/
+.idea/

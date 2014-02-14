@@ -29,7 +29,7 @@ public class LDAPAuthenticator implements Authenticator {
 	private Credentials credentials;
 
 	private User user;
-
+	
 	@Inject
 	private LDAPConfig ldapConfig;
 
@@ -58,7 +58,11 @@ public class LDAPAuthenticator implements Authenticator {
 
 	@Override
 	public br.gov.frameworkdemoiselle.security.User getUser() {
-		return user.parse();
+		if (user == null){
+			return null;
+		} else {
+			return user.parse();
+		}
 	}
 
 	private User createUser(Attributes attributes) throws NamingException {

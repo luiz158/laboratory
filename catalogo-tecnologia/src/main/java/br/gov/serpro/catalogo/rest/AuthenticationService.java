@@ -42,10 +42,9 @@ public class AuthenticationService {
 	}
 	
 	@GET
-	@LoggedIn
 	@Produces(APPLICATION_JSON)
-	public User getUser() {
-		return (User) securityContext.getUser();
+	public  br.gov.frameworkdemoiselle.security.User getUser() {
+		return securityContext.getUser();
 	}
 
 	public static class LoginForm {

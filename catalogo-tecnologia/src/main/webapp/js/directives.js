@@ -3,7 +3,8 @@ var diretivas = angular.module('catalogo.directives', []);
 
 diretivas.directive('ngAnaliseSituacao', function() {
 
-	  return {
+	
+	  return {	 		  
 		//restrict: 'C',
 	    //require: '^ngSituacao',
 	    scope: {
@@ -20,7 +21,7 @@ diretivas.directive('ngAnaliseSituacao', function() {
 		    		var labelType = 'label-success';
 		    		var icon = 'fa-thumbs-o-up';
 		    	} else 
-		    	if (situacao == 'Reprovado') {
+		    	if (situacao == 'Rejeitado') {
 		    		var labelType = 'label-danger';
 		    		var icon = 'fa-thumbs-o-down';
 		    	}
@@ -37,8 +38,7 @@ diretivas.directive('ngAnaliseSituacaoButton', function() {
 		//restrict: 'C',
 	    //require: '^ngSituacao',
 	    scope: {
-	      situacao: '@',
-	      aprovar: '&aprovar'
+	      situacao: '@'
 	    },	
 	    transclude: true,
 	    template: '<a data-toggle="dropdown" class="btn btn-sm  dropdown-toggle">'+
@@ -66,5 +66,24 @@ diretivas.directive('ngAnaliseSituacaoButton', function() {
   		});
 
 	    }
+	  };
+	});
+
+diretivas.directive('ngAnexos', function() {	
+	  return {
+		restrict: 'E',
+	    scope: {
+	        fase: '=fase'
+	    },
+	    templateUrl: 'directives/anexo.html',	    
+	    link: function(scope, elem, $attrs) {}
+	  };
+	});
+
+
+diretivas.directive('ngAlerts', function() {	
+	  return {
+		restrict: 'E',
+	    templateUrl: 'directives/alerts.html'	    
 	  };
 	});

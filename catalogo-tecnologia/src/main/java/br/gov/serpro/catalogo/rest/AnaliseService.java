@@ -3,9 +3,11 @@ package br.gov.serpro.catalogo.rest;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -69,64 +71,5 @@ public class AnaliseService {
 	public Analise carregar(@NotNull @PathParam("id") Long id) {
 		return analiseDAO.load(id);
 	}
-	
-	@POST
-	//@Transactional
-	@Path("/anexar")
-	@Consumes("multipart/form-data")
-	public Response salvarAnexo(MultipartFormDataInput input) {
-		String fileName = "";
-		Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
-		List<InputPart> inputParts = uploadForm.get("anexo");
- 
-		System.out.println("O upload chegou...");
-		
-		for (InputPart inputPart : inputParts) {
- 
-		 try {
- 
-			MultivaluedMap<String, String> header = inputPart.getHeaders();
-			fileName = getFileName(header);
- 
-			//convert the uploaded file to inputstream
-			InputStream inputStream = inputPart.getBody(InputStream.class,null);
- 
-			byte [] bytes = IOUtils.toByteArray(inputStream);
- 
- 
-			System.out.println("Done: "+fileName);
- 
-		  } catch (IOException e) {
-			e.printStackTrace();
-		  }
- 
-		}
- 
-		return Response.status(200)
-		    .entity("uploadFile is called, Uploaded file name : " + fileName).build();
- 
-	}
-	
-	
-	/**
-	 * header sample
-	 * {
-	 * 	Content-Type=[image/png], 
-	 * 	Content-Disposition=[form-data; name="file"; filename="filename.extension"]
-	 * }
-	 **/
-	//get uploaded filename, is there a easy way in RESTEasy?
-	private String getFileName(MultivaluedMap<String, String> header) { 
-		String[] contentDisposition = header.getFirst("Content-Disposition").split(";"); 
-		for (String filename : contentDisposition) {
-			if ((filename.trim().startsWith("filename"))) { 
-				String[] name = filename.split("="); 
-				String finalFileName = name[1].trim().replaceAll("\"", "");
-				return finalFileName;
-			}
-		}
-		return "unknown";
-	}
-
 	
 }

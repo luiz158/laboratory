@@ -36,9 +36,12 @@ controllers.controller('AnaliseList',
 		});
 
 controllers.controller('AnaliseEdit', function Analise($scope, $http,
-		$location, $routeParams, $upload) {
+		$location, $routeParams, $upload, $rootScope, AlertService) {
 
 	var id = $routeParams.id;
+	
+	// Necessário para compartilhar entre os controladores: Anexo, Colaboradores...
+	$rootScope.demandaId = id;
 
 	if (id) {
 		$http.get('api/analise/' + id).success(function(data) {
@@ -61,6 +64,7 @@ controllers.controller('AnaliseEdit', function Analise($scope, $http,
 			}
 
 		}).success(function(data) {
+			AlertService.addWithTimeout('success','Análise salva com sucesso');
 			$location.path('analise');
 		}).error(
 				function(data, status) {
@@ -77,33 +81,6 @@ controllers.controller('AnaliseEdit', function Analise($scope, $http,
 	$scope.aprovar = function(aprovado) {
 		$scope.analise.situacao = aprovado ? 'Aprovado' : 'Reprovado';
 		// $scope.salvar();
-	};
-
-	$scope.onFileSelect = function($files) {
-		// $files: an array of files selected, each file has name, size, and
-		// type.
-		for (var i = 0; i < $files.length; i++) {
-			var file = $files[i];
-			console.log(file);
-			console.log($scope.anexos);
-			$scope.upload = $upload.upload({
-				url : 'api/analise/anexar',
-				method : 'POST',
-				data : {
-					anexo : $scope.anexos
-				},
-				file : file,
-				headers: {
-					'Content-Disposition': '[form-data; name="'+file.name+'"; filename="'+file.name+'"]'
-				}
-			}).progress(
-					function(evt) {
-						console.log('percent: '
-								+ parseInt(100.0 * evt.loaded / evt.total));
-					}).success(function(data, status, headers, config) {
-				console.log(data);
-			});
-		}
 	};
 
 });

@@ -6,13 +6,15 @@
 		<jta-data-source>java:jboss/datasources/ExampleDS</jta-data-source>
 
 		<class>br.gov.serpro.catalogo.entity.Analise</class>
+		<class>br.gov.serpro.catalogo.entity.Anexo</class>
 
 		<properties>
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
-			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<!--
+			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 			-->
 
