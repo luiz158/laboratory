@@ -48,12 +48,14 @@ import br.gov.frameworkdemoiselle.component.audit.internal.processor.AbstractPro
 import br.gov.frameworkdemoiselle.component.audit.internal.qualifier.AuditProcessorQualifier;
 import br.gov.frameworkdemoiselle.component.audit.util.Util;
 import br.gov.frameworkdemoiselle.util.Beans;
+import javax.enterprise.context.ApplicationScoped;
 
 /**
  *
  * @author SERPRO
  *
  */
+
 public class RESTProcessors extends AbstractProcessor {
 
     private AuditConfig config = Beans.getReference(AuditConfig.class);

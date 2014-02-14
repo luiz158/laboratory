@@ -57,7 +57,7 @@ import javax.persistence.Id;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
-import org.jboss.weld.bean.proxy.ProxyFactory;
+
 
 import br.gov.frameworkdemoiselle.component.audit.annotation.Audit;
 
@@ -74,23 +74,23 @@ public class Util {
         StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
 
         for (StackTraceElement stackTraceElement : stackTraceElements) {
-            try {
-                Class<?> clazz = forName(stackTraceElement.getClassName());
-
-                if (ProxyFactory.isProxy(clazz.newInstance())) {
-                    clazz = clazz.getSuperclass();
-                }
-
-                String classe = getValueOfParameterInMethodAnnotation(clazz, stackTraceElement);
-
-                if (classe != null && !classe.isEmpty() && !classe.equalsIgnoreCase("null")) {
-                    lista.add(classe);
-                }
-
-            } catch (ClassNotFoundException ex) {
-            } catch (InstantiationException e) {
-            } catch (IllegalAccessException e) {
-            }
+//            try {
+//                Class<?> clazz = forName(stackTraceElement.getClassName());
+//
+////                if (ProxyFactory.isProxy(clazz.newInstance())) {
+////                    clazz = clazz.getSuperclass();
+////                }
+//
+//                String classe = getValueOfParameterInMethodAnnotation(clazz, stackTraceElement);
+//
+//                if (classe != null && !classe.isEmpty() && !classe.equalsIgnoreCase("null")) {
+//                    lista.add(classe);
+//                }
+//
+//            } catch (ClassNotFoundException ex) {
+//            } catch (InstantiationException e) {
+//            } catch (IllegalAccessException e) {
+//            }
         }
         return new ArrayList<String>(lista);
     }
