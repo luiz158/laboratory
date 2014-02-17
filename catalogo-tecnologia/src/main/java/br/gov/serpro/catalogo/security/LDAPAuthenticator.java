@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import br.gov.frameworkdemoiselle.security.AuthenticationException;
 import br.gov.frameworkdemoiselle.security.Authenticator;
 import br.gov.frameworkdemoiselle.security.Credentials;
+import br.gov.frameworkdemoiselle.security.InvalidCredentialsException;
 import br.gov.frameworkdemoiselle.util.Beans;
 import br.gov.serpro.catalogo.entity.User;
 
@@ -35,7 +36,7 @@ public class LDAPAuthenticator implements Authenticator {
 
 	@Override
 	public void authenticate() throws Exception {
-		try {
+		
 			SearchControls controls = createSearchControls();
 			String filter = createFilter();
 			SearchResult searchResult = createSearchResult(controls, filter);
@@ -45,9 +46,11 @@ public class LDAPAuthenticator implements Authenticator {
 
 			user = createUser(searchResult.getAttributes());
 
-		} catch (Exception cause) {
-			throw new AuthenticationException(cause);
-		}
+		/*} catch (Exception cause) {
+			throw new InvalidCredentialsException("usuário ou senha inválidos");
+		} catch (AuthenticationException cause) {
+			
+		}*/
 	}
 
 	@Override

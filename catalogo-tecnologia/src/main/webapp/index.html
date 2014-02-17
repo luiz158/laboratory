@@ -223,11 +223,11 @@
                     <!-- /.dropdown-alerts -->
                 </li>
                 <!-- /.dropdown -->
-                 <li class="dropdown" ng-controller="Auth" ng-model="usuario">
+                 <li class="dropdown" ng-controller="Auth">
                  		<a href="#/login" ng-if="!isLoggedIn()">Login</a>
                  		<div ng-if="isLoggedIn()">
                  		<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <span><i class="fa fa-user fa-fw"></i>{{usuario.name}}<i class="fa fa-caret-down"></i></span> 
+                        <span><i class="fa fa-user fa-fw"></i> {{getUsuario().displayName}} <i class="fa fa-caret-down"></i></span> 
                     </a>
                     <ul class="dropdown-menu dropdown-user">
                         <li><a href="#"><i class="fa fa-user fa-fw"></i> Perfil do Usuário</a>
