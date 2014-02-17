@@ -14,7 +14,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.jboss.resteasy.spi.validation.ValidateRequest;
 
 import br.gov.frameworkdemoiselle.security.Credentials;
-import br.gov.frameworkdemoiselle.security.LoggedIn;
 import br.gov.frameworkdemoiselle.security.SecurityContext;
 import br.gov.frameworkdemoiselle.util.Beans;
 import br.gov.serpro.catalogo.entity.User;
@@ -28,23 +27,22 @@ public class AuthenticationService {
 	private SecurityContext securityContext;
 
 	@POST
-	public void login(@Valid LoginForm form) throws Exception {
+	public User login(@Valid LoginForm form) throws Exception {
 		Credentials credentials = Beans.getReference(Credentials.class);
 		credentials.setUsername(form.username);
 		credentials.setPassword(form.password);
 		securityContext.login();
+		return (User) securityContext.getUser();
 	}
 	
 	@DELETE
-	@LoggedIn
 	public void logout() {
 		securityContext.logout();
 	}
 	
 	@GET
-	@Produces(APPLICATION_JSON)
-	public  br.gov.frameworkdemoiselle.security.User getUser() {
-		return securityContext.getUser();
+	public boolean isLoggedIn(){
+		return securityContext.isLoggedIn();
 	}
 
 	public static class LoginForm {

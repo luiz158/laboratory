@@ -49,26 +49,23 @@ services.factory('AlertService', function($rootScope, $timeout) {
 services.factory('AuthService', function($http) {
 
 	var logado = false;
-
+	
+	// Construtor
 	$http({
 		url : "api/auth",
 		method : "GET"
 	}).success(function(response) {
-		console.log('sucesso init auth service');
-		if (response != null && response != "") {
-			console.log(response);
+		if (response == 'false'){
+			logado = false;
+		} else {
 			logado = true;
 		}
 	}).error(function(response) {
 		console.log('erro init auth service');
 	});
 
-	console.log('')
-
 	return {
 		login : function(credential, callback, errorCallback) {
-			console.log('--------CREDENTIAL----------');
-			console.log(credential);
 			$http({
 				url : 'api/auth',
 				method : "POST",
@@ -78,7 +75,7 @@ services.factory('AuthService', function($http) {
 				}
 			}).success(function(response) {
 				logado = true;
-				callback(response.data);
+				callback(response);
 			}).error(function(response) {
 				logado = false;
 				errorCallback(response.data);
@@ -93,6 +90,7 @@ services.factory('AuthService', function($http) {
 					'Content-Type' : 'application/json;charset=utf8'
 				}
 			}).success(function(response) {
+				console.log('AuthService Logout Success');
 				logado = false;
 				callback(response.data);
 			});

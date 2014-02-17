@@ -5,20 +5,25 @@ var controllers = angular.module('catalogo.controllers');
 
 controllers.controller('Auth', function Auth($scope, $http, $location, AuthService) {
 
-	console.log('Instanciando Auth Controller');
+	console.log('AUTH CONTROLLER');
+	
+	$scope.usuario = {};
 	
 	function sucesso(data){
-		console.log('----------SUCESSO----------')
+		console.log('FUNÇÃO CALLBACK SUCESSO LOGIN')
+		$scope.usuario = data;
+		console.log($scope.usuario);
 		$location.path("/analise");
 	}
 	
 	function sucessologout(){
-		console.log('----------SAIR----------')
+		console.log('FUNÇÃO CALLBACK SUCESSO LOGOUT')
 		$location.path("/login");
+		$scope.usuario = null;
 	}
 	
 	function erro(data){
-		console.log('----------ERRO----------')
+		console.log('FUNÇÃO CALLBACK ERRO LOGIN')
 	}
 	
 	$scope.entrar = function() {
@@ -33,26 +38,3 @@ controllers.controller('Auth', function Auth($scope, $http, $location, AuthServi
 		return AuthService.isLoggedIn();
 	}
 });
-
-/*
-controllers.controller('Logout', function Logout($scope, $http, $location) {
-
-	$scope.sair = function() {
-
-		// console.log('---$scope.formData---');
-		// console.log($scope.formData);
-
-		$http({
-			method : 'DELETE',
-			url : 'api/auth',
-			headers : {
-				'Content-Type' : 'application/json;charset=utf8'
-			}
-		}).success(function(data, status, headers, config) {
-			console.log('usuário deslogado');
-		}).error(function(data, status, headers, config) {
-			console.log('não logado');
-		});
-	}
-});
-*/
