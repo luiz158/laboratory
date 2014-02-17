@@ -22,7 +22,23 @@ public class Produto {
 	private String versao;
 	
 	@NotEmpty
+	private String release;
+	
+	@NotEmpty
+	private String licenciamento;
+	
+	@NotEmpty
+	private String fabricante;
+	
+	@NotEmpty
+	private String fornecedor;
+	
+	@NotEmpty
 	private String descricao;
+	
+	private boolean legado;
+	
+	private boolean atualizacao;
 
 	
 	public Long getId() {
@@ -63,5 +79,70 @@ public class Produto {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+
+
 	
+	public String getRelease() {
+		return release;
+	}
+
+
+	
+	public void setRelease(String release) {
+		this.release = release;
+	}
+
+
+	
+	public String getLicenciamento() {
+		return licenciamento;
+	}
+
+
+	
+	public void setLicenciamento(String licenciamento) {
+		this.licenciamento = licenciamento;
+	}
+
+
+	
+	public String getFabricante() {
+		return fabricante;
+	}
+
+
+	
+	public void setFabricante(String fabricante) {
+		this.fabricante = fabricante;
+	}
+
+
+	
+	public String getFornecedor() {
+		return fornecedor;
+	}
+
+
+	
+	public void setFornecedor(String fornecedor) {
+		this.fornecedor = fornecedor;
+	}
+
+	public boolean isLegado() {
+		return legado;
+	}
+
+	public void setLegado(boolean legado) {
+		this.legado = legado;
+	}
+
+	public boolean isAtualizacao() {
+		return atualizacao;
+	}
+
+
+	
+	public void setAtualizacao(boolean atualizacao) {
+		this.atualizacao = atualizacao;
+	}
 }

@@ -29,10 +29,39 @@
 					<span id="nome-message" class="text-danger"></span>
 				</div>
 
-				<div class="form-group">
-					<label for="versao">Versão:</label>
-					<input type="text" class="form-control" id="versao" ng-model="produto.versao"	required>
-					<span id="versao-message" class="text-danger"></span>
+				<div class="form-group row">
+					<div class="col-md-3">
+						<label for="versao">Versão:</label>
+						<input type="text" class="form-control" id="versao" ng-model="produto.versao"	required>
+						<span id="versao-message" class="text-danger"></span>
+					</div>
+					<div class="col-md-3">
+						<label for="versao">Release:</label>
+						<input type="text" class="form-control" id="versao" ng-model="produto.release"	required>
+						<span id="release-message" class="text-danger"></span>
+					</div>
+					<div class="col-md-6">
+						<label for="licenciamento">Licenciamento:</label>
+						<select class="form-control" ng-model="produto.licenciamento">
+							<option>GPL</option>
+							<option>LGPL</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<div class="col-md-6">
+						<label for="fabricante">Fabricante:</label>
+						<select class="form-control" ng-model="produto.fabricante">
+							<option>Mozilla Foundation</option>
+						</select>
+					</div>
+					<div class="col-md-6">
+						<label for="fornecedor">Fornecedor:</label>
+						<select class="form-control" ng-model="produto.fornecedor">
+							<option>Mozilla Foundation</option>
+						</select>
+					</div>
 				</div>
 
 				<div class="form-group">
@@ -40,6 +69,18 @@
 					<textarea rows="4" class="form-control" id="descricao"
 						ng-model="produto.descricao" required></textarea>
 					<span id="descricao-message" class="text-danger"></span>
+				</div>
+				
+				<div class="form-group">
+					<label for="atualizacao">Atualização</label>
+					<input id="atualizacao" type="checkbox" ng-model="produto.atualizacao">
+					<span id="atualizacao-message" class="text-danger"></span>
+				</div>
+
+				<div class="form-group">
+					<label for="legado">Legado</label>
+					<input id="legado" type="checkbox" ng-model="produto.legado">
+					<span id="legado-message" class="text-danger"></span>
 				</div>
 
 			</div>
