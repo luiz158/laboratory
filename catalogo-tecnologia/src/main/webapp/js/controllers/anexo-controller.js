@@ -5,7 +5,7 @@ var controllers = angular.module('catalogo.controllers');
 
 /*"Para o funcionamento deste controlador é preciso disponibilizar o id da demanda em $rootScope.demandaId"*/
 controllers.controller('AnexoCtrl', function AnexoCtrl($scope, $rootScope, $http,
-		$location, $routeParams, $upload) {
+		$location, $routeParams, $upload, AlertService) {
 	
 	
 	$scope.anexo = {};
@@ -17,6 +17,7 @@ controllers.controller('AnexoCtrl', function AnexoCtrl($scope, $rootScope, $http
 	};	
 		
 	$scope.onFileSelect = function($files) {
+		$scope.progress = 0;
 		for (var i = 0; i < $files.length; i++) {
 			var file = $files[i];
 			$scope.upload = $upload.upload({
@@ -36,7 +37,7 @@ controllers.controller('AnexoCtrl', function AnexoCtrl($scope, $rootScope, $http
 			}).progress(
 				function(evt) {
 					$scope.progress = parseInt(100.0 * evt.loaded / evt.total);
-					//$scope.$apply();
+					$scope.$apply();
 			}).success(function(data, status, headers, config) {
 				$scope.progress = 0;				
 				carregarAnexos();
@@ -49,15 +50,19 @@ controllers.controller('AnexoCtrl', function AnexoCtrl($scope, $rootScope, $http
 			url : 'api/anexo/' + id,
 			method : "DELETE"
 		}).success(function(data) {
+			AlertService.addWithTimeout('success','Anexo excluído com sucesso');
 			carregarAnexos();
 		}).error(function(data, status) {
+			AlertService.addWithTimeout('danger','Não foi possível excluir o anexo.');
 		});
 	};
 	
 	function carregarAnexos() {
-		$http.get('api/anexo/'+$rootScope.demandaId+'/'+$scope.fase).success(function(data) {
-			$scope.anexos = data;
-		});
+		if($rootScope.demandaId){
+			$http.get('api/anexo/'+$rootScope.demandaId+'/'+$scope.fase).success(function(data) {
+				$scope.anexos = data;
+			});
+		}
 	}
 
 });

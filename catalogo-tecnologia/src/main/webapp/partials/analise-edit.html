@@ -10,7 +10,7 @@
 			<li class="ng-class: selected == 2 ? 'active':'';"
 				ng-show="analise.situacao != 'Rascunho'"><a
 				ng:click="selected=2">Próxima Fase</a></li>
-			<li class="ng-class: selected == 3 ? 'active':'';"><a
+			<li ng:show="analise.id" class="ng-class: selected == 3 ? 'active':'';"><a
 				ng:click="selected=3">Anexos</a></li>
 		</ul>
 

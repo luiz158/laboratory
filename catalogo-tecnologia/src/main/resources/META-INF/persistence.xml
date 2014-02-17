@@ -6,6 +6,7 @@
 		<jta-data-source>java:jboss/datasources/ExampleDS</jta-data-source>
 
 		<class>br.gov.serpro.catalogo.entity.Analise</class>
+		<class>br.gov.serpro.catalogo.entity.Produto</class>
 		<class>br.gov.serpro.catalogo.entity.Anexo</class>
 
 		<properties>
@@ -19,6 +20,10 @@
 			-->
 
 			<property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.JBossAppServerJtaPlatform" />
+			
+			 <property name="javax.persistence.jdbc.url" 
+                      value="jdbc:hsqldb:file:catalogodb;shutdown=true"/>
+			
 		</properties>
 	</persistence-unit>
 

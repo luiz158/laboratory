@@ -2,20 +2,49 @@ package br.gov.serpro.catalogo.entity;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
+import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 @Entity
+@NamedQueries({  
+	  @NamedQuery(
+			  name = Anexo.ANEXOS_DA_DEMANDA__NA_FASE, 
+			  query = "select new br.gov.serpro.catalogo.entity.Anexo(a.id, a.analise.id, a.fase, a.nomeArquivo, a.tipoArquivo, a.tamanhoArquivo) from Anexo a where (a.analise.id = :demanda) and (a.fase = :fase)")
+	}) 
 public class Anexo {
+	
+	public static final String ANEXOS_DA_DEMANDA__NA_FASE ="ANEXOS_DA_DEMANDA__NA_FASE";
 
+	public Anexo(){
+		
+	}
+	
+	public Anexo(Long id,Long analise,Integer fase,String nomeArquivo,String tipoArquivo,Integer tamanhoArquivo){
+		this.id = id;
+		this.analise = new Analise();
+		this.analise.setId(analise);
+		this.fase = fase;
+		this.nomeArquivo = nomeArquivo;
+		this.tamanhoArquivo = tamanhoArquivo;
+		this.tipoArquivo = tipoArquivo;		
+	}
+	
+	
+	
 	@Id
 	@GeneratedValue(strategy = SEQUENCE)
 	private Long id;
 	
-	@Lob
+	@Lob @Basic(fetch=FetchType.LAZY)
 	private byte[] arquivo;
 	
 	@ManyToOne
@@ -53,7 +82,7 @@ public class Anexo {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
+	
 	public byte[] getArquivo() {
 		return arquivo;
 	}
