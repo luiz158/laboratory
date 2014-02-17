@@ -18,45 +18,44 @@ import javax.ws.rs.Produces;
 import org.jboss.resteasy.spi.validation.ValidateRequest;
 
 import br.gov.frameworkdemoiselle.transaction.Transactional;
-import br.gov.serpro.catalogo.entity.Analise;
-import br.gov.serpro.catalogo.persistence.AnaliseDAO;
+import br.gov.serpro.catalogo.entity.Produto;
+import br.gov.serpro.catalogo.persistence.ProdutoDAO;
 
 @ValidateRequest
-@Path("/api/analise")
+@Path("/api/produto")
 @Produces(APPLICATION_JSON)
-public class AnaliseService {
+public class ProdutoService {
 
 	@Inject
-	private AnaliseDAO analiseDAO;
-
+	private ProdutoDAO produtoDAO;
+	
 	@POST
 	@Transactional
-	public Long salvar(@Valid Analise analise) {
-		return analiseDAO.insert(analise).getId();
+	public Long salvar(@Valid Produto produto) {
+		return produtoDAO.insert(produto).getId();
 	}
 
 	@DELETE
 	@Path("/{id}")
 	@Transactional
 	public void excluir(@NotNull @PathParam("id") Long id) {
-		analiseDAO.delete(id);
+		produtoDAO.delete(id);
 	}
 
 	@GET
-	public List<Analise> listar() {
-		return analiseDAO.findAll();
+	public List<Produto> listar() {
+		return produtoDAO.findAll();
 	}
 	
 	@PUT
 	@Transactional
-	public void alterar(@Valid Analise analise) {
-		analiseDAO.update(analise);
+	public void alterar(@Valid Produto produto) {
+		produtoDAO.update(produto);
 	}
 	
 	@GET
 	@Path("/{id}")
-	public Analise carregar(@NotNull @PathParam("id") Long id) {
-		return analiseDAO.load(id);
+	public Produto carregar(@NotNull @PathParam("id") Long id) {
+		return produtoDAO.load(id);
 	}
-	
 }
