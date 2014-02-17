@@ -55,9 +55,12 @@ controllers.controller('AnexoCtrl', function AnexoCtrl($scope, $rootScope, $http
 	};
 	
 	function carregarAnexos() {
-		$http.get('api/anexo/'+$rootScope.demandaId+'/'+$scope.fase).success(function(data) {
-			$scope.anexos = data;
-		});
+		if($rootScope.demandaId){
+			$http.get('api/anexo/'+$rootScope.demandaId+'/'+$scope.fase).success(function(data) {
+				$scope.anexos = data;
+				console.log(data);
+			});
+		}
 	}
 
 });

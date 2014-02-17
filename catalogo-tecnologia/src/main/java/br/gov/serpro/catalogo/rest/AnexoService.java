@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -20,6 +21,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.apache.commons.io.IOUtils;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
@@ -40,6 +42,9 @@ public class AnexoService {
 
 	@Inject
 	private AnaliseDAO analiseDAO;
+	
+	@Inject
+	private EntityManager em;
 
 	@POST
 	@Transactional
@@ -78,12 +83,12 @@ public class AnexoService {
 
 	@GET
 	@Path("/{id}/{fase}")
-	public List<Anexo> listar(@PathParam("id") Long id, @PathParam("fase") Integer fase) {
-		// TODO Filtrar pela demanda e fase...
-		System.out.println("ID: " + id);
-		System.out.println("Fase: " + fase);
-		return anexoDAO.findAll();
-	}
+	public List<Anexo> listar(@PathParam("id") Long id, @PathParam("fase") Integer fase) {	
+		return anexoDAO.listarSemCarregarBytes(id,fase);
+	}	
+
+	
+	
 
 	@DELETE
 	@Path("/{id}")
@@ -97,7 +102,6 @@ public class AnexoService {
 	@Produces("application/force-download")
 	public Response download(@PathParam("id") Long id) {
 		Anexo  anexo = anexoDAO.load(id);
-
 		return Response.ok(anexo.getArquivo(), MediaType.APPLICATION_OCTET_STREAM)
 				.header("content-disposition", "attachment; filename = '"+anexo.getNomeArquivo()+"'").build();
 	}

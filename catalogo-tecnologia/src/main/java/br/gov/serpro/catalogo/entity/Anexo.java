@@ -2,20 +2,33 @@ package br.gov.serpro.catalogo.entity;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
+import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 @Entity
+@NamedQueries({  
+	  @NamedQuery(
+			  name = Anexo.ANEXOS_DA_DEMANDA__NA_FASE, 
+			  query = "select a from Anexo a where (a.analise.id = :demanda) and (a.fase = :fase)")
+	}) 
 public class Anexo {
+	
+	public static final String ANEXOS_DA_DEMANDA__NA_FASE ="ANEXOS_DA_DEMANDA__NA_FASE";
 
 	@Id
 	@GeneratedValue(strategy = SEQUENCE)
 	private Long id;
 	
-	@Lob
+	@Lob @Basic(fetch=FetchType.LAZY)
 	private byte[] arquivo;
 	
 	@ManyToOne
@@ -54,6 +67,7 @@ public class Anexo {
 		this.id = id;
 	}
 
+	@JsonIgnore
 	public byte[] getArquivo() {
 		return arquivo;
 	}
