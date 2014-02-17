@@ -18,12 +18,28 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @NamedQueries({  
 	  @NamedQuery(
 			  name = Anexo.ANEXOS_DA_DEMANDA__NA_FASE, 
-			  query = "select a from Anexo a where (a.analise.id = :demanda) and (a.fase = :fase)")
+			  query = "select new br.gov.serpro.catalogo.entity.Anexo(a.id, a.analise.id, a.fase, a.nomeArquivo, a.tipoArquivo, a.tamanhoArquivo) from Anexo a where (a.analise.id = :demanda) and (a.fase = :fase)")
 	}) 
 public class Anexo {
 	
 	public static final String ANEXOS_DA_DEMANDA__NA_FASE ="ANEXOS_DA_DEMANDA__NA_FASE";
 
+	public Anexo(){
+		
+	}
+	
+	public Anexo(Long id,Long analise,Integer fase,String nomeArquivo,String tipoArquivo,Integer tamanhoArquivo){
+		this.id = id;
+		this.analise = new Analise();
+		this.analise.setId(analise);
+		this.fase = fase;
+		this.nomeArquivo = nomeArquivo;
+		this.tamanhoArquivo = tamanhoArquivo;
+		this.tipoArquivo = tipoArquivo;		
+	}
+	
+	
+	
 	@Id
 	@GeneratedValue(strategy = SEQUENCE)
 	private Long id;
@@ -66,8 +82,7 @@ public class Anexo {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	@JsonIgnore
+	
 	public byte[] getArquivo() {
 		return arquivo;
 	}
