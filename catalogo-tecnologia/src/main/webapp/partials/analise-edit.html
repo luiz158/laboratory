@@ -2,6 +2,10 @@
 	<h1 class="page-header">
 		Análise <small>edição</small>
 	</h1>
+	
+	<div>
+		<ng-alerts></ng-alerts>
+	</div>
 
 	<form name="formAnalise" role="form">
 		<ul class="nav nav-tabs" ng:init="selected=1">
@@ -21,13 +25,6 @@
 						<label for="detalhamento">Id:</label> <input class="form-control"
 							disabled=disabled type="text" id="id" ng-model="analise.id">
 					</div>
-					<!--<div class="col-md-6">
-						<label for="situacao">Situação:</label><br> <span class="btn-group" ng-analise-situacao-button situacao="{{analise.situacao}}"
-							aprovar="aprovar(true)">
-							<li ng-if="analise.situacao != 'Aprovado'"><a ng-click="aprovar(true)"><i class="fa fa-thumbs-o-up"> </i> Aprovar</a></li>
-							<li ng-if="analise.situacao != 'Reprovado'"><a ng-click="aprovar(false)"><i class="fa fa-thumbs-o-down"> </i> Rejeitar</a></li>
-						</span>
-					</div>-->
 				</div>
 				<div class="form-group row">
 					<div class="col-md-6">
