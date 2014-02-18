@@ -38,6 +38,23 @@ controllers.controller('PesquisaFasesCtrl', function PesquisaFasesCtrl($scope, $
 			AlertService.addWithTimeout('danger','Não foram encontrados resultados com estes parâmetros de pesquisa.');
 		}		
 	};
+	
+	$scope.pesquisar = function() {
+		$http({
+			url : 'api/fase/pesquisar',
+			method : "GET",
+			data : $scope.fase,
+			headers : {
+				'Content-Type' : 'application/json;charset=utf8'
+			}
+		}).success(function(data) {
+			$scope.resultado = data;
+			AlertService.addWithTimeout('success','Foram encontrada(s) '+$scope.resultado.length+' fase(s)');
+		}).error(function(data, status) {
+			AlertService.addWithTimeout('danger','Nenhum resultado encontrado.');		
+		});
+
+	};
 		
 
 });
