@@ -57,7 +57,7 @@ import br.gov.frameworkdemoiselle.util.Beans;
  */
 public class PersistenceAuditor extends AbstractAuditor {
 
-    private User identity = Beans.getReference(User.class);
+    private User identity;
 
     private AuditConfig config;
 

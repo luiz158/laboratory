@@ -55,7 +55,7 @@ import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
  * @author SERPRO
  * 
  */
-@Path("/trail")
+@Path("/rest/trail")
 public class TrailRESTService{
 
     @Inject
