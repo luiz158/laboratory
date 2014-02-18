@@ -54,7 +54,7 @@ public class BookmarkBC extends DelegateCrud<Bookmark, Long, BookmarkDAO> {
 
     private static final long serialVersionUID = 1L;
 
-    @Startup
+//    @Startup
     @Transactional
    // @Audit(description = "Carga Automática")
     public void load() {

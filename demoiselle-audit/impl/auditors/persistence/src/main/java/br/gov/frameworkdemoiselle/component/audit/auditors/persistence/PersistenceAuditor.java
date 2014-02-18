@@ -57,9 +57,9 @@ import br.gov.frameworkdemoiselle.util.Beans;
  */
 public class PersistenceAuditor extends AbstractAuditor {
 
-    private User identity = Beans.getReference(User.class);
+    private User identity;
 
-    private AuditConfig config = Beans.getReference(AuditConfig.class);
+    private AuditConfig config;
 
     /**
      *
@@ -70,6 +70,9 @@ public class PersistenceAuditor extends AbstractAuditor {
      */
     private Trail createTrailBean(Object object) {
 
+    	identity = Beans.getReference(User.class);
+    	config = Beans.getReference(AuditConfig.class);
+    	
         Util util = new Util();
         Trail trailBean = new Trail();
         trailBean.setHow(util.className().toString());
