@@ -83,7 +83,7 @@ public class Trail implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(nullable = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long idaudit;
 
     @Column(length = 1024)
