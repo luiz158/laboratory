@@ -21,15 +21,13 @@
 						aria-label="Browser: activate to sort column ascending">Nome</th>
 					<th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1"
 						aria-label="Browser: activate to sort column ascending">Descrição</th>
-					<th></th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr ng-repeat="g in grupos">
 					<td><a ng-click="editar(g)">{{g.id}}</a></td>
 					<td><a ng-click="editar(g)">{{g.nome}}</a></td>
-					<td><a ng-click="editar(g)">{{g.descricao}}</a></td>
-					<td><a ng-click="excluir(g.id)" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> excluir</a></td>
+					<td><a ng-click="editar(g)">{{g.descricao}}</a><a ng-click="excluir(g.id)" class="btn btn-danger btn-xs pull-right"><i class="fa fa-trash-o"></i> excluir</a></td>
 				</tr>
 			</tbody>
 		</table>
