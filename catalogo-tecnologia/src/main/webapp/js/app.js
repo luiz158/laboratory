@@ -26,3 +26,5 @@ config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/grupo/edit/:id', {templateUrl: 'partials/grupo-edit.html', controller: 'GrupoEdit'});
   //$routeProvider.otherwise({templateUrl: 'partials/analise-listar.html'});
 }]);
+
+var controllers = angular.module('catalogo.controllers',[]);

@@ -1,11 +1,11 @@
 'use strict';
 
 /* Controllers */
-var controllers = angular.module('catalogo.controllers', []);
+var controllers = angular.module('catalogo.controllers');
 
 controllers.controller('AnaliseList',
 		function Analise($scope, $http, $location) {
-
+			$scope.analises = [];
 			function carregarAnalises() {
 				$http.get('api/analise').success(function(data) {
 					$scope.analises = data;
