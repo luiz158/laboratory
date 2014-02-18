@@ -12,8 +12,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-
 @Entity
 @NamedQueries({  
 	  @NamedQuery(
