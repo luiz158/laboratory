@@ -87,3 +87,20 @@ diretivas.directive('ngAlerts', function() {
 	    templateUrl: 'directives/alerts.html'	    
 	  };
 	});
+
+diretivas.directive('ngClickConfirm', function() {
+	return {
+		restrict : 'A',
+		link : function(scope, elt, attrs) {
+			elt.bind('click', function(e) {
+				var message = attrs.msg || "Você tem certeza?";
+				bootbox.confirm(message, function(result) {
+					if (result) {
+						var action = attrs.ngClickConfirm;
+						scope.$eval(action);
+					}
+				});
+			});
+		},
+	};
+})

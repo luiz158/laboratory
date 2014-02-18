@@ -10,6 +10,7 @@ controllers.controller('AnexoCtrl', function AnexoCtrl($scope, $rootScope, $http
 	
 	$scope.anexo = {};
 	$scope.progress = 0;
+	$scope.labelArquivos = 'Nenhum arquivo selecionado';
 	
 	$scope.init = function(fase){
 		$scope.fase = fase;
@@ -36,13 +37,18 @@ controllers.controller('AnexoCtrl', function AnexoCtrl($scope, $rootScope, $http
 				fileFormDataName: 'file'
 			}).progress(
 				function(evt) {
-					$scope.progress = parseInt(100.0 * evt.loaded / evt.total);
-					$scope.$apply();
+					var percent = parseInt(100.0 * evt.loaded / evt.total);
+					$scope.progress =  (percent == 100) ? 0 : percent;
 			}).success(function(data, status, headers, config) {
 				$scope.progress = 0;				
 				carregarAnexos();
 			});
 		}
+		if ($files.length == 1) {
+			$scope.labelArquivos = $files[0].name;
+		} else if ($files.length > 1) {
+			$scope.labelArquivos = $files.length + ' arquivos selecionados';
+		}		
 	};
 	
 	$scope.excluir = function(id) {
@@ -56,6 +62,12 @@ controllers.controller('AnexoCtrl', function AnexoCtrl($scope, $rootScope, $http
 			AlertService.addWithTimeout('danger','Não foi possível excluir o anexo.');
 		});
 	};
+	
+	$scope.cancelarUpload = function() {
+		$scope.labelArquivos = 'Upload cancelado';
+		$scope.progress = 0;		
+		$scope.upload.abort();
+	}
 	
 	function carregarAnexos() {
 		if($rootScope.demandaId){
