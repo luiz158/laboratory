@@ -56,7 +56,7 @@ import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
  * 
  */
 @Path("/trail")
-public class TrailRESTService {
+public class TrailRESTService{
 
     @Inject
     private TrailBC bbc;
