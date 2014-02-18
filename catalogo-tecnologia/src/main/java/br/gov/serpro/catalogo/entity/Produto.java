@@ -2,9 +2,16 @@ package br.gov.serpro.catalogo.entity;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -35,6 +42,11 @@ public class Produto {
 	
 	@NotEmpty
 	private String descricao;
+	
+	@ElementCollection
+	@CollectionTable(name="plataformas_produtos", joinColumns=@JoinColumn(name="produto_id"))
+	@Column(name="plataformas_suportadas")
+	private List<String> plataformasSuportadas;
 	
 	private boolean legado;
 	
@@ -122,10 +134,17 @@ public class Produto {
 		return fornecedor;
 	}
 
-
-	
 	public void setFornecedor(String fornecedor) {
 		this.fornecedor = fornecedor;
+	}
+	
+	
+	public List<String> getPlataformasSuportadas() {
+		return plataformasSuportadas;
+	}
+
+	public void setPlataformasSuportadas(List<String> plataformasSuportadas) {
+		this.plataformasSuportadas = plataformasSuportadas;
 	}
 
 	public boolean isLegado() {
@@ -140,8 +159,6 @@ public class Produto {
 		return atualizacao;
 	}
 
-
-	
 	public void setAtualizacao(boolean atualizacao) {
 		this.atualizacao = atualizacao;
 	}

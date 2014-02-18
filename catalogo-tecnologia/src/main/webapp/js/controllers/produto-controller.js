@@ -46,13 +46,16 @@ controllers.controller('ProdutoEdit', function Produto($scope, $http,
 	if (id) {
 		$http.get('api/produto/' + id).success(function(data) {
 			$scope.produto = data;
+			$scope.plataformasSuportadas = data.plataformasSuportadas;
 		});
 	} else {
 		$scope.produto = {};
+		$scope.plataformasSuportadas = [];
 	}
 
 	$scope.salvarProduto = function() {
 		console.log("ProdutoController " + $scope.produto);
+		$scope.produto.plataformasSuportadas = $scope.plataformasSuportadas;
 		$("[id$='-message']").text("");
 		$http({
 			url : 'api/produto',
@@ -76,5 +79,34 @@ controllers.controller('ProdutoEdit', function Produto($scope, $http,
 				});
 
 	};
+	
+	$scope.adicionaPlataforma = function() {
+		var index = buscaElemento($scope.plataforma);
+		
+		if (index !== -1) {
+			alert('Plataforma já foi adicionada!');
+        }else{
+			$scope.plataformasSuportadas.push($scope.plataforma);
+		}
+	};
+	
+	$scope.removePlataforma = function(plataforma) {
+		var index = buscaElemento(plataforma);
+			
+		if (index !== -1) {
+            $scope.plataformasSuportadas.splice(index,1);
+        }
+	};
+	
+	function buscaElemento(plataforma){
+		var index = -1;
+		for ( var i = 0 ; i < $scope.plataformasSuportadas.length ; i++ ) {
+			if ($scope.plataformasSuportadas[i] === plataforma) {
+                index = i;
+                break;
+            }
+		}
+		return index;
+	}
 
 });
