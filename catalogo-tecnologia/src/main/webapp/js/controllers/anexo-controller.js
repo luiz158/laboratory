@@ -37,11 +37,19 @@ controllers.controller('AnexoCtrl', function AnexoCtrl($scope, $rootScope, $http
 				fileFormDataName: 'file'
 			}).progress(
 				function(evt) {
-					var percent = parseInt(100.0 * evt.loaded / evt.total);
-					$scope.progress =  (percent == 100) ? 0 : percent;
+					//var percent = parseInt(100.0 * evt.loaded / evt.total);
+					//$scope.progress =  (percent == 100) ? 0 : percent;
+					$scope.progress = parseInt(100.0 * evt.loaded / evt.total);
+					$scope.apply();
 			}).success(function(data, status, headers, config) {
-				$scope.progress = 0;				
+				$scope.labelArquivos = 'Incluindo anexo...';
 				carregarAnexos();
+				$scope.progress = 0;
+				$scope.labelArquivos = '';				
+			}).error(function(data, status) {
+				$scope.labelArquivos = '';
+				$scope.progress = 0;					
+				AlertService.add('danger','Não foi possível incluir o anexo.' + data + ' erro: ' + status);
 			});
 		}
 		if ($files.length == 1) {
