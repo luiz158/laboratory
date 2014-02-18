@@ -21,6 +21,7 @@ controllers.controller('AnexoCtrl', function AnexoCtrl($scope, $rootScope, $http
 		$scope.progress = 0;
 		for (var i = 0; i < $files.length; i++) {
 			var file = $files[i];
+			$scope.labelArquivos = 'Anexando ' + file.name + ' (' + i + '/' + $files.length + ')';
 			$scope.upload = $upload.upload({
 				url : 'api/anexo',
 				method : 'POST',
@@ -37,12 +38,12 @@ controllers.controller('AnexoCtrl', function AnexoCtrl($scope, $rootScope, $http
 				fileFormDataName: 'file'
 			}).progress(
 				function(evt) {
-					//var percent = parseInt(100.0 * evt.loaded / evt.total);
-					//$scope.progress =  (percent == 100) ? 0 : percent;
-					$scope.progress = parseInt(100.0 * evt.loaded / evt.total);
-					$scope.apply();
+					var percent = parseInt(100.0 * evt.loaded / evt.total);
+					$scope.progress =  (percent == 100) ? 0 : percent;
+					//$scope.progress = parseInt(100.0 * evt.loaded / evt.total);
+					//$scope.apply();
 			}).success(function(data, status, headers, config) {
-				$scope.labelArquivos = 'Incluindo anexo...';
+				//$scope.labelArquivos = 'Incluindo anexo...';
 				carregarAnexos();
 				$scope.progress = 0;
 				$scope.labelArquivos = '';				
