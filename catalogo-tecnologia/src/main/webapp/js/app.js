@@ -1,7 +1,5 @@
 'use strict';
 
-
-// Declare app level module which depends on filters, and services
 angular.module('catalogo', [
   'ngRoute',
   'catalogo.controllers',
@@ -13,6 +11,8 @@ angular.module('catalogo', [
 ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/login', {templateUrl: 'partials/login.html', controller: 'Auth'});
+  $routeProvider.when('/pesquisa/fases/:fase', {templateUrl: 'partials/pesquisa-fases.html', controller: 'PesquisaFasesCtrl'});
+  $routeProvider.when('/pesquisa/fases', {templateUrl: 'partials/pesquisa-fases.html', controller: 'PesquisaFasesCtrl'});
   $routeProvider.when('/analise', {templateUrl: 'partials/analise-listar.html', controller: 'AnaliseList'});
   $routeProvider.when('/analise/edit', {templateUrl: 'partials/analise-edit.html', controller: 'AnaliseEdit'});
   $routeProvider.when('/analise/edit/:id', {templateUrl: 'partials/analise-edit.html', controller: 'AnaliseEdit'});
