@@ -51,3 +51,17 @@ filters.filter('tipoArquivo', function() {
 		return url;		
 	};
   });
+
+filters.filter('nomeFase', function() {    
+	var nomes = ['','Análise','Prospecção', 'Internalização', 'Sustentação', 'Descarte'];		
+	return function(fase){	
+		return nomes[fase];		
+	};
+  });
+
+filters.filter('faseUrl', function() {    
+	var nomes = ['','analise/edit','prospeccao/edit', 'internalizacao/edit', 'sustentacao/edit', 'descarte/edit'];		
+	return function(fase){	
+		return nomes[fase];		
+	};
+  });
