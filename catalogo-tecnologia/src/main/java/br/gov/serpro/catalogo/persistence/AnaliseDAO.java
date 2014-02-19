@@ -1,16 +1,19 @@
 package br.gov.serpro.catalogo.persistence;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import br.gov.frameworkdemoiselle.lifecycle.Startup;
 import br.gov.frameworkdemoiselle.stereotype.PersistenceController;
 import br.gov.frameworkdemoiselle.template.JPACrud;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.serpro.catalogo.entity.Analise;
-import br.gov.serpro.catalogo.entity.Anexo;
 import br.gov.serpro.catalogo.entity.Situacao;
 import br.gov.serpro.catalogo.rest.FaseDTO;
 
@@ -20,12 +23,52 @@ public class AnaliseDAO extends JPACrud<Analise, Long> {
 	private static final long serialVersionUID = 1L;
 	
 	
-	@SuppressWarnings("unchecked")
 	public List<Analise> pesquisarAnalise(FaseDTO dto) {
-		Query query = getEntityManager().createNamedQuery(Analise.ANALISES_POR_FASE, Analise.class);
-		//query.setParameter("demanda", id);
-		//query.setParameter("fase", fase);		
-		return query.getResultList();
+		
+		CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
+	    CriteriaQuery<Analise> query = builder.createQuery(Analise.class);
+	    Root<Analise> analise = query.from(Analise.class);
+	    query.select(analise);
+	 
+	    List<Predicate> predicateList = new ArrayList<Predicate>();	 
+	 
+	    if (dto.getId() != null) {
+	    	Predicate p = builder.equal(analise.<Long>get("id"), dto.getId());
+	        predicateList.add(p);
+	    }
+	    
+	    if (dto.getPalavraChave() != null && !dto.getPalavraChave().isEmpty()) {
+	    	Predicate p = builder.like(
+	                builder.upper(analise.<String>get("detalhamento")), "%"+dto.getPalavraChave().toUpperCase()+"%");
+	        predicateList.add(p);
+	    }
+	    
+	    if (dto.getGestor() != null && !dto.getGestor().isEmpty()) {
+	    	Predicate p = builder.like(
+	                builder.upper(analise.<String>get("gestorAnalise")), "%"+dto.getGestor().toUpperCase()+"%");
+	        predicateList.add(p);
+	    }
+	    
+	    if (dto.getOrigemReferencia() != null && !dto.getOrigemReferencia().isEmpty()) {
+	    	Predicate p = builder.like(
+	                builder.upper(analise.<String>get("origemReferencia")), "%"+dto.getOrigemReferencia().toUpperCase()+"%");
+	        predicateList.add(p);
+	    }
+	    
+	    if (dto.getCodigoReferencia() != null && !dto.getCodigoReferencia().isEmpty()) {
+	    	Predicate p = builder.like(
+	                builder.upper(analise.<String>get("codigoReferencia")), "%"+dto.getCodigoReferencia().toUpperCase()+"%");
+	        predicateList.add(p);
+	    }
+	    
+	    //TODO Tratar a finalização.
+	    
+	 
+	 
+	    Predicate[] predicates = new Predicate[predicateList.size()];
+	    predicateList.toArray(predicates);
+	    query.where(predicates);	 
+	    return getEntityManager().createQuery(query).getResultList();
 	}	
 	
 	
