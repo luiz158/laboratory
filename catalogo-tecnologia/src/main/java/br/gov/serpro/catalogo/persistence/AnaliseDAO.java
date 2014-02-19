@@ -25,7 +25,7 @@ public class AnaliseDAO extends JPACrud<Analise, Long> {
 		a.setDemandante("Edson Arantes Nascimento");
 		a.setObjetivo("Analisar o uso de bolas de futsal na copa do mundo.");
 		a.setGestor("Sérgio Hein");
-		a.setOrigemReferencia("Twitter do Romário");
+		a.setOrigemReferencia("ALM");
 		a.setSituacao(Situacao.APROVADO);
 		a.setSituacaoJustificativa("É possível utilizar esta bola, pois será facilitada a ocorrência de tabacas e gols.");
 		insert(a);		
