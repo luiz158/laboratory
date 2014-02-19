@@ -60,8 +60,14 @@ filters.filter('nomeFase', function() {
   });
 
 filters.filter('faseUrl', function() {    
-	var nomes = ['','analise/edit','prospeccao/edit', 'internalizacao/edit', 'sustentacao/edit', 'descarte/edit'];		
+	var url = {
+			'ANALISE':'analise/edit',
+			'PROSPECCAO': 'prospeccao/edit',
+			'INTERNALIZACAO':'internalizacao/edit',
+			'SUSTENTACAO':'sustentacao/edit', 
+			'DESCARTE': 'descarte/edit'
+	}
 	return function(fase){	
-		return nomes[fase];		
+		return url[fase];		
 	};
   });

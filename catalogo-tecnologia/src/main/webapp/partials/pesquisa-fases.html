@@ -104,7 +104,7 @@
 		        			<b>ID:</b> {{f.id}} 
 		        		</div>
 		        		<div class="col-md-4">
-		        			<b>Fase:</b> {{f.fase | nomeFase}}  
+		        			<b>Fase:</b> {{f.fase}}  
 		        		</div>
 		        		<div class="col-md-4">
 		        			<b>Referência:</b> {{f.origemReferencia}} ( {{f.codigoReferencia}} ) 
@@ -112,10 +112,10 @@
 		        	</div>
 		            <div class="list-group-item-heading row">
 		        		<div class="col-md-4">
-		        			<b>Gestor:</b> {{f.gestor}} - {{f.gestorArea}} 
+		        			<b>Gestor:</b> {{f.gestor}} - {{f.area}} 
 		        		</div>
 		        		<div class="col-md-4">
-		        			<b>Registro:</b> {{f.dataRegistro}}  
+		        			<b>Registro:</b> {{f.dataRealizacao}}  
 		        		</div>
 		        		<div class="col-md-4">
 		        			<b>Finalização:</b> {{f.dataFinalizacao}} 

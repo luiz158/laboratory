@@ -30,10 +30,10 @@ public class FaseDTO{
 		this.setId(a.getId());
 		this.setFase(1);
 		this.setDataFinalizacao(a.getDataFinalizacao());
-		this.setDataRegistro(a.getDataAnalise());
-		this.setGestor(a.getGestorAnalise());
-		this.setGestorArea(a.getAreaGestorAnalise());
-		this.setObjetivo(a.getDetalhamento());
+		this.setDataRegistro(a.getDataRealizacao());
+		this.setGestor(a.getGestor());
+		this.setGestorArea(a.getGestor());
+		this.setObjetivo(a.getArea());
 		this.setOrigemReferencia(a.getOrigemReferencia());
 		this.setCodigoReferencia(a.getCodigoReferencia());
 	}
