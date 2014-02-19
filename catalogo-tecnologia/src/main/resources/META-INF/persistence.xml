@@ -17,7 +17,6 @@
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<!--
 			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
-			<property name="hibernate.hbm2ddl.auto" value="update" />
 			-->
 
 			<property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.JBossAppServerJtaPlatform" />

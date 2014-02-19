@@ -61,7 +61,7 @@ public class Bookmark implements Serializable {
      *  If you are using Glassfish then remove the strategy attribute
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column

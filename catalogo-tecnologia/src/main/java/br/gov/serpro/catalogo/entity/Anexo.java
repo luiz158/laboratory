@@ -12,14 +12,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
 
-@Entity
 @NamedQueries({  
 	  @NamedQuery(
 			  name = Anexo.ANEXOS_DA_DEMANDA__NA_FASE, 
 			  query = "select new br.gov.serpro.catalogo.entity.Anexo(a.id, a.analise.id, a.fase, a.nomeArquivo, a.tipoArquivo, a.tamanhoArquivo) from Anexo a where (a.analise.id = :demanda) and (a.fase = :fase)")
 	}) 
+@Entity
 public class Anexo {
 	
 	public static final String ANEXOS_DA_DEMANDA__NA_FASE ="ANEXOS_DA_DEMANDA__NA_FASE";

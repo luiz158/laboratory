@@ -9,12 +9,21 @@ import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
+@NamedQueries({  
+	  @NamedQuery(
+			  name = Analise.ANALISES_POR_FASE, 
+			  query = "select a from Analise a")
+	})
 public class Analise {
+
+	public static final String ANALISES_POR_FASE = "ANALISES_POR_FASE";
 
 	@Id
 	@GeneratedValue(strategy = SEQUENCE)
@@ -38,6 +47,8 @@ public class Analise {
 	
 	//@NotNull
 	private Date dataAnalise;
+	
+	private Date dataFinalizacao;
 	
 	@NotEmpty
 	private String gestorAnalise;
@@ -175,6 +186,14 @@ public class Analise {
 
 	public void setProximaFase(String proximaFase) {
 		this.proximaFase = proximaFase;
+	}
+
+	public Date getDataFinalizacao() {
+		return dataFinalizacao;
+	}
+
+	public void setDataFinalizacao(Date dataFinalizacao) {
+		this.dataFinalizacao = dataFinalizacao;
 	}
 
 }

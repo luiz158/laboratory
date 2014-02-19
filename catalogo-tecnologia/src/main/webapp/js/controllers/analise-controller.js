@@ -1,11 +1,11 @@
 'use strict';
 
 /* Controllers */
-var controllers = angular.module('catalogo.controllers', []);
+var controllers = angular.module('catalogo.controllers');
 
 controllers.controller('AnaliseList',
 		function Analise($scope, $http, $location) {
-
+			$scope.analises = [];
 			function carregarAnalises() {
 				$http.get('api/analise').success(function(data) {
 					$scope.analises = data;
@@ -51,6 +51,9 @@ controllers.controller('AnaliseEdit', function Analise($scope, $http,
 		$scope.analise = {};
 		$scope.analise.situacao = 'Rascunho';
 	}
+	
+	
+	
 
 	$scope.salvar = function() {
 		console.log("AnaliseController " + $scope.analise);
@@ -81,6 +84,11 @@ controllers.controller('AnaliseEdit', function Analise($scope, $http,
 	$scope.aprovar = function(aprovado) {
 		$scope.analise.situacao = aprovado ? 'Aprovado' : 'Reprovado';
 		// $scope.salvar();
+	};
+	
+	$scope.finalizar = function() {
+		$scope.analise.dataFinalizacao = new Date();
+		$scope.salvar();
 	};
 
 });
