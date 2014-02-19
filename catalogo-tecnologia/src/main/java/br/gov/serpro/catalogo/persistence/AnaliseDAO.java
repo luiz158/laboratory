@@ -61,9 +61,28 @@ public class AnaliseDAO extends JPACrud<Analise, Long> {
 	        predicateList.add(p);
 	    }
 	    
-	    //TODO Tratar a finalização.
+	    if (dto.getFinalizada()!= null &&  dto.getFinalizada() == 1) {
+	    	Predicate p = builder.isNotNull(analise.<Date>get("dataFinalizacao"));
+	        predicateList.add(p);
+	    }
 	    
-	 
+	    if (dto.getFinalizada()!= null &&  dto.getFinalizada() == 0) {
+	    	Predicate p = builder.isNull(analise.<Date>get("dataFinalizacao"));
+	        predicateList.add(p);
+	    }
+	    
+	    if (dto.getFinalizacaoApartir()!= null ) {
+	    	Predicate p = builder.greaterThanOrEqualTo(analise.<Date>get("dataFinalizacao"), dto.getFinalizacaoApartir());
+	        predicateList.add(p);	        
+	    }
+	    
+	    if (dto.getFinalizacaoAte()!= null ) {
+	    	Predicate p = builder.lessThanOrEqualTo(analise.<Date>get("dataFinalizacao"), dto.getFinalizacaoAte());
+	        predicateList.add(p);	        
+	    }
+	    
+	    //TODO Tratar a finalização.
+	    	 
 	 
 	    Predicate[] predicates = new Predicate[predicateList.size()];
 	    predicateList.toArray(predicates);
@@ -96,6 +115,7 @@ public class AnaliseDAO extends JPACrud<Analise, Long> {
 		a.setGestorAnalise("Marlinhos Carvalhal da Silva");
 		a.setOrigemReferencia("Solicita");
 		a.setSituacao(Situacao.REPROVADO);
+		a.setDataFinalizacao(new Date());
 		a.setJustificativa("O problema seria que os uniformes possuem substancias químicas que seriam alteradas durante a execução. O risco de explosão catastrófica é muito alto.");
 		insert(a);
 		

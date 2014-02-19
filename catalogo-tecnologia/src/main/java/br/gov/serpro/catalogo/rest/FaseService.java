@@ -31,14 +31,13 @@ public class FaseService {
 			FaseDTO f = new FaseDTO();
 			f.setId(a.getId());
 			f.setFase(1);
-			f.setCodigoReferencia(a.getCodigoReferencia());
-			f.setDataFinalizacao(a.getDataAnalise());//TODO a.getDataFinalizacao
+			f.setDataFinalizacao(a.getDataFinalizacao());
 			f.setDataRegistro(a.getDataAnalise());
-			f.setFinalizada(0);// (a.getDataFinalizacao()!=null)
 			f.setGestor(a.getGestorAnalise());
 			f.setGestorArea(a.getAreaGestorAnalise());
 			f.setObjetivo(a.getDetalhamento());
 			f.setOrigemReferencia(a.getOrigemReferencia());
+			f.setCodigoReferencia(a.getCodigoReferencia());
 			lista.add(f);
 		}
 		

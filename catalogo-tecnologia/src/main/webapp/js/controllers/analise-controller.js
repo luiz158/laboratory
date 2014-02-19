@@ -51,6 +51,9 @@ controllers.controller('AnaliseEdit', function Analise($scope, $http,
 		$scope.analise = {};
 		$scope.analise.situacao = 'Rascunho';
 	}
+	
+	
+	
 
 	$scope.salvar = function() {
 		console.log("AnaliseController " + $scope.analise);
@@ -81,6 +84,11 @@ controllers.controller('AnaliseEdit', function Analise($scope, $http,
 	$scope.aprovar = function(aprovado) {
 		$scope.analise.situacao = aprovado ? 'Aprovado' : 'Reprovado';
 		// $scope.salvar();
+	};
+	
+	$scope.finalizar = function() {
+		$scope.analise.dataFinalizacao = new Date();
+		$scope.salvar();
 	};
 
 });
