@@ -24,21 +24,13 @@ public class FaseService {
 	@POST
 	public List<FaseDTO> pesquisar(FaseDTO fase) {
 		List<FaseDTO> lista = new ArrayList<FaseDTO>();
-		List<Analise> analises = analiseDAO.pesquisarAnalise(fase);
-		//List<Prospeccao> prospeccoes = prospeccaoDAO.pesquisar(fase);
 		
-		for (Analise a : analises) {
-			FaseDTO f = new FaseDTO();
-			f.setId(a.getId());
-			f.setFase(1);
-			f.setDataFinalizacao(a.getDataFinalizacao());
-			f.setDataRegistro(a.getDataAnalise());
-			f.setGestor(a.getGestorAnalise());
-			f.setGestorArea(a.getAreaGestorAnalise());
-			f.setObjetivo(a.getDetalhamento());
-			f.setOrigemReferencia(a.getOrigemReferencia());
-			f.setCodigoReferencia(a.getCodigoReferencia());
-			lista.add(f);
+		if(fase.getFase()==null || fase.getFase()==1){
+			List<Analise> analises = analiseDAO.pesquisarAnalise(fase);		
+			for (Analise a : analises) {
+				FaseDTO f = new FaseDTO(a);
+				lista.add(f);
+			}
 		}
 		
 		return lista;

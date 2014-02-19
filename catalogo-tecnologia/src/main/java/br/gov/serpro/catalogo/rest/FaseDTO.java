@@ -2,6 +2,8 @@ package br.gov.serpro.catalogo.rest;
 
 import java.util.Date;
 
+import br.gov.serpro.catalogo.entity.Analise;
+
 public class FaseDTO{
 	/* Campos de pesquisa */
 	private Long id;
@@ -19,6 +21,22 @@ public class FaseDTO{
 	private Date dataRegistro;
 	private Date dataFinalizacao;
 	private String objetivo;
+	
+	public FaseDTO() {
+		
+	}
+	
+	public FaseDTO(Analise a) {
+		this.setId(a.getId());
+		this.setFase(1);
+		this.setDataFinalizacao(a.getDataFinalizacao());
+		this.setDataRegistro(a.getDataAnalise());
+		this.setGestor(a.getGestorAnalise());
+		this.setGestorArea(a.getAreaGestorAnalise());
+		this.setObjetivo(a.getDetalhamento());
+		this.setOrigemReferencia(a.getOrigemReferencia());
+		this.setCodigoReferencia(a.getCodigoReferencia());
+	}
 	
 	public Long getId() {
 		return id;
