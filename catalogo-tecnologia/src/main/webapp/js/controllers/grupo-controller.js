@@ -6,11 +6,12 @@ var controllers = angular.module('catalogo.controllers');
 controllers.controller('GrupoList',
 		
 		function Analise($scope, $http, $location) {
-	
+		
 			function carregarGrupos() {
 				$http.get('api/grupo').success(function(data) {
 					$scope.grupos = data;
 				});
+
 			}
 			
 			$scope.novo = function() {
@@ -40,16 +41,22 @@ controllers.controller('GrupoEdit',
 		function Analise($scope, $http, $location, $routeParams, AlertService) {
 	
 			var id = $routeParams.id;
-
-			$scope.perfis = ["ANALISE", "PROSPECCAO", "INTERNALIZACAO", "SUSTENTACAO", "DECLINIO", "ADMINISTRADOR", "CADASTRADOR", "CONSULTOR"];
-
 			
+			$http({
+				url : 'api/perfis',
+				method : "GET"
+			}).success(function(data) {
+				$scope.perfis = data;
+			}).error(function(data, status) {
+			});
+
 			if (id) {
 				$http.get('api/grupo/' + id).success(function(data) {
 					$scope.grupo = data;
 				});
 			} else {
 				$scope.grupo = {};
+				$scope.grupo.perfis = [];
 			}
 			
 			// toggle selection for a given fruit by name
