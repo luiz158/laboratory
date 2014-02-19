@@ -21,7 +21,7 @@ diretivas.directive('ngAnaliseSituacao', function() {
 		    		var labelType = 'label-success';
 		    		var icon = 'fa-thumbs-o-up';
 		    	} else 
-		    	if (situacao == 'Rejeitado') {
+		    	if (situacao == 'Reprovado') {
 		    		var labelType = 'label-danger';
 		    		var icon = 'fa-thumbs-o-down';
 		    	}
@@ -33,7 +33,7 @@ diretivas.directive('ngAnaliseSituacao', function() {
 	});
 
 diretivas.directive('ngAnaliseSituacaoButton', function() {
-
+	
 	  return {
 		//restrict: 'C',
 	    //require: '^ngSituacao',
@@ -103,4 +103,18 @@ diretivas.directive('ngClickConfirm', function() {
 			});
 		},
 	};
-})
+});
+
+
+diretivas.directive('backButton', function(){
+    return {
+      restrict: 'A',
+      link: function(scope, element, attrs) {
+    	  console.log('bind');
+        element.bind('click', function () {
+          history.back();
+          scope.$apply();
+        });
+      }
+    };
+});
