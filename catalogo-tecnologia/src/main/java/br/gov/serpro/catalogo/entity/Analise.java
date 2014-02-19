@@ -48,6 +48,8 @@ public class Analise {
 	//@NotNull
 	private Date dataAnalise;
 	
+	private Date dataFinalizacao;
+	
 	@NotEmpty
 	private String gestorAnalise;
 	
@@ -184,6 +186,14 @@ public class Analise {
 
 	public void setProximaFase(String proximaFase) {
 		this.proximaFase = proximaFase;
+	}
+
+	public Date getDataFinalizacao() {
+		return dataFinalizacao;
+	}
+
+	public void setDataFinalizacao(Date dataFinalizacao) {
+		this.dataFinalizacao = dataFinalizacao;
 	}
 
 }
