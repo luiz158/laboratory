@@ -40,6 +40,9 @@ controllers.controller('GrupoEdit',
 		function Analise($scope, $http, $location, $routeParams, AlertService) {
 	
 			var id = $routeParams.id;
+
+			$scope.perfis = ["ANALISE", "PROSPECCAO", "INTERNALIZACAO", "SUSTENTACAO", "DECLINIO", "ADMINISTRADOR", "CADASTRADOR", "CONSULTOR"];
+
 			
 			if (id) {
 				$http.get('api/grupo/' + id).success(function(data) {
@@ -48,6 +51,21 @@ controllers.controller('GrupoEdit',
 			} else {
 				$scope.grupo = {};
 			}
+			
+			// toggle selection for a given fruit by name
+			  $scope.toggleSelection = function toggleSelection(perfil) {
+			    var idx = $scope.grupo.perfis.indexOf(perfil);
+
+			    // is currently selected
+			    if (idx > -1) {
+			      $scope.grupo.perfis.splice(idx, 1);
+			    }
+
+			    // is newly selected
+			    else {
+			      $scope.grupo.perfis.push(perfil);
+			    }
+			  };
 	
 			$scope.salvar = function() {
 				$("[id$='-message']").text("");
