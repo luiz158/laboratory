@@ -17,7 +17,7 @@
 				ng:click="selected=3">Produtos</a></li>				
 			<li class="ng-class: selected == 4 ? 'active':'';"
 				ng-show="fase.situacao != 'Rascunho'"><a
-				ng:click="selected=4">Gestão da Internalização</a></li>
+				ng:click="selected=4">Próxima fase</a></li>
 			<li ng:show="fase.id" class="ng-class: selected == 5 ? 'active':'';"><a
 				ng:click="selected=5">Anexos</a></li>
 		</ul>
@@ -125,7 +125,9 @@
 		
 		<!-- Resultado da Prospecção -->
 		<div ng-if="selected == 2" class="panel panel-default">
-			
+			<div class="panel-heading">
+				Resultado da Prospecção
+			</div>
 			<div class="panel-body">
 				<div class="form-group">
 					<label for="testes">Descrição dos testes realizados:</label>
@@ -142,13 +144,19 @@
 			</div>
 		</div>
 		
-		<!-- Próxima fase -->
+		<!-- Produtos -->
 		<div ng-if="selected == 3" class="panel panel-default">
+			<div class="panel-heading">
+				Produtos de Tecnologia Prospectados
+			</div>
 		</div>
 		
 
 		<!-- Próxima fase -->
 		<div ng-if="selected == 4" class="panel panel-default">
+			<div class="panel-heading">
+				Próxima fase
+			</div>
 			<div class="panel-body">
 				<div class="form-group">
 					<label for="proximaFase">Próxima fase a ser executada:</label> <select
@@ -185,6 +193,9 @@
 
 		<!-- Anexos -->
 		<div ng:show="selected == 5 && fase.id" class="panel panel-default">
+			<div class="panel-heading">
+				Anexos
+			</div>
 			<ng-anexos fase="1" demanda="fase.id"></ng-anexos>
 		</div>
 
