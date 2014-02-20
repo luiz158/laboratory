@@ -32,8 +32,9 @@
 					<div class="col-md-6">
 						<a href="#{{fase.faseAnterior.fase | faseUrl}}/{{fase.faseAnterior.id}}">
 						<label for="id-anterior">{{fase.faseAnterior.fase | nomeFase}}:</label> 
-						<input class="form-control"
-							disabled=disabled type="text" id="id-anterior" ng-model="fase.faseAnterior.id">
+						<span class="form-control" disabled=disabled>
+							 {{fase.faseAnterior.id}} - {{fase.faseAnterior.origemReferencia}}[{{fase.faseAnterior.codigoReferencia}}]
+						</span>
 						</a>
 					</div>
 				</div>

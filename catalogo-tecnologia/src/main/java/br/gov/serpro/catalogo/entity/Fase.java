@@ -28,12 +28,6 @@ public class Fase {
 	@Enumerated(EnumType.STRING)
 	private FaseEnum fase;
 	
-	/**
-	 * Geralmente deve ter a o id correspondente a analise ou ser nulo;
-	 */
-	@OneToOne
-	private Fase faseInicial; 
-
 	private String demandante;
 	
 	@NotEmpty
@@ -72,9 +66,6 @@ public class Fase {
 	
 	private String proximaFaseGestorEmail;
 	
-	/**
-	 *  Previsão em dias para o ciclo da próxima fase 
-	 *  */
 	private Integer proximaFaseCiclo;
 	
 	@OneToOne
@@ -94,14 +85,6 @@ public class Fase {
 
 	public void setFase(FaseEnum fase) {
 		this.fase = fase;
-	}
-
-	public Fase getFaseInicial() {
-		return faseInicial;
-	}
-
-	public void setFaseInicial(Fase faseInicial) {
-		this.faseInicial = faseInicial;
 	}
 
 	public String getDemandante() {
