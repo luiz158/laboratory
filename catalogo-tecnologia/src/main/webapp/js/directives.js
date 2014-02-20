@@ -118,3 +118,15 @@ diretivas.directive('backButton', function(){
       }
     };
 });
+
+diretivas.directive('ngMembros', function() {	
+	  return {
+		restrict: 'E',
+		require: '^ngModel',
+		scope: {
+			ngModel: '='
+	    },
+	    templateUrl: 'directives/membros.html',	    
+	    link: function(scope, elem, $attrs) {}
+	  };
+	});

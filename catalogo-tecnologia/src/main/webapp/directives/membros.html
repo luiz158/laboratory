@@ -1,0 +1,30 @@
+
+<div ng-controller="MembrosCtrl">
+	<label>Membros da {{fase.fase | nomeFase}}</label>	
+	<div >	
+	<table class="table table-striped table-bordered table-hover dataTable no-footer">
+		<thead>
+			<tr >
+				<th>Membro</th>	
+				<th>
+					<a class="btn btn-primary btn-xs" ng-click="pesquisar()">
+						<i class="fa fa-search-plus"> Pesquisar</i>
+					</a>
+				</th>
+							
+			</tr>
+		</thead>
+		<tbody >
+			<tr role="row" ng-repeat="m in membros">
+				<td>{{m.nome}} ({{m.area}}) - {{m.ramal}}</td>
+				<td style="width: 10%">
+					<a ng-click="remover(m)" class="btn btn-danger btn-xs">
+						<i class="fa fa-trash-o"> Remover</i>
+					</a>					
+				</td>				
+			</tr>
+		</tbody>
+	</table>
+	</div>
+
+</div>

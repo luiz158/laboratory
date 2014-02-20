@@ -60,6 +60,9 @@ filters.filter('nomeFase', function() {
 			'DESCARTE': 'Descarte'
 	};		
 	return function(fase){	
+		if(!isNaN(parseFloat(fase)) && isFinite(fase)){
+			return nomes[Object.keys(nomes)[fase-1]];
+		}
 		return nomes[fase];		
 	};
   });

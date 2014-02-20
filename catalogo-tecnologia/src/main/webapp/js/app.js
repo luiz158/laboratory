@@ -16,6 +16,7 @@ config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/analise', {templateUrl: 'partials/analise-listar.html', controller: 'AnaliseList'});
   $routeProvider.when('/analise/edit', {templateUrl: 'partials/analise-edit.html', controller: 'AnaliseEdit'});
   $routeProvider.when('/analise/edit/:id', {templateUrl: 'partials/analise-edit.html', controller: 'AnaliseEdit'});
+  $routeProvider.when('/prospeccao/edit/:id', {templateUrl: 'partials/prospeccao-edit.html', controller: 'ProspeccaoCtrl'});
 
   $routeProvider.when('/produto', {templateUrl: 'partials/produto-listar.html', controller: 'ProdutoList'});
   $routeProvider.when('/produto/edit', {templateUrl: 'partials/produto-edit.html', controller: 'ProdutoEdit'});
@@ -24,7 +25,7 @@ config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/grupo', {templateUrl: 'partials/grupo-listar.html', controller: 'GrupoList'});
   $routeProvider.when('/grupo/edit', {templateUrl: 'partials/grupo-edit.html', controller: 'GrupoEdit'});
   $routeProvider.when('/grupo/edit/:id', {templateUrl: 'partials/grupo-edit.html', controller: 'GrupoEdit'});
-  //$routeProvider.otherwise({templateUrl: 'partials/analise-listar.html'});
+  $routeProvider.otherwise({templateUrl: 'partials/dashboard.html'});
 }]);
 
 var controllers = angular.module('catalogo.controllers',[]);
