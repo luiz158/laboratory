@@ -72,8 +72,9 @@ diretivas.directive('ngAnaliseSituacaoButton', function() {
 diretivas.directive('ngAnexos', function() {	
 	  return {
 		restrict: 'E',
-	    scope: {
-	        fase: '=fase'
+		require: '^ngModel',
+		scope: {
+			ngModel: '='
 	    },
 	    templateUrl: 'directives/anexo.html',	    
 	    link: function(scope, elem, $attrs) {}

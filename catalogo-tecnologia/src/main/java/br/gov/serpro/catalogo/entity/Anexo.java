@@ -12,51 +12,66 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
-
-@NamedQueries({  
-	  @NamedQuery(
-			  name = Anexo.ANEXOS_DA_DEMANDA__NA_FASE, 
-			  query = "select new br.gov.serpro.catalogo.entity.Anexo(a.id, a.analise.id, a.fase, a.nomeArquivo, a.tipoArquivo, a.tamanhoArquivo) from Anexo a where (a.analise.id = :demanda) and (a.fase = :fase)")
-	}) 
+@NamedQueries({ @NamedQuery(name = Anexo.ANEXOS_DA_DEMANDA_NA_FASE, query = "select new br.gov.serpro.catalogo.entity.Anexo(a.id, a.fase.id, a.nomeArquivo, a.tipoArquivo, a.tamanhoArquivo) from Anexo a where (a.fase.id = :fase)") })
 @Entity
 public class Anexo {
-	
-	public static final String ANEXOS_DA_DEMANDA__NA_FASE ="ANEXOS_DA_DEMANDA__NA_FASE";
 
-	public Anexo(){
-		
+	public static final String ANEXOS_DA_DEMANDA_NA_FASE = "ANEXOS_DA_DEMANDA_NA_FASE";
+
+	public Anexo() {
+
 	}
-	
-	public Anexo(Long id,Long analise,Integer fase,String nomeArquivo,String tipoArquivo,Integer tamanhoArquivo){
+
+	public Anexo(Long id, Long fase, String nomeArquivo, String tipoArquivo,
+			Integer tamanhoArquivo) {
 		this.id = id;
-		this.analise = new Analise();
-		this.analise.setId(analise);
-		this.fase = fase;
+		this.fase = new Fase();
+		this.fase.setId(fase);
 		this.nomeArquivo = nomeArquivo;
 		this.tamanhoArquivo = tamanhoArquivo;
-		this.tipoArquivo = tipoArquivo;		
+		this.tipoArquivo = tipoArquivo;
 	}
-	
-	
-	
+
 	@Id
 	@GeneratedValue(strategy = SEQUENCE)
 	private Long id;
-	
-	@Lob @Basic(fetch=FetchType.LAZY)
+
+	@Lob
+	@Basic(fetch = FetchType.LAZY)
 	private byte[] arquivo;
-	
+
 	@ManyToOne
-	private Analise analise;
-	
-	private Integer fase;
-	
+	private Fase fase;
+
 	private String nomeArquivo;
-	
+
 	private String tipoArquivo;
-	
+
 	private Integer tamanhoArquivo;
-	
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public byte[] getArquivo() {
+		return arquivo;
+	}
+
+	public void setArquivo(byte[] arquivo) {
+		this.arquivo = arquivo;
+	}
+
+	public Fase getFase() {
+		return fase;
+	}
+
+	public void setFase(Fase fase) {
+		this.fase = fase;
+	}
 
 	public String getNomeArquivo() {
 		return nomeArquivo;
@@ -74,38 +89,6 @@ public class Anexo {
 		this.tipoArquivo = tipoArquivo;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-	
-	public byte[] getArquivo() {
-		return arquivo;
-	}
-
-	public void setArquivo(byte[] arquivo) {
-		this.arquivo = arquivo;
-	}
-
-	public Analise getAnalise() {
-		return analise;
-	}
-
-	public void setAnalise(Analise analise) {
-		this.analise = analise;
-	}
-
-	public Integer getFase() {
-		return fase;
-	}
-
-	public void setFase(Integer fase) {
-		this.fase = fase;
-	}
-
 	public Integer getTamanhoArquivo() {
 		return tamanhoArquivo;
 	}
@@ -113,7 +96,5 @@ public class Anexo {
 	public void setTamanhoArquivo(Integer tamanhoArquivo) {
 		this.tamanhoArquivo = tamanhoArquivo;
 	}
-	
-	
 
 }
