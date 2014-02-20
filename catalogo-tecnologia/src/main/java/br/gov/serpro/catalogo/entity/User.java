@@ -1,9 +1,20 @@
 package br.gov.serpro.catalogo.entity;
 
+import static javax.persistence.GenerationType.SEQUENCE;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+
+@Entity
 public class User implements br.gov.frameworkdemoiselle.security.User {
 
 	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue(strategy = SEQUENCE)
+	private Long id;
 	
 	private String name;
 
@@ -12,10 +23,12 @@ public class User implements br.gov.frameworkdemoiselle.security.User {
 	private String email;
 
 	private String telephoneNumber;
+	
+//	private String sector;
 
 	@Override
 	public String getId() {
-		return name;
+		return id.toString();
 	}
 
 	@Override
@@ -58,6 +71,16 @@ public class User implements br.gov.frameworkdemoiselle.security.User {
 	public void setTelephoneNumber(String telephoneNumber) {
 		this.telephoneNumber = telephoneNumber;
 	}
+
+//	public String getSector() {
+//		return sector;
+//	}
+//
+//	public void setSector(String sector) {
+//		this.sector = sector;
+//	}
+	
+	
 	
 	/*
 	private Long id;

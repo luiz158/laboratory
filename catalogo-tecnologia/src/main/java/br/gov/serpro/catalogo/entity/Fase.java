@@ -34,7 +34,6 @@ public class Fase {
 	@OneToOne
 	private Fase faseInicial; 
 
-	@NotEmpty
 	private String demandante;
 	
 	@NotEmpty

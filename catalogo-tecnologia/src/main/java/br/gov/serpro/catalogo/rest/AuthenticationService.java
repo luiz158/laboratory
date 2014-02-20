@@ -17,6 +17,7 @@ import br.gov.frameworkdemoiselle.security.Credentials;
 import br.gov.frameworkdemoiselle.security.SecurityContext;
 import br.gov.frameworkdemoiselle.util.Beans;
 import br.gov.serpro.catalogo.entity.User;
+import br.gov.serpro.catalogo.persistence.UserDAO;
 
 @ValidateRequest
 @Path("/api/auth")
@@ -25,6 +26,9 @@ public class AuthenticationService {
 
 	@Inject
 	private SecurityContext securityContext;
+	
+	@Inject
+	private UserDAO userDAO;
 
 	@POST
 	public User login(@Valid LoginForm form) throws Exception {
@@ -32,6 +36,9 @@ public class AuthenticationService {
 		credentials.setUsername(form.username);
 		credentials.setPassword(form.password);
 		securityContext.login();
+		if (securityContext.isLoggedIn()){
+			userDAO.insert((User) securityContext.getUser());
+		}
 		return (User) securityContext.getUser();
 	}
 	
