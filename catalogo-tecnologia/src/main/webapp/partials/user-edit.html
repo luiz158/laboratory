@@ -39,9 +39,12 @@
  		<div class="form-group row">
 			<div class="col-md-3" ng-repeat="grupo in grupos">
 				<input type="checkbox"
-	    				 ng-checked=""
-	    				 ng-click="toggleSelection(grupo)"> {{grupo.nome}}<br/>
+						 name="grupos[]"
+	    				 ng-checked="isGrupoInGrupos(grupo) > -1"
+	    				 ng-click="toggleSelection(grupo)"> 
+	    				 {{grupo.nome}}<br/>
  			</div>
+ 			{{user.grupos}}
  		</div>
  		
  		<div class="form-group row">

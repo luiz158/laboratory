@@ -25,6 +25,12 @@ controllers.controller('UserEdit', function Analise($scope, $http, $location,
 		$routeParams, AlertService) {
 
 	var id = $routeParams.id;
+	
+	$http.get('api/user/' + id).success(function(data) {
+		$scope.user = data;
+		console.log("user:");
+		console.log($scope.user);
+	});
 
 	$http({
 		url : 'api/grupo',
@@ -34,14 +40,10 @@ controllers.controller('UserEdit', function Analise($scope, $http, $location,
 	}).error(function(data, status) {
 	});
 
-	$http.get('api/user/' + id).success(function(data) {
-		$scope.user = data;
-	});
-
 	// toggle selection for a given fruit by name
 	$scope.toggleSelection = function toggleSelection(grupo) {
 
-		var idx = $scope.user.grupos.indexOf(grupo);
+		var idx = $scope.isGrupoInGrupos(grupo);
 
 		// is currently selected
 		if (idx > -1) {
@@ -53,18 +55,18 @@ controllers.controller('UserEdit', function Analise($scope, $http, $location,
 			$scope.user.grupos.push(grupo);
 		}
 	};
-
-//	$scope.containsObject = function containsObject(obj, list){
-//		var i;
-//		for (i = 0; i < list.length; i++) {
-//			if (list[i] === obj) {
-//				return true;
-//			}
-//		}
-//
-//		return false;
-//	};
-
+	
+	$scope.isGrupoInGrupos = function isGrupoInGrupos(grupo){
+		var id = grupo.id;
+		
+		for(var i=0; i<$scope.user.grupos.length; i++){
+			if(id == $scope.user.grupos[i].id){
+				return 0;
+			}
+		}
+		return -1;
+	};
+	
 	$scope.salvar = function() {
 		$("[id$='-message']").text("");
 		$http({
