@@ -2,9 +2,12 @@ package br.gov.serpro.catalogo.entity;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 
 @Entity
@@ -24,13 +27,19 @@ public class User implements br.gov.frameworkdemoiselle.security.User {
 
 	private String telephoneNumber;
 	
+	@OneToMany
+	private List<Grupo> grupos;
+	
 //	private String sector;
 
-	@Override
-	public String getId() {
+	public String getId(){
 		return id.toString();
 	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
 	@Override
 	public Object getAttribute(Object key) {
 		return null;
@@ -39,7 +48,7 @@ public class User implements br.gov.frameworkdemoiselle.security.User {
 	@Override
 	public void setAttribute(Object key, Object value) {
 	}
-
+	
 	public String getName() {
 		return name;
 	}
@@ -71,6 +80,15 @@ public class User implements br.gov.frameworkdemoiselle.security.User {
 	public void setTelephoneNumber(String telephoneNumber) {
 		this.telephoneNumber = telephoneNumber;
 	}
+
+	public List<Grupo> getGrupos() {
+		return grupos;
+	}
+
+	public void setGrupos(List<Grupo> grupos) {
+		this.grupos = grupos;
+	}
+	
 
 //	public String getSector() {
 //		return sector;
