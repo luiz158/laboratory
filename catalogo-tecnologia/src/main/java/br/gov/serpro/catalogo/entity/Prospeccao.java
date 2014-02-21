@@ -25,6 +25,5 @@ public class Prospeccao extends Fase{
 	public void setConclusao(String conclusao) {
 		this.conclusao = conclusao;
 	}
-	
 
 }

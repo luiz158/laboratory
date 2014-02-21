@@ -2,7 +2,6 @@ package br.gov.serpro.catalogo.entity;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CollectionTable;
@@ -52,59 +51,45 @@ public class Produto {
 	
 	private boolean atualizacao;
 
-	
 	public Long getId() {
 		return id;
 	}
-
 	
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 	
 	public String getNome() {
 		return nome;
 	}
 
-	
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
-	
 	public String getVersao() {
 		return versao;
 	}
-
 	
 	public void setVersao(String versao) {
 		this.versao = versao;
 	}
-
 	
 	public String getDescricao() {
 		return descricao;
 	}
 
-	
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
 
-
-	
 	public String getRelease() {
 		return release;
 	}
-
-
 	
 	public void setRelease(String release) {
 		this.release = release;
 	}
-
-
 	
 	public String getLicenciamento() {
 		return licenciamento;
@@ -115,20 +100,14 @@ public class Produto {
 	public void setLicenciamento(String licenciamento) {
 		this.licenciamento = licenciamento;
 	}
-
-
 	
 	public String getFabricante() {
 		return fabricante;
 	}
-
-
 	
 	public void setFabricante(String fabricante) {
 		this.fabricante = fabricante;
 	}
-
-
 	
 	public String getFornecedor() {
 		return fornecedor;
@@ -137,7 +116,6 @@ public class Produto {
 	public void setFornecedor(String fornecedor) {
 		this.fornecedor = fornecedor;
 	}
-	
 	
 	public List<String> getPlataformasSuportadas() {
 		return plataformasSuportadas;

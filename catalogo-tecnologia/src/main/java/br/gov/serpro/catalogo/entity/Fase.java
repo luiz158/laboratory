@@ -223,5 +223,4 @@ public class Fase {
 		this.faseAnterior = faseAnterior;
 	}
 	
-	
 }
