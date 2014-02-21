@@ -42,21 +42,18 @@ controllers.controller('UserEdit', function Analise($scope, $http, $location,
 
 	// toggle selection for a given fruit by name
 	$scope.toggleSelection = function toggleSelection(grupo) {
-
 		var idx = $scope.isGrupoInGrupos(grupo);
-
 		// is currently selected
 		if (idx > -1) {
 			$scope.user.grupos.splice(idx, 1);
 		}
-
 		// is newly selected
 		else {
 			$scope.user.grupos.push(grupo);
 		}
 	};
 	
-	$scope.isGrupoInGrupos = function isGrupoInGrupos(grupo){
+	$scope.isGrupoInGrupos = function isGrupoInUserGrupos(grupo){
 		var id = grupo.id;
 		
 		for(var i=0; i<$scope.user.grupos.length; i++){
@@ -90,6 +87,5 @@ controllers.controller('UserEdit', function Analise($scope, $http, $location,
 						});
 					}
 				});
-
 	}
 });
