@@ -58,7 +58,7 @@ controllers.controller('UserEdit', function Analise($scope, $http, $location,
 		
 		for(var i=0; i<$scope.user.grupos.length; i++){
 			if(id == $scope.user.grupos[i].id){
-				return 0;
+				return i;
 			}
 		}
 		return -1;
