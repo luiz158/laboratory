@@ -1,5 +1,6 @@
 package br.gov.serpro.catalogo.entity;
 
+
 public enum FaseEnum {
 
 	ANALISE, PROSPECCAO, INTERNALIZACAO, SUSTENTACAO, DESCARTE;
@@ -11,5 +12,6 @@ public enum FaseEnum {
 		
 		return null;
 	}
+	
 	
 }
