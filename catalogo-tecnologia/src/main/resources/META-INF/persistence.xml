@@ -10,6 +10,7 @@
 		<class>br.gov.serpro.catalogo.entity.Analise</class>
 		<class>br.gov.serpro.catalogo.entity.Prospeccao</class>
 		<class>br.gov.serpro.catalogo.entity.Produto</class>
+		<class>br.gov.serpro.catalogo.entity.FaseProduto</class>
 		<class>br.gov.serpro.catalogo.entity.Anexo</class>
 		<class>br.gov.serpro.catalogo.entity.Grupo</class>
 		<class>br.gov.serpro.catalogo.entity.User</class>

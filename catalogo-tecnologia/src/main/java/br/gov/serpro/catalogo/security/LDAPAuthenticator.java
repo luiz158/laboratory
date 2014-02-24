@@ -107,7 +107,6 @@ public class LDAPAuthenticator implements Authenticator {
 	
 	private LdapContext createContext(String username, String password) throws NamingException {
 		final Hashtable<String, String> env = new Hashtable<String, String>();
-
 		env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
 		env.put(Context.PROVIDER_URL, ldapConfig.getProviderURL());
 		env.put(Context.SECURITY_AUTHENTICATION, ldapConfig.getSecurityAuthentication());
