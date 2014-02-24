@@ -3,6 +3,32 @@
 /* Controllers */
 var controllers = angular.module('catalogo.controllers');
 
+controllers.controller('UserNew',
+
+		function Analise($scope, $http, $location) {
+//
+//			function carregarUser() {
+//				$http.get('api/user').success(function(data) {
+//					$scope.users = data;
+//					console.log($scope.users);
+//				});
+//			}
+//
+			$scope.pesquisar = function(cpf) {
+				$http.get('api/user/cpf/' + cpf).success(function(data) {
+					$scope.user = data;
+					console.log($scope.user);
+				});
+			};
+//			
+//			$scope.novo = function() {
+//				$location.path('/user/new');
+//			};
+//
+//			carregarUser();
+		});
+
+
 controllers.controller('UserList',
 
 function Analise($scope, $http, $location) {
@@ -16,6 +42,10 @@ function Analise($scope, $http, $location) {
 
 	$scope.editar = function(analise) {
 		$location.path('/user/edit/' + analise.id);
+	};
+	
+	$scope.novo = function() {
+		$location.path('/user/new');
 	};
 
 	carregarUser();
@@ -58,7 +88,7 @@ controllers.controller('UserEdit', function Analise($scope, $http, $location,
 		
 		for(var i=0; i<$scope.user.grupos.length; i++){
 			if(id == $scope.user.grupos[i].id){
-				return 0;
+				return i;
 			}
 		}
 		return -1;
