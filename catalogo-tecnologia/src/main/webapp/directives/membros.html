@@ -1,30 +1,72 @@
 
 <div ng-controller="MembrosCtrl">
-	<label>Membros da {{fase.fase | nomeFase}}</label>	
-	<div >	
-	<table class="table table-striped table-bordered table-hover dataTable no-footer">
-		<thead>
-			<tr >
-				<th>Membro</th>	
-				<th>
-					<a class="btn btn-primary btn-xs" ng-click="pesquisar()">
-						<i class="fa fa-search-plus"> Pesquisar</i>
-					</a>
-				</th>
-							
-			</tr>
-		</thead>
-		<tbody >
-			<tr role="row" ng-repeat="m in membros">
-				<td>{{m.nome}} ({{m.area}}) - {{m.ramal}}</td>
-				<td style="width: 10%">
-					<a ng-click="remover(m)" class="btn btn-danger btn-xs">
-						<i class="fa fa-trash-o"> Remover</i>
-					</a>					
-				</td>				
-			</tr>
-		</tbody>
-	</table>
+	<label>Membros da {{fase.fase | nomeFase}}</label>
+	<div>
+		<table
+			class="table table-striped table-bordered table-hover dataTable no-footer">
+			<thead>
+				<tr>
+					<th>Membro</th>
+					<th><a class="btn btn-primary btn-xs" data-toggle="modal"
+						data-target="#pesquisarMembrosModal"> <i
+							class="fa fa-search-plus"> Pesquisar</i>
+					</a></th>
+
+				</tr>
+			</thead>
+			<tbody>
+				<tr role="row" ng-repeat="m in membros">
+					<td>{{m.nome}} ({{m.area}}) - {{m.ramal}}</td>
+					<td style="width: 10%"><a ng-click="remover(m)"
+						class="btn btn-danger btn-xs"> <i class="fa fa-trash-o">
+								Remover</i>
+					</a></td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
+
+
+	<div class="modal fade" id="pesquisarMembrosModal" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+		style="display: none;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">×</button>
+					<h4 class="modal-title" id="myModalLabel">Pesquisar membros</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group row">
+						<div class="form-group input-group">
+							<input type="text" class="form-control" ng-model="palavraChave">
+							<span class="input-group-btn">
+								<button class="btn btn-primary" type="button" ng-click="pesquisar()">
+									Pesquisar <i class="fa fa-search"></i>
+								</button>
+							</span>
+						</div>
+
+						<!-- Table -->
+						<table class="table">
+							<tbody>
+								<tr role="row" ng-repeat="m in resultadoPesquisa">
+									<td ng-click="adicionar(m)">{{m.nome}} ({{m.area}}) - {{m.ramal}}</td>									
+								</tr>
+							</tbody>
+						</table>
+
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
 
 </div>

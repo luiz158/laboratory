@@ -28,6 +28,7 @@ config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/grupo/edit/:id', {templateUrl: 'partials/grupo-edit.html', controller: 'GrupoEdit'});
   
   $routeProvider.when('/user', {templateUrl: 'partials/user-listar.html', controller: 'UserList'});
+  $routeProvider.when('/user/new', {templateUrl: 'partials/user-new.html', controller: 'UserNew'});
   $routeProvider.when('/user/edit/:id', {templateUrl: 'partials/user-edit.html', controller: 'UserEdit'});
   $routeProvider.otherwise({templateUrl: 'partials/dashboard.html'});
 }]);

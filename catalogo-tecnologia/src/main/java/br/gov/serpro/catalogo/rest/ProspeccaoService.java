@@ -19,6 +19,7 @@ import org.jboss.resteasy.spi.validation.ValidateRequest;
 
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.serpro.catalogo.entity.Prospeccao;
+import br.gov.serpro.catalogo.persistence.FaseProdutoDAO;
 import br.gov.serpro.catalogo.persistence.ProspeccaoDAO;
 
 @ValidateRequest
@@ -28,7 +29,7 @@ public class ProspeccaoService {
 
 	@Inject
 	private ProspeccaoDAO prospeccaoDAO;
-
+	
 	@POST
 	@Transactional
 	public Long salvar(@Valid Prospeccao prospeccao) {

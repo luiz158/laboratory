@@ -9,7 +9,10 @@ controllers.controller('ProspeccaoCtrl', function ProspeccaoCtrl($scope, $rootSc
 	$scope.fase = {};
 	$scope.fase.id = $routeParams.id;
 	$scope.fase.fase = 2;
-//	$rootScope.fase = $scope.fase;
+	
+	$scope.produtos = [];
+	
+	carregarProdutos();
 
 	if ($scope.fase.id) {
 		$http.get('api/prospeccao/' + $scope.fase.id).success(function(data) {
@@ -58,5 +61,11 @@ controllers.controller('ProspeccaoCtrl', function ProspeccaoCtrl($scope, $rootSc
 		$scope.fase.dataFinalizacao = new Date();
 		$scope.salvar();
 	};
+	
+	function carregarProdutos(){
+		$http.get('api/fase/produto/' + $scope.fase.id).success(function(data) {
+			$scope.produtos = data;
+		});
+	}
 
 });
