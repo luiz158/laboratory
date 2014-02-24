@@ -43,6 +43,13 @@ public class ProdutoService {
 	}
 
 	@GET
+	@Path("/listar/{nome}")
+	public List<Produto> listarLike(@NotNull @PathParam("nome") String nome) {
+		String jpql = "SELECT p FROM Produto p WHERE upper(p.nome) like upper('%"+nome+"%')";
+		return produtoDAO.findByJPQL(jpql);
+	}
+	
+	@GET
 	public List<Produto> listar() {
 		return produtoDAO.findAll();
 	}

@@ -109,10 +109,47 @@
 				
 				<div class="form-group">
 					<label for="atualizacao">Atualização</label>
-					<input id="atualizacao" type="checkbox" ng-model="produto.atualizacao">
+					<input id="atualizacao" type="checkbox" ng-change="clicaAtualizacao()" ng-model="produto.atualizacao">
 					<span id="atualizacao-message" class="text-danger"></span>
 				</div>
+				
+				<div ng-controller="ModalDemoCtrl">
+    				<script type="text/ng-template" id="myModalContent.html">
+        				<div class="modal-header">
+            				<h3>Lista dos produtos encontrados</h3>
+        				</div>
+        				<div class="modal-body">
+    	        			<ul>
+	                			<li ng-repeat="item in produtosPesquisados">
+                    				<a ng-click="selected.item = item">{{ item.nome }} - {{item.versao}}</a>
+                				</li>
+            				</ul>
+            				Selected: <b>{{ selected.item.nome }} - {{selected.item.versao}}</b>
+        				</div>
+        				<div class="modal-footer">
+            				<button class="btn btn-primary" ng-click="ok()">OK</button>
+            				<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        				</div>
+    				</script>
 
+    				<div class="form-group row" style='padding-left:1cm;' ng:show="produto.atualizacao">
+						<div class="col-md-6">
+							<label for="produtoParaPesquisa">Palavra-chave para pesquisa:</label>
+							<input type="text" class="form-control" id="produtoParaPesquisa" ng-model="produtoParaPesquisa">
+							<span id="produtoParaPesquisa-message" class="text-danger"></span>
+						</div>
+						<div class="col-md-6" style='padding-top:0.8cm; padding-left:0cm;'>
+							<a id="btnPesquisar" ng-click="open()" class="btn btn-primary btn-xs">Pesquisar</a>
+						</div>
+					</div>
+					
+					<div class="form-group" style='padding-left:1cm;' ng:show="produto.produtoAnterior">
+						<label for="nomeProdutoAnterior">Produto:</label> 
+						<input type="text" class="form-control" disabled="disabled" id="nomeProdutoAnterior" ng-model="produto.produtoAnterior"> 
+						<span id="nomeProdutoAnterior-message" class="text-danger"></span>
+					</div>
+				</div>
+				
 				<div class="form-group">
 					<label for="legado">Legado</label>
 					<input id="legado" type="checkbox" ng-model="produto.legado">
