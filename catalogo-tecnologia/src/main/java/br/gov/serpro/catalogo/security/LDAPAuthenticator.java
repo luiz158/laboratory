@@ -36,7 +36,7 @@ public class LDAPAuthenticator implements Authenticator {
 	public void authenticate() throws Exception {
 		
 			SearchControls controls = createSearchControls();
-			String filter = createFilter();
+			String filter = createFilter(credentials.getUsername());
 			SearchResult searchResult = createSearchResult(controls, filter);
 
 			LdapContext ldapContext = createContext(searchResult.getNameInNamespace(), credentials.getPassword());
@@ -50,6 +50,14 @@ public class LDAPAuthenticator implements Authenticator {
 			
 		}*/
 	}
+	
+	public User searchUserByCPF(String cpf) throws NamingException {
+		SearchControls controls = createSearchControls();
+		String filter = createFilter(cpf);
+		SearchResult searchResult = createSearchResult(controls, filter);
+		System.out.println("########## searchRedsult ######### " + searchResult.toString());
+		return createUser(searchResult.getAttributes());
+	}
 
 	@Override
 	public void unauthenticate() throws Exception {
@@ -59,12 +67,6 @@ public class LDAPAuthenticator implements Authenticator {
 
 	@Override
 	public User getUser() {
-		/*
-		if (user == null){
-			return null;
-		} else {
-			return user.parse();
-		}*/
 		return user;
 	}
 
@@ -86,9 +88,9 @@ public class LDAPAuthenticator implements Authenticator {
 		return result;
 	}
 
-	private String createFilter() {
+	private String createFilter(String username) {
 		String result = ldapConfig.getBaseFilter();
-		result = result.replaceAll("\\{0\\}", credentials.getUsername());
+		result = result.replaceAll("\\{0\\}", username);
 
 		return result;
 	}
@@ -117,4 +119,6 @@ public class LDAPAuthenticator implements Authenticator {
 
 		return new InitialLdapContext(env, null);
 	}
+
+	
 }
