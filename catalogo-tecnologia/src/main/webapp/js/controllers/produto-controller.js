@@ -45,39 +45,42 @@ controllers.controller('ProdutoEdit', function Produto($scope, $http,
 
 	if (id) {
 		$http.get('api/produto/' + id).success(function(data) {
-			$scope.produto = data;
+			$rootScope.produto = data;
 			$scope.plataformasSuportadas = data.plataformasSuportadas;
 		});
 	} else {
-		$scope.produto = {};
+		$rootScope.produto = {};
 		$scope.plataformasSuportadas = [];
 	}
 
 	$scope.salvarProduto = function() {
-		console.log("ProdutoController " + $scope.produto);
-		$scope.produto.plataformasSuportadas = $scope.plataformasSuportadas;
-		$("[id$='-message']").text("");
-		$http({
-			url : 'api/produto',
-			method : $scope.produto.id ? "PUT" : "POST",
-			data : $scope.produto,
-			headers : {
-				'Content-Type' : 'application/json;charset=utf8'
-			}
-
-		}).success(function(data) {
-			AlertService.addWithTimeout('success','Produto salvo com sucesso');
-			$location.path('produto');
-		}).error(
-				function(data, status) {
-					if (status = 412) {
-						$.each(data, function(i, violation) {
-							$("#" + violation.property + "-message").text(
-									violation.message);
-						});
-					}
-				});
-
+		if($rootScope.produto.atualizacao && (typeof($rootScope.produto.produtoAnterior) == "undefined" || $rootScope.produto.produtoAnterior=="")){
+			alert('É necessário preencher o produto ao qual essa atualização se refere!');
+		}else{
+			console.log("ProdutoController " + $rootScope.produto);
+			$rootScope.produto.plataformasSuportadas = $scope.plataformasSuportadas;
+			$("[id$='-message']").text("");
+			$http({
+				url : 'api/produto',
+				method : $rootScope.produto.id ? "PUT" : "POST",
+				data : $rootScope.produto,
+				headers : {
+					'Content-Type' : 'application/json;charset=utf8'
+				}
+	
+			}).success(function(data) {
+				AlertService.addWithTimeout('success','Produto salvo com sucesso');
+				$location.path('produto');
+			}).error(
+					function(data, status) {
+						if (status = 412) {
+							$.each(data, function(i, violation) {
+								$("#" + violation.property + "-message").text(
+										violation.message);
+							});
+						}
+			});
+		}
 	};
 	
 	$scope.adicionaPlataforma = function() {
@@ -98,6 +101,12 @@ controllers.controller('ProdutoEdit', function Produto($scope, $http,
         }
 	};
 	
+	$scope.clicaAtualizacao = function() {
+		if(!$rootScope.produto.atualizacao){
+			$rootScope.produto.produtoAnterior = "";
+		}
+	};
+	
 	function buscaElemento(plataforma){
 		var index = -1;
 		for ( var i = 0 ; i < $scope.plataformasSuportadas.length ; i++ ) {
@@ -108,5 +117,4 @@ controllers.controller('ProdutoEdit', function Produto($scope, $http,
 		}
 		return index;
 	}
-
 });

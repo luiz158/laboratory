@@ -42,6 +42,8 @@ public class Produto {
 	@NotEmpty
 	private String descricao;
 	
+	private String produtoAnterior;
+	
 	@ElementCollection
 	@CollectionTable(name="plataformas_produtos", joinColumns=@JoinColumn(name="produto_id"))
 	@Column(name="plataformas_suportadas")
@@ -139,5 +141,13 @@ public class Produto {
 
 	public void setAtualizacao(boolean atualizacao) {
 		this.atualizacao = atualizacao;
+	}
+
+	public String getProdutoAnterior() {
+		return produtoAnterior;
+	}
+
+	public void setProdutoAnterior(String produtoAnterior) {
+		this.produtoAnterior = produtoAnterior;
 	}
 }
