@@ -7,7 +7,7 @@ import javax.naming.directory.SearchControls;
 import br.gov.frameworkdemoiselle.annotation.Name;
 import br.gov.frameworkdemoiselle.configuration.Configuration;
 
-@Configuration(prefix = "frameworkdemoiselle.ldap.")
+@Configuration(prefix = "frameworkdemoiselle.ldap")
 public class LDAPConfig {
 
 	@Name("provider.url")
