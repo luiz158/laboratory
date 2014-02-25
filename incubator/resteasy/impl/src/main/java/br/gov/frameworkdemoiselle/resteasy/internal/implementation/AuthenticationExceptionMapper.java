@@ -12,6 +12,6 @@ public class AuthenticationExceptionMapper implements ExceptionMapper<Authentica
 
 	@Override
 	public Response toResponse(AuthenticationException exception) {
-		return Response.status(SC_UNAUTHORIZED).build();
+		return Response.status(SC_UNAUTHORIZED).entity(exception.getMessage()).build();
 	}
 }
