@@ -49,6 +49,7 @@ services.factory('AlertService', function($rootScope, $timeout) {
 services.factory('AuthService', function($http) {
 
 	var logado = false;
+	var usuario = {};
 	
 	// Construtor
 	$http({
@@ -66,6 +67,7 @@ services.factory('AuthService', function($http) {
 
 	return {
 		login : function(credential, callback, errorCallback) {
+			console.log(credential);
 			$http({
 				url : 'api/auth',
 				method : "POST",
@@ -74,11 +76,13 @@ services.factory('AuthService', function($http) {
 					'Content-Type' : 'application/json;charset=utf8'
 				}
 			}).success(function(response) {
+				usuario = response;
 				logado = true;
 				callback(response);
-			}).error(function(response) {
+			}).error(function(response, status) {
+				usuario = {};
 				logado = false;
-				errorCallback(response.data);
+				errorCallback(response, status);
 			});
 		},
 		logout : function(callback) {
@@ -97,6 +101,9 @@ services.factory('AuthService', function($http) {
 		},
 		isLoggedIn : function() {
 			return logado;
+		},
+		getUsuario : function(){
+			return usuario;
 		}
 	}
 });

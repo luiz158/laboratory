@@ -1,11 +1,11 @@
 'use strict';
 
 /* Controllers */
-var controllers = angular.module('catalogo.controllers', []);
+var controllers = angular.module('catalogo.controllers');
 
 controllers.controller('AnaliseList',
 		function Analise($scope, $http, $location) {
-
+			$scope.analises = [];
 			function carregarAnalises() {
 				$http.get('api/analise').success(function(data) {
 					$scope.analises = data;
@@ -38,19 +38,21 @@ controllers.controller('AnaliseList',
 controllers.controller('AnaliseEdit', function Analise($scope, $http,
 		$location, $routeParams, $upload, $rootScope, AlertService) {
 
-	var id = $routeParams.id;
+	$scope.fase = {};
+	$scope.fase.id = $routeParams.id;
+	$scope.fase.fase = 1;
 	
-	// Necessário para compartilhar entre os controladores: Anexo, Colaboradores...
-	$rootScope.demandaId = id;
-
-	if (id) {
-		$http.get('api/analise/' + id).success(function(data) {
+	if ($scope.fase.id) {
+		$http.get('api/analise/' + $scope.fase.id).success(function(data) {
 			$scope.analise = data;
 		});
 	} else {
 		$scope.analise = {};
 		$scope.analise.situacao = 'Rascunho';
 	}
+	
+	
+	
 
 	$scope.salvar = function() {
 		console.log("AnaliseController " + $scope.analise);
@@ -81,6 +83,11 @@ controllers.controller('AnaliseEdit', function Analise($scope, $http,
 	$scope.aprovar = function(aprovado) {
 		$scope.analise.situacao = aprovado ? 'Aprovado' : 'Reprovado';
 		// $scope.salvar();
+	};
+	
+	$scope.finalizar = function() {
+		$scope.analise.dataFinalizacao = new Date();
+		$scope.salvar();
 	};
 
 });

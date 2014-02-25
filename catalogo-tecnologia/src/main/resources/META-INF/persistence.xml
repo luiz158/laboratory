@@ -5,9 +5,19 @@
 	<persistence-unit name="pu" transaction-type="JTA">
 		<jta-data-source>java:jboss/datasources/ExampleDS</jta-data-source>
 
+		
+		<class>br.gov.serpro.catalogo.entity.Fase</class>
 		<class>br.gov.serpro.catalogo.entity.Analise</class>
+		<class>br.gov.serpro.catalogo.entity.Prospeccao</class>
 		<class>br.gov.serpro.catalogo.entity.Produto</class>
+		<class>br.gov.serpro.catalogo.entity.FaseProduto</class>
 		<class>br.gov.serpro.catalogo.entity.Anexo</class>
+		<class>br.gov.serpro.catalogo.entity.Grupo</class>
+		<class>br.gov.serpro.catalogo.entity.User</class>
+		
+		<!--
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
+		-->
 
 		<properties>
 			<property name="hibernate.show_sql" value="true" />
@@ -16,7 +26,6 @@
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<!--
 			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
-			<property name="hibernate.hbm2ddl.auto" value="update" />
 			-->
 
 			<property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.JBossAppServerJtaPlatform" />

@@ -27,7 +27,6 @@ filters.filter('tipoArquivo', function() {
 	tipos['unknow']=path+"unknow.png";
 	
 	return function(tipo){	
-		console.log('Filtrando tipo de arquivo: '+tipo);
 		var url = tipos['unknow'];
 		if(tipo.indexOf('image')>-1){
 			url = tipos['image'];
@@ -49,5 +48,34 @@ filters.filter('tipoArquivo', function() {
 			url = tipos['pdf'];
 		}  		
 		return url;		
+	};
+  });
+
+filters.filter('nomeFase', function() {    
+	var nomes = {
+			'ANALISE':'Análise',
+			'PROSPECCAO': 'Prospecção',
+			'INTERNALIZACAO':'Internalização',
+			'SUSTENTACAO':'Sustentação', 
+			'DESCARTE': 'Descarte'
+	};		
+	return function(fase){	
+		if(!isNaN(parseFloat(fase)) && isFinite(fase)){
+			return nomes[Object.keys(nomes)[fase-1]];
+		}
+		return nomes[fase];		
+	};
+  });
+
+filters.filter('faseUrl', function() {    
+	var url = {
+			'ANALISE':'analise/edit',
+			'PROSPECCAO': 'prospeccao/edit',
+			'INTERNALIZACAO':'internalizacao/edit',
+			'SUSTENTACAO':'sustentacao/edit', 
+			'DESCARTE': 'descarte/edit'
+	};
+	return function(fase){	
+		return url[fase];		
 	};
   });

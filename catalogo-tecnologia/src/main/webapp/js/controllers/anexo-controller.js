@@ -7,26 +7,26 @@ var controllers = angular.module('catalogo.controllers');
 controllers.controller('AnexoCtrl', function AnexoCtrl($scope, $rootScope, $http,
 		$location, $routeParams, $upload, AlertService) {
 	
+	/* Pega a fase diretamente da diretiva*/
+	$scope.fase = $scope.$parent.ngModel;
 	
 	$scope.anexo = {};
 	$scope.progress = 0;
+	$scope.labelArquivos = 'Nenhum arquivo selecionado';
 	
-	$scope.init = function(fase){
-		$scope.fase = fase;
-		carregarAnexos();
-	};	
+	carregarAnexos();
 		
 	$scope.onFileSelect = function($files) {
 		$scope.progress = 0;
 		for (var i = 0; i < $files.length; i++) {
 			var file = $files[i];
+			$scope.labelArquivos = 'Anexando ' + file.name + ' (' + i + '/' + $files.length + ')';
 			$scope.upload = $upload.upload({
 				url : 'api/anexo',
 				method : 'POST',
 				data : {
 					anexo : {
-						analise: {id: $rootScope.demandaId},
-						fase: $scope.fase,
+						fase: {id: $scope.fase.id, fase: $scope.fase.fase},						
 						nomeArquivo: file.name,
 						tipoArquivo: file.type,
 						tamanhoArquivo: file.size,
@@ -36,13 +36,26 @@ controllers.controller('AnexoCtrl', function AnexoCtrl($scope, $rootScope, $http
 				fileFormDataName: 'file'
 			}).progress(
 				function(evt) {
-					$scope.progress = parseInt(100.0 * evt.loaded / evt.total);
-					$scope.$apply();
+					var percent = parseInt(100.0 * evt.loaded / evt.total);
+					$scope.progress =  (percent == 100) ? 0 : percent;
+					//$scope.progress = parseInt(100.0 * evt.loaded / evt.total);
+					//$scope.apply();
 			}).success(function(data, status, headers, config) {
-				$scope.progress = 0;				
+				//$scope.labelArquivos = 'Incluindo anexo...';
 				carregarAnexos();
+				$scope.progress = 0;
+				$scope.labelArquivos = '';				
+			}).error(function(data, status) {
+				$scope.labelArquivos = '';
+				$scope.progress = 0;					
+				AlertService.add('danger','Não foi possível incluir o anexo.' + data + ' erro: ' + status);
 			});
 		}
+		if ($files.length == 1) {
+			$scope.labelArquivos = $files[0].name;
+		} else if ($files.length > 1) {
+			$scope.labelArquivos = $files.length + ' arquivos selecionados';
+		}		
 	};
 	
 	$scope.excluir = function(id) {
@@ -57,9 +70,15 @@ controllers.controller('AnexoCtrl', function AnexoCtrl($scope, $rootScope, $http
 		});
 	};
 	
+	$scope.cancelarUpload = function() {
+		$scope.labelArquivos = 'Upload cancelado';
+		$scope.progress = 0;		
+		$scope.upload.abort();
+	};
+	
 	function carregarAnexos() {
-		if($rootScope.demandaId){
-			$http.get('api/anexo/'+$rootScope.demandaId+'/'+$scope.fase).success(function(data) {
+		if($scope.fase.id){
+			$http.get('api/anexo/'+$scope.fase.id).success(function(data) {
 				$scope.anexos = data;
 			});
 		}

@@ -8,5 +8,5 @@ import br.gov.serpro.catalogo.entity.Analise;
 public class AnaliseDAO extends JPACrud<Analise, Long> {
 	
 	private static final long serialVersionUID = 1L;
-	
+		
 }

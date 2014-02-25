@@ -6,13 +6,12 @@ var controllers = angular.module('catalogo.controllers');
 controllers.controller('Auth', function Auth($scope, $http, $location, AuthService) {
 
 	console.log('AUTH CONTROLLER');
-	
 	$scope.usuario = {};
+	$scope.formData = {"username": "", "password": ""};
 	
 	function sucesso(data){
 		console.log('FUNÇÃO CALLBACK SUCESSO LOGIN')
 		$scope.usuario = data;
-		console.log($scope.usuario);
 		$location.path("/analise");
 	}
 	
@@ -22,8 +21,19 @@ controllers.controller('Auth', function Auth($scope, $http, $location, AuthServi
 		$scope.usuario = null;
 	}
 	
-	function erro(data){
-		console.log('FUNÇÃO CALLBACK ERRO LOGIN')
+	function erro(data, status){
+		console.log('FUNÇÃO CALLBACK ERRO LOGIN');
+		$("[id$='-message']").text("");
+		switch (status) {
+		case 412: 
+			$.each(data, function(i, violation) {
+				$("#" + violation.property + "-message").text(violation.message);
+			});
+			break;
+		case 401: 
+			$("#message").html("Usuário ou senha inválidos.");
+			break;
+		}
 	}
 	
 	$scope.entrar = function() {
@@ -36,5 +46,9 @@ controllers.controller('Auth', function Auth($scope, $http, $location, AuthServi
 	
 	$scope.isLoggedIn = function(){
 		return AuthService.isLoggedIn();
+	}
+	
+	$scope.getUsuario = function(){
+		return AuthService.getUsuario();
 	}
 });

@@ -1,0 +1,131 @@
+<div class="panel painel-default">
+	<h1 class="page-header">
+		Pesquisa <small>por fases</small>
+	</h1>
+
+	<div>
+		<ng-alerts></ng-alerts>
+	</div>
+
+	<div class="panel-body">
+		<form name="formPesquisa" role="form">
+			<div class="form-group row">
+				<div class="col-md-4">
+					<label for="palavraChave">Palavra-chave:</label> <input
+						class="form-control" type="text" id="palavraChave"
+						ng-model="fase.palavraChave">
+				</div>
+				<div class="col-md-4">
+					<label for="fase">Fase:</label> <select id="fase"
+						class="form-control" ng-model="fase.fase">
+						<option>--</option>
+						<option value="1">Análise</option>
+						<option value="2">Prospecção</option>
+						<option value="3">Internalização</option>
+						<option value="4">Sustentação</option>
+						<option value="5">Declínio</option>
+					</select>
+				</div>
+				<div class="col-md-4">
+					<label for="id">ID:</label> <input class="form-control" type="text"
+						id="id" ng-model="fase.id">
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-md-4">
+					<label for="gestor">Gestor:</label> <input
+						class="form-control" type="text" id="gestor"
+						ng-model="fase.gestor">
+				</div>
+				<div class="col-md-4">
+					<label for="origemReferencia">Referência:</label> <select
+						class="form-control" ng-model="fase.origemReferencia"
+						id="origemReferencia">
+						<option>--</option>
+						<option>ALM</option>
+						<option>SPEKX</option>
+						<option>Solicita</option>
+						<option>SISCOR</option>
+						<option>Demandas RFB</option>
+						<option>CSS</option>
+					</select>
+				</div>
+				<div class="col-md-4">
+					<label for="codigo">Código:</label> <input class="form-control"
+						type="text" id="codigo" ng-model="fase.codigoReferencia">
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-md-4">
+					<label for="finalizada">Finalizada:</label> <select
+						class="form-control" ng-model="fase.finalizada" id="finalizada">
+						<option value='1'>SIM</option>
+						<option value='0'>NÃO</option>
+					</select>
+				</div>
+				<div class="col-md-4">
+					<div date-picker="start"></div>
+					<label for="dataFinalizacaoApartir"> <i
+						class="fa fa-calendar"></i> Finalização a partir de:
+					</label> <input type="text" class="form-control"
+						id="dataFinalizacaoApartir" name="dataFinalizacaoApartir"
+						ng-model="fase.finalizacaoApartir" data-date-type="number"
+						data-min-date="01/01/2010" data-max-date="today"
+						data-autoclose="1" data-date-format="dd/MM/yyyy" bs-datepicker>
+				</div>
+				<div class="col-md-4">
+					<div date-picker="start"></div>
+					<label for="dataFinalizacaoAte"> <i class="fa fa-calendar"></i>
+						Finalização até:
+					</label> <input type="text" class="form-control" id="dataFinalizacaoAte"
+						name="dataFinalizacaoAte" ng-model="fase.finalizacaoAte"
+						data-date-type="number" data-min-date="01/01/2010"
+						data-max-date="today" dResultadoata-autoclose="1"
+						data-date-format="dd/MM/yyyy" bs-datepicker>
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-md-6">
+					<button class="btn btn-primary" ng-click="pesquisar()">
+						<i class="fa fa-search-plus"> </i> Pesquisar
+					</button>
+					<button class="btn btn-primary" ng-click="limpar()">
+						<i class="fa fa-eraser"> </i> Limpar
+					</button>
+				</div>
+			</div>
+		</form>
+				
+		<div>
+			<div class="list-group">
+		        <a ng-repeat="f in resultado" href="#{{f.fase | faseUrl}}/{{f.id}}" class="list-group-item">
+		        	<div class="list-group-item-heading row">
+		        		<div class="col-md-4">
+		        			<b>ID:</b> {{f.id}} 
+		        		</div>
+		        		<div class="col-md-4">
+		        			<b>Fase:</b> {{f.fase | nomeFase}}  
+		        		</div>
+		        		<div class="col-md-4">
+		        			<b>Referência:</b> {{f.origemReferencia}} ( {{f.codigoReferencia}} ) 
+		        		</div>
+		        	</div>
+		            <div class="list-group-item-heading row">
+		        		<div class="col-md-4">
+		        			<b>Gestor:</b> {{f.gestor}} - {{f.area}} 
+		        		</div>
+		        		<div class="col-md-4">
+		        			<b>Registro:</b> {{f.dataRealizacao}}  
+		        		</div>
+		        		<div class="col-md-4">
+		        			<b>Finalização:</b> {{f.dataFinalizacao}} 
+		        		</div>
+		        	</div>
+    				<p class="list-group-item-text"><b>Objetivo:</b> {{f.objetivo}}</p>
+		        </a>
+		    </div>
+		</div>
+		
+		
+	</div>
+</div>

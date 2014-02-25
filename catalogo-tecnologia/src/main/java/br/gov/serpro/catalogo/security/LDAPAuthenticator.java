@@ -14,7 +14,6 @@ import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
 import javax.servlet.http.HttpSession;
 
-import br.gov.frameworkdemoiselle.security.AuthenticationException;
 import br.gov.frameworkdemoiselle.security.Authenticator;
 import br.gov.frameworkdemoiselle.security.Credentials;
 import br.gov.frameworkdemoiselle.util.Beans;
@@ -35,9 +34,9 @@ public class LDAPAuthenticator implements Authenticator {
 
 	@Override
 	public void authenticate() throws Exception {
-		try {
+		
 			SearchControls controls = createSearchControls();
-			String filter = createFilter();
+			String filter = createFilter(credentials.getUsername());
 			SearchResult searchResult = createSearchResult(controls, filter);
 
 			LdapContext ldapContext = createContext(searchResult.getNameInNamespace(), credentials.getPassword());
@@ -45,9 +44,21 @@ public class LDAPAuthenticator implements Authenticator {
 
 			user = createUser(searchResult.getAttributes());
 
-		} catch (Exception cause) {
-			throw new AuthenticationException(cause);
+		/*} catch (Exception cause) {
+			throw new InvalidCredentialsException("usuário ou senha inválidos");
+		} catch (AuthenticationException cause) {
+			
+		}*/
+	}
+	
+	public User searchUserByCPF(String cpf) throws NamingException {
+		SearchControls controls = createSearchControls();
+		String filter = createFilter(cpf);
+		SearchResult searchResult = createSearchResult(controls, filter);
+		if(searchResult == null){
+			return null;
 		}
+		return createUser(searchResult.getAttributes());
 	}
 
 	@Override
@@ -58,12 +69,6 @@ public class LDAPAuthenticator implements Authenticator {
 
 	@Override
 	public User getUser() {
-		/*
-		if (user == null){
-			return null;
-		} else {
-			return user.parse();
-		}*/
 		return user;
 	}
 
@@ -85,9 +90,9 @@ public class LDAPAuthenticator implements Authenticator {
 		return result;
 	}
 
-	private String createFilter() {
+	private String createFilter(String username) {
 		String result = ldapConfig.getBaseFilter();
-		result = result.replaceAll("\\{0\\}", credentials.getUsername());
+		result = result.replaceAll("\\{0\\}", username);
 
 		return result;
 	}
@@ -116,4 +121,6 @@ public class LDAPAuthenticator implements Authenticator {
 
 		return new InitialLdapContext(env, null);
 	}
+
+	
 }

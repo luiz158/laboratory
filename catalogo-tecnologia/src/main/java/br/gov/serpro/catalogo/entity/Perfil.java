@@ -1,0 +1,7 @@
+package br.gov.serpro.catalogo.entity;
+
+public enum Perfil {
+
+	ANALISE, PROSPECCAO, INTERNALIZACAO, SUSTENTACAO, DECLINIO, ADMINISTRADOR, CADASTRADOR, CONSULTOR 
+	
+}

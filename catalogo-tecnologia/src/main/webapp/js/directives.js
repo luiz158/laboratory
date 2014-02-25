@@ -21,7 +21,7 @@ diretivas.directive('ngAnaliseSituacao', function() {
 		    		var labelType = 'label-success';
 		    		var icon = 'fa-thumbs-o-up';
 		    	} else 
-		    	if (situacao == 'Rejeitado') {
+		    	if (situacao == 'Reprovado') {
 		    		var labelType = 'label-danger';
 		    		var icon = 'fa-thumbs-o-down';
 		    	}
@@ -33,7 +33,7 @@ diretivas.directive('ngAnaliseSituacao', function() {
 	});
 
 diretivas.directive('ngAnaliseSituacaoButton', function() {
-
+	
 	  return {
 		//restrict: 'C',
 	    //require: '^ngSituacao',
@@ -72,8 +72,9 @@ diretivas.directive('ngAnaliseSituacaoButton', function() {
 diretivas.directive('ngAnexos', function() {	
 	  return {
 		restrict: 'E',
-	    scope: {
-	        fase: '=fase'
+		require: '^ngModel',
+		scope: {
+			ngModel: '='
 	    },
 	    templateUrl: 'directives/anexo.html',	    
 	    link: function(scope, elem, $attrs) {}
@@ -85,5 +86,48 @@ diretivas.directive('ngAlerts', function() {
 	  return {
 		restrict: 'E',
 	    templateUrl: 'directives/alerts.html'	    
+	  };
+	});
+
+diretivas.directive('ngClickConfirm', function() {
+	return {
+		restrict : 'A',
+		link : function(scope, elt, attrs) {
+			elt.bind('click', function(e) {
+				var message = attrs.msg || "Você tem certeza?";
+				bootbox.confirm(message, function(result) {
+					if (result) {
+						var action = attrs.ngClickConfirm;
+						scope.$eval(action);
+					}
+				});
+			});
+		},
+	};
+});
+
+
+diretivas.directive('backButton', function(){
+    return {
+      restrict: 'A',
+      link: function(scope, element, attrs) {
+    	  console.log('bind');
+        element.bind('click', function () {
+          history.back();
+          scope.$apply();
+        });
+      }
+    };
+});
+
+diretivas.directive('ngMembros', function() {	
+	  return {
+		restrict: 'E',
+		require: '^ngModel',
+		scope: {
+			ngModel: '='
+	    },
+	    templateUrl: 'directives/membros.html',	    
+	    link: function(scope, elem, $attrs) {}
 	  };
 	});
