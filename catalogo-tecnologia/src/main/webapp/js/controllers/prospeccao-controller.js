@@ -62,10 +62,34 @@ controllers.controller('ProspeccaoCtrl', function ProspeccaoCtrl($scope, $rootSc
 		$scope.salvar();
 	};
 	
+	$http.get('api/produto').success(function(data) {
+		$scope.resultadoProdutos = data;
+	});
+	
+	$scope.adicionarProduto = function(p){
+		var fp = {};
+		fp.id = 1000;
+		fp.fase = $scope.fase;
+		fp.produto = p;
+		$scope.produtos.push(fp);
+	};
+	
+	
 	function carregarProdutos(){
 		$http.get('api/fase/produto/' + $scope.fase.id).success(function(data) {
 			$scope.produtos = data;
 		});
 	}
+	
+	$scope.removerProduto = function(id) {
+		$http({
+			url : 'api/fase/produto/' + id,
+			method : "DELETE"
+		}).success(function(data) {
+			carregarProdutos();
+		}).error(function(data, status) {
+			AlertService.addWithTimeout('danger','Não foi possível remover o produto.');
+		});
+	};
 
 });
