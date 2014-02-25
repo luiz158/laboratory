@@ -55,7 +55,9 @@ public class LDAPAuthenticator implements Authenticator {
 		SearchControls controls = createSearchControls();
 		String filter = createFilter(cpf);
 		SearchResult searchResult = createSearchResult(controls, filter);
-		System.out.println("########## searchRedsult ######### " + searchResult.toString());
+		if(searchResult == null){
+			return null;
+		}
 		return createUser(searchResult.getAttributes());
 	}
 

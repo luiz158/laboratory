@@ -4,10 +4,12 @@ import static javax.persistence.GenerationType.SEQUENCE;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.UniqueConstraint;
 
 @Entity
 public class User implements br.gov.frameworkdemoiselle.security.User {
@@ -17,7 +19,8 @@ public class User implements br.gov.frameworkdemoiselle.security.User {
 	@Id
 	@GeneratedValue(strategy = SEQUENCE)
 	private Long id;
-	
+
+	@Column(unique=true)
 	private String name;
 
 	private String displayName;
