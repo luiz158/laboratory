@@ -35,7 +35,7 @@ config(['$routeProvider', function($routeProvider) {
 
 var controllers = angular.module('catalogo.controllers',[]);
 
-var ModalDemoCtrl = function ($scope, $http, $modal, $log) {
+var ModalDemoCtrl = function ($scope, $http, $modal, $log, $document) {
 
 	$scope.produtoParaPesquisa = "";
 	
@@ -52,6 +52,10 @@ var ModalDemoCtrl = function ($scope, $http, $modal, $log) {
 			$http.get(servico).success(function(data) {
 				$scope.produtosPesquisados = data;
 				
+				//var bodyRef = angular.element( $document[0].body );
+				
+				//bodyRef.addClass('ovh');
+				
 				var modalInstance = $modal.open({
 				    templateUrl: 'myModalContent.html',
 				    controller: ModalInstanceCtrl,
@@ -63,9 +67,11 @@ var ModalDemoCtrl = function ($scope, $http, $modal, $log) {
 				});
 				
 				modalInstance.result.then(function (selectedItem) {
+					  //bodyRef.removeClass('ovh');
 				      $scope.selected = selectedItem;
 				    }, function () {
-				    $log.info('Modal dismissed at: ' + new Date());
+				    	//bodyRef.removeClass('ovh');
+				        $log.info('Modal dismissed at: ' + new Date());
 				});
 				
 			});
@@ -85,7 +91,7 @@ var ModalInstanceCtrl = function ($rootScope, $scope, $modalInstance, items) {
 	
 	$scope.ok = function () {
 	  $modalInstance.close($scope.selected.item);
-	  $rootScope.produto.produtoAnterior = $scope.selected.item.nome;
+	  $rootScope.produto.produtoAnterior = $scope.selected.item.nome + " - " + $scope.selected.item.versao + "." + $scope.selected.item.release;
 	};
 
 	$scope.cancel = function () {

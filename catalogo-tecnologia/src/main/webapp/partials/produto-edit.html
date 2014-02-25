@@ -114,22 +114,22 @@
 				</div>
 				
 				<div ng-controller="ModalDemoCtrl">
-    				<script type="text/ng-template" id="myModalContent.html">
-        				<div class="modal-header">
-            				<h3>Lista dos produtos encontrados</h3>
-        				</div>
-        				<div class="modal-body">
-    	        			<ul>
-	                			<li ng-repeat="item in produtosPesquisados">
-                    				<a ng-click="selected.item = item">{{ item.nome }} - {{item.versao}}</a>
-                				</li>
-            				</ul>
-            				Selected: <b>{{ selected.item.nome }} - {{selected.item.versao}}</b>
-        				</div>
-        				<div class="modal-footer">
-            				<button class="btn btn-primary" ng-click="ok()">OK</button>
-            				<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-        				</div>
+    				<script type="text/ng-template" id="myModalContent.html">						
+        						<div class="modal-header">
+            						<h3>Lista dos produtos encontrados</h3>
+        						</div>
+        						<div class="modal-body">
+    	        					<ul>
+	                					<li ng-repeat="item in produtosPesquisados">
+                    						<a ng-click="selected.item = item">{{ item.nome }} - {{item.versao}} - {{item.release}}</a>
+                						</li>
+            						</ul>
+        						</div>
+        						<div class="modal-footer">
+								    Produto: <b style="padding-right: 34%;">{{ selected.item.nome }} - {{selected.item.versao}}.{{selected.item.release}}</b>
+       								<button class="btn btn-primary" ng-click="ok()">OK</button>
+       								<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        						</div>							
     				</script>
 
     				<div class="form-group row" style='padding-left:1cm;' ng:show="produto.atualizacao">

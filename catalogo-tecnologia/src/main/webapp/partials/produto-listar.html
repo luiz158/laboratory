@@ -22,6 +22,8 @@
 					<th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1"
 						aria-label="Browser: activate to sort column ascending">Versão</th>
 					<th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1"
+						aria-label="Browser: activate to sort column ascending">Release</th>	
+					<th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1"
 						aria-label="Browser: activate to sort column ascending">Descrição</th>
 					<th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1"
 						aria-label="Platform(s): activate to sort column ascending" style="width: 105px;">Ações</th>
@@ -32,6 +34,7 @@
 					<td><a ng-click="editarProduto(p)">{{p.id}}</a></td>
 					<td><a ng-click="editarProduto(p)">{{p.nome}}</a></td>
 					<td><a ng-click="editarProduto(p)">{{p.versao}}</a></td>
+					<td><a ng-click="editarProduto(p)">{{p.release}}</a></td>
 					<td><a ng-click="editarProduto(p)">{{p.descricao}}</a></td>
 					<td><a ng-click="excluirProduto(p.id)" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> excluir</a></td>
 				</tr>

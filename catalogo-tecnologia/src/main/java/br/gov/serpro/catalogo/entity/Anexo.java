@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -40,7 +41,8 @@ public class Anexo {
 	@Basic(fetch = FetchType.LAZY)
 	private byte[] arquivo;
 
-	@ManyToOne
+	@ManyToOne(targetEntity=Fase.class) 
+    @JoinColumn(name="fase_id", nullable=false, updatable=false)
 	private Fase fase;
 
 	private String nomeArquivo;

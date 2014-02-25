@@ -114,7 +114,1382 @@ public class CargaInicial {
 		fp.setProduto(produto);
 		faseProdutoDAO.insert(fp);
 		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
 		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
+		
+		produto = new Produto();
+		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
+		produto.setFabricante("Zuzkw");
+		produto.setFornecedor("Faice");
+		produto.setNome("Uotsap");
+		produto.setLicenciamento("GPL");
+		produto.setLegado(false);
+		produto.setVersao("2.0");
+		produto.setRelease("2.0");
+		produtoDAO.insert(produto);
+		
+		
+		fp = new FaseProduto();
+		fp.setFase(p);
+		fp.setProduto(produto);
+		faseProdutoDAO.insert(fp);
 		
 	}
 
