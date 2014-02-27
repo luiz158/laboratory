@@ -4,8 +4,6 @@
 var controllers = angular.module('catalogo.controllers');
 
 controllers.controller('Auth', function Auth($scope, $http, $location, AuthService) {
-
-	console.log('AUTH CONTROLLER');
 	$scope.usuario = {};
 	$scope.formData = {"username": "", "password": ""};
 	

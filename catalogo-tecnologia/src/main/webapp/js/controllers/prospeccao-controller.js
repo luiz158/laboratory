@@ -20,14 +20,10 @@ controllers.controller('ProspeccaoCtrl', function ProspeccaoCtrl($scope, $rootSc
 		});
 	} else {
 		AlertService.addWithTimeout('danger','Não foi possível encontrar a prospecção');
-		console.log('vai vltar...');
 		history.back();
 	}
 		
-	console.log($scope.fase);
-	
 	$scope.salvar = function() {
-		console.log("Salvar:  " + $scope.fase);
 		$("[id$='-message']").text("");
 		$http({
 			url : 'api/prospeccao',
@@ -36,25 +32,22 @@ controllers.controller('ProspeccaoCtrl', function ProspeccaoCtrl($scope, $rootSc
 			headers : {
 				'Content-Type' : 'application/json;charset=utf8'
 			}
-
 		}).success(function(data) {
 			AlertService.addWithTimeout('success','Prospecção salva com sucesso');
 			$location.path('/pesquisa/fases/2');
-		}).error(
-				function(data, status) {
-					if (status = 412) {
-						$.each(data, function(i, violation) {
-							$("#" + violation.property + "-message").text(
-									violation.message);
-						});
-					}
+		}).error( function(data, status) {
+			if (status = 412) {
+				$.each(data, function(i, violation) {
+					$("#" + violation.property + "-message").text(
+							violation.message);
 				});
+			}
+		});
 
 	};
 
 	$scope.aprovar = function(aprovado) {
 		$scope.fase.situacao = aprovado ? 'Aprovado' : 'Reprovado';
-		// $scope.salvar();
 	};
 	
 	$scope.finalizar = function() {

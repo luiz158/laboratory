@@ -7,8 +7,7 @@ angular.module('catalogo', [
   'catalogo.services',
   'catalogo.filters',
   'angularFileUpload',
-  'mgcrea.ngStrap',
-  'ui.bootstrap'
+  'mgcrea.ngStrap'
 ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/login', {templateUrl: 'partials/login.html', controller: 'Auth'});
