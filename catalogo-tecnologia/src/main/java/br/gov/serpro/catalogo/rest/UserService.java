@@ -5,7 +5,6 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.naming.NamingException;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.GET;

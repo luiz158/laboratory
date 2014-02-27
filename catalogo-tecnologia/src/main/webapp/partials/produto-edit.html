@@ -113,33 +113,17 @@
 					<span id="atualizacao-message" class="text-danger"></span>
 				</div>
 				
-				<div ng-controller="ModalDemoCtrl">
-    				<script type="text/ng-template" id="myModalContent.html">						
-        						<div class="modal-header">
-            						<h3>Lista dos produtos encontrados</h3>
-        						</div>
-        						<div class="modal-body">
-    	        					<ul>
-	                					<li ng-repeat="item in produtosPesquisados">
-                    						<a ng-click="selected.item = item">{{ item.nome }} - {{item.versao}} - {{item.release}}</a>
-                						</li>
-            						</ul>
-        						</div>
-        						<div class="modal-footer">
-								    Produto: <b style="padding-right: 34%;">{{ selected.item.nome }} - {{selected.item.versao}}.{{selected.item.release}}</b>
-       								<button class="btn btn-primary" ng-click="ok()">OK</button>
-       								<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-        						</div>							
-    				</script>
-
+				<div ng-controller="DemoCtrl">
     				<div class="form-group row" style='padding-left:1cm;' ng:show="produto.atualizacao">
 						<div class="col-md-6">
 							<label for="produtoParaPesquisa">Palavra-chave para pesquisa:</label>
 							<input type="text" class="form-control" id="produtoParaPesquisa" ng-model="produtoParaPesquisa">
 							<span id="produtoParaPesquisa-message" class="text-danger"></span>
 						</div>
-						<div class="col-md-6" style='padding-top:0.8cm; padding-left:0cm;'>
-							<a id="btnPesquisar" ng-click="open()" class="btn btn-primary btn-xs">Pesquisar</a>
+							<div class="col-md-6" style='padding-top:0.5cm; padding-left:0cm;'>
+							<button type="button" class="btn btn-lg btn-primary" data-template="partials/pesquisa-produtos.html" bs-modal="modal">
+								Pesquisar
+							</button>	
 						</div>
 					</div>
 					

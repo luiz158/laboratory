@@ -4,7 +4,7 @@
 var controllers = angular.module('catalogo.controllers');
 
 controllers.controller('ProdutoList',
-		function Produto($scope, $http, $location) {
+		function Produto($scope, $http, $location, AlertService) {
 
 			function carregarProdutos() {
 				$http.get('api/produto').success(function(data) {
@@ -29,6 +29,8 @@ controllers.controller('ProdutoList',
 					carregarProdutos();
 
 				}).error(function(data, status) {
+					AlertService.addWithTimeout('danger','Não foi possível executar a operação');
+					console.log('vai vltar...');
 				});
 			};
 
