@@ -5,7 +5,7 @@ var controllers = angular.module('catalogo.controllers');
 
 controllers.controller('ProdutoList',
 		function Produto($scope, $http, $location, AlertService) {
-
+			
 			function carregarProdutos() {
 				$http.get('api/produto').success(function(data) {
 					$scope.produtos = data;
@@ -39,7 +39,11 @@ controllers.controller('ProdutoList',
 
 controllers.controller('ProdutoEdit', function Produto($scope, $http,
 		$location, $routeParams, $upload, $rootScope, AlertService) {
-
+	
+	$scope.produtoParaPesquisa = "";
+	
+	$scope.modal = ({title: 'Title', content: 'Hello Modal<br />This is a multiline message!'});
+	
 	var id = $routeParams.id;
 	
 	// Necessário para compartilhar entre os controladores: Anexo, Colaboradores...

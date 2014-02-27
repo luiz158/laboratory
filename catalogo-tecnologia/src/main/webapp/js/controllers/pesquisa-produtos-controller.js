@@ -4,20 +4,19 @@
 var controllers = angular.module('catalogo.controllers');
 
 controllers.controller('DemoCtrl', function($scope, $http, $rootScope) {
-	$scope.modal = ({title: 'Title', content: 'Hello Modal<br />This is a multiline message!'});
+	//$scope.modal = ({title: 'Title', content: 'Hello Modal<br />This is a multiline message!'});
 
-	$scope.produtoParaPesquisa = "";
 	$scope.selected = "";
 
 	var servico = "";  
 
     if($scope.produtoParaPesquisa != ""){
-    	servico = 'api/produto/listar/'+ $scope.produtoParaPesquisa;
+    	servico = 'api/produto/listar/'+$scope.produtoParaPesquisa;
     }else{
     	servico = 'api/produto';
-    }  
-	   
-	$http.get(servico).success(function(data) {
+    }
+
+    $http.get(servico).success(function(data) {
 		$scope.produtosPesquisados = data;
 	});	
 	

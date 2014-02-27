@@ -1,4 +1,4 @@
-<div class="modal" tabindex="-1" role="dialog">
+<div class="modal" tabindex="-1" role="dialog" ng-controller="DemoCtrl">
 	
 	<div ng-show="!produtosPesquisados">Loading ...</div>
 	
@@ -10,14 +10,20 @@
 			<div class="modal-body" ng-show="content">
 
 				<ul>
-					<li ng-repeat="item in produtosPesquisados">
-						<a ng-click="seleciona(item)">{{ item.nome }} - {{item.versao}} - {{item.release}}</a>
+					<li ng-repeat="produto in produtosPesquisados">
+						<a ng-click="seleciona(produto)">{{ produto.nome }} - {{produto.versao}} - {{produto.release}}</a>
 					</li>
 				</ul>
 			</div>
 			<div class="modal-footer">
-				Produto: <b style="padding-right: 34%;">{{ selected.nome }} - {{selected.versao}}.{{selected.release}}</b>
-				<button class="btn btn-primary" ng-click="$hide()">OK</button>
+				<div class="form-group row">
+					<div class="col-md-6">
+						Produto: <b>{{ selected.nome }} - {{selected.versao}}.{{selected.release}}</b>
+					</div>	
+					<div class="col-md-6" style="padding-left: 34%;">					
+						<button class="btn btn-primary" ng-click="$hide()">OK</button>
+					</div>
+				</div>	
 			</div>
 		</div>
 	</div>
