@@ -10,6 +10,10 @@
 		<class>br.gov.serpro.catalogo.entity.Analise</class>
 		<class>br.gov.serpro.catalogo.entity.Prospeccao</class>
 		<class>br.gov.serpro.catalogo.entity.Produto</class>
+		<class>br.gov.serpro.catalogo.entity.Licenciamento</class>
+		<class>br.gov.serpro.catalogo.entity.Fornecedor</class>
+		<class>br.gov.serpro.catalogo.entity.Fabricante</class>
+		<class>br.gov.serpro.catalogo.entity.PlataformaTecnologica</class>
 		<class>br.gov.serpro.catalogo.entity.FaseProduto</class>
 		<class>br.gov.serpro.catalogo.entity.Anexo</class>
 		<class>br.gov.serpro.catalogo.entity.Grupo</class>
