@@ -3,6 +3,10 @@
 		Produto <small>edição</small>
 	</h1>
 
+	<div>
+		<ng-alerts></ng-alerts>
+	</div>
+
 	<form name="formProduto" role="form">
 <!-- 		<ul class="nav nav-tabs" ng:init="selected=1"> -->
 <!-- 			<li class="ng-class: selected == 1 ? 'active':'';"><a -->
@@ -42,9 +46,7 @@
 					</div>
 					<div class="col-md-6">
 						<label for="licenciamento">Licenciamento:</label>
-						<select id="licenciamento" class="form-control" ng-model="produto.licenciamento">
-							<option>GPL</option>
-							<option>LGPL</option>
+						<select id="licenciamento" class="form-control" ng-model="licenciamento" ng-options="l.nome for l in licenciamentos" required>
 						</select>
 					</div>
 				</div>
@@ -52,14 +54,12 @@
 				<div class="form-group row">
 					<div class="col-md-6">
 						<label for="fabricante">Fabricante:</label>
-						<select id="fabricante" class="form-control" ng-model="produto.fabricante">
-							<option>Mozilla Foundation</option>
+						<select id="fabricante" class="form-control" ng-model="fabricante" ng-options="f.nome for f in fabricantes" required>
 						</select>
 					</div>
 					<div class="col-md-6">
 						<label for="fornecedor">Fornecedor:</label>
-						<select id="fornecedor" class="form-control" ng-model="produto.fornecedor">
-							<option>Mozilla Foundation</option>
+						<select id="fornecedor" class="form-control" ng-model="fornecedor" ng-options="f.nome for f in fornecedores" required>
 						</select>
 					</div>
 				</div>
@@ -68,11 +68,7 @@
 					<div class="form-group row">
 						<div class="col-md-6">
 							<label for="plataformasTecSuportadas">Plataformas tecnológicas suportadas:</label>
-							<select id="plataformasTecSuportadas" class="form-control" ng-model="plataforma">
-								<option>Plataforma 1</option>
-								<option>Plataforma 2</option>
-								<option>Plataforma 3</option>
-								<option>Plataforma 4</option>
+							<select id="plataformasTecSuportadas" class="form-control" ng-model="plataforma" ng-options="p.nome for p in plataformasTecnologicas" required>
 							</select>
 							<span id="plataformasTecSuportadas-message" class="text-danger"></span>
 						</div>
@@ -92,7 +88,7 @@
 							</thead>
 							<tbody>
 								<tr ng-repeat="p in plataformasSuportadas">
-									<td>{{p}}</td>
+									<td>{{p.nome}}</td>
 									<td><a ng-click="removePlataforma(p)" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i></a></td>
 								</tr>
 							</tbody>

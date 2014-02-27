@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -6,13 +8,21 @@ import br.gov.frameworkdemoiselle.lifecycle.Startup;
 import br.gov.frameworkdemoiselle.stereotype.BusinessController;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.serpro.catalogo.entity.Analise;
+import br.gov.serpro.catalogo.entity.Fabricante;
 import br.gov.serpro.catalogo.entity.FaseEnum;
 import br.gov.serpro.catalogo.entity.FaseProduto;
+import br.gov.serpro.catalogo.entity.Fornecedor;
+import br.gov.serpro.catalogo.entity.Licenciamento;
+import br.gov.serpro.catalogo.entity.PlataformaTecnologica;
 import br.gov.serpro.catalogo.entity.Produto;
 import br.gov.serpro.catalogo.entity.Prospeccao;
 import br.gov.serpro.catalogo.entity.Situacao;
 import br.gov.serpro.catalogo.persistence.AnaliseDAO;
+import br.gov.serpro.catalogo.persistence.FabricanteDAO;
 import br.gov.serpro.catalogo.persistence.FaseProdutoDAO;
+import br.gov.serpro.catalogo.persistence.FornecedorDAO;
+import br.gov.serpro.catalogo.persistence.LicenciamentoDAO;
+import br.gov.serpro.catalogo.persistence.PlataformaTecnologicaDAO;
 import br.gov.serpro.catalogo.persistence.ProdutoDAO;
 import br.gov.serpro.catalogo.persistence.ProspeccaoDAO;
 
@@ -29,6 +39,18 @@ public class CargaInicial {
 	
 	@Inject
 	private ProdutoDAO produtoDAO;
+	
+	@Inject
+	private LicenciamentoDAO licenciamentoDAO;
+	
+	@Inject
+	private FabricanteDAO fabricanteDAO;
+	
+	@Inject
+	private FornecedorDAO fornecedorDAO;
+	
+	@Inject
+	private PlataformaTecnologicaDAO plataformaTecnologicaDAO;
 	
 	@Inject
 	private FaseProdutoDAO faseProdutoDAO;
@@ -79,13 +101,51 @@ public class CargaInicial {
 		p.setConclusao("A prospecção foi bem sucedida em que, pelos testes realizados, o Ubuntu 12 foi selecionado para ser internalizado.");
 		prospeccaoDAO.insert(p);
 		
+		Licenciamento l = new Licenciamento();
+		l.setNome("GPL");
+		l.setDescricao("GPL");
+		licenciamentoDAO.insert(l);
 		
+		l = new Licenciamento();
+		l.setNome("LGPL");
+		l.setDescricao("LGPL");
+		licenciamentoDAO.insert(l);
+		
+		Fabricante fabricante = new Fabricante();
+		fabricante.setNome("Mozilla");
+		fabricante.setDescricao("Mozilla");
+		fabricanteDAO.insert(fabricante);
+		
+		Fornecedor fornecedor = new Fornecedor();
+		fornecedor.setNome("Mozilla");
+		fornecedor.setDescricao("Mozilla");
+		fornecedorDAO.insert(fornecedor);
+		
+		PlataformaTecnologica pl = new PlataformaTecnologica();
+		pl.setNome("Plataforma 1");
+		pl.setDescricao("Plataforma 1");
+		plataformaTecnologicaDAO.insert(pl);
+		
+		pl = new PlataformaTecnologica();
+		pl.setNome("Plataforma 2");
+		pl.setDescricao("Plataforma 2");
+		plataformaTecnologicaDAO.insert(pl);
+		
+		pl = new PlataformaTecnologica();
+		pl.setNome("Plataforma 3");
+		pl.setDescricao("Plataforma 3");
+		plataformaTecnologicaDAO.insert(pl);
+		
+		List<PlataformaTecnologica> listaPlataformas = new ArrayList<PlataformaTecnologica>();
+		listaPlataformas = plataformaTecnologicaDAO.findAll();
+
 		Produto produto = new Produto();
 		produto.setDescricao("Melhor produto educativo dos ultimos 20 anos.");
-		produto.setFabricante("Tabajaras");
-		produto.setFornecedor("Fornicador");
+		produto.setLicenciamento(l);
+		produto.setFabricante(fabricante);
+		produto.setFornecedor(null);
+		produto.setPlataformasSuportadas(listaPlataformas);
 		produto.setNome("Havaianas de Pau");
-		produto.setLicenciamento("GPL");
 		produto.setLegado(false);
 		produto.setVersao("2.0");
 		produto.setRelease("2.0");
@@ -100,10 +160,10 @@ public class CargaInicial {
 		
 		produto = new Produto();
 		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
-		produto.setFabricante("Zuzkw");
-		produto.setFornecedor("Faice");
+		produto.setFabricante(fabricante);
+		produto.setFornecedor(null);
 		produto.setNome("Uotsap");
-		produto.setLicenciamento("GPL");
+		produto.setLicenciamento(l);
 		produto.setLegado(false);
 		produto.setVersao("2.0");
 		produto.setRelease("2.0");
@@ -118,10 +178,10 @@ public class CargaInicial {
 		for(int i=1; i<=5; i++){		
 			produto = new Produto();
 			produto.setDescricao("Descricao do produto");
-			produto.setFabricante("Fabricante fake");
-			produto.setFornecedor("Fornecedor fake");
+			produto.setFabricante(fabricante);
+			produto.setFornecedor(null);
 			produto.setNome("Produto Fake");
-			produto.setLicenciamento("GPL");
+			produto.setLicenciamento(l);
 			produto.setLegado(false);
 			produto.setVersao("2."+i);
 			produto.setRelease("2."+i);

@@ -4,13 +4,13 @@ import static javax.persistence.GenerationType.SEQUENCE;
 
 import java.util.List;
 
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -30,24 +30,28 @@ public class Produto {
 	@NotEmpty
 	private String release;
 	
-	@NotEmpty
-	private String licenciamento;
+	@ManyToOne
+	private Licenciamento licenciamento;
 	
-	@NotEmpty
-	private String fabricante;
+	@ManyToOne
+	private Fabricante fabricante;
 	
-	@NotEmpty
-	private String fornecedor;
+	@ManyToOne
+	private Fornecedor fornecedor;
 	
 	@NotEmpty
 	private String descricao;
 	
 	private String produtoAnterior;
 	
-	@ElementCollection
-	@CollectionTable(name="plataformas_produtos", joinColumns=@JoinColumn(name="produto_id"))
-	@Column(name="plataformas_suportadas")
-	private List<String> plataformasSuportadas;
+//	@ElementCollection
+//	@CollectionTable(name="plataformas_produtos", joinColumns=@JoinColumn(name="produto_id"))
+//	@Column(name="plataformas_suportadas")
+//	private List<String> plataformasSuportadas;
+	
+	@ManyToMany
+    @JoinTable(name="produto_plataforma_tecnologica", joinColumns={@JoinColumn(name="produto_id")}, inverseJoinColumns={@JoinColumn(name="plataforma_tecnologica_id")})
+	private List<PlataformaTecnologica> plataformasSuportadas;
 	
 	private boolean legado;
 	
@@ -93,37 +97,37 @@ public class Produto {
 		this.release = release;
 	}
 	
-	public String getLicenciamento() {
+	public Licenciamento getLicenciamento() {
 		return licenciamento;
 	}
 
 
 	
-	public void setLicenciamento(String licenciamento) {
+	public void setLicenciamento(Licenciamento licenciamento) {
 		this.licenciamento = licenciamento;
 	}
 	
-	public String getFabricante() {
+	public Fabricante getFabricante() {
 		return fabricante;
 	}
 	
-	public void setFabricante(String fabricante) {
+	public void setFabricante(Fabricante fabricante) {
 		this.fabricante = fabricante;
 	}
 	
-	public String getFornecedor() {
+	public Fornecedor getFornecedor() {
 		return fornecedor;
 	}
 
-	public void setFornecedor(String fornecedor) {
+	public void setFornecedor(Fornecedor fornecedor) {
 		this.fornecedor = fornecedor;
 	}
 	
-	public List<String> getPlataformasSuportadas() {
+	public List<PlataformaTecnologica> getPlataformasSuportadas() {
 		return plataformasSuportadas;
 	}
 
-	public void setPlataformasSuportadas(List<String> plataformasSuportadas) {
+	public void setPlataformasSuportadas(List<PlataformaTecnologica> plataformasSuportadas) {
 		this.plataformasSuportadas = plataformasSuportadas;
 	}
 
