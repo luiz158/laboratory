@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -26,7 +27,7 @@ public class FaseProdutoService {
 	
 
 	@GET @Path("/{fase}")
-	public List<FaseProduto> pesquisar(@PathParam("fase") Long fase) {
+	public List<FaseProduto> produtosDaFase(@PathParam("fase") Long fase) {
 		Fase f = new Fase();
 		f.setId(fase);
 		return faseProdutoDAO.produtosDaFase(f);
@@ -39,5 +40,10 @@ public class FaseProdutoService {
 		faseProdutoDAO.delete(id);
 	}
 	
+	@POST
+	@Transactional
+	public Long salvar(FaseProduto p) {
+		return faseProdutoDAO.insert(p).getId();
+	}
 	
 }

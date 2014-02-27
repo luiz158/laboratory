@@ -96,6 +96,7 @@ public class CargaInicial {
 		fp.setFase(p);
 		fp.setProduto(produto);
 		faseProdutoDAO.insert(fp);
+				
 		
 		produto = new Produto();
 		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
@@ -113,6 +114,25 @@ public class CargaInicial {
 		fp.setFase(p);
 		fp.setProduto(produto);
 		faseProdutoDAO.insert(fp);
+		
+		for(int i=1; i<=5; i++){		
+			produto = new Produto();
+			produto.setDescricao("Descricao do produto");
+			produto.setFabricante("Fabricante fake");
+			produto.setFornecedor("Fornecedor fake");
+			produto.setNome("Produto Fake");
+			produto.setLicenciamento("GPL");
+			produto.setLegado(false);
+			produto.setVersao("2."+i);
+			produto.setRelease("2."+i);
+			produtoDAO.insert(produto);			
+			
+			fp = new FaseProduto();
+			fp.setFase(p);
+			fp.setProduto(produto);
+			faseProdutoDAO.insert(fp);		
+		}
+		
 	}
 
 	
