@@ -59,12 +59,23 @@ controllers.controller('ProspeccaoCtrl', function ProspeccaoCtrl($scope, $rootSc
 		$scope.resultadoProdutos = data;
 	});
 	
-	$scope.adicionarProduto = function(p){
-		var fp = {};
-		fp.id = 1000;
-		fp.fase = $scope.fase;
-		fp.produto = p;
-		$scope.produtos.push(fp);
+	$scope.adicionarProduto = function(p){		
+		$http({
+			url : 'api/fase/produto',
+			method : "POST",
+			data : {fase: {id:$scope.fase.id}, produto: {id: p.id}},
+			headers : {
+				'Content-Type' : 'application/json;charset=utf8'
+			}
+		}).success(function(data) {
+			AlertService.addWithTimeout('success','Produto relacionado ');
+			carregarProdutos();
+		}).error( function(data, status) {
+			console.log(data);
+			AlertService.addWithTimeout('danger','Não foi possível relacionar o produto');
+		});
+		
+		
 	};
 	
 	
