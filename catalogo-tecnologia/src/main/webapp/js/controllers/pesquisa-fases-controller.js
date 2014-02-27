@@ -4,13 +4,31 @@
 var controllers = angular.module('catalogo.controllers');
 
 controllers.controller('PesquisaFasesCtrl', function PesquisaFasesCtrl($scope, $rootScope, $routeParams, $http, AlertService) {
+	/* Paginação */
+	$scope.paginacao = {
+			paginaAtual :0, 
+			registrosPorPagina: 5, 
+			data: [], 
+			paginas: function(){
+		        return Math.ceil($scope.paginacao.data.length/$scope.paginacao.registrosPorPagina);                
+		    },
+		    anterior: function(){
+		    	if($scope.paginacao.paginaAtual>0)
+		    		$scope.paginacao.paginaAtual = $scope.paginacao.paginaAtual-1;                
+		    },
+		    proxima: function(){
+		    	if($scope.paginacao.paginaAtual<$scope.paginacao.paginas()-1)
+		    		$scope.paginacao.paginaAtual = $scope.paginacao.paginaAtual+1;                
+		    }
+	};	
+	
 	/* Inicializando as variáveis */
 	$scope.fase = {};
 	$scope.fase.fase = $routeParams.fase;
 	
 	if($rootScope.pesquisaForm){
 		$scope.fase = $rootScope.pesquisaForm;
-		$scope.resultado = $rootScope.pesquisaResultado;
+		$scope.paginacao.data = $rootScope.pesquisaResultado;
 	}
 
 	/* Reinicia o objeto fase, caso a fase venha da url.*/
@@ -19,7 +37,7 @@ controllers.controller('PesquisaFasesCtrl', function PesquisaFasesCtrl($scope, $
 		$rootScope.pesquisaResultado = [];
 		$scope.fase = {};
 		$scope.fase.fase = $routeParams.fase;
-		$scope.resultado = [];
+		$scope.paginacao.data = [];
 	};
 		
 	$scope.pesquisar = function() {
@@ -33,9 +51,11 @@ controllers.controller('PesquisaFasesCtrl', function PesquisaFasesCtrl($scope, $
 			}
 		}).success(function(data) {
 			console.log(data);
-			$scope.resultado = data;
+			$scope.paginacao.data = data;
 			$rootScope.pesquisaResultado = data;
-			AlertService.addWithTimeout('success','Foram encontrada(s) '+$scope.resultado.length+' fase(s)');
+			if($scope.paginacao.data.length<1){
+				AlertService.addWithTimeout('danger','Nenhum resultado encontrado.');
+			}
 		}).error(function(data, status) {
 			AlertService.addWithTimeout('danger','Nenhum resultado encontrado.');	
 			console.log(data, status);

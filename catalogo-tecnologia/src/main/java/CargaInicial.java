@@ -71,6 +71,25 @@ public class CargaInicial {
 		a.setSituacaoJustificativa("Isso não tem cabimento. iPhones não suporta esta avançada tecnologia.");
 		analiseDAO.insert(a);	
 		
+		for(int i=0; i<10; i++){		
+			a = new Analise();		
+			a.setArea("CETEC");
+			a.setCodigoReferencia("R17100"+i);
+			a.setDataRealizacao(new Date());
+			a.setDemandante("Fulano "+i);
+			a.setObjetivo("Objetivo "+i);
+			a.setGestor("Gestor "+i);
+			a.setOrigemReferencia("ALM");
+			a.setSituacao(Situacao.APROVADO);
+			a.setSituacaoJustificativa("blablabalab blabalbal");
+			a.setProximaFase(FaseEnum.INTERNALIZACAO);
+			a.setProximaFaseArea("CTSDR");			
+			a.setProximaFaseGestor("Robson Ximenes");
+			a.setProximaFaseGestorEmail("robson.ximenes@serpro.gov.br");
+			a.setProximaFaseJustificativa("Robgol vai internalizar essa parada");
+			a = analiseDAO.insert(a);	
+		}
+		
 		a = new Analise();		
 		a.setArea("CETEC");
 		a.setCodigoReferencia("R171");
