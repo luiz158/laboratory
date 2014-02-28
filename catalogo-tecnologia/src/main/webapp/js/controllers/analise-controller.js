@@ -40,12 +40,18 @@ controllers.controller('AnaliseEdit', function Analise($scope, $http,
 
 	$scope.fase = {};
 	$scope.fase.id = $routeParams.id;
-	$scope.fase.fase = 1;
+	$scope.fase.fase = 1;	
+	
 	
 	if ($scope.fase.id) {
 		$http.get('api/analise/' + $scope.fase.id).success(function(data) {
 			$scope.analise = data;
 		});
+		
+		$http.get('api/fase/fluxo/' + $scope.fase.id).success(function(data) {
+			$scope.fluxo = data;
+		});		
+		
 	} else {
 		$scope.analise = {};
 		$scope.analise.situacao = 'Rascunho';

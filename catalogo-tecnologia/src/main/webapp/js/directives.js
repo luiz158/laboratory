@@ -131,3 +131,15 @@ diretivas.directive('ngMembros', function() {
 	    link: function(scope, elem, $attrs) {}
 	  };
 	});
+
+diretivas.directive('ngFluxo', function() {	
+	  return {
+		restrict: 'E',
+		require: '^ngModel',
+		scope: {
+			ngModel: '='
+	    },
+	    templateUrl: 'directives/fluxo.html',	    
+	    link: function(scope, elem, $attrs) {}
+	  };
+	});

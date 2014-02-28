@@ -5,6 +5,8 @@ import static javax.persistence.GenerationType.SEQUENCE;
 
 import java.util.Date;
 
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -12,6 +14,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
@@ -19,7 +23,11 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name="fase", discriminatorType=DiscriminatorType.STRING)
+@NamedQueries({ @NamedQuery(name = Fase.OBTER_POR_FASE_ANTERIOR, query = "select f from Fase f where (f.faseAnterior.id = :id)") })
 public class Fase {
+	
+	public static final String OBTER_POR_FASE_ANTERIOR = "OBTER_FASE_ANTERIOR";
 	
 	@Id
 	@GeneratedValue(strategy = SEQUENCE)
@@ -28,7 +36,6 @@ public class Fase {
 	@Enumerated(EnumType.STRING)
 	private FaseEnum fase;
 	
-	private String demandante;
 	
 	@NotEmpty
 	private String codigoReferencia;
@@ -85,14 +92,6 @@ public class Fase {
 
 	public void setFase(FaseEnum fase) {
 		this.fase = fase;
-	}
-
-	public String getDemandante() {
-		return demandante;
-	}
-
-	public void setDemandante(String demandante) {
-		this.demandante = demandante;
 	}
 
 	public String getCodigoReferencia() {

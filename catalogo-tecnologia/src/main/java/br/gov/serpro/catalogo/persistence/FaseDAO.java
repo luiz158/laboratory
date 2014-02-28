@@ -4,19 +4,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import br.gov.frameworkdemoiselle.lifecycle.Startup;
 import br.gov.frameworkdemoiselle.stereotype.PersistenceController;
 import br.gov.frameworkdemoiselle.template.JPACrud;
-import br.gov.frameworkdemoiselle.transaction.Transactional;
-import br.gov.serpro.catalogo.entity.Analise;
+import br.gov.serpro.catalogo.entity.Anexo;
 import br.gov.serpro.catalogo.entity.Fase;
 import br.gov.serpro.catalogo.entity.FaseEnum;
-import br.gov.serpro.catalogo.entity.Situacao;
 import br.gov.serpro.catalogo.rest.FaseDTO;
 
 @PersistenceController
@@ -92,6 +90,17 @@ public class FaseDAO extends JPACrud<Fase, Long> {
 	    predicateList.toArray(predicates);
 	    query.where(predicates);	 
 	    return getEntityManager().createQuery(query).getResultList();
+	}
+
+
+	public Fase obterFasePosterior(Long id) {
+		Query query = getEntityManager().createNamedQuery(Fase.OBTER_POR_FASE_ANTERIOR, Fase.class);
+		query.setParameter("id", id);		
+		Fase fase = null;
+		try{
+			fase = (Fase) query.getResultList().get(0);
+		}catch(IndexOutOfBoundsException e){}
+		return fase;
 	}		
 	
 	
