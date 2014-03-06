@@ -57,7 +57,7 @@ filters.filter('nomeFase', function() {
 			'PROSPECCAO': 'Prospecção',
 			'INTERNALIZACAO':'Internalização',
 			'SUSTENTACAO':'Sustentação', 
-			'DESCARTE': 'Descarte'
+			'DECLINIO': 'Declínio'
 	};		
 	return function(fase){	
 		if(!isNaN(parseFloat(fase)) && isFinite(fase)){
@@ -67,13 +67,27 @@ filters.filter('nomeFase', function() {
 	};
   });
 
+
+filters.filter('iconeFase', function() {    
+	var url = {
+			'ANALISE':'images/fases/analise.png',
+			'PROSPECCAO': 'images/fases/prospeccao.png',
+			'INTERNALIZACAO':'images/fases/internalizacao.png',
+			'SUSTENTACAO':'images/fases/sustentacao.png', 
+			'DECLINIO': 'images/fases/declinio.png'
+	};
+	return function(fase){	
+		return url[fase];		
+	};
+  });
+
 filters.filter('faseUrl', function() {    
 	var url = {
 			'ANALISE':'analise/edit',
 			'PROSPECCAO': 'prospeccao/edit',
 			'INTERNALIZACAO':'internalizacao/edit',
 			'SUSTENTACAO':'sustentacao/edit', 
-			'DESCARTE': 'descarte/edit'
+			'DECLINIO': 'declinio/edit'
 	};
 	return function(fase){	
 		return url[fase];		

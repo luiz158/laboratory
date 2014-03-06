@@ -97,7 +97,7 @@
 		</form>
 				
 		<div>
-			<div class="list-group" ng-if="paginacao.data.length >0">
+			<div  ng-if="paginacao.data.length >0">
 			
 				<div class="row">
 					<div class="col-sm-6">
@@ -120,11 +120,17 @@
 					</div>
 				</div>
 			
-				
 			
-		        <a ng-repeat="f in paginacao.data | startFrom:paginacao.paginaAtual*paginacao.registrosPorPagina | limitTo:paginacao.registrosPorPagina" href="#{{f.fase | faseUrl}}/{{f.id}}" class="list-group-item">
-		        	<div class="list-group-item-heading row">
-		        		<div class="col-md-4">
+			<ul class="chat list-group">
+                 <li ng-repeat="f in paginacao.data | startFrom:paginacao.paginaAtual*paginacao.registrosPorPagina | limitTo:paginacao.registrosPorPagina" href="#{{f.fase | faseUrl}}/{{f.id}}" 
+        	title="{{f.fase | nomeFase}}" class="left list-group-item clearfix">
+                     <span class="chat-img pull-left">
+                         <img src="{{f.fase | iconeFase}}" class="img-circle" width="40px">
+                     </span>
+                     <div class="chat-body clearfix">
+                         <div class="header">
+                         	<div class="row">
+		        		<div class="col-md-3">
 		        			<b>ID:</b> {{f.id}} 
 		        		</div>
 		        		<div class="col-md-4">
@@ -134,7 +140,7 @@
 		        			<b>Referência:</b> {{f.origemReferencia}} ( {{f.codigoReferencia}} ) 
 		        		</div>
 		        	</div>
-		            <div class="list-group-item-heading row">
+                         <div class="row">
 		        		<div class="col-md-4">
 		        			<b>Gestor:</b> {{f.gestor}} - {{f.area}} 
 		        		</div>
@@ -145,9 +151,16 @@
 		        			<b>Finalização:</b> {{f.dataFinalizacao}} 
 		        		</div>
 		        	</div>
-    				<p class="list-group-item-text"><b>Objetivo:</b> {{f.objetivo}}</p>
-		        </a>
-		    </div>
+                         </div>
+                         <p>
+                             <b>Objetivo:</b> {{f.objetivo}}
+                         </p>
+                     </div>
+                 </li>
+
+             </ul>			
+			
+		       
 		</div>
 		
 		

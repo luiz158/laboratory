@@ -26,17 +26,15 @@ controllers.controller('PesquisaFasesCtrl', function PesquisaFasesCtrl($scope, $
 	$scope.fase = {};
 	$scope.fase.fase = $routeParams.fase;
 	
-	if($rootScope.pesquisaForm){
-		$scope.fase = $rootScope.pesquisaForm;
-		$scope.paginacao.data = $rootScope.pesquisaResultado;
-	}
-
+	console.log($scope.fase.fase);
+	
+	
 	/* Reinicia o objeto fase, caso a fase venha da url.*/
 	$scope.limpar = function(){
 		$rootScope.pesquisaForm = null;
 		$rootScope.pesquisaResultado = [];
 		$scope.fase = {};
-		$scope.fase.fase = $routeParams.fase;
+		//$scope.fase.fase = $routeParams.fase;
 		$scope.paginacao.data = [];
 	};
 		
@@ -62,6 +60,19 @@ controllers.controller('PesquisaFasesCtrl', function PesquisaFasesCtrl($scope, $
 		});
 
 	};
+	
+	
+	/*
+	 * Recupera os dados da pesquisa ou faz uma nova. 
+	 * 
+	 * */
+	if($rootScope.pesquisaForm && $rootScope.pesquisaForm.fase == $scope.fase.fase){
+		$scope.fase = $rootScope.pesquisaForm;
+		$scope.paginacao.data = $rootScope.pesquisaResultado;
+	}else{
+		// Deixei trazendo todos da fase selecionada...
+		$scope.pesquisar();
+	}
 		
 
 });

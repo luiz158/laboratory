@@ -8,6 +8,7 @@ import br.gov.frameworkdemoiselle.lifecycle.Startup;
 import br.gov.frameworkdemoiselle.stereotype.BusinessController;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.serpro.catalogo.entity.Analise;
+import br.gov.serpro.catalogo.entity.Declinio;
 import br.gov.serpro.catalogo.entity.Fabricante;
 import br.gov.serpro.catalogo.entity.FaseEnum;
 import br.gov.serpro.catalogo.entity.FaseProduto;
@@ -18,6 +19,7 @@ import br.gov.serpro.catalogo.entity.Produto;
 import br.gov.serpro.catalogo.entity.Prospeccao;
 import br.gov.serpro.catalogo.entity.Situacao;
 import br.gov.serpro.catalogo.persistence.AnaliseDAO;
+import br.gov.serpro.catalogo.persistence.DeclinioDAO;
 import br.gov.serpro.catalogo.persistence.FabricanteDAO;
 import br.gov.serpro.catalogo.persistence.FaseProdutoDAO;
 import br.gov.serpro.catalogo.persistence.FornecedorDAO;
@@ -55,6 +57,9 @@ public class CargaInicial {
 	@Inject
 	private FaseProdutoDAO faseProdutoDAO;
 	
+	@Inject
+	private DeclinioDAO declinioDAO;
+	
 	
 	@Startup
 	@Transactional
@@ -71,7 +76,7 @@ public class CargaInicial {
 		a.setSituacaoJustificativa("Isso não tem cabimento. iPhones não suporta esta avançada tecnologia.");
 		analiseDAO.insert(a);	
 		
-		for(int i=0; i<10; i++){		
+		for(int i=0; i<3; i++){		
 			a = new Analise();		
 			a.setArea("CETEC");
 			a.setCodigoReferencia("R17100"+i);
@@ -119,6 +124,19 @@ public class CargaInicial {
 		p.setTestes("Os testes realizados foram feitos na regional Salvador em laboratório isolado. Foram averiguados testes de blablablabla. Maiores detalhes sobre os testes realizados podem ser encontrados em Arquivo1.odt.");
 		p.setConclusao("A prospecção foi bem sucedida em que, pelos testes realizados, o Ubuntu 12 foi selecionado para ser internalizado.");
 		prospeccaoDAO.insert(p);
+		
+		Declinio d = new Declinio();
+		d.setArea("CTSDR");
+		d.setCodigoReferencia("R172");
+		d.setOrigemReferencia("ALM");
+		d.setObjetivo("Acabar com essa palhaçada.");
+		d.setGestor("Robson Ximenes");
+		d.setFaseAnterior(p);
+		d.setDataRealizacao(new Date());
+		d.setSituacao(Situacao.APROVADO);
+		d.setNovaAnaliseRiscos(false);
+		d.setConclusao("Chega de papaiagada... bola normal.");
+		declinioDAO.insert(d);
 		
 		Licenciamento l = new Licenciamento();
 		l.setNome("GPL");
