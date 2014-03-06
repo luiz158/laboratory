@@ -1,7 +1,7 @@
 <div class="painel painel-default">
-	<h1 class="page-header">
-		Prospecção <small>edição</small>
-	</h1>
+	<h3 class="page-header">
+		Declínio <small>edição</small>
+	</h3>
 	
 	<ng-fluxo ng-model="fase"></ng-fluxo>
 	
@@ -12,16 +12,13 @@
 	<form name="formAnalise" role="form">
 		<ul class="nav nav-tabs" ng:init="selected=1">
 			<li class="ng-class: selected == 1 ? 'active':'';"><a
-				ng:click="selected=1">Prospecção</a></li>
+				ng:click="selected=1">Declínio</a></li>
 			<li class="ng-class: selected == 2 ? 'active':'';"><a
 				ng:click="selected=2">Resultado</a></li>
 			<li class="ng-class: selected == 3 ? 'active':'';"><a
 				ng:click="selected=3">Produtos</a></li>
-			<li class="ng-class: selected == 4 ? 'active':'';"
-				ng-show="fase.situacao != 'Rascunho'"><a ng:click="selected=4">Próxima
-					fase</a></li>
-			<li ng:show="fase.id" class="ng-class: selected == 5 ? 'active':'';"><a
-				ng:click="selected=5">Anexos</a></li>
+			<li ng:show="fase.id" class="ng-class: selected == 4 ? 'active':'';"><a
+				ng:click="selected=4">Anexos</a></li>
 		</ul>
 
 		<div class="panel panel-default" ng:show="selected == 1">
@@ -130,14 +127,8 @@
 
 		<!-- Resultado da Prospecção -->
 		<div ng-if="selected == 2" class="panel panel-default">
-			<div class="panel-heading">Resultado da Prospecção</div>
+			<div class="panel-heading">Resultado do Declínio</div>
 			<div class="panel-body">
-				<div class="form-group">
-					<label for="testes">Descrição dos testes realizados:</label>
-					<textarea rows="4" class="form-control" id="testes"
-						ng-model="fase.testes"></textarea>
-					<span id="testes-message" class="text-danger"></span>
-				</div>
 				<div class="form-group">
 					<label for="conclusao">Conclusão:</label>
 					<textarea rows="4" class="form-control" id="conclusao"
@@ -149,76 +140,12 @@
 
 		<!-- Produtos -->
 		<div ng-if="selected == 3" class="panel panel-default">
-			<div class="panel-heading">Produtos de Tecnologia Prospectados
-			</div>
-			<div class="panel-body">				
-				<div class="form-group row">
-					<div class="col-md-8">
-						<label for="produtoAdd">Produtos:</label> 
-						<select id="produtoAdd" class="form-control"
-						  ng-model="produtoAdd" ng-options="p.nome +' '+p.versao group by p.nome for p in resultadoProdutos">
-						</select>
-					</div>
-					<div class="col-md-2">
-						<label for="adicionarProduto"> &nbsp;</label>
-						<button id="adicionarProduto" class="form-control btn btn-primary btn-xl" ng-click="adicionarProduto(produtoAdd)">
-							<i class="fa fa-plus-o"> </i> Adicionar
-						</button>
-					</div>
-				</div>
-			
-				<div class="list-group">
-					<a ng-repeat="p in produtos" class="list-group-item">						
-						<button class="btn btn-danger btn-xl pull-right" ng-click="removerProduto(p.id)">
-							<i class="fa fa-trash-o"> </i> Remover
-						</button>					
-						<h5 class="list-group-item-heading">{{p.produto.nome}} <small>{{p.produto.versao}}</small></h5>
-						<p class="list-group-item-text">{{p.produto.descricao}}</p>
-					</a>
-				 </div>
-
-			</div>
+			<ng-produtos ng-model="fase"></ng-produtos>
 		</div>
 
-
-		<!-- Próxima fase -->
-		<div ng-if="selected == 4" class="panel panel-default">
-			<div class="panel-heading">Próxima fase</div>
-			<div class="panel-body">
-				<div class="form-group">
-					<label for="proximaFase">Próxima fase a ser executada:</label> <select
-						id="proximaFase" class="form-control" ng-model="fase.proximaFase">
-						<option value="INTERNALIZACAO">Internalização</option>
-						<option value="SUSTENTACAO">Sustentação</option>
-						<option value="DESCARTE">Descarte</option>
-					</select>
-				</div>
-
-				<div class="form-group">
-					<label for="justificativaProximaFase">Justificativa:</label>
-					<textarea rows="4" class="form-control"
-						id="justificativaProximaFase"
-						ng-model="fase.proximaFaseJustificativa" required></textarea>
-					<span id="proximaFaseJustificativa-message" class="text-danger"></span>
-				</div>
-
-				<div class="form-group row">
-					<div class="col-md-6">
-						<label for="proximaFaseGestor">Gestor da Próxima Fase:</label> <input
-							class="form-control" type="text" id="proximaFaseGestor"
-							ng-model="fase.proximaFaseGestor">
-					</div>
-					<div class="col-md-6">
-						<label for="proximaFaseArea">Área:</label> <input
-							class="form-control" type="text" id="proximaFaseArea"
-							ng-model="fase.proximaFaseArea">
-					</div>
-				</div>
-			</div>
-		</div>
 
 		<!-- Anexos -->
-		<div ng:show="selected == 5 && fase.id" class="panel panel-default">
+		<div ng:show="selected == 4" class="panel panel-default">
 			<div class="panel-heading">Anexos</div>
 			<ng-anexos ng-model="fase"></ng-anexos>
 		</div>

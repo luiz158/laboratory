@@ -57,7 +57,7 @@ filters.filter('nomeFase', function() {
 			'PROSPECCAO': 'Prospecção',
 			'INTERNALIZACAO':'Internalização',
 			'SUSTENTACAO':'Sustentação', 
-			'DESCARTE': 'Descarte'
+			'DECLINIO': 'Declínio'
 	};		
 	return function(fase){	
 		if(!isNaN(parseFloat(fase)) && isFinite(fase)){
@@ -73,7 +73,7 @@ filters.filter('faseUrl', function() {
 			'PROSPECCAO': 'prospeccao/edit',
 			'INTERNALIZACAO':'internalizacao/edit',
 			'SUSTENTACAO':'sustentacao/edit', 
-			'DESCARTE': 'descarte/edit'
+			'DECLINIO': 'declinio/edit'
 	};
 	return function(fase){	
 		return url[fase];		

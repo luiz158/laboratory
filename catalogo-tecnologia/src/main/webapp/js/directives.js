@@ -111,7 +111,6 @@ diretivas.directive('backButton', function(){
     return {
       restrict: 'A',
       link: function(scope, element, attrs) {
-    	  console.log('bind');
         element.bind('click', function () {
           history.back();
           scope.$apply();
@@ -128,6 +127,18 @@ diretivas.directive('ngMembros', function() {
 			ngModel: '='
 	    },
 	    templateUrl: 'directives/membros.html',	    
+	    link: function(scope, elem, $attrs) {}
+	  };
+	});
+
+diretivas.directive('ngProdutos', function() {	
+	  return {
+		restrict: 'E',
+		require: '^ngModel',
+		scope: {
+			ngModel: '='
+	    },
+	    templateUrl: 'directives/produtos-da-fase.html',	    
 	    link: function(scope, elem, $attrs) {}
 	  };
 	});

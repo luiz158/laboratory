@@ -12,12 +12,13 @@ angular.module('catalogo', [
 ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/login', {templateUrl: 'partials/login.html', controller: 'Auth'});
-  $routeProvider.when('/pesquisa/fases/:fase', {templateUrl: 'partials/pesquisa-fases.html', controller: 'PesquisaFasesCtrl'});
-  $routeProvider.when('/pesquisa/fases', {templateUrl: 'partials/pesquisa-fases.html', controller: 'PesquisaFasesCtrl'});
-  $routeProvider.when('/analise', {templateUrl: 'partials/analise-listar.html', controller: 'AnaliseList'});
-  $routeProvider.when('/analise/edit', {templateUrl: 'partials/analise-edit.html', controller: 'AnaliseEdit'});
-  $routeProvider.when('/analise/edit/:id', {templateUrl: 'partials/analise-edit.html', controller: 'AnaliseEdit'});
-  $routeProvider.when('/prospeccao/edit/:id', {templateUrl: 'partials/prospeccao-edit.html', controller: 'ProspeccaoCtrl'});
+  $routeProvider.when('/pesquisa/fases/:fase', {templateUrl: 'partials/fases/pesquisa-fases.html', controller: 'PesquisaFasesCtrl'});
+  $routeProvider.when('/pesquisa/fases', {templateUrl: 'partials/fases/pesquisa-fases.html', controller: 'PesquisaFasesCtrl'});
+  $routeProvider.when('/analise', {templateUrl: 'partials/fases/analise-listar.html', controller: 'AnaliseList'});
+  $routeProvider.when('/analise/edit', {templateUrl: 'partials/fases/analise-edit.html', controller: 'AnaliseEdit'});
+  $routeProvider.when('/analise/edit/:id', {templateUrl: 'partials/fases/analise-edit.html', controller: 'AnaliseEdit'});
+  $routeProvider.when('/prospeccao/edit/:id', {templateUrl: 'partials/fases/prospeccao-edit.html', controller: 'ProspeccaoCtrl'});
+  $routeProvider.when('/declinio/edit/:id', {templateUrl: 'partials/fases/declinio-edit.html', controller: 'DeclinioCtrl'});
 
   $routeProvider.when('/licenciamento', {templateUrl: 'partials/licenciamento-listar.html', controller: 'LicenciamentoList'});
   $routeProvider.when('/licenciamento/edit', {templateUrl: 'partials/licenciamento-edit.html', controller: 'LicenciamentoEdit'});
