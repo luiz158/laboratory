@@ -154,3 +154,25 @@ diretivas.directive('ngFluxo', function() {
 	    link: function(scope, elem, $attrs) {}
 	  };
 	});
+
+diretivas.directive('donut', function() {
+	  return {
+	    restrict: 'A',
+	    scope: {
+			donutData: '=',
+			donutColors: '='
+	    },
+	    link: function(scope, element, attrs) {
+	    	var config = {
+			        element: element,
+			        data: scope.donutData,
+			        resize: true
+			    };
+	    	if(scope.donutColors){
+	    		config.colors = scope.donutColors;
+	    	}
+	    	
+	    	Morris.Donut(config);       
+	    }
+	  };
+	});

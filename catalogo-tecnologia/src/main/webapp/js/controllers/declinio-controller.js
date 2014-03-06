@@ -4,7 +4,7 @@
 var controllers = angular.module('catalogo.controllers');
 
 
-controllers.controller('DeclinioCtrl', function ProspeccaoCtrl($scope, $http,$location, $routeParams, AlertService) {
+controllers.controller('DeclinioCtrl', function DeclinioCtrl($scope, $http,$location, $routeParams, AlertService) {
 
 	$scope.fase = {};
 	$scope.fase.id = $routeParams.id;
