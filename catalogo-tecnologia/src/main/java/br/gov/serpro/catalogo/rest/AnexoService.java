@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -21,7 +20,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.apache.commons.io.IOUtils;
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
@@ -29,8 +27,9 @@ import org.jboss.resteasy.spi.validation.ValidateRequest;
 
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.serpro.catalogo.entity.Anexo;
-import br.gov.serpro.catalogo.persistence.AnaliseDAO;
+import br.gov.serpro.catalogo.entity.Fase;
 import br.gov.serpro.catalogo.persistence.AnexoDAO;
+import br.gov.serpro.catalogo.persistence.FaseDAO;
 
 @ValidateRequest
 @Path("/api/anexo")
@@ -41,11 +40,8 @@ public class AnexoService {
 	private AnexoDAO anexoDAO;
 
 	@Inject
-	private AnaliseDAO analiseDAO;
+	private FaseDAO faseDAO;
 	
-	@Inject
-	private EntityManager em;
-
 	@POST
 	@Transactional
 	@Consumes("multipart/form-data")
@@ -60,8 +56,6 @@ public class AnexoService {
 		try {
 			String jsonString = inputPartsAnalise.get(0).getBodyAsString();
 			anexo = new ObjectMapper().readValue(jsonString, Anexo.class);
-			System.out.println(anexo);
-			// anexo.setAnalise(ob);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
@@ -71,7 +65,7 @@ public class AnexoService {
 				InputStream inputStream = inputPart.getBody(InputStream.class, null);
 				byte[] bytes = IOUtils.toByteArray(inputStream);
 				anexo.setArquivo(bytes);
-				anexo.setAnalise(analiseDAO.load(anexo.getAnalise().getId()));
+				anexo.setFase(faseDAO.load(anexo.getFase().getId()));
 				anexoDAO.insert(anexo);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -82,9 +76,11 @@ public class AnexoService {
 	}
 
 	@GET
-	@Path("/{id}/{fase}")
-	public List<Anexo> listar(@PathParam("id") Long id, @PathParam("fase") Integer fase) {	
-		return anexoDAO.listarSemCarregarBytes(id,fase);
+	@Path("/{id}")
+	public List<Anexo> listar(@PathParam("id") Long id) {	
+		Fase fase = new Fase();
+		fase.setId(id);
+		return anexoDAO.listarSemCarregarBytes(fase);
 	}	
 
 	

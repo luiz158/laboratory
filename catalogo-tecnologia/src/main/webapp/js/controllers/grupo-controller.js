@@ -6,11 +6,12 @@ var controllers = angular.module('catalogo.controllers');
 controllers.controller('GrupoList',
 		
 		function Analise($scope, $http, $location) {
-	
+		
 			function carregarGrupos() {
 				$http.get('api/grupo').success(function(data) {
 					$scope.grupos = data;
 				});
+
 			}
 			
 			$scope.novo = function() {
@@ -41,13 +42,37 @@ controllers.controller('GrupoEdit',
 	
 			var id = $routeParams.id;
 			
+			$http({
+				url : 'api/perfis',
+				method : "GET"
+			}).success(function(data) {
+				$scope.perfis = data;
+			}).error(function(data, status) {
+			});
+
 			if (id) {
 				$http.get('api/grupo/' + id).success(function(data) {
 					$scope.grupo = data;
 				});
 			} else {
 				$scope.grupo = {};
+				$scope.grupo.perfis = [];
 			}
+			
+			// toggle selection for a given fruit by name
+			  $scope.toggleSelection = function toggleSelection(perfil) {
+			    var idx = $scope.grupo.perfis.indexOf(perfil);
+
+			    // is currently selected
+			    if (idx > -1) {
+			      $scope.grupo.perfis.splice(idx, 1);
+			    }
+
+			    // is newly selected
+			    else {
+			      $scope.grupo.perfis.push(perfil);
+			    }
+			  };
 	
 			$scope.salvar = function() {
 				$("[id$='-message']").text("");

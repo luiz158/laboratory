@@ -15,7 +15,6 @@ public enum Situacao {
 		this.sigla = sigla;
 	}
 
-	
 	public String toString() {
 		return this.sigla;
 	}

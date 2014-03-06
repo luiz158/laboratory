@@ -4,8 +4,8 @@
 var controllers = angular.module('catalogo.controllers');
 
 controllers.controller('ProdutoList',
-		function Produto($scope, $http, $location) {
-
+		function Produto($scope, $http, $location, AlertService) {
+			
 			function carregarProdutos() {
 				$http.get('api/produto').success(function(data) {
 					$scope.produtos = data;
@@ -29,6 +29,8 @@ controllers.controller('ProdutoList',
 					carregarProdutos();
 
 				}).error(function(data, status) {
+					AlertService.addWithTimeout('danger','Não foi possível executar a operação');
+					console.log('vai vltar...');
 				});
 			};
 
@@ -37,7 +39,15 @@ controllers.controller('ProdutoList',
 
 controllers.controller('ProdutoEdit', function Produto($scope, $http,
 		$location, $routeParams, $upload, $rootScope, AlertService) {
-
+	
+	$scope.produtoParaPesquisa = "";
+	$scope.licenciamento = "";
+	$scope.fabricante = "";
+	$scope.fornecedor = "";
+	$scope.plataforma = "";
+	
+	$scope.modal = ({title: 'Title', content: 'Hello Modal<br />This is a multiline message!'});
+	
 	var id = $routeParams.id;
 	
 	// Necessário para compartilhar entre os controladores: Anexo, Colaboradores...
@@ -45,68 +55,142 @@ controllers.controller('ProdutoEdit', function Produto($scope, $http,
 
 	if (id) {
 		$http.get('api/produto/' + id).success(function(data) {
-			$scope.produto = data;
+			
+			$rootScope.produto = data;
 			$scope.plataformasSuportadas = data.plataformasSuportadas;
+			$http.get('api/licenciamento').success(function(data) {
+				$scope.licenciamentos = [];
+				$scope.licenciamentos = data;
+				if(typeof($rootScope.produto.licenciamento) != "undefined"){
+					var index = buscaElemento($rootScope.produto.licenciamento,$scope.licenciamentos);
+					if(index!=-1){
+						$scope.licenciamento = $scope.licenciamentos[index];
+					}
+				}
+			});
+			$http.get('api/fabricante').success(function(data) {
+				$scope.fabricantes = [];
+				$scope.fabricantes = data;
+				if(typeof($rootScope.produto.fabricante) != "undefined"){
+					var index = buscaElemento($rootScope.produto.fabricante,$scope.fabricantes);
+					if(index!=-1){
+						$scope.fabricante = $scope.fabricantes[index];
+					}
+				}
+			});
+			$http.get('api/fornecedor').success(function(data) {
+				$scope.fornecedores = [];
+				$scope.fornecedores = data;
+				if(typeof($rootScope.produto.fornecedor) != "undefined"){
+					var index = buscaElemento($rootScope.produto.fornecedor,$scope.fornecedores);
+					if(index!=-1){
+						$scope.fornecedor = $scope.fornecedores[index];
+					}
+				}
+			});
+			$http.get('api/plataformaTecnologica').success(function(data) {
+				$scope.plataformasTecnologicas = data;
+			});
 		});
 	} else {
-		$scope.produto = {};
+		$rootScope.produto = {};
 		$scope.plataformasSuportadas = [];
+		$http.get('api/licenciamento').success(function(data) {
+			$scope.licenciamentos = [];
+			$scope.licenciamentos = data;
+		});
+		$http.get('api/fabricante').success(function(data) {
+			$scope.fabricantes = [];
+			$scope.fabricantes = data;
+		});
+		$http.get('api/fornecedor').success(function(data) {
+			$scope.fornecedores = [];
+			$scope.fornecedores = data;
+		});
+		$http.get('api/plataformaTecnologica').success(function(data) {
+			$scope.plataformasTecnologicas = data;
+		});
 	}
 
 	$scope.salvarProduto = function() {
-		console.log("ProdutoController " + $scope.produto);
-		$scope.produto.plataformasSuportadas = $scope.plataformasSuportadas;
-		$("[id$='-message']").text("");
-		$http({
-			url : 'api/produto',
-			method : $scope.produto.id ? "PUT" : "POST",
-			data : $scope.produto,
-			headers : {
-				'Content-Type' : 'application/json;charset=utf8'
+		if($rootScope.produto.atualizacao && (typeof($rootScope.produto.produtoAnterior) == "undefined" || $rootScope.produto.produtoAnterior=="")){
+			AlertService.addWithTimeout('danger','É necessário preencher o produto ao qual essa atualização se refere!');
+		}else{
+			console.log("ProdutoController " + $rootScope.produto);
+			
+			$rootScope.produto.plataformasSuportadas = $scope.plataformasSuportadas;
+
+			if(typeof($scope.licenciamento) != "undefined" && $scope.licenciamento != ""){
+				$rootScope.produto.licenciamento = $scope.licenciamento;
 			}
-
-		}).success(function(data) {
-			AlertService.addWithTimeout('success','Produto salvo com sucesso');
-			$location.path('produto');
-		}).error(
-				function(data, status) {
-					if (status = 412) {
-						$.each(data, function(i, violation) {
-							$("#" + violation.property + "-message").text(
-									violation.message);
-						});
-					}
-				});
-
+			if(typeof($scope.fabricante) != "undefined"&& $scope.fabricante != ""){
+				$rootScope.produto.fabricante = $scope.fabricante;
+			}
+			if(typeof($scope.fornecedor) != "undefined"&& $scope.fornecedor != ""){
+				$rootScope.produto.fornecedor = $scope.fornecedor;
+			}
+			
+			$("[id$='-message']").text("");
+	
+			$http({
+				url : 'api/produto',
+				method : $rootScope.produto.id ? "PUT" : "POST",
+				data : $rootScope.produto,
+				headers : {
+					'Content-Type' : 'application/json;charset=utf8'
+				}
+	
+			}).success(function(data) {
+				AlertService.addWithTimeout('success','Produto salvo com sucesso');
+				$location.path('produto');
+			}).error(
+					function(data, status) {
+						if (status = 412) {
+							$.each(data, function(i, violation) {
+								$("#" + violation.property + "-message").text(
+										violation.message);
+							});
+						}
+			});
+		}
 	};
 	
 	$scope.adicionaPlataforma = function() {
-		var index = buscaElemento($scope.plataforma);
-		
-		if (index !== -1) {
-			alert('Plataforma já foi adicionada!');
-        }else{
-			$scope.plataformasSuportadas.push($scope.plataforma);
+		if(typeof($scope.plataforma) == "undefined" || $scope.plataforma == ""){
+			AlertService.addWithTimeout('danger','Não foi possível executar a operação');
+		}else{
+			var index = buscaElemento($scope.plataforma,$scope.plataformasSuportadas);
+			
+			if (index !== -1) {
+				AlertService.addWithTimeout('danger','Plataforma já foi adicionada!');
+	        }else{
+				$scope.plataformasSuportadas.push($scope.plataforma);
+			}
 		}
 	};
 	
 	$scope.removePlataforma = function(plataforma) {
-		var index = buscaElemento(plataforma);
+		var index = buscaElemento(plataforma,$scope.plataformasSuportadas);
 			
 		if (index !== -1) {
             $scope.plataformasSuportadas.splice(index,1);
         }
 	};
 	
-	function buscaElemento(plataforma){
+	$scope.clicaAtualizacao = function() {
+		if(!$rootScope.produto.atualizacao){
+			$rootScope.produto.produtoAnterior = "";
+		}
+	};
+	
+	function buscaElemento(elemento,lista){
 		var index = -1;
-		for ( var i = 0 ; i < $scope.plataformasSuportadas.length ; i++ ) {
-			if ($scope.plataformasSuportadas[i] === plataforma) {
+		for ( var i = 0 ; i < lista.length ; i++ ) {
+			if (lista[i].nome === elemento.nome) {
                 index = i;
                 break;
             }
 		}
 		return index;
 	}
-
 });

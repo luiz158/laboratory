@@ -1,0 +1,7 @@
+
+<ol ng-controller="FluxoCtrl" class="breadcrumb">
+	<li ng-repeat="f in fluxo" class="active">		
+		<a ng-if="f.id != fase.id" href="#{{f.fase | faseUrl}}/{{f.id}}">{{f.fase | nomeFase}}</a>
+		<span ng-if="f.id == fase.id">{{f.fase | nomeFase}}</span>
+	</li>
+</ol>

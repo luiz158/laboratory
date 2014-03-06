@@ -7,15 +7,14 @@ var controllers = angular.module('catalogo.controllers');
 controllers.controller('AnexoCtrl', function AnexoCtrl($scope, $rootScope, $http,
 		$location, $routeParams, $upload, AlertService) {
 	
+	/* Pega a fase diretamente da diretiva*/
+	$scope.fase = $scope.$parent.ngModel;
 	
 	$scope.anexo = {};
 	$scope.progress = 0;
 	$scope.labelArquivos = 'Nenhum arquivo selecionado';
 	
-	$scope.init = function(fase){
-		$scope.fase = fase;
-		carregarAnexos();
-	};	
+	carregarAnexos();
 		
 	$scope.onFileSelect = function($files) {
 		$scope.progress = 0;
@@ -27,8 +26,7 @@ controllers.controller('AnexoCtrl', function AnexoCtrl($scope, $rootScope, $http
 				method : 'POST',
 				data : {
 					anexo : {
-						analise: {id: $rootScope.demandaId},
-						fase: $scope.fase,
+						fase: {id: $scope.fase.id, fase: $scope.fase.fase},						
 						nomeArquivo: file.name,
 						tipoArquivo: file.type,
 						tamanhoArquivo: file.size,
@@ -76,11 +74,11 @@ controllers.controller('AnexoCtrl', function AnexoCtrl($scope, $rootScope, $http
 		$scope.labelArquivos = 'Upload cancelado';
 		$scope.progress = 0;		
 		$scope.upload.abort();
-	}
+	};
 	
 	function carregarAnexos() {
-		if($rootScope.demandaId){
-			$http.get('api/anexo/'+$rootScope.demandaId+'/'+$scope.fase).success(function(data) {
+		if($scope.fase.id){
+			$http.get('api/anexo/'+$scope.fase.id).success(function(data) {
 				$scope.anexos = data;
 			});
 		}

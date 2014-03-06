@@ -14,10 +14,8 @@ import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
 import javax.servlet.http.HttpSession;
 
-import br.gov.frameworkdemoiselle.security.AuthenticationException;
 import br.gov.frameworkdemoiselle.security.Authenticator;
 import br.gov.frameworkdemoiselle.security.Credentials;
-import br.gov.frameworkdemoiselle.security.InvalidCredentialsException;
 import br.gov.frameworkdemoiselle.util.Beans;
 import br.gov.serpro.catalogo.entity.User;
 
@@ -38,7 +36,7 @@ public class LDAPAuthenticator implements Authenticator {
 	public void authenticate() throws Exception {
 		
 			SearchControls controls = createSearchControls();
-			String filter = createFilter();
+			String filter = createFilter(credentials.getUsername());
 			SearchResult searchResult = createSearchResult(controls, filter);
 
 			LdapContext ldapContext = createContext(searchResult.getNameInNamespace(), credentials.getPassword());
@@ -52,6 +50,16 @@ public class LDAPAuthenticator implements Authenticator {
 			
 		}*/
 	}
+	
+	public User searchUserByCPF(String cpf) throws NamingException {
+		SearchControls controls = createSearchControls();
+		String filter = createFilter(cpf);
+		SearchResult searchResult = createSearchResult(controls, filter);
+		if(searchResult == null){
+			return null;
+		}
+		return createUser(searchResult.getAttributes());
+	}
 
 	@Override
 	public void unauthenticate() throws Exception {
@@ -61,12 +69,6 @@ public class LDAPAuthenticator implements Authenticator {
 
 	@Override
 	public User getUser() {
-		/*
-		if (user == null){
-			return null;
-		} else {
-			return user.parse();
-		}*/
 		return user;
 	}
 
@@ -88,9 +90,9 @@ public class LDAPAuthenticator implements Authenticator {
 		return result;
 	}
 
-	private String createFilter() {
+	private String createFilter(String username) {
 		String result = ldapConfig.getBaseFilter();
-		result = result.replaceAll("\\{0\\}", credentials.getUsername());
+		result = result.replaceAll("\\{0\\}", username);
 
 		return result;
 	}
@@ -119,4 +121,6 @@ public class LDAPAuthenticator implements Authenticator {
 
 		return new InitialLdapContext(env, null);
 	}
+
+	
 }

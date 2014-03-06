@@ -72,8 +72,9 @@ diretivas.directive('ngAnaliseSituacaoButton', function() {
 diretivas.directive('ngAnexos', function() {	
 	  return {
 		restrict: 'E',
-	    scope: {
-	        fase: '=fase'
+		require: '^ngModel',
+		scope: {
+			ngModel: '='
 	    },
 	    templateUrl: 'directives/anexo.html',	    
 	    link: function(scope, elem, $attrs) {}
@@ -118,3 +119,27 @@ diretivas.directive('backButton', function(){
       }
     };
 });
+
+diretivas.directive('ngMembros', function() {	
+	  return {
+		restrict: 'E',
+		require: '^ngModel',
+		scope: {
+			ngModel: '='
+	    },
+	    templateUrl: 'directives/membros.html',	    
+	    link: function(scope, elem, $attrs) {}
+	  };
+	});
+
+diretivas.directive('ngFluxo', function() {	
+	  return {
+		restrict: 'E',
+		require: '^ngModel',
+		scope: {
+			ngModel: '='
+	    },
+	    templateUrl: 'directives/fluxo.html',	    
+	    link: function(scope, elem, $attrs) {}
+	  };
+	});

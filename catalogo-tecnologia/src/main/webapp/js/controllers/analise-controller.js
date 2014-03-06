@@ -38,15 +38,20 @@ controllers.controller('AnaliseList',
 controllers.controller('AnaliseEdit', function Analise($scope, $http,
 		$location, $routeParams, $upload, $rootScope, AlertService) {
 
-	var id = $routeParams.id;
+	$scope.fase = {};
+	$scope.fase.id = $routeParams.id;
+	$scope.fase.fase = 1;	
 	
-	// Necessário para compartilhar entre os controladores: Anexo, Colaboradores...
-	$rootScope.demandaId = id;
-
-	if (id) {
-		$http.get('api/analise/' + id).success(function(data) {
+	
+	if ($scope.fase.id) {
+		$http.get('api/analise/' + $scope.fase.id).success(function(data) {
 			$scope.analise = data;
 		});
+		
+		$http.get('api/fase/fluxo/' + $scope.fase.id).success(function(data) {
+			$scope.fluxo = data;
+		});		
+		
 	} else {
 		$scope.analise = {};
 		$scope.analise.situacao = 'Rascunho';

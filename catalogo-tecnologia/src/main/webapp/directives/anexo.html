@@ -1,5 +1,5 @@
 <div class="panel-body">
-	<div class="panel-body" ng-controller="AnexoCtrl" ng-init="init(fase)">
+	<div class="panel-body" ng-controller="AnexoCtrl">
 
 		<div class="input-group">
 			<span class="input-group-btn"> <span class="btn btn-primary btn-file"> Escolher arquivos&hellip; <input type="file" multiple
@@ -29,11 +29,19 @@
 					<table class="table table-striped">
 						<tbody>
 							<tr ng-repeat="a in anexos">
-								<td><a ng-href="api/anexo/{{a.id}}"> <img alt="Tipo do arquivo" src="{{a.tipoArquivo | tipoArquivo}}" width="35px">
+								<td>
+									<a ng-href="api/anexo/{{a.id}}"> 
+										<img alt="Tipo do arquivo" ng-src="{{a.tipoArquivo | tipoArquivo}}" width="35px"> 
 										{{a.nomeArquivo}} <i>({{a.tamanhoArquivo | tamanho}})</i>
-								</a></td>
-								<td style="width: 20%"><a ng-href="api/anexo/{{a.id}}" class="btn btn-primary btn-sm"><i class="fa fa-download"></i> download</a> <a
-									ng-click-confirm="excluir(a.id)" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i> excluir</a></td>
+									</a>
+								</td>
+								<td style="width: 20%">
+									<a ng-href="api/anexo/{{a.id}}" class="btn btn-primary btn-sm">
+										<i class="fa fa-download"></i> download</a> 
+									<a ng-click-confirm="excluir(a.id)" class="btn btn-danger btn-sm">
+										<i class="fa fa-trash-o"></i> excluir
+									</a>
+								</td>
 							</tr>
 						</tbody>
 					</table>

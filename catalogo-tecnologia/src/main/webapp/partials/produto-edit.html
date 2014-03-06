@@ -3,6 +3,10 @@
 		Produto <small>edição</small>
 	</h1>
 
+	<div>
+		<ng-alerts></ng-alerts>
+	</div>
+
 	<form name="formProduto" role="form">
 <!-- 		<ul class="nav nav-tabs" ng:init="selected=1"> -->
 <!-- 			<li class="ng-class: selected == 1 ? 'active':'';"><a -->
@@ -42,9 +46,7 @@
 					</div>
 					<div class="col-md-6">
 						<label for="licenciamento">Licenciamento:</label>
-						<select id="licenciamento" class="form-control" ng-model="produto.licenciamento">
-							<option>GPL</option>
-							<option>LGPL</option>
+						<select id="licenciamento" class="form-control" ng-model="licenciamento" ng-options="l.nome for l in licenciamentos" required>
 						</select>
 					</div>
 				</div>
@@ -52,14 +54,12 @@
 				<div class="form-group row">
 					<div class="col-md-6">
 						<label for="fabricante">Fabricante:</label>
-						<select id="fabricante" class="form-control" ng-model="produto.fabricante">
-							<option>Mozilla Foundation</option>
+						<select id="fabricante" class="form-control" ng-model="fabricante" ng-options="f.nome for f in fabricantes" required>
 						</select>
 					</div>
 					<div class="col-md-6">
 						<label for="fornecedor">Fornecedor:</label>
-						<select id="fornecedor" class="form-control" ng-model="produto.fornecedor">
-							<option>Mozilla Foundation</option>
+						<select id="fornecedor" class="form-control" ng-model="fornecedor" ng-options="f.nome for f in fornecedores" required>
 						</select>
 					</div>
 				</div>
@@ -68,11 +68,7 @@
 					<div class="form-group row">
 						<div class="col-md-6">
 							<label for="plataformasTecSuportadas">Plataformas tecnológicas suportadas:</label>
-							<select id="plataformasTecSuportadas" class="form-control" ng-model="plataforma">
-								<option>Plataforma 1</option>
-								<option>Plataforma 2</option>
-								<option>Plataforma 3</option>
-								<option>Plataforma 4</option>
+							<select id="plataformasTecSuportadas" class="form-control" ng-model="plataforma" ng-options="p.nome for p in plataformasTecnologicas" required>
 							</select>
 							<span id="plataformasTecSuportadas-message" class="text-danger"></span>
 						</div>
@@ -92,7 +88,7 @@
 							</thead>
 							<tbody>
 								<tr ng-repeat="p in plataformasSuportadas">
-									<td>{{p}}</td>
+									<td>{{p.nome}}</td>
 									<td><a ng-click="removePlataforma(p)" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i></a></td>
 								</tr>
 							</tbody>
@@ -109,10 +105,31 @@
 				
 				<div class="form-group">
 					<label for="atualizacao">Atualização</label>
-					<input id="atualizacao" type="checkbox" ng-model="produto.atualizacao">
+					<input id="atualizacao" type="checkbox" ng-change="clicaAtualizacao()" ng-model="produto.atualizacao">
 					<span id="atualizacao-message" class="text-danger"></span>
 				</div>
-
+				
+				<div>
+    				<div class="form-group row" style='padding-left:1cm;' ng:show="produto.atualizacao">
+						<div class="col-md-6">
+							<label for="produtoParaPesquisa">Palavra-chave para pesquisa:</label>
+							<input type="text" class="form-control" id="produtoParaPesquisa" ng-model="produtoParaPesquisa">
+							<span id="produtoParaPesquisa-message" class="text-danger"></span>
+						</div>
+							<div class="col-md-6" style='padding-top:0.5cm; padding-left:0cm;'>
+							<button type="button" class="btn btn-lg btn-primary" data-template="partials/pesquisa-produtos.html" bs-modal="modal">
+								Pesquisar
+							</button>	
+						</div>
+					</div>
+					
+					<div class="form-group" style='padding-left:1cm;' ng:show="produto.produtoAnterior">
+						<label for="nomeProdutoAnterior">Produto:</label> 
+						<input type="text" class="form-control" disabled="disabled" id="nomeProdutoAnterior" ng-model="produto.produtoAnterior"> 
+						<span id="nomeProdutoAnterior-message" class="text-danger"></span>
+					</div>
+				</div>
+				
 				<div class="form-group">
 					<label for="legado">Legado</label>
 					<input id="legado" type="checkbox" ng-model="produto.legado">

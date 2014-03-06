@@ -23,14 +23,16 @@ public class ValidationException extends javax.validation.ValidationException {
 		return instance;
 	}
 
-	public void addViolation(String property, String message) {
+	public ValidationException addViolation(String property, String message) {
 		this.violations.add(new Violation(property, message));
+		return this;
 	}
 
-	public void addViolations(Set<MethodConstraintViolation<?>> violations) {
+	public ValidationException addViolations(Set<MethodConstraintViolation<?>> violations) {
 		for (MethodConstraintViolation<?> violation : violations) {
 			this.violations.add(Violation.parse(violation));
 		}
+		return this;
 	}
 
 	public Set<Violation> getConstraintViolations() {

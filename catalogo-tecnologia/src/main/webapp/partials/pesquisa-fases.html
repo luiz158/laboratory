@@ -97,8 +97,32 @@
 		</form>
 				
 		<div>
-			<div class="list-group">
-		        <a ng-repeat="f in resultado" href="#{{f.fase | faseUrl}}/{{f.id}}" class="list-group-item">
+			<div class="list-group" ng-if="paginacao.data.length >0">
+			
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="dataTables_info">
+							<h5>Total de registros: {{paginacao.data.length}} <small>Exibindo até {{paginacao.registrosPorPagina}} itens por página.</small></h5>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="dataTables_paginate paging_simple_numbers">
+						<ul class="pagination">
+							<li>
+								<a ng-click="paginacao.anterior()"> &laquo; </a></li>
+						  	<li ng-repeat="i in [] | range:paginacao.paginas()" 
+						  		ng-class="{'active' : paginacao.paginaAtual == i}">
+						  		<a ng-click="paginacao.paginaAtual = i"> {{i+1}} </a>
+						  	</li>
+						  	<li><a ng-click="paginacao.proxima()"> &raquo; </a></li>
+						</ul>
+						</div>
+					</div>
+				</div>
+			
+				
+			
+		        <a ng-repeat="f in paginacao.data | startFrom:paginacao.paginaAtual*paginacao.registrosPorPagina | limitTo:paginacao.registrosPorPagina" href="#{{f.fase | faseUrl}}/{{f.id}}" class="list-group-item">
 		        	<div class="list-group-item-heading row">
 		        		<div class="col-md-4">
 		        			<b>ID:</b> {{f.id}} 
@@ -112,10 +136,10 @@
 		        	</div>
 		            <div class="list-group-item-heading row">
 		        		<div class="col-md-4">
-		        			<b>Gestor:</b> {{f.gestor}} - {{f.gestorArea}} 
+		        			<b>Gestor:</b> {{f.gestor}} - {{f.area}} 
 		        		</div>
 		        		<div class="col-md-4">
-		        			<b>Registro:</b> {{f.dataRegistro}}  
+		        			<b>Registro:</b> {{f.dataRealizacao}}  
 		        		</div>
 		        		<div class="col-md-4">
 		        			<b>Finalização:</b> {{f.dataFinalizacao}} 

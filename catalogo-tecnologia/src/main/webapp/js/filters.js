@@ -27,7 +27,6 @@ filters.filter('tipoArquivo', function() {
 	tipos['unknow']=path+"unknow.png";
 	
 	return function(tipo){	
-		console.log('Filtrando tipo de arquivo: '+tipo);
 		var url = tipos['unknow'];
 		if(tipo.indexOf('image')>-1){
 			url = tipos['image'];
@@ -53,15 +52,47 @@ filters.filter('tipoArquivo', function() {
   });
 
 filters.filter('nomeFase', function() {    
-	var nomes = ['','Análise','Prospecção', 'Internalização', 'Sustentação', 'Descarte'];		
+	var nomes = {
+			'ANALISE':'Análise',
+			'PROSPECCAO': 'Prospecção',
+			'INTERNALIZACAO':'Internalização',
+			'SUSTENTACAO':'Sustentação', 
+			'DESCARTE': 'Descarte'
+	};		
 	return function(fase){	
+		if(!isNaN(parseFloat(fase)) && isFinite(fase)){
+			return nomes[Object.keys(nomes)[fase-1]];
+		}
 		return nomes[fase];		
 	};
   });
 
 filters.filter('faseUrl', function() {    
-	var nomes = ['','analise/edit','prospeccao/edit', 'internalizacao/edit', 'sustentacao/edit', 'descarte/edit'];		
+	var url = {
+			'ANALISE':'analise/edit',
+			'PROSPECCAO': 'prospeccao/edit',
+			'INTERNALIZACAO':'internalizacao/edit',
+			'SUSTENTACAO':'sustentacao/edit', 
+			'DESCARTE': 'descarte/edit'
+	};
 	return function(fase){	
-		return nomes[fase];		
+		return url[fase];		
 	};
   });
+
+filters.filter('startFrom', function() {	
+    return function(input, start) {
+    	if(!input) return input;
+        start = +start; //parse to int
+        return input.slice(start);
+    };
+});
+
+filters.filter('range', function() {
+	  return function(input, total) {
+	    total = parseInt(total);
+	    for (var i=0; i<total; i++)
+	      input.push(i);
+	    return input;
+	  };
+	});
