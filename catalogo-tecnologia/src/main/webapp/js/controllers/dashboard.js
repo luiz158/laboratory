@@ -5,9 +5,6 @@ var controllers = angular.module('catalogo.controllers');
 
 controllers.controller('DashboardCtrl', function DashboardCtrl($scope) {
 
-	console.log('DashboardCtrl');
-	
-	// Testando chart
 	$scope.data = [
 	               {label: "Análise", value: 12},
 	               {label: "Prospecção", value: 18},

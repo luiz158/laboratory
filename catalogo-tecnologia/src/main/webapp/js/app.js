@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('catalogo', [
+var app = angular.module('catalogo', [
   'ngRoute',
   'catalogo.controllers',
   'catalogo.directives',
@@ -49,5 +49,21 @@ config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/user/edit/:id', {templateUrl: 'partials/user-edit.html', controller: 'UserEdit'});
   $routeProvider.otherwise({templateUrl: 'partials/dashboard.html'});
 }]);
+
+// Fonte: http://stackoverflow.com/questions/15025979/can-i-make-a-function-available-in-every-controller-in-angular
+app.run(function($rootScope, AuthService) {
+    $rootScope.hasRole = function(roles) {
+    	console.log('blá');
+		var paramRoles = roles.split(",");
+		var userRoles = []; 
+		$.each(AuthService.getUsuario().grupos, function (i, grupo){
+			$.each(grupo.perfis, function (i, perfil){
+				userRoles.push(perfil);
+			});
+		});
+		userRoles = _.uniq(userRoles);
+		return _.intersection(userRoles, paramRoles).length; // 0 no javascript é false
+    };
+});
 
 var controllers = angular.module('catalogo.controllers',[]);

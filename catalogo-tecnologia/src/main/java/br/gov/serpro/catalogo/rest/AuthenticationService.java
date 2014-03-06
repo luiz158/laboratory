@@ -48,7 +48,8 @@ public class AuthenticationService {
 			if (userDAO.loadByCPF(user.getName()) == null){
 				userDAO.insert(user);
 			} else {
-				user.setId(Long.parseLong(userDAO.loadByCPF(user.getName()).getId()));
+//				user.setId(Long.parseLong(userDAO.loadByCPF(user.getName()).getId()));
+				user = userDAO.loadByCPF(user.getName());
 			}
 		}
 		

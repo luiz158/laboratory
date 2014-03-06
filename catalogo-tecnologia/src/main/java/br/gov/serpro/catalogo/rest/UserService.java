@@ -17,6 +17,7 @@ import javax.ws.rs.Produces;
 import org.jboss.resteasy.spi.validation.ValidateRequest;
 
 import br.gov.frameworkdemoiselle.resteasy.util.ValidationException;
+import br.gov.frameworkdemoiselle.security.RequiredRole;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.serpro.catalogo.entity.User;
 import br.gov.serpro.catalogo.persistence.UserDAO;
@@ -64,6 +65,7 @@ public class UserService {
 	
 	@POST
 	@Transactional
+	@RequiredRole("ADMINISTRADOR")
 	public void inserir(@Valid User user) {
 		userDAO.insert(user);
 	}

@@ -46,10 +46,10 @@ services.factory('AlertService', function($rootScope, $timeout) {
  * function(index) { return $rootScope.alerts.splice(index, 1); }
  *  }; } ]);
  */
-services.factory('AuthService', function($http) {
+services.factory('AuthService', function($http, $rootScope) {
 
 	var logado = false;
-	var usuario = {};
+	$rootScope.usuario = {};
 	
 	// Construtor
 	$http({
@@ -76,11 +76,12 @@ services.factory('AuthService', function($http) {
 					'Content-Type' : 'application/json;charset=utf8'
 				}
 			}).success(function(response) {
-				usuario = response;
+				$rootScope.usuario = response;
 				logado = true;
 				callback(response);
+				console.log($rootScope.usuario);
 			}).error(function(response, status) {
-				usuario = {};
+				$rootScope.usuario = {};
 				logado = false;
 				errorCallback(response, status);
 			});
@@ -103,7 +104,7 @@ services.factory('AuthService', function($http) {
 			return logado;
 		},
 		getUsuario : function(){
-			return usuario;
+			return $rootScope.usuario;
 		}
 	}
 });
