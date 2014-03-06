@@ -67,6 +67,20 @@ filters.filter('nomeFase', function() {
 	};
   });
 
+
+filters.filter('iconeFase', function() {    
+	var url = {
+			'ANALISE':'images/fases/analise.png',
+			'PROSPECCAO': 'images/fases/prospeccao.png',
+			'INTERNALIZACAO':'images/fases/internalizacao.png',
+			'SUSTENTACAO':'images/fases/sustentacao.png', 
+			'DECLINIO': 'images/fases/declinio.png'
+	};
+	return function(fase){	
+		return url[fase];		
+	};
+  });
+
 filters.filter('faseUrl', function() {    
 	var url = {
 			'ANALISE':'analise/edit',
