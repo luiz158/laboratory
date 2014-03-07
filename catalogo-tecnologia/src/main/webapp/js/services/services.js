@@ -3,6 +3,31 @@
 /* Services */
 var services = angular.module('catalogo.services', []);
 
+services.factory('OrigemDemandaService', function($http, $q) {
+	var itens = [];
+	var service = {};				
+
+	service.getItens = function() {
+	    var deferred = $q.defer();
+	    if(itens.length<=0){
+	    	$http({
+				url : 'api/origemDemanda',
+				method : "GET"
+			}).success(function(data) {
+				itens = data;	
+				deferred.resolve(itens);
+			}).error(function(data, status) {	
+				console.log(data, status);
+			});
+		}else{
+			deferred.resolve(itens);
+		}
+
+	    return deferred.promise;
+	  };
+	return service;
+});
+
 services.factory('AlertService', function($rootScope, $timeout) {
 	var alertService = {};
 
@@ -34,18 +59,7 @@ services.factory('AlertService', function($rootScope, $timeout) {
 	
 	return alertService;
 });
-/*
- * services.factory('AlertService', ['$rootScope', '$timeout',
- * function($rootScope, $timeout) { var alertService; $rootScope.alerts = [];
- * return alertService = { addAlert : function(type, msg, timeout) {
- * $rootScope.alerts.push({ type : type, msg : msg, close : function() { return
- * alertService.closeAlert(this); } }); console.log("add"+timeout); if (timeout) {
- * console.log("timeout"+timeout); $timeout(function() {
- * alertService.closeAlert(this); }, timeout); } }, closeAlert : function(alert) {
- * return this.closeAlertIdx($rootScope.alerts.indexOf(alert)); }, closeAlertIdx :
- * function(index) { return $rootScope.alerts.splice(index, 1); }
- *  }; } ]);
- */
+
 services.factory('AuthService', function($http, $rootScope) {
 
 	var logado = false;

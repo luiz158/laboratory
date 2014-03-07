@@ -4,19 +4,25 @@
 var controllers = angular.module('catalogo.controllers');
 
 
-controllers.controller('ProspeccaoCtrl', function ProspeccaoCtrl($scope, $rootScope, $http,$location, $routeParams, AlertService) {
+controllers.controller('ProspeccaoCtrl', function ProspeccaoCtrl($scope, $rootScope, $http,$location, $routeParams, AlertService, OrigemDemandaService) {
 
 	$scope.fase = {};
 	$scope.fase.id = $routeParams.id;
 	$scope.fase.fase = 2;
+	$scope.origemDemanda = [];
+	
+	OrigemDemandaService.getItens().then(function(data) {
+		$scope.origemDemanda = data;
+	});
 
 	if ($scope.fase.id) {
 		$http.get('api/prospeccao/' + $scope.fase.id).success(function(data) {
 			$scope.fase = data;
-			$scope.fase.faseAnterior = {id: data.faseAnterior.id, 
-								fase: data.faseAnterior.fase, 
-								origemReferencia: data.origemReferencia,
-								codigoReferencia: data.codigoReferencia
+			$scope.fase.faseAnterior = {
+					id: 				data.faseAnterior.id, 
+					fase: 				data.faseAnterior.fase, 
+					origemReferencia: 	data.faseAnterior.origemReferencia,
+					codigoReferencia: 	data.faseAnterior.codigoReferencia
 			};
 		});
 	} else {

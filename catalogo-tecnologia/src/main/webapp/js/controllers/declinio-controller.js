@@ -4,20 +4,24 @@
 var controllers = angular.module('catalogo.controllers');
 
 
-controllers.controller('DeclinioCtrl', function DeclinioCtrl($scope, $http,$location, $routeParams, AlertService) {
+controllers.controller('DeclinioCtrl', function DeclinioCtrl($scope, $http,$location, $routeParams, AlertService,OrigemDemandaService) {
 
 	$scope.fase = {};
 	$scope.fase.id = $routeParams.id;
 	$scope.fase.fase = 4;
+	
+	OrigemDemandaService.getItens().then(function(data) {
+		$scope.origemDemanda = data;
+	});
 	
 	if ($scope.fase.id) {
 		$http.get('api/declinio/' + $scope.fase.id).success(function(data) {
 			$scope.fase = data;
 			$scope.fase.faseAnterior = {id: data.faseAnterior.id, 
 					fase: data.faseAnterior.fase, 
-					origemReferencia: data.origemReferencia,
-					codigoReferencia: data.codigoReferencia
-}			;
+					origemReferencia: data.faseAnterior.origemReferencia,
+					codigoReferencia: data.faseAnterior.codigoReferencia
+			};
 		});
 	} else {
 		AlertService.addWithTimeout('danger','Não foi possível encontrar este ítem.');

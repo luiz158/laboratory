@@ -135,6 +135,9 @@ public class CargaInicial {
 	@Startup @Priority(99)
 	@Transactional
 	public void criarAnalises(){
+		
+		OrigemDemanda origem = origemDemandaDAO.findAll().get(0);
+		
 		Analise a = new Analise();		
 		a.setArea("SUPDE");
 		a.setCodigoReferencia("R171");
@@ -142,7 +145,7 @@ public class CargaInicial {
 		a.setDemandante("Pedro Alvares Cabral");
 		a.setObjetivo("Gostaria de utilizar Natural no desenvolvimento de aplicativos móveis");
 		a.setGestor("Wilson Simoninha Tchê");
-		a.setOrigemReferencia("ALM");
+		a.setOrigemReferencia(origem);
 		a.setSituacao(Situacao.REPROVADO);
 		a.setSituacaoJustificativa("Isso não tem cabimento. iphones não tem poder computacional para esta tecnologia.");
 		analiseDAO.insert(a);	
@@ -154,9 +157,9 @@ public class CargaInicial {
 		a.setDemandante("Arnaldo Antunes");
 		a.setObjetivo("Preciso de uma ferramenta para a visualização das informações secretas de uma base de dados desconhecida");
 		a.setGestor("Esse pegou uma bomba");
-		a.setOrigemReferencia("ALM");
+		a.setOrigemReferencia(origem);
 		a.setSituacao(Situacao.RASCUNHO);
-		analiseDAO.insert(a);	
+		a = analiseDAO.insert(a);	
 
 		a = new Analise();		
 		a.setArea("SUPDE");
@@ -165,7 +168,7 @@ public class CargaInicial {
 		a.setDemandante("Didi Mocó Sonrrisal Colesteró");
 		a.setObjetivo("Precise de uma ferramenta que facilite a geração de lero-lero para piadas");
 		a.setGestor("Atrogildo Enfezado");
-		a.setOrigemReferencia("ALM");
+		a.setOrigemReferencia(origem);
 		a.setSituacao(Situacao.APROVADO);
 		a.setSituacaoJustificativa("Me parece ser bem plausível. Devemos selecionar algumas tecnologias para isso.");
 		a.setProximaFase(FaseEnum.PROSPECCAO);
@@ -175,11 +178,11 @@ public class CargaInicial {
 		a.setProximaFaseJustificativa("Precisamos que este estudo seja prospectado com no mínimo 3 tecnologias.");
 		
 		
-		analiseDAO.insert(a);	
+		a = analiseDAO.insert(a);	
 		
 		Prospeccao p = new Prospeccao();		
 		p.setCodigoReferencia("R174");
-		p.setOrigemReferencia("ALM");
+		p.setOrigemReferencia(origem);
 		p.setObjetivo("Selecionar os tipos de bolas de futsal na copa do mundo.");
 		p.setGestor(a.getProximaFaseGestor());
 		p.setArea(a.getProximaFaseArea());
@@ -188,7 +191,7 @@ public class CargaInicial {
 		p.setSituacao(Situacao.REPROVADO);
 		p.setTestes("Os testes realizados foram feitos na regional Salvador em laboratório isolado. Foram averiguados testes de blablablabla. Maiores detalhes sobre os testes realizados podem ser encontrados em Arquivo1.odt.");
 		p.setConclusao("A prospecção foi bem sucedida em que, pelos testes realizados, o Ubuntu 12 foi selecionado para ser internalizado.");
-		prospeccaoDAO.insert(p);
+		p = prospeccaoDAO.insert(p);
 		
 		List<Produto> produtos = produtoDAO.findAll();		
 		for (Produto produto : produtos) {
@@ -202,7 +205,7 @@ public class CargaInicial {
 		Declinio d = new Declinio();
 		d.setArea("CTSDR");
 		d.setCodigoReferencia("R175");
-		d.setOrigemReferencia("ALM");
+		d.setOrigemReferencia(origem);
 		d.setObjetivo("Acabar com essa palhaçada.");
 		d.setGestor("Robson Ximenes");
 		d.setFaseAnterior(p);

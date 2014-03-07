@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -34,15 +35,14 @@ public class Fase {
 	private Long id;
 	
 	@Enumerated(EnumType.STRING)
-	private FaseEnum fase;
-	
+	private FaseEnum fase;	
 	
 	@NotEmpty
 	private String codigoReferencia;
 	
-	@NotEmpty
-	private String origemReferencia;
-
+	@ManyToOne
+	private OrigemDemanda origemReferencia;
+	
 	@NotEmpty
 	private String objetivo;
 
@@ -102,13 +102,7 @@ public class Fase {
 		this.codigoReferencia = codigoReferencia;
 	}
 
-	public String getOrigemReferencia() {
-		return origemReferencia;
-	}
 
-	public void setOrigemReferencia(String origemReferencia) {
-		this.origemReferencia = origemReferencia;
-	}
 
 	public String getObjetivo() {
 		return objetivo;
@@ -220,6 +214,14 @@ public class Fase {
 
 	public void setFaseAnterior(Fase faseAnterior) {
 		this.faseAnterior = faseAnterior;
+	}
+	
+	public OrigemDemanda getOrigemReferencia() {
+		return origemReferencia;
+	}
+
+	public void setOrigemReferencia(OrigemDemanda origemReferencia) {
+		this.origemReferencia = origemReferencia;
 	}
 	
 }

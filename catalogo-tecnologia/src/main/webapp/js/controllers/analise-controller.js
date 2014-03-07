@@ -36,18 +36,22 @@ controllers.controller('AnaliseList',
 		});
 
 controllers.controller('AnaliseEdit', function Analise($scope, $http,
-		$location, $routeParams, $upload, $rootScope, AlertService) {
+		$location, $routeParams, $upload, $rootScope, AlertService, OrigemDemandaService) {
 
 	$scope.fase = {};
 	$scope.fase.id = $routeParams.id;
 	$scope.fase.fase = 1;	
+	$scope.origemDemanda = [];
+	
+	OrigemDemandaService.getItens().then(function(data) {
+		$scope.origemDemanda = data;
+	});
 	
 	
 	if ($scope.fase.id) {
 		$http.get('api/analise/' + $scope.fase.id).success(function(data) {
 			$scope.analise = data;
-		});	
-		
+		});		
 	} else {
 		$scope.analise = {};
 		$scope.analise.situacao = 'Rascunho';
