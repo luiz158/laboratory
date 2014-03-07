@@ -14,24 +14,29 @@ import br.gov.serpro.catalogo.entity.Fabricante;
 import br.gov.serpro.catalogo.entity.FaseEnum;
 import br.gov.serpro.catalogo.entity.FaseProduto;
 import br.gov.serpro.catalogo.entity.Fornecedor;
+import br.gov.serpro.catalogo.entity.Grupo;
 import br.gov.serpro.catalogo.entity.Licenciamento;
+import br.gov.serpro.catalogo.entity.Perfil;
 import br.gov.serpro.catalogo.entity.PlataformaTecnologica;
 import br.gov.serpro.catalogo.entity.Produto;
 import br.gov.serpro.catalogo.entity.Prospeccao;
 import br.gov.serpro.catalogo.entity.Situacao;
 import br.gov.serpro.catalogo.entity.Subcategoria;
 import br.gov.serpro.catalogo.entity.Tema;
+import br.gov.serpro.catalogo.entity.User;
 import br.gov.serpro.catalogo.persistence.AnaliseDAO;
 import br.gov.serpro.catalogo.persistence.DeclinioDAO;
 import br.gov.serpro.catalogo.persistence.FabricanteDAO;
 import br.gov.serpro.catalogo.persistence.FaseProdutoDAO;
 import br.gov.serpro.catalogo.persistence.FornecedorDAO;
+import br.gov.serpro.catalogo.persistence.GrupoDAO;
 import br.gov.serpro.catalogo.persistence.LicenciamentoDAO;
 import br.gov.serpro.catalogo.persistence.PlataformaTecnologicaDAO;
 import br.gov.serpro.catalogo.persistence.ProdutoDAO;
 import br.gov.serpro.catalogo.persistence.ProspeccaoDAO;
 import br.gov.serpro.catalogo.persistence.SubcategoriaDAO;
 import br.gov.serpro.catalogo.persistence.TemaDAO;
+import br.gov.serpro.catalogo.persistence.UserDAO;
 
 
 
@@ -71,8 +76,43 @@ public class CargaInicial {
 	@Inject
 	private SubcategoriaDAO subcategoriaDAO;
 	
+	@Inject
+	private UserDAO usuarioDAO = new UserDAO();
 	
-	@Startup @Priority(2)
+	
+	@Inject
+	private GrupoDAO grupoDAO = new GrupoDAO();
+	
+	
+	User usuario1;
+	
+	@Startup @Priority(0)
+	@Transactional
+	public void criarUsuarios(){
+		
+		List<Perfil> perfis1 = new ArrayList<Perfil>();
+		perfis1.add(Perfil.ANALISE);
+		perfis1.add(Perfil.PROSPECCAO);
+		Grupo grupo = new Grupo();
+		grupo.setNome("Grupo 1");
+		grupo.setDescricao("grupo 1");
+		grupo.setPerfis(perfis1);
+		
+		grupoDAO.insert(grupo);
+		
+		usuario1 = new User();
+		usuario1.setName("Robson Saraiva Ximenes");
+		usuario1.setEmail("robson.ximenes@serpro.gov.br");
+		usuario1.setGrupos(new ArrayList<Grupo>());
+		usuario1.getGrupos().add(grupo);
+		
+		usuarioDAO.insert(usuario1);
+		
+	}
+	
+	
+	
+	@Startup @Priority(99)
 	@Transactional
 	public void criarAnalises(){
 		Analise a = new Analise();		
@@ -170,7 +210,7 @@ public class CargaInicial {
 		licenciamentoDAO.insert(l);
 		
 		Fabricante fabricante = new Fabricante();
-		fabricante.setNome("Mozilla");
+		fabricante.setNome("Arno");
 		fabricante.setRepresentante("Thiago");
 		fabricante.setTelefone("(75)9128-0410");
 		fabricante.setEmail("mariano.thiago@gmail.com");
@@ -184,17 +224,17 @@ public class CargaInicial {
 		fornecedorDAO.insert(fornecedor);
 		
 		PlataformaTecnologica pl = new PlataformaTecnologica();
-		pl.setNome("Plataforma 1");
+		pl.setNome("Ubuntu 12");
 		pl.setDescricao("Plataforma 1");
 		plataformaTecnologicaDAO.insert(pl);
 		
 		pl = new PlataformaTecnologica();
-		pl.setNome("Plataforma 2");
+		pl.setNome("Windows 97");
 		pl.setDescricao("Plataforma 2");
 		plataformaTecnologicaDAO.insert(pl);
 		
 		pl = new PlataformaTecnologica();
-		pl.setNome("Plataforma 3");
+		pl.setNome("MacOSX");
 		pl.setDescricao("Plataforma 3");
 		plataformaTecnologicaDAO.insert(pl);
 		
@@ -225,13 +265,13 @@ public class CargaInicial {
 		produtoDAO.insert(produto);		
 		
 		Tema tema = new Tema();
-		tema.setNome("Temax");
+		tema.setNome("Engenharia de Software");
 		tema.setDescricao("Temax");
 		tema.setTecnologia(null);
 		temaDAO.insert(tema);
 		
 		Subcategoria subcategoria = new Subcategoria();
-		subcategoria.setNome("Subcategoriax");
+		subcategoria.setNome("Liguagem de programação");
 		subcategoria.setDescricao("Subcategoriax");
 		subcategoria.setTema(null);
 		subcategoriaDAO.insert(subcategoria);
