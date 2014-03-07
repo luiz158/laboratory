@@ -16,6 +16,7 @@ import br.gov.serpro.catalogo.entity.FaseProduto;
 import br.gov.serpro.catalogo.entity.Fornecedor;
 import br.gov.serpro.catalogo.entity.Grupo;
 import br.gov.serpro.catalogo.entity.Licenciamento;
+import br.gov.serpro.catalogo.entity.OrigemDemanda;
 import br.gov.serpro.catalogo.entity.Perfil;
 import br.gov.serpro.catalogo.entity.PlataformaTecnologica;
 import br.gov.serpro.catalogo.entity.Produto;
@@ -31,6 +32,7 @@ import br.gov.serpro.catalogo.persistence.FaseProdutoDAO;
 import br.gov.serpro.catalogo.persistence.FornecedorDAO;
 import br.gov.serpro.catalogo.persistence.GrupoDAO;
 import br.gov.serpro.catalogo.persistence.LicenciamentoDAO;
+import br.gov.serpro.catalogo.persistence.OrigemDemandaDAO;
 import br.gov.serpro.catalogo.persistence.PlataformaTecnologicaDAO;
 import br.gov.serpro.catalogo.persistence.ProdutoDAO;
 import br.gov.serpro.catalogo.persistence.ProspeccaoDAO;
@@ -77,14 +79,19 @@ public class CargaInicial {
 	private SubcategoriaDAO subcategoriaDAO;
 	
 	@Inject
-	private UserDAO usuarioDAO = new UserDAO();
+	private UserDAO usuarioDAO;
 	
 	
 	@Inject
-	private GrupoDAO grupoDAO = new GrupoDAO();
+	private GrupoDAO grupoDAO;
+	
+	
+	@Inject 
+	private OrigemDemandaDAO origemDemandaDAO;
 	
 	
 	User usuario1;
+	User usuario2;
 	
 	@Startup @Priority(0)
 	@Transactional
@@ -107,6 +114,14 @@ public class CargaInicial {
 		usuario1.getGrupos().add(grupo);
 		
 		usuarioDAO.insert(usuario1);
+		
+		usuario2 = new User();
+		usuario2.setName("Thiago de Lima Mariano");
+		usuario2.setEmail("thiago.mariano@serpro.gov.br");
+		usuario2.setGrupos(new ArrayList<Grupo>());
+		usuario2.getGrupos().add(grupo);
+		
+		usuarioDAO.insert(usuario2);
 		
 	}
 	
@@ -282,6 +297,25 @@ public class CargaInicial {
 		subcategoria.setTema(null);
 		subcategoriaDAO.insert(subcategoria);
 		
+		OrigemDemanda origemDemanda = new OrigemDemanda();
+		origemDemanda.setNome("SPECX");
+		origemDemanda.setDescricao("SPECX...");
+		origemDemandaDAO.insert(origemDemanda);
+		
+		origemDemanda = new OrigemDemanda();
+		origemDemanda.setNome("ALM");
+		origemDemanda.setDescricao("ALM...");
+		origemDemandaDAO.insert(origemDemanda);
+		
+		origemDemanda = new OrigemDemanda();
+		origemDemanda.setNome("Demandas RFB");
+		origemDemanda.setDescricao("Demandas RFB...");
+		origemDemandaDAO.insert(origemDemanda);
+		
+		origemDemanda = new OrigemDemanda();
+		origemDemanda.setNome("Solicita");
+		origemDemanda.setDescricao("Solicita...");
+		origemDemandaDAO.insert(origemDemanda);
 	}
 
 	
