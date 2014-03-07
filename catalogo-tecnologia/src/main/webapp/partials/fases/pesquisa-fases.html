@@ -18,7 +18,7 @@
 				<div class="col-md-4">
 					<label for="fase">Fase:</label> <select id="fase"
 						class="form-control" ng-model="fase.fase">
-						<option>--</option>
+						<option value="" disabled>--</option>
 						<option value="1">Análise</option>
 						<option value="2">Prospecção</option>
 						<option value="3">Internalização</option>
@@ -42,7 +42,7 @@
 					<select id="origemReferencia" class="form-control" 
 							ng-model="fase.origemReferencia" 
 							ng-options="origem.nome for origem in origemDemanda track by origem.id">
-							<option value="" disabled>-- Selecione --</option>
+							<option value="" disabled>--</option>
 					</select>
 				</div>
 				<div class="col-md-4">
