@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import br.gov.frameworkdemoiselle.annotation.Priority;
 import br.gov.frameworkdemoiselle.lifecycle.Startup;
 import br.gov.frameworkdemoiselle.stereotype.BusinessController;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
@@ -70,73 +71,77 @@ public class CargaInicial {
 	@Inject
 	private SubcategoriaDAO subcategoriaDAO;
 	
-	@Startup
+	
+	@Startup @Priority(2)
 	@Transactional
-	public void criarAnalisesDeExemplo(){
+	public void criarAnalises(){
 		Analise a = new Analise();		
 		a.setArea("SUPDE");
-		a.setCodigoReferencia("R??????");
-		a.setDataRealizacao(new Date());
-		a.setDemandante("Jacinto Aquino Rego");
-		a.setObjetivo("Gostaria de utilizar PHP no desenvolvimento de aplicativos móveis para iPhone");
-		a.setGestor("Wilson Simonha Tchê");
-		a.setOrigemReferencia("ALM");
-		a.setSituacao(Situacao.REPROVADO);
-		a.setSituacaoJustificativa("Isso não tem cabimento. iPhones não suporta esta avançada tecnologia.");
-		analiseDAO.insert(a);	
-		
-		for(int i=0; i<3; i++){		
-			a = new Analise();		
-			a.setArea("CETEC");
-			a.setCodigoReferencia("R17100"+i);
-			a.setDataRealizacao(new Date());
-			a.setDemandante("Fulano "+i);
-			a.setObjetivo("Objetivo "+i);
-			a.setGestor("Gestor "+i);
-			a.setOrigemReferencia("ALM");
-			a.setSituacao(Situacao.APROVADO);
-			a.setSituacaoJustificativa("blablabalab blabalbal");
-			a.setProximaFase(FaseEnum.INTERNALIZACAO);
-			a.setProximaFaseArea("CTSDR");			
-			a.setProximaFaseGestor("Robson Ximenes");
-			a.setProximaFaseGestorEmail("robson.ximenes@serpro.gov.br");
-			a.setProximaFaseJustificativa("Robgol vai internalizar essa parada");
-			a = analiseDAO.insert(a);	
-		}
-		
-		a = new Analise();		
-		a.setArea("CETEC");
 		a.setCodigoReferencia("R171");
 		a.setDataRealizacao(new Date());
-		a.setDemandante("Edson Arantes Nascimento");
-		a.setObjetivo("Analisar o uso de bolas de futsal na copa do mundo.");
-		a.setGestor("Sérgio Hein");
+		a.setDemandante("Pedro Alvares Cabral");
+		a.setObjetivo("Gostaria de utilizar Natural no desenvolvimento de aplicativos móveis");
+		a.setGestor("Wilson Simoninha Tchê");
+		a.setOrigemReferencia("ALM");
+		a.setSituacao(Situacao.REPROVADO);
+		a.setSituacaoJustificativa("Isso não tem cabimento. iphones não tem poder computacional para esta tecnologia.");
+		analiseDAO.insert(a);	
+		
+		a = new Analise();		
+		a.setArea("SUPDE");
+		a.setCodigoReferencia("R172");
+		a.setDataRealizacao(new Date());
+		a.setDemandante("Arnaldo Antunes");
+		a.setObjetivo("Preciso de uma ferramenta para a visualização das informações secretas de uma base de dados desconhecida");
+		a.setGestor("Esse pegou uma bomba");
+		a.setOrigemReferencia("ALM");
+		a.setSituacao(Situacao.RASCUNHO);
+		analiseDAO.insert(a);	
+
+		a = new Analise();		
+		a.setArea("SUPDE");
+		a.setCodigoReferencia("R173");
+		a.setDataRealizacao(new Date());
+		a.setDemandante("Didi Mocó Sonrrisal Colesteró");
+		a.setObjetivo("Precise de uma ferramenta que facilite a geração de lero-lero para piadas");
+		a.setGestor("Atrogildo Enfezado");
 		a.setOrigemReferencia("ALM");
 		a.setSituacao(Situacao.APROVADO);
-		a.setSituacaoJustificativa("É possível utilizar esta bola, pois será facilitada a ocorrência de tabacas e gols.");
+		a.setSituacaoJustificativa("Me parece ser bem plausível. Devemos selecionar algumas tecnologias para isso.");
 		a.setProximaFase(FaseEnum.PROSPECCAO);
-		a.setProximaFaseArea("CTSDR");
-		a.setProximaFaseGestor("Robson Ximenes");
+		a.setProximaFaseArea("CETEC");
+		a.setProximaFaseGestor("Robgol");
 		a.setProximaFaseGestorEmail("robson.ximenes@serpro.gov.br");
-		a.setProximaFaseJustificativa("Robgol vai internalizar essa parada, pois ele é o melhor jogador de futebol que o SERPRO tem.");
-		a = analiseDAO.insert(a);	
+		a.setProximaFaseJustificativa("Precisamos que este estudo seja prospectado com no mínimo 3 tecnologias.");
 		
-		Prospeccao p = new Prospeccao();
-		p.setArea("CTSDR");
-		p.setCodigoReferencia("R172");
+		
+		analiseDAO.insert(a);	
+		
+		Prospeccao p = new Prospeccao();		
+		p.setCodigoReferencia("R174");
 		p.setOrigemReferencia("ALM");
 		p.setObjetivo("Selecionar os tipos de bolas de futsal na copa do mundo.");
-		p.setGestor("Robson Ximenes");
+		p.setGestor(a.getProximaFaseGestor());
+		p.setArea(a.getProximaFaseArea());
 		p.setFaseAnterior(a);
 		p.setDataRealizacao(new Date());
-		p.setSituacao(Situacao.APROVADO);
+		p.setSituacao(Situacao.REPROVADO);
 		p.setTestes("Os testes realizados foram feitos na regional Salvador em laboratório isolado. Foram averiguados testes de blablablabla. Maiores detalhes sobre os testes realizados podem ser encontrados em Arquivo1.odt.");
 		p.setConclusao("A prospecção foi bem sucedida em que, pelos testes realizados, o Ubuntu 12 foi selecionado para ser internalizado.");
 		prospeccaoDAO.insert(p);
 		
+		List<Produto> produtos = produtoDAO.findAll();		
+		for (Produto produto : produtos) {
+			FaseProduto fp = new FaseProduto();
+			fp.setFase(p);
+			fp.setProduto(produto);
+			faseProdutoDAO.insert(fp);
+		}
+		
+		
 		Declinio d = new Declinio();
 		d.setArea("CTSDR");
-		d.setCodigoReferencia("R172");
+		d.setCodigoReferencia("R175");
 		d.setOrigemReferencia("ALM");
 		d.setObjetivo("Acabar com essa palhaçada.");
 		d.setGestor("Robson Ximenes");
@@ -147,6 +152,13 @@ public class CargaInicial {
 		d.setConclusao("Chega de papaiagada... bola normal.");
 		declinioDAO.insert(d);
 		
+	}
+	
+	
+	@Startup @Priority(1)
+	@Transactional
+	public void criarOutras(){
+				
 		Licenciamento l = new Licenciamento();
 		l.setNome("GPL");
 		l.setDescricao("GPL");
@@ -199,14 +211,7 @@ public class CargaInicial {
 		produto.setLegado(false);
 		produto.setVersao("2.0");
 		produto.setRelease("2.0");
-		produtoDAO.insert(produto);
-		
-		
-		FaseProduto fp = new FaseProduto();
-		fp.setFase(p);
-		fp.setProduto(produto);
-		faseProdutoDAO.insert(fp);
-				
+		produtoDAO.insert(produto);		
 		
 		produto = new Produto();
 		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
@@ -217,31 +222,7 @@ public class CargaInicial {
 		produto.setLegado(false);
 		produto.setVersao("2.0");
 		produto.setRelease("2.0");
-		produtoDAO.insert(produto);
-		
-		
-		fp = new FaseProduto();
-		fp.setFase(p);
-		fp.setProduto(produto);
-		faseProdutoDAO.insert(fp);
-		
-		for(int i=1; i<=5; i++){		
-			produto = new Produto();
-			produto.setDescricao("Descricao do produto");
-			produto.setFabricante(fabricante);
-			produto.setFornecedor(null);
-			produto.setNome("Produto Fake");
-			produto.setLicenciamento(l);
-			produto.setLegado(false);
-			produto.setVersao("2."+i);
-			produto.setRelease("2."+i);
-			produtoDAO.insert(produto);			
-			
-			fp = new FaseProduto();
-			fp.setFase(p);
-			fp.setProduto(produto);
-			faseProdutoDAO.insert(fp);		
-		}
+		produtoDAO.insert(produto);		
 		
 		Tema tema = new Tema();
 		tema.setNome("Temax");
@@ -252,6 +233,12 @@ public class CargaInicial {
 		Subcategoria subcategoria = new Subcategoria();
 		subcategoria.setNome("Subcategoriax");
 		subcategoria.setDescricao("Subcategoriax");
+		subcategoria.setTema(null);
+		subcategoriaDAO.insert(subcategoria);
+		
+		subcategoria = new Subcategoria();
+		subcategoria.setNome("Banco de dados");
+		subcategoria.setDescricao("Banco de dados");
 		subcategoria.setTema(null);
 		subcategoriaDAO.insert(subcategoria);
 		
