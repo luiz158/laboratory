@@ -23,6 +23,7 @@ import br.gov.serpro.catalogo.entity.Produto;
 import br.gov.serpro.catalogo.entity.Prospeccao;
 import br.gov.serpro.catalogo.entity.Situacao;
 import br.gov.serpro.catalogo.entity.Subcategoria;
+import br.gov.serpro.catalogo.entity.Tecnologia;
 import br.gov.serpro.catalogo.entity.Tema;
 import br.gov.serpro.catalogo.entity.User;
 import br.gov.serpro.catalogo.persistence.AnaliseDAO;
@@ -37,6 +38,7 @@ import br.gov.serpro.catalogo.persistence.PlataformaTecnologicaDAO;
 import br.gov.serpro.catalogo.persistence.ProdutoDAO;
 import br.gov.serpro.catalogo.persistence.ProspeccaoDAO;
 import br.gov.serpro.catalogo.persistence.SubcategoriaDAO;
+import br.gov.serpro.catalogo.persistence.TecnologiaDAO;
 import br.gov.serpro.catalogo.persistence.TemaDAO;
 import br.gov.serpro.catalogo.persistence.UserDAO;
 
@@ -71,6 +73,9 @@ public class CargaInicial {
 	
 	@Inject
 	private DeclinioDAO declinioDAO;
+	
+	@Inject
+	private TecnologiaDAO tecnologiaDAO;
 	
 	@Inject
 	private TemaDAO temaDAO;
@@ -277,24 +282,31 @@ public class CargaInicial {
 		produto.setLegado(false);
 		produto.setVersao("2.0");
 		produto.setRelease("2.0");
-		produtoDAO.insert(produto);		
+		produtoDAO.insert(produto);
+		
+		
+		Tecnologia tecnologia = new Tecnologia();
+		tecnologia.setNome("Software");
+		tecnologia.setDescricao("tecn de software");
+		tecnologiaDAO.insert(tecnologia);
+		
 		
 		Tema tema = new Tema();
 		tema.setNome("Engenharia de Software");
 		tema.setDescricao("Temax");
-		tema.setTecnologia(null);
+		tema.setTecnologia(tecnologia);
 		temaDAO.insert(tema);
 		
 		Subcategoria subcategoria = new Subcategoria();
 		subcategoria.setNome("Liguagem de programação");
 		subcategoria.setDescricao("Subcategoriax");
-		subcategoria.setTema(null);
+		subcategoria.setTema(tema);
 		subcategoriaDAO.insert(subcategoria);
 		
 		subcategoria = new Subcategoria();
 		subcategoria.setNome("Banco de dados");
 		subcategoria.setDescricao("Banco de dados");
-		subcategoria.setTema(null);
+		subcategoria.setTema(tema);
 		subcategoriaDAO.insert(subcategoria);
 		
 		OrigemDemanda origemDemanda = new OrigemDemanda();
