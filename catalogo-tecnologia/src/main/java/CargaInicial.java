@@ -150,12 +150,16 @@ public class CargaInicial {
 		
 		Fabricante fabricante = new Fabricante();
 		fabricante.setNome("Mozilla");
-		fabricante.setDescricao("Mozilla");
+		fabricante.setRepresentante("Thiago");
+		fabricante.setTelefone("(75)9128-0410");
+		fabricante.setEmail("mariano.thiago@gmail.com");
 		fabricanteDAO.insert(fabricante);
 		
 		Fornecedor fornecedor = new Fornecedor();
 		fornecedor.setNome("Mozilla");
-		fornecedor.setDescricao("Mozilla");
+		fornecedor.setRepresentante("Thiago");
+		fornecedor.setTelefone("(75)9128-0410");
+		fornecedor.setEmail("mariano.thiago@gmail.com");
 		fornecedorDAO.insert(fornecedor);
 		
 		PlataformaTecnologica pl = new PlataformaTecnologica();

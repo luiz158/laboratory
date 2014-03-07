@@ -1,13 +1,13 @@
 <div class="painel painel-default">
 	<h1 class="page-header">
-		Fabricante <small>listagem</small>
+		Tecnologia <small>listagem</small>
 	</h1>
 
 	<div>
 		<ng-alerts></ng-alerts>
 	</div>
 
-	<button class="btn btn-primary" ng-click="novoFabricante()">
+	<button class="btn btn-primary" ng-click="novaTecnologia()">
 		<i class="fa fa-plus-circle"> </i> Novo
 	</button>
 
@@ -18,19 +18,19 @@
 					<th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-sort="ascending"
 						aria-label="Rendering engine: activate to sort column ascending" style="width: 162px;">Id</th>
 					<th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1"
-						aria-label="Browser: activate to sort column ascending">Fabricante</th>
+						aria-label="Browser: activate to sort column ascending">Tecnologia</th>
 					<th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1"
-						aria-label="Browser: activate to sort column ascending">Representante</th>
+						aria-label="Browser: activate to sort column ascending">Descrição</th>
 					<th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1"
 						aria-label="Platform(s): activate to sort column ascending" style="width: 105px;">Ações</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="f in fabricantes">
-					<td><a ng-click="editarFabricante(f)">{{f.id}}</a></td>
-					<td><a ng-click="editarFabricante(f)">{{f.nome}}</a></td>
-					<td><a ng-click="editarFabricante(f)">{{f.representante}}</a></td>
-					<td><a ng-click="excluirFabricante(f.id)" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> excluir</a></td>
+				<tr ng-repeat="t in tecnologias">
+					<td><a ng-click="editarTecnologia(t)">{{t.id}}</a></td>
+					<td><a ng-click="editarTecnologia(t)">{{t.nome}}</a></td>
+					<td><a ng-click="editarTecnologia(t)">{{t.descricao}}</a></td>
+					<td><a ng-click="excluirTecnologia(t.id)" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> excluir</a></td>
 				</tr>
 			</tbody>
 		</table>

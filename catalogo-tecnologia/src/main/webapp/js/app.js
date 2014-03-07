@@ -48,6 +48,18 @@ config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/user/new', {templateUrl: 'partials/user-new.html', controller: 'UserNew'});
   $routeProvider.when('/user/edit/:id', {templateUrl: 'partials/user-edit.html', controller: 'UserEdit'});
   $routeProvider.otherwise({templateUrl: 'partials/dashboard.html'});
+  
+  $routeProvider.when('/tecnologia', {templateUrl: 'partials/tecnologia-listar.html', controller: 'TecnologiaList'});
+  $routeProvider.when('/tecnologia/edit', {templateUrl: 'partials/tecnologia-edit.html', controller: 'TecnologiaEdit'});
+  $routeProvider.when('/tecnologia/edit/:id', {templateUrl: 'partials/tecnologia-edit.html', controller: 'TecnologiaEdit'});
+  
+  $routeProvider.when('/tema', {templateUrl: 'partials/tema-listar.html', controller: 'TemaList'});
+  $routeProvider.when('/tema/edit', {templateUrl: 'partials/tema-edit.html', controller: 'TemaEdit'});
+  $routeProvider.when('/tema/edit/:id', {templateUrl: 'partials/tema-edit.html', controller: 'TemaEdit'});
+  
+  $routeProvider.when('/subcategoria', {templateUrl: 'partials/subcategoria-listar.html', controller: 'SubcategoriaList'});
+  $routeProvider.when('/subcategoria/edit', {templateUrl: 'partials/subcategoria-edit.html', controller: 'SubcategoriaEdit'});
+  $routeProvider.when('/subcategoria/edit/:id', {templateUrl: 'partials/subcategoria-edit.html', controller: 'SubcategoriaEdit'});
 }]);
 
 // Fonte: http://stackoverflow.com/questions/15025979/can-i-make-a-function-available-in-every-controller-in-angular
