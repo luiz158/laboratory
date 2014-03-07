@@ -146,6 +146,6 @@ controllers.controller('SubcategoriaEdit', function Subcategoria($scope, $http,
 			$scope.temas = [];
 			$scope.temas = data;
 		});
-	}
+	};
 	
 });

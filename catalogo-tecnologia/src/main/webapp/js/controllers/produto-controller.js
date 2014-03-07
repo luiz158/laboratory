@@ -263,7 +263,7 @@ controllers.controller('ProdutoEdit', function Produto($scope, $http,
 			$scope.temas = [];
 			$scope.temas = data;
 		});
-	}
+	};
 	
 	$scope.carregarSubcategorias = function() {
 		$scope.subcategoria = "";
@@ -271,5 +271,5 @@ controllers.controller('ProdutoEdit', function Produto($scope, $http,
 			$scope.subcategorias = [];
 			$scope.subcategorias = data;
 		});
-	}
+	};
 });
