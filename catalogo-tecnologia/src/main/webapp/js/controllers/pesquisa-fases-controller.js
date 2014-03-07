@@ -3,7 +3,13 @@
 /* Controllers */
 var controllers = angular.module('catalogo.controllers');
 
-controllers.controller('PesquisaFasesCtrl', function PesquisaFasesCtrl($scope, $rootScope, $routeParams, $http, AlertService) {
+controllers.controller('PesquisaFasesCtrl', function PesquisaFasesCtrl($scope, $rootScope, $routeParams, $http, AlertService, OrigemDemandaService) {
+	
+	$scope.origemDemanda = [];		
+	OrigemDemandaService.getItens().then(function(data) {
+		$scope.origemDemanda = data;
+	});
+	
 	/* Paginação */
 	$scope.paginacao = {
 			paginaAtual :0, 
@@ -21,6 +27,8 @@ controllers.controller('PesquisaFasesCtrl', function PesquisaFasesCtrl($scope, $
 		    		$scope.paginacao.paginaAtual = $scope.paginacao.paginaAtual+1;                
 		    }
 	};	
+	
+	
 	
 	/* Inicializando as variáveis */
 	$scope.fase = {};

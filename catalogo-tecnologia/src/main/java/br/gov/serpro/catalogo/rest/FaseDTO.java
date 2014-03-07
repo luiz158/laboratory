@@ -3,13 +3,14 @@ package br.gov.serpro.catalogo.rest;
 import java.util.Date;
 
 import br.gov.serpro.catalogo.entity.Analise;
+import br.gov.serpro.catalogo.entity.OrigemDemanda;
 
 public class FaseDTO{
 	/* Campos de pesquisa */
 	private Long id;
 	private String palavraChave;
 	private Integer fase;
-	private String origemReferencia;
+	private OrigemDemanda origemReferencia;
 	private String codigoReferencia;
 	private Integer finalizada;
 	private Date finalizacaoApartir;
@@ -56,10 +57,10 @@ public class FaseDTO{
 	public void setFase(Integer fase) {
 		this.fase = fase;
 	}
-	public String getOrigemReferencia() {
+	public OrigemDemanda getOrigemReferencia() {
 		return origemReferencia;
 	}
-	public void setOrigemReferencia(String origemReferencia) {
+	public void setOrigemReferencia(OrigemDemanda origemReferencia) {
 		this.origemReferencia = origemReferencia;
 	}
 	public String getCodigoReferencia() {

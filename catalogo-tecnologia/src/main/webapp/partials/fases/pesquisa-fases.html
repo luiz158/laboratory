@@ -38,16 +38,11 @@
 						ng-model="fase.gestor">
 				</div>
 				<div class="col-md-4">
-					<label for="origemReferencia">Referência:</label> <select
-						class="form-control" ng-model="fase.origemReferencia"
-						id="origemReferencia">
-						<option>--</option>
-						<option>ALM</option>
-						<option>SPEKX</option>
-						<option>Solicita</option>
-						<option>SISCOR</option>
-						<option>Demandas RFB</option>
-						<option>CSS</option>
+					<label for="origemReferencia">Referência:</label> 
+					<select id="origemReferencia" class="form-control" 
+							ng-model="fase.origemReferencia" 
+							ng-options="origem.nome for origem in origemDemanda track by origem.id">
+							<option value="" disabled>-- Selecione --</option>
 					</select>
 				</div>
 				<div class="col-md-4">
