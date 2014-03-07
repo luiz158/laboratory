@@ -18,6 +18,7 @@
 		<class>br.gov.serpro.catalogo.entity.Tecnologia</class>
 		<class>br.gov.serpro.catalogo.entity.Tema</class>
 		<class>br.gov.serpro.catalogo.entity.Subcategoria</class>
+		<class>br.gov.serpro.catalogo.entity.OrigemDemanda</class>
 		<class>br.gov.serpro.catalogo.entity.FaseProduto</class>
 		<class>br.gov.serpro.catalogo.entity.Anexo</class>
 		<class>br.gov.serpro.catalogo.entity.Grupo</class>

@@ -60,6 +60,10 @@ config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/subcategoria', {templateUrl: 'partials/subcategoria-listar.html', controller: 'SubcategoriaList'});
   $routeProvider.when('/subcategoria/edit', {templateUrl: 'partials/subcategoria-edit.html', controller: 'SubcategoriaEdit'});
   $routeProvider.when('/subcategoria/edit/:id', {templateUrl: 'partials/subcategoria-edit.html', controller: 'SubcategoriaEdit'});
+  
+  $routeProvider.when('/origemDemanda', {templateUrl: 'partials/origem-demanda-listar.html', controller: 'OrigemDemandaList'});
+  $routeProvider.when('/origemDemanda/edit', {templateUrl: 'partials/origem-demanda-edit.html', controller: 'OrigemDemandaEdit'});
+  $routeProvider.when('/origemDemanda/edit/:id', {templateUrl: 'partials/origem-demanda-edit.html', controller: 'OrigemDemandaEdit'});
 }]);
 
 // Fonte: http://stackoverflow.com/questions/15025979/can-i-make-a-function-available-in-every-controller-in-angular
