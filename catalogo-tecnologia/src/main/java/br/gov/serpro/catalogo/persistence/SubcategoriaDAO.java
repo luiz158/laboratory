@@ -1,5 +1,7 @@
 package br.gov.serpro.catalogo.persistence;
 
+import java.util.List;
+
 import br.gov.frameworkdemoiselle.stereotype.PersistenceController;
 import br.gov.frameworkdemoiselle.template.JPACrud;
 import br.gov.serpro.catalogo.entity.Subcategoria;
@@ -8,5 +10,9 @@ import br.gov.serpro.catalogo.entity.Subcategoria;
 public class SubcategoriaDAO extends JPACrud<Subcategoria, Long> {
 
 	private static final long serialVersionUID = 1L;
-	
+
+	@Override
+	public List<Subcategoria> findByJPQL(String jpql) {
+		return super.findByJPQL(jpql);
+	}
 }

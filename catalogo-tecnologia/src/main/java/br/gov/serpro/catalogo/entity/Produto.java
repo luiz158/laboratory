@@ -39,6 +39,9 @@ public class Produto {
 	@ManyToOne
 	private Fornecedor fornecedor;
 	
+	@ManyToOne
+	private Subcategoria subcategoria;
+	
 	@NotEmpty
 	private String descricao;
 	
@@ -123,6 +126,14 @@ public class Produto {
 		this.fornecedor = fornecedor;
 	}
 	
+	public Subcategoria getSubcategoria() {
+		return subcategoria;
+	}
+	
+	public void setSubcategoria(Subcategoria subcategoria) {
+		this.subcategoria = subcategoria;
+	}
+
 	public List<PlataformaTecnologica> getPlataformasSuportadas() {
 		return plataformasSuportadas;
 	}

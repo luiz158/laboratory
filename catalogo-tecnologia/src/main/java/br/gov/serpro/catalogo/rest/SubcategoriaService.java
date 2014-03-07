@@ -18,9 +18,7 @@ import javax.ws.rs.Produces;
 import org.jboss.resteasy.spi.validation.ValidateRequest;
 
 import br.gov.frameworkdemoiselle.transaction.Transactional;
-import br.gov.serpro.catalogo.entity.Produto;
 import br.gov.serpro.catalogo.entity.Subcategoria;
-import br.gov.serpro.catalogo.entity.Tecnologia;
 import br.gov.serpro.catalogo.persistence.SubcategoriaDAO;
 
 @ValidateRequest
@@ -59,5 +57,12 @@ public class SubcategoriaService {
 	@Path("/{id}")
 	public Subcategoria carregar(@NotNull @PathParam("id") Long id) {
 		return subcategoriaDAO.load(id);
+	}
+	
+	@GET
+	@Path("/listar/{temaId}")
+	public List<Subcategoria> listarSubcategoriaByTema(@NotNull @PathParam("temaId") Long temaId) {
+		String jpql = "SELECT s FROM Subcategoria s WHERE s.tema.id ="+temaId;
+		return subcategoriaDAO.findByJPQL(jpql);
 	}
 }

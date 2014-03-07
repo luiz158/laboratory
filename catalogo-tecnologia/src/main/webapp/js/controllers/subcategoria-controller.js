@@ -51,10 +51,10 @@ controllers.controller('SubcategoriaEdit', function Subcategoria($scope, $http,
 		$http.get('api/subcategoria/' + id).success(function(data) {
 			$scope.subcategoria = data;
 			
-			$http.get('api/tema').success(function(data) {
+			$http.get('api/tema/listar/'+$scope.subcategoria.tema.tecnologia.id).success(function(data) {
 				$scope.temas = [];
-				$scope.temas = data;
 				if(typeof($scope.subcategoria.tema) != "undefined"){
+					$scope.temas = data;
 					var index = buscaElemento($scope.subcategoria.tema,$scope.temas);
 					if(index!=-1){
 						$scope.tema = $scope.temas[index];
@@ -71,6 +71,11 @@ controllers.controller('SubcategoriaEdit', function Subcategoria($scope, $http,
 						});
 						
 					}
+				}else{
+					$http.get('api/tecnologia').success(function(data) {
+						$scope.tecnologias = [];
+						$scope.tecnologias = data;
+					});
 				}
 			});
 			
@@ -140,7 +145,6 @@ controllers.controller('SubcategoriaEdit', function Subcategoria($scope, $http,
 		$http.get('api/tema/listar/'+$scope.tecnologia.id).success(function(data) {
 			$scope.temas = [];
 			$scope.temas = data;
-			console.log($scope.temas);
 		});
 	}
 	

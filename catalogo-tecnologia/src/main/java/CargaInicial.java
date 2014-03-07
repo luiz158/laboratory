@@ -18,6 +18,8 @@ import br.gov.serpro.catalogo.entity.PlataformaTecnologica;
 import br.gov.serpro.catalogo.entity.Produto;
 import br.gov.serpro.catalogo.entity.Prospeccao;
 import br.gov.serpro.catalogo.entity.Situacao;
+import br.gov.serpro.catalogo.entity.Subcategoria;
+import br.gov.serpro.catalogo.entity.Tema;
 import br.gov.serpro.catalogo.persistence.AnaliseDAO;
 import br.gov.serpro.catalogo.persistence.DeclinioDAO;
 import br.gov.serpro.catalogo.persistence.FabricanteDAO;
@@ -27,6 +29,8 @@ import br.gov.serpro.catalogo.persistence.LicenciamentoDAO;
 import br.gov.serpro.catalogo.persistence.PlataformaTecnologicaDAO;
 import br.gov.serpro.catalogo.persistence.ProdutoDAO;
 import br.gov.serpro.catalogo.persistence.ProspeccaoDAO;
+import br.gov.serpro.catalogo.persistence.SubcategoriaDAO;
+import br.gov.serpro.catalogo.persistence.TemaDAO;
 
 
 
@@ -60,6 +64,11 @@ public class CargaInicial {
 	@Inject
 	private DeclinioDAO declinioDAO;
 	
+	@Inject
+	private TemaDAO temaDAO;
+	
+	@Inject
+	private SubcategoriaDAO subcategoriaDAO;
 	
 	@Startup
 	@Transactional
@@ -233,6 +242,18 @@ public class CargaInicial {
 			fp.setProduto(produto);
 			faseProdutoDAO.insert(fp);		
 		}
+		
+		Tema tema = new Tema();
+		tema.setNome("Temax");
+		tema.setDescricao("Temax");
+		tema.setTecnologia(null);
+		temaDAO.insert(tema);
+		
+		Subcategoria subcategoria = new Subcategoria();
+		subcategoria.setNome("Subcategoriax");
+		subcategoria.setDescricao("Subcategoriax");
+		subcategoria.setTema(null);
+		subcategoriaDAO.insert(subcategoria);
 		
 	}
 

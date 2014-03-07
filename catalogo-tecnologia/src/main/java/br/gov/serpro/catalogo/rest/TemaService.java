@@ -18,11 +18,7 @@ import javax.ws.rs.Produces;
 import org.jboss.resteasy.spi.validation.ValidateRequest;
 
 import br.gov.frameworkdemoiselle.transaction.Transactional;
-import br.gov.serpro.catalogo.entity.Fornecedor;
-import br.gov.serpro.catalogo.entity.Produto;
-import br.gov.serpro.catalogo.entity.Tecnologia;
 import br.gov.serpro.catalogo.entity.Tema;
-import br.gov.serpro.catalogo.persistence.FornecedorDAO;
 import br.gov.serpro.catalogo.persistence.TemaDAO;
 
 @ValidateRequest
@@ -65,7 +61,7 @@ public class TemaService {
 	
 	@GET
 	@Path("/listar/{tecnologiaId}")
-	public List<Tema> listarLike(@NotNull @PathParam("tecnologiaId") Long tecnologiaId) {
+	public List<Tema> listarTemaByTecnologia(@NotNull @PathParam("tecnologiaId") Long tecnologiaId) {
 		String jpql = "SELECT t FROM Tema t WHERE t.tecnologia.id ="+tecnologiaId;
 		return temaDAO.findByJPQL(jpql);
 	}

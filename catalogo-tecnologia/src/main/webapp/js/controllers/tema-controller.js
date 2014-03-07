@@ -52,12 +52,17 @@ controllers.controller('TemaEdit', function Tema($scope, $http,
 			
 			$http.get('api/tecnologia').success(function(data) {
 				$scope.tecnologias = [];
-				$scope.tecnologias = data;
 				if(typeof($scope.tema.tecnologia) != "undefined"){
+					$scope.tecnologias = data;
 					var index = buscaElemento($scope.tema.tecnologia,$scope.tecnologias);
 					if(index!=-1){
 						$scope.tecnologia = $scope.tecnologias[index];
 					}
+				}else{
+					$http.get('api/tecnologia').success(function(data) {
+						$scope.tecnologias = [];
+						$scope.tecnologias = data;
+					});
 				}
 			});
 			
