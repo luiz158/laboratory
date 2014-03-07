@@ -55,7 +55,7 @@ public class FaseDAO extends JPACrud<Fase, Long> {
 	    }
 	    
 	    if (dto.getOrigemReferencia() != null && dto.getOrigemReferencia().getId()>0) {
-	    	Predicate p = builder.equal(fase.<Long>get("origemReferencia.id"), +dto.getOrigemReferencia().getId());
+	    	Predicate p = builder.equal(fase.get("origemReferencia").<Long>get("id"), +dto.getOrigemReferencia().getId());
 	        predicateList.add(p);
 	    }
 	    
