@@ -32,6 +32,23 @@ controllers.controller('UserNew',
 			});
 		};
 		
+		$scope.pesquisarNome = function(nome) {
+			$http.get('api/user/nome/' + nome).success(function(data) {
+				if (data == "") {
+					AlertService.addWithTimeout('warning', 'Usuário não cadastrado no LDAP');
+				}else{
+					$scope.users = data;
+					$.each(users, function(i, user) {
+						user.grupos = [];
+					});
+				}
+			}).error(function(data, status) {
+				if (status == 412) {
+					AlertService.addWithTimeout('danger', data[0].message);
+				}
+			});
+		};
+		
 		// toggle selection for a given fruit by name
 		$scope.toggleSelection = function toggleSelection(grupo) {
 			var idx = $scope.isGrupoInGrupos(grupo);
