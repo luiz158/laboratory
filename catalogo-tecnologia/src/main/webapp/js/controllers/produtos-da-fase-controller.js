@@ -8,11 +8,14 @@ controllers.controller('ProdutosCtrl', function ProdutosCtrl($scope, $http, Aler
 	$scope.produtos = [];
 	$scope.resultadoProdutos = [];
 	$scope.produtoAdd = {};
+	$scope.tecnologia = "";
+	$scope.tema = "";
+	$scope.subcategoria = "";
 	
 	carregarProdutosRelacionados();
 	
-	$http.get('api/produto').success(function(data) {
-		$scope.resultadoProdutos = data;
+	$http.get('api/tecnologia').success(function(data) {
+		$scope.tecnologias = data;
 	});
 	
 	$scope.adicionarProduto = function(p){		
@@ -48,5 +51,27 @@ controllers.controller('ProdutosCtrl', function ProdutosCtrl($scope, $http, Aler
 			AlertService.addWithTimeout('danger','Não foi possível remover o produto.');
 		});
 	};	
+	
+	$scope.carregarTemas = function() {
+		$scope.subcategorias = [];
+		$scope.resultadoProdutos = [];
+		$http.get('api/tema/listar/'+$scope.tecnologia.id).success(function(data) {
+			$scope.temas = data;
+		});
+	};
+	
+	$scope.carregarSubcategorias = function() {
+		$scope.resultadoProdutos = [];
+		$http.get('api/subcategoria/listar/'+$scope.tema.id).success(function(data) {
+			$scope.subcategorias = data;
+		});
+	};
+	
+	$scope.carregarProdutos = function() {
+		$http.get('api/produto/listarBySubcategoria/'+$scope.subcategoria.id).success(function(data) {
+			$scope.resultadoProdutos = data;
+		});
+	};
+	
 
 });

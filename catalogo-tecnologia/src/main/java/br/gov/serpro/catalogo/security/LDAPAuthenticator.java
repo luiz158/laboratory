@@ -1,6 +1,8 @@
 package br.gov.serpro.catalogo.security;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -36,7 +38,7 @@ public class LDAPAuthenticator implements Authenticator {
 	public void authenticate() throws Exception {
 		
 			SearchControls controls = createSearchControls();
-			String filter = createFilter(credentials.getUsername());
+			String filter = createCPFFilter(credentials.getUsername());
 			SearchResult searchResult = createSearchResult(controls, filter);
 
 			LdapContext ldapContext = createContext(searchResult.getNameInNamespace(), credentials.getPassword());
@@ -53,12 +55,28 @@ public class LDAPAuthenticator implements Authenticator {
 	
 	public User searchUserByCPF(String cpf) throws NamingException {
 		SearchControls controls = createSearchControls();
-		String filter = createFilter(cpf);
+		String filter = createCPFFilter(cpf);
 		SearchResult searchResult = createSearchResult(controls, filter);
 		if(searchResult == null){
 			return null;
 		}
 		return createUser(searchResult.getAttributes());
+	}
+	
+	public List<User> searchUserByDisplayName(String displayName) throws NamingException {
+		SearchControls controls = createSearchControls();
+		String filter = createDisplayNameFilter(displayName);
+		NamingEnumeration<SearchResult> searchResults = createListSearchResult(controls, filter);
+		if(searchResults == null){
+			return null;
+		}
+		
+		List<User> users = new ArrayList<User>();
+		while(searchResults.hasMore()) {
+//			System.out.println("##############" + ((SearchResult)searchResults.next()).getAttributes().toString() + "##########");
+			users.add(createUser(((SearchResult)searchResults.next()).getAttributes()));
+		}
+		return users;
 	}
 
 	@Override
@@ -77,7 +95,11 @@ public class LDAPAuthenticator implements Authenticator {
 
 		result.setName(attributes.get("uid").get().toString());
 		result.setDisplayName(attributes.get("cn").get().toString());
-		result.setEmail(attributes.get("mail").get().toString());
+		if(attributes.get("mail") == null) {
+			result.setEmail("");
+		}else {
+			result.setEmail(attributes.get("mail").get().toString());
+		}
 		result.setTelephoneNumber(attributes.get("telephoneNumber").get().toString());
 
 		return result;
@@ -90,9 +112,16 @@ public class LDAPAuthenticator implements Authenticator {
 		return result;
 	}
 
-	private String createFilter(String username) {
+	private String createCPFFilter(String username) {
 		String result = ldapConfig.getBaseFilter();
 		result = result.replaceAll("\\{0\\}", username);
+
+		return result;
+	}
+	
+	private String createDisplayNameFilter(String displayname) {
+		String result = ldapConfig.getNameFilter();
+		result = result.replaceAll("\\{0\\}", displayname);
 
 		return result;
 	}
@@ -103,6 +132,14 @@ public class LDAPAuthenticator implements Authenticator {
 		ldapContext.close();
 
 		return naming.hasMoreElements() ? naming.next() : null;
+	}
+	
+	private NamingEnumeration<SearchResult> createListSearchResult(SearchControls controls, String filter) throws NamingException {
+		LdapContext ldapContext = createContext();
+		final NamingEnumeration<SearchResult> naming = ldapContext.search(ldapConfig.getBaseCtxDN(), filter, controls);
+		ldapContext.close();
+
+		return naming.hasMoreElements() ? naming : null;
 	}
 	
 	private LdapContext createContext() throws NamingException {
