@@ -69,7 +69,6 @@ config(['$routeProvider', function($routeProvider) {
 // Fonte: http://stackoverflow.com/questions/15025979/can-i-make-a-function-available-in-every-controller-in-angular
 app.run(function($rootScope, AuthService) {
     $rootScope.hasRole = function(roles) {
-    	console.log('blá');
 		var paramRoles = roles.split(",");
 		var userRoles = []; 
 		$.each(AuthService.getUsuario().grupos, function (i, grupo){
