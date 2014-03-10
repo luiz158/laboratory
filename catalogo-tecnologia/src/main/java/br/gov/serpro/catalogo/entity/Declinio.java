@@ -11,8 +11,6 @@ public class Declinio extends Fase{
 		
 	private Boolean novaAnaliseRiscos;
 	
-	private String conclusao;
-	
 
 	public Boolean getNovaAnaliseRiscos() {
 		return novaAnaliseRiscos;
@@ -20,11 +18,6 @@ public class Declinio extends Fase{
 	public void setNovaAnaliseRiscos(Boolean novaAnaliseRiscos) {
 		this.novaAnaliseRiscos = novaAnaliseRiscos;
 	}
-	public String getConclusao() {
-		return conclusao;
-	}
-	public void setConclusao(String conclusao) {
-		this.conclusao = conclusao;
-	}
+
 
 }

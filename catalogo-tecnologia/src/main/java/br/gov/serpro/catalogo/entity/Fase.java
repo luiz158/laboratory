@@ -62,6 +62,8 @@ public class Fase {
 
 	private Date dataFinalizacao;
 	
+	private String conclusao;
+	
 	@Enumerated(EnumType.STRING)
 	private FaseEnum proximaFase;
 			
@@ -222,6 +224,14 @@ public class Fase {
 
 	public void setOrigemReferencia(OrigemDemanda origemReferencia) {
 		this.origemReferencia = origemReferencia;
+	}
+
+	public String getConclusao() {
+		return conclusao;
+	}
+
+	public void setConclusao(String conclusao) {
+		this.conclusao = conclusao;
 	}
 	
 }
