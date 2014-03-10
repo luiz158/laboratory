@@ -67,11 +67,24 @@
 					<div class="col-md-6">
 						<div date-picker="start"></div>
 						<label class="dataAnalise"><i class="fa fa-calendar"></i>
-							Data da Análise <small>(dd/mm/aaaa)</small>:</label> <input type="text"
+							Data da Análise <small>(dd/mm/aaaa)</small>:</label> 
+						<input type="text"
 							class="form-control" id="dataAnalise" name="dataAnalise"
 							ng-model="analise.dataRealizacao" data-date-type="number"
 							data-min-date="01/01/2010" data-max-date="today"
 							data-autoclose="1" data-date-format="dd/MM/yyyy" bs-datepicker>
+						<validation-msg propriedade="dataRealizacao"></validation-msg>
+							
+					</div>
+					<div class="col-md-6">
+						<div date-picker="start"></div>
+						<label class="dataFinalizacao"><i class="fa fa-calendar"></i>
+							Data da finalização:</label> 
+						<input type="text" disabled=disabled
+							class="form-control" id="dataFinalizacao" name="dataFinalizacao"
+							ng-model="analise.dataFinalizacao" data-date-format="dd/MM/yyyy">
+						<validation-msg propriedade="dataFinalizacao"></validation-msg>
+							
 					</div>
 				</div>
 
@@ -86,6 +99,7 @@
 						<label for="area">Área:</label> <input
 							class="form-control" required type="text" id="area"
 							ng-model="analise.area">
+						<validation-msg propriedade="area"></validation-msg>
 					</div>
 				</div>
 
@@ -162,12 +176,14 @@
 		</div>
 
 		<div>
-			<button class="btn btn-primary" ng-click="salvar()">
-				<i class="fa fa-save"> </i> Salvar
-			</button>
-			<button class="btn btn-primary" ng-click="finalizar()">
-				<i class="fa fa-gavel"> </i> Finalizar
-			</button>
+			<span ng-hide="dataFinalizacao">
+				<button class="btn btn-primary" ng-click="salvar()">
+					<i class="fa fa-save"> </i> Salvar
+				</button>
+				<button class="btn btn-primary" ng-click="finalizar()">
+					<i class="fa fa-gavel"> </i> Finalizar
+				</button>
+			</span>
 			<a class="btn btn-inverse pull-right" back-button><i
 				class="fa fa-long-arrow-left"></i> Voltar</a>
 		</div>

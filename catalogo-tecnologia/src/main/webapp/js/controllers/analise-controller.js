@@ -73,7 +73,6 @@ controllers.controller('AnaliseEdit', function Analise($scope, $http,
 			$location.path('analise');
 		}).error(function(data, status) {
 			if (status = 412) {
-				console.log(data);
 				ValidationService.registrarViolacoes(data);
 			}
 		});
@@ -96,7 +95,7 @@ controllers.controller('AnaliseEdit', function Analise($scope, $http,
 			}
 		}).success(function(data) {
 			AlertService.addWithTimeout('success','Análise finalizada com sucesso');
-			//$location.path('analise');
+			$location.path('analise');
 		}).error(function(data, status) {
 			if (status = 412) {
 				ValidationService.registrarViolacoes(data);

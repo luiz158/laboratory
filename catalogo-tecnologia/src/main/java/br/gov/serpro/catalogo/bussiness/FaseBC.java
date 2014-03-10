@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import br.gov.frameworkdemoiselle.resteasy.util.ValidationException;
 import br.gov.frameworkdemoiselle.stereotype.BusinessController;
+import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.serpro.catalogo.entity.Analise;
 import br.gov.serpro.catalogo.entity.Declinio;
 import br.gov.serpro.catalogo.entity.Fase;
@@ -14,14 +15,10 @@ import br.gov.serpro.catalogo.entity.Internalizacao;
 import br.gov.serpro.catalogo.entity.Prospeccao;
 import br.gov.serpro.catalogo.entity.Situacao;
 import br.gov.serpro.catalogo.entity.Sustentacao;
-import br.gov.serpro.catalogo.persistence.AnaliseDAO;
 import br.gov.serpro.catalogo.persistence.FaseDAO;
 
 @BusinessController
 public class FaseBC {
-
-	@Inject
-	private AnaliseDAO analiseDAO;
 
 	@Inject
 	private FaseDAO faseDAO;
@@ -32,70 +29,73 @@ public class FaseBC {
 	 * @param fase
 	 * @return
 	 */
+	@Transactional
 	public Fase finalizarFase(Fase fase) {
 
+		if (fase.getDataFinalizacao()!=null)
+			throw new ValidationException().addViolation("dataFinalizacao",
+					"Esta "+fase.getFase()+" já foi finalizada em "+fase.getDataFinalizacao());
+		
 		fase.setDataFinalizacao(new Date());
 
 		Fase proximafase = null;
 
-		if (fase.getFase().equals(FaseEnum.ANALISE)) {
-			proximafase = finalizarAnalise((Analise) fase);
-		} else if (fase.getFase().equals(FaseEnum.PROSPECCAO)) {
-			proximafase = null;
-		} else if (fase.getFase().equals(FaseEnum.INTERNALIZACAO)) {
-			proximafase = null;
-		} else if (fase.getFase().equals(FaseEnum.SUSTENTACAO)) {
-			proximafase = null;
-		} else if (fase.getFase().equals(FaseEnum.DECLINIO)) {
-			proximafase = null;
-		}
-
-		return proximafase;
-	}
-
-	private Fase finalizarAnalise(Analise analise) {
-
-		Fase proximafase = null;
-		
-		if (analise.getSituacao() == null
-				|| analise.getSituacao().equals(Situacao.RASCUNHO))
+		if (fase.getSituacao() == null
+				|| fase.getSituacao().equals(Situacao.RASCUNHO))
 			throw new ValidationException().addViolation("situacao",
 					"Favor informar a situação desta análise.");
 
 		// Se foi aprovado tem uma proxima fase;
-		if (analise.getSituacao().equals(Situacao.APROVADO)) {
+		if (fase.getSituacao().equals(Situacao.APROVADO)) {
 
-			if (analise.getSituacaoJustificativa() == null
-					|| analise.getSituacaoJustificativa().length() <= 10)
+			if (fase.getSituacaoJustificativa() == null
+					|| fase.getSituacaoJustificativa().isEmpty())
 				throw new ValidationException().addViolation("justificativa",
 						"Favor informar uma justificativa.");
 
-			if (analise.getProximaFase() == null)
+			if (fase.getProximaFase() == null)
 				throw new ValidationException().addViolation("proximaFase",
 						"Para finalizar é preciso definir a próxima fase.");
 
-			if (analise.getProximaFaseGestor() == null
-					|| analise.getProximaFaseGestor().isEmpty())
+			if (fase.getProximaFaseGestor() == null
+					|| fase.getProximaFaseGestor().isEmpty())
 				throw new ValidationException()
 						.addViolation("proximaFaseGestor",
 								"Para finalizar é preciso definir o gestor da próxima fase.");
 
-			if (analise.getProximaFaseJustificativa() == null
-					|| analise.getProximaFaseJustificativa().isEmpty())
+			if (fase.getProximaFaseJustificativa() == null
+					|| fase.getProximaFaseJustificativa().isEmpty())
 				throw new ValidationException()
 						.addViolation("proximaFaseJustificativa",
 								"Para finalizar é preciso preencher a justificativa da próxima fase.");
 
-			proximafase = getProximaFase(analise);
+			proximafase = getProximaFase(fase);
+			
 			faseDAO.insert(proximafase);
 		}
-		
-		analiseDAO.update(analise);
+
+		faseDAO.update(fase);
 
 		return proximafase;
 	}
 
+	
+    /**
+     * Instancia a proxima fase com os dados basicos.
+     * 
+     * Verifica se está seguindo o fluxo correto, caso contrario levanta uma validation execption
+     * 
+     * @param fase
+     * @return
+     */
 	private Fase getProximaFase(Fase fase) {
+		// Apenas a fase de analise é livre para pular fases
+		if(fase.getFase()!= FaseEnum.ANALISE){
+			if(fase.getProximaFase().ordinal() - fase.getFase().ordinal() != 1){
+				throw new ValidationException().addViolation("proximaFase",
+						"Não é possível alterar de fase "+fase.getFase()+" para a "+fase.getProximaFase());
+			}
+		}		
 		Fase proximafase = null;
 		if (fase.getProximaFase().equals(FaseEnum.PROSPECCAO)) {
 			proximafase = new Prospeccao();
@@ -105,7 +105,7 @@ public class FaseBC {
 			proximafase = new Sustentacao();
 		} else if (fase.getProximaFase().equals(FaseEnum.DECLINIO)) {
 			proximafase = new Declinio();
-		}
+		}		
 
 		proximafase.setFaseAnterior(fase);
 		proximafase.setSituacao(Situacao.RASCUNHO);
@@ -113,6 +113,44 @@ public class FaseBC {
 		proximafase.setGestor(fase.getProximaFaseGestor());
 
 		return proximafase;
+	}
+
+
+
+	public Fase salvar(Analise analise) {
+		validar(analise);
+		if(analise.getId()!=null){
+			faseDAO.update(analise);
+		}else{
+			faseDAO.insert(analise);
+		}
+		return analise;
+	}
+	
+	public Fase insert(Analise analise) {
+		validar(analise);
+		return faseDAO.insert(analise);
+	}
+
+
+	private void validar(Analise fase) {
+		validar((Fase)fase);
+		if (fase.getDemandante() == null || fase.getDemandante().isEmpty())
+			throw new ValidationException().addViolation("demandante", "Favor informar o demandante.");
+
+	}
+
+
+	private void validar(Fase fase) {
+		if (fase.getObjetivo() == null || fase.getObjetivo().isEmpty())
+			throw new ValidationException().addViolation("objetivo", "Favor informar o objetivo.");
+		
+		if (fase.getDataRealizacao() == null)
+			throw new ValidationException().addViolation("dataRealizacao", "Favor informar a data de realização.");
+		
+		if (fase.getGestor() == null || fase.getGestor().isEmpty())
+			throw new ValidationException().addViolation("gestor", "É preciso definir o gestor.");
+				
 	}
 
 }

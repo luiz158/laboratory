@@ -36,7 +36,7 @@ public class AnaliseService {
 	@POST
 	@Transactional
 	public Long salvar(@Valid Analise analise) {
-		return analiseDAO.insert(analise).getId();
+		return faseBC.salvar(analise).getId();
 	}
 
 	@DELETE
@@ -54,7 +54,7 @@ public class AnaliseService {
 	@PUT
 	@Transactional
 	public void alterar(@Valid Analise analise) {
-		analiseDAO.update(analise);
+		faseBC.salvar(analise).getId();
 	}
 	
 	@PUT
