@@ -15,6 +15,7 @@ import br.gov.serpro.catalogo.entity.FaseEnum;
 import br.gov.serpro.catalogo.entity.FaseProduto;
 import br.gov.serpro.catalogo.entity.Fornecedor;
 import br.gov.serpro.catalogo.entity.Grupo;
+import br.gov.serpro.catalogo.entity.Internalizacao;
 import br.gov.serpro.catalogo.entity.Licenciamento;
 import br.gov.serpro.catalogo.entity.OrigemDemanda;
 import br.gov.serpro.catalogo.entity.Perfil;
@@ -23,6 +24,7 @@ import br.gov.serpro.catalogo.entity.Produto;
 import br.gov.serpro.catalogo.entity.Prospeccao;
 import br.gov.serpro.catalogo.entity.Situacao;
 import br.gov.serpro.catalogo.entity.Subcategoria;
+import br.gov.serpro.catalogo.entity.Sustentacao;
 import br.gov.serpro.catalogo.entity.Tecnologia;
 import br.gov.serpro.catalogo.entity.Tema;
 import br.gov.serpro.catalogo.entity.User;
@@ -32,12 +34,14 @@ import br.gov.serpro.catalogo.persistence.FabricanteDAO;
 import br.gov.serpro.catalogo.persistence.FaseProdutoDAO;
 import br.gov.serpro.catalogo.persistence.FornecedorDAO;
 import br.gov.serpro.catalogo.persistence.GrupoDAO;
+import br.gov.serpro.catalogo.persistence.InternalizacaoDAO;
 import br.gov.serpro.catalogo.persistence.LicenciamentoDAO;
 import br.gov.serpro.catalogo.persistence.OrigemDemandaDAO;
 import br.gov.serpro.catalogo.persistence.PlataformaTecnologicaDAO;
 import br.gov.serpro.catalogo.persistence.ProdutoDAO;
 import br.gov.serpro.catalogo.persistence.ProspeccaoDAO;
 import br.gov.serpro.catalogo.persistence.SubcategoriaDAO;
+import br.gov.serpro.catalogo.persistence.SustentacaoDAO;
 import br.gov.serpro.catalogo.persistence.TecnologiaDAO;
 import br.gov.serpro.catalogo.persistence.TemaDAO;
 import br.gov.serpro.catalogo.persistence.UserDAO;
@@ -52,6 +56,15 @@ public class CargaInicial {
 	
 	@Inject
 	private ProspeccaoDAO prospeccaoDAO;
+	
+	@Inject
+	private InternalizacaoDAO internalizacaoDAO;
+	
+	@Inject
+	private SustentacaoDAO sustentacaoDAO;
+	
+	@Inject
+	private DeclinioDAO declinioDAO;
 	
 	@Inject
 	private ProdutoDAO produtoDAO;
@@ -70,10 +83,7 @@ public class CargaInicial {
 	
 	@Inject
 	private FaseProdutoDAO faseProdutoDAO;
-	
-	@Inject
-	private DeclinioDAO declinioDAO;
-	
+		
 	@Inject
 	private TecnologiaDAO tecnologiaDAO;
 	
@@ -94,7 +104,7 @@ public class CargaInicial {
 	@Inject 
 	private OrigemDemandaDAO origemDemandaDAO;
 	
-	
+
 	User usuario1;
 	User usuario2;
 	
@@ -191,6 +201,10 @@ public class CargaInicial {
 		p.setSituacao(Situacao.REPROVADO);
 		p.setTestes("Os testes realizados foram feitos na regional Salvador em laboratório isolado. Foram averiguados testes de blablablabla. Maiores detalhes sobre os testes realizados podem ser encontrados em Arquivo1.odt.");
 		p.setConclusao("A prospecção foi bem sucedida em que, pelos testes realizados, o Ubuntu 12 foi selecionado para ser internalizado.");
+		p.setProximaFase(FaseEnum.INTERNALIZACAO);
+		p.setProximaFaseArea("SUPST");
+		p.setProximaFaseGestor("Wilson Elias");
+		
 		p = prospeccaoDAO.insert(p);
 		
 		List<Produto> produtos = produtoDAO.findAll();		
@@ -201,16 +215,50 @@ public class CargaInicial {
 			faseProdutoDAO.insert(fp);
 		}
 		
+		Internalizacao i = new Internalizacao();
+		i.setCodigoReferencia("R175");
+		i.setOrigemReferencia(origem);
+		i.setObjetivo("Fornecer as bolas que já foram prospectadas com seus devidos condicionamentos");
+		i.setGestor(p.getProximaFaseGestor());
+		i.setArea(p.getProximaFaseArea());
+		i.setFaseAnterior(p);
+		i.setDataRealizacao(new Date());
+		i.setSituacao(Situacao.APROVADO);		
+		i.setRestricao(true);
+		i.setRestricaoQuemPode("Apenas robgol pode usar este tipo de bola");
+		i.setRestricaoJustificativa("Ele é o único com habilidade suficiente para isso.");		
+		i.setCapacitacao(false);		
+		i.setAnaliseDeRiscos(false);		
+		i.setProximaFase(FaseEnum.SUSTENTACAO);
+		i.setProximaFaseArea("SUPDE");
+		i.setProximaFaseGestor("Fulano da Silva Sauro");		
+		i.setConclusao("Produto internalizado com sucesso. Vamos manter ele na empresa.");		
+		internalizacaoDAO.insert(i);
+				
+		Sustentacao s = new Sustentacao();
+		s.setCodigoReferencia("R176");
+		s.setOrigemReferencia(origem);
+		s.setObjetivo("Manter as novas bolas em pratica");
+		s.setGestor(i.getProximaFaseGestor());
+		s.setArea(i.getProximaFaseArea());
+		s.setFaseAnterior(i);
+		s.setDataRealizacao(new Date());
+		s.setSituacao(Situacao.REPROVADO);
+		s.setProximaFase(FaseEnum.DECLINIO);
+		s.setProximaFaseArea("SUPDE");
+		s.setProximaFaseGestor("Fulano da Silva Sauro");	
+		sustentacaoDAO.insert(s);
+		
 		
 		Declinio d = new Declinio();
-		d.setArea("CTSDR");
-		d.setCodigoReferencia("R175");
+		d.setCodigoReferencia("R177");
 		d.setOrigemReferencia(origem);
 		d.setObjetivo("Acabar com essa palhaçada.");
-		d.setGestor("Robson Ximenes");
-		d.setFaseAnterior(p);
+		d.setGestor(s.getProximaFaseGestor());
+		d.setArea(s.getProximaFaseArea());
+		d.setFaseAnterior(s);
 		d.setDataRealizacao(new Date());
-		d.setSituacao(Situacao.APROVADO);
+		d.setSituacao(Situacao.REPROVADO);
 		d.setNovaAnaliseRiscos(false);
 		d.setConclusao("Chega de papaiagada... bola normal.");
 		declinioDAO.insert(d);

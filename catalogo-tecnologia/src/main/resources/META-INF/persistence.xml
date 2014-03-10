@@ -9,6 +9,9 @@
 		<class>br.gov.serpro.catalogo.entity.Fase</class>
 		<class>br.gov.serpro.catalogo.entity.Analise</class>
 		<class>br.gov.serpro.catalogo.entity.Prospeccao</class>
+		<class>br.gov.serpro.catalogo.entity.Documento</class>
+		<class>br.gov.serpro.catalogo.entity.Internalizacao</class>
+		<class>br.gov.serpro.catalogo.entity.Sustentacao</class>
 		<class>br.gov.serpro.catalogo.entity.Declinio</class>
 		<class>br.gov.serpro.catalogo.entity.Produto</class>
 		<class>br.gov.serpro.catalogo.entity.Licenciamento</class>

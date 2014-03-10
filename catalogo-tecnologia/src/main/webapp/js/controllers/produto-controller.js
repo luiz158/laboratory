@@ -61,6 +61,16 @@ controllers.controller('ProdutoEdit', function Produto($scope, $http,
 			
 			$rootScope.produto = data;
 			$scope.plataformasSuportadas = data.plataformasSuportadas;
+			$scope.subcategoriasSelecionadas = data.subcategorias;
+		
+			if(typeof($scope.subcategoriasSelecionadas) == "undefined"){
+				$scope.subcategoriasSelecionadas = [];
+			}
+			
+			if(typeof($scope.plataformasSuportadas) == "undefined"){
+				$scope.plataformasSuportadas = [];
+			}
+			
 			$http.get('api/licenciamento').success(function(data) {
 				$scope.licenciamentos = [];
 				$scope.licenciamentos = data;
@@ -94,51 +104,16 @@ controllers.controller('ProdutoEdit', function Produto($scope, $http,
 			$http.get('api/plataformaTecnologica').success(function(data) {
 				$scope.plataformasTecnologicas = data;
 			});
-			
-			$http.get('api/subcategoria/listar/'+$rootScope.produto.subcategoria.tema.id).success(function(data) {
-				$scope.subcategorias = [];
-				if(typeof($rootScope.produto.subcategoria) != "undefined"){
-					$scope.subcategorias = data;
-					var index = buscaElemento($rootScope.produto.subcategoria,$scope.subcategorias);
-					if(index!=-1){
-						$scope.subcategoria = $scope.subcategorias[index];
-						
-						$http.get('api/tema/listar/'+$rootScope.produto.subcategoria.tema.tecnologia.id).success(function(data) {
-							$scope.temas = [];
-							$scope.temas = data;
-							if(typeof($rootScope.produto.subcategoria.tema) != "undefined"){
-								var index = buscaElemento($rootScope.produto.subcategoria.tema,$scope.temas);
-								if(index!=-1){
-									$scope.tema = $scope.temas[index];
-									
-									$http.get('api/tecnologia').success(function(data) {
-										$scope.tecnologias = [];
-										$scope.tecnologias = data;
-										if(typeof($rootScope.produto.subcategoria.tema.tecnologia) != "undefined"){
-											var index = buscaElemento($rootScope.produto.subcategoria.tema.tecnologia,$scope.tecnologias);
-											if(index!=-1){
-												$scope.tecnologia = $scope.tecnologias[index];
-											}
-										}
-									});
-									
-								}
-							}
-						});
-						
-					}
-				}else{
-					$http.get('api/tecnologia').success(function(data) {
-						$scope.tecnologias = [];
-						$scope.tecnologias = data;
-					});
-				}
+			$http.get('api/tecnologia').success(function(data) {
+				$scope.tecnologias = data;
 			});
-			
 		});
 	} else {
+		
 		$rootScope.produto = {};
 		$scope.plataformasSuportadas = [];
+		$scope.subcategoriasSelecionadas = [];
+		
 		$http.get('api/licenciamento').success(function(data) {
 			$scope.licenciamentos = [];
 			$scope.licenciamentos = data;
@@ -155,7 +130,6 @@ controllers.controller('ProdutoEdit', function Produto($scope, $http,
 			$scope.plataformasTecnologicas = data;
 		});
 		$http.get('api/tecnologia').success(function(data) {
-			$scope.tecnologias = [];
 			$scope.tecnologias = data;
 		});
 	}
@@ -167,6 +141,7 @@ controllers.controller('ProdutoEdit', function Produto($scope, $http,
 			console.log("ProdutoController " + $rootScope.produto);
 			
 			$rootScope.produto.plataformasSuportadas = $scope.plataformasSuportadas;
+			$rootScope.produto.subcategorias = $scope.subcategoriasSelecionadas;
 
 			if(typeof($scope.licenciamento) != "undefined" && $scope.licenciamento != ""){
 				$rootScope.produto.licenciamento = $scope.licenciamento;
@@ -178,49 +153,33 @@ controllers.controller('ProdutoEdit', function Produto($scope, $http,
 				$rootScope.produto.fornecedor = $scope.fornecedor;
 			}
 			
-			if(typeof($scope.tecnologia) != "undefined" && $scope.tecnologia != ""){
-				if(typeof($scope.tema) != "undefined" && $scope.tema != ""){
-					if(typeof($scope.subcategoria) != "undefined" && $scope.subcategoria != ""){
-					
-						$rootScope.produto.subcategoria = $scope.subcategoria;
-						
-						$("[id$='-message']").text("");
-						
-						$http({
-							url : 'api/produto',
-							method : $rootScope.produto.id ? "PUT" : "POST",
-							data : $rootScope.produto,
-							headers : {
-								'Content-Type' : 'application/json;charset=utf8'
-							}
-				
-						}).success(function(data) {
-							AlertService.addWithTimeout('success','Produto salvo com sucesso');
-							$location.path('produto');
-						}).error(
-								function(data, status) {
-									if (status = 412) {
-										$.each(data, function(i, violation) {
-											$("#" + violation.property + "-message").text(
-													violation.message);
-										});
-									}
-						});
-					}else{
-						AlertService.addWithTimeout('danger','É preciso selecionar uma subcategoria!');
-					}
-				}else{
-					AlertService.addWithTimeout('danger','É preciso selecionar um tema!');
+			$("[id$='-message']").text("");
+			$http({
+				url : 'api/produto',
+				method : $rootScope.produto.id ? "PUT" : "POST",
+				data : $rootScope.produto,
+				headers : {
+					'Content-Type' : 'application/json;charset=utf8'
 				}
-			}else{
-				AlertService.addWithTimeout('danger','É preciso selecionar uma tecnologia!');
-			}	
+			
+			}).success(function(data) {
+				AlertService.addWithTimeout('success','Produto salvo com sucesso');
+				$location.path('produto');
+			}).error(
+					function(data, status) {
+						if (status = 412) {
+							$.each(data, function(i, violation) {
+								$("#" + violation.property + "-message").text(
+										violation.message);
+							});
+						}
+			});
 		}
 	};
 	
 	$scope.adicionaPlataforma = function() {
 		if(typeof($scope.plataforma) == "undefined" || $scope.plataforma == ""){
-			AlertService.addWithTimeout('danger','Não foi possível executar a operação');
+			AlertService.addWithTimeout('danger','Selecione uma plataforma');
 		}else{
 			var index = buscaElemento($scope.plataforma,$scope.plataformasSuportadas);
 			
@@ -232,11 +191,33 @@ controllers.controller('ProdutoEdit', function Produto($scope, $http,
 		}
 	};
 	
+	$scope.adicionaSubcategoria = function() {
+		if(typeof($scope.subcategoria) == "undefined" || $scope.subcategoria == ""){
+			AlertService.addWithTimeout('danger','Selecione uma subcategoria');
+		}else{
+			var index = buscaElemento($scope.subcategoria,$scope.subcategoriasSelecionadas);
+			
+			if (index !== -1) {
+				AlertService.addWithTimeout('danger','Subcategoria já foi adicionada!');
+	        }else{
+				$scope.subcategoriasSelecionadas.push($scope.subcategoria);
+			}
+		}
+	};
+	
 	$scope.removePlataforma = function(plataforma) {
 		var index = buscaElemento(plataforma,$scope.plataformasSuportadas);
 			
 		if (index !== -1) {
             $scope.plataformasSuportadas.splice(index,1);
+        }
+	};
+	
+	$scope.removeSubcategoria = function(subcategoria) {
+		var index = buscaElemento(subcategoria,$scope.subcategoriasSelecionadas);
+			
+		if (index !== -1) {
+            $scope.subcategoriasSelecionadas.splice(index,1);
         }
 	};
 	

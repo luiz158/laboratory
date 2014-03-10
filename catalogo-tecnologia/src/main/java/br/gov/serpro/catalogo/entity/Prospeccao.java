@@ -10,20 +10,12 @@ public class Prospeccao extends Fase{
 	}
 		
 	private String testes;
-	
-	private String conclusao;
-	
+		
 	public String getTestes() {
 		return testes;
 	}
 	public void setTestes(String testes) {
 		this.testes = testes;
-	}
-	public String getConclusao() {
-		return conclusao;
-	}
-	public void setConclusao(String conclusao) {
-		this.conclusao = conclusao;
 	}
 
 }
