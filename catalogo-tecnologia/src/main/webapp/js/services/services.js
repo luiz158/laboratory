@@ -144,6 +144,8 @@ services.factory('AuthService', function($http, $rootScope) {
 			return logado;
 		},
 		getUsuario : function(){
+			console.log('AuthService Logout Success');
+			console.log($rootScope);
 			return $rootScope.usuario;
 		}
 	}
