@@ -60,13 +60,17 @@ services.factory('AlertService', function($rootScope, $timeout) {
 	return alertService;
 });
 
-services.factory('ValidationService', function() {
+services.factory('ValidationService', function(AlertService) {
 	var service = {};
 	
 	service.validation = {};
 
 	service.add = function(nome, msg) {
-		service.validation[nome] = msg;
+		if(nome == null){
+			AlertService.addWithTimeout("danger",msg);
+		}else{
+			service.validation[nome] = msg;
+		}
 	};
 	
 	service.remove = function(nome) {
