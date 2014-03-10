@@ -9,18 +9,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.UniqueConstraint;
 
 @Entity
 public class User implements br.gov.frameworkdemoiselle.security.User {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = SEQUENCE)
 	private Long id;
 
-	@Column(unique=true)
+	@Column(unique = true)
 	private String name;
 
 	private String displayName;
@@ -28,18 +27,18 @@ public class User implements br.gov.frameworkdemoiselle.security.User {
 	private String email;
 
 	private String telephoneNumber;
-	
+
 	@OneToMany
 	private List<Grupo> grupos;
-	
-	public String getId(){
+
+	public String getId() {
 		return id == null ? null : id.toString();
 	}
 
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	@Override
 	public Object getAttribute(Object key) {
 		return null;
@@ -48,7 +47,7 @@ public class User implements br.gov.frameworkdemoiselle.security.User {
 	@Override
 	public void setAttribute(Object key, Object value) {
 	}
-	
+
 	public String getName() {
 		return name;
 	}

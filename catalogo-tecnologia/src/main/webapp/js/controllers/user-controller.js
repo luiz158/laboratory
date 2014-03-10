@@ -6,6 +6,8 @@ var controllers = angular.module('catalogo.controllers');
 controllers.controller('UserNew',
  	function UserNew($scope, $http, $location, AlertService) {
 	
+		$scope.users = [];
+		
 		function init(grupos) {
 	        $scope.grupos = grupos;
 	    }
@@ -17,13 +19,25 @@ controllers.controller('UserNew',
 			init(response);
 		});
 		
-		$scope.pesquisar = function(cpf) {
+		$scope.pesquisar = function(cpf,nome) {
+			$scope.users = [];
+			if(cpf != "" && cpf != null){
+				$scope.pesquisarCPF(cpf);
+			}else if(nome != "" && nome != null){
+				$scope.pesquisarNome(nome);
+			}else{
+				AlertService.addWithTimeout('warning', 'Preencha um dos campos antes executar a pesquisa!');
+			}
+		};
+		
+		$scope.pesquisarCPF = function(cpf) {
 			$http.get('api/user/cpf/' + cpf).success(function(data) {
 				if (data == "") {
 					AlertService.addWithTimeout('warning', 'Usuário não cadastrado no LDAP');
 				}else{
 					$scope.user = data;
 					$scope.user.grupos = [];
+					$scope.users.push($scope.user);
 				}
 			}).error(function(data, status) {
 				if (status == 412) {
@@ -38,7 +52,7 @@ controllers.controller('UserNew',
 					AlertService.addWithTimeout('warning', 'Usuário não cadastrado no LDAP');
 				}else{
 					$scope.users = data;
-					$.each(users, function(i, user) {
+					$.each($scope.users, function(i, user) {
 						user.grupos = [];
 					});
 				}
@@ -47,6 +61,10 @@ controllers.controller('UserNew',
 					AlertService.addWithTimeout('danger', data[0].message);
 				}
 			});
+		};
+		
+		$scope.editar = function(user) {
+			$scope.user = user;
 		};
 		
 		// toggle selection for a given fruit by name
@@ -75,25 +93,23 @@ controllers.controller('UserNew',
 		
 		$scope.salvar = function() {
 			$("[id$='-message']").text("");
-			$http({
-				url : 'api/user',
-				method : "POST",
-				data : $scope.user,
-				headers : {
-					'Content-Type' : 'application/json;charset=utf8'
-				}
-			}).success(
-					function(data) {
-						AlertService.addWithTimeout('success', 'Usuário salvo com sucesso');
-						$location.path('/user');
-					}).error(
-					function(data, status) {
-						if (status == 412) {
-							$.each(data, function(i, violation) {
-								$("#" + violation.property + "-message").text(violation.message);
-							});
-						}
-					});
+				$http({
+					url : 'api/user',
+					method : "POST",
+					data : $scope.user,
+					headers : {
+						'Content-Type' : 'application/json;charset=utf8'
+					}
+				}).success(
+						function(data) {
+							AlertService.addWithTimeout('success', 'Usuário salvo com sucesso');
+							$location.path('/user');
+						}).error(
+								function(data, status) {
+									if (status == 412) {
+										AlertService.addWithTimeout('danger', data[0].message);
+									}
+								});
 		}
 });
 
@@ -108,8 +124,8 @@ function UserList($scope, $http, $location) {
 		});
 	}
 
-	$scope.editar = function(analise) {
-		$location.path('/user/edit/' + analise.id);
+	$scope.editar = function(user) {
+		$location.path('/user/edit/' + user.id);
 	};
 	
 	$scope.novo = function() {

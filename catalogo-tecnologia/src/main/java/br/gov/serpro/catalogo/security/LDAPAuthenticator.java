@@ -100,8 +100,12 @@ public class LDAPAuthenticator implements Authenticator {
 		}else {
 			result.setEmail(attributes.get("mail").get().toString());
 		}
-		result.setTelephoneNumber(attributes.get("telephoneNumber").get().toString());
-
+		if(attributes.get("telephoneNumber") == null) {
+			result.setTelephoneNumber("");
+		}else {
+			result.setTelephoneNumber(attributes.get("telephoneNumber").get().toString());
+		}
+		
 		return result;
 	}
 	

@@ -47,25 +47,13 @@ public class UserService {
 	
 	@GET
 	@Path("/cpf/{cpf}")
-	public User carregarByrCPF(@NotNull @PathParam("cpf") String cpf) throws Exception {
-		if (userDAO.loadByCPF(cpf) != null){
-			ValidationException ve = new ValidationException();
-			ve.addViolation(null, "Usuário já cadastrado na base.");
-			throw ve;
-		}
-		
+	public User carregarByCPF(@NotNull @PathParam("cpf") String cpf) throws Exception {
 		return ldapAuthenticator.searchUserByCPF(cpf);
 	}
 	
 	@GET
 	@Path("/nome/{nome}")
 	public List<User> carregarByNome(@NotNull @PathParam("nome") String nome) throws Exception {
-		/*if (userDAO.loadByNome(nome) != null){
-			ValidationException ve = new ValidationException();
-			ve.addViolation(null, "Usuário já cadastrado na base.");
-			throw ve;
-		}*/
-		
 		return ldapAuthenticator.searchUserByDisplayName(nome);
 	}
 	
@@ -78,7 +66,20 @@ public class UserService {
 	@POST
 	@Transactional
 	@RequiredRole("ADMINISTRADOR")
-	public void inserir(@Valid User user) {
-		userDAO.insert(user);
+	public void inserir(@Valid User user)  throws Exception {
+		if(userExists(user.getName())) {
+			ValidationException ve = new ValidationException();
+			ve.addViolation(null, "Usuário já cadastrado na base.");
+			throw ve;
+		}else {
+			userDAO.insert(user);
+		}
+	}
+	
+	private boolean userExists(String cpf) {
+		if (userDAO.loadByCPF(cpf) != null){
+			return true;
+		}
+		return false;
 	}
 }

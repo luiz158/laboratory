@@ -60,6 +60,32 @@ services.factory('AlertService', function($rootScope, $timeout) {
 	return alertService;
 });
 
+services.factory('ValidationService', function() {
+	var service = {};
+	
+	service.validation = {};
+
+	service.add = function(nome, msg) {
+		service.validation[nome] = msg;
+	};
+	
+	service.remove = function(nome) {
+		service.validation[nome] = null;
+	};
+	
+	service.clear = function() {
+		service.validation = {};
+	};
+	
+	service.registrarViolacoes = function(data){
+		angular.forEach(data, function(violation){
+			service.add(violation.property,violation.message);
+		});
+	};
+	
+	return service;
+});
+
 services.factory('AuthService', function($http, $rootScope) {
 
 	var logado = false;
@@ -118,6 +144,8 @@ services.factory('AuthService', function($http, $rootScope) {
 			return logado;
 		},
 		getUsuario : function(){
+			console.log('AuthService Logout Success');
+			console.log($rootScope);
 			return $rootScope.usuario;
 		}
 	}
