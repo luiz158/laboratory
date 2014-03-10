@@ -95,6 +95,17 @@ services.factory('AuthService', function($http, $rootScope) {
 	var logado = false;
 	$rootScope.usuario = {};
 	
+	function getLoggedUser(){
+		$http({
+			url : "api/auth/user",
+			method : "GET"
+		}).success(function(response) {
+			$rootScope.usuario = response;
+		}).error(function(response) {
+			$rootScope.usuario = {};
+		});
+	}
+	
 	// Construtor
 	$http({
 		url : "api/auth",
@@ -104,6 +115,7 @@ services.factory('AuthService', function($http, $rootScope) {
 			logado = false;
 		} else {
 			logado = true;
+			getLoggedUser();
 		}
 	}).error(function(response) {
 		console.log('erro init auth service');
