@@ -18,6 +18,7 @@ import javax.ws.rs.Produces;
 import org.jboss.resteasy.spi.validation.ValidateRequest;
 
 import br.gov.frameworkdemoiselle.transaction.Transactional;
+import br.gov.serpro.catalogo.bussiness.FaseBC;
 import br.gov.serpro.catalogo.entity.Analise;
 import br.gov.serpro.catalogo.persistence.AnaliseDAO;
 
@@ -27,12 +28,15 @@ import br.gov.serpro.catalogo.persistence.AnaliseDAO;
 public class AnaliseService {
 
 	@Inject
+	private FaseBC faseBC;
+	
+	@Inject
 	private AnaliseDAO analiseDAO;
 
 	@POST
 	@Transactional
 	public Long salvar(@Valid Analise analise) {
-		return analiseDAO.insert(analise).getId();
+		return faseBC.salvar(analise).getId();
 	}
 
 	@DELETE
@@ -50,8 +54,16 @@ public class AnaliseService {
 	@PUT
 	@Transactional
 	public void alterar(@Valid Analise analise) {
-		analiseDAO.update(analise);
+		faseBC.salvar(analise).getId();
 	}
+	
+	@PUT
+	@Transactional
+	@Path("/finalizar")
+	public void finalizar(@Valid Analise analise) {
+		faseBC.finalizarFase(analise);
+	}
+	
 	
 	@GET
 	@Path("/{id}")

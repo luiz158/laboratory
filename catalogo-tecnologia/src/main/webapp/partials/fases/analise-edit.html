@@ -39,6 +39,7 @@
 							ng-options="origem.nome for origem in origemDemanda track by origem.id">
 							<option value="" disabled>-- Selecione --</option>
 						</select>
+						<validation-msg propriedade="origemReferencia"></validation-msg>
 					</div>
 					<div class="col-md-6">
 						<label for="codigo">Código:</label> 
@@ -50,15 +51,15 @@
 				<div class="form-group">
 					<label for="demandante">Demandante:</label> <input type="text"
 						class="form-control" id="demandante" ng-model="analise.demandante"
-						required> <span id="demandante-message"
-						class="text-danger"></span>
+						required> 
+						<validation-msg propriedade="demandante"></validation-msg>
 				</div>
 
 				<div class="form-group">
 					<label for="detalhamento">Detalhamento:</label>
 					<textarea rows="4" class="form-control" id="detalhamento"
 						ng-model="analise.objetivo" required></textarea>
-					<span id="detalhamento-message" class="text-danger"></span>
+					<validation-msg propriedade="detalhamento"></validation-msg>
 				</div>
 
 
@@ -66,11 +67,24 @@
 					<div class="col-md-6">
 						<div date-picker="start"></div>
 						<label class="dataAnalise"><i class="fa fa-calendar"></i>
-							Data da Análise <small>(dd/mm/aaaa)</small>:</label> <input type="text"
+							Data da Análise <small>(dd/mm/aaaa)</small>:</label> 
+						<input type="text"
 							class="form-control" id="dataAnalise" name="dataAnalise"
 							ng-model="analise.dataRealizacao" data-date-type="number"
 							data-min-date="01/01/2010" data-max-date="today"
 							data-autoclose="1" data-date-format="dd/MM/yyyy" bs-datepicker>
+						<validation-msg propriedade="dataRealizacao"></validation-msg>
+							
+					</div>
+					<div class="col-md-6">
+						<div date-picker="start"></div>
+						<label class="dataFinalizacao"><i class="fa fa-calendar"></i>
+							Data da finalização:</label> 
+						<input type="text" disabled=disabled
+							class="form-control" id="dataFinalizacao" name="dataFinalizacao"
+							ng-model="analise.dataFinalizacao" data-date-format="dd/MM/yyyy">
+						<validation-msg propriedade="dataFinalizacao"></validation-msg>
+							
 					</div>
 				</div>
 
@@ -79,25 +93,28 @@
 						<label for="gestor">Gestor da Análise:</label> <input
 							class="form-control" required type="text" id="gestor"
 							ng-model="analise.gestor">
+						<validation-msg propriedade="gestor"></validation-msg>
 					</div>
 					<div class="col-md-6">
 						<label for="area">Área:</label> <input
 							class="form-control" required type="text" id="area"
 							ng-model="analise.area">
+						<validation-msg propriedade="area"></validation-msg>
 					</div>
 				</div>
 
 				<div class="form-group">
-					<label for="situacao">Situação:</label><br> <span
-						id="situacao" class="btn-group" ng-analise-situacao-button
+					<label for="situacao">Situação:</label><br> 
+					<span id="situacao" class="btn-group" ng-analise-situacao-button
 						situacao="{{analise.situacao}}">
-						<li ng-if="analise.situacao != 'Aprovado'"><a
-							ng-click="aprovar(true)"><i class="fa fa-thumbs-o-up"> </i>
-								Aprovar</a></li>
-						<li ng-if="analise.situacao != 'Reprovado'"><a
-							ng-click="aprovar(false)"><i class="fa fa-thumbs-o-down">
-							</i> Rejeitar</a></li>
+						<li ng-if="analise.situacao != 'Aprovado'">
+							<a ng-click="aprovar(true)"><i class="fa fa-thumbs-o-up"> </i> Aprovar</a>
+						</li>
+						<li ng-if="analise.situacao != 'Reprovado'">
+							<a ng-click="aprovar(false)"><i class="fa fa-thumbs-o-down"></i> Rejeitar</a>
+						</li>
 					</span>
+					<validation-msg propriedade="situacao"></validation-msg>					 
 				</div>
 
 
@@ -106,7 +123,7 @@
 						<label for="justificativa">Justificativa:</label>
 						<textarea rows="4" class="form-control" id="justificativa"
 							ng-model="analise.situacaoJustificativa" required></textarea>
-						<span id="justificativa-message" class="text-danger"></span>
+						<validation-msg propriedade="justificativa"></validation-msg>
 					</div>
 				</div>
 
@@ -117,13 +134,15 @@
 		<div ng-if="selected == 2" class="panel panel-default">
 			<div class="panel-body">
 				<div class="form-group">
-					<label for="proximaFase">Próxima fase a ser executada:</label> <select
+					<label for="proximaFase">Próxima fase a ser executada:</label> 
+					<select
 						class="form-control" ng-model="analise.proximaFase">
 						<option value="PROSPECCAO">Prospeccao</option>
 						<option value="INTERNALIZACAO">Internalização</option>
 						<option value="SUSTENTACAO">Sustentação</option>
 						<option value="DECLINIO">Declínio</option>	
 					</select>
+					<validation-msg propriedade="proximaFase"></validation-msg>
 				</div>
 
 				<div class="form-group">
@@ -132,7 +151,7 @@
 						id="justificativaProximaFase"
 						ng-model="analise.proximaFaseJustificativa"
 						required></textarea>
-					<span id="justificativaProximaFase-message" class="text-danger"></span>
+					<validation-msg propriedade="proximaFaseJustificativa"></validation-msg>
 				</div>
 
 				<div class="form-group row">
@@ -140,6 +159,7 @@
 						<label for="detalhamento">Gestor da Próxima Fase:</label> <input
 							class="form-control" type="text" id="id"
 							ng-model="analise.proximaFaseGestor">
+							<validation-msg propriedade="proximaFaseGestor"></validation-msg>
 					</div>
 					<div class="col-md-6">
 						<label for="detalhamento">Área:</label> <input
@@ -162,6 +182,7 @@
 			<button class="btn btn-primary" ng-click="finalizar()">
 				<i class="fa fa-gavel"> </i> Finalizar
 			</button>
+		
 			<a class="btn btn-inverse pull-right" back-button><i
 				class="fa fa-long-arrow-left"></i> Voltar</a>
 		</div>

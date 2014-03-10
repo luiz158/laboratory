@@ -60,6 +60,36 @@ services.factory('AlertService', function($rootScope, $timeout) {
 	return alertService;
 });
 
+services.factory('ValidationService', function(AlertService) {
+	var service = {};
+	
+	service.validation = {};
+
+	service.add = function(nome, msg) {
+		if(nome == null){
+			AlertService.addWithTimeout("danger",msg);
+		}else{
+			service.validation[nome] = msg;
+		}
+	};
+	
+	service.remove = function(nome) {
+		service.validation[nome] = null;
+	};
+	
+	service.clear = function() {
+		service.validation = {};
+	};
+	
+	service.registrarViolacoes = function(data){
+		angular.forEach(data, function(violation){
+			service.add(violation.property,violation.message);
+		});
+	};
+	
+	return service;
+});
+
 services.factory('AuthService', function($http, $rootScope) {
 
 	var logado = false;

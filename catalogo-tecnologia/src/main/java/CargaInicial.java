@@ -150,29 +150,6 @@ public class CargaInicial {
 		
 		Analise a = new Analise();		
 		a.setArea("SUPDE");
-		a.setCodigoReferencia("R171");
-		a.setDataRealizacao(new Date());
-		a.setDemandante("Pedro Alvares Cabral");
-		a.setObjetivo("Gostaria de utilizar Natural no desenvolvimento de aplicativos móveis");
-		a.setGestor("Wilson Simoninha Tchê");
-		a.setOrigemReferencia(origem);
-		a.setSituacao(Situacao.REPROVADO);
-		a.setSituacaoJustificativa("Isso não tem cabimento. iphones não tem poder computacional para esta tecnologia.");
-		analiseDAO.insert(a);	
-		
-		a = new Analise();		
-		a.setArea("SUPDE");
-		a.setCodigoReferencia("R172");
-		a.setDataRealizacao(new Date());
-		a.setDemandante("Arnaldo Antunes");
-		a.setObjetivo("Preciso de uma ferramenta para a visualização das informações secretas de uma base de dados desconhecida");
-		a.setGestor("Esse pegou uma bomba");
-		a.setOrigemReferencia(origem);
-		a.setSituacao(Situacao.RASCUNHO);
-		a = analiseDAO.insert(a);	
-
-		a = new Analise();		
-		a.setArea("SUPDE");
 		a.setCodigoReferencia("R173");
 		a.setDataRealizacao(new Date());
 		a.setDemandante("Didi Mocó Sonrrisal Colesteró");

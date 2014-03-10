@@ -37,13 +37,13 @@ public class Fase {
 	@Enumerated(EnumType.STRING)
 	private FaseEnum fase;	
 	
-	@NotEmpty
+	//@NotEmpty
 	private String codigoReferencia;
 	
 	@ManyToOne
 	private OrigemDemanda origemReferencia;
 	
-	@NotEmpty
+	//@NotEmpty
 	private String objetivo;
 
 	private Date dataRealizacao;
