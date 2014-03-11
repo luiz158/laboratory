@@ -6,6 +6,8 @@ var controllers = angular.module('catalogo.controllers');
 
 controllers.controller('ProspeccaoCtrl', function ProspeccaoCtrl($scope, $rootScope, $http,$location, $routeParams, AlertService, OrigemDemandaService, ValidationService) {
 
+	$(window).scrollTop(0);
+	
 	$scope.fase = {};
 	$scope.fase.id = $routeParams.id;
 	$scope.fase.fase = 2;

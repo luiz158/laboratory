@@ -1,5 +1,6 @@
 package br.gov.serpro.catalogo.bussiness;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.inject.Inject;
@@ -35,10 +36,12 @@ public class FaseBC {
 	 */
 	@Transactional
 	public Fase finalizarFase(Fase fase) {
-
-		if (fase.getDataFinalizacao()!=null)
-			throw new ValidationException().addViolation("dataFinalizacao",
-					"Esta "+fase.getFase()+" já foi finalizada em "+fase.getDataFinalizacao());
+		
+		if (fase.getDataFinalizacao()!=null){
+			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+			throw new ValidationException().addViolation(null,
+					"Esta fase ("+fase.getFase()+") já foi finalizada em "+format.format(fase.getDataFinalizacao()));
+		}
 		
 		fase.setDataFinalizacao(new Date());
 		Fase proximafase = null;
@@ -183,9 +186,11 @@ public class FaseBC {
 
 	private void validarSalvar(Fase fase) {
 		
-		if (fase.getDataFinalizacao()!=null)
+		if (fase.getDataFinalizacao()!=null){
+			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 			throw new ValidationException().addViolation(null,
-					"Esta "+fase.getFase()+" já foi finalizada em "+fase.getDataFinalizacao());
+					"Esta fase ("+fase.getFase()+") já foi finalizada em "+format.format(fase.getDataFinalizacao()));
+		}
 		
 		if (fase.getObjetivo() == null || fase.getObjetivo().isEmpty())
 			throw new ValidationException().addViolation("objetivo", "Favor informar o objetivo.");
