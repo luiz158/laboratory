@@ -36,13 +36,26 @@ controllers.controller('MembrosCtrl', function MembrosCtrl($scope, $rootScope, $
 	};
 	
 	$scope.pesquisar = function(){
-		$scope.resultadoPesquisa = [
-		                    	    {id: 1, nome: 'Fulano', area: 'CETEC', ramal: '#71 1750'},
-		                    	    {id: 2, nome: 'Sicrano', area: 'CETEC', ramal: '#71 1751'},
-		                    	    {id: 3, nome: 'Beltrano', area: 'CETEC', ramal: '#71 1752'},
-		                    	    {id: 4, nome: 'Sicrano', area: 'CETEC', ramal: '#71 1753'},
-		                    	    {id: 5, nome: 'Sicrano', area: 'CETEC', ramal: '#71 1754'}
-		                    	 ];
+		$http.get('api/user/nome/' + $scope.palavraChave).success(function(data) {
+			if (data == "") {
+				AlertService.addWithTimeout('warning', 'Usuário não encontrado no LDAP');
+			}else{
+				$scope.resultadoPesquisa = [];				
+				angular.forEach(data, function(ldap){
+					var user = {};
+					user.email = ldap.email;
+					user.nome = ldap.displayName;
+					user.ramal = ldap.telephoneNumber;
+					user.cpf = ldap.name;					
+					$scope.resultadoPesquisa.push(user);
+				});
+				
+			}
+		}).error(function(data, status) {
+			if (status == 412) {
+				AlertService.addWithTimeout('danger', data[0].message);
+			}
+		});
 	};
 		
 

@@ -12,12 +12,16 @@ import br.gov.serpro.catalogo.entity.Analise;
 import br.gov.serpro.catalogo.entity.Declinio;
 import br.gov.serpro.catalogo.entity.Fase;
 import br.gov.serpro.catalogo.entity.FaseEnum;
+import br.gov.serpro.catalogo.entity.FaseMembro;
 import br.gov.serpro.catalogo.entity.Internalizacao;
 import br.gov.serpro.catalogo.entity.Prospeccao;
 import br.gov.serpro.catalogo.entity.Situacao;
 import br.gov.serpro.catalogo.entity.Sustentacao;
+import br.gov.serpro.catalogo.entity.User;
 import br.gov.serpro.catalogo.persistence.FaseDAO;
+import br.gov.serpro.catalogo.persistence.FaseMembroDAO;
 import br.gov.serpro.catalogo.persistence.FaseProdutoDAO;
+import br.gov.serpro.catalogo.persistence.UserDAO;
 
 @BusinessController
 public class FaseBC {
@@ -27,6 +31,13 @@ public class FaseBC {
 	
 	@Inject
 	private FaseProdutoDAO faseProdutoDAO;
+	
+	
+	@Inject
+	private UserDAO userDAO;
+	
+	@Inject
+	private FaseMembroDAO faseMembroDAO;
 
 	/**
 	 * Método que finaliza a fase e retorna a próxima fase ou null.
@@ -208,6 +219,22 @@ public class FaseBC {
 		if (fase.getDemandante() == null || fase.getDemandante().isEmpty())
 			throw new ValidationException().addViolation("demandante", "Favor informar o demandante.");
 
+	}
+	
+	@Transactional
+	public User adicionarMembro(User user, Fase fase){
+		if(userDAO.loadByCPF(user.getName()) == null){
+			userDAO.insert(user);
+		}
+		
+		fase = faseDAO.load(fase.getId());
+		
+		FaseMembro fm = new FaseMembro();
+		fm.setFase(fase);
+		fm.setUser(user);
+		faseMembroDAO.insert(fm);
+		
+		return user;
 	}
 	
 
