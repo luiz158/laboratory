@@ -21,6 +21,7 @@ controllers.controller('UserNew',
 		
 		$scope.pesquisar = function(cpf,nome) {
 			$scope.users = [];
+			$scope.user = {};
 			if(cpf != "" && cpf != null){
 				$scope.pesquisarCPF(cpf);
 			}else if(nome != "" && nome != null){

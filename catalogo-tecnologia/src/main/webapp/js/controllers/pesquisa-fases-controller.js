@@ -5,6 +5,8 @@ var controllers = angular.module('catalogo.controllers');
 
 controllers.controller('PesquisaFasesCtrl', function PesquisaFasesCtrl($scope, $rootScope, $routeParams, $http, AlertService, OrigemDemandaService) {
 	
+	$(window).scrollTop(0);
+	
 	$scope.origemDemanda = [];		
 	OrigemDemandaService.getItens().then(function(data) {
 		$scope.origemDemanda = data;

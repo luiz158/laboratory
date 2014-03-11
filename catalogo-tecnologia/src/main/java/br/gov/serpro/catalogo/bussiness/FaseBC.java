@@ -1,5 +1,6 @@
 package br.gov.serpro.catalogo.bussiness;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.inject.Inject;
@@ -16,12 +17,16 @@ import br.gov.serpro.catalogo.entity.Prospeccao;
 import br.gov.serpro.catalogo.entity.Situacao;
 import br.gov.serpro.catalogo.entity.Sustentacao;
 import br.gov.serpro.catalogo.persistence.FaseDAO;
+import br.gov.serpro.catalogo.persistence.FaseProdutoDAO;
 
 @BusinessController
 public class FaseBC {
 
 	@Inject
 	private FaseDAO faseDAO;
+	
+	@Inject
+	private FaseProdutoDAO faseProdutoDAO;
 
 	/**
 	 * Método que finaliza a fase e retorna a próxima fase ou null.
@@ -31,28 +36,69 @@ public class FaseBC {
 	 */
 	@Transactional
 	public Fase finalizarFase(Fase fase) {
-
-		if (fase.getDataFinalizacao()!=null)
-			throw new ValidationException().addViolation("dataFinalizacao",
-					"Esta "+fase.getFase()+" já foi finalizada em "+fase.getDataFinalizacao());
+		
+		if (fase.getDataFinalizacao()!=null){
+			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+			throw new ValidationException().addViolation(null,
+					"Esta fase ("+fase.getFase()+") já foi finalizada em "+format.format(fase.getDataFinalizacao()));
+		}
 		
 		fase.setDataFinalizacao(new Date());
-
 		Fase proximafase = null;
+		
+		validarFinalizar(fase);
 
+		// Se foi aprovado tem uma proxima fase;
+		if (fase.getSituacao().equals(Situacao.APROVADO)) {			
+			proximafase = getProximaFase(fase);
+			faseDAO.insert(proximafase);
+		}
+
+		faseDAO.update(fase);
+
+		return proximafase;
+	}
+
+	
+	/**
+	 * Valida os campos obrigatórios para finalizar uma fase.
+	 * 
+	 * @param fase
+	 */
+	private void validarFinalizar(Fase fase) {
 		if (fase.getSituacao() == null
 				|| fase.getSituacao().equals(Situacao.RASCUNHO))
 			throw new ValidationException().addViolation("situacao",
 					"Favor informar a situação desta análise.");
+		
+		if (fase.getSituacaoJustificativa() == null
+				|| fase.getSituacaoJustificativa().isEmpty())
+			throw new ValidationException().addViolation("justificativa",
+					"Favor informar uma justificativa.");
+		
+		
+		if(fase.getFase().equals(FaseEnum.PROSPECCAO)){
+			Prospeccao p = (Prospeccao)fase;
+			if (p.getTestes() == null || p.getTestes().isEmpty())
+				throw new ValidationException().addViolation("testes", "Favor informar os testes realizados.").addViolation(null, "Favor informar os testes realizados.");
+			if (fase.getConclusao() == null || fase.getConclusao().isEmpty())
+				throw new ValidationException().addViolation("conclusao", "Favor informar a conclusão.").addViolation(null, "Favor informar a conclusão.");	
+					
+			if (faseProdutoDAO.produtosDaFase(fase).isEmpty())
+				throw new ValidationException().addViolation(null, "Ao menos um produto deve ter sido prospectado.");	
+		}
+		
 
-		// Se foi aprovado tem uma proxima fase;
+		validarFinalizarCamposProximaFase(fase);
+	}
+
+
+	/**
+	 * Valida os campos da proxima fase apenas se a mesma tiver sido aprovada.
+	 * @param fase
+	 */
+	private void validarFinalizarCamposProximaFase(Fase fase) {
 		if (fase.getSituacao().equals(Situacao.APROVADO)) {
-
-			if (fase.getSituacaoJustificativa() == null
-					|| fase.getSituacaoJustificativa().isEmpty())
-				throw new ValidationException().addViolation("justificativa",
-						"Favor informar uma justificativa.");
-
 			if (fase.getProximaFase() == null)
 				throw new ValidationException()
 						.addViolation("proximaFase",
@@ -75,15 +121,7 @@ public class FaseBC {
 								"Para finalizar é preciso preencher a justificativa da próxima fase.")
 						.addViolation(null,
 								"Para finalizar é preciso definir a próxima fase.");
-
-			proximafase = getProximaFase(fase);
-
-			faseDAO.insert(proximafase);
 		}
-
-		faseDAO.update(fase);
-
-		return proximafase;
 	}
 
 	
@@ -124,35 +162,35 @@ public class FaseBC {
 
 
 
-	public Fase salvar(Analise analise) {
-		validar(analise);
-		if(analise.getId()!=null){
-			faseDAO.update(analise);
+	public Fase salvar(Analise fase) {
+		validarSalvar(fase);
+		if(fase.getId()!=null){
+			faseDAO.update(fase);
 		}else{
-			faseDAO.insert(analise);
+			faseDAO.insert(fase);
 		}
-		return analise;
+		return fase;
 	}
 	
-	public Fase insert(Analise analise) {
-		validar(analise);
-		return faseDAO.insert(analise);
+	public Fase salvar(Prospeccao fase) {
+		validarSalvar(fase);
+		if(fase.getId()!=null){
+			faseDAO.update(fase);
+		}else{
+			faseDAO.insert(fase);
+		}
+		return fase;
 	}
-
-
-	private void validar(Analise fase) {
-		validar((Fase)fase);
-		if (fase.getDemandante() == null || fase.getDemandante().isEmpty())
-			throw new ValidationException().addViolation("demandante", "Favor informar o demandante.");
-
-	}
-
-
-	private void validar(Fase fase) {
 		
-		if (fase.getDataFinalizacao()!=null)
+
+
+	private void validarSalvar(Fase fase) {
+		
+		if (fase.getDataFinalizacao()!=null){
+			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 			throw new ValidationException().addViolation(null,
-					"Esta "+fase.getFase()+" já foi finalizada em "+fase.getDataFinalizacao());
+					"Esta fase ("+fase.getFase()+") já foi finalizada em "+format.format(fase.getDataFinalizacao()));
+		}
 		
 		if (fase.getObjetivo() == null || fase.getObjetivo().isEmpty())
 			throw new ValidationException().addViolation("objetivo", "Favor informar o objetivo.");
@@ -164,5 +202,13 @@ public class FaseBC {
 			throw new ValidationException().addViolation("gestor", "É preciso definir o gestor.");
 				
 	}
+	
+	private void validarSalvar(Analise fase) {
+		validarSalvar((Fase)fase);
+		if (fase.getDemandante() == null || fase.getDemandante().isEmpty())
+			throw new ValidationException().addViolation("demandante", "Favor informar o demandante.");
+
+	}
+	
 
 }

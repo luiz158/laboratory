@@ -32,7 +32,7 @@
 		 <div ng-if="user.name">
 			<div class="form-group row">
 				<div class="col-md-12">
-					<label for="id">Nome:</label> {{user.displayName}}
+					<label for="id">Nome:</label> {{user.name}}
 				</div>
 			</div>
 			
@@ -44,6 +44,11 @@
 			<div class="form-group row">
 				<div class="col-md-12">
 					<label for="id">Email:</label> {{user.email}}
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-md-12">
+					<label for="id">Setor:</label> {{user.setor}}
 				</div>
 			</div>
 
@@ -87,14 +92,18 @@
 						<th class="sorting" tabindex="0"
 							aria-controls="dataTables-example" rowspan="1" colspan="1"
 							aria-label="Browser: activate to sort column ascending">Email</th>
+						<th class="sorting" tabindex="0"
+							aria-controls="dataTables-example" rowspan="1" colspan="1"
+							aria-label="Browser: activate to sort column ascending">Setor</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr ng-repeat="u in users">
-						<td><a ng-click="editar(u)">{{u.name}}</a></td>
-						<td><a ng-click="editar(u)">{{u.displayName}}</a>
+						<td><a ng-click="editar(u)">{{u.cpf}}</a></td>
+						<td><a ng-click="editar(u)">{{u.name}}</a>
 						<td><a ng-click="editar(u)">{{u.telephoneNumber}}</a>
 						<td><a ng-click="editar(u)">{{u.email}}</a>
+						<td><a ng-click="editar(u)">{{u.setor}}</a>
 					</tr>
 				</tbody>
 			</table>

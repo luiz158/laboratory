@@ -62,7 +62,7 @@
 					<label for="objetivo">Objetivo:</label>
 					<textarea rows="4" class="form-control" id="objetivo"
 						ng-model="fase.objetivo" required></textarea>
-					<span id="objetivo-message" class="text-danger"></span>
+					<validation-msg propriedade="objetivo"></validation-msg>
 				</div>
 
 
@@ -75,6 +75,16 @@
 							ng-model="fase.dataRealizacao" data-date-type="number"
 							data-min-date="01/01/2010" data-autoclose="1"
 							data-date-format="dd/MM/yyyy" bs-datepicker>
+						<validation-msg propriedade="dataRealizacao"></validation-msg>
+					</div>
+					<div class="col-md-6" ng-show="fase.dataFinalizacao">
+						<div date-picker="start"></div>
+						<label class="dataFinalizacao"><i class="fa fa-calendar"></i>
+							Data da finalização:</label> 
+						<input type="text" disabled=disabled
+							class="form-control" id="dataFinalizacao" name="dataFinalizacao"
+							ng-model="fase.dataFinalizacao" data-date-format="dd/MM/yyyy">
+						<validation-msg propriedade="dataFinalizacao"></validation-msg>							
 					</div>
 				</div>
 
@@ -82,13 +92,13 @@
 					<div class="col-md-6">
 						<label for="gestor">Gestor da {{fase.fase | nomeFase}}:</label> <input
 							class="form-control" required type="text" id="gestor"
-							ng-model="fase.gestor"> <span id="gestor-message"
-							class="text-danger"></span>
+							ng-model="fase.gestor"> 
+						<validation-msg propriedade="gestor"></validation-msg>
 					</div>
 					<div class="col-md-6">
 						<label for="area">Área:</label> <input class="form-control"
-							required type="text" id="area" ng-model="fase.area"> <span
-							id="area-message" class="text-danger"></span>
+							required type="text" id="area" ng-model="fase.area"> 
+							<validation-msg propriedade="area"></validation-msg>
 					</div>
 				</div>
 
@@ -109,6 +119,7 @@
 							ng-click="aprovar(false)"><i class="fa fa-thumbs-o-down">
 							</i> Rejeitar</a></li>
 					</span>
+					<validation-msg propriedade="situacao"></validation-msg>
 				</div>
 
 
@@ -118,6 +129,7 @@
 						<textarea rows="4" class="form-control" id="justificativa"
 							ng-model="fase.situacaoJustificativa" required></textarea>
 						<span id="situacaoJustificativa-message" class="text-danger"></span>
+						<validation-msg propriedade="situacaoJustificativa"></validation-msg>
 					</div>
 				</div>
 
@@ -132,13 +144,13 @@
 					<label for="testes">Descrição dos testes realizados:</label>
 					<textarea rows="4" class="form-control" id="testes"
 						ng-model="fase.testes"></textarea>
-					<span id="testes-message" class="text-danger"></span>
+					<validation-msg propriedade="testes"></validation-msg>
 				</div>
 				<div class="form-group">
 					<label for="conclusao">Conclusão:</label>
 					<textarea rows="4" class="form-control" id="conclusao"
 						ng-model="fase.conclusao"></textarea>
-					<span id="conclusao-message" class="text-danger"></span>
+					<validation-msg propriedade="conclusao"></validation-msg>
 				</div>
 			</div>
 		</div>
@@ -160,6 +172,7 @@
 						<option value="SUSTENTACAO">Sustentação</option>
 						<option value="DECLINIO">Declínio</option>
 					</select>
+					<validation-msg propriedade="proximaFase"></validation-msg>
 				</div>
 
 				<div class="form-group">
@@ -167,7 +180,7 @@
 					<textarea rows="4" class="form-control"
 						id="justificativaProximaFase"
 						ng-model="fase.proximaFaseJustificativa" required></textarea>
-					<span id="proximaFaseJustificativa-message" class="text-danger"></span>
+					<validation-msg propriedade="proximaFaseJustificativa"></validation-msg>
 				</div>
 
 				<div class="form-group row">
@@ -175,11 +188,13 @@
 						<label for="proximaFaseGestor">Gestor da Próxima Fase:</label> <input
 							class="form-control" type="text" id="proximaFaseGestor"
 							ng-model="fase.proximaFaseGestor">
+						<validation-msg propriedade="proximaFaseGestor"></validation-msg>
 					</div>
 					<div class="col-md-6">
 						<label for="proximaFaseArea">Área:</label> <input
 							class="form-control" type="text" id="proximaFaseArea"
 							ng-model="fase.proximaFaseArea">
+						<validation-msg propriedade="proximaFaseArea"></validation-msg>
 					</div>
 				</div>
 			</div>
