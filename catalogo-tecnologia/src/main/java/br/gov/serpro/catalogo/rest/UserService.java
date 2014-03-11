@@ -67,7 +67,7 @@ public class UserService {
 	@Transactional
 	@RequiredRole("ADMINISTRADOR")
 	public void inserir(@Valid User user)  throws Exception {
-		if(userExists(user.getName())) {
+		if(userExists(user.getCPF())) {
 			ValidationException ve = new ValidationException();
 			ve.addViolation(null, "Usuário já cadastrado na base.");
 			throw ve;

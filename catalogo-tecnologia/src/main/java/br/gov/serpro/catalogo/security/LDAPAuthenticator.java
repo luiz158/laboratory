@@ -60,6 +60,7 @@ public class LDAPAuthenticator implements Authenticator {
 		if(searchResult == null){
 			return null;
 		}
+		System.out.println("------------------" + searchResult.getAttributes() + "-------------------");
 		return createUser(searchResult.getAttributes());
 	}
 	
@@ -73,7 +74,6 @@ public class LDAPAuthenticator implements Authenticator {
 		
 		List<User> users = new ArrayList<User>();
 		while(searchResults.hasMore()) {
-//			System.out.println("##############" + ((SearchResult)searchResults.next()).getAttributes().toString() + "##########");
 			users.add(createUser(((SearchResult)searchResults.next()).getAttributes()));
 		}
 		return users;
@@ -93,8 +93,8 @@ public class LDAPAuthenticator implements Authenticator {
 	private User createUser(Attributes attributes) throws NamingException {
 		User result = new User();
 
-		result.setName(attributes.get("uid").get().toString());
-		result.setDisplayName(attributes.get("cn").get().toString());
+		result.setCPF(attributes.get("uid").get().toString());
+		result.setName(attributes.get("cn").get().toString());
 		if(attributes.get("mail") == null) {
 			result.setEmail("");
 		}else {
@@ -105,7 +105,17 @@ public class LDAPAuthenticator implements Authenticator {
 		}else {
 			result.setTelephoneNumber(attributes.get("telephoneNumber").get().toString());
 		}
+		if(attributes.get("ou") == null) {
+			result.setSetor("");
+		}else {
+			result.setSetor(attributes.get("ou").get().toString());
+		}
 		
+		System.out.println("------------------" + result.getCPF() + "-------------------");
+		System.out.println("------------------" + result.getName() + "-------------------");
+		System.out.println("------------------" + result.getEmail() + "-------------------");
+		System.out.println("------------------" + result.getTelephoneNumber() + "-------------------");
+		System.out.println("------------------" + result.getSetor() + "-------------------");
 		return result;
 	}
 	
