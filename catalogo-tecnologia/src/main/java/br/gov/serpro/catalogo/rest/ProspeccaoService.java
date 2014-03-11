@@ -18,8 +18,8 @@ import javax.ws.rs.Produces;
 import org.jboss.resteasy.spi.validation.ValidateRequest;
 
 import br.gov.frameworkdemoiselle.transaction.Transactional;
+import br.gov.serpro.catalogo.bussiness.FaseBC;
 import br.gov.serpro.catalogo.entity.Prospeccao;
-import br.gov.serpro.catalogo.persistence.FaseProdutoDAO;
 import br.gov.serpro.catalogo.persistence.ProspeccaoDAO;
 
 @ValidateRequest
@@ -30,11 +30,22 @@ public class ProspeccaoService {
 	@Inject
 	private ProspeccaoDAO prospeccaoDAO;
 	
+	@Inject
+	private FaseBC faseBC;
+	
 	@POST
 	@Transactional
 	public Long salvar(@Valid Prospeccao prospeccao) {
-		return prospeccaoDAO.insert(prospeccao).getId();
+		return faseBC.salvar(prospeccao).getId();
 	}
+	
+	@PUT
+	@Transactional
+	@Path("/finalizar")
+	public void finalizar(@Valid Prospeccao prospeccao) {
+		faseBC.finalizarFase(prospeccao);
+	}
+	
 
 	@DELETE
 	@Path("/{id}")
@@ -51,7 +62,7 @@ public class ProspeccaoService {
 	@PUT
 	@Transactional
 	public void alterar(@Valid Prospeccao prospeccao) {
-		prospeccaoDAO.update(prospeccao);
+		faseBC.salvar(prospeccao);
 	}
 	
 	@GET
