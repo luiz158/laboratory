@@ -65,6 +65,16 @@ public class AuthenticationService {
 	public boolean isLoggedIn(){
 		return securityContext.isLoggedIn();
 	}
+	
+	@GET
+	@Path("/user")
+	public User getUser(){
+		if(securityContext.isLoggedIn()) {
+			return (User) securityContext.getUser();
+		}else {
+			return null;
+		}
+	}
 
 	public static class LoginForm {
 
