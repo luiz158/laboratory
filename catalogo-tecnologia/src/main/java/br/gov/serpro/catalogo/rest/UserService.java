@@ -65,7 +65,6 @@ public class UserService {
 	
 	@POST
 	@Transactional
-	@RequiredRole("ADMINISTRADOR")
 	public void inserir(@Valid User user)  throws Exception {
 		if(userExists(user.getCPF())) {
 			ValidationException ve = new ValidationException();
