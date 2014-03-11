@@ -123,7 +123,7 @@ public class CargaInicial {
 		grupoDAO.insert(grupo);
 		
 		usuario1 = new User();
-		usuario1.setName("Robson Saraiva Ximenes");
+		usuario1.setCPF("Robson Saraiva Ximenes");
 		usuario1.setEmail("robson.ximenes@serpro.gov.br");
 		usuario1.setGrupos(new ArrayList<Grupo>());
 		usuario1.getGrupos().add(grupo);
@@ -131,7 +131,7 @@ public class CargaInicial {
 		usuarioDAO.insert(usuario1);
 		
 		usuario2 = new User();
-		usuario2.setName("Thiago de Lima Mariano");
+		usuario2.setCPF("Thiago de Lima Mariano");
 		usuario2.setEmail("thiago.mariano@serpro.gov.br");
 		usuario2.setGrupos(new ArrayList<Grupo>());
 		usuario2.getGrupos().add(grupo);

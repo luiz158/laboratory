@@ -45,11 +45,11 @@ public class AuthenticationService {
 		
 		if (securityContext.isLoggedIn()){
 			user = (User) securityContext.getUser();
-			if (userDAO.loadByCPF(user.getName()) == null){
+			if (userDAO.loadByCPF(user.getCPF()) == null){
 				userDAO.insert(user);
 			} else {
 //				user.setId(Long.parseLong(userDAO.loadByCPF(user.getName()).getId()));
-				user = userDAO.loadByCPF(user.getName());
+				user = userDAO.loadByCPF(user.getCPF());
 			}
 		}
 		
