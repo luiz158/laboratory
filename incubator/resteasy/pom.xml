@@ -58,6 +58,7 @@
 
 	<modules>
 		<module>impl</module>
+		<module>example/bookmark</module>
 		<!--
 		<module>documentation/reference</module>
 		-->
