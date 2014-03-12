@@ -8,9 +8,14 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@Table(uniqueConstraints= {
+	@UniqueConstraint(columnNames = {"fase_id", "user_id"})
+}) 
 @NamedQueries({ @NamedQuery(name = FaseMembro.MEMBROS_DA_FASE, query = "select fp from FaseMembro fp where (fp.fase.id = :fase)") })
 public class FaseMembro {
 	

@@ -1,5 +1,5 @@
 
-<div ng-controller="MembrosCtrl">
+<div ng-controller="MembrosCtrl">	
 	<label>Membros da {{fase.fase | nomeFase}}</label>
 	<div>
 		<table
@@ -7,10 +7,13 @@
 			<thead>
 				<tr>
 					<th>Membro</th>
-					<th><a class="btn btn-primary btn-xs" data-toggle="modal"
-						data-target="#pesquisarMembrosModal"> <i
-							class="fa fa-search-plus"> Pesquisar</i>
-					</a></th>
+					<th>
+						<a class="btn btn-primary btn-xs" 
+							data-toggle="modal"
+							data-target="#pesquisarMembrosModal"> 
+							<i class="fa fa-search-plus"> Pesquisar</i>
+						</a>
+					</th>
 
 				</tr>
 			</thead>
@@ -30,19 +33,19 @@
 	<div class="modal fade" id="pesquisarMembrosModal" tabindex="-1"
 		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
 		style="display: none;">
+		<form>
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">×</button>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 					<h4 class="modal-title" id="myModalLabel">Pesquisar membros</h4>
 				</div>
 				<div class="modal-body">
-					<div class="form-group row">
+					<div class="form-group">
 						<div class="form-group input-group">
-							<input type="text" class="form-control" ng-model="palavraChave">
+							<input type="text" class="form-control" ng-model="palavraChave" autofocus="autofocus">
 							<span class="input-group-btn">
-								<button class="btn btn-primary" type="button" ng-click="pesquisar()">
+								<button class="btn btn-primary" ng-click="pesquisar()">
 									Pesquisar <i class="fa fa-search"></i>
 								</button>
 							</span>
@@ -51,10 +54,15 @@
 						<!-- Table -->
 						<table class="table">
 							<tbody>
-								<tr role="row" ng-repeat="m in resultadoPesquisa" ng-click="adicionar(m)">
+								<tr role="row" ng-repeat="m in resultadoPesquisa">
 									<td >{{m.name}}</td>
 									<td> {{m.setor}}</td>
-									<td> {{m.telephoneNumber}}</td>									
+									<td> {{m.telephoneNumber}}</td>	
+									<td> 
+										<button class="btn btn-primary" type="button" ng-click="adicionar(m)">
+											Adicionar <i class="fa fa-plus-circle"></i>
+										</button> 
+									</td>									
 								</tr>
 							</tbody>
 						</table>
@@ -68,7 +76,9 @@
 			<!-- /.modal-content -->
 		</div>
 		<!-- /.modal-dialog -->
+		</form>
 	</div>
 	<!-- /.modal -->
+	
 
 </div>

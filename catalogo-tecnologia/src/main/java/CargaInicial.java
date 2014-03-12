@@ -330,12 +330,16 @@ public class CargaInicial {
 		subcategoria.setDescricao("Subcategoriax");
 		subcategoria.setTema(tema);
 		subcategoriaDAO.insert(subcategoria);
+		//produto.getSubcategorias().add(subcategoria);
 		
 		subcategoria = new Subcategoria();
 		subcategoria.setNome("Banco de dados");
 		subcategoria.setDescricao("Banco de dados");
 		subcategoria.setTema(tema);
 		subcategoriaDAO.insert(subcategoria);
+		
+		//produto.getSubcategorias().add(subcategoria);
+		//produtoDAO.update(produto);
 		
 		OrigemDemanda origemDemanda = new OrigemDemanda();
 		origemDemanda.setNome("SPECX");
