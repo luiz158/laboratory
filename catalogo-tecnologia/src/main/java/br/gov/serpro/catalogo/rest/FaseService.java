@@ -6,13 +6,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.validation.constraints.NotNull;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
+import br.gov.frameworkdemoiselle.transaction.Transactional;
+import br.gov.serpro.catalogo.bussiness.FaseBC;
 import br.gov.serpro.catalogo.entity.Fase;
+import br.gov.serpro.catalogo.entity.FaseMembro;
+import br.gov.serpro.catalogo.entity.User;
 import br.gov.serpro.catalogo.persistence.FaseDAO;
 
 @Path("/api/fase")
@@ -20,36 +26,39 @@ import br.gov.serpro.catalogo.persistence.FaseDAO;
 public class FaseService {
 	
 	@Inject
-	private FaseDAO faseDAO;
+	private FaseBC faseBC;
 	
+
 
 	@POST
 	public List<Fase> pesquisar(FaseDTO fase) {
-		return faseDAO.pesquisar(fase);
+		return faseBC.pesquisar(fase);
 	}
 	
 	@GET
 	@Path("/fluxo/{id}")
-	public List<Fase> obterCadeiaDasFases(@PathParam("id") Long id){
-		List<Fase> lista = new ArrayList<Fase>();
+	public List<Fase> obterCadeiaDasFases(@PathParam("id") Long id){		
+		return faseBC.obterCadeiaDasFases(id);
 		
-		Fase faseInicial = faseDAO.load(id);
-		lista.add(faseInicial);
-		
-		Fase faseAnterior = (faseInicial.getFaseAnterior()!=null)? faseDAO.load(faseInicial.getFaseAnterior().getId()): null;
-		while(faseAnterior!=null){			
-			lista.add(0, faseAnterior);
-			faseAnterior = (faseAnterior.getFaseAnterior()!=null)? faseDAO.load(faseAnterior.getFaseAnterior().getId()): null;
-		}
-		
-		Fase fasePosterior = faseDAO.obterFasePosterior(faseInicial.getId());
-		while(fasePosterior!=null){			
-			lista.add(fasePosterior);
-			fasePosterior  = faseDAO.obterFasePosterior(fasePosterior.getId());
-		}
-		
-		return lista;
-		
+	}
+	
+	@POST
+	@Path("/{id}/membros/add")
+	public User adicionarMembro(User user, @PathParam("id") Long id) {
+		return faseBC.adicionarMembro(user,id);
+	}
+	
+	@GET
+	@Path("/{id}/membros")
+	public List<FaseMembro> obterMembros(@PathParam("id") Long id){		
+		return faseBC.obterMembros(id);		
+	}
+	
+	@DELETE
+	@Path("/membros/excluir/{id}")
+	@Transactional
+	public void excluir(@NotNull @PathParam("id") Long id) {
+		faseBC.deleteMembro(id);
 	}
 	
 	

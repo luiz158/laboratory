@@ -1,9 +1,15 @@
 package br.gov.serpro.catalogo.bussiness;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.inject.Inject;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 
 import br.gov.frameworkdemoiselle.resteasy.util.ValidationException;
 import br.gov.frameworkdemoiselle.stereotype.BusinessController;
@@ -22,6 +28,7 @@ import br.gov.serpro.catalogo.persistence.FaseDAO;
 import br.gov.serpro.catalogo.persistence.FaseMembroDAO;
 import br.gov.serpro.catalogo.persistence.FaseProdutoDAO;
 import br.gov.serpro.catalogo.persistence.UserDAO;
+import br.gov.serpro.catalogo.rest.FaseDTO;
 
 @BusinessController
 public class FaseBC {
@@ -38,6 +45,45 @@ public class FaseBC {
 	
 	@Inject
 	private FaseMembroDAO faseMembroDAO;
+	
+	
+	/**
+	 * Pesquisa por criteria usando o DTO
+	 * 
+	 * @param fase
+	 * @return
+	 */
+	public List<Fase> pesquisar(FaseDTO fase) {
+		return faseDAO.pesquisar(fase);
+	}
+	
+	/**
+	 * Monta a lista com o fluxo de fases da demanda.
+	 * @param id de uma fase
+	 * @return
+	 */
+	public List<Fase> obterCadeiaDasFases(Long id){
+		List<Fase> lista = new ArrayList<Fase>();
+		
+		Fase faseInicial = faseDAO.load(id);
+		lista.add(faseInicial);
+		
+		Fase faseAnterior = (faseInicial.getFaseAnterior()!=null)? faseDAO.load(faseInicial.getFaseAnterior().getId()): null;
+		while(faseAnterior!=null){			
+			lista.add(0, faseAnterior);
+			faseAnterior = (faseAnterior.getFaseAnterior()!=null)? faseDAO.load(faseAnterior.getFaseAnterior().getId()): null;
+		}
+		
+		Fase fasePosterior = faseDAO.obterFasePosterior(faseInicial.getId());
+		while(fasePosterior!=null){			
+			lista.add(fasePosterior);
+			fasePosterior  = faseDAO.obterFasePosterior(fasePosterior.getId());
+		}
+		
+		return lista;
+		
+	}
+	
 
 	/**
 	 * Método que finaliza a fase e retorna a próxima fase ou null.
@@ -222,20 +268,27 @@ public class FaseBC {
 	}
 	
 	@Transactional
-	public User adicionarMembro(User user, Fase fase){
-		if(userDAO.loadByCPF(user.getName()) == null){
-			userDAO.insert(user);
+	public User adicionarMembro(User user, Long id){
+		FaseMembro faseMembro = new FaseMembro();
+		if(userDAO.loadByCPF(user.getCPF()) == null){
+			user = userDAO.insert(user);
 		}
-		
-		fase = faseDAO.load(fase.getId());
-		
-		FaseMembro fm = new FaseMembro();
-		fm.setFase(fase);
-		fm.setUser(user);
-		faseMembroDAO.insert(fm);
-		
-		return user;
+		faseMembro.setUser(userDAO.insert(user));
+		faseMembro.setFase(faseDAO.load(id));		
+		faseMembroDAO.insert(faseMembro);		
+		return faseMembro.getUser();
 	}
+
+	public List<FaseMembro> obterMembros(Long id) {		
+		Fase fase = new Fase();
+		fase.setId(id);		
+		return faseMembroDAO.membrosDaFase(fase);
+	}
+
+	public void deleteMembro(Long id) {
+		faseMembroDAO.delete(id);
+	}
+
 	
 
 }

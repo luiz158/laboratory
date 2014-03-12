@@ -13,7 +13,7 @@ public class UserDAO extends JPACrud<User, Long> {
 	private static final long serialVersionUID = 1L;
 	
 	public User loadByCPF(String cpf) {
-		String jpql = "from " + this.getBeanClass().getName() + " where name = :cpf";
+		String jpql = "from " + this.getBeanClass().getName() + " where cpf = :cpf";
 
 		TypedQuery<User> query = getEntityManager().createQuery(jpql, User.class);
 		query.setParameter("cpf", cpf);

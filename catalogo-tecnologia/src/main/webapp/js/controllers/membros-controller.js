@@ -16,8 +16,8 @@ controllers.controller('MembrosCtrl', function MembrosCtrl($scope, $rootScope, $
 	carregarMembros();	
 	
 	function carregarMembros() {		
-		if($rootScope.demandaId){
-			$http.get('api/membros/'+$scope.fase.id).success(function(data) {
+		if($scope.fase.id){
+			$http.get('api/fase/'+$scope.fase.id+"/membros").success(function(data) {
 				$scope.membros = data;
 			});
 		}
@@ -25,31 +25,40 @@ controllers.controller('MembrosCtrl', function MembrosCtrl($scope, $rootScope, $
 	}
 		
 	$scope.adicionar = function(m){
-		$scope.membros.push(m);
+		$http({
+			url : 'api/fase/'+$scope.fase.id+'/membros/add',
+			method : "POST",
+			data : m,
+			headers : {
+				'Content-Type' : 'application/json;charset=utf8'
+			}
+		}).success(function(data) {
+			carregarMembros();
+			AlertService.addWithTimeout('success','Membro ('+data.name+') adicionado');			
+		}).error( function(data, status) {
+			AlertService.addWithTimeout('danger','Não foi possível adicionar o membro.');
+		});
 	};
 	
 	$scope.remover = function(m){
-		for( var i = 0; i < $scope.membros.length; i++){
-			if($scope.membros[i].id == m.id)
-				$scope.membros.splice(i, 1);
-		}		
+		$http({
+			url : 'api/fase/membros/excluir/'+m.id,
+			method : "DELETE"
+		}).success(function(data) {
+			carregarMembros();
+			AlertService.addWithTimeout('success','Membro excluído com sucesso');
+		}).error(function(data, status) {
+			AlertService.addWithTimeout('danger','Não foi possível excluir o membro.');
+		});			
 	};
+	
 	
 	$scope.pesquisar = function(){
 		$http.get('api/user/nome/' + $scope.palavraChave).success(function(data) {
 			if (data == "") {
 				AlertService.addWithTimeout('warning', 'Usuário não encontrado no LDAP');
 			}else{
-				$scope.resultadoPesquisa = [];				
-				angular.forEach(data, function(ldap){
-					var user = {};
-					user.email = ldap.email;
-					user.nome = ldap.displayName;
-					user.ramal = ldap.telephoneNumber;
-					user.cpf = ldap.name;					
-					$scope.resultadoPesquisa.push(user);
-				});
-				
+				$scope.resultadoPesquisa = data;
 			}
 		}).error(function(data, status) {
 			if (status == 412) {
