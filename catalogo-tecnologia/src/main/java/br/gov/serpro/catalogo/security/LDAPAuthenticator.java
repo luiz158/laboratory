@@ -60,7 +60,6 @@ public class LDAPAuthenticator implements Authenticator {
 		if(searchResult == null){
 			return null;
 		}
-		System.out.println("------------------" + searchResult.getAttributes() + "-------------------");
 		return createUser(searchResult.getAttributes());
 	}
 	
@@ -111,11 +110,6 @@ public class LDAPAuthenticator implements Authenticator {
 			result.setSetor(attributes.get("ou").get().toString());
 		}
 		
-		System.out.println("------------------" + result.getCPF() + "-------------------");
-		System.out.println("------------------" + result.getName() + "-------------------");
-		System.out.println("------------------" + result.getEmail() + "-------------------");
-		System.out.println("------------------" + result.getTelephoneNumber() + "-------------------");
-		System.out.println("------------------" + result.getSetor() + "-------------------");
 		return result;
 	}
 	
