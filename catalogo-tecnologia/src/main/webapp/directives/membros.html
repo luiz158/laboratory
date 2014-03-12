@@ -15,9 +15,9 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr role="row" ng-repeat="m in membros">
-					<td>{{m.nome}} ({{m.area}}) - {{m.ramal}}</td>
-					<td style="width: 10%"><a ng-click="remover(m)"
+				<tr role="row" ng-repeat="faseMembro in membros">
+					<td>{{faseMembro.user.name}} ({{faseMembro.user.setor}}) - {{faseMembro.user.telephoneNumber}}</td>
+					<td style="width: 10%"><a ng-click="remover(faseMembro)"
 						class="btn btn-danger btn-xs"> <i class="fa fa-trash-o">
 								Remover</i>
 					</a></td>
@@ -51,8 +51,10 @@
 						<!-- Table -->
 						<table class="table">
 							<tbody>
-								<tr role="row" ng-repeat="m in resultadoPesquisa">
-									<td ng-click="adicionar(m)">{{m.nome}} ({{m.area}}) - {{m.ramal}}</td>									
+								<tr role="row" ng-repeat="m in resultadoPesquisa" ng-click="adicionar(m)">
+									<td >{{m.name}}</td>
+									<td> {{m.setor}}</td>
+									<td> {{m.telephoneNumber}}</td>									
 								</tr>
 							</tbody>
 						</table>
