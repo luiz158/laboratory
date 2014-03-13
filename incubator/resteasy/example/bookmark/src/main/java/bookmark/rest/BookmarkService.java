@@ -68,8 +68,11 @@ public class BookmarkService {
 	}
 
 	@DELETE
-	@Path("{id}")
-	public void delete(@PathParam("id") Long id) throws Exception {
-		bc.delete(id);
+	// @Path("{id}")
+	@Transactional
+	public List<Long> delete(List<Long> ids) throws Exception {
+		bc.delete(ids);
+
+		return ids;
 	}
 }

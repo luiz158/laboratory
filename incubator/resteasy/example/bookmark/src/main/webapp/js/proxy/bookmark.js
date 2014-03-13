@@ -6,16 +6,8 @@ BookmarkProxy.findAll = function($success, $error) {
     $.ajax({
 	type : "GET",
 	url : this.url,
-	success : function(data) {
-	    if ($success) {
-		$success(data);
-	    }
-	},
-	error : function(request) {
-	    if ($error) {
-		$error(request);
-	    }
-	}
+	success : $success,
+	error : $error
     });
 };
 
@@ -74,19 +66,13 @@ BookmarkProxy.update = function($id, $form, $success, $error) {
     });
 };
 
-BookmarkProxy.remove = function($id, $success, $error) {
+BookmarkProxy.remove = function($ids, $success, $error) {
     $.ajax({
 	type : "DELETE",
-	url : this.url + "/" + $id,
-	success : function(data) {
-	    if ($success) {
-		$success(data);
-	    }
-	},
-	error : function(request) {
-	    if ($error) {
-		$error(request);
-	    }
-	}
+	url : this.url,
+	data : JSON.stringify($ids),
+	contentType : "application/json",
+	success : $success,
+	error : $error
     });
 };
