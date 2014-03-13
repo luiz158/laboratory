@@ -6,7 +6,9 @@ var controllers = angular.module('catalogo.controllers');
 controllers.controller('UserNew',
  	function UserNew($scope, $http, $location, AlertService) {
 	
+		var MIN_NUMBER_OF_NAME_CARACTERS = 5;
 		$scope.users = [];
+		$scope.name = {}; 
 		
 		function init(grupos) {
 	        $scope.grupos = grupos;
@@ -48,20 +50,25 @@ controllers.controller('UserNew',
 		};
 		
 		$scope.pesquisarNome = function(nome) {
-			$http.get('api/user/nome/' + nome).success(function(data) {
-				if (data == "") {
-					AlertService.addWithTimeout('warning', 'Usuário não cadastrado no LDAP');
-				}else{
-					$scope.users = data;
-					$.each($scope.users, function(i, user) {
-						user.grupos = [];
-					});
-				}
-			}).error(function(data, status) {
-				if (status == 412) {
-					AlertService.addWithTimeout('danger', data[0].message);
-				}
-			});
+			$scope.name = nome;
+			if($scope.name.length >= MIN_NUMBER_OF_NAME_CARACTERS){
+				$http.get('api/user/nome/' + nome).success(function(data) {
+					if (data == "") {
+						AlertService.addWithTimeout('warning', 'Usuário não cadastrado no LDAP');
+					}else{
+						$scope.users = data;
+						$.each($scope.users, function(i, user) {
+							user.grupos = [];
+						});
+					}
+				}).error(function(data, status) {
+					if (status == 412) {
+						AlertService.addWithTimeout('danger', data[0].message);
+					}
+				});
+			}else{
+				AlertService.addWithTimeout('warning', 'Digite pelo menos ' + MIN_NUMBER_OF_NAME_CARACTERS + ' caracteres para realizar a consulta.');
+			}
 		};
 		
 		$scope.editar = function(user) {

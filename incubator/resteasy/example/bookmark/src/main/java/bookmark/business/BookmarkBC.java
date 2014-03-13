@@ -26,6 +26,10 @@ public class BookmarkBC extends DelegateCrud<Bookmark, Long, BookmarkDAO> {
 			insert(new Bookmark("SVN", "http://svn.frameworkdemoiselle.gov.br"));
 			insert(new Bookmark("Maven", "http://repository.frameworkdemoiselle.gov.br"));
 			insert(new Bookmark("Downloads", "http://download.frameworkdemoiselle.gov.br"));
+
+			// for (int i = 0; i < 1000; i++) {
+			// insert(new Bookmark("Book " + i, "http://" + i));
+			// }
 		}
 	}
 }
