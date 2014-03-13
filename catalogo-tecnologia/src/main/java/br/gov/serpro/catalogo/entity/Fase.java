@@ -24,6 +24,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -42,23 +43,19 @@ public class Fase {
 	@Enumerated(EnumType.STRING)
 	private FaseEnum fase;	
 	
-	//@NotEmpty
 	private String codigoReferencia;
 	
 	@ManyToOne
 	private OrigemDemanda origemReferencia;
 	
-	//@NotEmpty
 	private String objetivo;
 
 	private Date dataRealizacao;
 	
-	@NotEmpty
-	private String gestor;
+	@NotNull(message="É necessário atribuir a fase a um responsável.")
+	@ManyToOne
+	private User gestor;
 	
-	@NotEmpty
-	private String area;
-
 	@NotNull
 	@Enumerated(STRING)
 	private Situacao situacao;
@@ -73,12 +70,9 @@ public class Fase {
 	private FaseEnum proximaFase;
 			
 	private String proximaFaseJustificativa;
-	
-	private String proximaFaseGestor;
-	
-	private String proximaFaseArea;
-	
-	private String proximaFaseGestorEmail;
+
+	@ManyToOne
+	private User proximaFaseGestor;	
 	
 	private Integer proximaFaseCiclo;
 	
@@ -131,21 +125,6 @@ public class Fase {
 		this.dataRealizacao = dataRealizacao;
 	}
 
-	public String getGestor() {
-		return gestor;
-	}
-
-	public void setGestor(String gestor) {
-		this.gestor = gestor;
-	}
-
-	public String getArea() {
-		return area;
-	}
-
-	public void setArea(String area) {
-		this.area = area;
-	}
 
 	public Situacao getSituacao() {
 		return situacao;
@@ -187,28 +166,22 @@ public class Fase {
 		this.proximaFaseJustificativa = proximaFaseJustificativa;
 	}
 
-	public String getProximaFaseGestor() {
+	
+
+	public User getGestor() {
+		return gestor;
+	}
+
+	public void setGestor(User gestor) {
+		this.gestor = gestor;
+	}
+
+	public User getProximaFaseGestor() {
 		return proximaFaseGestor;
 	}
 
-	public void setProximaFaseGestor(String proximaFaseGestor) {
+	public void setProximaFaseGestor(User proximaFaseGestor) {
 		this.proximaFaseGestor = proximaFaseGestor;
-	}
-
-	public String getProximaFaseArea() {
-		return proximaFaseArea;
-	}
-
-	public void setProximaFaseArea(String proximaFaseArea) {
-		this.proximaFaseArea = proximaFaseArea;
-	}
-
-	public String getProximaFaseGestorEmail() {
-		return proximaFaseGestorEmail;
-	}
-
-	public void setProximaFaseGestorEmail(String proximaFaseGestorEmail) {
-		this.proximaFaseGestorEmail = proximaFaseGestorEmail;
 	}
 
 	public Integer getProximaFaseCiclo() {

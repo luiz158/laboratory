@@ -125,10 +125,10 @@
                  <li ng-repeat="f in paginacao.data | startFrom:paginacao.paginaAtual*paginacao.registrosPorPagina | limitTo:paginacao.registrosPorPagina"  
         	title="{{f.fase | nomeFase}}" class="left list-group-item clearfix">
         			<a href="#{{f.fase | faseUrl}}/{{f.id}}">
-                     <span class="chat-img pull-left">
-                         <img src="{{f.fase | iconeFase}}" class="img-circle" width="40px">
-                     </span>
-                     <div class="chat-body clearfix">
+	                     <span class="chat-img pull-left">
+	                         <img src="{{f.fase | iconeFase}}" class="img-circle" width="30px">
+	                     </span>
+	                     <div class="chat-body clearfix">
                          <div class="header">
                          	<div class="row">
 		        		<div class="col-md-3">
@@ -143,7 +143,7 @@
 		        	</div>
                          <div class="row">
 		        		<div class="col-md-4">
-		        			<b>Gestor:</b> {{f.gestor}} - {{f.area}} 
+		        			<b>Gestor:</b> {{f.gestor.name}} - {{f.gestor.setor}} 
 		        		</div>
 		        		<div class="col-md-4">
 		        			<b>Registro:</b> {{f.dataRealizacao}}  
@@ -157,9 +157,8 @@
                              <b>Objetivo:</b> {{f.objetivo}}
                          </p>
                      </div>
-                     </a>
+                    </a>
                  </li>
-
              </ul>			
 			
 		       

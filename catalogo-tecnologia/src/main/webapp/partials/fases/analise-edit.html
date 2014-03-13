@@ -92,13 +92,13 @@
 					<div class="col-md-6">
 						<label for="gestor">Gestor da Análise:</label> <input
 							class="form-control" required type="text" id="gestor"
-							ng-model="analise.gestor">
+							ng-model="analise.gestor.name" disabled=disabled>
 						<validation-msg propriedade="gestor"></validation-msg>
 					</div>
 					<div class="col-md-6">
 						<label for="area">Área:</label> <input
 							class="form-control" required type="text" id="area"
-							ng-model="analise.area">
+							ng-model="analise.gestor.setor" disabled=disabled>
 						<validation-msg propriedade="area"></validation-msg>
 					</div>
 				</div>
@@ -158,13 +158,13 @@
 					<div class="col-md-6">
 						<label for="detalhamento">Gestor da Próxima Fase:</label> <input
 							class="form-control" type="text" id="id"
-							ng-model="analise.proximaFaseGestor">
+							ng-model="analise.proximaFaseGestor.name" disabled=disabled>
 							<validation-msg propriedade="proximaFaseGestor"></validation-msg>
 					</div>
 					<div class="col-md-6">
 						<label for="detalhamento">Área:</label> <input
 							class="form-control" type="text" id="id"
-							ng-model="analise.proximaFaseArea">
+							ng-model="analise.proximaFaseGestor.setor" disabled=disabled>
 					</div>
 				</div>
 			</div>

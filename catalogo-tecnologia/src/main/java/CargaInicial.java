@@ -105,7 +105,7 @@ public class CargaInicial {
 	private OrigemDemandaDAO origemDemandaDAO;
 	
 
-	User usuario1;
+	static User usuario1;
 	User usuario2;
 	
 	@Startup @Priority(0)
@@ -123,20 +123,22 @@ public class CargaInicial {
 		grupoDAO.insert(grupo);
 		
 		usuario1 = new User();
-		usuario1.setCPF("Robson Saraiva Ximenes");
+		usuario1.setCPF("82546010549");
+		usuario1.setName("Robson Saraiva Ximenes");
 		usuario1.setEmail("robson.ximenes@serpro.gov.br");
+		usuario1.setSetor("CETEC/CTSDR");
 		usuario1.setGrupos(new ArrayList<Grupo>());
 		usuario1.getGrupos().add(grupo);
 		
 		usuarioDAO.insert(usuario1);
 		
-		usuario2 = new User();
-		usuario2.setCPF("Thiago de Lima Mariano");
-		usuario2.setEmail("thiago.mariano@serpro.gov.br");
-		usuario2.setGrupos(new ArrayList<Grupo>());
-		usuario2.getGrupos().add(grupo);
-		
-		usuarioDAO.insert(usuario2);
+//		usuario2 = new User();
+//		usuario2.setCPF("Thiago de Lima Mariano");
+//		usuario2.setEmail("thiago.mariano@serpro.gov.br");
+//		usuario2.setGrupos(new ArrayList<Grupo>());
+//		usuario2.getGrupos().add(grupo);
+//		
+//		usuarioDAO.insert(usuario2);
 		
 	}
 	
@@ -149,19 +151,16 @@ public class CargaInicial {
 		OrigemDemanda origem = origemDemandaDAO.findAll().get(0);
 		
 		Analise a = new Analise();		
-		a.setArea("SUPDE");
 		a.setCodigoReferencia("R173");
 		a.setDataRealizacao(new Date());
 		a.setDemandante("Didi Mocó Sonrrisal Colesteró");
 		a.setObjetivo("Precise de uma ferramenta que facilite a geração de lero-lero para piadas");
-		a.setGestor("Atrogildo Enfezado");
+		a.setGestor(usuario1);
 		a.setOrigemReferencia(origem);
 		a.setSituacao(Situacao.APROVADO);
 		a.setSituacaoJustificativa("Me parece ser bem plausível. Devemos selecionar algumas tecnologias para isso.");
 		a.setProximaFase(FaseEnum.PROSPECCAO);
-		a.setProximaFaseArea("CETEC");
-		a.setProximaFaseGestor("Robgol");
-		a.setProximaFaseGestorEmail("robson.ximenes@serpro.gov.br");
+		a.setProximaFaseGestor(usuario1);
 		a.setProximaFaseJustificativa("Precisamos que este estudo seja prospectado com no mínimo 3 tecnologias.");
 		
 		
@@ -172,15 +171,13 @@ public class CargaInicial {
 		p.setOrigemReferencia(origem);
 		p.setObjetivo("Selecionar os tipos de bolas de futsal na copa do mundo.");
 		p.setGestor(a.getProximaFaseGestor());
-		p.setArea(a.getProximaFaseArea());
 		p.setFaseAnterior(a);
 		p.setDataRealizacao(new Date());
 		p.setSituacao(Situacao.REPROVADO);
 		p.setTestes("Os testes realizados foram feitos na regional Salvador em laboratório isolado. Foram averiguados testes de blablablabla. Maiores detalhes sobre os testes realizados podem ser encontrados em Arquivo1.odt.");
 		p.setConclusao("A prospecção foi bem sucedida em que, pelos testes realizados, o Ubuntu 12 foi selecionado para ser internalizado.");
 		p.setProximaFase(FaseEnum.INTERNALIZACAO);
-		p.setProximaFaseArea("SUPST");
-		p.setProximaFaseGestor("Wilson Elias");
+		p.setProximaFaseGestor(usuario1);
 		
 		p = prospeccaoDAO.insert(p);
 		
@@ -197,7 +194,6 @@ public class CargaInicial {
 		i.setOrigemReferencia(origem);
 		i.setObjetivo("Fornecer as bolas que já foram prospectadas com seus devidos condicionamentos");
 		i.setGestor(p.getProximaFaseGestor());
-		i.setArea(p.getProximaFaseArea());
 		i.setFaseAnterior(p);
 		i.setDataRealizacao(new Date());
 		i.setSituacao(Situacao.APROVADO);		
@@ -207,8 +203,7 @@ public class CargaInicial {
 		i.setCapacitacao(false);		
 		i.setAnaliseDeRiscos(false);		
 		i.setProximaFase(FaseEnum.SUSTENTACAO);
-		i.setProximaFaseArea("SUPDE");
-		i.setProximaFaseGestor("Fulano da Silva Sauro");		
+		i.setProximaFaseGestor(usuario1);		
 		i.setConclusao("Produto internalizado com sucesso. Vamos manter ele na empresa.");		
 		internalizacaoDAO.insert(i);
 				
@@ -217,13 +212,11 @@ public class CargaInicial {
 		s.setOrigemReferencia(origem);
 		s.setObjetivo("Manter as novas bolas em pratica");
 		s.setGestor(i.getProximaFaseGestor());
-		s.setArea(i.getProximaFaseArea());
 		s.setFaseAnterior(i);
 		s.setDataRealizacao(new Date());
 		s.setSituacao(Situacao.REPROVADO);
 		s.setProximaFase(FaseEnum.DECLINIO);
-		s.setProximaFaseArea("SUPDE");
-		s.setProximaFaseGestor("Fulano da Silva Sauro");	
+		s.setProximaFaseGestor(usuario1);	
 		sustentacaoDAO.insert(s);
 		
 		
@@ -232,7 +225,6 @@ public class CargaInicial {
 		d.setOrigemReferencia(origem);
 		d.setObjetivo("Acabar com essa palhaçada.");
 		d.setGestor(s.getProximaFaseGestor());
-		d.setArea(s.getProximaFaseArea());
 		d.setFaseAnterior(s);
 		d.setDataRealizacao(new Date());
 		d.setSituacao(Situacao.REPROVADO);

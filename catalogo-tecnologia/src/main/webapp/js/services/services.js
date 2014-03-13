@@ -160,26 +160,7 @@ services.factory('AuthService', function($http, $rootScope) {
 			return logado;
 		},
 		getUsuario : function(){
-			console.log('AuthService Logout Success');
-			console.log($rootScope);
 			return $rootScope.usuario;
 		}
 	}
 });
-/*
- * logout : function(callback, errorCallback) { $http( { url : getBaseUrl() +
- * '/api/auth', method : "DELETE", headers : { 'Content-Type' :
- * 'application/json;charset=utf8' } }).success(function(response) {
- * console.log(response); callback(response); currentUser = null;
- * }).error(function(response) { console.log(response); }); },
- * 
- * 
- * isLoggedIn : function(callback, errorCallback) { },
- * 
- * 
- * currentUser : function(callback, errorCallback) { $http( { url : getBaseUrl() +
- * '/api/auth', method : "GET", headers : { 'Content-Type' :
- * 'application/json;charset=utf8' } }).success(function(response) {
- * console.log(response); callback(response); }).error(function(response) {
- * console.log(response); }); } };
- */

@@ -2,8 +2,9 @@ package br.gov.serpro.catalogo.rest;
 
 import java.util.Date;
 
-import br.gov.serpro.catalogo.entity.Analise;
+import br.gov.serpro.catalogo.entity.Fase;
 import br.gov.serpro.catalogo.entity.OrigemDemanda;
+import br.gov.serpro.catalogo.entity.User;
 
 public class FaseDTO{
 	/* Campos de pesquisa */
@@ -15,7 +16,7 @@ public class FaseDTO{
 	private Integer finalizada;
 	private Date finalizacaoApartir;
 	private Date finalizacaoAte;	
-	private String gestor;
+	private User gestor;
 	
 	/* Campos de exibição */
 	private String gestorArea;
@@ -27,14 +28,14 @@ public class FaseDTO{
 		
 	}
 	
-	public FaseDTO(Analise a) {
+	public FaseDTO(Fase a) {
 		this.setId(a.getId());
-		this.setFase(1);
+		this.setFase(a.getFase().ordinal()+1);
 		this.setDataFinalizacao(a.getDataFinalizacao());
 		this.setDataRegistro(a.getDataRealizacao());
 		this.setGestor(a.getGestor());
-		this.setGestorArea(a.getGestor());
-		this.setObjetivo(a.getArea());
+		this.setGestorArea(a.getGestor().getSetor());
+		this.setObjetivo(a.getObjetivo());
 		this.setOrigemReferencia(a.getOrigemReferencia());
 		this.setCodigoReferencia(a.getCodigoReferencia());
 	}
@@ -87,12 +88,15 @@ public class FaseDTO{
 	public void setFinalizacaoAte(Date finalizacaoAte) {
 		this.finalizacaoAte = finalizacaoAte;
 	}
-	public String getGestor() {
+	
+	public User getGestor() {
 		return gestor;
 	}
-	public void setGestor(String gestor) {
+
+	public void setGestor(User gestor) {
 		this.gestor = gestor;
 	}
+
 	public String getGestorArea() {
 		return gestorArea;
 	}

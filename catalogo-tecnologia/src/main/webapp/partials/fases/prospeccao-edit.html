@@ -92,12 +92,12 @@
 					<div class="col-md-6">
 						<label for="gestor">Gestor da {{fase.fase | nomeFase}}:</label> <input
 							class="form-control" required type="text" id="gestor"
-							ng-model="fase.gestor"> 
+							ng-model="fase.gestor.name" disabled=disabled> 
 						<validation-msg propriedade="gestor"></validation-msg>
 					</div>
 					<div class="col-md-6">
 						<label for="area">Área:</label> <input class="form-control"
-							required type="text" id="area" ng-model="fase.area"> 
+							required type="text" id="area" ng-model="fase.gestor.setor" disabled=disabled> 
 							<validation-msg propriedade="area"></validation-msg>
 					</div>
 				</div>
@@ -167,10 +167,8 @@
 			<div class="panel-body">
 				<div class="form-group">
 					<label for="proximaFase">Próxima fase a ser executada:</label> <select
-						id="proximaFase" class="form-control" ng-model="fase.proximaFase">
-						<option value="INTERNALIZACAO">Internalização</option>
-						<option value="SUSTENTACAO">Sustentação</option>
-						<option value="DECLINIO">Declínio</option>
+						id="proximaFase" class="form-control" ng-model="fase.proximaFase" disabled=disabled>
+						<option selected value="INTERNALIZACAO">Internalização</option>						
 					</select>
 					<validation-msg propriedade="proximaFase"></validation-msg>
 				</div>
@@ -187,13 +185,13 @@
 					<div class="col-md-6">
 						<label for="proximaFaseGestor">Gestor da Próxima Fase:</label> <input
 							class="form-control" type="text" id="proximaFaseGestor"
-							ng-model="fase.proximaFaseGestor">
+							ng-model="fase.proximaFaseGestor.name" disabled=disabled>
 						<validation-msg propriedade="proximaFaseGestor"></validation-msg>
 					</div>
 					<div class="col-md-6">
 						<label for="proximaFaseArea">Área:</label> <input
 							class="form-control" type="text" id="proximaFaseArea"
-							ng-model="fase.proximaFaseArea">
+							ng-model="fase.proximaFaseGestor.setor" disabled=disabled>
 						<validation-msg propriedade="proximaFaseArea"></validation-msg>
 					</div>
 				</div>

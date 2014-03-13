@@ -163,8 +163,7 @@ public class FaseBC {
 						.addViolation(null,
 								"Para finalizar é preciso definir a próxima fase.");
 
-			if (fase.getProximaFaseGestor() == null
-					|| fase.getProximaFaseGestor().isEmpty())
+			if (fase.getProximaFaseGestor() == null)
 				throw new ValidationException()
 						.addViolation("proximaFaseGestor",
 								"Para finalizar é preciso definir o gestor da próxima fase.")
@@ -211,7 +210,6 @@ public class FaseBC {
 
 		proximafase.setFaseAnterior(fase);
 		proximafase.setSituacao(Situacao.RASCUNHO);
-		proximafase.setArea(fase.getProximaFaseArea());
 		proximafase.setGestor(fase.getProximaFaseGestor());
 
 		return proximafase;
@@ -255,7 +253,7 @@ public class FaseBC {
 		if (fase.getDataRealizacao() == null)
 			throw new ValidationException().addViolation("dataRealizacao", "Favor informar a data de realização.");
 		
-		if (fase.getGestor() == null || fase.getGestor().isEmpty())
+		if (fase.getGestor() == null)
 			throw new ValidationException().addViolation("gestor", "É preciso definir o gestor.");
 				
 	}
