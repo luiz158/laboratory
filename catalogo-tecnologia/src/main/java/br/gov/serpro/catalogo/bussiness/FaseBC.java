@@ -270,10 +270,16 @@ public class FaseBC {
 	@Transactional
 	public User adicionarMembro(User user, Long id){
 		FaseMembro faseMembro = new FaseMembro();
-		if(userDAO.loadByCPF(user.getCPF()) == null){
+		System.out.println("Verificando o cpf: "+user.getCPF());
+		if(!userDAO.existeCadastroParaCPF(user.getCPF())){
 			user = userDAO.insert(user);
+		}else{			
+			if(faseMembroDAO.membroJaCadastrado(id, user.getCPF()))
+				throw new ValidationException().addViolation(null, "Membro já relacionado.");
+			user = userDAO.loadByCPF(user.getCPF());
 		}
-		faseMembro.setUser(userDAO.insert(user));
+		
+		faseMembro.setUser(user);
 		faseMembro.setFase(faseDAO.load(id));		
 		faseMembroDAO.insert(faseMembro);		
 		return faseMembro.getUser();

@@ -54,17 +54,21 @@ controllers.controller('MembrosCtrl', function MembrosCtrl($scope, $rootScope, $
 	
 	
 	$scope.pesquisar = function(){
-		$http.get('api/user/nome/' + $scope.palavraChave).success(function(data) {
-			if (data == "") {
-				AlertService.addWithTimeout('warning', 'Usuário não encontrado no LDAP');
-			}else{
-				$scope.resultadoPesquisa = data;
-			}
-		}).error(function(data, status) {
-			if (status == 412) {
-				AlertService.addWithTimeout('danger', data[0].message);
-			}
-		});
+		if(!$scope.palavraChave || $scope.palavraChave.length<3){
+			AlertService.addWithTimeout('warning', "Para pesquisar digite pelo menos 3 letras.");
+		}else{
+			$http.get('api/user/nome/' + $scope.palavraChave).success(function(data) {
+				if (data == "") {
+					AlertService.addWithTimeout('warning', 'Usuário não encontrado no LDAP');
+				}else{
+					$scope.resultadoPesquisa = data;
+				}
+			}).error(function(data, status) {
+				if (status == 412) {
+					AlertService.addWithTimeout('danger', data[0].message);
+				}
+			});
+		}
 	};
 		
 
