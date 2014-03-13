@@ -6,10 +6,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 
 import br.gov.frameworkdemoiselle.resteasy.util.ValidationException;
 import br.gov.frameworkdemoiselle.stereotype.BusinessController;
@@ -18,6 +14,7 @@ import br.gov.serpro.catalogo.entity.Analise;
 import br.gov.serpro.catalogo.entity.Declinio;
 import br.gov.serpro.catalogo.entity.Fase;
 import br.gov.serpro.catalogo.entity.FaseEnum;
+import br.gov.serpro.catalogo.entity.FaseInteressado;
 import br.gov.serpro.catalogo.entity.FaseMembro;
 import br.gov.serpro.catalogo.entity.Internalizacao;
 import br.gov.serpro.catalogo.entity.Prospeccao;
@@ -25,6 +22,7 @@ import br.gov.serpro.catalogo.entity.Situacao;
 import br.gov.serpro.catalogo.entity.Sustentacao;
 import br.gov.serpro.catalogo.entity.User;
 import br.gov.serpro.catalogo.persistence.FaseDAO;
+import br.gov.serpro.catalogo.persistence.FaseInteressadoDAO;
 import br.gov.serpro.catalogo.persistence.FaseMembroDAO;
 import br.gov.serpro.catalogo.persistence.FaseProdutoDAO;
 import br.gov.serpro.catalogo.persistence.UserDAO;
@@ -45,6 +43,9 @@ public class FaseBC {
 	
 	@Inject
 	private FaseMembroDAO faseMembroDAO;
+	
+	@Inject
+	private FaseInteressadoDAO faseInteressadoDAO;
 	
 	
 	/**
@@ -293,6 +294,34 @@ public class FaseBC {
 		faseMembroDAO.delete(id);
 	}
 
+	;;;
+	
+	@Transactional
+	public User adicionarInteressado(User user, Long id){
+		FaseInteressado faseMembro = new FaseInteressado();
+		System.out.println("Verificando o cpf: "+user.getCPF());
+		if(!userDAO.existeCadastroParaCPF(user.getCPF())){
+			user = userDAO.insert(user);
+		}else{			
+			if(faseInteressadoDAO.interessadoJaCadastrado(id, user.getCPF()))
+				throw new ValidationException().addViolation(null, "Interessado já relacionado.");
+			user = userDAO.loadByCPF(user.getCPF());
+		}		
+		faseMembro.setUser(user);
+		faseMembro.setFase(faseDAO.load(id));		
+		faseInteressadoDAO.insert(faseMembro);		
+		return faseMembro.getUser();
+	}
+
+	public List<FaseInteressado> obterInteressados(Long id) {		
+		Fase fase = new Fase();
+		fase.setId(id);		
+		return faseInteressadoDAO.interessados(fase);
+	}
+
+	public void deleteInteressado(Long id) {
+		faseInteressadoDAO.delete(id);
+	}
 	
 
 }

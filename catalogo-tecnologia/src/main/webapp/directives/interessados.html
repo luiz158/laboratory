@@ -1,0 +1,84 @@
+
+<div ng-controller="InteressadosCtrl">	
+	<label>Partes Interessadas - {{fase.fase | nomeFase}}</label>
+	<div>
+		<table
+			class="table table-striped table-bordered table-hover dataTable no-footer">
+			<thead>
+				<tr>
+					<th>Interessado</th>
+					<th>
+						<a class="btn btn-primary btn-xs" 
+							data-toggle="modal"
+							data-target="#pesquisarInteressadosModal"> 
+							<i class="fa fa-search-plus"> Pesquisar</i>
+						</a>
+					</th>
+
+				</tr>
+			</thead>
+			<tbody>
+				<tr role="row" ng-repeat="faseMembro in membros">
+					<td>{{faseMembro.user.name}} ({{faseMembro.user.setor}}) - {{faseMembro.user.telephoneNumber}}</td>
+					<td style="width: 10%"><a ng-click="remover(faseMembro)"
+						class="btn btn-danger btn-xs"> <i class="fa fa-trash-o">
+								Remover</i>
+					</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+
+	<div class="modal fade" id="pesquisarInteressadosModal" tabindex="-1"
+		role="dialog" aria-labelledby="interessadoLabel" aria-hidden="true"
+		style="display: none;">
+		<form>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h4 class="modal-title" id=""interessadoLabel"">Pesquisar por interessado</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<div class="form-group input-group">
+							<input type="text" class="form-control" ng-model="palavraChave" autofocus="autofocus">
+							<span class="input-group-btn">
+								<button class="btn btn-primary" ng-click="pesquisar()">
+									Pesquisar <i class="fa fa-search"></i>
+								</button>
+							</span>
+						</div>
+
+						<!-- Table -->
+						<table class="table">
+							<tbody>
+								<tr role="row" ng-repeat="m in resultadoPesquisa">
+									<td >{{m.name}}</td>
+									<td> {{m.setor}}</td>
+									<td> {{m.telephoneNumber}}</td>	
+									<td> 
+										<button class="btn btn-primary" type="button" ng-click="adicionar(m)">
+											Adicionar <i class="fa fa-plus-circle"></i>
+										</button> 
+									</td>									
+								</tr>
+							</tbody>
+						</table>
+
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+		</form>
+	</div>
+	<!-- /.modal -->
+	
+
+</div>

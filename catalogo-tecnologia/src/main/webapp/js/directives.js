@@ -145,6 +145,19 @@ diretivas.directive('ngMembros', function() {
 	};
 });
 
+diretivas.directive('ngInteressados', function() {
+	return {
+		restrict : 'E',
+		require : '^ngModel',
+		scope : {
+			ngModel : '='
+		},
+		templateUrl : 'directives/interessados.html',
+		link : function(scope, elem, $attrs) {
+		}
+	};
+});
+
 diretivas.directive('ngProdutos', function() {
 	return {
 		restrict : 'E',

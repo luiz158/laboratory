@@ -24,6 +24,7 @@
 		<class>br.gov.serpro.catalogo.entity.OrigemDemanda</class>
 		<class>br.gov.serpro.catalogo.entity.FaseProduto</class>
 		<class>br.gov.serpro.catalogo.entity.FaseMembro</class>
+		<class>br.gov.serpro.catalogo.entity.FaseInteressado</class>
 		<class>br.gov.serpro.catalogo.entity.Anexo</class>
 		<class>br.gov.serpro.catalogo.entity.Grupo</class>
 		<class>br.gov.serpro.catalogo.entity.User</class>
