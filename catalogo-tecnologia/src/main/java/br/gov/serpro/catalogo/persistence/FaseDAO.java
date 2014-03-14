@@ -48,8 +48,9 @@ public class FaseDAO extends JPACrud<Fase, Long> {
 	        predicateList.add(p);
 	    }
 	    
-	    if (dto.getGestor() != null) {
-	        Predicate p = builder.equal(fase.get("gestor").<Long>get("id"), +Long.valueOf(dto.getGestor().getId()));
+	    if (dto.getUnidadeGestora() != null && !dto.getUnidadeGestora().isEmpty()) {
+	        Predicate p = builder.like(
+	                builder.upper(fase.<String>get("unidadeGestora")), "%"+dto.getUnidadeGestora().toUpperCase()+"%");
 	        predicateList.add(p);
 	    }
 	    

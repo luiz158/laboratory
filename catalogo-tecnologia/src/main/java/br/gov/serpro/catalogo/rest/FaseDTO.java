@@ -16,10 +16,10 @@ public class FaseDTO{
 	private Integer finalizada;
 	private Date finalizacaoApartir;
 	private Date finalizacaoAte;	
-	private User gestor;
+	//private User gestor;
 	
 	/* Campos de exibição */
-	private String gestorArea;
+	private String unidadeGestora;
 	private Date dataRegistro;
 	private Date dataFinalizacao;
 	private String objetivo;
@@ -33,7 +33,7 @@ public class FaseDTO{
 		this.setFase(a.getFase().ordinal()+1);
 		this.setDataFinalizacao(a.getDataFinalizacao());
 		this.setDataRegistro(a.getDataRealizacao());
-		this.setGestorArea(a.getUnidadeGestora());
+		this.setUnidadeGestora(a.getUnidadeGestora());
 		this.setObjetivo(a.getObjetivo());
 		this.setOrigemReferencia(a.getOrigemReferencia());
 		this.setCodigoReferencia(a.getCodigoReferencia());
@@ -88,19 +88,12 @@ public class FaseDTO{
 		this.finalizacaoAte = finalizacaoAte;
 	}
 	
-	public User getGestor() {
-		return gestor;
-	}
 
-	public void setGestor(User gestor) {
-		this.gestor = gestor;
+	public String getUnidadeGestora() {
+		return unidadeGestora;
 	}
-
-	public String getGestorArea() {
-		return gestorArea;
-	}
-	public void setGestorArea(String gestorArea) {
-		this.gestorArea = gestorArea;
+	public void setUnidadeGestora(String gestorArea) {
+		this.unidadeGestora = gestorArea;
 	}
 	public Date getDataRegistro() {
 		return dataRegistro;
