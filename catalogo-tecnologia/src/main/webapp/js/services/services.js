@@ -100,6 +100,7 @@ services.factory('AuthService', function($http, $rootScope) {
 			url : "api/auth/user",
 			method : "GET"
 		}).success(function(response) {
+			console.log("Obteve o usuario logado: "+response.cpf);
 			$rootScope.usuario = response;
 		}).error(function(response) {
 			$rootScope.usuario = {};
@@ -159,7 +160,7 @@ services.factory('AuthService', function($http, $rootScope) {
 		isLoggedIn : function() {
 			return logado;
 		},
-		getUsuario : function(){
+		getUsuario : function(){			
 			return $rootScope.usuario;
 		}
 	}

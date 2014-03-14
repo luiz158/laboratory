@@ -13,6 +13,9 @@ controllers.controller('ProspeccaoCtrl', function ProspeccaoCtrl($scope, $rootSc
 	$scope.fase.fase = 2;
 	$scope.origemDemanda = [];
 	
+	console.log("aaaa");
+	console.log(OrigemDemandaService.getItens());
+	
 	OrigemDemandaService.getItens().then(function(data) {
 		$scope.origemDemanda = data;
 	});
