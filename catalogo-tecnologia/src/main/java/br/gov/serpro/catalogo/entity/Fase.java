@@ -52,9 +52,7 @@ public class Fase {
 
 	private Date dataRealizacao;
 	
-	@NotNull(message="É necessário atribuir a fase a um responsável.")
-	@ManyToOne
-	private User gestor;
+	private String unidadeGestora;
 	
 	@NotNull
 	@Enumerated(STRING)
@@ -71,12 +69,16 @@ public class Fase {
 			
 	private String proximaFaseJustificativa;
 
+	private String proximaFaseUnidadeGestora;
+	
 	@ManyToOne
-	private User proximaFaseGestor;	
+	@JoinColumn(updatable=false)
+	private User proximaFaseLider;	
 	
 	private Integer proximaFaseCiclo;
 	
 	@OneToOne
+	@JoinColumn(updatable=false)
 	private Fase faseAnterior;
 	
 	@ManyToMany(fetch=FetchType.LAZY)
@@ -168,20 +170,12 @@ public class Fase {
 
 	
 
-	public User getGestor() {
-		return gestor;
+	public User getProximaFaseLider() {
+		return proximaFaseLider;
 	}
 
-	public void setGestor(User gestor) {
-		this.gestor = gestor;
-	}
-
-	public User getProximaFaseGestor() {
-		return proximaFaseGestor;
-	}
-
-	public void setProximaFaseGestor(User proximaFaseGestor) {
-		this.proximaFaseGestor = proximaFaseGestor;
+	public void setProximaFaseLider(User proximaFaseGestor) {
+		this.proximaFaseLider = proximaFaseGestor;
 	}
 
 	public Integer getProximaFaseCiclo() {
@@ -222,6 +216,22 @@ public class Fase {
 
 	public void setProdutos(List<Produto> produtos) {
 		this.produtos = produtos;
+	}
+
+	public String getProximaFaseUnidadeGestora() {
+		return proximaFaseUnidadeGestora;
+	}
+
+	public void setProximaFaseUnidadeGestora(String proximaFaseUnidadeGestora) {
+		this.proximaFaseUnidadeGestora = proximaFaseUnidadeGestora;
+	}
+
+	public String getUnidadeGestora() {
+		return unidadeGestora;
+	}
+
+	public void setUnidadeGestora(String unidadeGestora) {
+		this.unidadeGestora = unidadeGestora;
 	}
 	
 }

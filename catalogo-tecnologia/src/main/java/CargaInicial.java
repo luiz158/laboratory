@@ -153,14 +153,16 @@ public class CargaInicial {
 		Analise a = new Analise();		
 		a.setCodigoReferencia("R173");
 		a.setDataRealizacao(new Date());
-		a.setDemandante("Didi Mocó Sonrrisal Colesteró");
+		a.setDemandanteUnidade("CETEC/CTSDR");
+		a.setDemandanteRepresentante(usuario1);
 		a.setObjetivo("Precise de uma ferramenta que facilite a geração de lero-lero para piadas");
-		a.setGestor(usuario1);
+		a.setUnidadeGestora("CTSDR");
 		a.setOrigemReferencia(origem);
 		a.setSituacao(Situacao.APROVADO);
 		a.setSituacaoJustificativa("Me parece ser bem plausível. Devemos selecionar algumas tecnologias para isso.");
 		a.setProximaFase(FaseEnum.PROSPECCAO);
-		a.setProximaFaseGestor(usuario1);
+		a.setProximaFaseLider(usuario1);
+		a.setProximaFaseUnidadeGestora(usuario1.getSetor());
 		a.setProximaFaseJustificativa("Precisamos que este estudo seja prospectado com no mínimo 3 tecnologias.");
 		
 		
@@ -179,14 +181,14 @@ public class CargaInicial {
 		p.setCodigoReferencia("R174");
 		p.setOrigemReferencia(origem);
 		p.setObjetivo("Selecionar os tipos de bolas de futsal na copa do mundo.");
-		p.setGestor(a.getProximaFaseGestor());
+		p.setUnidadeGestora(a.getUnidadeGestora());
 		p.setFaseAnterior(a);
 		p.setDataRealizacao(new Date());
 		p.setSituacao(Situacao.REPROVADO);
 		p.setTestes("Os testes realizados foram feitos na regional Salvador em laboratório isolado. Foram averiguados testes de blablablabla. Maiores detalhes sobre os testes realizados podem ser encontrados em Arquivo1.odt.");
 		p.setConclusao("A prospecção foi bem sucedida em que, pelos testes realizados, o Ubuntu 12 foi selecionado para ser internalizado.");
 		p.setProximaFase(FaseEnum.INTERNALIZACAO);
-		p.setProximaFaseGestor(usuario1);
+		p.setProximaFaseLider(usuario1);
 		
 		p = prospeccaoDAO.insert(p);
 		
@@ -202,7 +204,7 @@ public class CargaInicial {
 		i.setCodigoReferencia("R175");
 		i.setOrigemReferencia(origem);
 		i.setObjetivo("Fornecer as bolas que já foram prospectadas com seus devidos condicionamentos");
-		i.setGestor(p.getProximaFaseGestor());
+		i.setUnidadeGestora(a.getUnidadeGestora());
 		i.setFaseAnterior(p);
 		i.setDataRealizacao(new Date());
 		i.setSituacao(Situacao.APROVADO);		
@@ -212,7 +214,7 @@ public class CargaInicial {
 		i.setCapacitacao(false);		
 		i.setAnaliseDeRiscos(false);		
 		i.setProximaFase(FaseEnum.SUSTENTACAO);
-		i.setProximaFaseGestor(usuario1);		
+		i.setProximaFaseLider(usuario1);		
 		i.setConclusao("Produto internalizado com sucesso. Vamos manter ele na empresa.");		
 		internalizacaoDAO.insert(i);
 				
@@ -220,12 +222,12 @@ public class CargaInicial {
 		s.setCodigoReferencia("R176");
 		s.setOrigemReferencia(origem);
 		s.setObjetivo("Manter as novas bolas em pratica");
-		s.setGestor(i.getProximaFaseGestor());
+		s.setUnidadeGestora(a.getUnidadeGestora());
 		s.setFaseAnterior(i);
 		s.setDataRealizacao(new Date());
 		s.setSituacao(Situacao.REPROVADO);
 		s.setProximaFase(FaseEnum.DECLINIO);
-		s.setProximaFaseGestor(usuario1);	
+		s.setProximaFaseLider(usuario1);	
 		sustentacaoDAO.insert(s);
 		
 		
@@ -233,7 +235,7 @@ public class CargaInicial {
 		d.setCodigoReferencia("R177");
 		d.setOrigemReferencia(origem);
 		d.setObjetivo("Acabar com essa palhaçada.");
-		d.setGestor(s.getProximaFaseGestor());
+		d.setUnidadeGestora(a.getUnidadeGestora());
 		d.setFaseAnterior(s);
 		d.setDataRealizacao(new Date());
 		d.setSituacao(Situacao.REPROVADO);

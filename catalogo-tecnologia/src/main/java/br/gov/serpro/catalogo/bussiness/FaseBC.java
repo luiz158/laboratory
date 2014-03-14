@@ -163,13 +163,21 @@ public class FaseBC {
 								"Para finalizar é preciso definir a próxima fase.")
 						.addViolation(null,
 								"Para finalizar é preciso definir a próxima fase.");
-
-			if (fase.getProximaFaseGestor() == null)
+			
+			
+			if (fase.getProximaFaseUnidadeGestora() == null || fase.getProximaFaseUnidadeGestora().isEmpty())
 				throw new ValidationException()
-						.addViolation("proximaFaseGestor",
-								"Para finalizar é preciso definir o gestor da próxima fase.")
+						.addViolation("proximaFaseUnidadeGestora",
+								"Para finalizar é preciso definir a unidade gestora da próxima fase.")
 						.addViolation(null,
-								"Para finalizar é preciso definir a próxima fase.");
+								"Para finalizar é preciso definir a unidade gestora da próxima fase.");
+			
+			if (fase.getProximaFaseLider() == null)
+				throw new ValidationException()
+						.addViolation("proximaFaseLider",
+								"Para finalizar é preciso definir o lider da unidade gestora da próxima fase.")
+						.addViolation(null,
+								"Para finalizar é preciso definir o lider da unidade gestora da próxima fase.");
 
 			if (fase.getProximaFaseJustificativa() == null
 					|| fase.getProximaFaseJustificativa().isEmpty())
@@ -211,7 +219,7 @@ public class FaseBC {
 
 		proximafase.setFaseAnterior(fase);
 		proximafase.setSituacao(Situacao.RASCUNHO);
-		proximafase.setGestor(fase.getProximaFaseGestor());
+		proximafase.setUnidadeGestora(fase.getProximaFaseUnidadeGestora());
 
 		return proximafase;
 	}
@@ -254,16 +262,18 @@ public class FaseBC {
 		if (fase.getDataRealizacao() == null)
 			throw new ValidationException().addViolation("dataRealizacao", "Favor informar a data de realização.");
 		
-		if (fase.getGestor() == null)
-			throw new ValidationException().addViolation("gestor", "É preciso definir o gestor.");
+		if (fase.getUnidadeGestora() == null || fase.getUnidadeGestora().isEmpty())
+			throw new ValidationException().addViolation("unidadeGestora", "É preciso definir a unidade gestora.");
 				
 	}
 	
 	private void validarSalvar(Analise fase) {
 		validarSalvar((Fase)fase);
-		if (fase.getDemandante() == null || fase.getDemandante().isEmpty())
-			throw new ValidationException().addViolation("demandante", "Favor informar o demandante.");
+		if (fase.getDemandanteUnidade()== null || fase.getDemandanteUnidade().isEmpty())
+			throw new ValidationException().addViolation("demandanteUnidade", "Favor informar oa unidade demandante.");
 
+		if (fase.getDemandanteRepresentante()== null)
+			throw new ValidationException().addViolation("demandanteRepresentante", "Favor informar o representante.");
 	}
 	
 	@Transactional

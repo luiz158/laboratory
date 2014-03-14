@@ -1,7 +1,10 @@
 
 <div ng-controller="MembrosCtrl">	
-	<label>Membros da {{fase.fase | nomeFase}}</label>
-	<div>
+	<div class="panel panel-default">	
+		<div class="panel-heading">
+			<h4 class="panel-title">Equipe de {{fase.fase | nomeFase}}</h4>
+		</div>
+	<div class="panel-body">
 		<table
 			class="table table-striped table-bordered table-hover dataTable no-footer">
 			<thead>

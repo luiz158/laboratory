@@ -1,6 +1,7 @@
 package br.gov.serpro.catalogo.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Analise extends Fase {
@@ -9,15 +10,27 @@ public class Analise extends Fase {
 		this.setFase(FaseEnum.ANALISE);
 	}
 	
-	private String demandante;
+	private String demandanteUnidade;
 
-	public String getDemandante() {
-		return demandante;
+	@ManyToOne 
+	private User demandanteRepresentante;
+
+	public String getDemandanteUnidade() {
+		return demandanteUnidade;
 	}
 
-	public void setDemandante(String demandante) {
-		this.demandante = demandante;
+	public void setDemandanteUnidade(String demandanteUnidade) {
+		this.demandanteUnidade = demandanteUnidade;
 	}
+
+	public User getDemandanteRepresentante() {
+		return demandanteRepresentante;
+	}
+
+	public void setDemandanteRepresentante(User demandanteRepresentante) {
+		this.demandanteRepresentante = demandanteRepresentante;
+	}
+	
 	
 	
 

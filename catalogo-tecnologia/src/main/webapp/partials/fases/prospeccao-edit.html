@@ -92,18 +92,11 @@
 					</div>
 				</div>
 
-				<div class="form-group row">
-					<div class="col-md-6">
-						<label for="gestor">Gestor da {{fase.fase | nomeFase}}:</label> <input
+				<div class="form-group">
+						<label for="gestor">Unidade gestora de {{fase.fase | nomeFase}}:</label> <input
 							class="form-control" required type="text" id="gestor"
-							ng-model="fase.gestor.name" disabled=disabled> 
-						<validation-msg propriedade="gestor"></validation-msg>
-					</div>
-					<div class="col-md-6">
-						<label for="area">Área:</label> <input class="form-control"
-							required type="text" id="area" ng-model="fase.gestor.setor" disabled=disabled> 
-							<validation-msg propriedade="area"></validation-msg>
-					</div>
+							ng-model="fase.unidadeGestora" >
+						<validation-msg propriedade="unidadeGestora"></validation-msg>
 				</div>
 
 				<div class="form-group row">
