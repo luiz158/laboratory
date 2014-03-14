@@ -18,6 +18,7 @@ import br.gov.serpro.catalogo.entity.Fornecedor;
 import br.gov.serpro.catalogo.entity.Grupo;
 import br.gov.serpro.catalogo.entity.Internalizacao;
 import br.gov.serpro.catalogo.entity.Licenciamento;
+import br.gov.serpro.catalogo.entity.Observacao;
 import br.gov.serpro.catalogo.entity.OrigemDemanda;
 import br.gov.serpro.catalogo.entity.Perfil;
 import br.gov.serpro.catalogo.entity.PlataformaTecnologica;
@@ -36,6 +37,7 @@ import br.gov.serpro.catalogo.persistence.FornecedorDAO;
 import br.gov.serpro.catalogo.persistence.GrupoDAO;
 import br.gov.serpro.catalogo.persistence.InternalizacaoDAO;
 import br.gov.serpro.catalogo.persistence.LicenciamentoDAO;
+import br.gov.serpro.catalogo.persistence.ObservacaoDAO;
 import br.gov.serpro.catalogo.persistence.OrigemDemandaDAO;
 import br.gov.serpro.catalogo.persistence.PlataformaTecnologicaDAO;
 import br.gov.serpro.catalogo.persistence.ProdutoDAO;
@@ -99,6 +101,9 @@ public class CargaInicial {
 	@Inject 
 	private OrigemDemandaDAO origemDemandaDAO;
 	
+	@Inject
+	private ObservacaoDAO obsDAO;
+	
 
 	static User usuario1;
 	User usuario2;
@@ -160,6 +165,15 @@ public class CargaInicial {
 		
 		
 		a = analiseDAO.insert(a);	
+		
+		Observacao obs = new Observacao();
+		obs.setData(new Date());
+		obs.setUsuario(usuario1);
+		obs.setFase(a);
+		obs.setObservacao("Apenas observando como ficou legal.");
+		
+		obsDAO.insert(obs);
+		
 		
 		Prospeccao p = new Prospeccao();		
 		p.setCodigoReferencia("R174");

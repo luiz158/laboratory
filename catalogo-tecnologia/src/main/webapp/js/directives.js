@@ -96,6 +96,19 @@ diretivas.directive('ngAnexos', function() {
 	};
 });
 
+diretivas.directive('ngObservacoes', function() {
+	return {
+		restrict : 'E',
+		require : '^ngModel',
+		scope : {
+			ngModel : '='
+		},
+		templateUrl : 'directives/observacoes.html',
+		link : function(scope, elem, $attrs) {
+		}
+	};
+});
+
 diretivas.directive('ngAlerts', function() {
 	return {
 		restrict : 'E',

@@ -1,0 +1,45 @@
+<div class="panel">
+<div class="panel-body" ng-controller="ObservacaoCtrl">
+
+	<div class="panel panel-default">	
+		<div class="panel-heading">
+			<h4 class="panel-title">Observações <small>{{fase.fase | nomeFase}}</small></h4>
+		</div>
+		
+		<div class="panel-body">
+	
+			<div class="form-group">
+				<label for="Observacao">Observação:</label>
+				<textarea rows="4" class="form-control" id="Observacao"
+					ng-model="observacao.observacao" required></textarea>			
+			</div>
+			<div class="form-actions">	
+				<button class="btn btn-primary" ng-click="adicionar()">
+					<i class="fa fa-pencil-square-o"> </i> Registrar
+				</button>
+			</div>
+				
+		
+			<br >
+	
+			<ul class="list-group">
+				<li ng-repeat="o in observacoes" class="left list-group-item clearfix">
+		            <div class="header">
+		                <div class="row">
+			        		<div class="col-md-2">
+			        			<small><b>Data:</b> {{o.data}}</small> 
+			        		</div>
+			        		<div class="col-md-4">
+			        			<small><b>Autor:</b> {{o.usuario.name}}</small>  
+			        		</div>
+			        	</div>
+			        </div>
+			        <div class="well well-small">
+		                {{o.observacao}} 
+		            </div>		
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+</div>

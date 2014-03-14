@@ -46,10 +46,10 @@ public class AuthenticationService {
 		if (securityContext.isLoggedIn()){
 			user = (User) securityContext.getUser();
 			if (userDAO.loadByCPF(user.getCPF()) == null){
-				userDAO.insert(user);
+				user = userDAO.insert(user);
 			} else {
 //				user.setId(Long.parseLong(userDAO.loadByCPF(user.getName()).getId()));
-				user = userDAO.loadByCPF(user.getCPF());
+				user = userDAO.loadByCPF(user.getCPF());				
 			}
 		}
 		
@@ -69,11 +69,14 @@ public class AuthenticationService {
 	@GET
 	@Path("/user")
 	public User getUser(){
+		User user = null;
 		if(securityContext.isLoggedIn()) {
-			return (User) securityContext.getUser();
-		}else {
-			return null;
+			user = (User) securityContext.getUser();
+			if(user.getId()==null || user.getId().isEmpty()){
+				user = userDAO.loadByCPF(user.getCPF());
+			}
 		}
+		return user;
 	}
 
 	public static class LoginForm {
