@@ -54,6 +54,7 @@ function findAllOk(data) {
 }
 
 function removeOk(data) {
-    console.log(data);
-    table.removeRow(1);
+    $.each(data, function(index, value) {
+	table.removeRow(value);
+    });
 }
