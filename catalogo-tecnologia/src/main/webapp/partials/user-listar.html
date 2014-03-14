@@ -26,15 +26,18 @@
 						aria-label="Browser: activate to sort column ascending">Telefone</th>
 					<th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1"
 						aria-label="Browser: activate to sort column ascending">Email</th>
+					<th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1"
+						aria-label="Browser: activate to sort column ascending">Setor</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr ng-repeat="u in users">
 					<td><a ng-click="editar(u)">{{u.id}}</a></td>
-					<td><a ng-click="editar(u)">{{u.name}}</a></td>
-					<td><a ng-click="editar(u)">{{u.displayName}}</a>
+					<td><a ng-click="editar(u)">{{u.cpf}}</a></td>
+					<td><a ng-click="editar(u)">{{u.name}}</a>
 					<td><a ng-click="editar(u)">{{u.telephoneNumber}}</a>
 					<td><a ng-click="editar(u)">{{u.email}}</a>
+					<td><a ng-click="editar(u)">{{u.setor}}</a>
 				</tr>
 			</tbody>
 		</table>
