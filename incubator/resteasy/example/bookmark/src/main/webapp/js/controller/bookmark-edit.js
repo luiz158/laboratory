@@ -27,6 +27,10 @@ $(function() {
     $("#delete").click(function() {
 	BookmarkProxy.remove([ $("#id").val() ], removeOk);
     });
+    
+    $("#back").click(function() {
+	history.back();
+    });
 });
 
 function loadOk(data) {
