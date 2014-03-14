@@ -19,8 +19,7 @@
 		<class>br.gov.serpro.catalogo.entity.Fabricante</class>
 		<class>br.gov.serpro.catalogo.entity.PlataformaTecnologica</class>
 		<class>br.gov.serpro.catalogo.entity.Tecnologia</class>
-		<class>br.gov.serpro.catalogo.entity.Tema</class>
-		<class>br.gov.serpro.catalogo.entity.Subcategoria</class>
+		<class>br.gov.serpro.catalogo.entity.Categoria</class>
 		<class>br.gov.serpro.catalogo.entity.OrigemDemanda</class>
 		<class>br.gov.serpro.catalogo.entity.FaseProduto</class>
 		<class>br.gov.serpro.catalogo.entity.FaseMembro</class>

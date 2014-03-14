@@ -53,13 +53,9 @@ config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/tecnologia/edit', {templateUrl: 'partials/tecnologia-edit.html', controller: 'TecnologiaEdit'});
   $routeProvider.when('/tecnologia/edit/:id', {templateUrl: 'partials/tecnologia-edit.html', controller: 'TecnologiaEdit'});
   
-  $routeProvider.when('/tema', {templateUrl: 'partials/tema-listar.html', controller: 'TemaList'});
-  $routeProvider.when('/tema/edit', {templateUrl: 'partials/tema-edit.html', controller: 'TemaEdit'});
-  $routeProvider.when('/tema/edit/:id', {templateUrl: 'partials/tema-edit.html', controller: 'TemaEdit'});
-  
-  $routeProvider.when('/subcategoria', {templateUrl: 'partials/subcategoria-listar.html', controller: 'SubcategoriaList'});
-  $routeProvider.when('/subcategoria/edit', {templateUrl: 'partials/subcategoria-edit.html', controller: 'SubcategoriaEdit'});
-  $routeProvider.when('/subcategoria/edit/:id', {templateUrl: 'partials/subcategoria-edit.html', controller: 'SubcategoriaEdit'});
+  $routeProvider.when('/categoria', {templateUrl: 'partials/categoria-listar.html', controller: 'CategoriaList'});
+  $routeProvider.when('/categoria/edit', {templateUrl: 'partials/categoria-edit.html', controller: 'CategoriaEdit'});
+  $routeProvider.when('/categoria/edit/:id', {templateUrl: 'partials/categoria-edit.html', controller: 'CategoriaEdit'});
   
   $routeProvider.when('/origemDemanda', {templateUrl: 'partials/origem-demanda-listar.html', controller: 'OrigemDemandaList'});
   $routeProvider.when('/origemDemanda/edit', {templateUrl: 'partials/origem-demanda-edit.html', controller: 'OrigemDemandaEdit'});

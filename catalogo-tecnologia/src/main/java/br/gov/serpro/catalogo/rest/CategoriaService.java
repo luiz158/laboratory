@@ -18,51 +18,51 @@ import javax.ws.rs.Produces;
 import org.jboss.resteasy.spi.validation.ValidateRequest;
 
 import br.gov.frameworkdemoiselle.transaction.Transactional;
-import br.gov.serpro.catalogo.entity.Tema;
-import br.gov.serpro.catalogo.persistence.TemaDAO;
+import br.gov.serpro.catalogo.entity.Categoria;
+import br.gov.serpro.catalogo.persistence.CategoriaDAO;
 
 @ValidateRequest
-@Path("/api/tema")
+@Path("/api/categoria")
 @Produces(APPLICATION_JSON)
-public class TemaService {
+public class CategoriaService {
 	
 	@Inject
-	private TemaDAO temaDAO;
+	private CategoriaDAO categoriaDAO;
 	
 	@POST
 	@Transactional
-	public Long salvar(@Valid Tema tema) {
-		return temaDAO.insert(tema).getId();
+	public Long salvar(@Valid Categoria categoria) {
+		return categoriaDAO.insert(categoria).getId();
 	}
 
 	@DELETE
 	@Path("/{id}")
 	@Transactional
 	public void excluir(@NotNull @PathParam("id") Long id) {
-		temaDAO.delete(id);
+		categoriaDAO.delete(id);
 	}
 
 	@GET
-	public List<Tema> listar() {
-		return temaDAO.findAll();
+	public List<Categoria> listar() {
+		return categoriaDAO.findAll();
 	}
 	
 	@PUT
 	@Transactional
-	public void alterar(@Valid Tema tema) {
-		temaDAO.update(tema);
+	public void alterar(@Valid Categoria categoria) {
+		categoriaDAO.update(categoria);
 	}
 	
 	@GET
 	@Path("/{id}")
-	public Tema carregar(@NotNull @PathParam("id") Long id) {
-		return temaDAO.load(id);
+	public Categoria carregar(@NotNull @PathParam("id") Long id) {
+		return categoriaDAO.load(id);
 	}
 	
 	@GET
 	@Path("/listar/{tecnologiaId}")
-	public List<Tema> listarTemaByTecnologia(@NotNull @PathParam("tecnologiaId") Long tecnologiaId) {
-		String jpql = "SELECT t FROM Tema t WHERE t.tecnologia.id ="+tecnologiaId;
-		return temaDAO.findByJPQL(jpql);
+	public List<Categoria> listarCategoriaByTecnologia(@NotNull @PathParam("tecnologiaId") Long tecnologiaId) {
+		String jpql = "SELECT c FROM Categoria c WHERE c.tecnologia.id ="+tecnologiaId;
+		return categoriaDAO.findByJPQL(jpql);
 	}
 }

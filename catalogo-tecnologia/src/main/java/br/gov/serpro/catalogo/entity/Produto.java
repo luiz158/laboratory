@@ -54,8 +54,8 @@ public class Produto {
 	private List<PlataformaTecnologica> plataformasSuportadas;
 	
 	@ManyToMany
-    @JoinTable(name="produto_subcategoria", joinColumns={@JoinColumn(name="produto_id")}, inverseJoinColumns={@JoinColumn(name="subcategoria_id")})
-	private List<Subcategoria> subcategorias;
+    @JoinTable(name="produto_categoria", joinColumns={@JoinColumn(name="produto_id")}, inverseJoinColumns={@JoinColumn(name="categoria_id")})
+	private List<Categoria> categorias;
 	
 	private boolean legado;
 	
@@ -127,12 +127,12 @@ public class Produto {
 		this.fornecedor = fornecedor;
 	}
 	
-	public List<Subcategoria> getSubcategorias() {
-		return subcategorias;
+	public List<Categoria> getCategorias() {
+		return categorias;
 	}
 	
-	public void setSubcategorias(List<Subcategoria> subcategorias) {
-		this.subcategorias = subcategorias;
+	public void setCategorias(List<Categoria> categorias) {
+		this.categorias = categorias;
 	}
 
 	public List<PlataformaTecnologica> getPlataformasSuportadas() {

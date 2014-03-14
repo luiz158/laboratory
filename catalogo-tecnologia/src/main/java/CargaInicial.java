@@ -9,6 +9,7 @@ import br.gov.frameworkdemoiselle.lifecycle.Startup;
 import br.gov.frameworkdemoiselle.stereotype.BusinessController;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.serpro.catalogo.entity.Analise;
+import br.gov.serpro.catalogo.entity.Categoria;
 import br.gov.serpro.catalogo.entity.Declinio;
 import br.gov.serpro.catalogo.entity.Fabricante;
 import br.gov.serpro.catalogo.entity.FaseEnum;
@@ -23,12 +24,11 @@ import br.gov.serpro.catalogo.entity.PlataformaTecnologica;
 import br.gov.serpro.catalogo.entity.Produto;
 import br.gov.serpro.catalogo.entity.Prospeccao;
 import br.gov.serpro.catalogo.entity.Situacao;
-import br.gov.serpro.catalogo.entity.Subcategoria;
 import br.gov.serpro.catalogo.entity.Sustentacao;
 import br.gov.serpro.catalogo.entity.Tecnologia;
-import br.gov.serpro.catalogo.entity.Tema;
 import br.gov.serpro.catalogo.entity.User;
 import br.gov.serpro.catalogo.persistence.AnaliseDAO;
+import br.gov.serpro.catalogo.persistence.CategoriaDAO;
 import br.gov.serpro.catalogo.persistence.DeclinioDAO;
 import br.gov.serpro.catalogo.persistence.FabricanteDAO;
 import br.gov.serpro.catalogo.persistence.FaseProdutoDAO;
@@ -40,10 +40,8 @@ import br.gov.serpro.catalogo.persistence.OrigemDemandaDAO;
 import br.gov.serpro.catalogo.persistence.PlataformaTecnologicaDAO;
 import br.gov.serpro.catalogo.persistence.ProdutoDAO;
 import br.gov.serpro.catalogo.persistence.ProspeccaoDAO;
-import br.gov.serpro.catalogo.persistence.SubcategoriaDAO;
 import br.gov.serpro.catalogo.persistence.SustentacaoDAO;
 import br.gov.serpro.catalogo.persistence.TecnologiaDAO;
-import br.gov.serpro.catalogo.persistence.TemaDAO;
 import br.gov.serpro.catalogo.persistence.UserDAO;
 
 
@@ -88,10 +86,7 @@ public class CargaInicial {
 	private TecnologiaDAO tecnologiaDAO;
 	
 	@Inject
-	private TemaDAO temaDAO;
-	
-	@Inject
-	private SubcategoriaDAO subcategoriaDAO;
+	private CategoriaDAO categoriaDAO;
 	
 	@Inject
 	private UserDAO usuarioDAO;
@@ -311,26 +306,20 @@ public class CargaInicial {
 		tecnologiaDAO.insert(tecnologia);
 		
 		
-		Tema tema = new Tema();
-		tema.setNome("Engenharia de Software");
-		tema.setDescricao("Temax");
-		tema.setTecnologia(tecnologia);
-		temaDAO.insert(tema);
+		Categoria categoria = new Categoria();
+		categoria.setNome("Liguagem de programação");
+		categoria.setDescricao("Categoriax");
+		categoria.setTecnologia(tecnologia);
+		categoriaDAO.insert(categoria);
+		//produto.getCategorias().add(categoria);
 		
-		Subcategoria subcategoria = new Subcategoria();
-		subcategoria.setNome("Liguagem de programação");
-		subcategoria.setDescricao("Subcategoriax");
-		subcategoria.setTema(tema);
-		subcategoriaDAO.insert(subcategoria);
-		//produto.getSubcategorias().add(subcategoria);
+		categoria = new Categoria();
+		categoria.setNome("Banco de dados");
+		categoria.setDescricao("Banco de dados");
+		categoria.setTecnologia(tecnologia);
+		categoriaDAO.insert(categoria);
 		
-		subcategoria = new Subcategoria();
-		subcategoria.setNome("Banco de dados");
-		subcategoria.setDescricao("Banco de dados");
-		subcategoria.setTema(tema);
-		subcategoriaDAO.insert(subcategoria);
-		
-		//produto.getSubcategorias().add(subcategoria);
+		//produto.getCategorias().add(categoria);
 		//produtoDAO.update(produto);
 		
 		OrigemDemanda origemDemanda = new OrigemDemanda();

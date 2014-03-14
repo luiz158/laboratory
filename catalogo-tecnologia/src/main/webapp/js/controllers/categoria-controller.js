@@ -3,30 +3,30 @@
 /* Controllers */
 var controllers = angular.module('catalogo.controllers');
 
-controllers.controller('TemaList',
-		function Tema($scope, $http, $location, AlertService) {
+controllers.controller('CategoriaList',
+		function Categoria($scope, $http, $location, AlertService) {
 			
-			function carregarTemas() {
-				$http.get('api/tema').success(function(data) {
-					$scope.temas = data;
+			function carregarCategorias() {
+				$http.get('api/categoria').success(function(data) {
+					$scope.categorias = data;
 				});
 			}
 
-			$scope.novoTema = function() {
-				$location.path('/tema/edit');
+			$scope.novaCategoria = function() {
+				$location.path('/categoria/edit');
 			};
 
-			$scope.editarTema = function(tema) {
-				$location.path('/tema/edit/' + tema.id);
+			$scope.editarCategoria = function(categoria) {
+				$location.path('/categoria/edit/' + categoria.id);
 			};
 
-			$scope.excluirTema = function(id) {
+			$scope.excluirCategoria = function(id) {
 				$http({
-					url : 'api/tema/' + id,
+					url : 'api/categoria/' + id,
 					method : "DELETE"
 
 				}).success(function(data) {
-					carregarTemas();
+					carregarCategorias();
 
 				}).error(function(data, status) {
 					AlertService.addWithTimeout('danger','Não foi possível executar a operação');
@@ -34,10 +34,10 @@ controllers.controller('TemaList',
 				});
 			};
 
-			carregarTemas();
+			carregarCategorias();
 		});
 
-controllers.controller('TemaEdit', function Tema($scope, $http,
+controllers.controller('CategoriaEdit', function Categoria($scope, $http,
 		$location, $routeParams, $upload, $rootScope, AlertService) {
 	
 	var id = $routeParams.id;
@@ -47,53 +47,49 @@ controllers.controller('TemaEdit', function Tema($scope, $http,
 	$rootScope.demandaId = id;
 
 	if (id) {
-		$http.get('api/tema/' + id).success(function(data) {
-			$scope.tema = data;
-			
+		$http.get('api/categoria/' + id).success(function(data) {
+			$scope.categoria = data;
+
 			$http.get('api/tecnologia').success(function(data) {
 				$scope.tecnologias = [];
-				if(typeof($scope.tema.tecnologia) != "undefined"){
-					$scope.tecnologias = data;
-					var index = buscaElemento($scope.tema.tecnologia,$scope.tecnologias);
+				$scope.tecnologias = data;
+				if(typeof($scope.categoria.tecnologia) != "undefined"){
+					var index = buscaElemento($scope.categoria.tecnologia,$scope.tecnologias);
 					if(index!=-1){
 						$scope.tecnologia = $scope.tecnologias[index];
 					}
-				}else{
-					$http.get('api/tecnologia').success(function(data) {
-						$scope.tecnologias = [];
-						$scope.tecnologias = data;
-					});
-				}
+				}	
 			});
-			
 		});
 	} else {
-		$scope.tema = {};
+		$scope.categoria = {};
+		
 		$http.get('api/tecnologia').success(function(data) {
 			$scope.tecnologias = [];
 			$scope.tecnologias = data;
 		});
+		
 	}
 
-	$scope.salvarTema = function() {
+	$scope.salvarCategoria = function() {
 		
-		console.log("TemaController " + $scope.tema);
+		console.log("CategoriaController " + $scope.categoria);
 
 		if(typeof($scope.tecnologia) != "undefined" && $scope.tecnologia != ""){
-			$scope.tema.tecnologia = $scope.tecnologia;
-			
+			$scope.categoria.tecnologia = $scope.tecnologia;
+				
 			$("[id$='-message']").text("");
 			$http({
-				url : 'api/tema',
-				method : $scope.tema.id ? "PUT" : "POST",
-				data : $scope.tema,
+				url : 'api/categoria',
+				method : $scope.categoria.id ? "PUT" : "POST",
+				data : $scope.categoria,
 				headers : {
 					'Content-Type' : 'application/json;charset=utf8'
 				}
-		
+			
 			}).success(function(data) {
-				AlertService.addWithTimeout('success','Tema salvo com sucesso');
-				$location.path('tema');
+				AlertService.addWithTimeout('success','Categoria salva com sucesso');
+				$location.path('categoria');
 			}).error(
 					function(data, status) {
 						if (status = 412) {
@@ -105,7 +101,7 @@ controllers.controller('TemaEdit', function Tema($scope, $http,
 			});
 		}else{
 			AlertService.addWithTimeout('danger','É preciso selecionar uma tecnologia!');
-		}
+		}	
 		
 		
 	};
@@ -120,5 +116,4 @@ controllers.controller('TemaEdit', function Tema($scope, $http,
 		}
 		return index;
 	}
-	
 });

@@ -67,9 +67,9 @@ public class ProdutoService {
 	}
 	
 	@GET
-	@Path("/listarBySubcategoria/{subcategoriaId}")
-	public List<Produto> listarProdutoBySubcategoria(@NotNull @PathParam("subcategoriaId") Long subcategoriaId) {
-		String jpql = "select p from Produto p inner join p.subcategorias s where s.id = "+subcategoriaId;
+	@Path("/listarByCategoria/{categoriaId}")
+	public List<Produto> listarProdutoByCategoria(@NotNull @PathParam("categoriaId") Long categoriaId) {
+		String jpql = "select p from Produto p inner join p.categorias s where s.id = "+categoriaId;
 		return produtoDAO.findByJPQL(jpql);
 	}
 }

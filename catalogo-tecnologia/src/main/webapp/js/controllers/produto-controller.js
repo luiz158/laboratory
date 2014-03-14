@@ -46,8 +46,7 @@ controllers.controller('ProdutoEdit', function Produto($scope, $http,
 	$scope.fornecedor = "";
 	$scope.plataforma = "";
 	$scope.tecnologia = "";
-	$scope.tema = "";
-	$scope.subcategoria = "";
+	$scope.categoria = "";
 	
 	$scope.modal = ({title: 'Title', content: 'Hello Modal<br />This is a multiline message!'});
 	
@@ -61,10 +60,10 @@ controllers.controller('ProdutoEdit', function Produto($scope, $http,
 			
 			$rootScope.produto = data;
 			$scope.plataformasSuportadas = data.plataformasSuportadas;
-			$scope.subcategoriasSelecionadas = data.subcategorias;
+			$scope.categoriasSelecionadas = data.categorias;
 		
-			if(typeof($scope.subcategoriasSelecionadas) == "undefined"){
-				$scope.subcategoriasSelecionadas = [];
+			if(typeof($scope.categoriasSelecionadas) == "undefined"){
+				$scope.categoriasSelecionadas = [];
 			}
 			
 			if(typeof($scope.plataformasSuportadas) == "undefined"){
@@ -112,7 +111,7 @@ controllers.controller('ProdutoEdit', function Produto($scope, $http,
 		
 		$rootScope.produto = {};
 		$scope.plataformasSuportadas = [];
-		$scope.subcategoriasSelecionadas = [];
+		$scope.categoriasSelecionadas = [];
 		
 		$http.get('api/licenciamento').success(function(data) {
 			$scope.licenciamentos = [];
@@ -141,7 +140,7 @@ controllers.controller('ProdutoEdit', function Produto($scope, $http,
 			console.log("ProdutoController " + $rootScope.produto);
 			
 			$rootScope.produto.plataformasSuportadas = $scope.plataformasSuportadas;
-			$rootScope.produto.subcategorias = $scope.subcategoriasSelecionadas;
+			$rootScope.produto.categorias = $scope.categoriasSelecionadas;
 
 			if(typeof($scope.licenciamento) != "undefined" && $scope.licenciamento != ""){
 				$rootScope.produto.licenciamento = $scope.licenciamento;
@@ -191,16 +190,16 @@ controllers.controller('ProdutoEdit', function Produto($scope, $http,
 		}
 	};
 	
-	$scope.adicionaSubcategoria = function() {
-		if(typeof($scope.subcategoria) == "undefined" || $scope.subcategoria == ""){
-			AlertService.addWithTimeout('danger','Selecione uma subcategoria');
+	$scope.adicionaCategoria = function() {
+		if(typeof($scope.categoria) == "undefined" || $scope.categoria == ""){
+			AlertService.addWithTimeout('danger','Selecione uma categoria');
 		}else{
-			var index = buscaElemento($scope.subcategoria,$scope.subcategoriasSelecionadas);
+			var index = buscaElemento($scope.categoria,$scope.categoriasSelecionadas);
 			
 			if (index !== -1) {
-				AlertService.addWithTimeout('danger','Subcategoria já foi adicionada!');
+				AlertService.addWithTimeout('danger','Categoria já foi adicionada!');
 	        }else{
-				$scope.subcategoriasSelecionadas.push($scope.subcategoria);
+				$scope.categoriasSelecionadas.push($scope.categoria);
 			}
 		}
 	};
@@ -213,11 +212,11 @@ controllers.controller('ProdutoEdit', function Produto($scope, $http,
         }
 	};
 	
-	$scope.removeSubcategoria = function(subcategoria) {
-		var index = buscaElemento(subcategoria,$scope.subcategoriasSelecionadas);
+	$scope.removeCategoria = function(categoria) {
+		var index = buscaElemento(categoria,$scope.categoriasSelecionadas);
 			
 		if (index !== -1) {
-            $scope.subcategoriasSelecionadas.splice(index,1);
+            $scope.categoriasSelecionadas.splice(index,1);
         }
 	};
 	
@@ -238,19 +237,11 @@ controllers.controller('ProdutoEdit', function Produto($scope, $http,
 		return index;
 	}
 	
-	$scope.carregarTemas = function() {
-		$scope.tema = "";
-		$http.get('api/tema/listar/'+$scope.tecnologia.id).success(function(data) {
-			$scope.temas = [];
-			$scope.temas = data;
-		});
-	};
-	
-	$scope.carregarSubcategorias = function() {
-		$scope.subcategoria = "";
-		$http.get('api/subcategoria/listar/'+$scope.tema.id).success(function(data) {
-			$scope.subcategorias = [];
-			$scope.subcategorias = data;
+	$scope.carregarCategorias = function() {
+		$scope.categoria = "";
+		$http.get('api/categoria/listar/'+$scope.tecnologia.id).success(function(data) {
+			$scope.categorias = [];
+			$scope.categorias = data;
 		});
 	};
 });

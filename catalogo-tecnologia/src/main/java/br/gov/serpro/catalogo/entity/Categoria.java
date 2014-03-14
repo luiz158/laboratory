@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Subcategoria {
+public class Categoria {
 
 	@Id
 	@GeneratedValue(strategy = SEQUENCE)
@@ -19,7 +19,7 @@ public class Subcategoria {
 	private String descricao;
 	
 	@ManyToOne
-	private Tema tema;
+	private Tecnologia tecnologia;
 
 	public Long getId() {
 		return id;
@@ -45,11 +45,11 @@ public class Subcategoria {
 		this.descricao = descricao;
 	}
 
-	public Tema getTema() {
-		return tema;
+	public Tecnologia getTecnologia() {
+		return tecnologia;
 	}
 
-	public void setTema(Tema tema) {
-		this.tema = tema;
+	public void setTecnologia(Tecnologia tecnologia) {
+		this.tecnologia = tecnologia;
 	}
 }

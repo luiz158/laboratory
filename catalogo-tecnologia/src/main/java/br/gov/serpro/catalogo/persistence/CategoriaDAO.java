@@ -4,15 +4,15 @@ import java.util.List;
 
 import br.gov.frameworkdemoiselle.stereotype.PersistenceController;
 import br.gov.frameworkdemoiselle.template.JPACrud;
-import br.gov.serpro.catalogo.entity.Tema;
+import br.gov.serpro.catalogo.entity.Categoria;
 
 @PersistenceController
-public class TemaDAO extends JPACrud<Tema, Long> {
+public class CategoriaDAO extends JPACrud<Categoria, Long> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Override
-	public List<Tema> findByJPQL(String jpql) {
+	public List<Categoria> findByJPQL(String jpql) {
 		return super.findByJPQL(jpql);
 	}
 }
