@@ -1,4 +1,6 @@
 $(function() {
+    $("#description").focus();
+
     $(document).ready(function() {
 	if (id = $.url().param('id')) {
 	    BookmarkProxy.load(id, loadOk, loadFailed);
@@ -20,6 +22,10 @@ $(function() {
 	} else {
 	    BookmarkProxy.insert(form, saveOk, saveFailed);
 	}
+    });
+
+    $("#delete").click(function() {
+	BookmarkProxy.remove([ $("#id").val() ], removeOk);
     });
 });
 
@@ -72,4 +78,8 @@ function saveFailed(request) {
     default:
 	break;
     }
+}
+
+function removeOk(data) {
+    location.href = "bookmark-list.html";
 }
