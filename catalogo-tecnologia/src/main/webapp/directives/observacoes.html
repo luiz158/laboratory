@@ -10,7 +10,7 @@
 	
 			<div class="form-group">
 				<label for="Observacao">Observação:</label>
-				<textarea rows="4" class="form-control" id="Observacao"
+				<textarea rows="2" class="form-control" id="Observacao"
 					ng-model="observacao.observacao" required></textarea>			
 			</div>
 			<div class="form-actions">	
@@ -18,7 +18,6 @@
 					<i class="fa fa-pencil-square-o"> </i> Registrar
 				</button>
 			</div>
-				
 		
 			<br >
 	
@@ -26,12 +25,10 @@
 				<li ng-repeat="o in observacoes" class="left list-group-item clearfix">
 		            <div class="header">
 		                <div class="row">
-			        		<div class="col-md-2">
-			        			<small><b>Data:</b> {{o.data}}</small> 
-			        		</div>
 			        		<div class="col-md-4">
 			        			<small><b>Autor:</b> {{o.usuario.name}}</small>  
-			        		</div>
+			        			<small><b>Data:</b> {{o.data | date:'MM/dd/yyyy'}} {{o.horario}}</small> 
+			        		</div>			        		
 			        	</div>
 			        </div>
 			        <div class="well well-small">

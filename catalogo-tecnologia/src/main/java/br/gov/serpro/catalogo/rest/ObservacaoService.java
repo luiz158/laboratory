@@ -32,6 +32,12 @@ public class ObservacaoService {
 	public List<Observacao> listar(@PathParam("id") Long id) {	
 		Fase fase = new Fase();
 		fase.setId(id);
+		
+		List<Observacao> list = obsDAO.observacoes(fase);
+		for (Observacao observacao : list) {
+			System.out.println(observacao.getData());
+		}
+		
 		return obsDAO.observacoes(fase);
 	}	
 

@@ -2,6 +2,7 @@ package br.gov.serpro.catalogo.entity;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -13,6 +14,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @NamedQueries({ @NamedQuery(name = Observacao.OBSERVACOES_NA_FASE, query = " from Observacao a where (a.fase.id = :fase) ORDER BY a.data DESC") })
 @Entity
@@ -32,6 +34,14 @@ public class Observacao {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date data;
+	
+	@Transient
+	private String horario;
+
+	public String getHorario() {
+		SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+		return format.format(getData());
+	}
 
 	@ManyToOne 
     @JoinColumn(nullable=false, updatable=false)
