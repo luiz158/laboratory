@@ -33,18 +33,15 @@ function findAllOk(data) {
 		formatter : "<input type='checkbox' value='{id}'>",
 	    }, {
 		key : "id",
-		label : "ID",
-		sortable : true
+		label : "ID"
 	    }, {
 		key : "description",
 		label : "Descrição",
-		formatter : "<a href='bookmark-edit.html?id={id}'>{value}</a>",
-		sortable : true
+		formatter : "<a href='bookmark-edit.html?id={id}'>{value}</a>"
 	    }, {
 		key : "link",
 		label : "Link",
-		formatter : "<a href='{value}'>{value}</a>",
-		sortable : true
+		formatter : "<a href='{value}'>{value}</a>"
 	    } ],
 	    data : data
 	});
@@ -54,6 +51,7 @@ function findAllOk(data) {
 }
 
 function removeOk(data) {
-    console.log(data);
-    table.removeRow(1);
+    $.each(data, function(index, value) {
+	table.removeRow(value);
+    });
 }

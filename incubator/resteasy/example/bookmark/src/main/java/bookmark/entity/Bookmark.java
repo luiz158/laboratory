@@ -9,6 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.URL;
+
 @Entity
 public class Bookmark implements Serializable {
 
@@ -22,9 +25,12 @@ public class Bookmark implements Serializable {
 	private Long id;
 
 	@Column
+	@NotEmpty
 	private String description;
 
+	@URL
 	@Column
+	@NotEmpty
 	private String link;
 
 	public Bookmark() {

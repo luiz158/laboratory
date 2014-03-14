@@ -8,19 +8,16 @@ controllers.controller('Auth', function Auth($scope, $http, $location, AuthServi
 	$scope.formData = {"username": "", "password": ""};
 	
 	function sucesso(data){
-		console.log('FUNÇÃO CALLBACK SUCESSO LOGIN')
 		$scope.usuario = data;
 		$location.path("/analise");
 	}
 	
 	function sucessologout(){
-		console.log('FUNÇÃO CALLBACK SUCESSO LOGOUT')
 		$location.path("/login");
 		$scope.usuario = null;
 	}
 	
 	function erro(data, status){
-		console.log('FUNÇÃO CALLBACK ERRO LOGIN');
 		$("[id$='-message']").text("");
 		switch (status) {
 		case 412: 

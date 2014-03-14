@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+<meta charset="utf-8">
+<title>Bookmark Edit</title>
+<link href="css/bookmark-html5.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+	<form>
+		<div id="id-row" hidden="true">
+			<label for="id">ID</label><span id="id-text"></span><input id="id" type="hidden">
+		</div>
+
+		<div>
+			<label for="description">Description</label> <input id="description" type="text">
+			<div id="description-message" hidden="true"></div>
+		</div>
+
+		<div>
+			<label for="link">Link</label> <input id="link" type="text">
+			<div id="link-message" hidden="true"></div>
+		</div>
+
+		<div>
+			<button id="save">Salvar</button>
+			<button id="delete">Excluir</button>
+			<button id="back">Voltar</button>
+		</div>
+	</form>
+
+	<script src="js/lib/jquery-2.1.0.min.js" type="text/javascript"></script>
+	<script src="js/lib/purl.js" type="text/javascript"></script>
+	<script src="js/proxy/bookmark.js" type="text/javascript"></script>
+	<script src="js/controller/bookmark-edit.js" type="text/javascript"></script>
+</body>
