@@ -18,6 +18,8 @@ config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/analise/edit', {templateUrl: 'partials/fases/analise-edit.html', controller: 'AnaliseEdit'});
   $routeProvider.when('/analise/edit/:id', {templateUrl: 'partials/fases/analise-edit.html', controller: 'AnaliseEdit'});
   $routeProvider.when('/prospeccao/edit/:id', {templateUrl: 'partials/fases/prospeccao-edit.html', controller: 'ProspeccaoCtrl'});
+  $routeProvider.when('/internalizacao/edit/:id', {templateUrl: 'partials/fases/internalizacao-edit.html', controller: 'InternalizacaoCtrl'});
+  $routeProvider.when('/sustentacao/edit/:id', {templateUrl: 'partials/fases/sustentacao-edit.html', controller: 'SustentacaoCtrl'});
   $routeProvider.when('/declinio/edit/:id', {templateUrl: 'partials/fases/declinio-edit.html', controller: 'DeclinioCtrl'});
 
   $routeProvider.when('/licenciamento', {templateUrl: 'partials/licenciamento-listar.html', controller: 'LicenciamentoList'});

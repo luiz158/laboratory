@@ -107,9 +107,14 @@ public class FaseBC {
 		validarFinalizar(fase);
 
 		// Se foi aprovado tem uma proxima fase;
-		if (fase.getSituacao().equals(Situacao.APROVADO)) {			
+		if (fase.getSituacao().equals(Situacao.APROVADO) && !fase.getFase().equals(FaseEnum.DECLINIO)) {			
 			proximafase = getProximaFase(fase);
 			faseDAO.insert(proximafase);
+			
+			FaseMembro fm = new FaseMembro();
+			fm.setFase(proximafase);
+			fm.setUser(fase.getProximaFaseLider());			
+			faseMembroDAO.insert(fm);			
 		}
 
 		faseDAO.update(fase);
@@ -220,7 +225,7 @@ public class FaseBC {
 		proximafase.setFaseAnterior(fase);
 		proximafase.setSituacao(Situacao.RASCUNHO);
 		proximafase.setUnidadeGestora(fase.getProximaFaseUnidadeGestora());
-
+		
 		return proximafase;
 	}
 
@@ -237,6 +242,16 @@ public class FaseBC {
 	}
 	
 	public Fase salvar(Prospeccao fase) {
+		validarSalvar(fase);
+		if(fase.getId()!=null){
+			faseDAO.update(fase);
+		}else{
+			faseDAO.insert(fase);
+		}
+		return fase;
+	}
+	
+	public Fase salvar(Internalizacao fase) {
 		validarSalvar(fase);
 		if(fase.getId()!=null){
 			faseDAO.update(fase);
@@ -275,6 +290,17 @@ public class FaseBC {
 		if (fase.getDemandanteRepresentante()== null)
 			throw new ValidationException().addViolation("demandanteRepresentante", "Favor informar o representante.");
 	}
+	
+	private void validarSalvar(Internalizacao fase) {
+		validarSalvar((Fase)fase);
+		if (fase.getAquisicaoNecessaria() == null )
+			throw new ValidationException().addViolation("aquisicaoNecessaria", "Favor informar a necessidade de aquisição.");
+
+		if (fase.getCapacitacao() == null )
+			throw new ValidationException().addViolation("capacitacao", "Favor informar a necessidade de capacitação.");
+
+	}
+	
 	
 	@Transactional
 	public User adicionarMembro(User user, Long id){
@@ -339,6 +365,14 @@ public class FaseBC {
 			userBanco = userDAO.insert(user);
 		}
 		return userBanco;
+	}
+
+	public void delete(Long id) {
+		faseDAO.delete(id);
+	}
+
+	public Fase load(Long id) {
+		return faseDAO.load(id);
 	}
 	
 
