@@ -130,11 +130,14 @@
 	                    <div class="chat-body clearfix">
 	                        <div class="header">
 	                         	<div class="row">
-			        		<div class="col-md-3">
+			        		<div class="col-md-1">
 			        			<b>ID:</b> {{f.id}} 
 			        		</div>
+			        		<div class="col-md-2">
+			        			<b>Fase:</b> {{f.fase | nomeFase}}</span>
+			        		</div>
 			        		<div class="col-md-4">
-			        			<b>Fase:</b> {{f.fase | nomeFase}}  
+			        			<b>Situação: <span ng-analise-situacao situacao="{{f.situacao}}"></span>
 			        		</div>
 			        		<div class="col-md-4">
 			        			<b>Referência:</b> {{f.origemReferencia.nome}} {{f.codigoReferencia}} 
