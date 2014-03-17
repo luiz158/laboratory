@@ -18,7 +18,11 @@ $(function() {
 	    ids.push($(value).val());
 	});
 
-	BookmarkProxy.remove(ids, removeOk);
+	if (ids.length == 0) {
+	    alert('Nenhum registro selecionado');
+	} else if (confirm('Tem certeza que deseja apagar?')) {
+	    BookmarkProxy.remove(ids, removeOk);
+	}
     });
 });
 
