@@ -8,6 +8,7 @@ import br.gov.frameworkdemoiselle.annotation.Priority;
 import br.gov.frameworkdemoiselle.lifecycle.Startup;
 import br.gov.frameworkdemoiselle.stereotype.BusinessController;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
+import br.gov.serpro.catalogo.bussiness.FaseBC;
 import br.gov.serpro.catalogo.entity.Analise;
 import br.gov.serpro.catalogo.entity.Categoria;
 import br.gov.serpro.catalogo.entity.Declinio;
@@ -52,19 +53,22 @@ import br.gov.serpro.catalogo.persistence.UserDAO;
 public class CargaInicial {
 	
 	@Inject
-	private AnaliseDAO analiseDAO;
+	private FaseBC faseBC;
 	
-	@Inject
-	private ProspeccaoDAO prospeccaoDAO;
-	
-	@Inject
-	private InternalizacaoDAO internalizacaoDAO;
-	
-	@Inject
-	private SustentacaoDAO sustentacaoDAO;
-	
-	@Inject
-	private DeclinioDAO declinioDAO;
+//	@Inject
+//	private AnaliseDAO analiseDAO;
+//	
+//	@Inject
+//	private ProspeccaoDAO prospeccaoDAO;
+//	
+//	@Inject
+//	private InternalizacaoDAO internalizacaoDAO;
+//	
+//	@Inject
+//	private SustentacaoDAO sustentacaoDAO;
+//	
+//	@Inject
+//	private DeclinioDAO declinioDAO;
 	
 	@Inject
 	private ProdutoDAO produtoDAO;
@@ -166,7 +170,7 @@ public class CargaInicial {
 		a.setProximaFaseJustificativa("Precisamos que este estudo seja prospectado com no mínimo 3 tecnologias.");
 		
 		
-		a = analiseDAO.insert(a);	
+		a = (Analise)faseBC.salvar(a);	
 		
 		Observacao obs = new Observacao();
 		obs.setData(new Date());
@@ -177,20 +181,21 @@ public class CargaInicial {
 		obsDAO.insert(obs);
 		
 		
-		Prospeccao p = new Prospeccao();		
+		Prospeccao p = (Prospeccao)faseBC.finalizarFase(a);		
 		p.setCodigoReferencia("R174");
 		p.setOrigemReferencia(origem);
-		p.setObjetivo("Selecionar os tipos de bolas de futsal na copa do mundo.");
-		p.setUnidadeGestora(a.getUnidadeGestora());
-		p.setFaseAnterior(a);
+		p.setObjetivo("Selecionar os tipos de bolas de futsal na copa do mundo.");		
 		p.setDataRealizacao(new Date());
-		p.setSituacao(Situacao.REPROVADO);
+		p.setSituacao(Situacao.APROVADO);
+		p.setSituacaoJustificativa("Aprovei pois a prospeccao foi bem sucedida.");
 		p.setTestes("Os testes realizados foram feitos na regional Salvador em laboratório isolado. Foram averiguados testes de blablablabla. Maiores detalhes sobre os testes realizados podem ser encontrados em Arquivo1.odt.");
 		p.setConclusao("A prospecção foi bem sucedida em que, pelos testes realizados, o Ubuntu 12 foi selecionado para ser internalizado.");
 		p.setProximaFase(FaseEnum.INTERNALIZACAO);
 		p.setProximaFaseLider(usuario1);
+		p.setProximaFaseUnidadeGestora(usuario1.getSetor());
+		p.setProximaFaseJustificativa("Precisamos que este estudo seja prospectado com no mínimo 3 tecnologias.");		
 		
-		p = prospeccaoDAO.insert(p);
+		p = (Prospeccao)faseBC.salvar(p);
 		
 		List<Produto> produtos = produtoDAO.findAll();		
 		for (Produto produto : produtos) {
@@ -200,48 +205,56 @@ public class CargaInicial {
 			faseProdutoDAO.insert(fp);
 		}
 		
-		Internalizacao i = new Internalizacao();
+		Internalizacao i = (Internalizacao)faseBC.finalizarFase(p);
 		i.setCodigoReferencia("R175");
 		i.setOrigemReferencia(origem);
 		i.setObjetivo("Fornecer as bolas que já foram prospectadas com seus devidos condicionamentos");
-		i.setUnidadeGestora(a.getUnidadeGestora());
-		i.setFaseAnterior(p);
 		i.setDataRealizacao(new Date());
-		i.setSituacao(Situacao.APROVADO);		
+		i.setSituacao(Situacao.REPROVADO);	
 		i.setRestricao(true);
 		i.setRestricaoQuemPode("Apenas robgol pode usar este tipo de bola");
 		i.setRestricaoJustificativa("Ele é o único com habilidade suficiente para isso.");		
+		i.setAquisicaoNecessaria(false);
 		i.setCapacitacao(false);		
-		i.setAnaliseDeRiscos(false);		
-		i.setProximaFase(FaseEnum.SUSTENTACAO);
-		i.setProximaFaseLider(usuario1);		
-		i.setConclusao("Produto internalizado com sucesso. Vamos manter ele na empresa.");		
-		internalizacaoDAO.insert(i);
+		i.setAnaliseDeRiscos(false);
+		i = (Internalizacao)faseBC.salvar(i);
 				
-		Sustentacao s = new Sustentacao();
-		s.setCodigoReferencia("R176");
-		s.setOrigemReferencia(origem);
-		s.setObjetivo("Manter as novas bolas em pratica");
-		s.setUnidadeGestora(a.getUnidadeGestora());
-		s.setFaseAnterior(i);
-		s.setDataRealizacao(new Date());
-		s.setSituacao(Situacao.REPROVADO);
-		s.setProximaFase(FaseEnum.DECLINIO);
-		s.setProximaFaseLider(usuario1);	
-		sustentacaoDAO.insert(s);
+
 		
+		a = new Analise();		
+		a.setCodigoReferencia("????????");
+		a.setDataRealizacao(new Date());
+		a.setDemandanteUnidade("CETEC/CTSDR");
+		a.setDemandanteRepresentante(usuario1);
+		a.setObjetivo("Nonono nononon ononononon ononononon onononono non");
+		a.setUnidadeGestora("CTSDR");
+		a.setOrigemReferencia(origem);
+		a.setSituacao(Situacao.APROVADO);
+		a.setSituacaoJustificativa("nonononono nonononono nononononon onononon on");		
+		a = (Analise)faseBC.salvar(a);
 		
-		Declinio d = new Declinio();
-		d.setCodigoReferencia("R177");
-		d.setOrigemReferencia(origem);
-		d.setObjetivo("Acabar com essa palhaçada.");
-		d.setUnidadeGestora(a.getUnidadeGestora());
-		d.setFaseAnterior(s);
-		d.setDataRealizacao(new Date());
-		d.setSituacao(Situacao.REPROVADO);
-		d.setNovaAnaliseRiscos(false);
-		d.setConclusao("Chega de papaiagada... bola normal.");
-		declinioDAO.insert(d);
+		a = new Analise();		
+		a.setCodigoReferencia("????????");
+		a.setDataRealizacao(new Date());
+		a.setDemandanteUnidade("CETEC/CTSDR");
+		a.setDemandanteRepresentante(usuario1);
+		a.setObjetivo("Nonono nononon ononononon ononononon onononono non");
+		a.setUnidadeGestora("CTSDR");
+		a.setOrigemReferencia(origem);
+		a.setSituacao(Situacao.REPROVADO);
+		a.setSituacaoJustificativa("nonononono nonononono nononononon onononon on");		
+		a = (Analise)faseBC.salvar(a);
+		
+		a = new Analise();		
+		a.setCodigoReferencia("????????");
+		a.setDataRealizacao(new Date());
+		a.setDemandanteUnidade("CETEC/CTSDR");
+		a.setDemandanteRepresentante(usuario1);
+		a.setObjetivo("Nonono nononon ononononon ononononon onononono non");
+		a.setUnidadeGestora("CTSDR");
+		a.setOrigemReferencia(origem);
+		a.setSituacao(Situacao.RASCUNHO);		
+		a = (Analise)faseBC.salvar(a);
 		
 	}
 	
