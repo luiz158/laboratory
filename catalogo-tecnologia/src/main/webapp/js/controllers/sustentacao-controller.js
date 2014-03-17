@@ -4,21 +4,23 @@
 var controllers = angular.module('catalogo.controllers');
 
 
-controllers.controller('ProspeccaoCtrl', function ProspeccaoCtrl($scope, $rootScope, $http,$location, $routeParams, AlertService, OrigemDemandaService, ValidationService) {
+controllers.controller('SustentacaoCtrl', function SustentacaoCtrl($scope, $rootScope, $http,$location, $routeParams, AlertService, OrigemDemandaService, ValidationService) {
 
 	$(window).scrollTop(0);
 	
 	$scope.fase = {};
 	$scope.fase.id = $routeParams.id;
-	$scope.fase.fase = 2;
+	$scope.fase.fase = 4;
 	$scope.origemDemanda = [];
-		
+	
+	console.log(OrigemDemandaService.getItens());
+	
 	OrigemDemandaService.getItens().then(function(data) {
 		$scope.origemDemanda = data;
 	});
 
 	if ($scope.fase.id) {
-		$http.get('api/prospeccao/' + $scope.fase.id).success(function(data) {
+		$http.get('api/sustentacao/' + $scope.fase.id).success(function(data) {
 			$scope.fase = data;
 			$scope.fase.faseAnterior = {
 					id: 				data.faseAnterior.id, 
@@ -27,7 +29,7 @@ controllers.controller('ProspeccaoCtrl', function ProspeccaoCtrl($scope, $rootSc
 					codigoReferencia: 	data.faseAnterior.codigoReferencia
 			};
 		}).error( function(data, status) {
-			AlertService.addWithTimeout('danger','Não foi possível encontrar a prospecção');
+			AlertService.addWithTimeout('danger','Não foi possível encontrar o registro');
 			history.back();
 		});
 	} else {
@@ -36,7 +38,7 @@ controllers.controller('ProspeccaoCtrl', function ProspeccaoCtrl($scope, $rootSc
 	}
 		
 	$scope.salvar = function(finalizar) {
-		var url = 'api/prospeccao';
+		var url = 'api/sustentacao';
 		if(finalizar) url = url+"/finalizar";
 		ValidationService.clear();
 		$http({
@@ -48,11 +50,11 @@ controllers.controller('ProspeccaoCtrl', function ProspeccaoCtrl($scope, $rootSc
 			}
 		}).success(function(data) {
 			if(finalizar){
-				AlertService.addWithTimeout('success','Prospecção finalizada com sucesso');
+				AlertService.addWithTimeout('success','Internalização finalizada com sucesso');
 			}else{
-				AlertService.addWithTimeout('success','Prospecção salva com sucesso');
+				AlertService.addWithTimeout('success','Internalização salva com sucesso');
 			}
-			$location.path('/pesquisa/fases/2');
+			$location.path('/pesquisa/fases/4');
 		}).error( function(data, status) {
 			console.log(data);
 			if (status = 412) {
