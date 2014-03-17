@@ -56,6 +56,7 @@ public class BookmarkService {
 
 	@POST
 	@Transactional
+	@Produces(APPLICATION_JSON)
 	public Response insert(@Valid Bookmark entity) {
 		if (entity.getId() != null) {
 			return Response.status(BAD_REQUEST).entity("Não defina o atributo \"id\"").type(TEXT_PLAIN).build();
@@ -70,6 +71,7 @@ public class BookmarkService {
 	@POST
 	@Path("{id}")
 	@Transactional
+	@Produces(APPLICATION_JSON)
 	public Response update(@PathParam("id") Long id, @Valid Bookmark entity) {
 		if (entity.getId() != null) {
 			return Response.status(BAD_REQUEST).entity("Não defina o atributo \"id\"").type(TEXT_PLAIN).build();

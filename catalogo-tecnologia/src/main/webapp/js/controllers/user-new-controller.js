@@ -3,22 +3,15 @@
 /* Controllers */
 var controllers = angular.module('catalogo.controllers');
 
-controllers.controller('UserNew', 
-	function UserNew($scope, $http, $location, AlertService) {
+controllers.controller('UserNew', function UserNew($scope, $http, $location, AlertService, UserService) {
 
 	var MIN_NUMBER_OF_NAME_CARACTERS = 5;
 	$scope.users = [];
+	$scope.grupos = [];
 	$scope.name = {};
 
-	function init(grupos) {
-		$scope.grupos = grupos;
-	}
-
-	$http({
-		url : 'api/grupo',
-		method : "GET"
-	}).success(function(response) {
-		init(response);
+	UserService.getGrupos().then(function(data) {
+		$scope.grupos = data;
 	});
 
 	$scope.pesquisar = function(cpf, nome) {
