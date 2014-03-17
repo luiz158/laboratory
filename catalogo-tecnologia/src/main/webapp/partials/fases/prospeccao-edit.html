@@ -186,17 +186,15 @@
 
 				<div class="form-group row">
 					<div class="col-md-6">
-						<label for="proximaFaseGestor">Gestor da Próxima Fase:</label> <input
-							class="form-control" type="text" id="proximaFaseGestor"
-							ng-model="fase.proximaFaseGestor.name" disabled=disabled>
-						<validation-msg propriedade="proximaFaseGestor"></validation-msg>
+						<label for="detalhamento">Unidade Gestora:</label> <input
+							class="form-control" type="text" id="id"
+							ng-model="fase.proximaFaseUnidadeGestora">
 					</div>
 					<div class="col-md-6">
-						<label for="proximaFaseArea">Área:</label> <input
-							class="form-control" type="text" id="proximaFaseArea"
-							ng-model="fase.proximaFaseGestor.setor" disabled=disabled>
-						<validation-msg propriedade="proximaFaseArea"></validation-msg>
-					</div>
+						<label for="detalhamento">Líder da equipe:</label> 
+							<ng-campo-usuario ng-model="fase.proximaFaseLider" name="proximaFaseLider"></ng-campo-usuario>
+							<validation-msg propriedade="proximaFaseLider"></validation-msg>
+					</div>					
 				</div>
 			</div>
 		</div>

@@ -72,13 +72,11 @@ public class Fase {
 	private String proximaFaseUnidadeGestora;
 	
 	@ManyToOne
-	@JoinColumn(updatable=false)
 	private User proximaFaseLider;	
 	
 	private Integer proximaFaseCiclo;
 	
 	@OneToOne
-	@JoinColumn(updatable=false)
 	private Fase faseAnterior;
 	
 	@ManyToMany(fetch=FetchType.LAZY)
