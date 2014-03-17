@@ -64,24 +64,28 @@ services.factory('ValidationService', function(AlertService) {
 	var service = {};
 	
 	service.validation = {};
+	
+	service.remove = function(nome) {
+		service.validation[nome] = null;
+	};
 
 	service.add = function(nome, msg) {
 		if(nome == null){
 			AlertService.addWithTimeout("danger",msg);
 		}else{
 			service.validation[nome] = msg;
+			$timeout(function() {
+				service.remove(nome);
+			}, timeout ? timeout: 3000);
 		}
-	};
-	
-	service.remove = function(nome) {
-		service.validation[nome] = null;
-	};
+	};	
 	
 	service.clear = function() {
 		service.validation = {};
 	};
 	
 	service.registrarViolacoes = function(data){
+		service.clear();
 		angular.forEach(data, function(violation){
 			service.add(violation.property,violation.message);
 		});

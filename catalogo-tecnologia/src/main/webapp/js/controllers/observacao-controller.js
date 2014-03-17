@@ -20,7 +20,6 @@ controllers.controller('ObservacaoCtrl', function ObservacaoCtrl($scope, $rootSc
 		if($scope.fase.id){
 			$http.get('api/observacao/fase/'+$scope.fase.id).success(function(data) {
 				$scope.observacoes = data;
-				console.log(data);
 			});
 		}	
 	}

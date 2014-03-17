@@ -332,6 +332,14 @@ public class FaseBC {
 	public void deleteInteressado(Long id) {
 		faseInteressadoDAO.delete(id);
 	}
+
+	public User carregarUsuario(User user) {
+		User userBanco = userDAO.loadByCPF(user.getCPF());
+		if(userBanco == null){
+			userBanco = userDAO.insert(user);
+		}
+		return userBanco;
+	}
 	
 
 }

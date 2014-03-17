@@ -96,6 +96,61 @@ diretivas.directive('ngAnexos', function() {
 	};
 });
 
+diretivas.directive('ngCampoUsuario', function() {
+	return {
+		restrict : 'E',
+		require : '^ngModel',
+		scope : {
+			usuario : '=ngModel',
+			fase: '@',
+			name: '@'
+		},
+		templateUrl : 'directives/campo-usuario.html',
+		link : function(scope, elem, $attrs) {
+			
+		},
+		controller: function ($scope, $http, AlertService) {
+			$scope.palavraChave = "";
+			$scope.resultadoPesquisa = [];			
+				
+			$scope.selecionar = function(m){		
+				$http({
+					url : 'api/fase/usuario/carregar',
+					method : "POST",
+					data : m,
+					headers : {
+						'Content-Type' : 'application/json;charset=utf8'
+					}
+				}).success(function(data) {
+					$scope.usuario = data;	
+					delete $scope.usuario.grupos;					
+				}).error( function(data, status) {
+					AlertService.addWithTimeout('danger',data[0].message);
+				});
+				
+			};				
+			
+			$scope.pesquisar = function(){
+				if(!$scope.palavraChave || $scope.palavraChave.length<3){
+					AlertService.addWithTimeout('warning', "Para pesquisar digite pelo menos 3 letras.");
+				}else{
+					$http.get('api/user/nome/' + $scope.palavraChave).success(function(data) {
+						if (data == "") {
+							AlertService.addWithTimeout('warning', 'Usuário não encontrado no LDAP');
+						}else{
+							$scope.resultadoPesquisa = data;
+						}
+					}).error(function(data, status) {
+						if (status == 412) {
+							AlertService.addWithTimeout('danger', data[0].message);
+						}
+					});
+				}
+			};
+		}
+	}
+});
+
 diretivas.directive('ngObservacoes', function() {
 	return {
 		restrict : 'E',

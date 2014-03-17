@@ -38,6 +38,12 @@ public class FaseService {
 		return faseBC.obterCadeiaDasFases(id);
 
 	}
+	
+	@POST
+	@Path("/usuario/carregar")
+	public User carregarUsuario(User user) {
+		return faseBC.carregarUsuario(user);
+	}
 
 	@POST
 	@Path("/{id}/membros/add")

@@ -55,16 +55,15 @@
 						<label for="demandante">Unidade Demandante:</label> <input type="text"
 							class="form-control" id="demandante" ng-model="analise.demandanteUnidade"
 							required> 
-							<validation-msg propriedade="demandante"></validation-msg>
+							<validation-msg propriedade="demandante" fase="analise.id"></validation-msg>
 					</div>
 					<div class="col-md-6">
 						<label for="demandante">Representante da Unidade:</label> 
-						<input type="text" class="form-control" id="demandante" 
-							ng-model="analise.demandanteRepresentante.name"
-							required disabled=disabled> 
-							<validation-msg propriedade="demandante"></validation-msg>
+						<ng-campo-usuario ng-model="analise.demandanteRepresentante" name="demandanteRepresentante"></ng-campo-usuario> 
+						<validation-msg propriedade="demandanteRepresentante"></validation-msg>
 					</div>
 				</div>
+					
 					
 
 				<div class="form-group">
@@ -172,16 +171,15 @@
 
 				<div class="form-group row">
 					<div class="col-md-6">
-						<label for="detalhamento">Gestor da Próxima Fase:</label> <input
+						<label for="detalhamento">Unidade Gestora:</label> <input
 							class="form-control" type="text" id="id"
-							ng-model="analise.proximaFaseGestor.name" disabled=disabled>
-							<validation-msg propriedade="proximaFaseGestor"></validation-msg>
+							ng-model="analise.proximaFaseUnidadeGestora">
 					</div>
 					<div class="col-md-6">
-						<label for="detalhamento">Área:</label> <input
-							class="form-control" type="text" id="id"
-							ng-model="analise.proximaFaseGestor.setor" disabled=disabled>
-					</div>
+						<label for="detalhamento">Líder da equipe:</label> 
+							<ng-campo-usuario ng-model="analise.proximaFaseLider" name="proximaFaseLider"></ng-campo-usuario>
+							<validation-msg propriedade="proximaFaseLider"></validation-msg>
+					</div>					
 				</div>
 			</div>
 		</div>

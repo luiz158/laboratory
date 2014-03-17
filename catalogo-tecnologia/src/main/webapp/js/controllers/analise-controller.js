@@ -65,6 +65,9 @@ controllers.controller('AnaliseEdit', function Analise($scope, $http,
 
 	$scope.salvar = function() {
 		ValidationService.clear();
+		
+		console.log($scope.analise);
+		
 		$http({
 			url : 'api/analise',
 			method : $scope.analise.id ? "PUT" : "POST",
