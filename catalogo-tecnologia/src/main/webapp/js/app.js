@@ -78,3 +78,4 @@ app.run(function($rootScope, AuthService) {
 });
 
 var controllers = angular.module('catalogo.controllers',[]);
+var services = angular.module('catalogo.services',[]);
