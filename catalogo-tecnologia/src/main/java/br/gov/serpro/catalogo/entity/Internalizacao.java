@@ -18,7 +18,7 @@ public class Internalizacao extends Fase {
 	private String restricaoJustificativa;
 
 	// Aquisições para a internalização
-	private Boolean aquisicaoNecessaria;
+	private Integer aquisicaoNecessaria;
 	private String aquisicaoItens;
 	private String aquisicaoResultado;
 	@OneToMany
@@ -50,10 +50,10 @@ public class Internalizacao extends Fase {
 	public void setRestricaoJustificativa(String restricaoJustificativa) {
 		this.restricaoJustificativa = restricaoJustificativa;
 	}
-	public Boolean getAquisicaoNecessaria() {
+	public Integer getAquisicaoNecessaria() {
 		return aquisicaoNecessaria;
 	}
-	public void setAquisicaoNecessaria(Boolean aquisicaoNecessaria) {
+	public void setAquisicaoNecessaria(Integer aquisicaoNecessaria) {
 		this.aquisicaoNecessaria = aquisicaoNecessaria;
 	}
 	public String getAquisicaoItens() {

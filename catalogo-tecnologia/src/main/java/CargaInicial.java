@@ -214,7 +214,7 @@ public class CargaInicial {
 		i.setRestricao(true);
 		i.setRestricaoQuemPode("Apenas robgol pode usar este tipo de bola");
 		i.setRestricaoJustificativa("Ele é o único com habilidade suficiente para isso.");		
-		i.setAquisicaoNecessaria(false);
+		i.setAquisicaoNecessaria(0);
 		i.setCapacitacao(false);		
 		i.setAnaliseDeRiscos(false);
 		i = (Internalizacao)faseBC.salvar(i);
