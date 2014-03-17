@@ -25,9 +25,11 @@ $(function() {
     });
 
     $("#delete").click(function() {
-	BookmarkProxy.remove([ $("#id").val() ], removeOk);
+	if (confirm('Tem certeza que deseja apagar?')) {
+	    BookmarkProxy.remove([ $("#id").val() ], removeOk);
+	}
     });
-    
+
     $("#back").click(function() {
 	history.back();
     });
@@ -39,6 +41,7 @@ function loadOk(data) {
     $("#id").val(data.id);
     $("#description").val(data.description);
     $("#link").val(data.link);
+    $("#delete").show();
 }
 
 function loadFailed(request) {
