@@ -10,7 +10,6 @@ controllers.controller('UserNew', function UserNew($scope, $http, $location, Ale
 	$scope.grupos = [];
 	$scope.name = {};
 
-	console.log("UserNew");
 	UserService.getGrupos().then(function(data) {
 		$scope.grupos = data;
 	});
