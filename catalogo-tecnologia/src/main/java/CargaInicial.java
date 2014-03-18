@@ -211,12 +211,12 @@ public class CargaInicial {
 		i.setObjetivo("Fornecer as bolas que já foram prospectadas com seus devidos condicionamentos");
 		i.setDataRealizacao(new Date());
 		i.setSituacao(Situacao.REPROVADO);	
-		i.setRestricao(true);
+		i.setRestricao(1);
 		i.setRestricaoQuemPode("Apenas robgol pode usar este tipo de bola");
 		i.setRestricaoJustificativa("Ele é o único com habilidade suficiente para isso.");		
 		i.setAquisicaoNecessaria(0);
-		i.setCapacitacao(false);		
-		i.setAnaliseDeRiscos(false);
+		i.setCapacitacao(0);		
+		i.setAnaliseDeRiscos(0);
 		i = (Internalizacao)faseBC.salvar(i);
 				
 
