@@ -15,16 +15,8 @@ BookmarkProxy.load = function($id, $success, $error) {
     $.ajax({
 	type : "GET",
 	url : this.url + "/" + $id,
-	success : function(data) {
-	    if ($success) {
-		$success(data);
-	    }
-	},
-	error : function(request) {
-	    if ($error) {
-		$error(request);
-	    }
-	}
+	success : $success,
+	error : $error
     });
 };
 
@@ -34,16 +26,8 @@ BookmarkProxy.insert = function($form, $success, $error) {
 	url : this.url,
 	data : JSON.stringify($form),
 	contentType : "application/json",
-	success : function(data) {
-	    if ($success) {
-		$success(data);
-	    }
-	},
-	error : function(request) {
-	    if ($error) {
-		$error(request);
-	    }
-	}
+	success : $success,
+	error : $error
     });
 };
 
@@ -53,16 +37,8 @@ BookmarkProxy.update = function($id, $form, $success, $error) {
 	url : this.url + "/" + $id,
 	data : JSON.stringify($form),
 	contentType : "application/json",
-	success : function(data) {
-	    if ($success) {
-		$success(data);
-	    }
-	},
-	error : function(request) {
-	    if ($error) {
-		$error(request);
-	    }
-	}
+	success : $success,
+	error : $error
     });
 };
 

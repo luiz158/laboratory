@@ -19,7 +19,7 @@ import br.gov.serpro.catalogo.entity.Observacao;
 import br.gov.serpro.catalogo.persistence.ObservacaoDAO;
 
 @ValidateRequest
-@Path("/api/observacao")
+@Path("observacao")
 @Produces(APPLICATION_JSON)
 public class ObservacaoService {
 
@@ -28,7 +28,7 @@ public class ObservacaoService {
 	
 
 	@GET
-	@Path("/fase/{id}")
+	@Path("fase/{id}")
 	public List<Observacao> listar(@PathParam("id") Long id) {	
 		Fase fase = new Fase();
 		fase.setId(id);
@@ -42,7 +42,7 @@ public class ObservacaoService {
 	}	
 
 	@POST
-	@Path("/fase/{id}/add")
+	@Path("fase/{id}/add")
 	public Observacao adicionar(Observacao observacao, @PathParam("id") Long id) {
 		if(observacao.getFase()==null) observacao.setFase(new Fase());
 		observacao.getFase().setId(id);

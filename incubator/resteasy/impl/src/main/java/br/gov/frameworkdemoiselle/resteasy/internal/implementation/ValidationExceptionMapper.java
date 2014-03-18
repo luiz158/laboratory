@@ -1,7 +1,6 @@
 package br.gov.frameworkdemoiselle.resteasy.internal.implementation;
 
 import static javax.servlet.http.HttpServletResponse.SC_PRECONDITION_FAILED;
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -27,7 +26,6 @@ public class ValidationExceptionMapper implements ExceptionMapper<javax.validati
 			exception.printStackTrace();
 		}
 
-		return Response.status(SC_PRECONDITION_FAILED).entity(validation.getConstraintViolations())
-				.type(APPLICATION_JSON).build();
+		return Response.status(SC_PRECONDITION_FAILED).entity(validation.getConstraintViolations()).build();
 	}
 }

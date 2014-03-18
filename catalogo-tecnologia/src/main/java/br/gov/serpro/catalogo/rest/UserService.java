@@ -17,14 +17,13 @@ import javax.ws.rs.Produces;
 import org.jboss.resteasy.spi.validation.ValidateRequest;
 
 import br.gov.frameworkdemoiselle.resteasy.util.ValidationException;
-import br.gov.frameworkdemoiselle.security.RequiredRole;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.serpro.catalogo.entity.User;
 import br.gov.serpro.catalogo.persistence.UserDAO;
 import br.gov.serpro.catalogo.security.LDAPAuthenticator;
 
 @ValidateRequest
-@Path("/api/user")
+@Path("user")
 @Produces(APPLICATION_JSON)
 public class UserService {
 
@@ -40,19 +39,19 @@ public class UserService {
 	}
 	
 	@GET
-	@Path("/{id}")
+	@Path("{id}")
 	public User carregar(@NotNull @PathParam("id") Long id) {
 		return userDAO.load(id);
 	}
 	
 	@GET
-	@Path("/cpf/{cpf}")
+	@Path("cpf/{cpf}")
 	public User carregarByCPF(@NotNull @PathParam("cpf") String cpf) throws Exception {
 		return ldapAuthenticator.searchUserByCPF(cpf);
 	}
 	
 	@GET
-	@Path("/nome/{nome}")
+	@Path("nome/{nome}")
 	public List<User> carregarByNome(@NotNull @PathParam("nome") String nome) throws Exception {
 		return ldapAuthenticator.searchUserByDisplayName(nome);
 	}

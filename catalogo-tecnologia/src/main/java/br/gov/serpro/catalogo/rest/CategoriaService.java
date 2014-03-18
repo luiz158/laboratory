@@ -22,7 +22,7 @@ import br.gov.serpro.catalogo.entity.Categoria;
 import br.gov.serpro.catalogo.persistence.CategoriaDAO;
 
 @ValidateRequest
-@Path("/api/categoria")
+@Path("categoria")
 @Produces(APPLICATION_JSON)
 public class CategoriaService {
 	
@@ -36,7 +36,7 @@ public class CategoriaService {
 	}
 
 	@DELETE
-	@Path("/{id}")
+	@Path("{id}")
 	@Transactional
 	public void excluir(@NotNull @PathParam("id") Long id) {
 		categoriaDAO.delete(id);
@@ -54,13 +54,13 @@ public class CategoriaService {
 	}
 	
 	@GET
-	@Path("/{id}")
+	@Path("{id}")
 	public Categoria carregar(@NotNull @PathParam("id") Long id) {
 		return categoriaDAO.load(id);
 	}
 	
 	@GET
-	@Path("/listar/{tecnologiaId}")
+	@Path("listar/{tecnologiaId}")
 	public List<Categoria> listarCategoriaByTecnologia(@NotNull @PathParam("tecnologiaId") Long tecnologiaId) {
 		String jpql = "SELECT c FROM Categoria c WHERE c.tecnologia.id ="+tecnologiaId;
 		return categoriaDAO.findByJPQL(jpql);

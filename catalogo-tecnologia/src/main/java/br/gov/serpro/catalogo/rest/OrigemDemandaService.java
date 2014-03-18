@@ -18,12 +18,11 @@ import javax.ws.rs.Produces;
 import org.jboss.resteasy.spi.validation.ValidateRequest;
 
 import br.gov.frameworkdemoiselle.transaction.Transactional;
-import br.gov.serpro.catalogo.entity.Fornecedor;
 import br.gov.serpro.catalogo.entity.OrigemDemanda;
 import br.gov.serpro.catalogo.persistence.OrigemDemandaDAO;
 
 @ValidateRequest
-@Path("/api/origemDemanda")
+@Path("origemDemanda")
 @Produces(APPLICATION_JSON)
 public class OrigemDemandaService {
 	
@@ -37,7 +36,7 @@ public class OrigemDemandaService {
 	}
 
 	@DELETE
-	@Path("/{id}")
+	@Path("{id}")
 	@Transactional
 	public void excluir(@NotNull @PathParam("id") Long id) {
 		origemDemandaDAO.delete(id);
@@ -55,7 +54,7 @@ public class OrigemDemandaService {
 	}
 	
 	@GET
-	@Path("/{id}")
+	@Path("{id}")
 	public OrigemDemanda carregar(@NotNull @PathParam("id") Long id) {
 		return origemDemandaDAO.load(id);
 	}

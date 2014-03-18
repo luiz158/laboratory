@@ -22,7 +22,7 @@ import br.gov.serpro.catalogo.entity.Produto;
 import br.gov.serpro.catalogo.persistence.ProdutoDAO;
 
 @ValidateRequest
-@Path("/api/produto")
+@Path("produto")
 @Produces(APPLICATION_JSON)
 public class ProdutoService {
 
@@ -36,14 +36,14 @@ public class ProdutoService {
 	}
 
 	@DELETE
-	@Path("/{id}")
+	@Path("{id}")
 	@Transactional
 	public void excluir(@NotNull @PathParam("id") Long id) {
 		produtoDAO.delete(id);
 	}
 
 	@GET
-	@Path("/listar/{nome}")
+	@Path("listar/{nome}")
 	public List<Produto> listarLike(@NotNull @PathParam("nome") String nome) {
 		String jpql = "SELECT p FROM Produto p WHERE upper(p.nome) like upper('%"+nome+"%')";
 		return produtoDAO.findByJPQL(jpql);
@@ -61,13 +61,13 @@ public class ProdutoService {
 	}
 	
 	@GET
-	@Path("/{id}")
+	@Path("{id}")
 	public Produto carregar(@NotNull @PathParam("id") Long id) {
 		return produtoDAO.load(id);
 	}
 	
 	@GET
-	@Path("/listarByCategoria/{categoriaId}")
+	@Path("listarByCategoria/{categoriaId}")
 	public List<Produto> listarProdutoByCategoria(@NotNull @PathParam("categoriaId") Long categoriaId) {
 		String jpql = "select p from Produto p inner join p.categorias s where s.id = "+categoriaId;
 		return produtoDAO.findByJPQL(jpql);

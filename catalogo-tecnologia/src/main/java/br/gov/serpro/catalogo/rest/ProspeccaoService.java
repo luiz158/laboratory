@@ -23,7 +23,7 @@ import br.gov.serpro.catalogo.entity.Prospeccao;
 import br.gov.serpro.catalogo.persistence.ProspeccaoDAO;
 
 @ValidateRequest
-@Path("/api/prospeccao")
+@Path("prospeccao")
 @Produces(APPLICATION_JSON)
 public class ProspeccaoService {
 
@@ -41,14 +41,14 @@ public class ProspeccaoService {
 	
 	@PUT
 	@Transactional
-	@Path("/finalizar")
+	@Path("finalizar")
 	public void finalizar(@Valid Prospeccao prospeccao) {
 		faseBC.finalizarFase(prospeccao);
 	}
 	
 
 	@DELETE
-	@Path("/{id}")
+	@Path("{id}")
 	@Transactional
 	public void excluir(@NotNull @PathParam("id") Long id) {
 		prospeccaoDAO.delete(id);
@@ -66,7 +66,7 @@ public class ProspeccaoService {
 	}
 	
 	@GET
-	@Path("/{id}")
+	@Path("{id}")
 	public Prospeccao carregar(@NotNull @PathParam("id") Long id) {
 		return prospeccaoDAO.load(id);
 	}

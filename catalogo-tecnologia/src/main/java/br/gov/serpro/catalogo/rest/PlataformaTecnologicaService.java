@@ -22,7 +22,7 @@ import br.gov.serpro.catalogo.entity.PlataformaTecnologica;
 import br.gov.serpro.catalogo.persistence.PlataformaTecnologicaDAO;
 
 @ValidateRequest
-@Path("/api/plataformaTecnologica")
+@Path("plataformaTecnologica")
 @Produces(APPLICATION_JSON)
 public class PlataformaTecnologicaService {
 
@@ -36,7 +36,7 @@ public class PlataformaTecnologicaService {
 	}
 
 	@DELETE
-	@Path("/{id}")
+	@Path("{id}")
 	@Transactional
 	public void excluir(@NotNull @PathParam("id") Long id) {
 		plataformaTecnologicaDAO.delete(id);
@@ -54,7 +54,7 @@ public class PlataformaTecnologicaService {
 	}
 	
 	@GET
-	@Path("/{id}")
+	@Path("{id}")
 	public PlataformaTecnologica carregar(@NotNull @PathParam("id") Long id) {
 		return plataformaTecnologicaDAO.load(id);
 	}

@@ -20,7 +20,7 @@ import br.gov.serpro.catalogo.entity.FaseInteressado;
 import br.gov.serpro.catalogo.entity.FaseMembro;
 import br.gov.serpro.catalogo.entity.User;
 
-@Path("/api/fase")
+@Path("fase")
 @Produces(APPLICATION_JSON)
 public class FaseService {
 
@@ -33,51 +33,51 @@ public class FaseService {
 	}
 
 	@GET
-	@Path("/fluxo/{id}")
+	@Path("fluxo/{id}")
 	public List<Fase> obterCadeiaDasFases(@PathParam("id") Long id) {
 		return faseBC.obterCadeiaDasFases(id);
 
 	}
 	
 	@POST
-	@Path("/usuario/carregar")
+	@Path("usuario/carregar")
 	public User carregarUsuario(User user) {
 		return faseBC.carregarUsuario(user);
 	}
 
 	@POST
-	@Path("/{id}/membros/add")
+	@Path("{id}/membros/add")
 	public User adicionarMembro(User user, @PathParam("id") Long id) {
 		return faseBC.adicionarMembro(user, id);
 	}
 
 	@GET
-	@Path("/{id}/membros")
+	@Path("{id}/membros")
 	public List<FaseMembro> obterMembros(@PathParam("id") Long id) {
 		return faseBC.obterMembros(id);
 	}
 
 	@DELETE
-	@Path("/membros/excluir/{id}")
+	@Path("membros/excluir/{id}")
 	@Transactional
 	public void excluir(@NotNull @PathParam("id") Long id) {
 		faseBC.deleteMembro(id);
 	}
 
 	@POST
-	@Path("/{id}/interessados/add")
+	@Path("{id}/interessados/add")
 	public User adicionarInteressado(User user, @PathParam("id") Long id) {
 		return faseBC.adicionarInteressado(user, id);
 	}
 
 	@GET
-	@Path("/{id}/interessados")
+	@Path("{id}/interessados")
 	public List<FaseInteressado> obterInteressados(@PathParam("id") Long id) {
 		return faseBC.obterInteressados(id);
 	}
 
 	@DELETE
-	@Path("/interessados/excluir/{id}")
+	@Path("interessados/excluir/{id}")
 	@Transactional
 	public void excluirInteressados(@NotNull @PathParam("id") Long id) {
 		faseBC.deleteInteressado(id);

@@ -18,7 +18,7 @@ import br.gov.serpro.catalogo.entity.Fase;
 import br.gov.serpro.catalogo.entity.FaseProduto;
 import br.gov.serpro.catalogo.persistence.FaseProdutoDAO;
 
-@Path("/api/fase/produto")
+@Path("fase/produto")
 @Produces(APPLICATION_JSON)
 public class FaseProdutoService {
 	
@@ -26,7 +26,7 @@ public class FaseProdutoService {
 	private FaseProdutoDAO faseProdutoDAO;
 	
 
-	@GET @Path("/{fase}")
+	@GET @Path("{fase}")
 	public List<FaseProduto> produtosDaFase(@PathParam("fase") Long fase) {
 		Fase f = new Fase();
 		f.setId(fase);
@@ -34,7 +34,7 @@ public class FaseProdutoService {
 	}
 	
 	@DELETE
-	@Path("/{id}")
+	@Path("{id}")
 	@Transactional
 	public void excluir(@NotNull @PathParam("id") Long id) {
 		faseProdutoDAO.delete(id);

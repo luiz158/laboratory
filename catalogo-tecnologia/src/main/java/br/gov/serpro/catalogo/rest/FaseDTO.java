@@ -4,7 +4,6 @@ import java.util.Date;
 
 import br.gov.serpro.catalogo.entity.Fase;
 import br.gov.serpro.catalogo.entity.OrigemDemanda;
-import br.gov.serpro.catalogo.entity.User;
 
 public class FaseDTO{
 	/* Campos de pesquisa */

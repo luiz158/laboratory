@@ -22,7 +22,7 @@ import br.gov.serpro.catalogo.entity.Fabricante;
 import br.gov.serpro.catalogo.persistence.FabricanteDAO;
 
 @ValidateRequest
-@Path("/api/fabricante")
+@Path("fabricante")
 @Produces(APPLICATION_JSON)
 public class FabricanteService {
 
@@ -36,7 +36,7 @@ public class FabricanteService {
 	}
 
 	@DELETE
-	@Path("/{id}")
+	@Path("{id}")
 	@Transactional
 	public void excluir(@NotNull @PathParam("id") Long id) {
 		fabricanteDAO.delete(id);
@@ -54,7 +54,7 @@ public class FabricanteService {
 	}
 	
 	@GET
-	@Path("/{id}")
+	@Path("{id}")
 	public Fabricante carregar(@NotNull @PathParam("id") Long id) {
 		return fabricanteDAO.load(id);
 	}
