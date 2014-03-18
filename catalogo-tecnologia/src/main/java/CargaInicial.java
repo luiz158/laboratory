@@ -211,12 +211,12 @@ public class CargaInicial {
 		i.setObjetivo("Fornecer as bolas que já foram prospectadas com seus devidos condicionamentos");
 		i.setDataRealizacao(new Date());
 		i.setSituacao(Situacao.REPROVADO);	
-		i.setRestricao(true);
+		i.setRestricao(1);
 		i.setRestricaoQuemPode("Apenas robgol pode usar este tipo de bola");
 		i.setRestricaoJustificativa("Ele é o único com habilidade suficiente para isso.");		
 		i.setAquisicaoNecessaria(0);
-		i.setCapacitacao(false);		
-		i.setAnaliseDeRiscos(false);
+		i.setCapacitacao(0);		
+		i.setAnaliseDeRiscos(0);
 		i = (Internalizacao)faseBC.salvar(i);
 				
 
@@ -305,6 +305,23 @@ public class CargaInicial {
 		List<PlataformaTecnologica> listaPlataformas = new ArrayList<PlataformaTecnologica>();
 		listaPlataformas = plataformaTecnologicaDAO.findAll();
 
+		Tecnologia tecnologia = new Tecnologia();
+		tecnologia.setNome("Software");
+		tecnologia.setDescricao("tecn de software");
+		tecnologiaDAO.insert(tecnologia);
+		
+		Categoria categoria1 = new Categoria();
+		categoria1.setNome("Liguagem de programação");
+		categoria1.setDescricao("Categoriax");
+		categoria1.setTecnologia(tecnologia);
+		categoriaDAO.insert(categoria1);
+				
+		Categoria categoria2 = new Categoria();
+		categoria2.setNome("Banco de dados");
+		categoria2.setDescricao("Banco de dados");
+		categoria2.setTecnologia(tecnologia);
+		categoriaDAO.insert(categoria2);
+		
 		Produto produto = new Produto();
 		produto.setDescricao("Melhor produto educativo dos ultimos 20 anos.");
 		produto.setLicenciamento(l);
@@ -317,6 +334,10 @@ public class CargaInicial {
 		produto.setRelease("2.0");
 		produtoDAO.insert(produto);		
 		
+		produto.setCategorias(new ArrayList<Categoria>());
+		produto.getCategorias().add(categoria1);
+		produtoDAO.update(produto);
+		
 		produto = new Produto();
 		produto.setDescricao("Maior trocador de porcaria via telefones modernos que tem internê");
 		produto.setFabricante(fabricante);
@@ -326,30 +347,13 @@ public class CargaInicial {
 		produto.setLegado(false);
 		produto.setVersao("2.0");
 		produto.setRelease("2.0");
-		produtoDAO.insert(produto);
+		produtoDAO.insert(produto);		
 		
 		
-		Tecnologia tecnologia = new Tecnologia();
-		tecnologia.setNome("Software");
-		tecnologia.setDescricao("tecn de software");
-		tecnologiaDAO.insert(tecnologia);
-		
-		
-		Categoria categoria = new Categoria();
-		categoria.setNome("Liguagem de programação");
-		categoria.setDescricao("Categoriax");
-		categoria.setTecnologia(tecnologia);
-		categoriaDAO.insert(categoria);
-		//produto.getCategorias().add(categoria);
-		
-		categoria = new Categoria();
-		categoria.setNome("Banco de dados");
-		categoria.setDescricao("Banco de dados");
-		categoria.setTecnologia(tecnologia);
-		categoriaDAO.insert(categoria);
-		
-		//produto.getCategorias().add(categoria);
-		//produtoDAO.update(produto);
+		produto.setCategorias(new ArrayList<Categoria>());
+		produto.getCategorias().add(categoria1);
+		produto.getCategorias().add(categoria2);
+		produtoDAO.update(produto);
 		
 		OrigemDemanda origemDemanda = new OrigemDemanda();
 		origemDemanda.setNome("SPECX");

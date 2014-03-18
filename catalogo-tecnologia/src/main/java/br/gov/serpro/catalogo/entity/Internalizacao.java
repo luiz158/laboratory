@@ -10,10 +10,11 @@ public class Internalizacao extends Fase {
 
 	public Internalizacao() {
 		this.setFase(FaseEnum.INTERNALIZACAO);
+		this.setProximaFase(FaseEnum.SUSTENTACAO);
 	}
 
 	// Restricoes de uso
-	private Boolean restricao;
+	private Integer restricao;
 	private String restricaoQuemPode;
 	private String restricaoJustificativa;
 
@@ -25,17 +26,18 @@ public class Internalizacao extends Fase {
 	private List<Documento> aquisicaoContratos;
 
 	// capacitacoes
-	private Boolean capacitacao;
+	private Integer capacitacao;
 	private String capacitacaoNecessarias;
 	private String capacitacaoRealizadas;
 	
 	// capacitacoes
-	private Boolean analiseDeRiscos;
+	private Integer analiseDeRiscos;
 	private String analiseDeRiscosJustificativa;
-	public Boolean getRestricao() {
+	
+	public Integer getRestricao() {
 		return restricao;
 	}
-	public void setRestricao(Boolean restricao) {
+	public void setRestricao(Integer restricao) {
 		this.restricao = restricao;
 	}
 	public String getRestricaoQuemPode() {
@@ -74,10 +76,10 @@ public class Internalizacao extends Fase {
 	public void setAquisicaoContratos(List<Documento> aquisicaoContratos) {
 		this.aquisicaoContratos = aquisicaoContratos;
 	}
-	public Boolean getCapacitacao() {
+	public Integer getCapacitacao() {
 		return capacitacao;
 	}
-	public void setCapacitacao(Boolean capacitacao) {
+	public void setCapacitacao(Integer capacitacao) {
 		this.capacitacao = capacitacao;
 	}
 	public String getCapacitacaoNecessarias() {
@@ -92,10 +94,10 @@ public class Internalizacao extends Fase {
 	public void setCapacitacaoRealizadas(String capacitacaoRealizadas) {
 		this.capacitacaoRealizadas = capacitacaoRealizadas;
 	}
-	public Boolean getAnaliseDeRiscos() {
+	public Integer getAnaliseDeRiscos() {
 		return analiseDeRiscos;
 	}
-	public void setAnaliseDeRiscos(Boolean analiseDeRiscos) {
+	public void setAnaliseDeRiscos(Integer analiseDeRiscos) {
 		this.analiseDeRiscos = analiseDeRiscos;
 	}
 	public String getAnaliseDeRiscosJustificativa() {
