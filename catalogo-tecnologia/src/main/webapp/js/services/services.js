@@ -25,7 +25,7 @@ services.factory('DocumentoService', function($http, $q) {
 	};
 	
 	service.getDocumentos = function(id) {
-		console.log(id)
+		console.log(id);
 		var deferred = $q.defer();
     	$http({
 			url : 'api/documento/fase/'+id,
