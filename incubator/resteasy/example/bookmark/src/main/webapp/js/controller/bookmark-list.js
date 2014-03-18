@@ -1,4 +1,6 @@
 $(function() {
+    $("#new").focus();
+
     $(document).ready(function() {
 	BookmarkProxy.findAll(findAllOk);
     });

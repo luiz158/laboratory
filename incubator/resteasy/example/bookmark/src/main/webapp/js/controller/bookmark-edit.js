@@ -1,6 +1,5 @@
 $(function() {
-	
-	$("#delete").hide();
+    $("#delete").hide();
     $("#description").focus();
 
     $(document).ready(function() {
@@ -67,7 +66,7 @@ function saveFailed(request) {
 	$($("form input").get().reverse()).each(function() {
 	    var id = $(this).attr('id');
 	    var message = null;
-	    
+
 	    $.each(request.responseJSON, function(index, value) {
 		if (id == value.property) {
 		    message = value.message;
