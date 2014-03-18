@@ -151,9 +151,40 @@ public class FaseBC {
 				throw new ValidationException().addViolation(null, "Ao menos um produto deve ter sido prospectado.");	
 		}
 		
+		if(fase.getFase().equals(FaseEnum.INTERNALIZACAO)){
+			Internalizacao i = (Internalizacao)fase;
+			if(i.getAquisicaoNecessaria()>0){
+				if (i.getAquisicaoItens() == null || i.getAquisicaoItens().isEmpty())
+					throw new ValidationException().addViolation("aquisicaoItens", "Favor as aquisições necessárias")
+							.addViolation(null, "Favor as aquisições necessárias");
+			}
+			
+			if(i.getCapacitacao()>0){
+				if (i.getCapacitacaoNecessarias()== null || i.getCapacitacaoNecessarias().isEmpty())
+					throw new ValidationException().addViolation("capacitacaoNecessarias", "Favor as capacitações necessárias")
+							.addViolation(null, "Favor as capacitações necessárias");
+			}
+			
+			if(i.getRestricao()>0){
+				if (i.getRestricaoQuemPode()== null || i.getRestricaoQuemPode().isEmpty())
+					throw new ValidationException().addViolation("restricaoQuemPode", "Favor informar quais clientes e/ou áreas internas podem utilizar o Produto")
+							.addViolation(null, "Favor informar quais clientes e/ou áreas internas podem utilizar o Produto");
+				if (i.getRestricaoJustificativa()== null || i.getRestricaoJustificativa().isEmpty())
+					throw new ValidationException().addViolation("restricaoJustificativa", "Favor informar a justificativa da restrição de uso.")
+							.addViolation(null, "Favor informar a justificativa da restrição de uso.");
+			}
+			
+			if(i.getAnaliseDeRiscos()<1){
+				if (i.getAnaliseDeRiscosJustificativa()== null || i.getAnaliseDeRiscosJustificativa().isEmpty())
+					throw new ValidationException().addViolation("analiseDeRiscosJustificativa", "Favor justificar a inexistencia da Análise de riscos.")
+							.addViolation(null, "Favor justificar a inexistencia da Análise de riscos.");
+			}
+		}
+		
 
 		validarFinalizarCamposProximaFase(fase);
 	}
+	
 
 
 	/**
