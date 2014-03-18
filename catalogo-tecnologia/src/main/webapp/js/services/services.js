@@ -38,7 +38,7 @@ services.factory('AlertService', function($rootScope, $timeout) {
   	    var alert = alertService.add(type, msg);
 		$timeout(function() {
 			alertService.closeAlert(alert);
-		}, timeout ? timeout: 3000);
+		}, timeout ? timeout: 4000);
 	};
 	
 	alertService.add = function(type, msg, timeout) {
