@@ -30,7 +30,7 @@ public class User implements br.gov.frameworkdemoiselle.security.User {
 	
 	private String setor;
 	
-	@OneToMany
+	@OneToMany(targetEntity = Grupo.class)
 	private List<Grupo> grupos;
 
 	public String getId() {
