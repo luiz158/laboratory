@@ -39,6 +39,7 @@
 
 	<name>demoiselle_resteasy</name>
 
+	<!--
 	<filter>
 		<filter-name>Resteasy Filter</filter-name>
 		<filter-class>org.jboss.resteasy.plugins.server.servlet.FilterDispatcher</filter-class>
@@ -55,6 +56,7 @@
 		<param-name>resteasy.scan</param-name>
 		<param-value>true</param-value>
 	</context-param>
+	-->
 
 	<ordering>
 		<after>
