@@ -56,7 +56,7 @@ services.factory('UserService', function($http, $q, AlertService) {
 					AlertService.addWithTimeout('danger', data[0].message);
 				}else if(status == 413){
 					AlertService.addWithTimeout('danger', "O servidor não suporta a quantidade de registros retornados. "
-					+ "Por favor, seja mais restritivo e, sua pesquisa.");
+					+ "Por favor, seja mais restritivo em sua pesquisa.");
 				}
 			});
 		} else {
