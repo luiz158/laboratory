@@ -70,15 +70,15 @@ controllers.controller('UserNew', function UserNew($scope, $http, $location, Ale
 			headers : {
 				'Content-Type' : 'application/json;charset=utf8'
 			}
-		}).success(
-				function(data) {
-					AlertService.addWithTimeout('success',
-							'Usuário salvo com sucesso');
-					$location.path('/user');
-				}).error(function(data, status) {
+		}).success(function(data) {
+			AlertService.addWithTimeout('success', 'Usuário salvo com sucesso');
+			$location.path('/user');
+		}).error(function(data, status) {
+			console.log("data: " + data);
+			console.log("status: " + status);
 			if (status == 412) {
 				AlertService.addWithTimeout('danger', data[0].message);
 			}
 		});
-	}
+	};
 });
