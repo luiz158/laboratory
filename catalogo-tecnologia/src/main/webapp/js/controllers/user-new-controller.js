@@ -18,31 +18,17 @@ controllers.controller('UserNew', function UserNew($scope, $http, $location, Ale
 		$scope.users = [];
 		$scope.user = {};
 		if (cpf != "" && cpf != null) {
-			$scope.pesquisarCPF(cpf);
+			UserService.searchByCPF(cpf).then(function(data) {
+				$scope.user = data;
+				$scope.user.grupos = [];
+				$scope.users.push($scope.user);
+			});
 		} else if (nome != "" && nome != null) {
 			$scope.pesquisarNome(nome);
 		} else {
 			AlertService.addWithTimeout('warning',
 					'Preencha um dos campos antes executar a pesquisa!');
 		}
-	};
-
-	$scope.pesquisarCPF = function(cpf) {
-		$http.get('api/user/cpf/' + cpf).success(
-				function(data) {
-					if (data == "") {
-						AlertService.addWithTimeout('warning',
-								'Usuário não cadastrado no LDAP');
-					} else {
-						$scope.user = data;
-						$scope.user.grupos = [];
-						$scope.users.push($scope.user);
-					}
-				}).error(function(data, status) {
-			if (status == 412) {
-				AlertService.addWithTimeout('danger', data[0].message);
-			}
-		});
 	};
 
 	$scope.pesquisarNome = function(nome) {
