@@ -5,6 +5,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.naming.SizeLimitExceededException;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.GET;
@@ -53,7 +54,11 @@ public class UserService {
 	@GET
 	@Path("nome/{nome}")
 	public List<User> carregarByNome(@NotNull @PathParam("nome") String nome) throws Exception {
-		return ldapAuthenticator.searchUserByDisplayName(nome);
+		try {
+			return ldapAuthenticator.searchUserByDisplayName(nome);
+		}catch(SizeLimitExceededException sizeLimitExceededException) {
+			throw sizeLimitExceededException;
+		}
 	}
 	
 	@PUT

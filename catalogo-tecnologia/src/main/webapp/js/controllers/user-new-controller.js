@@ -5,7 +5,6 @@ var controllers = angular.module('catalogo.controllers');
 
 controllers.controller('UserNew', function UserNew($scope, $http, $location, AlertService, UserService) {
 
-	var MIN_NUMBER_OF_NAME_CARACTERS = 5;
 	$scope.users = [];
 	$scope.grupos = [];
 	$scope.name = {};
@@ -24,36 +23,14 @@ controllers.controller('UserNew', function UserNew($scope, $http, $location, Ale
 				$scope.users.push($scope.user);
 			});
 		} else if (nome != "" && nome != null) {
-			$scope.pesquisarNome(nome);
-		} else {
-			AlertService.addWithTimeout('warning',
-					'Preencha um dos campos antes executar a pesquisa!');
-		}
-	};
-
-	$scope.pesquisarNome = function(nome) {
-		$scope.name = nome;
-		if ($scope.name.length >= MIN_NUMBER_OF_NAME_CARACTERS) {
-			$http.get('api/user/nome/' + nome).success(
-					function(data) {
-						if (data == "") {
-							AlertService.addWithTimeout('warning',
-									'Usuário não cadastrado no LDAP');
-						} else {
-							$scope.users = data;
-							$.each($scope.users, function(i, user) {
-								user.grupos = [];
-							});
-						}
-					}).error(function(data, status) {
-				if (status == 412) {
-					AlertService.addWithTimeout('danger', data[0].message);
-				}
+			UserService.searchByName(nome).then(function(data) {
+				$scope.users = data;
+				$.each($scope.users, function(i, user) {
+					user.grupos = [];
+				});
 			});
 		} else {
-			AlertService.addWithTimeout('warning', 'Digite pelo menos '
-					+ MIN_NUMBER_OF_NAME_CARACTERS
-					+ ' caracteres para realizar a consulta.');
+			AlertService.addWithTimeout('warning', 'Preencha um dos campos antes executar a pesquisa!');
 		}
 	};
 
@@ -93,15 +70,15 @@ controllers.controller('UserNew', function UserNew($scope, $http, $location, Ale
 			headers : {
 				'Content-Type' : 'application/json;charset=utf8'
 			}
-		}).success(
-				function(data) {
-					AlertService.addWithTimeout('success',
-							'Usuário salvo com sucesso');
-					$location.path('/user');
-				}).error(function(data, status) {
+		}).success(function(data) {
+			AlertService.addWithTimeout('success', 'Usuário salvo com sucesso');
+			$location.path('/user');
+		}).error(function(data, status) {
+			console.log("data: " + data);
+			console.log("status: " + status);
 			if (status == 412) {
 				AlertService.addWithTimeout('danger', data[0].message);
 			}
 		});
-	}
+	};
 });
