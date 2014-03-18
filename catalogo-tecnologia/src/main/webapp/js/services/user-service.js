@@ -28,8 +28,7 @@ services.factory('UserService', function($http, $q, AlertService) {
 		$http.get('api/user/cpf/' + cpf).success(
 				function(data) {
 					if (data == "") {
-						AlertService.addWithTimeout('warning',
-								'Usuário não cadastrado no LDAP');
+						AlertService.addWithTimeout('warning', 'Usuário não cadastrado no LDAP');
 					} else {
 						deferred.resolve(data);
 					}
@@ -51,8 +50,13 @@ services.factory('UserService', function($http, $q, AlertService) {
 					deferred.resolve(data);
 				}
 			}).error(function(data, status) {
+				console.log("data: " + data);
+				console.log("status: " + status);
 				if (status == 412) {
 					AlertService.addWithTimeout('danger', data[0].message);
+				}else if(status == 413){
+					AlertService.addWithTimeout('danger', "O servidor não suporta a quantidade de registros retornados. "
+					+ "Por favor, seja mais restritivo e, sua pesquisa.");
 				}
 			});
 		} else {
