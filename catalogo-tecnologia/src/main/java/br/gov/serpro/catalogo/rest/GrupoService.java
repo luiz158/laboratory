@@ -22,7 +22,7 @@ import br.gov.serpro.catalogo.entity.Grupo;
 import br.gov.serpro.catalogo.persistence.GrupoDAO;
 
 @ValidateRequest
-@Path("/api/grupo")
+@Path("grupo")
 @Produces(APPLICATION_JSON)
 public class GrupoService {
 
@@ -42,7 +42,7 @@ public class GrupoService {
 	}
 
 	@DELETE
-	@Path("/{id}")
+	@Path("{id}")
 	@Transactional
 	public void excluir(@NotNull @PathParam("id") Long id) {
 		grupoDAO.delete(id);
@@ -54,7 +54,7 @@ public class GrupoService {
 	}
 	
 	@GET
-	@Path("/{id}")
+	@Path("{id}")
 	public Grupo carregar(@NotNull @PathParam("id") Long id) {
 		return grupoDAO.load(id);
 	}

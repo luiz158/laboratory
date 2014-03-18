@@ -19,7 +19,7 @@ import br.gov.serpro.catalogo.entity.Declinio;
 import br.gov.serpro.catalogo.persistence.DeclinioDAO;
 
 @ValidateRequest
-@Path("/api/declinio")
+@Path("declinio")
 @Produces(APPLICATION_JSON)
 public class DeclinioService {
 
@@ -39,7 +39,7 @@ public class DeclinioService {
 	}
 	
 	@GET
-	@Path("/{id}")
+	@Path("{id}")
 	public Declinio carregar(@NotNull @PathParam("id") Long id) {
 		return declinioDAO.load(id);
 	}

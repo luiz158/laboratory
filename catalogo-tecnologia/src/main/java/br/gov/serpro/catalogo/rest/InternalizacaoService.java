@@ -19,7 +19,7 @@ import br.gov.serpro.catalogo.bussiness.FaseBC;
 import br.gov.serpro.catalogo.entity.Internalizacao;
 
 @ValidateRequest
-@Path("/api/internalizacao")
+@Path("internalizacao")
 @Produces(APPLICATION_JSON)
 public class InternalizacaoService {
 	
@@ -34,7 +34,7 @@ public class InternalizacaoService {
 	
 	@PUT
 	@Transactional
-	@Path("/finalizar")
+	@Path("finalizar")
 	public void finalizar(@Valid Internalizacao f) {
 		faseBC.finalizarFase(f);
 	}
@@ -46,7 +46,7 @@ public class InternalizacaoService {
 	}
 	
 	@GET
-	@Path("/{id}")
+	@Path("{id}")
 	public Internalizacao carregar(@NotNull @PathParam("id") Long id) {
 		return (Internalizacao)faseBC.load(id);
 	}

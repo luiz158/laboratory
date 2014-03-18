@@ -23,7 +23,7 @@ import br.gov.serpro.catalogo.entity.Analise;
 import br.gov.serpro.catalogo.persistence.AnaliseDAO;
 
 @ValidateRequest
-@Path("/api/analise")
+@Path("analise")
 @Produces(APPLICATION_JSON)
 public class AnaliseService {
 
@@ -40,7 +40,7 @@ public class AnaliseService {
 	}
 
 	@DELETE
-	@Path("/{id}")
+	@Path("{id}")
 	@Transactional
 	public void excluir(@NotNull @PathParam("id") Long id) {
 		analiseDAO.delete(id);
@@ -59,14 +59,14 @@ public class AnaliseService {
 	
 	@PUT
 	@Transactional
-	@Path("/finalizar")
+	@Path("finalizar")
 	public void finalizar(@Valid Analise analise) {
 		faseBC.finalizarFase(analise);
 	}
 	
 	
 	@GET
-	@Path("/{id}")
+	@Path("{id}")
 	public Analise carregar(@NotNull @PathParam("id") Long id) {
 		return analiseDAO.load(id);
 	}

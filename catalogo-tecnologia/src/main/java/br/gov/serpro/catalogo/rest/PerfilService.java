@@ -11,7 +11,7 @@ import org.jboss.resteasy.spi.validation.ValidateRequest;
 import br.gov.serpro.catalogo.entity.Perfil;
 
 @ValidateRequest
-@Path("/api/perfis")
+@Path("perfis")
 @Produces(APPLICATION_JSON)
 public class PerfilService {
 
