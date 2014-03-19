@@ -1,7 +1,9 @@
 package br.gov.serpro.catalogo.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
@@ -22,9 +24,7 @@ public class Internalizacao extends Fase {
 	private Integer aquisicaoNecessaria;
 	private String aquisicaoItens;
 	private String aquisicaoResultado;
-	@OneToMany
-	private List<Documento> aquisicaoContratos;
-
+	
 	// capacitacoes
 	private Integer capacitacao;
 	private String capacitacaoNecessarias;
@@ -70,12 +70,7 @@ public class Internalizacao extends Fase {
 	public void setAquisicaoResultado(String aquisicaoResultado) {
 		this.aquisicaoResultado = aquisicaoResultado;
 	}
-	public List<Documento> getAquisicaoContratos() {
-		return aquisicaoContratos;
-	}
-	public void setAquisicaoContratos(List<Documento> aquisicaoContratos) {
-		this.aquisicaoContratos = aquisicaoContratos;
-	}
+
 	public Integer getCapacitacao() {
 		return capacitacao;
 	}

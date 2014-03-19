@@ -3,6 +3,44 @@
 /* Services */
 var services = angular.module('catalogo.services');
 
+services.factory('DocumentoService', function($http, $q) {
+	var service = {};				
+
+	service.inserir = function(doc) {
+		console.log(doc);
+	   var deferred = $q.defer();
+	   $http({
+			url : 'api/documento/fase/'+doc.fase.id+'/add',
+			method : "POST",
+			data : doc,
+			headers : {
+				'Content-Type' : 'application/json;charset=utf8'
+			}
+		}).success(function(data) {
+			deferred.resolve(data);
+		}).error(function(data, status) {	
+			deferred.reject(data);
+		});		   
+	   return deferred.promise;
+	};
+	
+	service.getDocumentos = function(id) {
+		console.log(id);
+		var deferred = $q.defer();
+    	$http({
+			url : 'api/documento/fase/'+id,
+			method : "GET"
+		}).success(function(data) {
+			deferred.resolve(data);
+		}).error(function(data, status) {	
+			deferred.reject(data);
+		}); 
+	   return deferred.promise;
+	};
+	  
+	return service;
+});
+
 services.factory('OrigemDemandaService', function($http, $q) {
 	var itens = [];
 	var service = {};				

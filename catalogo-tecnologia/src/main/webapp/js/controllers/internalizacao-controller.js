@@ -4,7 +4,7 @@
 var controllers = angular.module('catalogo.controllers');
 
 
-controllers.controller('InternalizacaoCtrl', function InternalizacaoCtrl($scope, $rootScope, $http,$location, $routeParams, AlertService, OrigemDemandaService, ValidationService) {
+controllers.controller('InternalizacaoCtrl', function InternalizacaoCtrl($scope, $rootScope, $http,$location, $routeParams, AlertService, OrigemDemandaService, ValidationService, DocumentoService) {
 
 	$(window).scrollTop(0);
 	
@@ -13,11 +13,32 @@ controllers.controller('InternalizacaoCtrl', function InternalizacaoCtrl($scope,
 	$scope.fase.fase = 3;
 	$scope.origemDemanda = [];
 	
-	console.log(OrigemDemandaService.getItens());
+	$scope.documentos = [];
 	
+	$scope.ciclo = {numero: 0, fator: 1};
+	
+	// Obtém os itens para o combo de Origem
 	OrigemDemandaService.getItens().then(function(data) {
 		$scope.origemDemanda = data;
 	});
+	
+		
+
+	function atualizarCiclo(newValue){	
+		var ciclo = $scope.ciclo.numero * $scope.ciclo.fator;
+		console.log(ciclo);
+		$scope.fase.proximaFaseCiclo = ciclo;
+	}
+   
+	
+	$scope.$watch('ciclo.numero', function(newValue, oldValue) {
+		atualizarCiclo(newValue);
+     });
+	
+	$scope.$watch('ciclo.fator', function(newValue, oldValue) {
+		atualizarCiclo(newValue);
+     });
+	
 
 	if ($scope.fase.id) {
 		$http.get('api/internalizacao/' + $scope.fase.id).success(function(data) {
@@ -28,6 +49,10 @@ controllers.controller('InternalizacaoCtrl', function InternalizacaoCtrl($scope,
 					origemReferencia: 	data.faseAnterior.origemReferencia,
 					codigoReferencia: 	data.faseAnterior.codigoReferencia
 			};
+			if($scope.fase.proximaFaseCiclo){
+				$scope.ciclo.numero = $scope.fase.proximaFaseCiclo;
+			}
+			listarDocumentos();
 		}).error( function(data, status) {
 			AlertService.addWithTimeout('danger','Não foi possível encontrar o registro');
 			history.back();
@@ -72,5 +97,30 @@ controllers.controller('InternalizacaoCtrl', function InternalizacaoCtrl($scope,
 		$scope.salvar(true);
 	};
 	
+	function listarDocumentos(){
+		DocumentoService.getDocumentos($scope.fase.id).then(
+		function(data){
+			$scope.documentos = data;
+		});
+	}
+	
+
+	
+	$scope.adicionarDocumento = function() {
+		$scope.documento.fase = {id: $scope.fase.id};		
+		DocumentoService.inserir($scope.documento).then(
+		function(){
+			listarDocumentos();
+			$scope.documento = {};
+		}, function(reason) {
+    		console.log('Failed: ' + reason);
+  		}, function(update) {
+    		console.log('Got notification: ' + update);
+  		});
+	};
+	
+	$scope.removerDocumento = function() {
+		
+	};
 
 });
