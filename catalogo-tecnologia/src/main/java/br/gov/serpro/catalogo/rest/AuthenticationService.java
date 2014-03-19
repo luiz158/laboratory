@@ -2,6 +2,7 @@ package br.gov.serpro.catalogo.rest;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.DELETE;
@@ -13,6 +14,7 @@ import javax.ws.rs.Produces;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.jboss.resteasy.spi.validation.ValidateRequest;
 
+import br.gov.frameworkdemoiselle.security.AfterLoginSuccessful;
 import br.gov.frameworkdemoiselle.security.Credentials;
 import br.gov.frameworkdemoiselle.security.SecurityContext;
 import br.gov.frameworkdemoiselle.util.Beans;
@@ -29,28 +31,16 @@ public class AuthenticationService {
 
 	@Inject
 	private UserDAO userDAO;
-
+	
 	@POST
 	public User login(@Valid LoginForm form) throws Exception {
-		User user = new User();
-
 		Credentials credentials = Beans.getReference(Credentials.class);
 		credentials.setUsername(form.username);
 		credentials.setPassword(form.password);
 
 		securityContext.login();
 
-		if (securityContext.isLoggedIn()) {
-			user = (User) securityContext.getUser();
-			if (userDAO.loadByCPF(user.getCPF()) == null) {
-				user = userDAO.insert(user);
-			} else {
-				// user.setId(Long.parseLong(userDAO.loadByCPF(user.getName()).getId()));
-				user = userDAO.loadByCPF(user.getCPF());
-			}
-		}
-
-		return user;
+		return (User) securityContext.getUser();
 	}
 
 	@DELETE
