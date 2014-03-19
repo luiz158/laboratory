@@ -53,8 +53,10 @@ filters.filter('tipoArquivo', function() {
 
 
 var operacoes = {
-		CRIAR: {icone: "fa fa-plus", badge: "success"}, 
+		CRIAR: {icone: "fa fa-plus", badge: "info"}, 
 		ATUALIZAR: {icone: "fa fa-save", badge: "primary"}, 
+		APROVAR: {icone: "fa fa-thumbs-o-up", badge: "success"}, 
+		REPROVAR: {icone: "fa fa-thumbs-o-down", badge: "danger"}, 
 		FINALIZAR: {icone: "fa fa-check", badge: "warning"}, 
 		EXCLUIR: {icone: "fa fa-warning", badge: "danger"}
 };

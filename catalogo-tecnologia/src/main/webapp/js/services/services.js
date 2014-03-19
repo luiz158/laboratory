@@ -120,8 +120,11 @@ services.factory('ValidationService', function(AlertService) {
 	};
 	
 	service.registrarViolacoes = function(data){
-		angular.forEach(data, function(violation){
-			service.add(violation.property,violation.message);
+		console.log(data);
+		angular.forEach(data, function(violation){	
+			if(violation.message){
+				service.add(violation.property,violation.message);
+			}
 		});
 	};
 	

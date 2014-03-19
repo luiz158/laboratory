@@ -119,7 +119,9 @@ public class FaseBC {
 		validarFinalizar(fase);	
 		
 		faseDAO.update(fase);
-		faseHistoricoDAO.insert(new FaseHistorico(fase,OPERACAO.FINALIZAR));	
+					
+		OPERACAO operacao = (fase.getSituacao().equals(Situacao.APROVADO))?OPERACAO.APROVAR:OPERACAO.REPROVAR;
+		faseHistoricoDAO.insert(new FaseHistorico(fase,operacao));	
 		
 		// Se foi aprovado tem uma proxima fase;
 		if (fase.getSituacao().equals(Situacao.APROVADO) && !fase.getFase().equals(FaseEnum.DECLINIO)) {			
