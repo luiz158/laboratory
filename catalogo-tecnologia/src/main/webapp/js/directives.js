@@ -151,6 +151,32 @@ diretivas.directive('ngCampoUsuario', function() {
 	}
 });
 
+diretivas.directive('ngHistoricoFase', function() {
+	return {
+		restrict : 'E',
+		require : '^ngModel',
+		scope : {
+			fase : '=ngModel'
+		},
+		templateUrl : 'directives/historico-fase.html',
+		link : function(scope, elem, $attrs) {
+			
+		},
+		controller: function ($scope, $http, AlertService) {
+			$scope.historico = [];			
+				
+			$http({
+				url : 'api/fase/historico/'+$scope.fase.id,
+				method : "GET"
+			}).success(function(data) {
+				$scope.historico = data;						
+			}).error( function(data, status) {
+				AlertService.addWithTimeout('danger',data[0].message);
+			});
+		}
+	};
+});
+
 diretivas.directive('ngObservacoes', function() {
 	return {
 		restrict : 'E',

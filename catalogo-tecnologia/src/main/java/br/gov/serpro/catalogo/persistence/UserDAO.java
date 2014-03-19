@@ -39,12 +39,5 @@ public class UserDAO extends JPACrud<User, Long> {
 		return !query.getResultList().isEmpty();
 	}
 	
-	public void insertAuthenticateUser(@Observes AfterLoginSuccessful event, SecurityContext securityContext) {
-		User user = (User) securityContext.getUser();
-		if (loadByCPF(user.getCPF()) == null) {
-			UserDAO userDAO = Beans.getReference(UserDAO.class);
-			userDAO.insert(user);
-		} 
-	}
-	
+		
 }
