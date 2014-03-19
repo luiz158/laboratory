@@ -14,6 +14,7 @@ import javax.ws.rs.Produces;
 
 import org.jboss.resteasy.spi.validation.ValidateRequest;
 
+import br.gov.frameworkdemoiselle.security.LoggedIn;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.serpro.catalogo.bussiness.FaseBC;
 import br.gov.serpro.catalogo.entity.Internalizacao;
@@ -28,6 +29,7 @@ public class InternalizacaoService {
 	
 	@POST
 	@Transactional
+	@LoggedIn
 	public Long salvar(@Valid Internalizacao f) {
 		return faseBC.salvar(f).getId();
 	}
@@ -41,6 +43,7 @@ public class InternalizacaoService {
 	
 	@PUT
 	@Transactional
+	@LoggedIn
 	public void alterar(@Valid Internalizacao f) {
 		faseBC.salvar(f);
 	}

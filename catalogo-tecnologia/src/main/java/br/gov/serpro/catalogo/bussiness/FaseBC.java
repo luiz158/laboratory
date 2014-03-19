@@ -8,6 +8,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import br.gov.frameworkdemoiselle.resteasy.util.ValidationException;
+import br.gov.frameworkdemoiselle.security.LoggedIn;
 import br.gov.frameworkdemoiselle.security.SecurityContext;
 import br.gov.frameworkdemoiselle.stereotype.BusinessController;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
@@ -273,7 +274,7 @@ public class FaseBC {
 		return proximafase;
 	}
 
-
+	@LoggedIn
 	private Fase salvar(Fase fase) {
 		if(fase.getId()!=null){
 			faseDAO.update(fase);

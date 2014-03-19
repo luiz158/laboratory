@@ -8,12 +8,14 @@
 	<div class="panel-body">
 		<ul class="timeline">
 			<li ng-repeat="h in historico" ng-class-even="'timeline-inverted'">
-				<div class="timeline-badge">
-					<i class="fa fa-check"></i>
+				<div class="timeline-badge {{h.operacao | operacaoClass}}">
+					<i class="{{h.operacao | operacaoIcone}}"></i>
 				</div>
 				<div class="timeline-panel">
 					<div class="timeline-heading">
+						<a href="#{{h.fase.fase | faseUrl}}/{{h.fase.id}}">
 						<h4 class="timeline-title">{{h.fase.fase | nomeFase}}</h4>
+						</a>
 						<p>
 							<small class="text-muted"><i class="fa fa-time"></i> {{h.data | date:'MM/dd/yyyy'}} {{h.horario}} - {{h.usuario.name}}</small>
 						</p>
