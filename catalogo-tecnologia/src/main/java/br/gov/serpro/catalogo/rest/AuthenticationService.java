@@ -56,14 +56,7 @@ public class AuthenticationService {
 	@GET
 	@Path("user")
 	public User getUser() {
-		User user = null;
-		if (securityContext.isLoggedIn()) {
-			user = (User) securityContext.getUser();
-			if (user.getId() == null || user.getId().isEmpty()) {
-				user = userDAO.loadByCPF(user.getCPF());
-			}
-		}
-		return user;
+		return (User) securityContext.getUser();
 	}
 
 	public static class LoginForm {
