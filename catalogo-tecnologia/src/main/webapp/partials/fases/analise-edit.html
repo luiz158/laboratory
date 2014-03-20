@@ -104,9 +104,9 @@
 
 				<div class="form-group row">
 					<div class="col-md-6">
-						<label for="gestor">Unidade gestora de {{fase.fase | nomeFase}}:</label> <input
-							class="form-control" required type="text" id="gestor"
-							ng-model="fase.unidadeGestora" >
+						<label for="unidadeGestora">Unidade gestora de {{fase.fase | nomeFase}}:</label> <input
+							class="form-control" required type="text" id="unidadeGestora"
+							ng-model="analise.unidadeGestora" >
 						<validation-msg propriedade="unidadeGestora"></validation-msg>
 					</div>
 				</div>
@@ -196,7 +196,7 @@
 			<ng-observacoes ng-model="fase"></ng-observacoes>
 		</div>
 		
-		<!-- Observações -->
+		<!-- Historico -->
 		<div ng:show="selected == 5 && analise.id" class="panel panel-default">
 			<ng-historico-fase ng-model="fase"></ng-historico-fase>
 		</div>

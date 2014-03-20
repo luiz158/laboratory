@@ -8,6 +8,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import br.gov.frameworkdemoiselle.resteasy.util.ValidationException;
+import br.gov.frameworkdemoiselle.security.LoggedIn;
 import br.gov.frameworkdemoiselle.security.SecurityContext;
 import br.gov.frameworkdemoiselle.stereotype.BusinessController;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
@@ -118,7 +119,9 @@ public class FaseBC {
 		validarFinalizar(fase);	
 		
 		faseDAO.update(fase);
-		faseHistoricoDAO.insert(new FaseHistorico(fase,OPERACAO.FINALIZAR));	
+					
+		OPERACAO operacao = (fase.getSituacao().equals(Situacao.APROVADO))?OPERACAO.APROVAR:OPERACAO.REPROVAR;
+		faseHistoricoDAO.insert(new FaseHistorico(fase,operacao));	
 		
 		// Se foi aprovado tem uma proxima fase;
 		if (fase.getSituacao().equals(Situacao.APROVADO) && !fase.getFase().equals(FaseEnum.DECLINIO)) {			
@@ -273,7 +276,7 @@ public class FaseBC {
 		return proximafase;
 	}
 
-
+	@LoggedIn
 	private Fase salvar(Fase fase) {
 		if(fase.getId()!=null){
 			faseDAO.update(fase);

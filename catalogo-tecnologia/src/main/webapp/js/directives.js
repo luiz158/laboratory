@@ -109,7 +109,7 @@ diretivas.directive('ngCampoUsuario', function() {
 		link : function(scope, elem, $attrs) {
 			
 		},
-		controller: function ($scope, $http, AlertService) {
+		controller: function ($scope, $http, AlertService, UserService) {
 			$scope.palavraChave = "";
 			$scope.resultadoPesquisa = [];			
 				
@@ -131,24 +131,14 @@ diretivas.directive('ngCampoUsuario', function() {
 			};				
 			
 			$scope.pesquisar = function(){
-				if(!$scope.palavraChave || $scope.palavraChave.length<3){
-					AlertService.addWithTimeout('warning', "Para pesquisar digite pelo menos 3 letras.");
-				}else{
-					$http.get('api/user/nome/' + $scope.palavraChave).success(function(data) {
-						if (data == "") {
-							AlertService.addWithTimeout('warning', 'Usuário não encontrado no LDAP');
-						}else{
-							$scope.resultadoPesquisa = data;
-						}
-					}).error(function(data, status) {
-						if (status == 412) {
-							AlertService.addWithTimeout('danger', data[0].message);
-						}
-					});
-				}
+				UserService.searchByName($scope.palavraChave).then( 
+					function(data) {
+						$scope.resultadoPesquisa = data;
+					}
+				);
 			};
 		}
-	}
+	};
 });
 
 diretivas.directive('ngHistoricoFase', function() {

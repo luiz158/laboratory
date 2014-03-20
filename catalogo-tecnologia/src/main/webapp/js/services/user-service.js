@@ -29,6 +29,7 @@ services.factory('UserService', function($http, $q, AlertService) {
 				function(data) {
 					if (data == "") {
 						AlertService.addWithTimeout('warning', 'Usuário não cadastrado no LDAP');
+						deffered.reject();
 					} else {
 						deferred.resolve(data);
 					}
@@ -36,6 +37,7 @@ services.factory('UserService', function($http, $q, AlertService) {
 			if (status == 412) {
 				AlertService.addWithTimeout('danger', data[0].message);
 			}
+			deffered.reject(data);
 		});
 		return deferred.promise;
 	};
@@ -46,6 +48,7 @@ services.factory('UserService', function($http, $q, AlertService) {
 			$http.get('api/user/nome/' + name).success(	function(data) {
 				if (data == "") {
 					AlertService.addWithTimeout('warning', 'Usuário não cadastrado no LDAP');
+					deferred.reject();
 				} else {
 					deferred.resolve(data);
 				}
@@ -58,11 +61,13 @@ services.factory('UserService', function($http, $q, AlertService) {
 					AlertService.addWithTimeout('danger', "O servidor não suporta a quantidade de registros retornados. "
 					+ "Por favor, seja mais restritivo em sua pesquisa.");
 				}
+				deferred.reject();
 			});
 		} else {
 			AlertService.addWithTimeout('warning', 'Digite pelo menos '
 					+ MIN_NUMBER_OF_NAME_CARACTERS
 					+ ' caracteres para realizar a consulta.');
+			deferred.reject();
 		}
 		return deferred.promise;
 	};

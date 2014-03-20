@@ -23,7 +23,7 @@ import br.gov.frameworkdemoiselle.util.Beans;
 @Entity
 public class FaseHistorico {
 	
-	public enum OPERACAO{CRIAR, ATUALIZAR, FINALIZAR, EXCLUIR}
+	public enum OPERACAO{CRIAR, ATUALIZAR, APROVAR, REPROVAR, EXCLUIR}
 
 	@Id
 	@GeneratedValue(strategy = SEQUENCE)
