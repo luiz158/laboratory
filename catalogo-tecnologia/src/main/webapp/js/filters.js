@@ -51,6 +51,28 @@ filters.filter('tipoArquivo', function() {
 	};
   });
 
+
+var operacoes = {
+		CRIAR: {icone: "fa fa-plus", badge: "info"}, 
+		ATUALIZAR: {icone: "fa fa-save", badge: "primary"}, 
+		APROVAR: {icone: "fa fa-thumbs-o-up", badge: "success"}, 
+		REPROVAR: {icone: "fa fa-thumbs-o-down", badge: "danger"}, 
+		FINALIZAR: {icone: "fa fa-check", badge: "warning"}, 
+		EXCLUIR: {icone: "fa fa-warning", badge: "danger"}
+};
+
+filters.filter('operacaoIcone', function() {    
+		return function(operacao){
+			return operacoes[operacao].icone;
+		};	
+  });
+
+filters.filter('operacaoClass', function() {    
+	return function(operacao){
+		return operacoes[operacao].badge;
+	};	
+  });
+
 filters.filter('nomeFase', function() {    
 	var nomes = {
 			'ANALISE':'Análise',

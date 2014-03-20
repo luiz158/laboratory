@@ -6,12 +6,13 @@ import javax.inject.Inject;
 
 import br.gov.frameworkdemoiselle.annotation.Priority;
 import br.gov.frameworkdemoiselle.lifecycle.Startup;
+import br.gov.frameworkdemoiselle.security.Credentials;
+import br.gov.frameworkdemoiselle.security.SecurityContext;
 import br.gov.frameworkdemoiselle.stereotype.BusinessController;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.serpro.catalogo.bussiness.FaseBC;
 import br.gov.serpro.catalogo.entity.Analise;
 import br.gov.serpro.catalogo.entity.Categoria;
-import br.gov.serpro.catalogo.entity.Declinio;
 import br.gov.serpro.catalogo.entity.Fabricante;
 import br.gov.serpro.catalogo.entity.FaseEnum;
 import br.gov.serpro.catalogo.entity.FaseProduto;
@@ -26,24 +27,18 @@ import br.gov.serpro.catalogo.entity.PlataformaTecnologica;
 import br.gov.serpro.catalogo.entity.Produto;
 import br.gov.serpro.catalogo.entity.Prospeccao;
 import br.gov.serpro.catalogo.entity.Situacao;
-import br.gov.serpro.catalogo.entity.Sustentacao;
 import br.gov.serpro.catalogo.entity.Tecnologia;
 import br.gov.serpro.catalogo.entity.User;
-import br.gov.serpro.catalogo.persistence.AnaliseDAO;
 import br.gov.serpro.catalogo.persistence.CategoriaDAO;
-import br.gov.serpro.catalogo.persistence.DeclinioDAO;
 import br.gov.serpro.catalogo.persistence.FabricanteDAO;
 import br.gov.serpro.catalogo.persistence.FaseProdutoDAO;
 import br.gov.serpro.catalogo.persistence.FornecedorDAO;
 import br.gov.serpro.catalogo.persistence.GrupoDAO;
-import br.gov.serpro.catalogo.persistence.InternalizacaoDAO;
 import br.gov.serpro.catalogo.persistence.LicenciamentoDAO;
 import br.gov.serpro.catalogo.persistence.ObservacaoDAO;
 import br.gov.serpro.catalogo.persistence.OrigemDemandaDAO;
 import br.gov.serpro.catalogo.persistence.PlataformaTecnologicaDAO;
 import br.gov.serpro.catalogo.persistence.ProdutoDAO;
-import br.gov.serpro.catalogo.persistence.ProspeccaoDAO;
-import br.gov.serpro.catalogo.persistence.SustentacaoDAO;
 import br.gov.serpro.catalogo.persistence.TecnologiaDAO;
 import br.gov.serpro.catalogo.persistence.UserDAO;
 
@@ -55,20 +50,11 @@ public class CargaInicial {
 	@Inject
 	private FaseBC faseBC;
 	
-//	@Inject
-//	private AnaliseDAO analiseDAO;
-//	
-//	@Inject
-//	private ProspeccaoDAO prospeccaoDAO;
-//	
-//	@Inject
-//	private InternalizacaoDAO internalizacaoDAO;
-//	
-//	@Inject
-//	private SustentacaoDAO sustentacaoDAO;
-//	
-//	@Inject
-//	private DeclinioDAO declinioDAO;
+	@Inject
+	private Credentials credentials;
+	
+	@Inject
+	private SecurityContext securityContext;
 	
 	@Inject
 	private ProdutoDAO produtoDAO;
@@ -112,6 +98,9 @@ public class CargaInicial {
 	static User usuario1;
 	User usuario2;
 	
+	public CargaInicial() {
+	}
+	
 	@Startup @Priority(0)
 	@Transactional
 	public void criarUsuarios(){
@@ -136,13 +125,10 @@ public class CargaInicial {
 		
 		usuarioDAO.insert(usuario1);
 		
-//		usuario2 = new User();
-//		usuario2.setCPF("Thiago de Lima Mariano");
-//		usuario2.setEmail("thiago.mariano@serpro.gov.br");
-//		usuario2.setGrupos(new ArrayList<Grupo>());
-//		usuario2.getGrupos().add(grupo);
-//		
-//		usuarioDAO.insert(usuario2);
+		credentials.setUsername(usuario1.getCPF());
+		credentials.setPassword("xereca12");
+		securityContext.login();
+		
 		
 	}
 	

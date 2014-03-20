@@ -8,12 +8,16 @@ import java.util.List;
 import javax.inject.Inject;
 
 import br.gov.frameworkdemoiselle.resteasy.util.ValidationException;
+import br.gov.frameworkdemoiselle.security.LoggedIn;
+import br.gov.frameworkdemoiselle.security.SecurityContext;
 import br.gov.frameworkdemoiselle.stereotype.BusinessController;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.serpro.catalogo.entity.Analise;
 import br.gov.serpro.catalogo.entity.Declinio;
 import br.gov.serpro.catalogo.entity.Fase;
 import br.gov.serpro.catalogo.entity.FaseEnum;
+import br.gov.serpro.catalogo.entity.FaseHistorico;
+import br.gov.serpro.catalogo.entity.FaseHistorico.OPERACAO;
 import br.gov.serpro.catalogo.entity.FaseInteressado;
 import br.gov.serpro.catalogo.entity.FaseMembro;
 import br.gov.serpro.catalogo.entity.Internalizacao;
@@ -22,6 +26,7 @@ import br.gov.serpro.catalogo.entity.Situacao;
 import br.gov.serpro.catalogo.entity.Sustentacao;
 import br.gov.serpro.catalogo.entity.User;
 import br.gov.serpro.catalogo.persistence.FaseDAO;
+import br.gov.serpro.catalogo.persistence.FaseHistoricoDAO;
 import br.gov.serpro.catalogo.persistence.FaseInteressadoDAO;
 import br.gov.serpro.catalogo.persistence.FaseMembroDAO;
 import br.gov.serpro.catalogo.persistence.FaseProdutoDAO;
@@ -47,6 +52,11 @@ public class FaseBC {
 	@Inject
 	private FaseInteressadoDAO faseInteressadoDAO;
 	
+	@Inject
+	private FaseHistoricoDAO faseHistoricoDAO;
+	
+	@Inject
+	private SecurityContext securityContext;
 	
 	/**
 	 * Pesquisa por criteria usando o DTO
@@ -85,6 +95,8 @@ public class FaseBC {
 		
 	}
 	
+	
+	
 
 	/**
 	 * Método que finaliza a fase e retorna a próxima fase ou null.
@@ -104,20 +116,24 @@ public class FaseBC {
 		fase.setDataFinalizacao(new Date());
 		Fase proximafase = null;
 		
-		validarFinalizar(fase);
-
+		validarFinalizar(fase);	
+		
+		faseDAO.update(fase);
+					
+		OPERACAO operacao = (fase.getSituacao().equals(Situacao.APROVADO))?OPERACAO.APROVAR:OPERACAO.REPROVAR;
+		faseHistoricoDAO.insert(new FaseHistorico(fase,operacao));	
+		
 		// Se foi aprovado tem uma proxima fase;
 		if (fase.getSituacao().equals(Situacao.APROVADO) && !fase.getFase().equals(FaseEnum.DECLINIO)) {			
 			proximafase = getProximaFase(fase);
-			faseDAO.insert(proximafase);
+			faseDAO.insert(proximafase);			
+			faseHistoricoDAO.insert(new FaseHistorico(proximafase,OPERACAO.CRIAR));
 			
 			FaseMembro fm = new FaseMembro();
 			fm.setFase(proximafase);
 			fm.setUser(fase.getProximaFaseLider());			
 			faseMembroDAO.insert(fm);			
 		}
-
-		faseDAO.update(fase);
 
 		return proximafase;
 	}
@@ -260,36 +276,31 @@ public class FaseBC {
 		return proximafase;
 	}
 
-
-
-	public Fase salvar(Analise fase) {
-		validarSalvar(fase);
+	@LoggedIn
+	private Fase salvar(Fase fase) {
 		if(fase.getId()!=null){
 			faseDAO.update(fase);
+			faseHistoricoDAO.insert(new FaseHistorico(fase,OPERACAO.ATUALIZAR));
 		}else{
 			faseDAO.insert(fase);
+			faseHistoricoDAO.insert(new FaseHistorico(fase,OPERACAO.CRIAR));
 		}
 		return fase;
+	}
+	
+	public Fase salvar(Analise fase) {
+		validarSalvar(fase);
+		return salvar((Fase) fase);
 	}
 	
 	public Fase salvar(Prospeccao fase) {
 		validarSalvar(fase);
-		if(fase.getId()!=null){
-			faseDAO.update(fase);
-		}else{
-			faseDAO.insert(fase);
-		}
-		return fase;
+		return salvar((Fase) fase);
 	}
 	
 	public Fase salvar(Internalizacao fase) {
 		validarSalvar(fase);
-		if(fase.getId()!=null){
-			faseDAO.update(fase);
-		}else{
-			faseDAO.insert(fase);
-		}
-		return fase;
+		return salvar((Fase) fase);
 	}
 		
 
@@ -400,11 +411,26 @@ public class FaseBC {
 
 	public void delete(Long id) {
 		faseDAO.delete(id);
+		Fase fase = new Fase();
+		fase.setId(id);
+		faseHistoricoDAO.insert(new FaseHistorico(fase,OPERACAO.EXCLUIR));
 	}
 
 	public Fase load(Long id) {
 		return faseDAO.load(id);
 	}
+
+	public List<FaseHistorico> obterHistorico(Long id) {
+		List<Fase> fases = obterCadeiaDasFases(id);
+		
+		List<Long> ids = new ArrayList<Long>();
+		for (Fase fase : fases) {
+			ids.add(fase.getId());
+		}
+		return faseHistoricoDAO.obterHistorico(ids);
+	}
+
+
 	
 
 }

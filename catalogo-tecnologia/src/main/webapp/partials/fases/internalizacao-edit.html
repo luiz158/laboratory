@@ -22,6 +22,9 @@
 		<li ng:show="fase.id" class="ng-class: selected == 6 ? 'active':'';">
 			<a ng:click="selected=6">Observações</a>
 		</li>
+		<li ng:show="fase.id" class="ng-class: selected == 7 ? 'active':'';">
+				<a ng:click="selected=7">Histórico</a>
+			</li>
 	</ul>
 
 	<div class="panel panel-default" ng:show="selected == 1">
@@ -354,7 +357,7 @@
 						<textarea rows="4" class="form-control" id="justificativa"
 							ng-model="fase.situacaoJustificativa" required></textarea>
 						<span id="situacaoJustificativa-message" class="text-danger"></span>
-						<validation-msg propriedade="situacaoJustificativa"></validation-msg>
+						<validation-msg propriedade="justificativa"></validation-msg>
 					</div>
 				</div>
 
@@ -453,6 +456,11 @@
 	<div ng:show="selected == 6 && fase.id" class="panel panel-default">
 		<ng-observacoes ng-model="fase"></ng-observacoes>
 	</div>
+	
+	<!-- Historico -->
+		<div ng:show="selected == 7" class="panel panel-default">
+			<ng-historico-fase ng-model="fase"></ng-historico-fase>
+		</div>
 
 	<div>
 		<button class="btn btn-primary" ng-click="salvar()">
