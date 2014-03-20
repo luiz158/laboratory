@@ -36,8 +36,6 @@ controllers.controller('PesquisaFasesCtrl', function PesquisaFasesCtrl($scope, $
 	$scope.fase = {};
 	$scope.fase.fase = $routeParams.fase;
 	
-	console.log($scope.fase.fase);
-	
 	
 	/* Reinicia o objeto fase, caso a fase venha da url.*/
 	$scope.limpar = function(){
