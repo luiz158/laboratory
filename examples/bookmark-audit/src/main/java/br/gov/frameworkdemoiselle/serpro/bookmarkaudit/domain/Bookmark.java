@@ -36,23 +36,16 @@
  */
 package br.gov.frameworkdemoiselle.serpro.bookmarkaudit.domain;
 
-import br.gov.frameworkdemoiselle.component.audit.auditors.persistence.PersistenceAuditor;
+import static javax.persistence.GenerationType.SEQUENCE;
+
 import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-/**
- *
- * @author SERPRO
- *
- */
 @Entity
-@EntityListeners(value = PersistenceAuditor.class)
 public class Bookmark implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -61,7 +54,7 @@ public class Bookmark implements Serializable {
      *  If you are using Glassfish then remove the strategy attribute
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = SEQUENCE)
     private Long id;
 
     @Column
@@ -101,33 +94,6 @@ public class Bookmark implements Serializable {
 
     public void setLink(String link) {
         this.link = link;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 19 * hash + (this.id != null ? this.id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Bookmark other = (Bookmark) obj;
-        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "Bookmark{" + "id=" + id + ", description=" + description + ", link=" + link + '}';
     }
 
 }

@@ -36,7 +36,6 @@
  */
 package br.gov.frameworkdemoiselle.serpro.bookmarkaudit.business;
 
-import br.gov.frameworkdemoiselle.lifecycle.Startup;
 import br.gov.frameworkdemoiselle.serpro.bookmarkaudit.domain.Bookmark;
 import br.gov.frameworkdemoiselle.serpro.bookmarkaudit.persistence.BookmarkDAO;
 import br.gov.frameworkdemoiselle.stereotype.BusinessController;
@@ -48,7 +47,6 @@ import br.gov.frameworkdemoiselle.transaction.Transactional;
  * @author SERPRO
  *
  */
-
 @BusinessController
 public class BookmarkBC extends DelegateCrud<Bookmark, Long, BookmarkDAO> {
 
@@ -56,7 +54,7 @@ public class BookmarkBC extends DelegateCrud<Bookmark, Long, BookmarkDAO> {
 
 //    @Startup
     @Transactional
-   // @Audit(description = "Carga Automática")
+    // @Audit(description = "Carga Automática")
     public void load() {
         for (Bookmark bookmark : findAll()) {
             delete(bookmark.getId());
@@ -65,9 +63,5 @@ public class BookmarkBC extends DelegateCrud<Bookmark, Long, BookmarkDAO> {
             insert(new Bookmark("Demoiselle Portal", "http://www.frameworkdemoiselle.gov.br"));
         }
     }
-
-
-
-
 
 }

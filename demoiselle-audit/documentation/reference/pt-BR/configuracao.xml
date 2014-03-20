@@ -1,340 +1,41 @@
 <?xml version='1.0' encoding="utf-8"?>
 <!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" []>
-<chapter id="behave-configuracao">
+<chapter id="audit-configuracao">
 
-	<title>Configurações do Behave</title>
-	<para>
-		Todos os os módulos do Demoseille Behave possuem configurações
-		específicas (Parsers, Runners e Integrations), boa parte delas possui
-		um valor padrão que pode ser alterado no projeto.
-	</para>
-	<tip>
-		<para>
-			Também é possível alterar estas configurações utilizando o
-			parâmetro -D para a chamada da maquina virtual Java.
-			Por exemplo:
-			-Dbehave.integration.alm.enabled=true .
-		</para>
-	</tip>
-	<section>
-		<title>Configurações do Parser</title>
-		<para>
-			<itemizedlist>
-				<listitem>
-					<citetitle>behave.parser.language:</citetitle>
-					propriedade que seleciona a linguagem que o
-					parser irá trabalhar,
-					o
-					padrão é
-					<emphasis>pt</emphasis>
-					.
-				</listitem>
-				<listitem>
-					<citetitle>behave.parser.identification.scenario.pattern:
-					</citetitle>
-					propriedade define a expressão regular que irá identificar um
-					início de cenário no arquivo de história. O Padrão é
-					<emphasis>^(\\s)*(CEN\u00C1RIO|Cen\u00E1rio|cen\u00E1rio)\:(.*)
-					</emphasis>
-				</listitem>
-				<listitem>
-					<citetitle>behave.parser.prefixes.bdd.pattern:
-					</citetitle>
-					propriedade define a expressão regular que irá identificar um
-					início de cada passo no arquivo de história. O Padrão é
-					<emphasis>^(\\s)*(DADO |QUANDO |ENT\u00C3O |E |MAS |Dado |Quando
-						|Ent\u00E3o |Mas |dado |quando |ent\u00E3o |e |mas )(.*)
-					</emphasis>
-				</listitem>
-				<listitem>
-					<citetitle>behave.parser.story.extension.original:
-					</citetitle>
-					propriedade define a extensão do arquivo original que será lido,
-					o
-					padrão é
-					<emphasis>bdd</emphasis>
-					no core, mas no caso do JBehave o padrão é
-					<emphasis>story</emphasis>
-					.
-				</listitem>
-				<listitem>
-					<citetitle>behave.parser.story.extension.converted:
-					</citetitle>
-					propriedade define a extensão do arquivo gerado após o pré
-					processamento do framework,
-					o padrão é
-					<emphasis>story</emphasis>
-					no core, mas no caso do JBehave o padrão é
-					<emphasis>storyConverted</emphasis>
-				</listitem>
-				<listitem>
-					<citetitle>behave.parser.commonssteps.enabled:
-					</citetitle>
-					propriedade que habilita os passos comuns utilizados pelos
-					parsers,
-					o padrão é
-					<emphasis>ativado</emphasis>
-					.
-				</listitem>
-				<listitem>
-					<citetitle>behave.parser.beforeaftersteps.enabled:
-					</citetitle>
-					propriedade que habilita os passos anteriores e posteriores as
-					execuções das histórias, no caso do runner WebDriver ele levando o
-					navegador nestes passos.
-					O padrão para é a
-					<emphasis>ativado</emphasis>
-					.
-				</listitem>
-			</itemizedlist>
-		</para>
-	</section>
-	<section>
-		<title>Configurações do Runner</title>
-		<para>
-			<itemizedlist>
-				<listitem>
-					<citetitle>behave.runner.screen.maxWait</citetitle>
-					: Tempo máximo de espera em uma ação na tela,
-					O valor padrão é
-					<emphasis>10000 milisegundos</emphasis>
-					.
-				</listitem>
-				<listitem>
-					<citetitle>behave.runner.screen.minWait</citetitle>
-					: Tempo mínimo de espera em uma ação na tela,
-					O valor padrão é
-					<emphasis>100 milisegundos</emphasis>
-					.
-				</listitem>
-				<listitem>
-					<citetitle>behave.runner.proxy.url</citetitle>
-					: propriedade, quando informada, ativa o uso de proxy no navegador.
-					O valor padrão da url do proxy é
-					<emphasis>vazio</emphasis>
-					.
-				</listitem>
-				<listitem>
-					<citetitle>behave.runner.screen.type</citetitle>
-					: Opções do
-					WebDriver: MozillaFirefox, InternetExplorer,
-					GoogleChrome. No caso do
-					IE e Chrome são necessárias configurações
-					adicionais.
-					O valor padrão é
-					<emphasis>MozillaFirefox</emphasis>
-					.
-				</listitem>
-				<listitem>
-					<citetitle>behave.runner.screen.remote.name</citetitle>
-					: Para testes remotos, esta propriedade informa
-					qual navegadore será
-					utilizada,
-					O valor padrão é
-					<emphasis>vazio</emphasis>
-					.
-				</listitem>
-				<listitem>
-					<citetitle>behave.runner.screen.remote.url</citetitle>
-					: Para testes remotos, esta propriedade informa
-					a URL na qual o
-					Selenium Server encontra-se,
-					O valor padrão é
-					<emphasis>vazio</emphasis>
-					.
-				</listitem>
-				<listitem>
-					<citetitle>behave.runner.screen.driverPath</citetitle>
-					: Localização do driver que faz ligação
-					entre o navegador e o
-					webdriver,
-					O valor padrão é
-					<emphasis>vazio</emphasis>
-					.
-				</listitem>
-				<listitem>
-					<citetitle>behave.runner.profile.enabled</citetitle>
-					: propriedade que ativa ou desativa o uso de
-					profile no navegador,
-					O
-					valor padrão é
-					<emphasis>desabilitado</emphasis>
-					.
-				</listitem>
-				<listitem>
-					<citetitle>behave.runner.screen.profilePath</citetitle>
-					: Localização do profile,
-					O valor padrão é
-					<emphasis>vazio</emphasis>
-					.
-				</listitem>
-				<listitem>
-					<citetitle>behave.runner.app.mainClass</citetitle>
-					: Nome de domínio totalmente qualificado da
-					classe principal da
-					aplicação sobre testes,
-					O valor padrão é
-					<emphasis>vazio</emphasis>
-					.
-				</listitem>
-			</itemizedlist>
-		</para>
-	</section>
-	<section>
-		<title>Configurações do Integration</title>
-		<para>
-			<itemizedlist>
-				<listitem>
-					<citetitle>behave.integration.alm.enabled</citetitle>
-					: propriedade que habilita/desabilita a funcionalidade de
-					integração com a ALM.
-					O valor padrão é
-					<emphasis>desabilitado</emphasis>
-					.
-				</listitem>
-				<listitem>
-					<citetitle>behave.integration.alm.url.security</citetitle>
-					: Campo obrigatório para integração com a ALM. Endereço
-					completo do
-					caminho para autenticação na ALM
-					O valor padrão é
-					<emphasis>vazio</emphasis>
-					.
-				</listitem>
-				<listitem>
-					<citetitle>behave.integration.alm.url.services</citetitle>
-					: Campo obrigatório para integração com a ALM. Endereço
-					completo do
-					caminho para os serviços REST
-					O valor padrão é
-					<emphasis>vazio</emphasis>
-					.
-				</listitem>
-				<listitem>
-					<citetitle>behave.integration.alm.projectArea</citetitle>
-					: Campo obrigatório
-					para integração com a ALM. Alias da
-					área de
-					projeto, tomar cuidado com
-					áreas renomeadas, pois o Alias não
-					é
-					alterado
-					O valor padrão é
-					<emphasis>vazio</emphasis>
-					.
-				</listitem>
-				<listitem>
-					<citetitle>behave.integration.alm.testPlanId</citetitle>
-					: Campo obrigatório
-					para integração com a ALM. Id do
-					plano de testes
-					que pertence a área de
-					projeto
-					O valor padrão é
-					<emphasis>vazio</emphasis>
-					.
-				</listitem>
-				<listitem>
-					<citetitle>behave.integration.authenticator.host</citetitle>
-					: Endereço (IP) do Autenticator
-					O valor padrão é
-					<emphasis>localhost</emphasis>
-					.
-				</listitem>
-				<listitem>
-					<citetitle>behave.integration.authenticator.port</citetitle>
-					: Porta
-					utilizada para comunicação com o Autenticator
-					O valor padrão
-					é
-					<emphasis>9990</emphasis>
-					.
-				</listitem>
+    <title>Configurações do Audit</title>
+    <para>
+        O Demoseille Audit possui como base 3 módulos (Core, Processors e Auditors). O Core orquestra a integração
+        entre os Processadores e os Auditores, que são implementações de cada projeto. Está primeira versão sairá com
+        um Processador para serviços REST e um Auditor de camada de dados.
+    </para>
+    <section>
+        <title>Configurações do Sistema</title>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <citetitle>POM.XML</citetitle>
 
-			</itemizedlist>
-		</para>
-	</section>
-	<section>
-		<title>Configurações do Integration - Autenticator ALM</title>
-		<para>
-			<warning>
-				<para>
-					O Autenticator é necessário para que a integração com a ALM
-					funcione
-					corretamente, não sendo possível fazer a integração sem
-					esse
-					utilitário.
-					Caso o Autenticator não esteja disponível a seguinte
-					mensagem será
-					exebida na exceção lançada:
-					<citetitle>br.gov.frameworkdemoiselle.behave.exception.BehaveException:
-						Autenticador inacessível. Verifique se o processo foi iniciado
-					</citetitle>
-				</para>
-			</warning>
-			<section>
-				<title>Instação no Projeto</title>
-				<para>
-					Para fazer uso do módulo de integração basta acrescentar a
-					dependência no pom.xml do projeto.
-					<programlisting><![CDATA[
+                    <emphasis>pt</emphasis>
+                    .
+                </listitem>
+            </itemizedlist>
+        </para>
+    </section>
+
+    <section>
+        <title>Instação no Projeto</title>
+        <para>
+            Para fazer uso do módulo de integração basta acrescentar a
+            dependência no pom.xml do projeto.
+            <programlisting><![CDATA[
 <dependency>
 	<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
 	<artifactId>demoiselle-behave-integration-alm</artifactId>
 	<version>1.x.x</version>
 	<scope>test</scope>
 </dependency>]]></programlisting>
-				</para>
-			</section>
-			<section>
-				<title>Motivações</title>
-				<para>
-					<itemizedlist>
-						<listitem>
-							Todas as chamadas Rest ao RQM necessitam de um usuário e
-							senha
-							válidos para a plataforma Jazz.
-						</listitem>
-						<listitem>
-							Por segurança não recomendamos armazenar de forma
-							persistente
-							estas informações.
-						</listitem>
-						<listitem>
-							O componente “demoiselle-behave-integration-alm” provê
-							uma forma
-							segura de armazenar o usuário e senha do testador.
-						</listitem>
-						<listitem>
-							O armazenamento é realizado em memória de forma
-							criptografada e
-							podendo ser acessado apenas localmente na estação
-							do testador
-							durante a execução dos testes.
-						</listitem>
-					</itemizedlist>
-				</para>
-			</section>
-			<section>
-				<title>Utilização</title>
-				<para>
-					<itemizedlist>
-						<listitem>
-							Para iniciar o serviço, obtenha o autenticador
-							<ulink
-								url="http://demoiselle.sourceforge.net/repository/release/br/gov/frameworkdemoiselle/component/behave/demoiselle-behave-integration-alm/1.3.0/demoiselle-behave-integration-alm-1.3.0.jar">demoiselle-behave-integration-alm-1.3.0.jar</ulink>
-							e execute-o com o seguinte comando:
-							<programlisting>java -jar demoiselle-behave-integrtion-alm-[versao].java</programlisting>
-						</listitem>
-						<listitem>
-							Parâmetros:
-
-							<programlisting>-p [porta] -o [ip-de-origem]</programlisting>
-						</listitem>
-					</itemizedlist>
-				</para>
-			</section>
-		</para>
-	</section>
+        </para>
+    </section>
+			
 </chapter>
