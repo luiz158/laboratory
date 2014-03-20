@@ -41,18 +41,11 @@ function findAllOk(data) {
 	    "mDataProp" : "link"
 	} ],
 	// "aaData" : data,
+	// "bSort" : true,
 	"bServerSide" : true,
-	"sAjaxSource" : 'api/bookmark/datatables'
-    // ,
-    // "fnServerData" : function(sSource, aoData, fnCallback, oSettings) {
-    // oSettings.jqXHR = $.ajax({
-    // "dataType" : 'json',
-    // "type" : "GET",
-    // "url" : sSource,
-    // "data" : aoData,
-    // "success" : fnCallback
-    // });
-    // }
+	"sPaginationType" : "full_numbers",
+	"sAjaxSource" : 'api/bookmark/datatables',
+	"bSort" : false
     });
 }
 
