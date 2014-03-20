@@ -31,7 +31,7 @@ $(function() {
 var table;
 
 function findAllOk(data) {
-    YUI().use("datatable", function(Y) {
+    YUI().use("datatable", "datatable-paginator", function(Y) {
 
 	table = new Y.DataTable({
 	    columns : [ {
@@ -47,12 +47,19 @@ function findAllOk(data) {
 	    }, {
 		key : "link",
 		label : "Link",
-		formatter : "<a href='{value}'>{value}</a>"
+		formatter : "<a href='{value}' target='_blank'>{value}</a>"
 	    } ],
-	    data : data
+	    data : data,
+	    rowsPerPage : 10
 	});
 
 	table.render("#resultList");
+    });
+}
+
+function checkUncheckAll(sender) {
+    $("input[type=checkbox]").each(function(index, value) {
+	$(this).prop('checked', sender.checked);
     });
 }
 
