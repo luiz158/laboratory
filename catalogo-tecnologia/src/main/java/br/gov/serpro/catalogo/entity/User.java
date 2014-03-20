@@ -9,37 +9,38 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.UniqueConstraint;
 
-@Entity
+@Entity(name="User")
 public class User implements br.gov.frameworkdemoiselle.security.User {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = SEQUENCE)
 	private Long id;
 
-	@Column(unique=true)
-	private String name;
+	@Column(unique = true)
+	private String cpf;
 
-	private String displayName;
+	private String name;
 
 	private String email;
 
 	private String telephoneNumber;
 	
-	@OneToMany
-	private List<Grupo> grupos;
+	private String setor;
 	
-	public String getId(){
+	@OneToMany(targetEntity = Grupo.class)
+	private List<Grupo> grupos;
+
+	public String getId() {
 		return id == null ? null : id.toString();
 	}
 
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	@Override
 	public Object getAttribute(Object key) {
 		return null;
@@ -48,21 +49,21 @@ public class User implements br.gov.frameworkdemoiselle.security.User {
 	@Override
 	public void setAttribute(Object key, Object value) {
 	}
-	
+
+	public String getCPF() {
+		return cpf;
+	}
+
+	public void setCPF(String cpf) {
+		this.cpf = cpf;
+	}
+
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDisplayName() {
-		return displayName;
-	}
-
-	public void setDisplayName(String displayName) {
-		this.displayName = displayName;
+	public void setName(String Name) {
+		this.name = Name;
 	}
 
 	public String getEmail() {
@@ -79,6 +80,14 @@ public class User implements br.gov.frameworkdemoiselle.security.User {
 
 	public void setTelephoneNumber(String telephoneNumber) {
 		this.telephoneNumber = telephoneNumber;
+	}
+	
+	public String getSetor() {
+		return setor;
+	}
+	
+	public void setSetor(String setor) {
+		this.setor = setor;
 	}
 
 	public List<Grupo> getGrupos() {

@@ -7,10 +7,11 @@
 		<ng-alerts></ng-alerts>
 	</div>
 	
-	<button class="btn btn-primary" ng-click="novo()">
-		<i class="fa fa-plus-circle"> </i> Novo
+	
+	<button class="btn btn-primary" ng-click="novo()" ng-show="hasRole('ADMINISTRADOR,CONSULTOR')">
+		<i class="fa fa-plus-circle"> </i> Novo.
 	</button>
-
+		
 	<div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
 		<table class="table table-striped table-bordered table-hover dataTable no-footer" id="dataTables-example" aria-describedby="dataTables-example_info">
 			<thead>
@@ -25,15 +26,18 @@
 						aria-label="Browser: activate to sort column ascending">Telefone</th>
 					<th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1"
 						aria-label="Browser: activate to sort column ascending">Email</th>
+					<th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1"
+						aria-label="Browser: activate to sort column ascending">Setor</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr ng-repeat="u in users">
 					<td><a ng-click="editar(u)">{{u.id}}</a></td>
-					<td><a ng-click="editar(u)">{{u.name}}</a></td>
-					<td><a ng-click="editar(u)">{{u.displayName}}</a>
+					<td><a ng-click="editar(u)">{{u.cpf}}</a></td>
+					<td><a ng-click="editar(u)">{{u.name}}</a>
 					<td><a ng-click="editar(u)">{{u.telephoneNumber}}</a>
 					<td><a ng-click="editar(u)">{{u.email}}</a>
+					<td><a ng-click="editar(u)">{{u.setor}}</a>
 				</tr>
 			</tbody>
 		</table>

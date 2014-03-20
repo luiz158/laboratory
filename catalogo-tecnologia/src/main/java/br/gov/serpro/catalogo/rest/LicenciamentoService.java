@@ -22,7 +22,7 @@ import br.gov.serpro.catalogo.entity.Licenciamento;
 import br.gov.serpro.catalogo.persistence.LicenciamentoDAO;
 
 @ValidateRequest
-@Path("/api/licenciamento")
+@Path("licenciamento")
 @Produces(APPLICATION_JSON)
 public class LicenciamentoService {
 
@@ -36,7 +36,7 @@ public class LicenciamentoService {
 	}
 
 	@DELETE
-	@Path("/{id}")
+	@Path("{id}")
 	@Transactional
 	public void excluir(@NotNull @PathParam("id") Long id) {
 		licenciamentoDAO.delete(id);
@@ -54,7 +54,7 @@ public class LicenciamentoService {
 	}
 	
 	@GET
-	@Path("/{id}")
+	@Path("{id}")
 	public Licenciamento carregar(@NotNull @PathParam("id") Long id) {
 		return licenciamentoDAO.load(id);
 	}

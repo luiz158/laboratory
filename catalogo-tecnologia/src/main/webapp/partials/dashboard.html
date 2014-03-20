@@ -1,3 +1,18 @@
-<div class="painel painel-default">
-	Dashboard	
+<div class="painel painel-default" ng-controller="DashboardCtrl">
+	<h3 class="page-header">Painel de controle </h3>
+	
+	<div class="row">
+		<div class="col-md-4">
+			<div class="panel panel-default">
+		       <div class="panel-heading">
+		           <i class="fa fa-bar-chart-o fa-fw"></i> Fases das demandas
+		       </div>
+		       <div class="panel-body">
+		           <div id="morris-donut-chart" donut donut-data="data" donut-colors="colors"></div>		           
+		       </div>
+		       <!-- /.panel-body -->
+		   </div>
+   		</div>
+   </div>
+	
 </div>

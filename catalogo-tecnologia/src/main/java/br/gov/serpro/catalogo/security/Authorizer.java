@@ -35,7 +35,7 @@ public class Authorizer implements br.gov.frameworkdemoiselle.security.Authorize
 	}
 
 	private User getUser() {
-		return userDAO.loadByCPF(((User) securityContext.getUser()).getName());
+		return userDAO.loadByCPF(((User) securityContext.getUser()).getCPF());
 	}
 
 	@Override

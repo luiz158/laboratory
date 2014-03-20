@@ -1,0 +1,170 @@
+<div class="panel painel-default">
+	<h1 class="page-header">
+		Pesquisa <small>por fases</small>
+	</h1>
+
+	<div>
+		<ng-alerts></ng-alerts>
+	</div>
+
+	<div class="panel-body">
+		<form name="formPesquisa" role="form">
+			<div class="form-group row">
+				<div class="col-md-4">
+					<label for="palavraChave">Palavra-chave:</label> <input
+						class="form-control" type="text" id="palavraChave"
+						ng-model="fase.palavraChave">
+				</div>
+				<div class="col-md-4">
+					<label for="fase">Fase:</label> <select id="fase"
+						class="form-control" ng-model="fase.fase">
+						<option value="" disabled>--</option>
+						<option value="1">Análise</option>
+						<option value="2">Prospecção</option>
+						<option value="3">Internalização</option>
+						<option value="4">Sustentação</option>
+						<option value="5">Declínio</option>
+					</select>
+				</div>
+				<div class="col-md-4">
+					<label for="id">ID:</label> <input class="form-control" type="text"
+						id="id" ng-model="fase.id">
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-md-4">
+					<label for="gestor">Unidade gestora:</label> <input
+						class="form-control" type="text" id="gestor"
+						ng-model="fase.unidadeGestora">
+				</div>
+				<div class="col-md-4">
+					<label for="origemReferencia">Referência:</label> 
+					<select id="origemReferencia" class="form-control" 
+							ng-model="fase.origemReferencia" 
+							ng-options="origem.nome for origem in origemDemanda track by origem.id">
+							<option value="" disabled>--</option>
+					</select>
+				</div>
+				<div class="col-md-4">
+					<label for="codigo">Código:</label> <input class="form-control"
+						type="text" id="codigo" ng-model="fase.codigoReferencia">
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-md-4">
+					<label for="finalizada">Finalizada:</label> <select
+						class="form-control" ng-model="fase.finalizada" id="finalizada">
+						<option value='1'>SIM</option>
+						<option value='0'>NÃO</option>
+					</select>
+				</div>
+				<div class="col-md-4">
+					<div date-picker="start"></div>
+					<label for="dataFinalizacaoApartir"> <i
+						class="fa fa-calendar"></i> Finalização a partir de:
+					</label> <input type="text" class="form-control"
+						id="dataFinalizacaoApartir" name="dataFinalizacaoApartir"
+						ng-model="fase.finalizacaoApartir" data-date-type="number"
+						data-min-date="01/01/2010" data-max-date="today"
+						data-autoclose="1" data-date-format="dd/MM/yyyy" bs-datepicker>
+				</div>
+				<div class="col-md-4">
+					<div date-picker="start"></div>
+					<label for="dataFinalizacaoAte"> <i class="fa fa-calendar"></i>
+						Finalização até:
+					</label> <input type="text" class="form-control" id="dataFinalizacaoAte"
+						name="dataFinalizacaoAte" ng-model="fase.finalizacaoAte"
+						data-date-type="number" data-min-date="01/01/2010"
+						data-autoclose="1"
+						data-date-format="dd/MM/yyyy" bs-datepicker>
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-md-6">
+					<button class="btn btn-primary" ng-click="pesquisar()">
+						<i class="fa fa-search-plus"> </i> Pesquisar
+					</button>
+					<button class="btn btn-primary" ng-click="limpar()">
+						<i class="fa fa-eraser"> </i> Limpar
+					</button>
+				</div>
+			</div>
+		</form>
+				
+		<div>
+			<div ng-if="paginacao.data.length >0">			
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="dataTables_info">
+							<h5>Total de registros: {{paginacao.data.length}} <small>Exibindo até 
+							<select ng-model="paginacao.registrosPorPagina">
+								<option>5</option>
+								<option>10</option>
+								<option>20</option>
+							</select> itens por página.</small></h5>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="dataTables_paginate paging_simple_numbers">
+						<ul class="pagination">
+							<li>
+								<a ng-click="paginacao.anterior()"> &laquo; </a></li>
+						  	<li ng-repeat="i in [] | range:paginacao.paginas()" 
+						  		ng-class="{'active' : paginacao.paginaAtual == i}">
+						  		<a ng-click="paginacao.paginaAtual = i"> {{i+1}} </a>
+						  	</li>
+						  	<li><a ng-click="paginacao.proxima()"> &raquo; </a></li>
+						</ul>
+						</div>
+					</div>
+				</div>
+			
+			
+			<ul class="chat list-group">
+                 <li ng-repeat="f in paginacao.data | startFrom:paginacao.paginaAtual*paginacao.registrosPorPagina | limitTo:paginacao.registrosPorPagina"  
+        	title="{{f.fase | nomeFase}}" class="left list-group-item clearfix">
+        			<a href="#{{f.fase | faseUrl}}/{{f.id}}">
+	                    <span class="chat-img pull-left">
+	                         <img src="{{f.fase | iconeFase}}" class="img-circle" width="30px">
+	                    </span>
+	                    <div class="chat-body clearfix">
+	                        <div class="header">
+	                         	<div class="row">
+			        		<div class="col-md-1">
+			        			<b>ID:</b> {{f.id}} 
+			        		</div>
+			        		<div class="col-md-2">
+			        			<b>Fase:</b> {{f.fase | nomeFase}}</span>
+			        		</div>
+			        		<div class="col-md-4">
+			        			<b>Situação: <span ng-analise-situacao situacao="{{f.situacao}}"></span>
+			        		</div>
+			        		<div class="col-md-4">
+			        			<b>Referência:</b> {{f.origemReferencia.nome}} {{f.codigoReferencia}} 
+			        		</div>
+			        	</div>
+	                    <div class="row">
+			        		<div class="col-md-3">
+			        			<b>Unidade Gestora:</b> {{f.unidadeGestora}} 
+			        		</div>
+			        		<div class="col-md-4">
+			        			<b>Registro:</b> {{f.dataRealizacao}}  
+			        		</div>
+			        		<div class="col-md-4">
+			        			<b>Finalização:</b> {{f.dataFinalizacao}} 
+			        		</div>
+			        	</div>
+                         <p>
+                             <b>Objetivo:</b> {{f.objetivo}}
+                         </p>
+                     </div>
+                    </a>
+                 </li>
+             </ul>			
+			
+		       
+		</div>
+		
+		
+	</div>
+</div>

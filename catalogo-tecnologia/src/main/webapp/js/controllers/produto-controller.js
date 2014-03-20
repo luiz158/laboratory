@@ -45,6 +45,8 @@ controllers.controller('ProdutoEdit', function Produto($scope, $http,
 	$scope.fabricante = "";
 	$scope.fornecedor = "";
 	$scope.plataforma = "";
+	$scope.tecnologia = "";
+	$scope.categoria = "";
 	
 	$scope.modal = ({title: 'Title', content: 'Hello Modal<br />This is a multiline message!'});
 	
@@ -58,6 +60,16 @@ controllers.controller('ProdutoEdit', function Produto($scope, $http,
 			
 			$rootScope.produto = data;
 			$scope.plataformasSuportadas = data.plataformasSuportadas;
+			$scope.categoriasSelecionadas = data.categorias;
+		
+			if(typeof($scope.categoriasSelecionadas) == "undefined"){
+				$scope.categoriasSelecionadas = [];
+			}
+			
+			if(typeof($scope.plataformasSuportadas) == "undefined"){
+				$scope.plataformasSuportadas = [];
+			}
+			
 			$http.get('api/licenciamento').success(function(data) {
 				$scope.licenciamentos = [];
 				$scope.licenciamentos = data;
@@ -91,10 +103,16 @@ controllers.controller('ProdutoEdit', function Produto($scope, $http,
 			$http.get('api/plataformaTecnologica').success(function(data) {
 				$scope.plataformasTecnologicas = data;
 			});
+			$http.get('api/tecnologia').success(function(data) {
+				$scope.tecnologias = data;
+			});
 		});
 	} else {
+		
 		$rootScope.produto = {};
 		$scope.plataformasSuportadas = [];
+		$scope.categoriasSelecionadas = [];
+		
 		$http.get('api/licenciamento').success(function(data) {
 			$scope.licenciamentos = [];
 			$scope.licenciamentos = data;
@@ -110,6 +128,9 @@ controllers.controller('ProdutoEdit', function Produto($scope, $http,
 		$http.get('api/plataformaTecnologica').success(function(data) {
 			$scope.plataformasTecnologicas = data;
 		});
+		$http.get('api/tecnologia').success(function(data) {
+			$scope.tecnologias = data;
+		});
 	}
 
 	$scope.salvarProduto = function() {
@@ -119,6 +140,7 @@ controllers.controller('ProdutoEdit', function Produto($scope, $http,
 			console.log("ProdutoController " + $rootScope.produto);
 			
 			$rootScope.produto.plataformasSuportadas = $scope.plataformasSuportadas;
+			$rootScope.produto.categorias = $scope.categoriasSelecionadas;
 
 			if(typeof($scope.licenciamento) != "undefined" && $scope.licenciamento != ""){
 				$rootScope.produto.licenciamento = $scope.licenciamento;
@@ -131,7 +153,6 @@ controllers.controller('ProdutoEdit', function Produto($scope, $http,
 			}
 			
 			$("[id$='-message']").text("");
-	
 			$http({
 				url : 'api/produto',
 				method : $rootScope.produto.id ? "PUT" : "POST",
@@ -139,7 +160,7 @@ controllers.controller('ProdutoEdit', function Produto($scope, $http,
 				headers : {
 					'Content-Type' : 'application/json;charset=utf8'
 				}
-	
+			
 			}).success(function(data) {
 				AlertService.addWithTimeout('success','Produto salvo com sucesso');
 				$location.path('produto');
@@ -157,7 +178,7 @@ controllers.controller('ProdutoEdit', function Produto($scope, $http,
 	
 	$scope.adicionaPlataforma = function() {
 		if(typeof($scope.plataforma) == "undefined" || $scope.plataforma == ""){
-			AlertService.addWithTimeout('danger','Não foi possível executar a operação');
+			AlertService.addWithTimeout('danger','Selecione uma plataforma');
 		}else{
 			var index = buscaElemento($scope.plataforma,$scope.plataformasSuportadas);
 			
@@ -169,11 +190,33 @@ controllers.controller('ProdutoEdit', function Produto($scope, $http,
 		}
 	};
 	
+	$scope.adicionaCategoria = function() {
+		if(typeof($scope.categoria) == "undefined" || $scope.categoria == ""){
+			AlertService.addWithTimeout('danger','Selecione uma categoria');
+		}else{
+			var index = buscaElemento($scope.categoria,$scope.categoriasSelecionadas);
+			
+			if (index !== -1) {
+				AlertService.addWithTimeout('danger','Categoria já foi adicionada!');
+	        }else{
+				$scope.categoriasSelecionadas.push($scope.categoria);
+			}
+		}
+	};
+	
 	$scope.removePlataforma = function(plataforma) {
 		var index = buscaElemento(plataforma,$scope.plataformasSuportadas);
 			
 		if (index !== -1) {
             $scope.plataformasSuportadas.splice(index,1);
+        }
+	};
+	
+	$scope.removeCategoria = function(categoria) {
+		var index = buscaElemento(categoria,$scope.categoriasSelecionadas);
+			
+		if (index !== -1) {
+            $scope.categoriasSelecionadas.splice(index,1);
         }
 	};
 	
@@ -193,4 +236,12 @@ controllers.controller('ProdutoEdit', function Produto($scope, $http,
 		}
 		return index;
 	}
+	
+	$scope.carregarCategorias = function() {
+		$scope.categoria = "";
+		$http.get('api/categoria/listar/'+$scope.tecnologia.id).success(function(data) {
+			$scope.categorias = [];
+			$scope.categorias = data;
+		});
+	};
 });

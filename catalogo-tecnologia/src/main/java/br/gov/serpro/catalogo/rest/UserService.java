@@ -5,6 +5,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.naming.SizeLimitExceededException;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.GET;
@@ -23,7 +24,7 @@ import br.gov.serpro.catalogo.persistence.UserDAO;
 import br.gov.serpro.catalogo.security.LDAPAuthenticator;
 
 @ValidateRequest
-@Path("/api/user")
+@Path("user")
 @Produces(APPLICATION_JSON)
 public class UserService {
 
@@ -39,21 +40,25 @@ public class UserService {
 	}
 	
 	@GET
-	@Path("/{id}")
+	@Path("{id}")
 	public User carregar(@NotNull @PathParam("id") Long id) {
 		return userDAO.load(id);
 	}
 	
 	@GET
-	@Path("/cpf/{cpf}")
-	public User carregar(@NotNull @PathParam("cpf") String cpf) throws Exception {
-		if (userDAO.loadByCPF(cpf) != null){
-			ValidationException ve = new ValidationException();
-			ve.addViolation(null, "Usuário já cadastrado na base.");
-			throw ve;
-		}
-		
+	@Path("cpf/{cpf}")
+	public User carregarByCPF(@NotNull @PathParam("cpf") String cpf) throws Exception {
 		return ldapAuthenticator.searchUserByCPF(cpf);
+	}
+	
+	@GET
+	@Path("nome/{nome}")
+	public List<User> carregarByNome(@NotNull @PathParam("nome") String nome) throws Exception {
+		try {
+			return ldapAuthenticator.searchUserByDisplayName(nome);
+		}catch(SizeLimitExceededException sizeLimitExceededException) {
+			throw sizeLimitExceededException;
+		}
 	}
 	
 	@PUT
@@ -64,7 +69,20 @@ public class UserService {
 	
 	@POST
 	@Transactional
-	public void inserir(@Valid User user) {
-		userDAO.insert(user);
+	public void inserir(@Valid User user)  throws Exception {
+		if(userExists(user.getCPF())) {
+			ValidationException ve = new ValidationException();
+			ve.addViolation(null, "Usuário já cadastrado na base.");
+			throw ve;
+		}else {
+			userDAO.insert(user);
+		}
+	}
+	
+	private boolean userExists(String cpf) {
+		if (userDAO.loadByCPF(cpf) != null){
+			return true;
+		}
+		return false;
 	}
 }

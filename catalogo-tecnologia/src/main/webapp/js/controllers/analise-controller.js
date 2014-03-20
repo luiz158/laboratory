@@ -5,6 +5,9 @@ var controllers = angular.module('catalogo.controllers');
 
 controllers.controller('AnaliseList',
 		function Analise($scope, $http, $location) {
+	
+			$(window).scrollTop(0);
+	
 			$scope.analises = [];
 			function carregarAnalises() {
 				$http.get('api/analise').success(function(data) {
@@ -36,33 +39,35 @@ controllers.controller('AnaliseList',
 		});
 
 controllers.controller('AnaliseEdit', function Analise($scope, $http,
-		$location, $routeParams, $upload, $rootScope, AlertService) {
+		$location, $routeParams, $upload, $rootScope, AlertService, OrigemDemandaService, ValidationService) {
 
+	$(window).scrollTop(0);
+	
 	$scope.fase = {};
 	$scope.fase.id = $routeParams.id;
 	$scope.fase.fase = 1;	
+	$scope.origemDemanda = [];
+	
+	OrigemDemandaService.getItens().then(function(data) {
+		$scope.origemDemanda = data;
+	});
 	
 	
 	if ($scope.fase.id) {
 		$http.get('api/analise/' + $scope.fase.id).success(function(data) {
 			$scope.analise = data;
-		});
-		
-		$http.get('api/fase/fluxo/' + $scope.fase.id).success(function(data) {
-			$scope.fluxo = data;
 		});		
-		
 	} else {
 		$scope.analise = {};
 		$scope.analise.situacao = 'Rascunho';
 	}
-	
-	
-	
+		
 
 	$scope.salvar = function() {
-		console.log("AnaliseController " + $scope.analise);
-		$("[id$='-message']").text("");
+		ValidationService.clear();
+		
+		console.log($scope.analise);
+		
 		$http({
 			url : 'api/analise',
 			method : $scope.analise.id ? "PUT" : "POST",
@@ -74,26 +79,36 @@ controllers.controller('AnaliseEdit', function Analise($scope, $http,
 		}).success(function(data) {
 			AlertService.addWithTimeout('success','Análise salva com sucesso');
 			$location.path('analise');
-		}).error(
-				function(data, status) {
-					if (status = 412) {
-						$.each(data, function(i, violation) {
-							$("#" + violation.property + "-message").text(
-									violation.message);
-						});
-					}
-				});
+		}).error(function(data, status) {
+			if (status = 412) {
+				ValidationService.registrarViolacoes(data);
+			}
+		});
 
 	};
 
 	$scope.aprovar = function(aprovado) {
+		ValidationService.remove('situacao');
 		$scope.analise.situacao = aprovado ? 'Aprovado' : 'Reprovado';
-		// $scope.salvar();
 	};
 	
 	$scope.finalizar = function() {
-		$scope.analise.dataFinalizacao = new Date();
-		$scope.salvar();
+		ValidationService.clear();
+		$http({
+			url : 'api/analise/finalizar',
+			method : "PUT",
+			data : $scope.analise,
+			headers : {
+				'Content-Type' : 'application/json;charset=utf8'
+			}
+		}).success(function(data) {
+			AlertService.addWithTimeout('success','Análise finalizada com sucesso');
+			$location.path('analise');
+		}).error(function(data, status) {
+			if (status = 412) {
+				ValidationService.registrarViolacoes(data);
+			}
+		});
 	};
 
 });

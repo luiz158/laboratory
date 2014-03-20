@@ -5,7 +5,7 @@ var controllers = angular.module('catalogo.controllers');
 
 /*"Para o funcionamento deste controlador é preciso disponibilizar o id da fase em $rootScope.demandaId"*/
 controllers.controller('MembrosCtrl', function MembrosCtrl($scope, $rootScope, $http,
-		$routeParams, AlertService) {
+		$routeParams, AlertService, UserService) {
 	
 	/* Pega a fase diretamente da diretiva*/
 	$scope.fase = $scope.$parent.ngModel;
@@ -16,8 +16,8 @@ controllers.controller('MembrosCtrl', function MembrosCtrl($scope, $rootScope, $
 	carregarMembros();	
 	
 	function carregarMembros() {		
-		if($rootScope.demandaId){
-			$http.get('api/membros/'+$scope.fase.id).success(function(data) {
+		if($scope.fase.id){
+			$http.get('api/fase/'+$scope.fase.id+"/membros").success(function(data) {
 				$scope.membros = data;
 			});
 		}
@@ -25,24 +25,40 @@ controllers.controller('MembrosCtrl', function MembrosCtrl($scope, $rootScope, $
 	}
 		
 	$scope.adicionar = function(m){
-		$scope.membros.push(m);
+		$http({
+			url : 'api/fase/'+$scope.fase.id+'/membros/add',
+			method : "POST",
+			data : m,
+			headers : {
+				'Content-Type' : 'application/json;charset=utf8'
+			}
+		}).success(function(data) {
+			carregarMembros();
+			AlertService.addWithTimeout('success','Membro ('+data.name+') adicionado');			
+		}).error( function(data, status) {
+			AlertService.addWithTimeout('danger','Não foi possível adicionar o membro.');
+		});
 	};
 	
 	$scope.remover = function(m){
-		for( var i = 0; i < $scope.membros.length; i++){
-			if($scope.membros[i].id == m.id)
-				$scope.membros.splice(i, 1);
-		}		
+		$http({
+			url : 'api/fase/membros/excluir/'+m.id,
+			method : "DELETE"
+		}).success(function(data) {
+			carregarMembros();
+			AlertService.addWithTimeout('success','Membro excluído com sucesso');
+		}).error(function(data, status) {
+			AlertService.addWithTimeout('danger','Não foi possível excluir o membro.');
+		});			
 	};
 	
+	
 	$scope.pesquisar = function(){
-		$scope.resultadoPesquisa = [
-		                    	    {id: 1, nome: 'Fulano', area: 'CETEC', ramal: '#71 1750'},
-		                    	    {id: 2, nome: 'Sicrano', area: 'CETEC', ramal: '#71 1751'},
-		                    	    {id: 3, nome: 'Beltrano', area: 'CETEC', ramal: '#71 1752'},
-		                    	    {id: 4, nome: 'Sicrano', area: 'CETEC', ramal: '#71 1753'},
-		                    	    {id: 5, nome: 'Sicrano', area: 'CETEC', ramal: '#71 1754'}
-		                    	 ];
+		UserService.searchByName($scope.palavraChave).then( 
+			function(data) {
+				$scope.resultadoPesquisa = data;
+			}
+		);
 	};
 		
 

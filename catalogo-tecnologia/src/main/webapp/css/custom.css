@@ -29,6 +29,14 @@ body {
 
 
 
+.floatmessage {
+    position: fixed;
+    top: 20px;
+    right: 50px;
+    margin-left: -150px;
+    width: 300px;
+    z-index: 9999;
+}
 
 
 

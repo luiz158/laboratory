@@ -27,6 +27,9 @@ public class LDAPConfig {
 
 	@Name("base.filter")
 	private String baseFilter;
+	
+	@Name("name.filter")
+	private String nameFilter;
 
 	@Name("search.scope")
 	private String searchScope = "SUBTREE_SCOPE";
@@ -53,6 +56,10 @@ public class LDAPConfig {
 
 	public String getBaseFilter() {
 		return baseFilter;
+	}
+	
+	public String getNameFilter() {
+		return nameFilter;
 	}
 
 	public Integer getSearchScope() {

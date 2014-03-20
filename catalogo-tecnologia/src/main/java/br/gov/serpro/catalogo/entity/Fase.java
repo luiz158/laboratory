@@ -3,21 +3,30 @@ package br.gov.serpro.catalogo.entity;
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.GenerationType.SEQUENCE;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -34,26 +43,19 @@ public class Fase {
 	private Long id;
 	
 	@Enumerated(EnumType.STRING)
-	private FaseEnum fase;
+	private FaseEnum fase;	
 	
-	
-	@NotEmpty
 	private String codigoReferencia;
 	
-	@NotEmpty
-	private String origemReferencia;
-
-	@NotEmpty
+	@ManyToOne
+	private OrigemDemanda origemReferencia;
+	
 	private String objetivo;
 
 	private Date dataRealizacao;
 	
-	@NotEmpty
-	private String gestor;
+	private String unidadeGestora;
 	
-	@NotEmpty
-	private String area;
-
 	@NotNull
 	@Enumerated(STRING)
 	private Situacao situacao;
@@ -62,22 +64,27 @@ public class Fase {
 
 	private Date dataFinalizacao;
 	
+	private String conclusao;
+	
 	@Enumerated(EnumType.STRING)
 	private FaseEnum proximaFase;
 			
 	private String proximaFaseJustificativa;
+
+	private String proximaFaseUnidadeGestora;
 	
-	private String proximaFaseGestor;
-	
-	private String proximaFaseArea;
-	
-	private String proximaFaseGestorEmail;
+	@ManyToOne
+	private User proximaFaseLider;	
 	
 	private Integer proximaFaseCiclo;
 	
 	@OneToOne
 	private Fase faseAnterior;
-
+	
+	@ManyToMany(fetch=FetchType.LAZY)
+    @JoinTable(name="fase_produto", joinColumns={@JoinColumn(name="fase_id")}, inverseJoinColumns={@JoinColumn(name="produto_id")})
+	private List<Produto> produtos;
+	
 	public Long getId() {
 		return id;
 	}
@@ -102,13 +109,7 @@ public class Fase {
 		this.codigoReferencia = codigoReferencia;
 	}
 
-	public String getOrigemReferencia() {
-		return origemReferencia;
-	}
 
-	public void setOrigemReferencia(String origemReferencia) {
-		this.origemReferencia = origemReferencia;
-	}
 
 	public String getObjetivo() {
 		return objetivo;
@@ -126,21 +127,6 @@ public class Fase {
 		this.dataRealizacao = dataRealizacao;
 	}
 
-	public String getGestor() {
-		return gestor;
-	}
-
-	public void setGestor(String gestor) {
-		this.gestor = gestor;
-	}
-
-	public String getArea() {
-		return area;
-	}
-
-	public void setArea(String area) {
-		this.area = area;
-	}
 
 	public Situacao getSituacao() {
 		return situacao;
@@ -182,28 +168,14 @@ public class Fase {
 		this.proximaFaseJustificativa = proximaFaseJustificativa;
 	}
 
-	public String getProximaFaseGestor() {
-		return proximaFaseGestor;
+	
+
+	public User getProximaFaseLider() {
+		return proximaFaseLider;
 	}
 
-	public void setProximaFaseGestor(String proximaFaseGestor) {
-		this.proximaFaseGestor = proximaFaseGestor;
-	}
-
-	public String getProximaFaseArea() {
-		return proximaFaseArea;
-	}
-
-	public void setProximaFaseArea(String proximaFaseArea) {
-		this.proximaFaseArea = proximaFaseArea;
-	}
-
-	public String getProximaFaseGestorEmail() {
-		return proximaFaseGestorEmail;
-	}
-
-	public void setProximaFaseGestorEmail(String proximaFaseGestorEmail) {
-		this.proximaFaseGestorEmail = proximaFaseGestorEmail;
+	public void setProximaFaseLider(User proximaFaseGestor) {
+		this.proximaFaseLider = proximaFaseGestor;
 	}
 
 	public Integer getProximaFaseCiclo() {
@@ -221,5 +193,47 @@ public class Fase {
 	public void setFaseAnterior(Fase faseAnterior) {
 		this.faseAnterior = faseAnterior;
 	}
+	
+	public OrigemDemanda getOrigemReferencia() {
+		return origemReferencia;
+	}
+
+	public void setOrigemReferencia(OrigemDemanda origemReferencia) {
+		this.origemReferencia = origemReferencia;
+	}
+
+	public String getConclusao() {
+		return conclusao;
+	}
+
+	public void setConclusao(String conclusao) {
+		this.conclusao = conclusao;
+	}
+
+	public List<Produto> getProdutos() {
+		return produtos;
+	}
+
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
+	}
+
+	public String getProximaFaseUnidadeGestora() {
+		return proximaFaseUnidadeGestora;
+	}
+
+	public void setProximaFaseUnidadeGestora(String proximaFaseUnidadeGestora) {
+		this.proximaFaseUnidadeGestora = proximaFaseUnidadeGestora;
+	}
+
+	public String getUnidadeGestora() {
+		return unidadeGestora;
+	}
+
+	public void setUnidadeGestora(String unidadeGestora) {
+		this.unidadeGestora = unidadeGestora;
+	}
+
+	
 	
 }

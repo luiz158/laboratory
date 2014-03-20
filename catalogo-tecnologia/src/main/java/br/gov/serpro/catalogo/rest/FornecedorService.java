@@ -22,7 +22,7 @@ import br.gov.serpro.catalogo.entity.Fornecedor;
 import br.gov.serpro.catalogo.persistence.FornecedorDAO;
 
 @ValidateRequest
-@Path("/api/fornecedor")
+@Path("fornecedor")
 @Produces(APPLICATION_JSON)
 public class FornecedorService {
 	
@@ -36,7 +36,7 @@ public class FornecedorService {
 	}
 
 	@DELETE
-	@Path("/{id}")
+	@Path("{id}")
 	@Transactional
 	public void excluir(@NotNull @PathParam("id") Long id) {
 		fornecedorDAO.delete(id);
@@ -54,7 +54,7 @@ public class FornecedorService {
 	}
 	
 	@GET
-	@Path("/{id}")
+	@Path("{id}")
 	public Fornecedor carregar(@NotNull @PathParam("id") Long id) {
 		return fornecedorDAO.load(id);
 	}

@@ -20,7 +20,7 @@
 					<th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1"
 						aria-label="Browser: activate to sort column ascending">Fornecedor</th>
 					<th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1"
-						aria-label="Browser: activate to sort column ascending">Descrição</th>
+						aria-label="Browser: activate to sort column ascending">Representante</th>
 					<th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1"
 						aria-label="Platform(s): activate to sort column ascending" style="width: 105px;">Ações</th>
 				</tr>
@@ -29,7 +29,7 @@
 				<tr ng-repeat="f in fornecedores">
 					<td><a ng-click="editarFornecedor(f)">{{f.id}}</a></td>
 					<td><a ng-click="editarFornecedor(f)">{{f.nome}}</a></td>
-					<td><a ng-click="editarFornecedor(f)">{{f.descricao}}</a></td>
+					<td><a ng-click="editarFornecedor(f)">{{f.representante}}</a></td>
 					<td><a ng-click="excluirFornecedor(f.id)" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> excluir</a></td>
 				</tr>
 			</tbody>

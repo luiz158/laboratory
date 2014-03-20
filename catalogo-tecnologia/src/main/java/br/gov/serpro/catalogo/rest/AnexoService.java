@@ -1,6 +1,7 @@
 package br.gov.serpro.catalogo.rest;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.MediaType.MULTIPART_FORM_DATA;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,7 +33,7 @@ import br.gov.serpro.catalogo.persistence.AnexoDAO;
 import br.gov.serpro.catalogo.persistence.FaseDAO;
 
 @ValidateRequest
-@Path("/api/anexo")
+@Path("anexo")
 @Produces(APPLICATION_JSON)
 public class AnexoService {
 
@@ -44,7 +45,7 @@ public class AnexoService {
 	
 	@POST
 	@Transactional
-	@Consumes("multipart/form-data")
+	@Consumes(MULTIPART_FORM_DATA)
 	public Response salvarAnexo(MultipartFormDataInput input) {
 
 		Anexo anexo = new Anexo();
@@ -76,7 +77,7 @@ public class AnexoService {
 	}
 
 	@GET
-	@Path("/{id}")
+	@Path("{id}")
 	public List<Anexo> listar(@PathParam("id") Long id) {	
 		Fase fase = new Fase();
 		fase.setId(id);
@@ -87,14 +88,14 @@ public class AnexoService {
 	
 
 	@DELETE
-	@Path("/{id}")
+	@Path("{id}")
 	@Transactional
 	public void excluir(@NotNull @PathParam("id") Long id) {
 		anexoDAO.delete(id);
 	}
 
 	@GET
-	@Path("/{id}")
+	@Path("{id}")
 	@Produces("application/force-download")
 	public Response download(@PathParam("id") Long id) {
 		Anexo  anexo = anexoDAO.load(id);

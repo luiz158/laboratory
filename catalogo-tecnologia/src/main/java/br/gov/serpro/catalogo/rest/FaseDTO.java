@@ -2,22 +2,23 @@ package br.gov.serpro.catalogo.rest;
 
 import java.util.Date;
 
-import br.gov.serpro.catalogo.entity.Analise;
+import br.gov.serpro.catalogo.entity.Fase;
+import br.gov.serpro.catalogo.entity.OrigemDemanda;
 
 public class FaseDTO{
 	/* Campos de pesquisa */
 	private Long id;
 	private String palavraChave;
 	private Integer fase;
-	private String origemReferencia;
+	private OrigemDemanda origemReferencia;
 	private String codigoReferencia;
 	private Integer finalizada;
 	private Date finalizacaoApartir;
 	private Date finalizacaoAte;	
-	private String gestor;
+	//private User gestor;
 	
 	/* Campos de exibição */
-	private String gestorArea;
+	private String unidadeGestora;
 	private Date dataRegistro;
 	private Date dataFinalizacao;
 	private String objetivo;
@@ -26,14 +27,13 @@ public class FaseDTO{
 		
 	}
 	
-	public FaseDTO(Analise a) {
+	public FaseDTO(Fase a) {
 		this.setId(a.getId());
-		this.setFase(1);
+		this.setFase(a.getFase().ordinal()+1);
 		this.setDataFinalizacao(a.getDataFinalizacao());
 		this.setDataRegistro(a.getDataRealizacao());
-		this.setGestor(a.getGestor());
-		this.setGestorArea(a.getGestor());
-		this.setObjetivo(a.getArea());
+		this.setUnidadeGestora(a.getUnidadeGestora());
+		this.setObjetivo(a.getObjetivo());
 		this.setOrigemReferencia(a.getOrigemReferencia());
 		this.setCodigoReferencia(a.getCodigoReferencia());
 	}
@@ -56,10 +56,10 @@ public class FaseDTO{
 	public void setFase(Integer fase) {
 		this.fase = fase;
 	}
-	public String getOrigemReferencia() {
+	public OrigemDemanda getOrigemReferencia() {
 		return origemReferencia;
 	}
-	public void setOrigemReferencia(String origemReferencia) {
+	public void setOrigemReferencia(OrigemDemanda origemReferencia) {
 		this.origemReferencia = origemReferencia;
 	}
 	public String getCodigoReferencia() {
@@ -86,17 +86,13 @@ public class FaseDTO{
 	public void setFinalizacaoAte(Date finalizacaoAte) {
 		this.finalizacaoAte = finalizacaoAte;
 	}
-	public String getGestor() {
-		return gestor;
+	
+
+	public String getUnidadeGestora() {
+		return unidadeGestora;
 	}
-	public void setGestor(String gestor) {
-		this.gestor = gestor;
-	}
-	public String getGestorArea() {
-		return gestorArea;
-	}
-	public void setGestorArea(String gestorArea) {
-		this.gestorArea = gestorArea;
+	public void setUnidadeGestora(String gestorArea) {
+		this.unidadeGestora = gestorArea;
 	}
 	public Date getDataRegistro() {
 		return dataRegistro;
