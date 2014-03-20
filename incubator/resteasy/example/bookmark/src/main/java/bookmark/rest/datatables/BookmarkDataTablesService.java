@@ -26,29 +26,17 @@ public class BookmarkDataTablesService {
 
 	@GET
 	public DataTablesResult<Bookmark> findAllPaged(@QueryParam("sEcho") Integer echo,
-			@QueryParam("iDisplayStart") Integer displayStart, @QueryParam("iDisplayLength") Integer displayLength,
-			@QueryParam("sSearch") String search, @QueryParam("iSortCol_0") Integer sortCol) throws Exception {
+			@QueryParam("iDisplayStart") Integer displayStart, @QueryParam("iDisplayLength") Integer displayLength)
+			throws Exception {
 
-		StringBuffer jpqlBase = new StringBuffer();
-		jpqlBase.append(" from Bookmark this where ");
-		// jpqlBase.append(" this.id = :id or ");
-		jpqlBase.append(" lower(this.description) like :description or ");
-		jpqlBase.append(" lower(this.link) like :link ");
+		String jpqlBase = "from Bookmark this";
 
-		System.out.println(sortCol);
-
-		TypedQuery<Bookmark> query = em.createQuery(jpqlBase.toString(), Bookmark.class);
-		// query.setParameter("id", search);
-		query.setParameter("description", "%" + search.toLowerCase() + "%");
-		query.setParameter("link", "%" + search.toLowerCase() + "%");
+		TypedQuery<Bookmark> query = em.createQuery(jpqlBase, Bookmark.class);
 		query.setFirstResult(displayStart);
 		query.setMaxResults(displayLength);
 		List<Bookmark> data = query.getResultList();
 
-		TypedQuery<Long> countQuery = em.createQuery("select count(this) " + jpqlBase.toString(), Long.class);
-		// countQuery.setParameter("id", search);
-		countQuery.setParameter("description", "%" + search.toLowerCase() + "%");
-		countQuery.setParameter("link", "%" + search.toLowerCase() + "%");
+		TypedQuery<Long> countQuery = em.createQuery("select count(this) " + jpqlBase, Long.class);
 		Long count = countQuery.getSingleResult();
 
 		DataTablesResult<Bookmark> result = new DataTablesResult<Bookmark>();
