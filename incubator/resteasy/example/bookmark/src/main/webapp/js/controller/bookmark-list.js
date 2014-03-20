@@ -55,7 +55,8 @@ function findAllOk(data) {
 				"bRetrieve" : true,
 				//"bDestroy" : true,
 				"bServerSide" : true,
-				"sPaginationType" : "full_numbers",
+				//"sPaginationType" : "full_numbers",
+				"sPaginationType": "bs_normal",
 				"sAjaxSource" : 'api/bookmark/datatables',
 				"bSort" : false
 			});
