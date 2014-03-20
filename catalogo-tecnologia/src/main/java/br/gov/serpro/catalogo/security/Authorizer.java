@@ -6,7 +6,6 @@ import br.gov.frameworkdemoiselle.security.SecurityContext;
 import br.gov.serpro.catalogo.entity.Grupo;
 import br.gov.serpro.catalogo.entity.Perfil;
 import br.gov.serpro.catalogo.entity.User;
-import br.gov.serpro.catalogo.persistence.UserDAO;
 
 
 public class Authorizer implements br.gov.frameworkdemoiselle.security.Authorizer{
@@ -15,14 +14,11 @@ public class Authorizer implements br.gov.frameworkdemoiselle.security.Authorize
 	
 	@Inject
 	private SecurityContext securityContext;
-	
-	@Inject
-	private UserDAO userDAO;
-	
+
 	@Override
 	public boolean hasRole(String role) throws Exception {
 		if(securityContext.isLoggedIn()) {
-			User user = getUser();
+			User user = (User)securityContext.getUser();
 			for(Grupo grupo : user.getGrupos()) {
 				for(Perfil perfil : grupo.getPerfis()) {
 					if(role.equalsIgnoreCase(perfil.toString())) {
@@ -34,9 +30,6 @@ public class Authorizer implements br.gov.frameworkdemoiselle.security.Authorize
 		return false;
 	}
 
-	private User getUser() {
-		return userDAO.loadByCPF(((User) securityContext.getUser()).getCPF());
-	}
 
 	@Override
 	public boolean hasPermission(String resource, String operation) throws Exception {

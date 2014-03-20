@@ -15,6 +15,7 @@ import javax.ws.rs.Produces;
 
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.serpro.catalogo.bussiness.FaseBC;
+import br.gov.serpro.catalogo.bussiness.UsuarioBC;
 import br.gov.serpro.catalogo.entity.Fase;
 import br.gov.serpro.catalogo.entity.FaseHistorico;
 import br.gov.serpro.catalogo.entity.FaseInteressado;
@@ -27,6 +28,9 @@ public class FaseService {
 
 	@Inject
 	private FaseBC faseBC;
+	
+	@Inject
+	private UsuarioBC usuarioBC;
 
 	@POST
 	public List<Fase> pesquisar(FaseDTO fase) {
@@ -50,7 +54,7 @@ public class FaseService {
 	@POST
 	@Path("usuario/carregar")
 	public User carregarUsuario(User user) {
-		return faseBC.carregarUsuario(user);
+		return usuarioBC.carregarOuInserir(user);
 	}
 
 	@POST

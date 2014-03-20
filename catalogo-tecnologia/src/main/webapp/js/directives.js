@@ -307,6 +307,7 @@ diretivas.directive('validationMsg', function(ValidationService) {
 	};
 });
 
+
 diretivas.directive('loggedIn', function(ValidationService) {
 	return {
 		restrict : 'A',	
