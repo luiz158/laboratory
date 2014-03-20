@@ -9,11 +9,11 @@ controllers.controller('Auth', function Auth($scope, $http, $location, AuthServi
 	
 	function sucesso(data){
 		$scope.usuario = data;
-		$location.path("/analise");
+		location.href="home.html";
 	}
 	
 	function sucessologout(){
-		$location.path("/login");
+		location.href="index.html";
 		$scope.usuario = null;
 	}
 	
@@ -33,17 +33,17 @@ controllers.controller('Auth', function Auth($scope, $http, $location, AuthServi
 	
 	$scope.entrar = function() {
 		AuthService.login($scope.formData, sucesso, erro);
-	}
+	};
 	
 	$scope.sair = function() {
 		AuthService.logout(sucessologout);
-	}
+	};
 	
 	$scope.isLoggedIn = function(){
 		return AuthService.isLoggedIn();
-	}
+	};
 	
 	$scope.getUsuario = function(){
 		return AuthService.getUsuario();
-	}
+	};
 });
