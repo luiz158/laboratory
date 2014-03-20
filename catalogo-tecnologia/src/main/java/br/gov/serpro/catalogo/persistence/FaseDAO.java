@@ -3,16 +3,19 @@ package br.gov.serpro.catalogo.persistence;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
 
+import javax.inject.Inject;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.slf4j.Logger;
+
 import br.gov.frameworkdemoiselle.stereotype.PersistenceController;
 import br.gov.frameworkdemoiselle.template.JPACrud;
-import br.gov.serpro.catalogo.entity.Anexo;
 import br.gov.serpro.catalogo.entity.Fase;
 import br.gov.serpro.catalogo.entity.FaseEnum;
 import br.gov.serpro.catalogo.rest.FaseDTO;
@@ -22,6 +25,15 @@ public class FaseDAO extends JPACrud<Fase, Long> {
 	
 	private static final long serialVersionUID = 1L;
 	
+	@Inject
+	private Logger logger;
+	
+	@Override
+	public void delete(Long id) {
+		// TODO Exclusão lógica
+		logger.debug("Implementar a exclusão lógica..");
+		super.delete(id);
+	}
 	
 	public List<Fase> pesquisar(FaseDTO dto) {
 		
