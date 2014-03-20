@@ -2,7 +2,7 @@ $(function() {
     $("#new").focus();
 
     $(document).ready(function() {
-	findAllOk();
+	BookmarkProxy.findAll(findAllOk);
     });
 
     $("form").submit(function(event) {
@@ -28,23 +28,36 @@ $(function() {
     });
 });
 
+var table;
+
 function findAllOk(data) {
-    $('#resultList').dataTable({
-	"aoColumns" : [ {
-	    "mDataProp" : "id"
-	}, {
-	    "mDataProp" : "description"
-	}, {
-	    "mDataProp" : "link"
-	} ],
-	// "aaData" : data,
-	// "bSort" : true,
-	"bServerSide" : true,
-	"sPaginationType" : "full_numbers",
-	"sAjaxSource" : 'api/bookmark/datatables',
-	"bSort" : false
+    YUI().use("datatable", function(Y) {
+
+	table = new Y.DataTable({
+	    columns : [ {
+		label : " ",
+		formatter : "<input type='checkbox' value='{id}'>",
+	    }, {
+		key : "id",
+		label : "ID"
+	    }, {
+		key : "description",
+		label : "Descrição",
+		formatter : "<a href='bookmark-edit.html?id={id}'>{value}</a>"
+	    }, {
+		key : "link",
+		label : "Link",
+		formatter : "<a href='{value}'>{value}</a>"
+	    } ],
+	    data : data
+	});
+
+	table.render("#resultList");
     });
 }
 
 function removeOk(data) {
+    $.each(data, function(index, value) {
+	table.removeRow(value);
+    });
 }
