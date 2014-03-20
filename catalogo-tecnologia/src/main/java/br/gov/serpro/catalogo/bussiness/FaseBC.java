@@ -39,7 +39,7 @@ public class FaseBC {
 	private FaseDAO faseDAO;
 	
 	@Inject
-	private UserDAO userDAO;
+	private UsuarioBC usuarioBC;
 	
 	@Inject
 	private FaseMembroDAO faseMembroDAO;
@@ -209,15 +209,12 @@ public class FaseBC {
 	
 	@Transactional
 	public User adicionarMembro(User user, Long id){
-		FaseMembro faseMembro = new FaseMembro();
-		System.out.println("Verificando o cpf: "+user.getCPF());
-		if(!userDAO.existeCadastroParaCPF(user.getCPF())){
-			user = userDAO.insert(user);
-		}else{			
-			if(faseMembroDAO.membroJaCadastrado(id, user.getCPF()))
+		FaseMembro faseMembro = new FaseMembro();		
+		
+		if(faseMembroDAO.membroJaCadastrado(id, user.getCPF()))
 				throw new ValidationException().addViolation(null, "Membro já relacionado.");
-			user = userDAO.loadByCPF(user.getCPF());
-		}
+		
+		user = usuarioBC.carregarOuInserir(user);	
 		
 		faseMembro.setUser(user);
 		faseMembro.setFase(faseDAO.load(id));		
@@ -240,14 +237,12 @@ public class FaseBC {
 	@Transactional
 	public User adicionarInteressado(User user, Long id){
 		FaseInteressado faseMembro = new FaseInteressado();
-		System.out.println("Verificando o cpf: "+user.getCPF());
-		if(!userDAO.existeCadastroParaCPF(user.getCPF())){
-			user = userDAO.insert(user);
-		}else{			
-			if(faseInteressadoDAO.interessadoJaCadastrado(id, user.getCPF()))
-				throw new ValidationException().addViolation(null, "Interessado já relacionado.");
-			user = userDAO.loadByCPF(user.getCPF());
-		}		
+		
+		if(faseInteressadoDAO.interessadoJaCadastrado(id, user.getCPF()))
+			throw new ValidationException().addViolation(null, "Interessado já relacionado.");
+	
+		user = usuarioBC.carregarOuInserir(user);
+		
 		faseMembro.setUser(user);
 		faseMembro.setFase(faseDAO.load(id));		
 		faseInteressadoDAO.insert(faseMembro);		
@@ -262,14 +257,6 @@ public class FaseBC {
 
 	public void deleteInteressado(Long id) {
 		faseInteressadoDAO.delete(id);
-	}
-
-	public User carregarUsuario(User user) {
-		User userBanco = userDAO.loadByCPF(user.getCPF());
-		if(userBanco == null){
-			userBanco = userDAO.insert(user);
-		}
-		return userBanco;
 	}
 
 	public void delete(Long id) {

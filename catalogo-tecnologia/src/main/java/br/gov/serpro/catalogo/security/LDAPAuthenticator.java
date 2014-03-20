@@ -5,7 +5,6 @@ import java.util.Hashtable;
 import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
-import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.naming.Context;
 import javax.naming.NamingEnumeration;
@@ -17,12 +16,10 @@ import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
 import javax.servlet.http.HttpSession;
 
-import br.gov.frameworkdemoiselle.security.AfterLoginSuccessful;
 import br.gov.frameworkdemoiselle.security.Authenticator;
 import br.gov.frameworkdemoiselle.security.Credentials;
-import br.gov.frameworkdemoiselle.security.SecurityContext;
-import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.frameworkdemoiselle.util.Beans;
+import br.gov.serpro.catalogo.bussiness.UsuarioBC;
 import br.gov.serpro.catalogo.entity.User;
 import br.gov.serpro.catalogo.persistence.UserDAO;
 
@@ -38,9 +35,9 @@ public class LDAPAuthenticator implements Authenticator {
 	
 	@Inject
 	private LDAPConfig ldapConfig;
-	
-	@Inject
-	private UserDAO userDAO;
+		
+	@Inject 
+	private UsuarioBC usuarioBC;
 
 	@Override
 	public void authenticate() throws Exception {
@@ -52,7 +49,11 @@ public class LDAPAuthenticator implements Authenticator {
 			LdapContext ldapContext = createContext(searchResult.getNameInNamespace(), credentials.getPassword());
 			ldapContext.close();
 
-			user = createUser(searchResult.getAttributes());			
+			user = usuarioBC.carregarOuInserir(createUser(searchResult.getAttributes()));			
+			
+			List<String> roles = new ArrayList<String>();
+			roles.add("logado");			
+			user.setAttribute("roles", roles);
 			
 			
 		/*} catch (Exception cause) {
@@ -62,14 +63,7 @@ public class LDAPAuthenticator implements Authenticator {
 		}*/
 	}
 	
-	@Transactional
-	public void sincronizarUsuarioLDAPComBaseInterna(@Observes AfterLoginSuccessful event, SecurityContext securityContext) {
-		User usuarioSistema = userDAO.loadByCPF(user.getCPF());
-		if (usuarioSistema == null) {			
-			usuarioSistema = userDAO.insert(user);
-		}
-		user = usuarioSistema;
-	}
+	
 	
 	
 	public User searchUserByCPF(String cpf) throws NamingException {
