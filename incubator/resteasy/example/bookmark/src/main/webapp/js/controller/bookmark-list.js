@@ -2,7 +2,8 @@ $(function() {
     $("#new").focus();
 
     $(document).ready(function() {
-	BookmarkProxy.findAll(findAllOk);
+	// BookmarkProxy.findAll(findAllOk);
+	findAllOk();
     });
 
     $("form").submit(function(event) {
@@ -31,28 +32,27 @@ $(function() {
 var table;
 
 function findAllOk(data) {
-    YUI().use("datatable", function(Y) {
-
-	table = new Y.DataTable({
-	    columns : [ {
-		label : " ",
-		formatter : "<input type='checkbox' value='{id}'>",
-	    }, {
-		key : "id",
-		label : "ID"
-	    }, {
-		key : "description",
-		label : "Descrição",
-		formatter : "<a href='bookmark-edit.html?id={id}'>{value}</a>"
-	    }, {
-		key : "link",
-		label : "Link",
-		formatter : "<a href='{value}'>{value}</a>"
-	    } ],
-	    data : data
-	});
-
-	table.render("#resultList");
+    $('#resultList').dataTable({
+	"aoColumns" : [ {
+	    "mDataProp" : "id"
+	}, {
+	    "mDataProp" : "description"
+	}, {
+	    "mDataProp" : "link"
+	} ],
+	// "aaData" : data,
+	"bServerSide" : true,
+	"sAjaxSource" : 'api/bookmark/datatables'
+    // ,
+    // "fnServerData" : function(sSource, aoData, fnCallback, oSettings) {
+    // oSettings.jqXHR = $.ajax({
+    // "dataType" : 'json',
+    // "type" : "GET",
+    // "url" : sSource,
+    // "data" : aoData,
+    // "success" : fnCallback
+    // });
+    // }
     });
 }
 
