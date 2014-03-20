@@ -37,23 +37,36 @@ function findAllOk(data) {
 			    "aTargets" : [ 0 ],
 			    "mData" : "id",
 			    "mRender" : function(id) {
-				return '<input id="remove-' + id
-					+ '" type="checkbox" value="' + id
-					+ '">';
+			    	return '<input id="remove-' + id + '" type="checkbox" value="' + id	+ '">';
 			    }
 			}, {
 			    "aTargets" : [ 1 ],
-			    "mData" : "description"
+			    "mData" : "description",
+			    "mRender" : function(data, type, full) {
+			    	return '<a href="bookmark-edit.html?id=' + full.id + '">' + full.description	+ '</a>';
+			    }
 			}, {
 			    "aTargets" : [ 2 ],
-			    "mData" : "link"
+			    "mData" : "link",
+			    "mRender" : function(link) {
+			    	return '<a href="' + link + '" target="_blank">' + link	+ '</a>';
+			    }
 			} ],
 		"oLanguage" : {
 		    "sInfo" : "Mostrando _START_ a _END_ de _TOTAL_ registros",
+		    "sEmptyTable": "Não há dados disponíveis na tabela",
+		    "sLengthMenu": "Mostrar _MENU_ registros",
+		    "sInfoThousands" : ".", 
+		    "oPaginate": {
+		    	"sFirst" : "Primeiro",
+		    	"sLast" : "Último",
+		        "sNext" : "Próximo",
+		        "sPrevious" : "Anterior"
+		    }
 		},
-		// "bDestroy" : true,
+		"bFilter": false,
 		"bRetrieve" : true,
-		"sPaginationType" : "bs_normal",
+		"sPaginationType" : "bs_full",
 
 		// "aaData" : data,
 		// "bSort" : true
