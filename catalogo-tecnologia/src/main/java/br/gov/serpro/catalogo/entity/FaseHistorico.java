@@ -62,7 +62,7 @@ public class FaseHistorico {
 	
 	private String gerarDescricao(){
 		StringBuffer sb = new StringBuffer();
-		sb.append(getUsuario().getName()).append(" executou a ação: ").append(operacao.name());
+		sb.append("Executou a ação: ").append(operacao.name());
 		sb.append(" com a situação: ").append(fase.getSituacao().name());
 		return sb.toString();
 	}
