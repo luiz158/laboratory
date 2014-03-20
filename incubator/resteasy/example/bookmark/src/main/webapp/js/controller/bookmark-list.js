@@ -2,6 +2,7 @@ $(function() {
     $("#new").focus();
 
     $(document).ready(function() {
+	// BookmarkProxy.findAll(findAllOk);
 	findAllOk();
     });
 
@@ -29,22 +30,43 @@ $(function() {
 });
 
 function findAllOk(data) {
-    $('#resultList').dataTable({
-	"aoColumns" : [ {
-	    "mDataProp" : "id"
-	}, {
-	    "mDataProp" : "description"
-	}, {
-	    "mDataProp" : "link"
-	} ],
-	// "aaData" : data,
-	// "bSort" : true,
-	"bServerSide" : true,
-	"sPaginationType" : "full_numbers",
-	"sAjaxSource" : 'api/bookmark/datatables',
-	"bSort" : false
-    });
+    var oTable = $('#resultList').dataTable(
+	    {
+		"aoColumns" : [
+			{
+			    "aTargets" : [ 0 ],
+			    "mData" : "id",
+			    "mRender" : function(id) {
+				return '<input id="remove-' + id
+					+ '" type="checkbox" value="' + id
+					+ '">';
+			    }
+			}, {
+			    "aTargets" : [ 1 ],
+			    "mData" : "description"
+			}, {
+			    "aTargets" : [ 2 ],
+			    "mData" : "link"
+			} ],
+		"oLanguage" : {
+		    "sInfo" : "Mostrando _START_ a _END_ de _TOTAL_ registros",
+		},
+		// "bDestroy" : true,
+		"bRetrieve" : true,
+		"sPaginationType" : "bs_normal",
+
+		// "aaData" : data,
+		// "bSort" : true
+
+		"sAjaxSource" : 'api/bookmark/datatables',
+		"bServerSide" : true,
+		"bSort" : false
+	    });
+    oTable.fnClearTable();
 }
 
 function removeOk(data) {
+    $.each(data, function(index, value) {
+	findAllOk();
+    });
 }

@@ -42,13 +42,13 @@ config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/produto/edit', {templateUrl: 'partials/produto-edit.html', controller: 'ProdutoEdit'});
   $routeProvider.when('/produto/edit/:id', {templateUrl: 'partials/produto-edit.html', controller: 'ProdutoEdit'});
   
-  $routeProvider.when('/grupo', {templateUrl: 'partials/grupo-listar.html', controller: 'GrupoList'});
-  $routeProvider.when('/grupo/edit', {templateUrl: 'partials/grupo-edit.html', controller: 'GrupoEdit'});
-  $routeProvider.when('/grupo/edit/:id', {templateUrl: 'partials/grupo-edit.html', controller: 'GrupoEdit'});
+  $routeProvider.when('/grupo', {templateUrl: 'partials/user/grupo-listar.html', controller: 'GrupoList'});
+  $routeProvider.when('/grupo/edit', {templateUrl: 'partials/user/grupo-edit.html', controller: 'GrupoEdit'});
+  $routeProvider.when('/grupo/edit/:id', {templateUrl: 'partials/user/grupo-edit.html', controller: 'GrupoEdit'});
   
-  $routeProvider.when('/user', {templateUrl: 'partials/user-listar.html', controller: 'UserList'});
-  $routeProvider.when('/user/new', {templateUrl: 'partials/user-new.html', controller: 'UserNew'});
-  $routeProvider.when('/user/edit/:id', {templateUrl: 'partials/user-edit.html', controller: 'UserEdit'});
+  $routeProvider.when('/user', {templateUrl: 'partials/user/user-listar.html', controller: 'UserList'});
+  $routeProvider.when('/user/new', {templateUrl: 'partials/user/user-new.html', controller: 'UserNew'});
+  $routeProvider.when('/user/edit/:id', {templateUrl: 'partials/user/user-edit.html', controller: 'UserEdit'});
   $routeProvider.otherwise({templateUrl: 'partials/dashboard.html'});
   
   $routeProvider.when('/tecnologia', {templateUrl: 'partials/tecnologia-listar.html', controller: 'TecnologiaList'});
@@ -81,3 +81,4 @@ app.run(function($rootScope, AuthService) {
 
 var controllers = angular.module('catalogo.controllers',[]);
 var services = angular.module('catalogo.services',[]);
+
