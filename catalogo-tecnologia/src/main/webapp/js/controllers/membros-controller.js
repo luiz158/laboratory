@@ -5,7 +5,7 @@ var controllers = angular.module('catalogo.controllers');
 
 /*"Para o funcionamento deste controlador é preciso disponibilizar o id da fase em $rootScope.demandaId"*/
 controllers.controller('MembrosCtrl', function MembrosCtrl($scope, $rootScope, $http,
-		$routeParams, AlertService) {
+		$routeParams, AlertService, UserService) {
 	
 	/* Pega a fase diretamente da diretiva*/
 	$scope.fase = $scope.$parent.ngModel;
@@ -54,21 +54,11 @@ controllers.controller('MembrosCtrl', function MembrosCtrl($scope, $rootScope, $
 	
 	
 	$scope.pesquisar = function(){
-		if(!$scope.palavraChave || $scope.palavraChave.length<3){
-			AlertService.addWithTimeout('warning', "Para pesquisar digite pelo menos 3 letras.");
-		}else{
-			$http.get('api/user/nome/' + $scope.palavraChave).success(function(data) {
-				if (data == "") {
-					AlertService.addWithTimeout('warning', 'Usuário não encontrado no LDAP');
-				}else{
-					$scope.resultadoPesquisa = data;
-				}
-			}).error(function(data, status) {
-				if (status == 412) {
-					AlertService.addWithTimeout('danger', data[0].message);
-				}
-			});
-		}
+		UserService.searchByName($scope.palavraChave).then( 
+			function(data) {
+				$scope.resultadoPesquisa = data;
+			}
+		);
 	};
 		
 

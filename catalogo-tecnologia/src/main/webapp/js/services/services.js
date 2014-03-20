@@ -119,13 +119,17 @@ services.factory('ValidationService', function(AlertService) {
 		service.validation = {};
 	};
 	
-	service.registrarViolacoes = function(data){
-		console.log(data);
-		angular.forEach(data, function(violation){	
-			if(violation.message){
-				service.add(violation.property,violation.message);
-			}
-		});
+	service.registrarViolacoes = function(data){		
+		if (angular.isArray(data)){
+			angular.forEach(data, function(violation){	
+				if(violation.message){
+					service.add(violation.property,violation.message);
+				}
+			});
+		}else{
+			service.add(null,"Falha ao executar a operação.");
+			console.log(data);
+		}
 	};
 	
 	return service;
