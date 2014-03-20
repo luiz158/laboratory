@@ -306,3 +306,16 @@ diretivas.directive('validationMsg', function(ValidationService) {
 		}
 	};
 });
+
+diretivas.directive('loggedIn', function(ValidationService) {
+	return {
+		restrict : 'A',	
+		controller : function($scope, AuthService) {
+			AuthService.getLoggedUserService().then(function (data){
+				if(data == ""){
+					location.href="index.html";
+				}
+			});
+		}
+	};
+});
