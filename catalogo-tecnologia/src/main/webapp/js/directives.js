@@ -154,15 +154,16 @@ diretivas.directive('ngHistoricoFase', function() {
 		},
 		controller: function ($scope, $http, AlertService) {
 			$scope.historico = [];			
-				
-			$http({
-				url : 'api/fase/historico/'+$scope.fase.id,
-				method : "GET"
-			}).success(function(data) {
-				$scope.historico = data;						
-			}).error( function(data, status) {
-				AlertService.addWithTimeout('danger',data[0].message);
-			});
+			if($scope.fase.id){	
+				$http({
+					url : 'api/fase/historico/'+$scope.fase.id,
+					method : "GET"
+				}).success(function(data) {
+					$scope.historico = data;						
+				}).error( function(data, status) {
+					AlertService.addWithTimeout('danger',data[0].message);
+				});
+			}
 		}
 	};
 });
@@ -308,14 +309,15 @@ diretivas.directive('validationMsg', function(ValidationService) {
 });
 
 
-diretivas.directive('loggedIn', function(ValidationService) {
+diretivas.directive('loggedIn', function(AuthService) {
 	return {
 		restrict : 'A',	
-		controller : function($scope, AuthService) {
+		link : function(scope, elem, $attrs) {
 			AuthService.getLoggedUserService().then(function (data){
 				if(data == ""){
 					location.href="index.html";
 				}
+				logado = true;
 			});
 		}
 	};
