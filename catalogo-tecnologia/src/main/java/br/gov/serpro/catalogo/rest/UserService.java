@@ -18,6 +18,7 @@ import javax.ws.rs.Produces;
 import org.jboss.resteasy.spi.validation.ValidateRequest;
 
 import br.gov.frameworkdemoiselle.resteasy.util.ValidationException;
+import br.gov.frameworkdemoiselle.security.RequiredRole;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.serpro.catalogo.entity.User;
 import br.gov.serpro.catalogo.persistence.UserDAO;
@@ -27,6 +28,8 @@ import br.gov.serpro.catalogo.security.LDAPAuthenticator;
 @Path("user")
 @Produces(APPLICATION_JSON)
 public class UserService {
+	
+	static final String ADMINISTRADOR = "ADMINISTRADOR";
 
 	@Inject
 	private UserDAO userDAO;
@@ -63,12 +66,14 @@ public class UserService {
 	
 	@PUT
 	@Transactional
+	@RequiredRole(ADMINISTRADOR)
 	public void alterar(@Valid User user) {
 		userDAO.update(user);
 	}
 	
 	@POST
 	@Transactional
+	@RequiredRole(ADMINISTRADOR)
 	public void inserir(@Valid User user)  throws Exception {
 		if(userExists(user.getCPF())) {
 			ValidationException ve = new ValidationException();

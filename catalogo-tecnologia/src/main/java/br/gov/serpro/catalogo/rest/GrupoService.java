@@ -17,6 +17,8 @@ import javax.ws.rs.Produces;
 
 import org.jboss.resteasy.spi.validation.ValidateRequest;
 
+import br.gov.frameworkdemoiselle.security.AuthorizationException;
+import br.gov.frameworkdemoiselle.security.RequiredRole;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.serpro.catalogo.entity.Grupo;
 import br.gov.serpro.catalogo.persistence.GrupoDAO;
@@ -25,18 +27,22 @@ import br.gov.serpro.catalogo.persistence.GrupoDAO;
 @Path("grupo")
 @Produces(APPLICATION_JSON)
 public class GrupoService {
+	
+	static final String ADMINISTRADOR = "ADMINISTRADOR";
 
 	@Inject
 	private GrupoDAO grupoDAO;
 	
 	@POST
 	@Transactional
+	@RequiredRole(ADMINISTRADOR)
 	public Long salvar(@Valid Grupo grupo) {
 		return grupoDAO.insert(grupo).getId();
 	}
 
 	@PUT
 	@Transactional
+	@RequiredRole(ADMINISTRADOR)
 	public void alterar(@Valid Grupo grupo) {
 		grupoDAO.update(grupo);
 	}
@@ -44,6 +50,7 @@ public class GrupoService {
 	@DELETE
 	@Path("{id}")
 	@Transactional
+	@RequiredRole(ADMINISTRADOR)
 	public void excluir(@NotNull @PathParam("id") Long id) {
 		grupoDAO.delete(id);
 	}
