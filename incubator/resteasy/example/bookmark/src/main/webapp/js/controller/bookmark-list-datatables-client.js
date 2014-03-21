@@ -14,50 +14,46 @@ $(function() {
     });
 
     $("#delete").click(function() {
-	var ids = [];
+    	var ids = [];
 
-	$("input:checked").each(function(index, value) {
-	    ids.push($(value).val());
-	});
+    	$("input:checked").each(function(index, value) {
+    		ids.push($(value).val());
+    	});
 
-	if (ids.length == 0) {
-	    alert('Nenhum registro selecionado');
-	} else if (confirm('Tem certeza que deseja apagar?')) {
-	    BookmarkProxy.remove(ids, removeOk);
-	}
+    	if (ids.length == 0) {
+    		alert('Nenhum registro selecionado');
+    	} else if (confirm('Tem certeza que deseja apagar?')) {
+    		BookmarkProxy.remove(ids, removeOk);
+    	}
     });
 });
 
-function findAllOk(data) {
-    console.log(data);
+var oTable; 
 
-    var oTable = $('#resultList').dataTable(
+function findAllOk(data) {
+
+    oTable = $('#resultList').dataTable(
 	    {
 		"aoColumns" : [
 			{
 			    "aTargets" : [ 0 ],
 			    "mDataProp" : "id",
 			    "mRender" : function(id) {
-				return '<input id="remove-' + id
-					+ '" type="checkbox" value="' + id
-					+ '">';
+			    	return '<input id="remove-' + id + '" type="checkbox" value="' + id	+ '">';
 			    }
 			},
 			{
 			    "aTargets" : [ 1 ],
 			    "mDataProp" : "description",
 			    "mRender" : function(data, type, full) {
-				return '<a href="bookmark-edit.html?id='
-					+ full.id + '">' + full.description
-					+ '</a>';
+			    	return '<a href="bookmark-edit.html?id=' + full.id + '">' + full.description + '</a>';
 			    }
 			},
 			{
 			    "aTargets" : [ 2 ],
 			    "mDataProp" : "link",
 			    "mRender" : function(link) {
-				return '<a href="' + link
-					+ '" target="_blank">' + link + '</a>';
+			    	return '<a href="' + link + '" target="_blank">' + link + '</a>';
 			    }
 			} ],
 		"oLanguage" : {
@@ -73,15 +69,19 @@ function findAllOk(data) {
 		    }
 		},
 		"bFilter" : false,
-//		"bRetrieve" : true,
+		//"bRetrieve" : true,
+		//"bServerSide": true,
 		"bDestroy" : true,
 		"sPaginationType" : "bs_full",
 		"aaData" : data,
 		"bSort" : false
 	    });
-    // oTable.fnClearTable();
+    	//oTable.fnClearTable();
+    
 }
 
 function removeOk(data) {
-    BookmarkProxy.findAll(findAllOk);
+	$.each(data, function(index, value) {
+		oTable.fnDeleteRow($("#remove-" + value).closest('tr')[0]._DT_RowIndex);
+    });
 }
