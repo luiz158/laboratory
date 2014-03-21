@@ -2,8 +2,7 @@ $(function() {
     $("#new").focus();
 
     $(document).ready(function() {
-	// BookmarkProxy.findAll(findAllOk);
-	findAllOk();
+	BookmarkProxy.findAll(findAllOk);
     });
 
     $("form").submit(function(event) {
@@ -30,56 +29,59 @@ $(function() {
 });
 
 function findAllOk(data) {
+    console.log(data);
+
     var oTable = $('#resultList').dataTable(
 	    {
 		"aoColumns" : [
 			{
 			    "aTargets" : [ 0 ],
-			    "mData" : "id",
+			    "mDataProp" : "id",
 			    "mRender" : function(id) {
-			    	return '<input id="remove-' + id + '" type="checkbox" value="' + id	+ '">';
+				return '<input id="remove-' + id
+					+ '" type="checkbox" value="' + id
+					+ '">';
 			    }
-			}, {
+			},
+			{
 			    "aTargets" : [ 1 ],
-			    "mData" : "description",
+			    "mDataProp" : "description",
 			    "mRender" : function(data, type, full) {
-			    	return '<a href="bookmark-edit.html?id=' + full.id + '">' + full.description	+ '</a>';
+				return '<a href="bookmark-edit.html?id='
+					+ full.id + '">' + full.description
+					+ '</a>';
 			    }
-			}, {
+			},
+			{
 			    "aTargets" : [ 2 ],
-			    "mData" : "link",
+			    "mDataProp" : "link",
 			    "mRender" : function(link) {
-			    	return '<a href="' + link + '" target="_blank">' + link	+ '</a>';
+				return '<a href="' + link
+					+ '" target="_blank">' + link + '</a>';
 			    }
 			} ],
 		"oLanguage" : {
 		    "sInfo" : "Mostrando _START_ a _END_ de _TOTAL_ registros",
-		    "sEmptyTable": "Não há dados disponíveis na tabela",
-		    "sLengthMenu": "Mostrar _MENU_ registros",
-		    "sInfoThousands" : ".", 
-		    "oPaginate": {
-		    	"sFirst" : "Primeiro",
-		    	"sLast" : "Último",
-		        "sNext" : "Próximo",
-		        "sPrevious" : "Anterior"
+		    "sEmptyTable" : "Não há dados disponíveis na tabela",
+		    "sLengthMenu" : "Mostrar _MENU_ registros",
+		    "sInfoThousands" : ".",
+		    "oPaginate" : {
+			"sFirst" : "Primeiro",
+			"sLast" : "Último",
+			"sNext" : "Próximo",
+			"sPrevious" : "Anterior"
 		    }
 		},
-		"bFilter": false,
-		"bRetrieve" : true,
+		"bFilter" : false,
+//		"bRetrieve" : true,
+		"bDestroy" : true,
 		"sPaginationType" : "bs_full",
-
-		// "aaData" : data,
-		// "bSort" : true
-
-		"sAjaxSource" : 'api/bookmark/datatables',
-		"bServerSide" : true,
+		"aaData" : data,
 		"bSort" : false
 	    });
-    oTable.fnClearTable();
+    // oTable.fnClearTable();
 }
 
 function removeOk(data) {
-    $.each(data, function(index, value) {
-	findAllOk();
-    });
+    BookmarkProxy.findAll(findAllOk);
 }
