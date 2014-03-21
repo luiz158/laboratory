@@ -26,7 +26,6 @@ services.factory('AuthService', function($http, $q, $rootScope) {
 	
 	
 	function getLoggedUser(){
-		console.log('getLoggedUser');
 		$http({
 			url : "api/auth/user",
 			method : "GET"
@@ -56,8 +55,6 @@ services.factory('AuthService', function($http, $q, $rootScope) {
 
 	
 	service.login = function(credential, callback, errorCallback) {
-		console.log('login: ');
-		console.log(credential);
 		$http({
 			url : 'api/auth',
 			method : "POST",
@@ -69,7 +66,6 @@ services.factory('AuthService', function($http, $q, $rootScope) {
 			$rootScope.usuario = response;
 			logado = true;
 			callback(response);
-			console.log($rootScope.usuario);
 		}).error(function(response, status) {
 			$rootScope.usuario = {};
 			logado = false;
@@ -78,7 +74,6 @@ services.factory('AuthService', function($http, $q, $rootScope) {
 	};
 	
 	service.logout = function(callback) {
-		console.log('--------LOGOUT----------');
 		$http({
 			url : 'api/auth',
 			method : "DELETE",
@@ -93,14 +88,10 @@ services.factory('AuthService', function($http, $q, $rootScope) {
 	};
 	
 	service.isLoggedIn = function(){
-		console.log('isLoggedIn: ');
-		console.log(logado);
 		return logado;
 	};
 	
 	service.getUsuario = function(){
-		console.log('getUsuario: ');
-		console.log($rootScope.usuario);
 		return $rootScope.usuario;
 	};
 	

@@ -43,16 +43,16 @@
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <!--    <parent>
+    <parent>
         <groupId>br.gov.frameworkdemoiselle</groupId>
         <artifactId>demoiselle-component-build-parent</artifactId>
         <version>9</version>
-    </parent>-->
-    <parent>
+    </parent>
+    <!--    <parent>
         <groupId>br.gov.frameworkdemoiselle</groupId>
         <artifactId>demoiselle-minimal-parent</artifactId>
         <version>2.4.0</version>
-    </parent>
+    </parent>-->
 
     <name>Demoiselle Audit Parent</name>
     <description> Contém as informações de build comum a todos os projetos do Demoiselle Audit. Se você é usuário do audit, certamente este POM não servirá para você.</description>
@@ -121,32 +121,23 @@
     <dependencies>
         <dependency>
             <groupId>br.gov.frameworkdemoiselle</groupId>
+            <artifactId>demoiselle-core</artifactId>
+            <version>2.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>br.gov.frameworkdemoiselle</groupId>
             <artifactId>demoiselle-jpa</artifactId>
             <scope>compile</scope>
+            <version>2.4.0</version>
         </dependency>
         <dependency>
             <groupId>br.gov.frameworkdemoiselle.component</groupId>
             <artifactId>demoiselle-junit</artifactId>
-            <version>2.3.0</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
+            <version>2.3.1</version>
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-jackson-provider</artifactId>
-            <version>3.0.5.Final</version>
-        </dependency>
 
-        <dependency>
-            <groupId>org.reflections</groupId>
-            <artifactId>reflections</artifactId>
-            <version>0.9.9-RC1</version>
-        </dependency>
     </dependencies>
 
     <build>

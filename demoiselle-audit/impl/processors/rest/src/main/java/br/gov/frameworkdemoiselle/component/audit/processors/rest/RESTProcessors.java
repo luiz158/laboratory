@@ -36,19 +36,16 @@
  */
 package br.gov.frameworkdemoiselle.component.audit.processors.rest;
 
-import javax.enterprise.event.Observes;
-import javax.ws.rs.core.MediaType;
-
-import org.jboss.resteasy.client.ClientRequest;
-import org.jboss.resteasy.client.ClientResponse;
-
 import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
 import br.gov.frameworkdemoiselle.component.audit.internal.AuditConfig;
 import br.gov.frameworkdemoiselle.component.audit.internal.processor.AbstractProcessor;
 import br.gov.frameworkdemoiselle.component.audit.internal.qualifier.AuditProcessorQualifier;
 import br.gov.frameworkdemoiselle.component.audit.util.Util;
 import br.gov.frameworkdemoiselle.util.Beans;
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.event.Observes;
+import javax.ws.rs.core.MediaType;
+import org.jboss.resteasy.client.ClientRequest;
+import org.jboss.resteasy.client.ClientResponse;
 
 /**
  *
@@ -58,8 +55,12 @@ import javax.enterprise.context.ApplicationScoped;
 
 public class RESTProcessors extends AbstractProcessor {
 
-    private AuditConfig config = Beans.getReference(AuditConfig.class);
+    private final AuditConfig config = Beans.getReference(AuditConfig.class);
 
+    /**
+     *
+     * @param trail
+     */
     @Override
     public void execute(@Observes @AuditProcessorQualifier Trail trail) {
 

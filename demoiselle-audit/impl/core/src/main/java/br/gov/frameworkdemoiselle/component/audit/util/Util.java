@@ -58,7 +58,6 @@ import javax.persistence.Id;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
-
 import br.gov.frameworkdemoiselle.component.audit.annotation.Audit;
 
 /**
@@ -74,6 +73,14 @@ public class Util {
         StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
 
         for (StackTraceElement stackTraceElement : stackTraceElements) {
+            System.out.println("----------------------------------------------------------------------------");
+            System.out.println("stackTraceElement.getClassName() " + stackTraceElement.getClassName());
+            System.out.println("stackTraceElement.getFileName() " + stackTraceElement.getFileName());
+            System.out.println("stackTraceElement.getMethodName() " + stackTraceElement.getMethodName());
+            System.out.println("stackTraceElement.getLineNumber() " + stackTraceElement.getLineNumber());
+            System.out.println("stackTraceElement.isNativeMethod() " + stackTraceElement.isNativeMethod());
+            System.out.println("stackTraceElement.toString() " + stackTraceElement.toString());
+
 //            try {
 //                Class<?> clazz = forName(stackTraceElement.getClassName());
 //
