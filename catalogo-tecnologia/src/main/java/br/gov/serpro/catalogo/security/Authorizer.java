@@ -7,7 +7,6 @@ import br.gov.serpro.catalogo.entity.Grupo;
 import br.gov.serpro.catalogo.entity.Perfil;
 import br.gov.serpro.catalogo.entity.User;
 
-
 public class Authorizer implements br.gov.frameworkdemoiselle.security.Authorizer{
 
 	private static final long serialVersionUID = 1L;
@@ -19,17 +18,18 @@ public class Authorizer implements br.gov.frameworkdemoiselle.security.Authorize
 	public boolean hasRole(String role) throws Exception {
 		if(securityContext.isLoggedIn()) {
 			User user = (User)securityContext.getUser();
-			for(Grupo grupo : user.getGrupos()) {
-				for(Perfil perfil : grupo.getPerfis()) {
-					if(role.equalsIgnoreCase(perfil.toString())) {
-						return true;
+			if(user.getGrupos() != null) {
+				for(Grupo grupo : user.getGrupos()) {
+					for(Perfil perfil : grupo.getPerfis()) {
+						if(role.equalsIgnoreCase(perfil.toString())) {
+							return true;
+						}
 					}
 				}
 			}
-		}
+		} 
 		return false;
 	}
-
 
 	@Override
 	public boolean hasPermission(String resource, String operation) throws Exception {
