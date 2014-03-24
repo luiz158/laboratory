@@ -8,15 +8,19 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
 
-@Entity(name="User")
+@Entity(name="usuario")
 public class User implements br.gov.frameworkdemoiselle.security.User {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = SEQUENCE)
+	@GeneratedValue(strategy = SEQUENCE, generator = "usuario_seq")
+	@SequenceGenerator(name = "usuario_seq", sequenceName = "usuario_id_seq")
 	private Long id;
 
 	@Column(unique = true)
@@ -30,9 +34,10 @@ public class User implements br.gov.frameworkdemoiselle.security.User {
 	
 	private String setor;
 	
-	@OneToMany(targetEntity = Grupo.class)
+	@ManyToMany
+    @JoinTable(name="usuario_grupo", joinColumns={@JoinColumn(name="usuario_id")}, inverseJoinColumns={@JoinColumn(name="grupo_id")})
 	private List<Grupo> grupos;
-
+	
 	public String getId() {
 		return id == null ? null : id.toString();
 	}

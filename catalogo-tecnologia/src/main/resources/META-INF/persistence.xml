@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 
 	<persistence-unit name="pu" transaction-type="JTA">
-		<jta-data-source>java:jboss/datasources/ExampleDS</jta-data-source>
+		<jta-data-source>java:jboss/datasources/CatalogoTecnologiaDS</jta-data-source>
 
 		
 		<class>br.gov.serpro.catalogo.entity.Fase</class>
@@ -29,7 +29,7 @@
 		<class>br.gov.serpro.catalogo.entity.Observacao</class>
 		<class>br.gov.serpro.catalogo.entity.Grupo</class>
 		<class>br.gov.serpro.catalogo.entity.User</class>
-		
+
 		<!--
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		-->
@@ -37,7 +37,7 @@
 		<properties>
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />
-			<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
 			<!-- property name="hibernate.hbm2ddl.auto" value="update" /-->		
 			<property name="hibernate.hbm2ddl.auto" value="create-drop" />			
 

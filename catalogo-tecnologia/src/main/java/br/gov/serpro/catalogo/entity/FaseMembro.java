@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -22,7 +23,8 @@ public class FaseMembro {
 	public static final String MEMBROS_DA_FASE = "MEMBROS_DA_FASE";
 	
 	@Id
-	@GeneratedValue(strategy = SEQUENCE)
+	@GeneratedValue(strategy = SEQUENCE, generator = "fase_membro_seq")
+	@SequenceGenerator(name = "fase_membro_seq", sequenceName = "fase_membro_id_seq")
 	private Long id;
 	
 	@NotNull

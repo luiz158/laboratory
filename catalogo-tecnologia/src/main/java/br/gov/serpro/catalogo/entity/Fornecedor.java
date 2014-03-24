@@ -5,6 +5,7 @@ import static javax.persistence.GenerationType.SEQUENCE;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -12,7 +13,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class Fornecedor {
 
 	@Id
-	@GeneratedValue(strategy = SEQUENCE)
+	@GeneratedValue(strategy = SEQUENCE, generator = "fornecedor_seq")
+	@SequenceGenerator(name = "fornecedor_seq", sequenceName = "fornecedor_id_seq")
 	private Long id;
 	
 	@NotEmpty

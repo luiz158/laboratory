@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -17,7 +18,8 @@ public class FaseProduto {
 	public static final String PRODUTOS_DA_FASE = "PRODUTOS_DA_FASE";
 	
 	@Id
-	@GeneratedValue(strategy = SEQUENCE)
+	@GeneratedValue(strategy = SEQUENCE, generator = "fase_produto_seq")
+	@SequenceGenerator(name = "fase_produto_seq", sequenceName = "fase_produto_id_seq")
 	private Long id;
 	
 	@NotNull

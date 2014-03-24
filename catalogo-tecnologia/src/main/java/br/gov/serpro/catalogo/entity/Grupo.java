@@ -8,6 +8,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -15,7 +16,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class Grupo {
 
 	@Id
-	@GeneratedValue(strategy = SEQUENCE)
+	@GeneratedValue(strategy = SEQUENCE, generator = "grupo_seq")
+	@SequenceGenerator(name = "grupo_seq", sequenceName = "grupo_id_seq")
 	private Long id;
 
 	@NotEmpty
