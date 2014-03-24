@@ -108,6 +108,7 @@ public class CargaInicial {
 		List<Perfil> perfis1 = new ArrayList<Perfil>();
 		perfis1.add(Perfil.ANALISE);
 		perfis1.add(Perfil.PROSPECCAO);
+		perfis1.add(Perfil.ADMINISTRADOR);
 		Grupo grupo = new Grupo();
 		grupo.setNome("Grupo 1");
 		grupo.setDescricao("grupo 1");
@@ -122,8 +123,18 @@ public class CargaInicial {
 		usuario1.setSetor("CETEC/CTSDR");
 		usuario1.setGrupos(new ArrayList<Grupo>());
 		usuario1.getGrupos().add(grupo);
-		
+
 		usuarioDAO.insert(usuario1);
+		
+		usuario2 = new User();
+		usuario2.setCPF("01748913506");
+		usuario2.setName("Emerson Silva de Oliveira");
+		usuario2.setEmail("emerson.oliveira@serpro.gov.br");
+		usuario2.setSetor("SUPST/STDSC/STDDC");
+		usuario2.setGrupos(new ArrayList<Grupo>());
+		usuario2.getGrupos().add(grupo);
+		
+		usuarioDAO.insert(usuario2);
 		
 		credentials.setUsername(usuario1.getCPF());
 		credentials.setPassword("xereca12");
