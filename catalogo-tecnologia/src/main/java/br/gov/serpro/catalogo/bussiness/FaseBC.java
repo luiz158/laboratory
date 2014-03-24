@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 
 import br.gov.frameworkdemoiselle.resteasy.util.ValidationException;
-import br.gov.frameworkdemoiselle.security.SecurityContext;
 import br.gov.frameworkdemoiselle.stereotype.BusinessController;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.serpro.catalogo.bussiness.validation.FaseValidator;
@@ -16,8 +16,6 @@ import br.gov.serpro.catalogo.entity.Analise;
 import br.gov.serpro.catalogo.entity.Declinio;
 import br.gov.serpro.catalogo.entity.Fase;
 import br.gov.serpro.catalogo.entity.FaseEnum;
-import br.gov.serpro.catalogo.entity.FaseHistorico;
-import br.gov.serpro.catalogo.entity.FaseHistorico.OPERACAO;
 import br.gov.serpro.catalogo.entity.FaseInteressado;
 import br.gov.serpro.catalogo.entity.FaseMembro;
 import br.gov.serpro.catalogo.entity.Internalizacao;
@@ -25,11 +23,14 @@ import br.gov.serpro.catalogo.entity.Prospeccao;
 import br.gov.serpro.catalogo.entity.Situacao;
 import br.gov.serpro.catalogo.entity.Sustentacao;
 import br.gov.serpro.catalogo.entity.User;
+import br.gov.serpro.catalogo.event.FaseEvent;
+import br.gov.serpro.catalogo.event.FaseEvent.ATUALIZAR;
+import br.gov.serpro.catalogo.event.FaseEvent.CRIAR;
+import br.gov.serpro.catalogo.event.FaseEvent.EXCLUIR;
+import br.gov.serpro.catalogo.event.FaseEvent.FINALIZAR;
 import br.gov.serpro.catalogo.persistence.FaseDAO;
-import br.gov.serpro.catalogo.persistence.FaseHistoricoDAO;
 import br.gov.serpro.catalogo.persistence.FaseInteressadoDAO;
 import br.gov.serpro.catalogo.persistence.FaseMembroDAO;
-import br.gov.serpro.catalogo.persistence.UserDAO;
 import br.gov.serpro.catalogo.rest.FaseDTO;
 
 @BusinessController
@@ -46,16 +47,18 @@ public class FaseBC {
 	
 	@Inject
 	private FaseInteressadoDAO faseInteressadoDAO;
-	
-	@Inject
-	private FaseHistoricoDAO faseHistoricoDAO;
-		
+			
 	@Inject
 	private FaseValidator faseValidator;
 		
 	@Inject
 	private EmailBC emailBC;
 	
+	@Inject @CRIAR private Event<FaseEvent> eventoFaseCriar;
+	@Inject @ATUALIZAR private Event<FaseEvent> eventoFaseAtualizar;
+	@Inject @FINALIZAR private Event<FaseEvent> eventoFaseFinalizar;
+	@Inject @EXCLUIR private Event<FaseEvent> eventoFaseExcluir;
+		
 	/**
 	 * Pesquisa por criteria usando o DTO
 	 * 
@@ -116,16 +119,15 @@ public class FaseBC {
 		
 		faseValidator.validarFinalizar(fase);	
 		
-		faseDAO.update(fase);
-					
-		OPERACAO operacao = (fase.getSituacao().equals(Situacao.APROVADO))?OPERACAO.APROVAR:OPERACAO.REPROVAR;
-		faseHistoricoDAO.insert(new FaseHistorico(fase,operacao));	
+		faseDAO.update(fase);		
+		eventoFaseFinalizar.fire(new FaseEvent(fase));
+		
 		
 		// Se foi aprovado tem uma proxima fase;
 		if (fase.getSituacao().equals(Situacao.APROVADO) && !fase.getFase().equals(FaseEnum.DECLINIO)) {			
 			proximafase = getProximaFase(fase);
-			faseDAO.insert(proximafase);			
-			faseHistoricoDAO.insert(new FaseHistorico(proximafase,OPERACAO.CRIAR));
+			faseDAO.insert(proximafase);	
+			eventoFaseCriar.fire(new FaseEvent(proximafase));
 			
 			FaseMembro fm = new FaseMembro();
 			fm.setFase(proximafase);
@@ -175,11 +177,11 @@ public class FaseBC {
 	private Fase salvar(Fase fase) {
 		if(fase.getId()!=null){
 			faseDAO.update(fase);
-			faseHistoricoDAO.insert(new FaseHistorico(fase,OPERACAO.ATUALIZAR));
+			eventoFaseAtualizar.fire(new FaseEvent(fase));
 		}else{
 			faseDAO.insert(fase);
-			faseHistoricoDAO.insert(new FaseHistorico(fase,OPERACAO.CRIAR));
-		}
+			eventoFaseCriar.fire(new FaseEvent(fase));
+		}				
 		return fase;
 	}
 	
@@ -263,21 +265,11 @@ public class FaseBC {
 		faseDAO.delete(id);
 		Fase fase = new Fase();
 		fase.setId(id);
-		faseHistoricoDAO.insert(new FaseHistorico(fase,OPERACAO.EXCLUIR));
+		eventoFaseExcluir.fire(new FaseEvent(fase));
 	}
 
 	public Fase load(Long id) {
 		return faseDAO.load(id);
-	}
-
-	public List<FaseHistorico> obterHistorico(Long id) {
-		List<Fase> fases = obterCadeiaDasFases(id);
-		
-		List<Long> ids = new ArrayList<Long>();
-		for (Fase fase : fases) {
-			ids.add(fase.getId());
-		}
-		return faseHistoricoDAO.obterHistorico(ids);
 	}
 
 

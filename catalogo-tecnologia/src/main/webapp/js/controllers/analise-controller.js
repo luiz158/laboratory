@@ -6,7 +6,6 @@ var controllers = angular.module('catalogo.controllers');
 controllers.controller('AnaliseList',
 		function Analise($scope, $http, $location) {
 	
-			$(window).scrollTop(0);
 	
 			$scope.analises = [];
 			function carregarAnalises() {
@@ -41,7 +40,6 @@ controllers.controller('AnaliseList',
 controllers.controller('AnaliseEdit', function Analise($scope, $http,
 		$location, $routeParams, $upload, $rootScope, AlertService, OrigemDemandaService, ValidationService) {
 
-	$(window).scrollTop(0);
 	
 	$scope.fase = {};
 	$scope.fase.id = $routeParams.id;

@@ -56,7 +56,6 @@ controllers.controller('PesquisaFasesCtrl', function PesquisaFasesCtrl($scope, $
 				'Content-Type' : 'application/json;charset=utf8'
 			}
 		}).success(function(data) {
-			console.log(data);
 			$scope.paginacao.data = data;
 			$rootScope.pesquisaResultado = data;
 			if($scope.paginacao.data.length<1){
