@@ -37,25 +37,25 @@ public class FaseBC {
 
 	@Inject
 	private FaseDAO faseDAO;
-	
+
 	@Inject
 	private UsuarioBC usuarioBC;
-	
+
 	@Inject
 	private FaseMembroDAO faseMembroDAO;
-	
+
 	@Inject
 	private FaseInteressadoDAO faseInteressadoDAO;
-	
+
 	@Inject
 	private FaseHistoricoDAO faseHistoricoDAO;
-		
+
 	@Inject
 	private FaseValidator faseValidator;
-		
+
 	@Inject
 	private EmailBC emailBC;
-	
+
 	/**
 	 * Pesquisa por criteria usando o DTO
 	 * 
@@ -65,7 +65,7 @@ public class FaseBC {
 	public List<Fase> pesquisar(FaseDTO fase) {
 		return faseDAO.pesquisar(fase);
 	}
-	
+
 	/**
 	 * Monta a lista com o fluxo de fases da demanda.
 	 * @param id de uma fase
@@ -73,28 +73,28 @@ public class FaseBC {
 	 */
 	public List<Fase> obterCadeiaDasFases(Long id){
 		List<Fase> lista = new ArrayList<Fase>();
-		
+
 		Fase faseInicial = faseDAO.load(id);
 		lista.add(faseInicial);
-		
+
 		Fase faseAnterior = (faseInicial.getFaseAnterior()!=null)? faseDAO.load(faseInicial.getFaseAnterior().getId()): null;
 		while(faseAnterior!=null){			
 			lista.add(0, faseAnterior);
 			faseAnterior = (faseAnterior.getFaseAnterior()!=null)? faseDAO.load(faseAnterior.getFaseAnterior().getId()): null;
 		}
-		
+
 		Fase fasePosterior = faseDAO.obterFasePosterior(faseInicial.getId());
 		while(fasePosterior!=null){			
 			lista.add(fasePosterior);
 			fasePosterior  = faseDAO.obterFasePosterior(fasePosterior.getId());
 		}
-		
+
 		return lista;
-		
+
 	}
-	
-	
-	
+
+
+
 
 	/**
 	 * Método que finaliza a fase e retorna a próxima fase ou null.
@@ -104,29 +104,29 @@ public class FaseBC {
 	 */
 	@Transactional
 	public Fase finalizarFase(Fase fase) {
-		
+
 		if (fase.getDataFinalizacao()!=null){
 			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 			throw new ValidationException().addViolation(null,
 					"Esta fase ("+fase.getFase()+") já foi finalizada em "+format.format(fase.getDataFinalizacao()));
 		}
-		
+
 		fase.setDataFinalizacao(new Date());
 		Fase proximafase = null;
-		
+
 		faseValidator.validarFinalizar(fase);	
-		
+
 		faseDAO.update(fase);
-					
+
 		OPERACAO operacao = (fase.getSituacao().equals(Situacao.APROVADO))?OPERACAO.APROVAR:OPERACAO.REPROVAR;
 		faseHistoricoDAO.insert(new FaseHistorico(fase,operacao));	
-		
+
 		// Se foi aprovado tem uma proxima fase;
 		if (fase.getSituacao().equals(Situacao.APROVADO) && !fase.getFase().equals(FaseEnum.DECLINIO)) {			
 			proximafase = getProximaFase(fase);
 			faseDAO.insert(proximafase);			
 			faseHistoricoDAO.insert(new FaseHistorico(proximafase,OPERACAO.CRIAR));
-			
+
 			FaseMembro fm = new FaseMembro();
 			fm.setFase(proximafase);
 			fm.setUser(fase.getProximaFaseLider());			
@@ -136,8 +136,8 @@ public class FaseBC {
 
 		return proximafase;
 	}
-	
-	
+
+
     /**
      * Instancia a proxima fase com os dados basicos.
      * 
@@ -168,7 +168,7 @@ public class FaseBC {
 		proximafase.setFaseAnterior(fase);
 		proximafase.setSituacao(Situacao.RASCUNHO);
 		proximafase.setUnidadeGestora(fase.getProximaFaseUnidadeGestora());
-		
+
 		return proximafase;
 	}
 
@@ -182,40 +182,40 @@ public class FaseBC {
 		}
 		return fase;
 	}
-	
+
 	public Fase salvar(Analise fase) {
 		faseValidator.validarSalvar(fase);
 		return salvar((Fase) fase);
 	}
-	
+
 	public Fase salvar(Prospeccao fase) {
 		faseValidator.validarSalvar(fase);
 		return salvar((Fase) fase);
 	}
-	
+
 	public Fase salvar(Internalizacao fase) {
 		faseValidator.validarSalvar(fase);
 		return salvar((Fase) fase);
 	}
-	
+
 	public Fase salvar(Declinio fase) {
 		faseValidator.validarSalvar(fase);
 		return salvar((Fase) fase);
 	}
-		
 
-	
-	
-	
+
+
+
+
 	@Transactional
 	public User adicionarMembro(User user, Long id){
 		FaseMembro faseMembro = new FaseMembro();		
-		
+
 		if(faseMembroDAO.membroJaCadastrado(id, user.getCPF()))
 				throw new ValidationException().addViolation(null, "Membro já relacionado.");
-		
+
 		user = usuarioBC.carregarOuInserir(user);	
-		
+
 		faseMembro.setUser(user);
 		faseMembro.setFase(faseDAO.load(id));		
 		faseMembroDAO.insert(faseMembro);
@@ -233,16 +233,16 @@ public class FaseBC {
 		faseMembroDAO.delete(id);
 	}
 
-	
+
 	@Transactional
 	public User adicionarInteressado(User user, Long id){
 		FaseInteressado faseMembro = new FaseInteressado();
-		
+
 		if(faseInteressadoDAO.interessadoJaCadastrado(id, user.getCPF()))
 			throw new ValidationException().addViolation(null, "Interessado já relacionado.");
-	
+
 		user = usuarioBC.carregarOuInserir(user);
-		
+
 		faseMembro.setUser(user);
 		faseMembro.setFase(faseDAO.load(id));		
 		faseInteressadoDAO.insert(faseMembro);		
@@ -272,7 +272,7 @@ public class FaseBC {
 
 	public List<FaseHistorico> obterHistorico(Long id) {
 		List<Fase> fases = obterCadeiaDasFases(id);
-		
+
 		List<Long> ids = new ArrayList<Long>();
 		for (Fase fase : fases) {
 			ids.add(fase.getId());
@@ -281,6 +281,6 @@ public class FaseBC {
 	}
 
 
-	
+
 
 }

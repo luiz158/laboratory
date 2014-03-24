@@ -3,7 +3,6 @@ package br.gov.serpro.catalogo.entity;
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.GenerationType.SEQUENCE;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,12 +22,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -39,7 +35,8 @@ public class Fase {
 	public static final String OBTER_POR_FASE_ANTERIOR = "OBTER_FASE_ANTERIOR";
 	
 	@Id
-	@GeneratedValue(strategy = SEQUENCE)
+	@GeneratedValue(strategy = SEQUENCE, generator = "fase_seq")
+	@SequenceGenerator(name = "fase_seq", sequenceName = "fase_id_seq")
 	private Long id;
 	
 	@Enumerated(EnumType.STRING)

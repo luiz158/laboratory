@@ -12,6 +12,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 
 @NamedQueries({ @NamedQuery(name = Anexo.ANEXOS_DA_DEMANDA_NA_FASE, query = "select new br.gov.serpro.catalogo.entity.Anexo(a.id, a.fase.id, a.nomeArquivo, a.tipoArquivo, a.tamanhoArquivo) from Anexo a where (a.fase.id = :fase)") })
 @Entity
@@ -34,7 +35,8 @@ public class Anexo {
 	}
 
 	@Id
-	@GeneratedValue(strategy = SEQUENCE)
+	@GeneratedValue(strategy = SEQUENCE, generator = "anexo_seq")
+	@SequenceGenerator(name = "anexo_seq", sequenceName = "anexo_id_seq")
 	private Long id;
 
 	@Lob

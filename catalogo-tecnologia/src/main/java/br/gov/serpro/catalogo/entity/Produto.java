@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -18,7 +19,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class Produto {
 
 	@Id
-	@GeneratedValue(strategy = SEQUENCE)
+	@GeneratedValue(strategy = SEQUENCE, generator = "produto_seq")
+	@SequenceGenerator(name = "produto_seq", sequenceName = "produto_id_seq")
 	private Long id;
 	
 	@NotEmpty
