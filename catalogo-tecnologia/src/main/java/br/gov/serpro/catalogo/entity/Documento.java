@@ -15,7 +15,7 @@ public class Documento {
 
 	@Id
 	@GeneratedValue(strategy = SEQUENCE, generator = "documento_seq")
-	@SequenceGenerator(name = "documento_seq", sequenceName = "documento_id_seq")
+	@SequenceGenerator(name = "documento_seq", sequenceName = "documento_id_seq", allocationSize=1)
 	private Long id;
 	
 	@NotNull

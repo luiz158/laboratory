@@ -36,7 +36,7 @@ public class Anexo {
 
 	@Id
 	@GeneratedValue(strategy = SEQUENCE, generator = "anexo_seq")
-	@SequenceGenerator(name = "anexo_seq", sequenceName = "anexo_id_seq")
+	@SequenceGenerator(name = "anexo_seq", sequenceName = "anexo_id_seq", allocationSize=1)
 	private Long id;
 
 	@Lob

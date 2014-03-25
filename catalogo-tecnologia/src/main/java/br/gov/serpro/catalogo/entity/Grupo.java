@@ -17,7 +17,7 @@ public class Grupo {
 
 	@Id
 	@GeneratedValue(strategy = SEQUENCE, generator = "grupo_seq")
-	@SequenceGenerator(name = "grupo_seq", sequenceName = "grupo_id_seq")
+	@SequenceGenerator(name = "grupo_seq", sequenceName = "grupo_id_seq", allocationSize=1)
 	private Long id;
 
 	@NotEmpty

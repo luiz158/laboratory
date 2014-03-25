@@ -14,7 +14,7 @@ public class OrigemDemanda {
 
 	@Id
 	@GeneratedValue(strategy = SEQUENCE, generator = "origem_demanda_seq")
-	@SequenceGenerator(name = "origem_demanda_seq", sequenceName = "origem_demanda_id_seq")
+	@SequenceGenerator(name = "origem_demanda_seq", sequenceName = "origem_demanda_id_seq", allocationSize=1)
 	private Long id;
 	
 	@NotEmpty

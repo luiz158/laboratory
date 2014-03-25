@@ -12,7 +12,7 @@ public class Tecnologia {
 
 	@Id
 	@GeneratedValue(strategy = SEQUENCE, generator = "tecnologia_seq")
-	@SequenceGenerator(name = "tecnologia_seq", sequenceName = "tecnologia_id_seq")
+	@SequenceGenerator(name = "tecnologia_seq", sequenceName = "tecnologia_id_seq", allocationSize=1)
 	private Long id;
 	
 	private String nome;

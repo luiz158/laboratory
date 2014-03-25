@@ -36,7 +36,7 @@ public class Fase {
 	
 	@Id
 	@GeneratedValue(strategy = SEQUENCE, generator = "fase_seq")
-	@SequenceGenerator(name = "fase_seq", sequenceName = "fase_id_seq")
+	@SequenceGenerator(name = "fase_seq", sequenceName = "fase_id_seq", allocationSize=1)
 	private Long id;
 	
 	@Enumerated(EnumType.STRING)
