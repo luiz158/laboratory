@@ -17,6 +17,7 @@ import javax.ws.rs.Produces;
 
 import org.jboss.resteasy.spi.validation.ValidateRequest;
 
+import br.gov.frameworkdemoiselle.security.RequiredRole;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.serpro.catalogo.entity.OrigemDemanda;
 import br.gov.serpro.catalogo.persistence.OrigemDemandaDAO;
@@ -26,11 +27,15 @@ import br.gov.serpro.catalogo.persistence.OrigemDemandaDAO;
 @Produces(APPLICATION_JSON)
 public class OrigemDemandaService {
 	
+	static final String ADMINISTRADOR = "ADMINISTRADOR";
+	static final String CADASTRADOR = "CADASTRADOR";
+	
 	@Inject
 	private OrigemDemandaDAO origemDemandaDAO;
 	
 	@POST
 	@Transactional
+	@RequiredRole({ADMINISTRADOR, CADASTRADOR})
 	public Long salvar(@Valid OrigemDemanda origemDemanda) {
 		return origemDemandaDAO.insert(origemDemanda).getId();
 	}
@@ -38,6 +43,7 @@ public class OrigemDemandaService {
 	@DELETE
 	@Path("{id}")
 	@Transactional
+	@RequiredRole({ADMINISTRADOR, CADASTRADOR})
 	public void excluir(@NotNull @PathParam("id") Long id) {
 		origemDemandaDAO.delete(id);
 	}
@@ -49,6 +55,7 @@ public class OrigemDemandaService {
 	
 	@PUT
 	@Transactional
+	@RequiredRole({ADMINISTRADOR, CADASTRADOR})
 	public void alterar(@Valid OrigemDemanda origemDemanda) {
 		origemDemandaDAO.update(origemDemanda);
 	}
