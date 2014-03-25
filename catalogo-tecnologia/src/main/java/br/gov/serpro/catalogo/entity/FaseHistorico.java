@@ -12,6 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -26,7 +27,8 @@ public class FaseHistorico {
 	public enum OPERACAO{CRIAR, ATUALIZAR, APROVAR, REPROVAR, EXCLUIR}
 
 	@Id
-	@GeneratedValue(strategy = SEQUENCE)
+	@GeneratedValue(strategy = SEQUENCE, generator = "fase_historico_seq")
+	@SequenceGenerator(name = "fase_historico_seq", sequenceName = "fase_historico_id_seq")
 	private Long id;
 	
 	@NotNull

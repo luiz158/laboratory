@@ -322,3 +322,4 @@ diretivas.directive('loggedIn', function(AuthService) {
 		}
 	};
 });
+

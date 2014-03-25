@@ -7,13 +7,15 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 
 @Entity
 public class Documento {
 
 	@Id
-	@GeneratedValue(strategy = SEQUENCE)
+	@GeneratedValue(strategy = SEQUENCE, generator = "documento_seq")
+	@SequenceGenerator(name = "documento_seq", sequenceName = "documento_id_seq")
 	private Long id;
 	
 	@NotNull

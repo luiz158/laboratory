@@ -15,6 +15,7 @@ import javax.ws.rs.Produces;
 
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.serpro.catalogo.bussiness.FaseBC;
+import br.gov.serpro.catalogo.bussiness.FaseHistoricoBC;
 import br.gov.serpro.catalogo.bussiness.UsuarioBC;
 import br.gov.serpro.catalogo.entity.Fase;
 import br.gov.serpro.catalogo.entity.FaseHistorico;
@@ -28,6 +29,9 @@ public class FaseService {
 
 	@Inject
 	private FaseBC faseBC;
+	
+	@Inject
+	private FaseHistoricoBC faseHistoricoBC;
 	
 	@Inject
 	private UsuarioBC usuarioBC;
@@ -47,7 +51,7 @@ public class FaseService {
 	@GET
 	@Path("historico/{id}")
 	public List<FaseHistorico> obterHistorico(@PathParam("id") Long id) {
-		return faseBC.obterHistorico(id);
+		return faseHistoricoBC.obterHistorico(id);
 
 	}
 	

@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -23,7 +24,8 @@ public class Observacao {
 	public static final String OBSERVACOES_NA_FASE = "OBSERVACOES_NA_FASE";
 
 	@Id
-	@GeneratedValue(strategy = SEQUENCE)
+	@GeneratedValue(strategy = SEQUENCE, generator = "observacao_seq")
+	@SequenceGenerator(name = "observacao_seq", sequenceName = "observacao_id_seq")
 	private Long id;
 
 	@ManyToOne
