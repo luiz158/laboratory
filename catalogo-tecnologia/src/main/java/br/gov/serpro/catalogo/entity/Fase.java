@@ -71,7 +71,7 @@ public class Fase {
 	private String proximaFaseUnidadeGestora;
 	
 	@ManyToOne
-	private Usuario proximaFaseLider;	
+	private User proximaFaseLider;	
 	
 	private Integer proximaFaseCiclo;
 	
@@ -167,11 +167,11 @@ public class Fase {
 
 	
 
-	public Usuario getProximaFaseLider() {
+	public User getProximaFaseLider() {
 		return proximaFaseLider;
 	}
 
-	public void setProximaFaseLider(Usuario proximaFaseGestor) {
+	public void setProximaFaseLider(User proximaFaseGestor) {
 		this.proximaFaseLider = proximaFaseGestor;
 	}
 

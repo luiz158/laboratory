@@ -6,7 +6,7 @@ import br.gov.frameworkdemoiselle.resteasy.util.ValidationException;
 import br.gov.frameworkdemoiselle.stereotype.BusinessController;
 import br.gov.frameworkdemoiselle.util.Beans;
 import br.gov.serpro.catalogo.entity.Fase;
-import br.gov.serpro.catalogo.entity.Usuario;
+import br.gov.serpro.catalogo.entity.User;
 
 @BusinessController
 public class EmailBC {
@@ -14,7 +14,7 @@ public class EmailBC {
 	//@Inject 
 	//private Mail mail;
 
-	public void enviarEmailUsuarioAdicionadoEquipe(Usuario usuario, Fase fase) {
+	public void enviarEmailUsuarioAdicionadoEquipe(User usuario, Fase fase) {
 		if(usuario.getEmail()!=null && !usuario.getEmail().isEmpty()){	
 			Beans.getReference(Logger.class).debug(usuario.getEmail());
 //			mail

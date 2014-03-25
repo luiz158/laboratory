@@ -9,7 +9,7 @@ import br.gov.frameworkdemoiselle.stereotype.PersistenceController;
 import br.gov.frameworkdemoiselle.template.JPACrud;
 import br.gov.serpro.catalogo.entity.Fase;
 import br.gov.serpro.catalogo.entity.FaseMembro;
-import br.gov.serpro.catalogo.entity.Usuario;
+import br.gov.serpro.catalogo.entity.User;
 
 @PersistenceController
 public class FaseMembroDAO extends JPACrud<FaseMembro, Long> {

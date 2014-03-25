@@ -5,7 +5,7 @@ import javax.inject.Inject;
 import br.gov.frameworkdemoiselle.security.SecurityContext;
 import br.gov.serpro.catalogo.entity.Grupo;
 import br.gov.serpro.catalogo.entity.Perfil;
-import br.gov.serpro.catalogo.entity.Usuario;
+import br.gov.serpro.catalogo.entity.User;
 
 public class Authorizer implements br.gov.frameworkdemoiselle.security.Authorizer{
 
@@ -17,7 +17,7 @@ public class Authorizer implements br.gov.frameworkdemoiselle.security.Authorize
 	@Override
 	public boolean hasRole(String role) throws Exception {
 		if(securityContext.isLoggedIn()) {
-			Usuario user = (Usuario)securityContext.getUser();
+			User user = (User)securityContext.getUser();
 			if(user.getGrupos() != null) {
 				for(Grupo grupo : user.getGrupos()) {
 					for(Perfil perfil : grupo.getPerfis()) {

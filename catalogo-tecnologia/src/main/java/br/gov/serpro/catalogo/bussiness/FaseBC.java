@@ -22,7 +22,7 @@ import br.gov.serpro.catalogo.entity.Internalizacao;
 import br.gov.serpro.catalogo.entity.Prospeccao;
 import br.gov.serpro.catalogo.entity.Situacao;
 import br.gov.serpro.catalogo.entity.Sustentacao;
-import br.gov.serpro.catalogo.entity.Usuario;
+import br.gov.serpro.catalogo.entity.User;
 import br.gov.serpro.catalogo.event.FaseEvent;
 import br.gov.serpro.catalogo.event.FaseEvent.ATUALIZAR;
 import br.gov.serpro.catalogo.event.FaseEvent.CRIAR;
@@ -210,7 +210,7 @@ public class FaseBC {
 
 
 	@Transactional
-	public Usuario adicionarMembro(Usuario user, Long id){
+	public User adicionarMembro(User user, Long id){
 		FaseMembro faseMembro = new FaseMembro();		
 
 		if(faseMembroDAO.membroJaCadastrado(id, user.getCPF()))
@@ -237,7 +237,7 @@ public class FaseBC {
 
 
 	@Transactional
-	public Usuario adicionarInteressado(Usuario user, Long id){
+	public User adicionarInteressado(User user, Long id){
 		FaseInteressado faseMembro = new FaseInteressado();
 
 		if(faseInteressadoDAO.interessadoJaCadastrado(id, user.getCPF()))

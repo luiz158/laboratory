@@ -37,7 +37,7 @@ public class FaseHistorico {
 	
 	@NotNull
 	@ManyToOne(fetch=FetchType.LAZY)
-	private Usuario usuario;
+	private User usuario;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date data;
@@ -55,7 +55,7 @@ public class FaseHistorico {
 	}
 	
 	public FaseHistorico(Fase fase, OPERACAO operacao) {
-		this.usuario = (Usuario)Beans.getReference(SecurityContext.class).getUser();
+		this.usuario = (User)Beans.getReference(SecurityContext.class).getUser();
 		this.fase = fase;
 		this.operacao = operacao;
 		this.data = new Date();
@@ -90,11 +90,11 @@ public class FaseHistorico {
 		this.fase = fase;
 	}
 
-	public Usuario getUsuario() {
+	public User getUsuario() {
 		return usuario;
 	}
 
-	public void setUsuario(Usuario usuario) {
+	public void setUsuario(User usuario) {
 		this.usuario = usuario;
 	}
 

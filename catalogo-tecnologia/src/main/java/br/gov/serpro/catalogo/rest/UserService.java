@@ -20,7 +20,7 @@ import org.jboss.resteasy.spi.validation.ValidateRequest;
 import br.gov.frameworkdemoiselle.resteasy.util.ValidationException;
 import br.gov.frameworkdemoiselle.security.RequiredRole;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
-import br.gov.serpro.catalogo.entity.Usuario;
+import br.gov.serpro.catalogo.entity.User;
 import br.gov.serpro.catalogo.persistence.UserDAO;
 import br.gov.serpro.catalogo.security.LDAPAuthenticator;
 
@@ -38,26 +38,26 @@ public class UserService {
 	private LDAPAuthenticator ldapAuthenticator;
 	
 	@GET
-	public List<Usuario> listar() {
-		List<Usuario> users = userDAO.findAll();
+	public List<User> listar() {
+		List<User> users = userDAO.findAll();
 		return users;
 	}
 	
 	@GET
 	@Path("{id}")
-	public Usuario carregar(@NotNull @PathParam("id") Long id) {
+	public User carregar(@NotNull @PathParam("id") Long id) {
 		return userDAO.load(id);
 	}
 	
 	@GET
 	@Path("cpf/{cpf}")
-	public Usuario carregarByCPF(@NotNull @PathParam("cpf") String cpf) throws Exception {
+	public User carregarByCPF(@NotNull @PathParam("cpf") String cpf) throws Exception {
 		return ldapAuthenticator.searchUserByCPF(cpf);
 	}
 	
 	@GET
 	@Path("nome/{nome}")
-	public List<Usuario> carregarByNome(@NotNull @PathParam("nome") String nome) throws Exception {
+	public List<User> carregarByNome(@NotNull @PathParam("nome") String nome) throws Exception {
 		try {
 			return ldapAuthenticator.searchUserByDisplayName(nome);
 		}catch(SizeLimitExceededException sizeLimitExceededException) {
@@ -68,14 +68,14 @@ public class UserService {
 	@PUT
 	@Transactional
 	@RequiredRole(ADMINISTRADOR)
-	public void alterar(@Valid Usuario user) {
+	public void alterar(@Valid User user) {
 		userDAO.update(user);
 	}
 	
 	@POST
 	@Transactional
 	@RequiredRole(ADMINISTRADOR)
-	public void inserir(@Valid Usuario user)  throws Exception {
+	public void inserir(@Valid User user)  throws Exception {
 		if(userExists(user.getCPF())) {
 			ValidationException ve = new ValidationException();
 			ve.addViolation(null, "Usuário já cadastrado na base.");

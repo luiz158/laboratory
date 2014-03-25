@@ -18,7 +18,7 @@ import br.gov.frameworkdemoiselle.security.AfterLoginSuccessful;
 import br.gov.frameworkdemoiselle.security.Credentials;
 import br.gov.frameworkdemoiselle.security.SecurityContext;
 import br.gov.frameworkdemoiselle.util.Beans;
-import br.gov.serpro.catalogo.entity.Usuario;
+import br.gov.serpro.catalogo.entity.User;
 import br.gov.serpro.catalogo.persistence.UserDAO;
 
 @ValidateRequest
@@ -33,14 +33,14 @@ public class AuthenticationService {
 	private UserDAO userDAO;
 	
 	@POST
-	public Usuario login(@Valid LoginForm form) throws Exception {
+	public User login(@Valid LoginForm form) throws Exception {
 		Credentials credentials = Beans.getReference(Credentials.class);
 		credentials.setUsername(form.username);
 		credentials.setPassword(form.password);
 
 		securityContext.login();
 
-		return (Usuario) securityContext.getUser();
+		return (User) securityContext.getUser();
 	}
 
 	@DELETE
@@ -55,8 +55,8 @@ public class AuthenticationService {
 
 	@GET
 	@Path("user")
-	public Usuario getUser() {
-		return (Usuario) securityContext.getUser();
+	public User getUser() {
+		return (User) securityContext.getUser();
 	}
 
 	public static class LoginForm {

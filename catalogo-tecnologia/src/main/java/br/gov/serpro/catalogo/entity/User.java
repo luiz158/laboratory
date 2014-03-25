@@ -12,9 +12,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
-@Entity(name="usuario")
-public class Usuario implements br.gov.frameworkdemoiselle.security.User {
+@Entity
+@Table(name="usuario")
+public class User implements br.gov.frameworkdemoiselle.security.User {
 
 	private static final long serialVersionUID = 1L;
 
