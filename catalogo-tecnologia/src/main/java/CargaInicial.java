@@ -28,7 +28,7 @@ import br.gov.serpro.catalogo.entity.Produto;
 import br.gov.serpro.catalogo.entity.Prospeccao;
 import br.gov.serpro.catalogo.entity.Situacao;
 import br.gov.serpro.catalogo.entity.Tecnologia;
-import br.gov.serpro.catalogo.entity.User;
+import br.gov.serpro.catalogo.entity.Usuario;
 import br.gov.serpro.catalogo.persistence.CategoriaDAO;
 import br.gov.serpro.catalogo.persistence.FabricanteDAO;
 import br.gov.serpro.catalogo.persistence.FaseProdutoDAO;
@@ -90,9 +90,9 @@ public class CargaInicial {
 	@Inject
 	private ObservacaoDAO obsDAO;
 
-	static User usuario1;
+	static Usuario usuario1;
 
-	User usuario2;
+	Usuario usuario2;
 
 	public CargaInicial() {
 	}
@@ -113,7 +113,7 @@ public class CargaInicial {
 
 		grupoDAO.insert(grupo);
 
-		usuario1 = new User();
+		usuario1 = new Usuario();
 		usuario1.setCPF("82546010549");
 		usuario1.setName("Robson Saraiva Ximenes");
 		usuario1.setEmail("robson.ximenes@serpro.gov.br");

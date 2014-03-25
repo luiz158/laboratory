@@ -21,7 +21,7 @@ import br.gov.serpro.catalogo.entity.Fase;
 import br.gov.serpro.catalogo.entity.FaseHistorico;
 import br.gov.serpro.catalogo.entity.FaseInteressado;
 import br.gov.serpro.catalogo.entity.FaseMembro;
-import br.gov.serpro.catalogo.entity.User;
+import br.gov.serpro.catalogo.entity.Usuario;
 
 @Path("fase")
 @Produces(APPLICATION_JSON)
@@ -57,13 +57,13 @@ public class FaseService {
 	
 	@POST
 	@Path("usuario/carregar")
-	public User carregarUsuario(User user) {
+	public Usuario carregarUsuario(Usuario user) {
 		return usuarioBC.carregarOuInserir(user);
 	}
 
 	@POST
 	@Path("{id}/membros/add")
-	public User adicionarMembro(User user, @PathParam("id") Long id) {
+	public Usuario adicionarMembro(Usuario user, @PathParam("id") Long id) {
 		return faseBC.adicionarMembro(user, id);
 	}
 
@@ -82,7 +82,7 @@ public class FaseService {
 
 	@POST
 	@Path("{id}/interessados/add")
-	public User adicionarInteressado(User user, @PathParam("id") Long id) {
+	public Usuario adicionarInteressado(Usuario user, @PathParam("id") Long id) {
 		return faseBC.adicionarInteressado(user, id);
 	}
 

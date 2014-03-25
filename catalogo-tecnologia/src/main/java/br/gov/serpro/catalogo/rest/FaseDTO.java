@@ -15,7 +15,7 @@ public class FaseDTO{
 	private Integer finalizada;
 	private Date finalizacaoApartir;
 	private Date finalizacaoAte;	
-	//private User gestor;
+	//private Usuario gestor;
 	
 	/* Campos de exibição */
 	private String unidadeGestora;

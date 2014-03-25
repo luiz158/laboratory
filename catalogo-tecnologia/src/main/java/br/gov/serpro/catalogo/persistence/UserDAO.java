@@ -9,20 +9,20 @@ import br.gov.frameworkdemoiselle.security.SecurityContext;
 import br.gov.frameworkdemoiselle.stereotype.PersistenceController;
 import br.gov.frameworkdemoiselle.template.JPACrud;
 import br.gov.frameworkdemoiselle.util.Beans;
-import br.gov.serpro.catalogo.entity.User;
+import br.gov.serpro.catalogo.entity.Usuario;
 
 @PersistenceController
-public class UserDAO extends JPACrud<User, Long> {
+public class UserDAO extends JPACrud<Usuario, Long> {
 	
 	private static final long serialVersionUID = 1L;
 	
-	public User loadByCPF(String cpf) {
+	public Usuario loadByCPF(String cpf) {
 		String jpql = "from " + this.getBeanClass().getName() + " where cpf = :cpf";
 
-		TypedQuery<User> query = getEntityManager().createQuery(jpql, User.class);
+		TypedQuery<Usuario> query = getEntityManager().createQuery(jpql, Usuario.class);
 		query.setParameter("cpf", cpf);
 
-		User result;
+		Usuario result;
 		try {
 			result = query.getSingleResult();
 		} catch (NoResultException cause) {
@@ -34,7 +34,7 @@ public class UserDAO extends JPACrud<User, Long> {
 
 	public boolean existeCadastroParaCPF(String cpf) {
 		String jpql = "from " + this.getBeanClass().getName() + " where cpf = :cpf";
-		TypedQuery<User> query = getEntityManager().createQuery(jpql, User.class);
+		TypedQuery<Usuario> query = getEntityManager().createQuery(jpql, Usuario.class);
 		query.setParameter("cpf", cpf);			
 		return !query.getResultList().isEmpty();
 	}

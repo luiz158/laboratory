@@ -13,7 +13,7 @@ public class Analise extends Fase {
 	private String demandanteUnidade;
 
 	@ManyToOne 
-	private User demandanteRepresentante;
+	private Usuario demandanteRepresentante;
 
 	public String getDemandanteUnidade() {
 		return demandanteUnidade;
@@ -23,11 +23,11 @@ public class Analise extends Fase {
 		this.demandanteUnidade = demandanteUnidade;
 	}
 
-	public User getDemandanteRepresentante() {
+	public Usuario getDemandanteRepresentante() {
 		return demandanteRepresentante;
 	}
 
-	public void setDemandanteRepresentante(User demandanteRepresentante) {
+	public void setDemandanteRepresentante(Usuario demandanteRepresentante) {
 		this.demandanteRepresentante = demandanteRepresentante;
 	}
 	

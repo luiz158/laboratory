@@ -14,7 +14,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 
 @Entity(name="usuario")
-public class User implements br.gov.frameworkdemoiselle.security.User {
+public class Usuario implements br.gov.frameworkdemoiselle.security.User {
 
 	private static final long serialVersionUID = 1L;
 

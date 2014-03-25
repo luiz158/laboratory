@@ -20,7 +20,7 @@ import br.gov.frameworkdemoiselle.security.Authenticator;
 import br.gov.frameworkdemoiselle.security.Credentials;
 import br.gov.frameworkdemoiselle.util.Beans;
 import br.gov.serpro.catalogo.bussiness.UsuarioBC;
-import br.gov.serpro.catalogo.entity.User;
+import br.gov.serpro.catalogo.entity.Usuario;
 import br.gov.serpro.catalogo.persistence.UserDAO;
 
 @SessionScoped
@@ -31,7 +31,7 @@ public class LDAPAuthenticator implements Authenticator {
 	@Inject
 	private Credentials credentials;
 
-	private User user;
+	private Usuario user;
 	
 	@Inject
 	private LDAPConfig ldapConfig;
@@ -66,7 +66,7 @@ public class LDAPAuthenticator implements Authenticator {
 	
 	
 	
-	public User searchUserByCPF(String cpf) throws NamingException {
+	public Usuario searchUserByCPF(String cpf) throws NamingException {
 		SearchControls controls = createSearchControls();
 		String filter = createCPFFilter(cpf);
 		SearchResult searchResult = createSearchResult(controls, filter);
@@ -76,7 +76,7 @@ public class LDAPAuthenticator implements Authenticator {
 		return createUser(searchResult.getAttributes());
 	}
 	
-	public List<User> searchUserByDisplayName(String displayName) throws NamingException {
+	public List<Usuario> searchUserByDisplayName(String displayName) throws NamingException {
 		SearchControls controls = createSearchControls();
 		String filter = createDisplayNameFilter(displayName);
 		NamingEnumeration<SearchResult> searchResults = createListSearchResult(controls, filter);
@@ -84,7 +84,7 @@ public class LDAPAuthenticator implements Authenticator {
 			return null;
 		}
 		
-		List<User> users = new ArrayList<User>();
+		List<Usuario> users = new ArrayList<Usuario>();
 		while(searchResults.hasMore()) {
 			users.add(createUser(((SearchResult)searchResults.next()).getAttributes()));
 		}
@@ -98,12 +98,12 @@ public class LDAPAuthenticator implements Authenticator {
 	}
 
 	@Override
-	public User getUser() {
+	public Usuario getUser() {
 		return user;
 	}
 
-	private User createUser(Attributes attributes) throws NamingException {
-		User result = new User();
+	private Usuario createUser(Attributes attributes) throws NamingException {
+		Usuario result = new Usuario();
 
 		result.setCPF(attributes.get("uid").get().toString());
 		result.setName(attributes.get("cn").get().toString());

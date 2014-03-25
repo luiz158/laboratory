@@ -28,7 +28,7 @@
 		<class>br.gov.serpro.catalogo.entity.Anexo</class>
 		<class>br.gov.serpro.catalogo.entity.Observacao</class>
 		<class>br.gov.serpro.catalogo.entity.Grupo</class>
-		<class>br.gov.serpro.catalogo.entity.User</class>
+		<class>br.gov.serpro.catalogo.entity.Usuario</class>
 
 		<!--
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>

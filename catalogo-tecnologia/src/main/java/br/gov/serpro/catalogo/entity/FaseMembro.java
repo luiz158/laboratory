@@ -33,7 +33,7 @@ public class FaseMembro {
 	
 	@NotNull
 	@ManyToOne
-	private User user;
+	private Usuario user;
 
 	public Long getId() {
 		return id;
@@ -51,11 +51,11 @@ public class FaseMembro {
 		this.fase = fase;
 	}
 
-	public User getUser() {
+	public Usuario getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(Usuario user) {
 		this.user = user;
 	}
 

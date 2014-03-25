@@ -47,7 +47,7 @@ public class Observacao {
 
 	@ManyToOne 
     @JoinColumn(nullable=false, updatable=false)
-	private User usuario;
+	private Usuario usuario;
 
 	public Long getId() {
 		return id;
@@ -81,11 +81,11 @@ public class Observacao {
 		this.data = data;
 	}
 
-	public User getUsuario() {
+	public Usuario getUsuario() {
 		return usuario;
 	}
 
-	public void setUsuario(User usuario) {
+	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
 

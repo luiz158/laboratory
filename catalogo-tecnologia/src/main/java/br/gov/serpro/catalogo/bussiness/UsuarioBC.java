@@ -5,7 +5,7 @@ import java.io.Serializable;
 import javax.inject.Inject;
 
 import br.gov.frameworkdemoiselle.stereotype.BusinessController;
-import br.gov.serpro.catalogo.entity.User;
+import br.gov.serpro.catalogo.entity.Usuario;
 import br.gov.serpro.catalogo.persistence.UserDAO;
 
 @BusinessController
@@ -22,8 +22,8 @@ public class UsuarioBC implements Serializable{
 	 * @param user
 	 * @return
 	 */
-	public User carregarOuInserir(User user){
-		User usuarioSistema = userDAO.loadByCPF(user.getCPF());
+	public Usuario carregarOuInserir(Usuario user){
+		Usuario usuarioSistema = userDAO.loadByCPF(user.getCPF());
 		if (usuarioSistema == null) {			
 			usuarioSistema = userDAO.insert(user);
 		}
