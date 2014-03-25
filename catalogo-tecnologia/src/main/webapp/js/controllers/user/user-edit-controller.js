@@ -50,20 +50,18 @@ controllers.controller('UserEdit',
 			headers : {
 				'Content-Type' : 'application/json;charset=utf8'
 			}
-		}).success(
-				function(data) {
-					AlertService.addWithTimeout('success',
-							'Usuário salvo com sucesso');
-					$location.path('/user');
-				}).error(
-				function(data, status) {
-					if (status == 412) {
-						$.each(data, function(i, violation) {
-							$("#" + violation.property + "-message").text(
-									violation.message);
-						});
-					}
+		}).success(	function(data) {
+			AlertService.addWithTimeout('success', 'Usuário salvo com sucesso');
+			$location.path('/user');
+		}).error(function(data, status) {
+			if (status == 412) {
+				$.each(data, function(i, violation) {
+					$("#" + violation.property + "-message").text(violation.message);
 				});
+			}else if (status = 401){
+				AlertService.addWithTimeout('warning', data.message);
+			}
+		});
 	};
 
 });
