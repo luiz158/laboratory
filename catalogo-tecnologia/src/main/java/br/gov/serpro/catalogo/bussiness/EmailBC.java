@@ -1,11 +1,7 @@
 package br.gov.serpro.catalogo.bussiness;
 
-import javax.inject.Inject;
-
 import org.slf4j.Logger;
 
-import br.gov.frameworkdemoiselle.mail.Mail;
-import br.gov.frameworkdemoiselle.mail.internal.implementation.JBossLookup;
 import br.gov.frameworkdemoiselle.resteasy.util.ValidationException;
 import br.gov.frameworkdemoiselle.stereotype.BusinessController;
 import br.gov.frameworkdemoiselle.util.Beans;
