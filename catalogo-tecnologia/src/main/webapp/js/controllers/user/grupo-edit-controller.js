@@ -56,7 +56,10 @@ controllers.controller('GrupoEdit', function Analise($scope, $http, $location,
 				$.each(data, function(i, violation) {
 					$("#" + violation.property + "-message").text(violation.message);
 				});
-			}
+			}else if(status == 401){
+				AlertService.addWithTimeout('warning', data.message);
+				$location.path('/grupo');
+			};
 		});
 	};
 });
