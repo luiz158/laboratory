@@ -5,9 +5,31 @@
 	<!-- If you are using tomcat6/tomcat7/junit then use this persistence-unit -->
 	<!--
 	-->
-	<persistence-unit name="bookmark-ds" transaction-type="RESOURCE_LOCAL">
+	<persistence-unit name="pu" transaction-type="RESOURCE_LOCAL">
 
-		<class>br.gov.serpro.catalogo.domain.Bookmark</class>
+		<class>br.gov.serpro.catalogo.entity.Fase</class>
+		<class>br.gov.serpro.catalogo.entity.Analise</class>
+		<class>br.gov.serpro.catalogo.entity.Prospeccao</class>
+		<class>br.gov.serpro.catalogo.entity.Documento</class>
+		<class>br.gov.serpro.catalogo.entity.Internalizacao</class>
+		<class>br.gov.serpro.catalogo.entity.Sustentacao</class>
+		<class>br.gov.serpro.catalogo.entity.Declinio</class>
+		<class>br.gov.serpro.catalogo.entity.Produto</class>
+		<class>br.gov.serpro.catalogo.entity.Licenciamento</class>
+		<class>br.gov.serpro.catalogo.entity.Fornecedor</class>
+		<class>br.gov.serpro.catalogo.entity.Fabricante</class>
+		<class>br.gov.serpro.catalogo.entity.PlataformaTecnologica</class>
+		<class>br.gov.serpro.catalogo.entity.Tecnologia</class>
+		<class>br.gov.serpro.catalogo.entity.Categoria</class>
+		<class>br.gov.serpro.catalogo.entity.OrigemDemanda</class>
+		<class>br.gov.serpro.catalogo.entity.FaseProduto</class>
+		<class>br.gov.serpro.catalogo.entity.FaseMembro</class>
+		<class>br.gov.serpro.catalogo.entity.FaseInteressado</class>
+		<class>br.gov.serpro.catalogo.entity.FaseHistorico</class>
+		<class>br.gov.serpro.catalogo.entity.Anexo</class>
+		<class>br.gov.serpro.catalogo.entity.Observacao</class>
+		<class>br.gov.serpro.catalogo.entity.Grupo</class>
+		<class>br.gov.serpro.catalogo.entity.User</class>
 
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver" />
@@ -18,43 +40,8 @@
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="false" />
 			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
-
-			<property name="eclipselink.logging.level" value="FINE" />
-			<property name="eclipselink.ddl-generation" value="create-tables" />
-			<property name="eclipselink.ddl-generation.output-mode" value="database" />
 		</properties>
 	</persistence-unit>
 
-	<!-- If you are using jboss6 with non JTA transaction then use this persistence-unit -->
-	<!--
-	<persistence-unit name="bookmark-ds" transaction-type="RESOURCE_LOCAL">
-		<non-jta-data-source>java:/DefaultDS</non-jta-data-source>
-
-		<class>br.gov.serpro.catalogo.domain.Bookmark</class>
-
-		<properties>
-			<property name="hibernate.show_sql" value="true" />
-			<property name="hibernate.format_sql" value="false" />
-			<property name="hibernate.hbm2ddl.auto" value="update" />
-			<property name="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.JBossTransactionManagerLookup" />
-		</properties>
-	</persistence-unit>
-	-->
-
-	<!-- If you are using jboss6 with JTA transaction then use this persistence-unit -->
-	<!--
-	<persistence-unit name="bookmark-ds" transaction-type="JTA">
-		<jta-data-source>java:/DefaultDS</jta-data-source>
-
-		<class>br.gov.serpro.catalogo.domain.Bookmark</class>
-
-		<properties>
-			<property name="hibernate.show_sql" value="true" />
-			<property name="hibernate.format_sql" value="false" />
-			<property name="hibernate.hbm2ddl.auto" value="update" />
-			<property name="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.JBossTransactionManagerLookup" />
-		</properties>
-	</persistence-unit>
-	-->
-
+	
 </persistence>

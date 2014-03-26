@@ -4,7 +4,10 @@ import java.io.Serializable;
 
 import javax.inject.Inject;
 
+import br.gov.frameworkdemoiselle.annotation.Priority;
+import br.gov.frameworkdemoiselle.lifecycle.Startup;
 import br.gov.frameworkdemoiselle.stereotype.BusinessController;
+import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.serpro.catalogo.entity.User;
 import br.gov.serpro.catalogo.persistence.UserDAO;
 
@@ -31,6 +34,18 @@ public class UsuarioBC implements Serializable{
 	}
 
 
+	@Startup
+	@Priority(0)
+	@Transactional
+	public User iniciarUsuario(){
+		User admin = new User();
+		admin.setCPF("admin");
+		admin.setEmail("admin@catalogotecnologia.serpro");
+		admin.setName("ADMIN");
+		admin.setSetor("");
+		admin.setTelephoneNumber("");
+		return this.carregarOuInserir(admin);
+	}
 	
 
 }

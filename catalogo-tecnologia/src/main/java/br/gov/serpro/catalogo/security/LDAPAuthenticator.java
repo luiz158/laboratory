@@ -42,6 +42,14 @@ public class LDAPAuthenticator implements Authenticator {
 	@Override
 	public void authenticate() throws Exception {
 		
+		// Criando o usuário admin, caso não exista.
+		if(credentials.getUsername().equals("admin")){
+			if(credentials.getPassword().equals("admin")){
+				user = usuarioBC.iniciarUsuario();				
+			}
+			return;
+		}
+		
 			SearchControls controls = createSearchControls();
 			String filter = createCPFFilter(credentials.getUsername());
 			SearchResult searchResult = createSearchResult(controls, filter);
