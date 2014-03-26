@@ -14,7 +14,7 @@ public class PlataformaTecnologica {
 
 	@Id
 	@GeneratedValue(strategy = SEQUENCE, generator = "plataforma_tecnologica_seq")
-	@SequenceGenerator(name = "plataforma_tecnologica_seq", sequenceName = "plataforma_tecnologica_id_seq")
+	@SequenceGenerator(name = "plataforma_tecnologica_seq", sequenceName = "plataforma_tecnologica_id_seq", allocationSize=1)
 	private Long id;
 	
 	@NotEmpty

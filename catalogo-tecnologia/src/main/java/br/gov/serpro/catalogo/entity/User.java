@@ -22,7 +22,7 @@ public class User implements br.gov.frameworkdemoiselle.security.User {
 
 	@Id
 	@GeneratedValue(strategy = SEQUENCE, generator = "usuario_seq")
-	@SequenceGenerator(name = "usuario_seq", sequenceName = "usuario_id_seq")
+	@SequenceGenerator(name = "usuario_seq", sequenceName = "usuario_id_seq", allocationSize=1)
 	private Long id;
 
 	@Column(unique = true)

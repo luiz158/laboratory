@@ -19,7 +19,7 @@ public class FaseProduto {
 	
 	@Id
 	@GeneratedValue(strategy = SEQUENCE, generator = "fase_produto_seq")
-	@SequenceGenerator(name = "fase_produto_seq", sequenceName = "fase_produto_id_seq")
+	@SequenceGenerator(name = "fase_produto_seq", sequenceName = "fase_produto_id_seq", allocationSize=1)
 	private Long id;
 	
 	@NotNull

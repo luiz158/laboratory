@@ -14,7 +14,7 @@ public class Licenciamento {
 
 	@Id
 	@GeneratedValue(strategy = SEQUENCE, generator = "licenciamento_seq")
-	@SequenceGenerator(name = "licenciamento_seq", sequenceName = "licenciamento_id_seq")
+	@SequenceGenerator(name = "licenciamento_seq", sequenceName = "licenciamento_id_seq", allocationSize=1)
 	private Long id;
 	
 	@NotEmpty

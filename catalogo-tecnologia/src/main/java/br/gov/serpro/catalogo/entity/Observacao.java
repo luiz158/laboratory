@@ -25,7 +25,7 @@ public class Observacao {
 
 	@Id
 	@GeneratedValue(strategy = SEQUENCE, generator = "observacao_seq")
-	@SequenceGenerator(name = "observacao_seq", sequenceName = "observacao_id_seq")
+	@SequenceGenerator(name = "observacao_seq", sequenceName = "observacao_id_seq", allocationSize=1)
 	private Long id;
 
 	@ManyToOne

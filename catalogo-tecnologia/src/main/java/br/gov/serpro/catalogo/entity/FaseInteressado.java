@@ -24,7 +24,7 @@ public class FaseInteressado {
 	
 	@Id
 	@GeneratedValue(strategy = SEQUENCE, generator = "fase_interessado_seq")
-	@SequenceGenerator(name = "fase_interessado_seq", sequenceName = "fase_interessado_id_seq")
+	@SequenceGenerator(name = "fase_interessado_seq", sequenceName = "fase_interessado_id_seq", allocationSize=1)
 	private Long id;
 	
 	@NotNull

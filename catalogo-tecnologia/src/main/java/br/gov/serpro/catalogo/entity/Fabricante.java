@@ -14,7 +14,7 @@ public class Fabricante {
 
 	@Id
 	@GeneratedValue(strategy = SEQUENCE, generator = "fabricante_seq")
-	@SequenceGenerator(name = "fabricante_seq", sequenceName = "fabricante_id_seq")
+	@SequenceGenerator(name = "fabricante_seq", sequenceName = "fabricante_id_seq", allocationSize=1)
 	private Long id;
 	
 	@NotEmpty

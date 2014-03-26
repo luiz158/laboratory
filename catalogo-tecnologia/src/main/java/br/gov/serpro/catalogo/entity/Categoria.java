@@ -13,7 +13,7 @@ public class Categoria {
 
 	@Id
 	@GeneratedValue(strategy = SEQUENCE, generator = "categoria_seq")
-	@SequenceGenerator(name = "categoria_seq", sequenceName = "categoria_id_seq")
+	@SequenceGenerator(name = "categoria_seq", sequenceName = "categoria_id_seq", allocationSize=1)
 	private Long id;
 	
 	private String nome;
