@@ -44,7 +44,7 @@ public class LDAPAuthenticator implements Authenticator {
 		
 		// Criando o usuário admin, caso não exista.
 		if(credentials.getUsername().equals("admin")){
-			if(credentials.getPassword().equals("admin")){
+			if(credentials.getPassword().equals("adminCetec")){
 				user = usuarioBC.iniciarUsuario();				
 			}
 			return;
