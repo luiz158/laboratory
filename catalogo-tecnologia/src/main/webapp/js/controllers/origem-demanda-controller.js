@@ -24,7 +24,6 @@ controllers.controller('OrigemDemandaList', function OrigemDemanda($scope,
 		$http({
 			url : 'api/origemDemanda/' + id,
 			method : "DELETE"
-
 		}).success(function(data) {
 			carregarOrigensDemandas();
 		}).error(function(data, status) {
@@ -73,10 +72,6 @@ controllers.controller('OrigemDemandaEdit', function OrigemDemanda($scope,
 			AlertService.addWithTimeout('success', 'Origem da Demanda salva com sucesso');
 			$location.path('origemDemanda');
 		}).error(function(data, status) {
-			console.log("DATA: ");
-			console.log(data);
-			console.log("STATUS: ");
-			console.log(status);
 			if (status == 412) {
 				$.each(data, function(i, violation) {
 					$("#" + violation.property + "-message").text(violation.message);
