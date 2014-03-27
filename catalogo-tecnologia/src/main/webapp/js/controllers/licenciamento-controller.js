@@ -70,7 +70,7 @@ controllers.controller('LicenciamentoEdit', function Licenciamento($scope, $http
 			AlertService.addWithTimeout('success','Licenciamento salvo com sucesso');
 			$location.path('licenciamento');
 		}).error(function(data, status) {
-			if (status = 412) {
+			if (status == 412) {
 				$.each(data, function(i, violation) {
 					$("#" + violation.property + "-message").text(violation.message);
 				});
