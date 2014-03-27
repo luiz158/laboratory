@@ -17,6 +17,7 @@ import javax.ws.rs.Produces;
 
 import org.jboss.resteasy.spi.validation.ValidateRequest;
 
+import br.gov.frameworkdemoiselle.security.RequiredRole;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.serpro.catalogo.entity.Licenciamento;
 import br.gov.serpro.catalogo.persistence.LicenciamentoDAO;
@@ -25,12 +26,16 @@ import br.gov.serpro.catalogo.persistence.LicenciamentoDAO;
 @Path("licenciamento")
 @Produces(APPLICATION_JSON)
 public class LicenciamentoService {
+	
+	static final String ADMINISTRADOR = "ADMINISTRADOR";
+	static final String CADASTRADOR = "CADASTRADOR";
 
 	@Inject
 	private LicenciamentoDAO licenciamentoDAO;
 	
 	@POST
 	@Transactional
+	@RequiredRole({ADMINISTRADOR, CADASTRADOR})
 	public Long salvar(@Valid Licenciamento licenciamento) {
 		return licenciamentoDAO.insert(licenciamento).getId();
 	}
@@ -38,6 +43,7 @@ public class LicenciamentoService {
 	@DELETE
 	@Path("{id}")
 	@Transactional
+	@RequiredRole({ADMINISTRADOR, CADASTRADOR})
 	public void excluir(@NotNull @PathParam("id") Long id) {
 		licenciamentoDAO.delete(id);
 	}
@@ -49,6 +55,7 @@ public class LicenciamentoService {
 	
 	@PUT
 	@Transactional
+	@RequiredRole({ADMINISTRADOR, CADASTRADOR})
 	public void alterar(@Valid Licenciamento licenciamento) {
 		licenciamentoDAO.update(licenciamento);
 	}
