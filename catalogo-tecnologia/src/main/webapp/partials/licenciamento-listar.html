@@ -7,7 +7,7 @@
 		<ng-alerts></ng-alerts>
 	</div>
 
-	<button class="btn btn-primary" ng-click="novoLicenciamento()">
+	<button has-role='ADMINISTRADOR,CADASTRADOR' class="btn btn-primary" ng-click="novoLicenciamento()">
 		<i class="fa fa-plus-circle"> </i> Novo
 	</button>
 
@@ -30,7 +30,7 @@
 					<td><a ng-click="editarLicenciamento(l)">{{l.id}}</a></td>
 					<td><a ng-click="editarLicenciamento(l)">{{l.nome}}</a></td>
 					<td><a ng-click="editarLicenciamento(l)">{{l.descricao}}</a></td>
-					<td><a ng-click="excluirLicenciamento(l.id)" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> excluir</a></td>
+					<td><a has-role='ADMINISTRADOR,CADASTRADOR' ng-click="excluirLicenciamento(l.id)" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> excluir</a></td>
 				</tr>
 			</tbody>
 		</table>
