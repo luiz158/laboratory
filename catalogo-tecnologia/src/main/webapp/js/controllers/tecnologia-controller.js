@@ -29,8 +29,12 @@ controllers.controller('TecnologiaList',
 					carregarTecnologias();
 
 				}).error(function(data, status) {
-					AlertService.addWithTimeout('danger','Não foi possível executar a operação');
-					console.log('vai vltar...');
+					if(status == 401){
+						AlertService.addWithTimeout('warning',data.message);
+						$location.path('/tecnologia');
+					}else{
+						AlertService.addWithTimeout('danger','Não foi possível executar a operação');
+					}
 				});
 			};
 
@@ -69,14 +73,17 @@ controllers.controller('TecnologiaEdit', function Tecnologia($scope, $http,
 		}).success(function(data) {
 			AlertService.addWithTimeout('success','Tecnologia salva com sucesso');
 			$location.path('tecnologia');
-		}).error(
-				function(data, status) {
-					if (status = 412) {
-						$.each(data, function(i, violation) {
-							$("#" + violation.property + "-message").text(
-									violation.message);
-						});
-					}
+		}).error(function(data, status) {
+			if(status == 401){
+				AlertService.addWithTimeout('danger','Não foi possível executar a operação');
+				$location.path('/tecnologia');
+			}else if (status = 412) {
+				$.each(data, function(i, violation) {
+					$("#" + violation.property + "-message").text(violation.message);
+				});
+			} else {
+				AlertService.addWithTimeout('danger','Não foi possível executar a operação');
+			}
 		});
 	};
 });
