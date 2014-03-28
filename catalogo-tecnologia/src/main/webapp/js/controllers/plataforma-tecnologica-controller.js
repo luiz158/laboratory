@@ -75,6 +75,7 @@ controllers.controller('PlataformaTecnologicaEdit', function PlataformaTecnologi
 		}).error(function(data, status) {
 			if (status == 401) {
 				AlertService.addWithTimeout('warning',data.message);
+				$location.path('/plataformaTecnologica');
 			} else	if (status == 412) {
 				$.each(data, function(i, violation) {
 					$("#" + violation.property + "-message").text(violation.message);
