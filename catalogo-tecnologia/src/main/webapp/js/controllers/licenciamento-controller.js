@@ -29,6 +29,7 @@ controllers.controller('LicenciamentoList',
 				}).error(function(data, status) {
 					if (status == 401) {
 						AlertService.addWithTimeout('warning', data.message);
+						$location.path('/licenciamento');
 					} else {
 						AlertService.addWithTimeout('danger','Não foi possível executar a operação');
 					}
@@ -70,12 +71,13 @@ controllers.controller('LicenciamentoEdit', function Licenciamento($scope, $http
 			AlertService.addWithTimeout('success','Licenciamento salvo com sucesso');
 			$location.path('licenciamento');
 		}).error(function(data, status) {
-			if (status == 412) {
+			if (status == 401) {
+				AlertService.addWithTimeout('warning', data.message);
+				$location.path('/licenciamento');
+			} else if (status == 412){
 				$.each(data, function(i, violation) {
 					$("#" + violation.property + "-message").text(violation.message);
 				});
-			} else if (status == 401){
-				AlertService.addWithTimeout('warning', data.message);
 			} else {
 				AlertService.addWithTimeout('danger','Não foi possível executar a operação');
 			}

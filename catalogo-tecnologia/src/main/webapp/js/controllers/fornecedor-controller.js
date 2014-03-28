@@ -31,6 +31,7 @@ controllers.controller('FornecedorList',
 				}).error(function(data, status) {
 					if(status == 401){
 						AlertService.addWithTimeout('warnig',data.message);
+						$location.path('/fornecedor');
 					}else{
 						AlertService.addWithTimeout('danger','Não foi possível executar a operação');
 					}
@@ -75,6 +76,7 @@ controllers.controller('FornecedorEdit', function Fornecedor($scope, $http,
 		}).error(function(data, status) {
 			if (status == 401) {
 				AlertService.addWithTimeout('warnig',data.message);
+				$location.path('/fornecedor');
 			} else	if (status == 412) {
 				$.each(data, function(i, violation) {
 					$("#" + violation.property + "-message").text(violation.message);

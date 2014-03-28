@@ -29,6 +29,7 @@ controllers.controller('FabricanteList',
 				}).error(function(data, status) {
 					if(status == 401){
 						AlertService.addWithTimeout('warning',data.message);
+						$location.path('/fabricante');
 					}else{
 						AlertService.addWithTimeout('danger','Não foi possível executar a operação');
 					}
@@ -72,6 +73,7 @@ controllers.controller('FabricanteEdit', function Fabricante($scope, $http,
 		}).error(function(data, status) {
 			if (status == 401) {
 				AlertService.addWithTimeout('warning',data.message);
+				$location.path('/fabricante');
 			} else if (status == 412){
 				$.each(data, function(i, violation) {
 					$("#" + violation.property + "-message").text(violation.message);

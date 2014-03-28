@@ -72,13 +72,13 @@ controllers.controller('OrigemDemandaEdit', function OrigemDemanda($scope,
 			AlertService.addWithTimeout('success', 'Origem da Demanda salva com sucesso');
 			$location.path('origemDemanda');
 		}).error(function(data, status) {
-			if (status == 412) {
+			if (status == 401) {
+				AlertService.addWithTimeout('warning', data.message);
+				$location.path('origemDemanda');
+			}else if(status == 412){
 				$.each(data, function(i, violation) {
 					$("#" + violation.property + "-message").text(violation.message);
 				});
-			}else if(status == 401){
-				AlertService.addWithTimeout('warning', data.message);
-				$location.path('origemDemanda');
 			}else {
 				AlertService.addWithTimeout('danger', 'Não foi possível executar a operação');
 			};
