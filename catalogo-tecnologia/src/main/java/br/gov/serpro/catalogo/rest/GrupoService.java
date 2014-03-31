@@ -17,7 +17,6 @@ import javax.ws.rs.Produces;
 
 import org.jboss.resteasy.spi.validation.ValidateRequest;
 
-import br.gov.frameworkdemoiselle.security.AuthorizationException;
 import br.gov.frameworkdemoiselle.security.RequiredRole;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.serpro.catalogo.entity.Grupo;

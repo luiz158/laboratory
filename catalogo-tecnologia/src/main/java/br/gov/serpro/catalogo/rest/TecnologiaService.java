@@ -17,6 +17,7 @@ import javax.ws.rs.Produces;
 
 import org.jboss.resteasy.spi.validation.ValidateRequest;
 
+import br.gov.frameworkdemoiselle.security.RequiredRole;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.serpro.catalogo.entity.Tecnologia;
 import br.gov.serpro.catalogo.persistence.TecnologiaDAO;
@@ -26,11 +27,15 @@ import br.gov.serpro.catalogo.persistence.TecnologiaDAO;
 @Produces(APPLICATION_JSON)
 public class TecnologiaService {
 	
+	static final String ADMINISTRADOR = "ADMINISTRADOR";
+	static final String CADASTRADOR = "CADASTRADOR";
+	
 	@Inject
 	private TecnologiaDAO tecnologiaDAO;
 	
 	@POST
 	@Transactional
+	@RequiredRole({ADMINISTRADOR, CADASTRADOR})
 	public Long salvar(@Valid Tecnologia tecnologia) {
 		return tecnologiaDAO.insert(tecnologia).getId();
 	}
@@ -38,6 +43,7 @@ public class TecnologiaService {
 	@DELETE
 	@Path("{id}")
 	@Transactional
+	@RequiredRole({ADMINISTRADOR, CADASTRADOR})
 	public void excluir(@NotNull @PathParam("id") Long id) {
 		tecnologiaDAO.delete(id);
 	}
@@ -49,6 +55,7 @@ public class TecnologiaService {
 	
 	@PUT
 	@Transactional
+	@RequiredRole({ADMINISTRADOR, CADASTRADOR})
 	public void alterar(@Valid Tecnologia tecnologia) {
 		tecnologiaDAO.update(tecnologia);
 	}

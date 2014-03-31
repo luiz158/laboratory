@@ -17,6 +17,7 @@ import javax.ws.rs.Produces;
 
 import org.jboss.resteasy.spi.validation.ValidateRequest;
 
+import br.gov.frameworkdemoiselle.security.RequiredRole;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.serpro.catalogo.entity.Fabricante;
 import br.gov.serpro.catalogo.persistence.FabricanteDAO;
@@ -25,12 +26,16 @@ import br.gov.serpro.catalogo.persistence.FabricanteDAO;
 @Path("fabricante")
 @Produces(APPLICATION_JSON)
 public class FabricanteService {
+	
+	static final String ADMINISTRADOR = "ADMINISTRADOR";
+	static final String CADASTRADOR = "CADASTRADOR";
 
 	@Inject
 	private FabricanteDAO fabricanteDAO;
 	
 	@POST
 	@Transactional
+	@RequiredRole({ADMINISTRADOR, CADASTRADOR})
 	public Long salvar(@Valid Fabricante fabricante) {
 		return fabricanteDAO.insert(fabricante).getId();
 	}
@@ -38,6 +43,7 @@ public class FabricanteService {
 	@DELETE
 	@Path("{id}")
 	@Transactional
+	@RequiredRole({ADMINISTRADOR, CADASTRADOR})
 	public void excluir(@NotNull @PathParam("id") Long id) {
 		fabricanteDAO.delete(id);
 	}
@@ -49,6 +55,7 @@ public class FabricanteService {
 	
 	@PUT
 	@Transactional
+	@RequiredRole({ADMINISTRADOR, CADASTRADOR})
 	public void alterar(@Valid Fabricante fabricante) {
 		fabricanteDAO.update(fabricante);
 	}

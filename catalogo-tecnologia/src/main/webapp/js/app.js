@@ -64,20 +64,8 @@ config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/origemDemanda/edit/:id', {templateUrl: 'partials/origem-demanda-edit.html', controller: 'OrigemDemandaEdit'});
 }]);
 
-// Fonte: http://stackoverflow.com/questions/15025979/can-i-make-a-function-available-in-every-controller-in-angular
-app.run(function($rootScope, AuthService) {
-    $rootScope.hasRole = function(roles) {
-		var paramRoles = roles.split(",");
-		var userRoles = []; 
-		$.each(AuthService.getUsuario().grupos, function (i, grupo){
-			$.each(grupo.perfis, function (i, perfil){
-				userRoles.push(perfil);
-			});
-		});
-		userRoles = _.uniq(userRoles);
-		return _.intersection(userRoles, paramRoles).length; // 0 no javascript é false
-    };
-});
+//app.run(function($rootScope) {
+//});
 
 var controllers = angular.module('catalogo.controllers',[]);
 var services = angular.module('catalogo.services',[]);

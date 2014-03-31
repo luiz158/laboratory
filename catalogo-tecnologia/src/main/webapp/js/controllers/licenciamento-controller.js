@@ -24,13 +24,15 @@ controllers.controller('LicenciamentoList',
 				$http({
 					url : 'api/licenciamento/' + id,
 					method : "DELETE"
-
 				}).success(function(data) {
 					carregarLicenciamentos();
-
 				}).error(function(data, status) {
-					AlertService.addWithTimeout('danger','Não foi possível executar a operação');
-					console.log('vai vltar...');
+					if (status == 401) {
+						AlertService.addWithTimeout('warning', data.message);
+						$location.path('/licenciamento');
+					} else {
+						AlertService.addWithTimeout('danger','Não foi possível executar a operação');
+					}
 				});
 			};
 
@@ -65,18 +67,20 @@ controllers.controller('LicenciamentoEdit', function Licenciamento($scope, $http
 			headers : {
 				'Content-Type' : 'application/json;charset=utf8'
 			}
-	
 		}).success(function(data) {
 			AlertService.addWithTimeout('success','Licenciamento salvo com sucesso');
 			$location.path('licenciamento');
-		}).error(
-				function(data, status) {
-					if (status = 412) {
-						$.each(data, function(i, violation) {
-							$("#" + violation.property + "-message").text(
-									violation.message);
-						});
-					}
+		}).error(function(data, status) {
+			if (status == 401) {
+				AlertService.addWithTimeout('warning', data.message);
+				$location.path('/licenciamento');
+			} else if (status == 412){
+				$.each(data, function(i, violation) {
+					$("#" + violation.property + "-message").text(violation.message);
+				});
+			} else {
+				AlertService.addWithTimeout('danger','Não foi possível executar a operação');
+			}
 		});
 	};
 });

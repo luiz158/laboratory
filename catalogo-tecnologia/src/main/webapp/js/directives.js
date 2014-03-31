@@ -4,7 +4,6 @@ diretivas
 		.directive(
 				'ngAnaliseSituacao',
 				function() {
-
 					return {
 						// restrict: 'C',
 						// require: '^ngSituacao',
@@ -12,9 +11,7 @@ diretivas
 							situacao : '@'
 						},
 						template : '<span class="label"><i class="fa"> </i> {{situacao}}</span>',
-
 						link : function(scope, elem, $attrs) {
-
 							$attrs.$observe('situacao', function(situacao) {
 								var labelType = 'label-primary';
 								var icon = 'fa-pencil-square-o';
@@ -102,18 +99,18 @@ diretivas.directive('ngCampoUsuario', function() {
 		require : '^ngModel',
 		scope : {
 			usuario : '=ngModel',
-			fase: '@',
-			name: '@'
+			fase : '@',
+			name : '@'
 		},
 		templateUrl : 'directives/campo-usuario.html',
 		link : function(scope, elem, $attrs) {
-			
+
 		},
-		controller: function ($scope, $http, AlertService, UserService) {
+		controller : function($scope, $http, AlertService, UserService) {
 			$scope.palavraChave = "";
-			$scope.resultadoPesquisa = [];			
-				
-			$scope.selecionar = function(m){		
+			$scope.resultadoPesquisa = [];
+
+			$scope.selecionar = function(m) {
 				$http({
 					url : 'api/fase/usuario/carregar',
 					method : "POST",
@@ -122,20 +119,19 @@ diretivas.directive('ngCampoUsuario', function() {
 						'Content-Type' : 'application/json;charset=utf8'
 					}
 				}).success(function(data) {
-					$scope.usuario = data;	
-					delete $scope.usuario.grupos;					
-				}).error( function(data, status) {
-					AlertService.addWithTimeout('danger',data[0].message);
+					$scope.usuario = data;
+					delete $scope.usuario.grupos;
+				}).error(function(data, status) {
+					AlertService.addWithTimeout('danger', data[0].message);
 				});
-				
-			};				
-			
-			$scope.pesquisar = function(){
-				UserService.searchByName($scope.palavraChave).then( 
-					function(data) {
-						$scope.resultadoPesquisa = data;
-					}
-				);
+
+			};
+
+			$scope.pesquisar = function() {
+				UserService.searchByName($scope.palavraChave).then(
+						function(data) {
+							$scope.resultadoPesquisa = data;
+						});
 			};
 		}
 	};
@@ -150,18 +146,18 @@ diretivas.directive('ngHistoricoFase', function() {
 		},
 		templateUrl : 'directives/historico-fase.html',
 		link : function(scope, elem, $attrs) {
-			
+
 		},
-		controller: function ($scope, $http, AlertService) {
-			$scope.historico = [];			
-			if($scope.fase.id){	
+		controller : function($scope, $http, AlertService) {
+			$scope.historico = [];
+			if ($scope.fase.id) {
 				$http({
-					url : 'api/fase/historico/'+$scope.fase.id,
+					url : 'api/fase/historico/' + $scope.fase.id,
 					method : "GET"
 				}).success(function(data) {
-					$scope.historico = data;						
-				}).error( function(data, status) {
-					AlertService.addWithTimeout('danger',data[0].message);
+					$scope.historico = data;
+				}).error(function(data, status) {
+					AlertService.addWithTimeout('danger', data[0].message);
 				});
 			}
 		}
@@ -291,31 +287,35 @@ diretivas.directive('donut', function() {
 	};
 });
 
-diretivas.directive('validationMsg', function(ValidationService) {
-	return {
-		restrict : 'E',
-		scope : {
-			propriedade : '@'
-		},
-		template : "<div class='error text-danger' ng-show='msg'><small class='error' >{{msg}}</small></div>",		
-		controller : function($scope) {
-			$scope.$watch(function() {
-				return ValidationService.validation[$scope.propriedade];
-			}, function(msg) {
-				$scope.msg = msg;
-			});
-		}
-	};
-});
-
+diretivas
+		.directive(
+				'validationMsg',
+				function(ValidationService) {
+					return {
+						restrict : 'E',
+						scope : {
+							propriedade : '@'
+						},
+						template : "<div class='error text-danger' ng-show='msg'><small class='error' >{{msg}}</small></div>",
+						controller : function($scope) {
+							$scope
+									.$watch(
+											function() {
+												return ValidationService.validation[$scope.propriedade];
+											}, function(msg) {
+												$scope.msg = msg;
+											});
+						}
+					};
+				});
 
 diretivas.directive('loggedIn', function(AuthService) {
 	return {
-		restrict : 'A',	
+		restrict : 'A',
 		link : function(scope, elem, $attrs) {
-			AuthService.getLoggedUserService().then(function (data){
-				if(data == ""){
-					location.href="index.html";
+			AuthService.getLoggedUserService().then(function(data) {
+				if (data == "") {
+					location.href = "index.html";
 				}
 				logado = true;
 			});
@@ -323,3 +323,30 @@ diretivas.directive('loggedIn', function(AuthService) {
 	};
 });
 
+diretivas.directive('hasRole', function(AuthService) {
+	return {
+		restrict : 'A',
+		link : function(scope, elem, $attrs) {
+			var paramRoles = $attrs.hasRole.split(",");
+			var userRoles = [];
+			var grupos = [];
+			AuthService.getLoggedUserService().then(function(data) {
+				if (data.grupos) {
+					grupos = data.grupos;
+					$.each(grupos, function(i, grupo) {
+						$.each(grupo.perfis, function(i, perfil) {
+							userRoles.push(perfil);
+						});
+					});
+				}
+				userRoles = _.uniq(userRoles);
+
+				if (_.intersection(userRoles, paramRoles).length == 0) {
+					elem.attr('disabled', true);
+				} else {
+					elem.attr('disabled', false);
+				}
+			});
+		}
+	};
+});

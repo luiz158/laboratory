@@ -7,7 +7,7 @@
 		<ng-alerts></ng-alerts>
 	</div>
 
-	<button class="btn btn-primary" ng-click="novaTecnologia()">
+	<button has-role='ADMINISTRADOR,CADASTRADOR' class="btn btn-primary" ng-click="novaTecnologia()">
 		<i class="fa fa-plus-circle"> </i> Novo
 	</button>
 
@@ -30,7 +30,7 @@
 					<td><a ng-click="editarTecnologia(t)">{{t.id}}</a></td>
 					<td><a ng-click="editarTecnologia(t)">{{t.nome}}</a></td>
 					<td><a ng-click="editarTecnologia(t)">{{t.descricao}}</a></td>
-					<td><a ng-click="excluirTecnologia(t.id)" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> excluir</a></td>
+					<td><a has-role='ADMINISTRADOR,CADASTRADOR' ng-click="excluirTecnologia(t.id)" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> excluir</a></td>
 				</tr>
 			</tbody>
 		</table>

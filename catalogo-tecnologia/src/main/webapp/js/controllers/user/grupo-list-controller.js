@@ -3,7 +3,7 @@
 /* Controllers */
 var controllers = angular.module('catalogo.controllers');
 
-controllers.controller('GrupoList', function Analise($scope, $http, $location) {
+controllers.controller('GrupoList', function Analise($scope, $http, $location, AlertService) {
 
 	function carregarGrupos() {
 		$http.get('api/grupo').success(function(data) {
@@ -25,9 +25,12 @@ controllers.controller('GrupoList', function Analise($scope, $http, $location) {
 			method : "DELETE"
 
 		}).success(function(data) {
+			AlertService.addWithTimeout('success', 'Usuário salvo com sucesso');
 			carregarGrupos();
-
 		}).error(function(data, status) {
+			if(status == 401){
+				AlertService.addWithTimeout('warning', data.message);
+			}
 		});
 	};
 

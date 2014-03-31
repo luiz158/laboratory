@@ -17,6 +17,7 @@ import javax.ws.rs.Produces;
 
 import org.jboss.resteasy.spi.validation.ValidateRequest;
 
+import br.gov.frameworkdemoiselle.security.RequiredRole;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.serpro.catalogo.entity.Fornecedor;
 import br.gov.serpro.catalogo.persistence.FornecedorDAO;
@@ -26,11 +27,15 @@ import br.gov.serpro.catalogo.persistence.FornecedorDAO;
 @Produces(APPLICATION_JSON)
 public class FornecedorService {
 	
+	static final String ADMINISTRADOR = "ADMINISTRADOR";
+	static final String CADASTRADOR = "CADASTRADOR";
+	
 	@Inject
 	private FornecedorDAO fornecedorDAO;
 	
 	@POST
 	@Transactional
+	@RequiredRole({ADMINISTRADOR, CADASTRADOR})
 	public Long salvar(@Valid Fornecedor fornecedor) {
 		return fornecedorDAO.insert(fornecedor).getId();
 	}
@@ -38,6 +43,7 @@ public class FornecedorService {
 	@DELETE
 	@Path("{id}")
 	@Transactional
+	@RequiredRole({ADMINISTRADOR, CADASTRADOR})
 	public void excluir(@NotNull @PathParam("id") Long id) {
 		fornecedorDAO.delete(id);
 	}
@@ -49,6 +55,7 @@ public class FornecedorService {
 	
 	@PUT
 	@Transactional
+	@RequiredRole({ADMINISTRADOR, CADASTRADOR})
 	public void alterar(@Valid Fornecedor fornecedor) {
 		fornecedorDAO.update(fornecedor);
 	}

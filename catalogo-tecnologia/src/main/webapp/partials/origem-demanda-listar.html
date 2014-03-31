@@ -7,7 +7,7 @@
 		<ng-alerts></ng-alerts>
 	</div>
 
-	<button class="btn btn-primary" ng-click="novoOrigemDemanda()">
+	<button has-role='ADMINISTRADOR,CADASTRADOR' class="btn btn-primary" ng-click="novoOrigemDemanda()">
 		<i class="fa fa-plus-circle"> </i> Novo
 	</button>
 
@@ -30,7 +30,7 @@
 					<td><a ng-click="editarOrigemDemanda(o)">{{o.id}}</a></td>
 					<td><a ng-click="editarOrigemDemanda(o)">{{o.nome}}</a></td>
 					<td><a ng-click="editarOrigemDemanda(o)">{{o.descricao}}</a></td>
-					<td><a ng-click="excluirOrigemDemanda(o.id)" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> excluir</a></td>
+					<td><a has-role='ADMINISTRADOR,CADASTRADOR' ng-click="excluirOrigemDemanda(o.id)" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> excluir</a></td>
 				</tr>
 			</tbody>
 		</table>
