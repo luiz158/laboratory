@@ -24,6 +24,8 @@ import br.gov.serpro.catalogo.entity.Situacao;
 import br.gov.serpro.catalogo.entity.Sustentacao;
 import br.gov.serpro.catalogo.entity.User;
 import br.gov.serpro.catalogo.event.FaseEvent;
+import br.gov.serpro.catalogo.event.FaseEvent.ADD_INTERESSADO;
+import br.gov.serpro.catalogo.event.FaseEvent.ADD_MEMBRO;
 import br.gov.serpro.catalogo.event.FaseEvent.ATUALIZAR;
 import br.gov.serpro.catalogo.event.FaseEvent.CRIAR;
 import br.gov.serpro.catalogo.event.FaseEvent.EXCLUIR;
@@ -58,6 +60,8 @@ public class FaseBC {
 	@Inject @ATUALIZAR private Event<FaseEvent> eventoFaseAtualizar;
 	@Inject @FINALIZAR private Event<FaseEvent> eventoFaseFinalizar;
 	@Inject @EXCLUIR private Event<FaseEvent> eventoFaseExcluir;
+	@Inject @ADD_INTERESSADO private Event<FaseEvent> eventoFaseAdicionarInteressado;
+	@Inject @ADD_MEMBRO private Event<FaseEvent> eventoFaseAdicionarMembro;
 		
 	/**
 	 * Pesquisa por criteria usando o DTO
@@ -132,8 +136,9 @@ public class FaseBC {
 			FaseMembro fm = new FaseMembro();
 			fm.setFase(proximafase);
 			fm.setUser(fase.getProximaFaseLider());			
-			faseMembroDAO.insert(fm);					
-			emailBC.enviarEmailUsuarioAdicionadoEquipe(fm.getUser(), fm.getFase());
+			faseMembroDAO.insert(fm);			
+			
+			eventoFaseAdicionarMembro.fire(new FaseEvent(fm.getUser(), fm.getFase()));
 		}
 
 		return proximafase;
@@ -221,7 +226,7 @@ public class FaseBC {
 		faseMembro.setUser(user);
 		faseMembro.setFase(faseDAO.load(id));		
 		faseMembroDAO.insert(faseMembro);
-		emailBC.enviarEmailUsuarioAdicionadoEquipe(faseMembro.getUser(), faseMembro.getFase());
+		eventoFaseAdicionarMembro.fire(new FaseEvent(faseMembro.getUser(), faseMembro.getFase()));
 		return faseMembro.getUser();
 	}
 
@@ -247,7 +252,8 @@ public class FaseBC {
 
 		faseMembro.setUser(user);
 		faseMembro.setFase(faseDAO.load(id));		
-		faseInteressadoDAO.insert(faseMembro);		
+		faseInteressadoDAO.insert(faseMembro);	
+		eventoFaseAdicionarInteressado.fire(new FaseEvent(faseMembro.getUser(), faseMembro.getFase()));
 		return faseMembro.getUser();
 	}
 
