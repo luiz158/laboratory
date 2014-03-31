@@ -10,7 +10,7 @@ var app = angular.module('catalogo', [
   'ngAnimate',
   'mgcrea.ngStrap'
 ]).
-config(['$routeProvider', function($routeProvider) {
+config(['$routeProvider', function($routeProvider) {	
   $routeProvider.when('/login', {templateUrl: 'partials/login.html', controller: 'Auth'});
   $routeProvider.when('/pesquisa/fases/:fase', {templateUrl: 'partials/fases/pesquisa-fases.html', controller: 'PesquisaFasesCtrl'});
   $routeProvider.when('/pesquisa/fases', {templateUrl: 'partials/fases/pesquisa-fases.html', controller: 'PesquisaFasesCtrl'});

@@ -3,17 +3,27 @@
 /* Controllers */
 var controllers = angular.module('catalogo.controllers');
 
-controllers.controller('Auth', function Auth($scope, $http, $location, AuthService) {
+controllers.controller('Auth', function Auth($scope,$routeParams, $http, $location, AuthService) {
 	$scope.usuario = {};
 	$scope.formData = {"username": "", "password": ""};
 	
+	
+	var url = location.href;
+	if(url.indexOf("#")>0){ // Guarda a rota existente.
+		$scope.rotaOriginal = url.substring(url.indexOf("#")+1,url.length);
+	}
+	
 	function sucesso(data){
 		$scope.usuario = data;
-		location.href="home.html";
+		if($scope.rotaOriginal){
+			location.href="home.html#"+$scope.rotaOriginal;
+		}else{
+			location.href="home.html";
+		}	
 	}
 	
 	function sucessologout(){
-		location.href="index.html";
+		location.href="index.html";	
 		$scope.usuario = null;
 	}
 	

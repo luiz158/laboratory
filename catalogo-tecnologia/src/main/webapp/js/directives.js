@@ -315,7 +315,8 @@ diretivas.directive('loggedIn', function(AuthService) {
 		link : function(scope, elem, $attrs) {
 			AuthService.getLoggedUserService().then(function(data) {
 				if (data == "") {
-					location.href = "index.html";
+					var urlOriginal = location.href;
+					location.href = "index.html?destino="+urlOriginal;
 				}
 				logado = true;
 			});
