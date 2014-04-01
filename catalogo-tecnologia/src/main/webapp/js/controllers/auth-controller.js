@@ -5,18 +5,18 @@ var controllers = angular.module('catalogo.controllers');
 
 controllers.controller('Auth', function Auth($scope,$routeParams, $http, $location, AuthService) {
 	$scope.usuario = {};
-	$scope.formData = {"username": "", "password": ""};
 	
+	$scope.formData = {"username": "", "password": ""};	
 	
 	var url = location.href;
 	if(url.indexOf("#")>0){ // Guarda a rota existente.
-		$scope.rotaOriginal = url.substring(url.indexOf("#")+1,url.length);
+		$scope.rotaOriginal = url.substring(url.indexOf("#"),url.length);
 	}
 	
 	function sucesso(data){
 		$scope.usuario = data;
 		if($scope.rotaOriginal){
-			location.href="home.html#"+$scope.rotaOriginal;
+			location.href="home.html"+$scope.rotaOriginal;
 		}else{
 			location.href="home.html";
 		}	
@@ -42,6 +42,7 @@ controllers.controller('Auth', function Auth($scope,$routeParams, $http, $locati
 	}
 	
 	$scope.entrar = function() {
+		$scope.$broadcast("autofill:update");
 		AuthService.login($scope.formData, sucesso, erro);
 	};
 	
