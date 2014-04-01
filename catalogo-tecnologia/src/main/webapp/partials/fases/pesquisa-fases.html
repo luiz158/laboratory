@@ -106,65 +106,63 @@
 					</div>
 					<div class="col-sm-6">
 						<div class="dataTables_paginate paging_simple_numbers">
-						<ul class="pagination">
-							<li>
-								<a ng-click="paginacao.anterior()"> &laquo; </a></li>
-						  	<li ng-repeat="i in [] | range:paginacao.paginas()" 
-						  		ng-class="{'active' : paginacao.paginaAtual == i}">
-						  		<a ng-click="paginacao.paginaAtual = i"> {{i+1}} </a>
-						  	</li>
-						  	<li><a ng-click="paginacao.proxima()"> &raquo; </a></li>
-						</ul>
+							<ul class="pagination">
+								<li>
+									<a ng-click="paginacao.anterior()"> &laquo; </a></li>
+							  	<li ng-repeat="i in [] | range:paginacao.paginas()" 
+							  		ng-class="{'active' : paginacao.paginaAtual == i}">
+							  		<a ng-click="paginacao.paginaAtual = i"> {{i+1}} </a>
+							  	</li>
+							  	<li><a ng-click="paginacao.proxima()"> &raquo; </a></li>
+							</ul>
 						</div>
 					</div>
 				</div>
 			
 			
-			<ul class="chat list-group">
-                 <li ng-repeat="f in paginacao.data | startFrom:paginacao.paginaAtual*paginacao.registrosPorPagina | limitTo:paginacao.registrosPorPagina"  
-        	title="{{f.fase | nomeFase}}" class="left list-group-item clearfix">
-        			<a href="#{{f.fase | faseUrl}}/{{f.id}}">
-	                    <span class="chat-img pull-left">
-	                         <img ng-src="{{f.fase | iconeFase}}" class="img-circle" width="30px">
-	                    </span>
-	                    <div class="chat-body clearfix">
-	                        <div class="header">
-	                         	<div class="row">
-			        		<div class="col-md-1">
-			        			<b>ID:</b> {{f.id}} 
-			        		</div>
-			        		<div class="col-md-2">
-			        			<b>Fase:</b> {{f.fase | nomeFase}}</span>
-			        		</div>
-			        		<div class="col-md-4">
-			        			<b>Situação: <span ng-analise-situacao situacao="{{f.situacao}}"></span>
-			        		</div>
-			        		<div class="col-md-4">
-			        			<b>Referência:</b> {{f.origemReferencia.nome}} {{f.codigoReferencia}} 
-			        		</div>
-			        	</div>
-	                    <div class="row">
-			        		<div class="col-md-3">
-			        			<b>Unidade Gestora:</b> {{f.unidadeGestora}} 
-			        		</div>
-			        		<div class="col-md-4">
-			        			<b>Registro:</b> {{f.dataRealizacao}}  
-			        		</div>
-			        		<div class="col-md-4">
-			        			<b>Finalização:</b> {{f.dataFinalizacao}} 
-			        		</div>
-			        	</div>
-                         <p>
-                             <b>Objetivo:</b> {{f.objetivo}}
-                         </p>
-                     </div>
-                    </a>
-                 </li>
-             </ul>			
+				<ul class="chat list-group">
+	                 <li ng-repeat="f in paginacao.data | startFrom:paginacao.paginaAtual*paginacao.registrosPorPagina | limitTo:paginacao.registrosPorPagina"  
+	        	title="{{f.fase | nomeFase}}" class="left list-group-item clearfix">
+	        			<a href="#{{f.fase | faseUrl}}/{{f.id}}">
+		                    <span class="chat-img pull-left">
+		                         <img ng-src="{{f.fase | iconeFase}}" class="img-circle" width="30px">
+		                    </span>
+		                    <div class="chat-body clearfix">
+		                        <div class="header">
+		                         	<div class="row">
+				        		<div class="col-md-1">
+				        			<b>ID:</b> {{f.id}} 
+				        		</div>
+				        		<div class="col-md-2">
+				        			<b>Fase:</b> {{f.fase | nomeFase}}</span>
+				        		</div>
+				        		<div class="col-md-4">
+				        			<b>Situação: <span ng-analise-situacao situacao="{{f.situacao}}"></span>
+				        		</div>
+				        		<div class="col-md-4">
+				        			<b>Referência:</b> {{f.origemReferencia.nome}} {{f.codigoReferencia}} 
+				        		</div>
+				        	</div>
+		                    <div class="row">
+				        		<div class="col-md-3">
+				        			<b>Unidade Gestora:</b> {{f.unidadeGestora}} 
+				        		</div>
+				        		<div class="col-md-4">
+				        			<b>Registro:</b> {{f.dataRealizacao}}  
+				        		</div>
+				        		<div class="col-md-4">
+				        			<b>Finalização:</b> {{f.dataFinalizacao}} 
+				        		</div>
+				        	</div>
+	                         <p>
+	                             <b>Objetivo:</b> {{f.objetivo}}
+	                         </p>
+	                     </div>
+	                    </a>
+	                 </li>
+	            </ul>			
 			
-		       
+		    </div>
 		</div>
-		
-		
-	</div>
+    </div>
 </div>

@@ -60,10 +60,10 @@
 			<div class="sidebar-collapse">
 				<ul class="nav" id="side-menu">
 					<li class="sidebar-search">
-						<div class="input-group custom-search-form">
+						<div class="input-group custom-search-form" ng-controller="Home">
 							<input type="text" class="form-control" placeholder="Procurar..."
 								ng-model="variavel"> <span class="input-group-btn">
-								<button class="btn btn-default" type="button">
+								<button class="btn btn-default" type="button" ng-click="pesquisarProduto()">
 									<i class="fa fa-search"></i>
 								</button>
 							</span>
@@ -157,7 +157,9 @@
 	<script src="js/controllers/user/user-edit-controller.js"></script>
 	<script src="js/controllers/user/user-new-controller.js"></script>
 	<script src="js/controllers/user/user-list-controller.js"></script>
-
+    <script src="js/controllers/home-controller.js"></script>
+    <script src="js/controllers/produtos-pesquisados-controller.js"></script>
+    
 	<script src="js/lib/jquery-1.10.2.js"></script>
 	<script src="js/lib/bootstrap.min.js"></script>
 	<script src="js/lib/bootbox.min.js"></script>

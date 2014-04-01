@@ -72,4 +72,10 @@ public class ProdutoService {
 		String jpql = "select p from Produto p inner join p.categorias s where s.id = "+categoriaId;
 		return produtoDAO.findByJPQL(jpql);
 	}
+	
+	@GET @Path("produtoSemFase/{produto}")
+	public List<Produto> produtosSemFase(@PathParam("produto") String nomeProduto) {
+		String jpql = "select p from FaseProduto fp right outer join fp.produto p where fp IS NULL and upper(p.nome) like upper('%"+nomeProduto+"%')";
+		return produtoDAO.findByJPQL(jpql);
+	}
 }

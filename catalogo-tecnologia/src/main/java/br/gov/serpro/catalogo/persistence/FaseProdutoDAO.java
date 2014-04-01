@@ -21,4 +21,9 @@ public class FaseProdutoDAO extends JPACrud<FaseProduto, Long> {
 		return query.getResultList();
 	}
 	
+	@Override
+	public List<FaseProduto> findByJPQL(String jpql) {
+		return super.findByJPQL(jpql);
+	}
+	
 }

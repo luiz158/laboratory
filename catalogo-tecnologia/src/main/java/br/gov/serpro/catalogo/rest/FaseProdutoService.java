@@ -16,6 +16,7 @@ import javax.ws.rs.Produces;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.serpro.catalogo.entity.Fase;
 import br.gov.serpro.catalogo.entity.FaseProduto;
+import br.gov.serpro.catalogo.entity.Produto;
 import br.gov.serpro.catalogo.persistence.FaseProdutoDAO;
 
 @Path("fase/produto")
@@ -33,6 +34,13 @@ public class FaseProdutoService {
 		return faseProdutoDAO.produtosDaFase(f);
 	}
 	
+	@GET @Path("{fase}/{produto}")
+	public List<FaseProduto> produtosDaFase(@PathParam("fase") String fase, @PathParam("produto") String nomeProduto) {
+		String jpql = "select fp from FaseProduto fp where fp.fase.fase = '"+fase+"' and upper(fp.produto.nome) like upper('%"+nomeProduto+"%')";
+		List<FaseProduto> list = faseProdutoDAO.findByJPQL(jpql); 
+		return list;
+	}
+	
 	@DELETE
 	@Path("{id}")
 	@Transactional
@@ -45,5 +53,4 @@ public class FaseProdutoService {
 	public Long salvar(FaseProduto p) {
 		return faseProdutoDAO.insert(p).getId();
 	}
-	
 }
