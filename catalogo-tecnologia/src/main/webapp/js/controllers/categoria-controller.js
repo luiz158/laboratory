@@ -97,7 +97,7 @@ controllers.controller('CategoriaEdit', function Categoria($scope, $http,
 				if(status == 401){
 					AlertService.addWithTimeout('warning',data.message);
 					$location.path('/categoria');
-				}else if (status = 412) {
+				}else if (status == 412) {
 					$.each(data, function(i, violation) {
 						$("#" + violation.property + "-message").text(violation.message);
 					});
