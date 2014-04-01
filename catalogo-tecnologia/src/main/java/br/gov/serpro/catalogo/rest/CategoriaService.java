@@ -17,6 +17,7 @@ import javax.ws.rs.Produces;
 
 import org.jboss.resteasy.spi.validation.ValidateRequest;
 
+import br.gov.frameworkdemoiselle.security.RequiredRole;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.serpro.catalogo.entity.Categoria;
 import br.gov.serpro.catalogo.persistence.CategoriaDAO;
@@ -26,11 +27,15 @@ import br.gov.serpro.catalogo.persistence.CategoriaDAO;
 @Produces(APPLICATION_JSON)
 public class CategoriaService {
 	
+	static final String ADMINISTRADOR = "ADMINISTRADOR";
+	static final String CADASTRADOR = "CADASTRADOR";
+	
 	@Inject
 	private CategoriaDAO categoriaDAO;
 	
 	@POST
 	@Transactional
+	@RequiredRole({ADMINISTRADOR, CADASTRADOR})
 	public Long salvar(@Valid Categoria categoria) {
 		return categoriaDAO.insert(categoria).getId();
 	}
@@ -38,6 +43,7 @@ public class CategoriaService {
 	@DELETE
 	@Path("{id}")
 	@Transactional
+	@RequiredRole({ADMINISTRADOR, CADASTRADOR})
 	public void excluir(@NotNull @PathParam("id") Long id) {
 		categoriaDAO.delete(id);
 	}
@@ -49,6 +55,7 @@ public class CategoriaService {
 	
 	@PUT
 	@Transactional
+	@RequiredRole({ADMINISTRADOR, CADASTRADOR})
 	public void alterar(@Valid Categoria categoria) {
 		categoriaDAO.update(categoria);
 	}

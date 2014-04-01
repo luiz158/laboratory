@@ -29,8 +29,12 @@ controllers.controller('ProdutoList',
 					carregarProdutos();
 
 				}).error(function(data, status) {
-					AlertService.addWithTimeout('danger','Não foi possível executar a operação');
-					console.log('vai vltar...');
+					if(status == 401){
+						AlertService.addWithTimeout('warning',data.message);
+						$location.path('/produto');
+					}else {
+						AlertService.addWithTimeout('danger','Não foi possível executar a operação');
+					}
 				});
 			};
 
@@ -164,14 +168,17 @@ controllers.controller('ProdutoEdit', function Produto($scope, $http,
 			}).success(function(data) {
 				AlertService.addWithTimeout('success','Produto salvo com sucesso');
 				$location.path('produto');
-			}).error(
-					function(data, status) {
-						if (status = 412) {
-							$.each(data, function(i, violation) {
-								$("#" + violation.property + "-message").text(
-										violation.message);
-							});
-						}
+			}).error(function(data, status) {
+				if(status == 401){
+					AlertService.addWithTimeout('warning',data.message);
+					$location.path('/produto');
+				} else if (status == 412) {
+					$.each(data, function(i, violation) {
+						$("#" + violation.property + "-message").text(violation.message);
+					});
+				} else {
+					AlertService.addWithTimeout('danger','Não foi possível executar a operação');
+				}
 			});
 		}
 	};
