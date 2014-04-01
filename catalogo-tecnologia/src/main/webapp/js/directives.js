@@ -2,8 +2,6 @@ var diretivas = angular.module('catalogo.directives', []);
 
 diretivas.directive('ngAnaliseSituacao',function() {
 	return {
-		// restrict: 'C',
-		// require: '^ngSituacao',
 		scope : {
 			situacao : '@'
 		},
@@ -29,8 +27,6 @@ diretivas.directive('ngAnaliseSituacao',function() {
 
 diretivas.directive('ngAnaliseSituacaoButton',function() {
 	return {
-		// restrict: 'C',
-		// require: '^ngSituacao',
 		scope : {
 			situacao : '@'
 		},
