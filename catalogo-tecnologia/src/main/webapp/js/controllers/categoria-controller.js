@@ -27,10 +27,13 @@ controllers.controller('CategoriaList',
 
 				}).success(function(data) {
 					carregarCategorias();
-
 				}).error(function(data, status) {
-					AlertService.addWithTimeout('danger','Não foi possível executar a operação');
-					console.log('vai vltar...');
+					if(status == 401){
+						AlertService.addWithTimeout('warning',data.message);
+						$location.path('/categoria');
+					}else{
+						AlertService.addWithTimeout('danger','Não foi possível executar a operação');
+					}
 				});
 			};
 
@@ -90,14 +93,17 @@ controllers.controller('CategoriaEdit', function Categoria($scope, $http,
 			}).success(function(data) {
 				AlertService.addWithTimeout('success','Categoria salva com sucesso');
 				$location.path('categoria');
-			}).error(
-					function(data, status) {
-						if (status = 412) {
-							$.each(data, function(i, violation) {
-								$("#" + violation.property + "-message").text(
-										violation.message);
-							});
-						}
+			}).error(function(data, status) {
+				if(status == 401){
+					AlertService.addWithTimeout('warning',data.message);
+					$location.path('/categoria');
+				}else if (status == 412) {
+					$.each(data, function(i, violation) {
+						$("#" + violation.property + "-message").text(violation.message);
+					});
+				} else {
+					AlertService.addWithTimeout('danger','Não foi possível executar a operação');
+				}
 			});
 		}else{
 			AlertService.addWithTimeout('danger','É preciso selecionar uma tecnologia!');
