@@ -90,3 +90,57 @@
 		</div>
     </div>
 </div>	
+<div id="produtosInternalizacao" class="painel painel-default" ng-if="produtosInternalizacao">
+	<h1 class="page-header">
+		Lista <small>de produtos que estão ou passaram pela fase de internalização</small>
+	</h1>
+
+	<div class="panel-body">
+		<div>
+			<ul class="chat list-group">
+	        	<li ng-repeat="f in produtosInternalizacao" title="{{f.fase.fase | nomeFase}}" class="left list-group-item clearfix">
+	        		<a href="#{{f.fase.fase | faseUrl}}/{{f.fase.id}}">
+		            	<span class="chat-img pull-left">
+		                	<img ng-src="{{f.fase.fase | iconeFase}}" class="img-circle" width="30px"/>
+		                </span>
+		                <div class="chat-body clearfix">
+		                	<div class="header">
+		                    	<div class="row">
+				        			<div class="col-md-1">
+				        				<b>ID:</b> {{f.fase.id}} 
+				        			</div>
+				        			<div class="col-md-2">
+				        				<b>Fase:</b> {{f.fase.fase | nomeFase}}
+				        			</div>
+				        			<div class="col-md-4">
+				        				<b>Situação: <span ng-analise-situacao situacao="{{f.fase.situacao}}"></span></b>
+				        			</div>
+				        			<div class="col-md-4">
+				        				<b>Referência:</b> {{f.fase.origemReferencia.nome}} {{f.fase.codigoReferencia}} 
+				        			</div>
+				        		</div>
+		                    	<div class="row">
+				        			<div class="col-md-3">
+				        				<b>Unidade Gestora:</b> {{f.fase.unidadeGestora}} 
+				        			</div>
+				        			<div class="col-md-4">
+				        				<b>Registro:</b> {{f.fase.dataRealizacao}}  
+				        			</div>
+				        			<div class="col-md-4">
+				        				<b>Finalização:</b> {{f.fase.dataFinalizacao}} 
+				        			</div>
+				        		</div>
+								<p>
+	                            	<b>Produto:</b> {{f.produto.nome}}
+	                         	</p>
+	                         	<p>
+	                            	<b>Objetivo:</b> {{f.fase.objetivo}}
+	                         	</p>
+	                     	</div>
+	                    </div>	
+	                </a>
+	            </li>
+	        </ul>			
+		</div>
+    </div>
+</div>
