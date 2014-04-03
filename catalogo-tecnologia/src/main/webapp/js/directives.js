@@ -320,12 +320,13 @@ diretivas.directive('hasRole', function(AuthService) {
 	return {
 		restrict : 'A',
 		link : function(scope, elem, $attrs) {
+			console.log(elem);
 			var paramRoles = $attrs.hasRole.split(",");
 			AuthService.getLoggedUserService().then(function(user) {							
 				var estaHabilitado = hasRoles(user, paramRoles);
 				if (!estaHabilitado) {
 					elem.attr('disabled', true);
-					elem.find("*").attr("disabled", "disabled").off('click');
+					elem.find("*").attr("disabled", "disabled");//.off('click');
 				} else {
 					elem.attr('disabled', false);
 				}

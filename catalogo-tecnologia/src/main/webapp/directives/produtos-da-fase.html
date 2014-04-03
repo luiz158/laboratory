@@ -41,9 +41,10 @@
 		<div class="list-group">
 			<a ng-repeat="p in produtos" class="list-group-item">
 				<button class="btn btn-danger btn-xl pull-right"
-					ng-click="removerProduto(p.id)">
-					<i class="fa fa-trash-o"> </i> Remover
+					ng-click="removerProduto(p.id)" has-role="fase.fase">
+					<i class="fa fa-trash-o"> </i> Remover 
 				</button>
+				
 				<h5 class="list-group-item-heading">
 					{{p.produto.nome}} <small>{{p.produto.versao}}</small>
 				</h5>
