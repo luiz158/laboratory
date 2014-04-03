@@ -313,26 +313,19 @@ diretivas.directive('loggedIn', function(AuthService) {
 	};
 });
 
-diretivas.directive('hasRole', function(AuthService) {
+/**
+ * Se o elemento for um botão, vai desabilitalo
+ */
+diretivas.directive('hasRole', function(AuthService) {		
 	return {
 		restrict : 'A',
 		link : function(scope, elem, $attrs) {
 			var paramRoles = $attrs.hasRole.split(",");
-			var userRoles = [];
-			var grupos = [];
-			AuthService.getLoggedUserService().then(function(data) {
-				if (data.grupos) {
-					grupos = data.grupos;
-					$.each(grupos, function(i, grupo) {
-						$.each(grupo.perfis, function(i, perfil) {
-							userRoles.push(perfil);
-						});
-					});
-				}
-				userRoles = _.uniq(userRoles);
-
-				if (_.intersection(userRoles, paramRoles).length == 0) {
+			AuthService.getLoggedUserService().then(function(user) {							
+				var estaHabilitado = hasRoles(user, paramRoles);
+				if (!estaHabilitado) {
 					elem.attr('disabled', true);
+					elem.find("*").attr("disabled", "disabled").off('click');
 				} else {
 					elem.attr('disabled', false);
 				}
@@ -340,6 +333,50 @@ diretivas.directive('hasRole', function(AuthService) {
 		}
 	};
 });
+
+diretivas.directive('ifHasRole', function(AuthService) {		
+	return {
+		restrict : 'A',
+		link : function(scope, elem, $attrs) {
+			console.log("ifHasRole");
+			console.log(elem);
+			var paramRoles = $attrs.ifHasRole.split(",");
+			AuthService.getLoggedUserService().then(function(user) {							
+				var estaHabilitado = hasRoles(user, paramRoles);
+				if (!estaHabilitado) {
+					console.log(elem);
+					elem.remove();
+				} 
+			});
+		}
+	};
+});
+
+
+/**
+ * Testa a intercecao entre as roles do usuario e as roles informadas.
+ * 
+ * Sempre será adicionado a role ADMINISTRADOR pois este perfil está em GODMOD
+ * 
+ * @param user
+ * @param roles
+ * @returns {Boolean}
+ */
+function hasRoles(user, roles){
+	roles.push("ADMINISTRADOR");
+	var userRoles = [];
+	var grupos = [];
+	if (user.grupos) {
+		grupos = user.grupos;
+		$.each(grupos, function(i, grupo) {
+			$.each(grupo.perfis, function(i, perfil) {
+				userRoles.push(perfil);
+			});
+		});
+	}	
+	userRoles = _.uniq(userRoles);
+	return _.intersection(userRoles, roles).length > 0;
+}
 
 /**
  * Campos que são preenchidos automaticamente pelo browser como login e senha,

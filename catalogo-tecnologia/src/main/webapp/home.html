@@ -76,8 +76,8 @@
 						<ul class="nav nav-second-level active">
 							<li><a href="#pesquisa/fases"><i
 									class="glyphicon glyphicon-list"></i> Pesquisa</a></li>
-							<li><a href="#analise/edit"><i
-									class="glyphicon glyphicon-plus-sign"></i> Nova Analise</a></li>
+							<li if-has-role='ADMINISTRADOR,ANALISE'>
+								<a href="#analise/edit"><i class="glyphicon glyphicon-plus-sign"></i> Nova Analise</a></li>
 
 						</ul> <!-- /.nav-second-level --></li>
 					<li><a href="#"><i class="fa fa-wrench fa-fw"></i>

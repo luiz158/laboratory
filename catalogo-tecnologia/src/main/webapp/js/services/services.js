@@ -119,9 +119,18 @@ services.factory('ValidationService', function(AlertService) {
 		service.validation = {};
 	};
 	
-	service.registrarViolacoes = function(data){		
+	service.registrarViolacoes = function(data){
+		
+		var violations=null;
 		if (angular.isArray(data)){
-			angular.forEach(data, function(violation){	
+			violations = data;
+		}else{
+			if(angular.isArray(data.constraintViolations)){
+				violations = data.constraintViolations;
+			}
+		}
+		if (angular.isArray(violations)){
+			angular.forEach(violations, function(violation){	
 				if(violation.message){
 					service.add(violation.property,violation.message);
 				}
