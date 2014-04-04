@@ -24,8 +24,6 @@
 					<th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1"
 						aria-label="Browser: activate to sort column ascending">Versão</th>
 					<th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1"
-						aria-label="Browser: activate to sort column ascending">Release</th>	
-					<th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1"
 						aria-label="Browser: activate to sort column ascending">Descrição</th>
 				</tr>
 			</thead>
@@ -34,7 +32,6 @@
 					<td><a ng-controller="ProdutoList" ng-click="editarProduto(p)">{{p.id}}</a></td>
 					<td><a ng-controller="ProdutoList" ng-click="editarProduto(p)">{{p.nome}}</a></td>
 					<td><a ng-controller="ProdutoList" ng-click="editarProduto(p)">{{p.versao}}</a></td>
-					<td><a ng-controller="ProdutoList" ng-click="editarProduto(p)">{{p.release}}</a></td>
 					<td><a ng-controller="ProdutoList" ng-click="editarProduto(p)">{{p.descricao}}</a></td>
 				</tr>
 			</tbody>
@@ -89,7 +86,6 @@
 				        				<b>Versao:</b> {{f.produto.versao}}  
 				        			</div>
 				        			<div class="col-md-4">
-				        				<b>Release:</b> {{f.produto.release}} 
 				        			</div>
 				        		</div>	
 	                         	<p>
@@ -151,7 +147,6 @@
 				        				<b>Versao:</b> {{f.produto.versao}}  
 				        			</div>
 				        			<div class="col-md-4">
-				        				<b>Release:</b> {{f.produto.release}} 
 				        			</div>
 				        		</div>	
 	                         	<p>
@@ -213,7 +208,6 @@
 				        				<b>Versao:</b> {{f.produto.versao}}  
 				        			</div>
 				        			<div class="col-md-4">
-				        				<b>Release:</b> {{f.produto.release}} 
 				        			</div>
 				        		</div>								
 	                         	<p>
@@ -275,9 +269,8 @@
 				        				<b>Versao:</b> {{f.produto.versao}}  
 				        			</div>
 				        			<div class="col-md-4">
-				        				<b>Release:</b> {{f.produto.release}} 
 				        			</div>
-				        		</div>								
+				        		</div>
 	                         	<p>
 	                            	<b>Objetivo:</b> {{f.fase.objetivo}}
 	                         	</p>

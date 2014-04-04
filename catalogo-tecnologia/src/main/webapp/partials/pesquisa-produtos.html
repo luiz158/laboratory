@@ -11,14 +11,14 @@
 
 				<ul>
 					<li ng-repeat="produto in produtosPesquisados">
-						<a ng-click="seleciona(produto)">{{ produto.nome }} - {{produto.versao}} - {{produto.release}}</a>
+						<a ng-click="seleciona(produto)">{{ produto.nome }} - {{produto.versao}}</a>
 					</li>
 				</ul>
 			</div>
 			<div class="modal-footer">
 				<div class="form-group row">
 					<div class="col-md-6">
-						Produto: <b>{{ selected.nome }} - {{selected.versao}}.{{selected.release}}</b>
+						Produto: <b>{{ selected.nome }} - {{selected.versao}}</b>
 					</div>	
 					<div class="col-md-6" style="padding-left: 34%;">					
 						<button class="btn btn-primary" ng-click="$hide()">OK</button>
