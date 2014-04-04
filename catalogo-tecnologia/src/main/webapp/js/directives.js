@@ -320,7 +320,6 @@ diretivas.directive('hasRole', function(AuthService) {
 	return {
 		restrict : 'A',
 		link : function(scope, elem, $attrs) {
-			console.log(elem);
 			var paramRoles = $attrs.hasRole.split(",");
 			AuthService.getLoggedUserService().then(function(user) {							
 				var estaHabilitado = hasRoles(user, paramRoles);
@@ -339,13 +338,10 @@ diretivas.directive('ifHasRole', function(AuthService) {
 	return {
 		restrict : 'A',
 		link : function(scope, elem, $attrs) {
-			console.log("ifHasRole");
-			console.log(elem);
 			var paramRoles = $attrs.ifHasRole.split(",");
 			AuthService.getLoggedUserService().then(function(user) {							
 				var estaHabilitado = hasRoles(user, paramRoles);
 				if (!estaHabilitado) {
-					console.log(elem);
 					elem.remove();
 				} 
 			});
@@ -394,3 +390,9 @@ diretivas.directive("autofill", function () {
         }
     };
 });
+
+diretivas.directive('appVersion', ['version', function(version) {
+    return function(scope, elm, attrs) {
+        elm.text(version);
+      };
+ }]);

@@ -70,3 +70,4 @@ config(['$routeProvider', function($routeProvider) {
 
 var controllers = angular.module('catalogo.controllers',[]);
 var services = angular.module('catalogo.services',[]);
+services.value('version', '1.1');

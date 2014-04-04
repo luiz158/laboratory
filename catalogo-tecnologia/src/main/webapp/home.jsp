@@ -11,11 +11,15 @@
 <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cat√°logo de Tecnologia</title>
+<title>Cat·logo de Tecnologia</title>
+
 </head>
 
 <!--body logged-in-->
 <body>
+
+	esse È o JSP
+
 	<div id="wrapper">
 
 		<nav class="navbar navbar-default navbar-static-top" role="navigation"
@@ -27,7 +31,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="index.html">Cat√°logo de Tecnologia  <small>v<span app-version></span></small></a>
+				<a class="navbar-brand" href="index.html">Cat√°logo de Tecnologia</a>
 			</div>
 			<!-- /.navbar-header -->
 
@@ -40,9 +44,9 @@
 					</a>
 						<ul class="dropdown-menu dropdown-user">
 							<li><a href="#"><i class="fa fa-user fa-fw"></i> Perfil
-									do Usu√°rio</a></li>
+									do Usu·°rio</a></li>
 							<li><a href="#"><i class="fa fa-gear fa-fw"></i>
-									Configura√ß√µes</a></li>
+									ConfiguraÁıes</a></li>
 							<li class="divider"></li>
 							<li><a style="cursor: pointer" ng-click="sair()"><i
 									class="fa fa-sign-out fa-fw"></i> Logout</a></li>
@@ -88,12 +92,12 @@
 							<li><a href="#fabricante">Fabricante</a></li>
 							<li><a href="#fornecedor">Fornecedor</a></li>
 							<li><a href="#plataformaTecnologica">Plataforma
-									Tecnol√≥gica</a></li>
+									TecnolÛgica</a></li>
 							<li><a href="#tecnologia">Tecnologia</a></li>
 							<li><a href="#categoria">Categoria</a></li>
 							<li><a href="#produto">Produto</a></li>
 							<li><a href="#grupo">Grupo</a></li>
-							<li><a href="#user">Usu√°rio</a></li>
+							<li><a href="#user">Usu·rio</a></li>
 							<li><a href="typography.html">...</a></li>
 						</ul> <!-- /.nav-second-level --></li>
 				</ul>
