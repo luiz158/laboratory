@@ -7,7 +7,7 @@
 		<ng-alerts></ng-alerts>
 	</div>
  	
-	<button class="btn btn-primary" ng-click="novo()">
+	<button has-role="ANALISE" class="btn btn-primary" ng-click="novo()">
 		<i class="fa fa-plus-circle"> </i> Criar nova análise
 	</button>
 	
@@ -34,7 +34,7 @@
 					<td><a ng-click="editar(a)">{{a.demandante}}</a></td>
 					<td><a ng-click="editar(a)">{{a.objetivo}}</a></td>
 					<td><span ng-analise-situacao situacao="{{a.situacao}}"></span></td>
-					<td><a ng-click="excluir(a.id)" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> excluir</a></td>
+					<td><a has-role="ANALISE" ng-click="excluir(a.id)" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> excluir</a></td>
 				</tr>
 			</tbody>
 		</table>
