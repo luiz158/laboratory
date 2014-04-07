@@ -7,7 +7,7 @@
 
 	<groupId>br.gov.serpro</groupId>
 	<artifactId>catalogo-tecnologia</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.2-SNAPSHOT</version>
 	<packaging>war</packaging>
 
 	<name></name>
@@ -126,4 +126,27 @@
 	<properties>
 		<jboss.as.version>7.2.0.Final</jboss.as.version>
 	</properties>
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<webResources>
+						<resource>
+							<filtering>true</filtering>
+							<directory>src/main/webapp/js</directory>
+							<includes>
+								<include>app.js</include>
+							</includes>
+							<targetPath>js</targetPath>
+						</resource>
+					</webResources>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	
 </project>

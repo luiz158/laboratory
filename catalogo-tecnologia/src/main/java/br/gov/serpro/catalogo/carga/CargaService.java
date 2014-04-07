@@ -303,7 +303,6 @@ public class CargaService {
 		produto.setNome("Havaianas de Pau");
 		produto.setLegado(false);
 		produto.setVersao("2.0");
-		produto.setRelease("2.0");
 		produtoDAO.insert(produto);
 
 		produto.setCategorias(new ArrayList<Categoria>());
@@ -318,7 +317,6 @@ public class CargaService {
 		produto.setLicenciamento(l);
 		produto.setLegado(false);
 		produto.setVersao("2.0");
-		produto.setRelease("2.0");
 		produtoDAO.insert(produto);
 
 		produto.setCategorias(new ArrayList<Categoria>());

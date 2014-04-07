@@ -132,3 +132,9 @@ filters.filter('range', function() {
 	    return input;
 	  };
 	});
+
+filters.filter('version', function(version) {
+    return function(text) {
+        return String(text).replace(/\%VERSION\%/mg, version);
+      };
+});

@@ -38,9 +38,9 @@
 								<td style="width: 20%">
 									<a ng-href="api/anexo/{{a.id}}" class="btn btn-primary btn-sm">
 										<i class="fa fa-download"></i> download</a> 
-									<a ng-click-confirm="excluir(a.id)" class="btn btn-danger btn-sm">
+									<button ng-click-confirm="excluir(a.id)" has-role="fase.fase" class="btn btn-danger btn-sm">
 										<i class="fa fa-trash-o"></i> excluir
-									</a>
+									</button>
 								</td>
 							</tr>
 						</tbody>

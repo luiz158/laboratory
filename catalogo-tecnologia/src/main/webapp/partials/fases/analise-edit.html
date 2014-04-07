@@ -12,7 +12,7 @@
 	</ng-fluxo>
 	
 	
-	<form name="formAnalise" role="form">
+	<form name="formAnalise" role="form" has-role="ANALISE">
 		<ul class="nav nav-tabs" ng:init="selected=1">
 			<li class="ng-class: selected == 1 ? 'active':'';"><a
 				ng:click="selected=1">Análise</a></li>
@@ -113,10 +113,10 @@
 				
 				<div class="form-group row">
 					<div class="col-md-6" id="membros">
-						<ng-membros ng-model="fase"></ng-membros>
+						<ng-membros ng-model="fase" has-role="ANALISE"></ng-membros>
 					</div>
 					<div class="col-md-6" id="interessados">
-						<ng-interessados ng-model="fase"></ng-interessados>
+						<ng-interessados ng-model="fase" has-role="ANALISE"></ng-interessados>
 					</div>
 				</div>
 
@@ -135,11 +135,11 @@
 				</div>
 
 
-				<div ng-if="analise.situacao != 'Rascunho'">
+				<div ng-show="analise.situacao != 'Rascunho'">
 					<div class="form-group">
 						<label for="justificativa">Justificativa:</label>
 						<textarea rows="4" class="form-control" id="justificativa"
-							ng-model="analise.situacaoJustificativa" required></textarea>
+							ng-model="analise.situacaoJustificativa"></textarea>
 						<validation-msg propriedade="justificativa"></validation-msg>
 					</div>
 				</div>
@@ -148,7 +148,7 @@
 		</div>
 
 		<!-- Próxima fase -->
-		<div ng-if="selected == 2" class="panel panel-default">
+		<div ng-show="selected == 2" class="panel panel-default">
 			<div class="panel-body">
 				<div class="form-group">
 					<label for="proximaFase">Próxima fase a ser executada:</label> 
@@ -167,7 +167,7 @@
 					<textarea rows="4" class="form-control"
 						id="justificativaProximaFase"
 						ng-model="analise.proximaFaseJustificativa"
-						required></textarea>
+						></textarea>
 					<validation-msg propriedade="proximaFaseJustificativa"></validation-msg>
 				</div>
 
@@ -188,17 +188,17 @@
 
 		<!-- Anexos -->
 		<div ng:show="selected == 3 && analise.id" class="panel panel-default">
-			<ng-anexos ng-model="fase"></ng-anexos>
+			<ng-anexos ng-model="fase" has-role="ANALISE"></ng-anexos>
 		</div>
 		
 		<!-- Observações -->
 		<div ng:show="selected == 4 && analise.id" class="panel panel-default">
-			<ng-observacoes ng-model="fase"></ng-observacoes>
+			<ng-observacoes ng-model="fase" has-role="ANALISE"></ng-observacoes>
 		</div>
 		
 		<!-- Historico -->
 		<div ng:show="selected == 5 && analise.id" class="panel panel-default">
-			<ng-historico-fase ng-model="fase"></ng-historico-fase>
+			<ng-historico-fase ng-model="fase" has-role="ANALISE"></ng-historico-fase>
 		</div>
 
 		<div>

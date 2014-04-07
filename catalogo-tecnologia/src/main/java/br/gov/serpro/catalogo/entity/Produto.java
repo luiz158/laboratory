@@ -29,9 +29,6 @@ public class Produto {
 	@NotEmpty
 	private String versao;
 	
-	@NotEmpty
-	private String release;
-	
 	@ManyToOne
 	private Licenciamento licenciamento;
 	
@@ -95,19 +92,9 @@ public class Produto {
 		this.descricao = descricao;
 	}
 
-	public String getRelease() {
-		return release;
-	}
-	
-	public void setRelease(String release) {
-		this.release = release;
-	}
-	
 	public Licenciamento getLicenciamento() {
 		return licenciamento;
 	}
-
-
 	
 	public void setLicenciamento(Licenciamento licenciamento) {
 		this.licenciamento = licenciamento;

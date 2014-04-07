@@ -7,7 +7,7 @@ public class Prospeccao extends Fase{
 
 	public Prospeccao() {
 		this.setFase(FaseEnum.PROSPECCAO);
-		this.setProximaFase(FaseEnum.INTERNALIZACAO);
+		//this.setProximaFase(FaseEnum.INTERNALIZACAO);
 	}
 		
 	private String testes;

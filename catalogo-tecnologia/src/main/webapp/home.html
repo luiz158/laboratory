@@ -27,7 +27,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="index.html">Catálogo de Tecnologia</a>
+				<a class="navbar-brand" href="index.html">Catálogo de Tecnologia  <small>v<span app-version></span></small></a>
 			</div>
 			<!-- /.navbar-header -->
 
@@ -69,16 +69,17 @@
 							</span>
 						</div> <!-- /input-group -->
 					</li>
-					<li><a href="index.html"><i class="fa fa-dashboard fa-fw"></i>
-							Painel</a></li>
+					<li><a href="home.html"><i class="fa fa-dashboard fa-fw"></i> Painel</a>
+					</li>
 					<li><a href="#"><i class="fa fa-sitemap fa-fw"></i> Fases<span
 							class="fa arrow"></span></a>
 						<ul class="nav nav-second-level active">
-							<li><a href="#pesquisa/fases"><i
-									class="glyphicon glyphicon-list"></i> Pesquisa</a></li>
-							<li><a href="#analise/edit"><i
-									class="glyphicon glyphicon-plus-sign"></i> Nova Analise</a></li>
-
+							<li><a href="#pesquisa/fases">
+								<i	class="glyphicon glyphicon-list"></i> Pesquisa</a>
+							</li>
+							<li if-has-role='ADMINISTRADOR,ANALISE'>
+								<a href="#analise/edit"><i class="glyphicon glyphicon-plus-sign"></i> Nova Analise</a>
+							</li>
 						</ul> <!-- /.nav-second-level --></li>
 					<li><a href="#"><i class="fa fa-wrench fa-fw"></i>
 							Cadastros<span class="fa arrow"></span></a>

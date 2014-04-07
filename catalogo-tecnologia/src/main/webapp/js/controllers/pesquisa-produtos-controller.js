@@ -22,6 +22,6 @@ controllers.controller('DemoCtrl', function($scope, $http, $rootScope) {
 	
 	$scope.seleciona = function(produto) {
 		$scope.selected = produto;
-		$rootScope.produto.produtoAnterior = $scope.selected.nome + " - " + $scope.selected.versao + "." + $scope.selected.release;
+		$rootScope.produto.produtoAnterior = $scope.selected.nome + " - " + $scope.selected.versao;
 	};
 });

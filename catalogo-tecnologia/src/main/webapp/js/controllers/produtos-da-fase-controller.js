@@ -45,7 +45,7 @@ controllers.controller('ProdutosCtrl', function ProdutosCtrl($scope, $http, Aler
 			url : 'api/fase/produto/' + id,
 			method : "DELETE"
 		}).success(function(data) {
-			carregarProdutos();
+			carregarProdutosRelacionados();
 		}).error(function(data, status) {
 			AlertService.addWithTimeout('danger','Não foi possível remover o produto.');
 		});

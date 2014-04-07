@@ -17,7 +17,7 @@
 				<tr role="row" ng-repeat="faseMembro in membros">
 					<td>{{faseMembro.user.name}}</td> 
 					<td>{{faseMembro.user.setor}}</td>
-					<td style="width: 10%"><a ng-click="remover(faseMembro)"
+					<td style="width: 10%"><a ng-click="remover(faseMembro)" has-role="fase.fase"
 						class="btn btn-danger btn-xs"> <i class="fa fa-trash-o">
 								Remover</i>
 					</a></td>

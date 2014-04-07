@@ -82,6 +82,37 @@ diretivas.directive('ngAnexos', function() {
 	};
 });
 
+diretivas.directive('ngProximaFase', function() {
+	return {
+		restrict : 'E',
+		require : '^ngModel',
+		scope : {
+			fase : '=ngModel'			
+		},
+		templateUrl : 'directives/proximaFase.html',
+		controller : function($scope) {
+			
+			$scope.ciclo = {numero: $scope.fase.proximaFaseCiclo, fator: 1};
+			
+			function atualizarCiclo(newValue){	
+				if(!isNaN($scope.ciclo.numero) && !isNaN($scope.ciclo.fator)){
+					var total = $scope.ciclo.numero * $scope.ciclo.fator;
+					$scope.fase.proximaFaseCiclo = total;
+				}
+			}
+			
+			$scope.$watch('ciclo.numero', function(newValue, oldValue) {
+				atualizarCiclo(newValue);
+		     });
+			
+			$scope.$watch('ciclo.fator', function(newValue, oldValue) {
+				atualizarCiclo(newValue);
+		     });
+			
+		}
+	};
+});
+
 diretivas.directive('ngCampoUsuario', function() {
 	return {
 		restrict : 'E',
@@ -134,9 +165,6 @@ diretivas.directive('ngHistoricoFase', function() {
 			fase : '=ngModel'
 		},
 		templateUrl : 'directives/historico-fase.html',
-		link : function(scope, elem, $attrs) {
-
-		},
 		controller : function($scope, $http, AlertService) {
 			$scope.historico = [];
 			if ($scope.fase.id) {
@@ -146,7 +174,7 @@ diretivas.directive('ngHistoricoFase', function() {
 				}).success(function(data) {
 					$scope.historico = data;
 				}).error(function(data, status) {
-					AlertService.addWithTimeout('danger', data[0].message);
+					console.log(data);
 				});
 			}
 		}
@@ -313,26 +341,19 @@ diretivas.directive('loggedIn', function(AuthService) {
 	};
 });
 
-diretivas.directive('hasRole', function(AuthService) {
+/**
+ * Se o elemento for um botão, vai desabilitalo
+ */
+diretivas.directive('hasRole', function(AuthService) {		
 	return {
 		restrict : 'A',
 		link : function(scope, elem, $attrs) {
 			var paramRoles = $attrs.hasRole.split(",");
-			var userRoles = [];
-			var grupos = [];
-			AuthService.getLoggedUserService().then(function(data) {
-				if (data.grupos) {
-					grupos = data.grupos;
-					$.each(grupos, function(i, grupo) {
-						$.each(grupo.perfis, function(i, perfil) {
-							userRoles.push(perfil);
-						});
-					});
-				}
-				userRoles = _.uniq(userRoles);
-
-				if (_.intersection(userRoles, paramRoles).length == 0) {
+			AuthService.getLoggedUserService().then(function(user) {							
+				var estaHabilitado = hasRoles(user, paramRoles);
+				if (!estaHabilitado) {
 					elem.attr('disabled', true);
+					elem.find("*").attr("disabled", "disabled");//.off('click');
 				} else {
 					elem.attr('disabled', false);
 				}
@@ -340,6 +361,47 @@ diretivas.directive('hasRole', function(AuthService) {
 		}
 	};
 });
+
+diretivas.directive('ifHasRole', function(AuthService) {		
+	return {
+		restrict : 'A',
+		link : function(scope, elem, $attrs) {
+			var paramRoles = $attrs.ifHasRole.split(",");
+			AuthService.getLoggedUserService().then(function(user) {							
+				var estaHabilitado = hasRoles(user, paramRoles);
+				if (!estaHabilitado) {
+					elem.remove();
+				} 
+			});
+		}
+	};
+});
+
+
+/**
+ * Testa a intercecao entre as roles do usuario e as roles informadas.
+ * 
+ * Sempre será adicionado a role ADMINISTRADOR pois este perfil está em GODMOD
+ * 
+ * @param user
+ * @param roles
+ * @returns {Boolean}
+ */
+function hasRoles(user, roles){
+	roles.push("ADMINISTRADOR");
+	var userRoles = [];
+	var grupos = [];
+	if (user.grupos) {
+		grupos = user.grupos;
+		$.each(grupos, function(i, grupo) {
+			$.each(grupo.perfis, function(i, perfil) {
+				userRoles.push(perfil);
+			});
+		});
+	}	
+	userRoles = _.uniq(userRoles);
+	return _.intersection(userRoles, roles).length > 0;
+}
 
 /**
  * Campos que são preenchidos automaticamente pelo browser como login e senha,
@@ -356,3 +418,9 @@ diretivas.directive("autofill", function () {
         }
     };
 });
+
+diretivas.directive('appVersion', ['version', function(version) {
+    return function(scope, elm, attrs) {
+        elm.text(version);
+      };
+ }]);

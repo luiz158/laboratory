@@ -50,8 +50,10 @@ public class FaseService {
 	
 	@GET
 	@Path("historico/{id}")
+	@Produces(APPLICATION_JSON)
 	public List<FaseHistorico> obterHistorico(@PathParam("id") Long id) {
-		return faseHistoricoBC.obterHistorico(id);
+		List<FaseHistorico> result = faseHistoricoBC.obterHistorico(id);
+		return result;
 
 	}
 	
