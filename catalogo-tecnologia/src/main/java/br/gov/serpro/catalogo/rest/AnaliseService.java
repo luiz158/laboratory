@@ -17,6 +17,7 @@ import javax.ws.rs.Produces;
 
 import org.jboss.resteasy.spi.validation.ValidateRequest;
 
+import br.gov.frameworkdemoiselle.security.RequiredRole;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.serpro.catalogo.bussiness.FaseBC;
 import br.gov.serpro.catalogo.entity.Analise;
@@ -27,6 +28,9 @@ import br.gov.serpro.catalogo.persistence.AnaliseDAO;
 @Produces(APPLICATION_JSON)
 public class AnaliseService {
 
+	static final String ADMINISTRADOR = "ADMINISTRADOR";
+	static final String ANALISE = "ANALISE";
+	
 	@Inject
 	private FaseBC faseBC;
 	
@@ -35,6 +39,7 @@ public class AnaliseService {
 
 	@POST
 	@Transactional
+	@RequiredRole({ADMINISTRADOR, ANALISE})
 	public Long salvar(@Valid Analise analise) {
 		return faseBC.salvar(analise).getId();
 	}
@@ -42,6 +47,7 @@ public class AnaliseService {
 	@DELETE
 	@Path("{id}")
 	@Transactional
+	@RequiredRole({ADMINISTRADOR, ANALISE})
 	public void excluir(@NotNull @PathParam("id") Long id) {
 		analiseDAO.delete(id);
 	}
@@ -53,6 +59,7 @@ public class AnaliseService {
 	
 	@PUT
 	@Transactional
+	@RequiredRole({ADMINISTRADOR, ANALISE})
 	public void alterar(@Valid Analise analise) {
 		faseBC.salvar(analise).getId();
 	}
@@ -60,6 +67,7 @@ public class AnaliseService {
 	@PUT
 	@Transactional
 	@Path("finalizar")
+	@RequiredRole({ADMINISTRADOR, ANALISE})
 	public void finalizar(@Valid Analise analise) {
 		faseBC.finalizarFase(analise);
 	}
