@@ -53,9 +53,6 @@ public class FaseBC {
 	@Inject
 	private FaseValidator faseValidator;
 
-	@Inject
-	private EmailBC emailBC;
-
 	@Inject @CRIAR private Event<FaseEvent> eventoFaseCriar;
 	@Inject @ATUALIZAR private Event<FaseEvent> eventoFaseAtualizar;
 	@Inject @FINALIZAR private Event<FaseEvent> eventoFaseFinalizar;
@@ -128,7 +125,7 @@ public class FaseBC {
 		
 		
 		// Se foi aprovado tem uma proxima fase;
-		if (fase.getSituacao().equals(Situacao.APROVADO) && !fase.getFase().equals(FaseEnum.DECLINIO)) {			
+		if (fase.getSituacao().equals(Situacao.APROVADO)) {			
 			proximafase = getProximaFase(fase);
 			faseDAO.insert(proximafase);	
 			eventoFaseCriar.fire(new FaseEvent(proximafase));
@@ -136,8 +133,7 @@ public class FaseBC {
 			FaseMembro fm = new FaseMembro();
 			fm.setFase(proximafase);
 			fm.setUser(fase.getProximaFaseLider());			
-			faseMembroDAO.insert(fm);			
-			
+			faseMembroDAO.insert(fm);						
 			eventoFaseAdicionarMembro.fire(new FaseEvent(fm.getUser(), fm.getFase()));
 		}
 
@@ -156,9 +152,15 @@ public class FaseBC {
 	private Fase getProximaFase(Fase fase) {
 		// Apenas a fase de analise é livre para pular fases
 		if(fase.getFase()!= FaseEnum.ANALISE){
-			if(fase.getProximaFase().ordinal() - fase.getFase().ordinal() != 1){
-				throw new ValidationException().addViolation("proximaFase",
-						"Não é possível alterar de fase "+fase.getFase()+" para a "+fase.getProximaFase());
+			if(fase.getFase().equals(FaseEnum.SUSTENTACAO)){
+				if(fase.getProximaFase().ordinal()<fase.getFase().ordinal())
+					throw new ValidationException().addViolation("proximaFase",
+							"Não é possível alterar de fase "+fase.getFase()+" para a "+fase.getProximaFase());
+			}else{				
+				if(fase.getProximaFase().ordinal() - fase.getFase().ordinal() != 1){
+					throw new ValidationException().addViolation("proximaFase",
+							"Não é possível alterar de fase "+fase.getFase()+" para a "+fase.getProximaFase());
+				}
 			}
 		}		
 		Fase proximafase = null;
@@ -201,6 +203,11 @@ public class FaseBC {
 	}
 
 	public Fase salvar(Internalizacao fase) {
+		faseValidator.validarSalvar(fase);
+		return salvar((Fase) fase);
+	}
+	
+	public Fase salvar(Sustentacao fase) {
 		faseValidator.validarSalvar(fase);
 		return salvar((Fase) fase);
 	}

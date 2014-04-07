@@ -4,20 +4,21 @@
 var controllers = angular.module('catalogo.controllers');
 
 
-controllers.controller('SustentacaoCtrl', function SustentacaoCtrl($scope, $rootScope, $http,$location, $routeParams, AlertService, OrigemDemandaService, ValidationService) {
-
-	$(window).scrollTop(0);
+controllers.controller('SustentacaoCtrl', function SustentacaoCtrl($scope, $rootScope, $http,$location, $routeParams, AlertService, OrigemDemandaService, ValidationService, DocumentoService) {
 	
 	$scope.fase = {};
 	$scope.fase.id = $routeParams.id;
 	$scope.fase.fase = 4;
 	$scope.origemDemanda = [];
 	
-	console.log(OrigemDemandaService.getItens());
+	$scope.documentos = [];	
 	
+	
+	// Obtém os itens para o combo de Origem
 	OrigemDemandaService.getItens().then(function(data) {
 		$scope.origemDemanda = data;
 	});
+		
 
 	if ($scope.fase.id) {
 		$http.get('api/sustentacao/' + $scope.fase.id).success(function(data) {
@@ -28,12 +29,13 @@ controllers.controller('SustentacaoCtrl', function SustentacaoCtrl($scope, $root
 					origemReferencia: 	data.faseAnterior.origemReferencia,
 					codigoReferencia: 	data.faseAnterior.codigoReferencia
 			};
+			listarDocumentos();
 		}).error( function(data, status) {
 			AlertService.addWithTimeout('danger','Não foi possível encontrar o registro');
 			history.back();
 		});
 	} else {
-		AlertService.addWithTimeout('danger','Não foi possível encontrar a prospecção');
+		AlertService.addWithTimeout('danger','Não foi possível encontrar a Sustentação');
 		history.back();
 	}
 		
@@ -50,9 +52,9 @@ controllers.controller('SustentacaoCtrl', function SustentacaoCtrl($scope, $root
 			}
 		}).success(function(data) {
 			if(finalizar){
-				AlertService.addWithTimeout('success','Internalização finalizada com sucesso');
+				AlertService.addWithTimeout('success','Sustentação finalizada com sucesso');
 			}else{
-				AlertService.addWithTimeout('success','Internalização salva com sucesso');
+				AlertService.addWithTimeout('success','Sustentação salva com sucesso');
 			}
 			$location.path('/pesquisa/fases/4');
 		}).error( function(data, status) {
@@ -72,5 +74,30 @@ controllers.controller('SustentacaoCtrl', function SustentacaoCtrl($scope, $root
 		$scope.salvar(true);
 	};
 	
+	function listarDocumentos(){
+		DocumentoService.getDocumentos($scope.fase.id).then(
+		function(data){
+			$scope.documentos = data;
+		});
+	}
+	
+
+	
+	$scope.adicionarDocumento = function() {
+		$scope.documento.fase = {id: $scope.fase.id};		
+		DocumentoService.inserir($scope.documento).then(
+		function(){
+			listarDocumentos();
+			$scope.documento = {};
+		}, function(reason) {
+    		console.log('Failed: ' + reason);
+  		}, function(update) {
+    		console.log('Got notification: ' + update);
+  		});
+	};
+	
+	$scope.removerDocumento = function() {
+		
+	};
 
 });

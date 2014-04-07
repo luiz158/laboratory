@@ -82,6 +82,37 @@ diretivas.directive('ngAnexos', function() {
 	};
 });
 
+diretivas.directive('ngProximaFase', function() {
+	return {
+		restrict : 'E',
+		require : '^ngModel',
+		scope : {
+			fase : '=ngModel'			
+		},
+		templateUrl : 'directives/proximaFase.html',
+		controller : function($scope) {
+			
+			$scope.ciclo = {numero: $scope.fase.proximaFaseCiclo, fator: 1};
+			
+			function atualizarCiclo(newValue){	
+				if(!isNaN($scope.ciclo.numero) && !isNaN($scope.ciclo.fator)){
+					var total = $scope.ciclo.numero * $scope.ciclo.fator;
+					$scope.fase.proximaFaseCiclo = total;
+				}
+			}
+			
+			$scope.$watch('ciclo.numero', function(newValue, oldValue) {
+				atualizarCiclo(newValue);
+		     });
+			
+			$scope.$watch('ciclo.fator', function(newValue, oldValue) {
+				atualizarCiclo(newValue);
+		     });
+			
+		}
+	};
+});
+
 diretivas.directive('ngCampoUsuario', function() {
 	return {
 		restrict : 'E',
@@ -134,9 +165,6 @@ diretivas.directive('ngHistoricoFase', function() {
 			fase : '=ngModel'
 		},
 		templateUrl : 'directives/historico-fase.html',
-		link : function(scope, elem, $attrs) {
-
-		},
 		controller : function($scope, $http, AlertService) {
 			$scope.historico = [];
 			if ($scope.fase.id) {
@@ -146,7 +174,7 @@ diretivas.directive('ngHistoricoFase', function() {
 				}).success(function(data) {
 					$scope.historico = data;
 				}).error(function(data, status) {
-					AlertService.addWithTimeout('danger', data[0].message);
+					console.log(data);
 				});
 			}
 		}

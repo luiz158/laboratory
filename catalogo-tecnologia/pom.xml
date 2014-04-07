@@ -141,12 +141,12 @@
 							<includes>
 								<include>app.js</include>
 							</includes>
-							<targetPath>js</targetPath> 
+							<targetPath>js</targetPath>
 						</resource>
 					</webResources>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
-
+	
 </project>

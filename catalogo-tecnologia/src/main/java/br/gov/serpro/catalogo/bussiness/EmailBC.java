@@ -78,7 +78,7 @@ public class EmailBC{
 			message.setText(corpo);
 			Transport transport = session.getTransport(PROTOCOL);
 			transport.connect();
-			transport.sendMessage(message, message.getAllRecipients());
+			//transport.sendMessage(message, message.getAllRecipients());
 			transport.close();
 			logger.debug("Enviando finalizado");
 		} catch (MessagingException mex) {
