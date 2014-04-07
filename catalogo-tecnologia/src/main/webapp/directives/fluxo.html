@@ -5,8 +5,18 @@
 
 
 <ol ng-controller="FluxoCtrl" class="breadcrumb">
-	<li ng-repeat="f in fluxo" class="active">		
-		<a ng-if="f.id != fase.id" href="#{{f.fase | faseUrl}}/{{f.id}}">{{f.fase | nomeFase}}</a>
-		<span ng-if="f.id == fase.id">{{f.fase | nomeFase}}</span>
+	<li ng-repeat="f in fluxo" ng-class="{'active': f.id != fase.id}">		
+		<a ng-if="f.id != fase.id" href="#{{f.fase | faseUrl}}/{{f.id}}">{{f.fase | nomeFase}} </a>
+		<span ng-if="f.id == fase.id">{{f.fase | nomeFase}} </span>
+		<a id="popover" ng-if="f.ciclos" class="badge" ng-click="toggleCiclos()"
+			data-toggle="popover" 
+			data-placement="bottom"> {{f.ciclos}} </a>		
+		<div ng-if="exibirCiclos && f.fase=='SUSTENTACAO'" class="breadcrumbmenu">
+			<ul class="">
+				<li ng-repeat="s in f.sustentacoes">
+					<a href="#{{s.fase | faseUrl}}/{{s.id}}"> Data de realização: {{s.dataRealizacao}} </a>	
+				</li>
+			</ul>
+		</div>
 	</li>
 </ol>

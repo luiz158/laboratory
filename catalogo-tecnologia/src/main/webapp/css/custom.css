@@ -28,7 +28,6 @@ body {
 }
 
 
-
 .floatmessage {
     position: fixed;
     top: 20px;
@@ -39,5 +38,12 @@ body {
 }
 
 
-
-
+.breadcrumbmenu {
+	position: absolute;
+	width: auto;
+	z-index: 5;
+	background-color: #f5f5f5;
+	margin:3px;
+	padding: 3px;
+    border-radius: 5px;
+}

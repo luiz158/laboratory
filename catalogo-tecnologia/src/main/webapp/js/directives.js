@@ -269,7 +269,7 @@ diretivas.directive('ngProdutos', function() {
 	};
 });
 
-diretivas.directive('ngFluxo', function() {
+diretivas.directive('ngFluxo', function($timeout) {
 	return {
 		restrict : 'E',
 		require : '^ngModel',
@@ -278,6 +278,8 @@ diretivas.directive('ngFluxo', function() {
 		},
 		templateUrl : 'directives/fluxo.html',
 		link : function(scope, elem, $attrs) {
+			
+			
 		}
 	};
 });
