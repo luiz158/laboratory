@@ -24,6 +24,7 @@ import org.jboss.resteasy.spi.validation.ValidateRequest;
 
 import bookmark.business.BookmarkBC;
 import bookmark.entity.Bookmark;
+import br.gov.frameworkdemoiselle.security.LoggedIn;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 
 @ValidateRequest
@@ -36,6 +37,7 @@ public class BookmarkService {
 	private BookmarkBC bc;
 
 	@GET
+	@LoggedIn
 	public List<Bookmark> findAll() throws Exception {
 		return bc.findAll();
 	}
