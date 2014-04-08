@@ -1,4 +1,4 @@
-<div class="painel painel-default">
+<div class="painel painel-default" has-role="fase.fase">
 	<h3 class="page-header">
 		Internalização <small>edição</small>
 	</h3>
@@ -186,7 +186,7 @@
                                         <tr ng-repeat="c in documentos">
                                             <td>{{c.documentoOficialDemanada}}</td>
                                             <td>{{c.rgContrato}}</td>
-                                            <td><button class="btn btn-danger btn-xs" ng-click="removerDocumento(c)"> 
+                                            <td><button class="btn btn-danger btn-xs" ng-click="removerDocumento(c)" has-role="fase.fase"> 
                                             		<i class="fa fa-trash-o"> Excluir</i>
                                             	</button>
                                             </td>
@@ -366,7 +366,7 @@
 	</div>
 
 	<!-- Resultado -->
-	<div ng-if="selected == 2" class="panel panel-default">
+	<div ng-show="selected == 2" class="panel panel-default">
 		<div class="panel-heading">Resultado</div>
 		<div class="panel-body">
 			<div class="form-group">
@@ -379,13 +379,13 @@
 	</div>
 
 	<!-- Produtos -->
-	<div ng-if="selected == 3" class="panel panel-default">
+	<div ng-show="selected == 3" class="panel panel-default">
 		<ng-produtos ng-model="fase"></ng-produtos>
 	</div>
 
 
 	<!-- Próxima fase -->
-	<div ng-if="selected == 4" class="panel panel-default">
+	<div ng-show="selected == 4" class="panel panel-default">
 		<div class="panel-heading">Próxima fase</div>
 		<div class="panel-body">
 			<div class="form-group">

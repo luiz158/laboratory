@@ -1,4 +1,4 @@
-<div class="painel painel-default">
+<div class="painel painel-default" has-role="fase.fase">
 	<h3 class="page-header">
 		Declínio <small>edição</small>
 	</h3>
@@ -109,7 +109,7 @@
 				</div>
 
 
-				<div ng-if="fase.situacao != 'Rascunho'">
+				<div ng-show="fase.situacao != 'Rascunho'">
 					<div class="form-group">
 						<label for="justificativa">Justificativa:</label>
 						<textarea rows="4" class="form-control" id="justificativa"
@@ -122,7 +122,7 @@
 		</div>
 
 		<!-- Resultado da Prospecção -->
-		<div ng-if="selected == 2" class="panel panel-default">
+		<div ng-show="selected == 2" class="panel panel-default">
 			<div class="panel-heading">Resultado do Declínio</div>
 			<div class="panel-body">
 				<div class="form-group">
@@ -135,7 +135,7 @@
 		</div>
 
 		<!-- Produtos -->
-		<div ng-if="selected == 3" class="panel panel-default">
+		<div ng-show="selected == 3" class="panel panel-default">
 			<ng-produtos ng-model="fase"></ng-produtos>
 		</div>
 
