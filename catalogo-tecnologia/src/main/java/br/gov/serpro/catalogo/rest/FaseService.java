@@ -40,6 +40,13 @@ public class FaseService {
 	public List<Fase> pesquisar(FaseDTO fase) {
 		return faseBC.pesquisar(fase);
 	}
+	
+	@DELETE
+	@Path("excluir/{id}")
+	@Transactional
+	public void excluir(@NotNull @PathParam("id") Long id) {
+		faseBC.excluir(id);
+	}
 
 	@GET
 	@Path("fluxo/{id}")
@@ -78,7 +85,7 @@ public class FaseService {
 	@DELETE
 	@Path("membros/excluir/{id}")
 	@Transactional
-	public void excluir(@NotNull @PathParam("id") Long id) {
+	public void excluirMembro(@NotNull @PathParam("id") Long id) {
 		faseBC.deleteMembro(id);
 	}
 

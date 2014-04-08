@@ -121,4 +121,24 @@ controllers.controller('AnaliseEdit', function Analise($scope, $http,
 			}
 		});
 	};
+	
+	$scope.excluir = function(id) {
+		console.log("Excluir");
+		$http({
+			url : 'api/fase/excluir/'+id,
+			method : "DELETE"
+		}).success(function(data) {
+			AlertService.addWithTimeout('success','Análise excluída com sucesso');
+			$location.path('analise');
+		}).error(function(data, status) {
+			if (status == 401) {
+				AlertService.addWithTimeout('warning',data.message);
+			} else if(status == 412){
+				ValidationService.registrarViolacoes(data);
+			}else{
+				AlertService.addWithTimeout('danger','Não foi possível executar a operação');
+			}
+		});
+	};
+	
 });
