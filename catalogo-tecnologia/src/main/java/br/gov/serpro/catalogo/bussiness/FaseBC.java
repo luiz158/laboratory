@@ -175,6 +175,7 @@ public class FaseBC {
 		}		
 
 		proximafase.setFaseAnterior(fase);
+		proximafase.setFaseInicial((fase.getFaseInicial()!=null?fase.getFaseInicial(): fase));
 		proximafase.setSituacao(Situacao.RASCUNHO);
 		proximafase.setUnidadeGestora(fase.getProximaFaseUnidadeGestora());
 

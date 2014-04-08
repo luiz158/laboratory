@@ -17,6 +17,7 @@ import br.gov.serpro.catalogo.bussiness.FaseBC;
 import br.gov.serpro.catalogo.bussiness.UsuarioBC;
 import br.gov.serpro.catalogo.entity.Analise;
 import br.gov.serpro.catalogo.entity.Categoria;
+import br.gov.serpro.catalogo.entity.Declinio;
 import br.gov.serpro.catalogo.entity.Fabricante;
 import br.gov.serpro.catalogo.entity.FaseEnum;
 import br.gov.serpro.catalogo.entity.FaseProduto;
@@ -31,6 +32,7 @@ import br.gov.serpro.catalogo.entity.PlataformaTecnologica;
 import br.gov.serpro.catalogo.entity.Produto;
 import br.gov.serpro.catalogo.entity.Prospeccao;
 import br.gov.serpro.catalogo.entity.Situacao;
+import br.gov.serpro.catalogo.entity.Sustentacao;
 import br.gov.serpro.catalogo.entity.Tecnologia;
 import br.gov.serpro.catalogo.entity.User;
 import br.gov.serpro.catalogo.persistence.CategoriaDAO;
@@ -44,7 +46,6 @@ import br.gov.serpro.catalogo.persistence.OrigemDemandaDAO;
 import br.gov.serpro.catalogo.persistence.PlataformaTecnologicaDAO;
 import br.gov.serpro.catalogo.persistence.ProdutoDAO;
 import br.gov.serpro.catalogo.persistence.TecnologiaDAO;
-import br.gov.serpro.catalogo.persistence.UserDAO;
 
 @Path("carga/xyz48")
 @Produces(APPLICATION_JSON)
@@ -183,14 +184,44 @@ public class CargaService {
 		i.setOrigemReferencia(origem);
 		i.setObjetivo("Fornecer as bolas que já foram prospectadas com seus devidos condicionamentos");
 		i.setDataRealizacao(new Date());
-		i.setSituacao(Situacao.REPROVADO);
+		i.setSituacao(Situacao.APROVADO);
+		i.setSituacaoJustificativa("asahkajhakj");
 		i.setRestricao(1);
 		i.setRestricaoQuemPode("Apenas robgol pode usar este tipo de bola");
 		i.setRestricaoJustificativa("Ele é o único com habilidade suficiente para isso.");
 		i.setAquisicaoNecessaria(0);
 		i.setCapacitacao(0);
 		i.setAnaliseDeRiscos(0);
+		i.setAnaliseDeRiscosJustificativa("nada");
+		i.setProximaFase(FaseEnum.SUSTENTACAO);
+		i.setProximaFaseLider(usuario1);
+		i.setProximaFaseUnidadeGestora(usuario1.getSetor());
+		i.setProximaFaseJustificativa("Precisamos que este estudo seja prospectado com no mínimo 3 tecnologias.");
+
 		i = (Internalizacao) faseBC.salvar(i);
+		
+		Sustentacao s = (Sustentacao) faseBC.finalizarFase(i);
+		s.setCodigoReferencia("R175");
+		s.setOrigemReferencia(origem);
+		s.setObjetivo("Fornecer as bolas que já foram prospectadas com seus devidos condicionamentos");
+		s.setDataRealizacao(new Date());
+		s.setSituacao(Situacao.APROVADO);
+		s.setSituacaoJustificativa("asahkajhakj");
+		s.setRestricao(1);
+		s.setRestricaoQuemPode("Apenas robgol pode usar este tipo de bola");
+		s.setRestricaoJustificativa("Ele é o único com habilidade suficiente para isso.");
+		s.setAquisicaoNecessaria(0);
+		s.setCapacitacao(0);
+		s.setAnaliseDeRiscos(0);
+		s.setAnaliseDeRiscosJustificativa("nada");
+		s.setProximaFase(FaseEnum.DECLINIO);
+		s.setProximaFaseLider(usuario1);
+		s.setProximaFaseUnidadeGestora(usuario1.getSetor());
+		s.setProximaFaseJustificativa("Precisamos que este estudo seja prospectado com no mínimo 3 tecnologias.");
+		s = (Sustentacao) faseBC.salvar(s);
+		
+		Declinio d = (Declinio) faseBC.finalizarFase(s);
+		
 
 		a = new Analise();
 		a.setCodigoReferencia("????????");
@@ -217,16 +248,19 @@ public class CargaService {
 		a = (Analise) faseBC.salvar(a);
 
 		a = new Analise();
-		a.setCodigoReferencia("????????");
+		a.setCodigoReferencia("Completo");
 		a.setDataRealizacao(new Date());
-		a.setDemandanteUnidade("CETEC/CTSDR");
+		a.setDemandanteUnidade("CETEC/Completo");
 		a.setDemandanteRepresentante(usuario1);
-		a.setObjetivo("Nonono nononon ononononon ononononon onononono non");
+		a.setObjetivo("Completo");
 		a.setUnidadeGestora("CTSDR");
 		a.setOrigemReferencia(origem);
 		a.setSituacao(Situacao.RASCUNHO);
 		a = (Analise) faseBC.salvar(a);
+		
+		
 
+		
 	}
 
 	@GET
