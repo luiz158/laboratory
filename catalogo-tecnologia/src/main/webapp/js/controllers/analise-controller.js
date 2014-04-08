@@ -54,28 +54,26 @@ controllers.controller('AnaliseEdit', function Analise($scope, $http,
 	
 	OrigemDemandaService.getItens().then(function(data) {
 		$scope.origemDemanda = data;
-	});
-	
+	});	
 	
 	if ($scope.fase.id) {
 		$http.get('api/analise/' + $scope.fase.id).success(function(data) {
 			$scope.analise = data;
+			$scope.fase = data;
 		});		
 	} else {
-		$scope.analise = {};
-		$scope.analise.situacao = 'Rascunho';
+		$scope.fase  = {};
+		$scope.fase .situacao = 'Rascunho';
 	}
 		
 
 	$scope.salvar = function() {
 		ValidationService.clear();
 		
-		console.log($scope.analise);
-		
 		$http({
 			url : 'api/analise',
-			method : $scope.analise.id ? "PUT" : "POST",
-			data : $scope.analise,
+			method : $scope.fase .id ? "PUT" : "POST",
+			data : $scope.fase ,
 			headers : {
 				'Content-Type' : 'application/json;charset=utf8'
 			}
@@ -97,7 +95,7 @@ controllers.controller('AnaliseEdit', function Analise($scope, $http,
 
 	$scope.aprovar = function(aprovado) {
 		ValidationService.remove('situacao');
-		$scope.analise.situacao = aprovado ? 'Aprovado' : 'Reprovado';
+		$scope.fase .situacao = aprovado ? 'Aprovado' : 'Reprovado';
 	};
 	
 	$scope.finalizar = function() {
@@ -105,7 +103,7 @@ controllers.controller('AnaliseEdit', function Analise($scope, $http,
 		$http({
 			url : 'api/analise/finalizar',
 			method : "PUT",
-			data : $scope.analise,
+			data : $scope.fase ,
 			headers : {
 				'Content-Type' : 'application/json;charset=utf8'
 			}

@@ -45,7 +45,7 @@ public class LDAPAuthenticator implements Authenticator {
 		// Criando o usuário admin, caso não exista.
 		if (credentials.getUsername().equals("admin")) {
 			if (credentials.getPassword().equals("adminCetec")) {
-				user = usuarioBC.iniciarUsuario();
+				this.user = usuarioBC.iniciarUsuario();
 				return;
 			}else{
 				throw new InvalidCredentialsException("usuário ou senha inválidos");
@@ -60,7 +60,7 @@ public class LDAPAuthenticator implements Authenticator {
 				searchResult.getNameInNamespace(), credentials.getPassword());
 		ldapContext.close();
 
-		user = usuarioBC.carregarOuInserir(createUser(searchResult
+		this.user = usuarioBC.carregarOuInserir(createUser(searchResult
 				.getAttributes()));
 
 		List<String> roles = new ArrayList<String>();
@@ -106,13 +106,13 @@ public class LDAPAuthenticator implements Authenticator {
 
 	@Override
 	public void unauthenticate() throws Exception {
-		user = null;
+		this.user = null;
 		Beans.getReference(HttpSession.class).invalidate();
 	}
 
 	@Override
 	public User getUser() {
-		return user;
+		return this.user;
 	}
 
 	private User createUser(Attributes attributes) throws NamingException {
