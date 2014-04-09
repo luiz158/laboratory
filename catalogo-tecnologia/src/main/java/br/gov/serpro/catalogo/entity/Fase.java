@@ -74,9 +74,10 @@ public class Fase {
 	private Fase faseAnterior;
 	
 	@OneToOne
-	private Fase faseInicial;
-	
+	private Fase faseInicial;	
 
+	@Enumerated(EnumType.ORDINAL)
+	private StatusEnum status = StatusEnum.ATIVO;
 	
 	public Fase getFaseInicial() {
 		return faseInicial;
@@ -225,6 +226,14 @@ public class Fase {
 
 	public void setUnidadeGestora(String unidadeGestora) {
 		this.unidadeGestora = unidadeGestora;
+	}
+
+	public StatusEnum getStatus() {
+		return status;
+	}
+
+	public void setStatus(StatusEnum status) {
+		this.status = status;
 	}
 
 	

@@ -75,11 +75,11 @@ controllers.controller('PesquisaFasesCtrl', function PesquisaFasesCtrl($scope, $
 	 * */
 	if($rootScope.pesquisaForm && $rootScope.pesquisaForm.fase == $scope.fase.fase){
 		$scope.fase = $rootScope.pesquisaForm;
-		$scope.paginacao.data = $rootScope.pesquisaResultado;
+		//$scope.paginacao.data = $rootScope.pesquisaResultado;
 	}else{
-		// Deixei trazendo todos da fase selecionada...
-		$scope.pesquisar();
+		//$scope.pesquisar();
 	}
+	$scope.pesquisar();
 		
 
 });

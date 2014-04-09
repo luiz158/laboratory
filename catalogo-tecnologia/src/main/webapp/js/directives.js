@@ -467,3 +467,14 @@ diretivas.directive("confirmButton", function($timeout) {
 	    }
 	};
 });
+
+diretivas.directive('ngFaseToolbar', function($timeout) {
+	return {
+		restrict : 'E',
+		require : '^ngModel',
+		scope : {
+			ngModel : '='
+		},
+		templateUrl : 'partials/fase/toolbar.html'
+	};
+});

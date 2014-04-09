@@ -4,7 +4,7 @@
 var controllers = angular.module('catalogo.controllers');
 
 
-controllers.controller('DeclinioCtrl', function DeclinioCtrl($scope, $http,$location, $routeParams, AlertService,OrigemDemandaService) {
+controllers.controller('DeclinioCtrl', function DeclinioCtrl($scope, $http,$location, $routeParams, AlertService,OrigemDemandaService, FaseService) {
 
 	$scope.fase = {};
 	$scope.fase.id = $routeParams.id;
@@ -21,6 +21,10 @@ controllers.controller('DeclinioCtrl', function DeclinioCtrl($scope, $http,$loca
 					fase: data.faseAnterior.fase, 
 					origemReferencia: data.faseAnterior.origemReferencia,
 					codigoReferencia: data.faseAnterior.codigoReferencia
+			};
+			$scope.fase.faseInicial = {
+					id: 				data.faseInicial.id, 
+					fase: 				data.faseInicial.fase
 			};
 		});
 	} else {
@@ -57,6 +61,17 @@ controllers.controller('DeclinioCtrl', function DeclinioCtrl($scope, $http,$loca
 	$scope.finalizar = function() {
 		$scope.fase.dataFinalizacao = new Date();
 		$scope.salvar();
+	};
+	
+	$scope.excluir = function(id) {
+		FaseService.excluir(id).then(
+			function(data) {
+				AlertService.addWithTimeout('success','Análise excluída com sucesso');
+				$location.path('/pesquisa/fases');
+			},function(data) {
+				ValidationService.registrarViolacoes(data);				
+			}
+		);
 	};
 	
 

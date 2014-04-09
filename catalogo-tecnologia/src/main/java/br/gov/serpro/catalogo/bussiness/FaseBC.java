@@ -21,6 +21,7 @@ import br.gov.serpro.catalogo.entity.FaseMembro;
 import br.gov.serpro.catalogo.entity.Internalizacao;
 import br.gov.serpro.catalogo.entity.Prospeccao;
 import br.gov.serpro.catalogo.entity.Situacao;
+import br.gov.serpro.catalogo.entity.StatusEnum;
 import br.gov.serpro.catalogo.entity.Sustentacao;
 import br.gov.serpro.catalogo.entity.User;
 import br.gov.serpro.catalogo.event.FaseEvent;
@@ -81,6 +82,10 @@ public class FaseBC {
 	}
 
 
+	public List<Fase> obterCadeiaDasFasesComExcluidos(Long id) {
+		Fase fase = faseDAO.load(id);
+		return faseDAO.obterCadeiaApartirDafaseInicialComExcluidos(fase.getFaseInicial()!=null?fase.getFaseInicial().getId():fase.getId());
+	}
 
 
 	/**
@@ -259,9 +264,10 @@ public class FaseBC {
 	}
 
 	public void delete(Long id) {
-		faseDAO.delete(id);
-		Fase fase = new Fase();
-		fase.setId(id);
+		Fase fase = faseDAO.load(id);
+		faseValidator.validarExcluir(fase);
+		fase.setStatus(StatusEnum.EXCLUIDO);
+		faseDAO.update(fase);
 		eventoFaseExcluir.fire(new FaseEvent(fase));
 	}
 
@@ -269,13 +275,7 @@ public class FaseBC {
 		return faseDAO.load(id);
 	}
 
-	public void excluir(Long id) {
-		
-		//TODO validar excluir
-		
-		System.out.println("excluiu de mentira...");
-		
-	}
+	
 
 
 }

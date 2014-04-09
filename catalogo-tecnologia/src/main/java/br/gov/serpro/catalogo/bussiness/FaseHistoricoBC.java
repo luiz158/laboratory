@@ -16,6 +16,7 @@ import br.gov.serpro.catalogo.entity.Situacao;
 import br.gov.serpro.catalogo.event.FaseEvent;
 import br.gov.serpro.catalogo.event.FaseEvent.ATUALIZAR;
 import br.gov.serpro.catalogo.event.FaseEvent.CRIAR;
+import br.gov.serpro.catalogo.event.FaseEvent.EXCLUIR;
 import br.gov.serpro.catalogo.event.FaseEvent.FINALIZAR;
 import br.gov.serpro.catalogo.persistence.FaseHistoricoDAO;
 
@@ -38,7 +39,7 @@ public class FaseHistoricoBC {
 	
 	public void faseSalva(@Observes @ATUALIZAR FaseEvent e){
         logger.debug("FaseEvent ATUALIZAR: " + e.getFase().getFase());
-        faseHistoricoDAO.update(new FaseHistorico(e.getFase(),OPERACAO.ATUALIZAR));     
+        faseHistoricoDAO.insert(new FaseHistorico(e.getFase(),OPERACAO.ATUALIZAR));     
     }	
 
 	public void faseFinalizada(@Observes @FINALIZAR FaseEvent e){
@@ -47,9 +48,13 @@ public class FaseHistoricoBC {
     	faseHistoricoDAO.insert(new FaseHistorico(e.getFase(),operacao));
     }
 	
+	public void faseExcluida(@Observes @EXCLUIR FaseEvent e){
+        logger.debug("FaseEvent @EXCLUIR: " + e.getFase().getFase());
+        faseHistoricoDAO.insert(new FaseHistorico(e.getFase(),OPERACAO.EXCLUIR));     
+    }
+	
 	public List<FaseHistorico> obterHistorico(Long id) {
-		List<Fase> fases = faseBC.obterCadeiaDasFases(id);
-		
+		List<Fase> fases = faseBC.obterCadeiaDasFasesComExcluidos(id);		
 		List<Long> ids = new ArrayList<Long>();
 		for (Fase fase : fases) {
 			ids.add(fase.getId());
