@@ -16,7 +16,6 @@ import javax.ws.rs.Produces;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.serpro.catalogo.entity.Fase;
 import br.gov.serpro.catalogo.entity.FaseProduto;
-import br.gov.serpro.catalogo.entity.Produto;
 import br.gov.serpro.catalogo.persistence.FaseProdutoDAO;
 
 @Path("fase/produto")
@@ -26,7 +25,6 @@ public class FaseProdutoService {
 	@Inject
 	private FaseProdutoDAO faseProdutoDAO;
 	
-
 	@GET @Path("{fase}")
 	public List<FaseProduto> produtosDaFase(@PathParam("fase") Long fase) {
 		Fase f = new Fase();
@@ -34,11 +32,9 @@ public class FaseProdutoService {
 		return faseProdutoDAO.produtosDaFase(f);
 	}
 	
-	@GET @Path("{fase}/{produto}")
-	public List<FaseProduto> produtosDaFase(@PathParam("fase") String fase, @PathParam("produto") String nomeProduto) {
-		String jpql = "select fp from FaseProduto fp where fp.fase.fase = '"+fase+"' and upper(fp.produto.nome) like upper('%"+nomeProduto+"%')";
-		List<FaseProduto> list = faseProdutoDAO.findByJPQL(jpql); 
-		return list;
+	@GET @Path("listarProdutoFasePorNomeProduto/{produto}")
+	public List<FaseProduto> listarFaseProdutoPorNomeProduto(@PathParam("produto") String nomeProduto) {
+		return faseProdutoDAO.listarFaseProdutoPorNomeProduto(nomeProduto);
 	}
 	
 	@DELETE

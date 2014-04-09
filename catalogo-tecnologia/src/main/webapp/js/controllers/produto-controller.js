@@ -246,7 +246,7 @@ controllers.controller('ProdutoEdit', function Produto($scope, $http,
 	
 	$scope.carregarCategorias = function() {
 		$scope.categoria = "";
-		$http.get('api/categoria/listar/'+$scope.tecnologia.id).success(function(data) {
+		$http.get('api/categoria/listarCategoriaPorTecnologia/'+$scope.tecnologia.id).success(function(data) {
 			$scope.categorias = [];
 			$scope.categorias = data;
 		});

@@ -67,9 +67,8 @@ public class CategoriaService {
 	}
 	
 	@GET
-	@Path("listar/{tecnologiaId}")
-	public List<Categoria> listarCategoriaByTecnologia(@NotNull @PathParam("tecnologiaId") Long tecnologiaId) {
-		String jpql = "SELECT c FROM Categoria c WHERE c.tecnologia.id ="+tecnologiaId;
-		return categoriaDAO.findByJPQL(jpql);
+	@Path("listarCategoriaPorTecnologia/{tecnologiaId}")
+	public List<Categoria> listarCategoriaPorTecnologia(@NotNull @PathParam("tecnologiaId") Long tecnologiaId) {
+		return categoriaDAO.listarCategoraPorTecnologia(tecnologiaId);
 	}
 }

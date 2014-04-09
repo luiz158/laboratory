@@ -18,6 +18,7 @@ import br.gov.frameworkdemoiselle.stereotype.PersistenceController;
 import br.gov.frameworkdemoiselle.template.JPACrud;
 import br.gov.serpro.catalogo.entity.Fase;
 import br.gov.serpro.catalogo.entity.FaseEnum;
+import br.gov.serpro.catalogo.entity.FaseProduto;
 import br.gov.serpro.catalogo.rest.FaseDTO;
 
 @PersistenceController
@@ -113,7 +114,4 @@ public class FaseDAO extends JPACrud<Fase, Long> {
 		}catch(IndexOutOfBoundsException e){}
 		return fase;
 	}		
-	
-	
-	
 }

@@ -2,7 +2,6 @@ package br.gov.serpro.catalogo.rest;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
-import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.DELETE;
@@ -14,12 +13,10 @@ import javax.ws.rs.Produces;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.jboss.resteasy.spi.validation.ValidateRequest;
 
-import br.gov.frameworkdemoiselle.security.AfterLoginSuccessful;
 import br.gov.frameworkdemoiselle.security.Credentials;
 import br.gov.frameworkdemoiselle.security.SecurityContext;
 import br.gov.frameworkdemoiselle.util.Beans;
 import br.gov.serpro.catalogo.entity.User;
-import br.gov.serpro.catalogo.persistence.UserDAO;
 
 @ValidateRequest
 @Path("auth")
@@ -29,9 +26,6 @@ public class AuthenticationService {
 	@Inject
 	private SecurityContext securityContext;
 
-	@Inject
-	private UserDAO userDAO;
-	
 	@POST
 	public User login(@Valid LoginForm form) throws Exception {
 		Credentials credentials = Beans.getReference(Credentials.class);

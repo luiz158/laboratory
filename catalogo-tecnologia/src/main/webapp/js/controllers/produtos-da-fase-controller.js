@@ -53,13 +53,13 @@ controllers.controller('ProdutosCtrl', function ProdutosCtrl($scope, $http, Aler
 			
 	$scope.carregarCategorias = function() {
 		$scope.resultadoProdutos = [];
-		$http.get('api/categoria/listar/'+$scope.tecnologia.id).success(function(data) {
+		$http.get('api/categoria/listarCategoriaPorTecnologia/'+$scope.tecnologia.id).success(function(data) {
 			$scope.categorias = data;
 		});
 	};
 	
 	$scope.carregarProdutos = function() {
-		$http.get('api/produto/listarByCategoria/'+$scope.categoria.id).success(function(data) {
+		$http.get('api/produto/listarProdutosPorCategoria/'+$scope.categoria.id).success(function(data) {
 			$scope.resultadoProdutos = data;
 		});
 	};

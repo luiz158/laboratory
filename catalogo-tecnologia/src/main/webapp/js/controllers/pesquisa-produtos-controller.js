@@ -11,7 +11,7 @@ controllers.controller('DemoCtrl', function($scope, $http, $rootScope) {
 	var servico = "";  
 
     if($scope.produtoParaPesquisa != ""){
-    	servico = 'api/produto/listar/'+$scope.produtoParaPesquisa;
+    	servico = 'api/produto/listarProdutosPorNome/'+$scope.produtoParaPesquisa;
     }else{
     	servico = 'api/produto';
     }
