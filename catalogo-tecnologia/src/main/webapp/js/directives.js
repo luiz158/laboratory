@@ -426,3 +426,44 @@ diretivas.directive('appVersion', ['version', function(version) {
         elm.text(version);
       };
  }]);
+
+diretivas.directive("confirmButton", function($timeout) {
+	return {
+	    restrict: 'A',
+	    scope: {
+	        confirm: '&'
+	    },
+	    link: function(scope, element, attrs) {
+	      var buttonId, html, message, nope, title, yep;	      
+	      buttonId = Math.floor(Math.random() * 10000000000);	      
+	      attrs.buttonId = buttonId;	      
+	      message = attrs.message || "Tem certeza?";
+	      yep = attrs.yes || "Sim";
+	      nope = attrs.no || "Não";
+	      title = attrs.title || "Confirm";	      
+	    	      
+	      element.bind('click', function(e) {
+	    	  var box = bootbox.dialog({
+	    		  message: message,
+	    		  title: title,
+	    		  buttons: {
+	    			  success: {
+		    		      label: yep,
+		    		      className: "btn-success",
+		    		      callback: function() {
+		    		    	  $timeout(function(){
+		    		    		  scope.confirm();
+		    		    	  });
+		    		      }
+	    			  },
+	    			  danger: {
+		    		      label: nope,
+		    		      className: "btn-danger",
+		    		      callback: function() {}
+	    			  }
+	    		  }
+	    	  });	      
+	      });
+	    }
+	};
+});

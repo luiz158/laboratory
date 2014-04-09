@@ -3,12 +3,9 @@
 		Prospecção <small>edição</small>
 	</h3>
 	
-	<ng-fluxo ng-model="fase">
-	</ng-fluxo>
+	<ng-fluxo ng-model="fase"> </ng-fluxo>
 	
-	<div>
-		<ng-alerts></ng-alerts>
-	</div>
+	<div><ng-alerts></ng-alerts></div>
 
 	<form name="formAnalise" role="form" has-role="PROSPECCAO">
 		<ul class="nav nav-tabs" ng:init="selected=1">
@@ -173,8 +170,7 @@
 				<div class="form-group">
 					<label for="proximaFase">Próxima fase a ser executada:</label> <select
 						id="proximaFase" class="form-control" ng-model="fase.proximaFase" disabled=disabled>
-						<option selected value="INTERNALIZACAO">Internalização</option>	
-						<option selected value="DECLINIO">Declínio</option>					
+						<option selected value="INTERNALIZACAO">Internalização</option>					
 					</select>
 					<validation-msg propriedade="proximaFase"></validation-msg>					
 				</div>
@@ -218,16 +214,7 @@
 			<ng-historico-fase ng-model="fase" has-role="fase.fase"></ng-historico-fase>
 		</div>
 
-		<div>
-			<button class="btn btn-primary" ng-click="salvar()">
-				<i class="fa fa-save"> </i> Salvar
-			</button>
-			<button class="btn btn-primary" ng-click="finalizar()">
-				<i class="fa fa-gavel"> </i> Finalizar
-			</button>
-			<a class="btn btn-inverse pull-right" back-button><i
-				class="fa fa-long-arrow-left"></i> Voltar</a>
-		</div>
+		<div ng-include src="'partials/fases/toolbar.html'"></div>
 
 
 	</form>

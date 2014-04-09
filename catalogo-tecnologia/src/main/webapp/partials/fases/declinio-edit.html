@@ -20,6 +20,12 @@
 				ng:click="selected=3">Produtos</a></li>
 			<li ng:show="fase.id" class="ng-class: selected == 4 ? 'active':'';"><a
 				ng:click="selected=4">Anexos</a></li>
+			<li ng:show="fase.id" class="ng-class: selected == 5 ? 'active':'';">
+				<a ng:click="selected=5">Observações</a>
+			</li>
+			<li ng:show="fase.id" class="ng-class: selected == 6 ? 'active':'';">
+					<a ng:click="selected=6">Histórico</a>
+			</li>
 		</ul>
 
 		<div class="panel panel-default" ng:show="selected == 1">
@@ -145,17 +151,18 @@
 			<div class="panel-heading">Anexos</div>
 			<ng-anexos ng-model="fase"></ng-anexos>
 		</div>
-
-		<div>
-			<button class="btn btn-primary" ng-click="salvar()">
-				<i class="fa fa-save"> </i> Salvar
-			</button>
-			<button class="btn btn-primary" ng-click="finalizar()">
-				<i class="fa fa-gavel"> </i> Finalizar
-			</button>
-			<a class="btn btn-inverse pull-right" back-button><i
-				class="fa fa-long-arrow-left"></i> Voltar</a>
+		
+		<!-- Observações -->
+		<div ng:show="selected == 5 && fase.id" class="panel panel-default">
+			<ng-observacoes ng-model="fase"></ng-observacoes>
 		</div>
+		
+		<!-- Historico -->
+		<div ng:show="selected == 6" class="panel panel-default">
+			<ng-historico-fase ng-model="fase"></ng-historico-fase>
+		</div>
+
+		<div ng-include src="'partials/fases/toolbar.html'"></div>
 
 
 	</form>

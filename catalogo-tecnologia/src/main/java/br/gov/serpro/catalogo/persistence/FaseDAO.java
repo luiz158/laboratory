@@ -7,6 +7,7 @@ import java.util.logging.Level;
 
 import javax.inject.Inject;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -18,7 +19,7 @@ import br.gov.frameworkdemoiselle.stereotype.PersistenceController;
 import br.gov.frameworkdemoiselle.template.JPACrud;
 import br.gov.serpro.catalogo.entity.Fase;
 import br.gov.serpro.catalogo.entity.FaseEnum;
-import br.gov.serpro.catalogo.entity.FaseProduto;
+import br.gov.serpro.catalogo.entity.FaseMembro;
 import br.gov.serpro.catalogo.rest.FaseDTO;
 
 @PersistenceController
@@ -113,5 +114,15 @@ public class FaseDAO extends JPACrud<Fase, Long> {
 			fase = (Fase) query.getResultList().get(0);
 		}catch(IndexOutOfBoundsException e){}
 		return fase;
-	}		
+	}
+
+	public List<Fase> obterCadeiaApartirDafaseInicial(Long id) {
+		String jpql = "select f from Fase f where f.fase.id = :id or f.faseInicial.id = :id order by id ASC";
+		TypedQuery<Fase> query = getEntityManager().createQuery(jpql, Fase.class);
+		query.setParameter("id", id);
+		return query.getResultList();
+	}	
+	
+	
+	
 }

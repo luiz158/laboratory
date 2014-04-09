@@ -76,25 +76,8 @@ public class FaseBC {
 	 * @return
 	 */
 	public List<Fase> obterCadeiaDasFases(Long id){
-		List<Fase> lista = new ArrayList<Fase>();
-
-		Fase faseInicial = faseDAO.load(id);
-		lista.add(faseInicial);
-
-		Fase faseAnterior = (faseInicial.getFaseAnterior()!=null)? faseDAO.load(faseInicial.getFaseAnterior().getId()): null;
-		while(faseAnterior!=null){			
-			lista.add(0, faseAnterior);
-			faseAnterior = (faseAnterior.getFaseAnterior()!=null)? faseDAO.load(faseAnterior.getFaseAnterior().getId()): null;
-		}
-
-		Fase fasePosterior = faseDAO.obterFasePosterior(faseInicial.getId());
-		while(fasePosterior!=null){			
-			lista.add(fasePosterior);
-			fasePosterior  = faseDAO.obterFasePosterior(fasePosterior.getId());
-		}
-
-		return lista;
-
+		Fase fase = faseDAO.load(id);
+		return faseDAO.obterCadeiaApartirDafaseInicial(fase.getFaseInicial()!=null?fase.getFaseInicial().getId():fase.getId());
 	}
 
 
@@ -284,6 +267,14 @@ public class FaseBC {
 
 	public Fase load(Long id) {
 		return faseDAO.load(id);
+	}
+
+	public void excluir(Long id) {
+		
+		//TODO validar excluir
+		
+		System.out.println("excluiu de mentira...");
+		
 	}
 
 
