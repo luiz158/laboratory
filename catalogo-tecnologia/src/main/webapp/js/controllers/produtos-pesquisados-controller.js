@@ -7,11 +7,7 @@ controllers.controller('ProdutosPesquisados', function ProdutosPesquisados($scop
 		$location, AlertService) {
 
 	$scope.variavel = $routeParams.variavel;
-	$scope.produtosAnalise = "";
-	$scope.produtosProspeccao = "";
-	$scope.produtosInternalizacao = "";
-	$scope.produtosSustentacao = "";
-	$scope.produtosDeclinio = "";
+	$scope.produtosFase = "";
 	$scope.produtosSemFase = "";
 	$scope.qtdRegistrosEncontrados = 0;
 	
@@ -19,21 +15,11 @@ controllers.controller('ProdutosPesquisados', function ProdutosPesquisados($scop
 
 	function carregarProdutos() {
 
-		$http.get('api/fase/produto/PROSPECCAO/'+$scope.variavel).success(function(data) {
-			$scope.produtosProspeccao = data;
-			$http.get('api/fase/produto/INTERNALIZACAO/'+$scope.variavel).success(function(data) {
-				$scope.produtosInternalizacao = data;
-				$http.get('api/fase/produto/SUSTENTACAO/'+$scope.variavel).success(function(data) {
-					$scope.produtosSustentacao = data;
-					$http.get('api/fase/produto/DECLINIO/'+$scope.variavel).success(function(data) {
-						$scope.produtosDeclinio = data;
-						$http.get('api/produto/produtoSemFase/'+$scope.variavel).success(function(data) {
-							$scope.produtosSemFase = data;
-							$scope.qtdRegistrosEncontrados = $scope.produtosProspeccao.length + $scope.produtosInternalizacao.length + 
-							$scope.produtosSustentacao.length + $scope.produtosDeclinio.length + $scope.produtosSemFase.length;
-						});
-					});
-				});
+		$http.get('api/fase/produto/listarProdutoFasePorNomeProduto/'+$scope.variavel).success(function(data) {
+			$scope.produtosFase = data;
+			$http.get('api/produto/listarProdutosSemFase/'+$scope.variavel).success(function(data) {
+				$scope.produtosSemFase = data;
+				$scope.qtdRegistrosEncontrados = $scope.produtosFase.length + $scope.produtosSemFase.length;
 			});
 		});
 	};

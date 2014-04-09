@@ -49,13 +49,6 @@ public class ProdutoService {
 	}
 
 	@GET
-	@Path("listar/{nome}")
-	public List<Produto> listarLike(@NotNull @PathParam("nome") String nome) {
-		String jpql = "SELECT p FROM Produto p WHERE upper(p.nome) like upper('%"+nome+"%')";
-		return produtoDAO.findByJPQL(jpql);
-	}
-	
-	@GET
 	public List<Produto> listar() {
 		return produtoDAO.findAll();
 	}
@@ -74,15 +67,19 @@ public class ProdutoService {
 	}
 	
 	@GET
-	@Path("listarByCategoria/{categoriaId}")
+	@Path("listarProdutosPorCategoria/{categoriaId}")
 	public List<Produto> listarProdutoByCategoria(@NotNull @PathParam("categoriaId") Long categoriaId) {
-		String jpql = "select p from Produto p inner join p.categorias s where s.id = "+categoriaId;
-		return produtoDAO.findByJPQL(jpql);
+		return produtoDAO.listarProdutoPorCategoria(categoriaId);
 	}
 	
-	@GET @Path("produtoSemFase/{produto}")
+	@GET @Path("listarProdutosSemFase/{produto}")
 	public List<Produto> produtosSemFase(@PathParam("produto") String nomeProduto) {
-		String jpql = "select p from FaseProduto fp right outer join fp.produto p where fp IS NULL and upper(p.nome) like upper('%"+nomeProduto+"%')";
-		return produtoDAO.findByJPQL(jpql);
+		return produtoDAO.listarProdutosSemFase(nomeProduto);
+	}
+	
+	@GET
+	@Path("listarProdutosPorNome/{nome}")
+	public List<Produto> listarLike(@NotNull @PathParam("nome") String nome) {
+		return produtoDAO.listarProdutosPorNome(nome);
 	}
 }

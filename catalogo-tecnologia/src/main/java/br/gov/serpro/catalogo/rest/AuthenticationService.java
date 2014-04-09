@@ -17,7 +17,6 @@ import br.gov.frameworkdemoiselle.security.Credentials;
 import br.gov.frameworkdemoiselle.security.SecurityContext;
 import br.gov.frameworkdemoiselle.util.Beans;
 import br.gov.serpro.catalogo.entity.User;
-import br.gov.serpro.catalogo.persistence.UserDAO;
 
 @ValidateRequest
 @Path("auth")

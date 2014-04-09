@@ -11,8 +11,8 @@ public class CategoriaDAO extends JPACrud<Categoria, Long> {
 
 	private static final long serialVersionUID = 1L;
 
-	@Override
-	public List<Categoria> findByJPQL(String jpql) {
+	public List<Categoria> listarCategoraPorTecnologia(Long tecnologiaId) {
+		String jpql = "SELECT c FROM Categoria c WHERE c.tecnologia.id ="+tecnologiaId;
 		return super.findByJPQL(jpql);
 	}
 }

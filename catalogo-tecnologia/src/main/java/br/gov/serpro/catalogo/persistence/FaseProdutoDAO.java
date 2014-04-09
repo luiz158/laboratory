@@ -21,8 +21,9 @@ public class FaseProdutoDAO extends JPACrud<FaseProduto, Long> {
 		return query.getResultList();
 	}
 	
-	@Override
-	public List<FaseProduto> findByJPQL(String jpql) {
+	public List<FaseProduto> listarFaseProdutoPorNomeProduto(String nomeProduto){
+		String jpql = "select fp2 from FaseProduto fp2 where fp2.id in ("
+				+ "select max(fp.id) from FaseProduto fp where upper(fp.produto.nome) like upper('%"+nomeProduto+"%') group by fp.fase.faseInicial.id, fp.produto.id) ORDER BY fp2.produto.id";
 		return super.findByJPQL(jpql);
 	}
 	
