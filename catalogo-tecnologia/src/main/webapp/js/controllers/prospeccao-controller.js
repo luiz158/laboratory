@@ -56,7 +56,7 @@ controllers.controller('ProspeccaoCtrl', function ProspeccaoCtrl($scope, $rootSc
 			}else{
 				AlertService.addWithTimeout('success','Prospecção salva com sucesso');
 			}
-			$location.path('/pesquisa/fases/2');
+			//$location.path('/pesquisa/fases/2');
 		}).error( function(data, status) {
 			if (status = 412) {
 				ValidationService.registrarViolacoes(data);

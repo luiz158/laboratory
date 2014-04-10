@@ -61,5 +61,6 @@ public class FaseHistoricoBC {
 		}
 		return faseHistoricoDAO.obterHistorico(ids);
 	}
-
+	
+	
 }

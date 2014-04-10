@@ -80,11 +80,11 @@ controllers.controller('AnaliseEdit', function Analise($scope, $http,
 
 		}).success(function(data) {
 			AlertService.addWithTimeout('success','Análise salva com sucesso');
-			$location.path('analise');
+			//$location.path('analise');
 		}).error(function(data, status) {
 			if (status == 401) {
 				AlertService.addWithTimeout('warning',data.message);
-				$location.path('/analise');
+				//$location.path('/analise');
 			} else if(status == 412){
 				ValidationService.registrarViolacoes(data);
 			}else{
@@ -113,7 +113,7 @@ controllers.controller('AnaliseEdit', function Analise($scope, $http,
 		}).error(function(data, status) {
 			if (status == 401) {
 				AlertService.addWithTimeout('warning',data.message);
-				$location.path('/analise');
+				//$location.path('/analise');
 			} else if(status == 412){
 				ValidationService.registrarViolacoes(data);
 			}else{

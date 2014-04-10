@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -18,7 +19,14 @@ import br.gov.frameworkdemoiselle.stereotype.PersistenceController;
 import br.gov.frameworkdemoiselle.template.JPACrud;
 import br.gov.serpro.catalogo.entity.Fase;
 import br.gov.serpro.catalogo.entity.FaseEnum;
+import br.gov.serpro.catalogo.entity.FaseHistorico;
+import br.gov.serpro.catalogo.entity.Situacao;
 import br.gov.serpro.catalogo.entity.StatusEnum;
+import br.gov.serpro.catalogo.entity.FaseHistorico.OPERACAO;
+import br.gov.serpro.catalogo.event.FaseEvent;
+import br.gov.serpro.catalogo.event.FaseEvent.ATUALIZAR;
+import br.gov.serpro.catalogo.event.FaseEvent.CRIAR;
+import br.gov.serpro.catalogo.event.FaseEvent.FINALIZAR;
 import br.gov.serpro.catalogo.rest.FaseDTO;
 
 @PersistenceController
@@ -129,7 +137,6 @@ public class FaseDAO extends JPACrud<Fase, Long> {
 		query.setParameter("status", StatusEnum.EXCLUIDO);
 		return query.getResultList();
 	}	
-	
-	
+		
 	
 }
