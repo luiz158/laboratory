@@ -141,45 +141,48 @@ controllers.controller('ProdutoEdit', function Produto($scope, $http,
 		if($rootScope.produto.atualizacao && (typeof($rootScope.produto.produtoAnterior) == "undefined" || $rootScope.produto.produtoAnterior=="")){
 			AlertService.addWithTimeout('danger','É necessário preencher o produto ao qual essa atualização se refere!');
 		}else{
-			console.log("ProdutoController " + $rootScope.produto);
-			
-			$rootScope.produto.plataformasSuportadas = $scope.plataformasSuportadas;
-			$rootScope.produto.categorias = $scope.categoriasSelecionadas;
-
-			if(typeof($scope.licenciamento) != "undefined" && $scope.licenciamento != ""){
-				$rootScope.produto.licenciamento = $scope.licenciamento;
-			}
-			if(typeof($scope.fabricante) != "undefined"&& $scope.fabricante != ""){
-				$rootScope.produto.fabricante = $scope.fabricante;
-			}
-			if(typeof($scope.fornecedor) != "undefined"&& $scope.fornecedor != ""){
-				$rootScope.produto.fornecedor = $scope.fornecedor;
-			}
-			
-			$("[id$='-message']").text("");
-			$http({
-				url : 'api/produto',
-				method : $rootScope.produto.id ? "PUT" : "POST",
-				data : $rootScope.produto,
-				headers : {
-					'Content-Type' : 'application/json;charset=utf8'
+			if($scope.categoriasSelecionadas.length == 0){
+				AlertService.addWithTimeout('danger','É necessário adicionar pelo menos uma categoria!');
+			}else{	
+				console.log("ProdutoController " + $rootScope.produto);
+				
+				$rootScope.produto.plataformasSuportadas = $scope.plataformasSuportadas;
+				$rootScope.produto.categorias = $scope.categoriasSelecionadas;
+				if(typeof($scope.licenciamento) != "undefined" && $scope.licenciamento != ""){
+					$rootScope.produto.licenciamento = $scope.licenciamento;
 				}
-			
-			}).success(function(data) {
-				AlertService.addWithTimeout('success','Produto salvo com sucesso');
-				$location.path('produto');
-			}).error(function(data, status) {
-				if(status == 401){
-					AlertService.addWithTimeout('warning',data.message);
-					$location.path('/produto');
-				} else if (status == 412) {
-					$.each(data, function(i, violation) {
-						$("#" + violation.property + "-message").text(violation.message);
-					});
-				} else {
-					AlertService.addWithTimeout('danger','Não foi possível executar a operação');
+				if(typeof($scope.fabricante) != "undefined"&& $scope.fabricante != ""){
+					$rootScope.produto.fabricante = $scope.fabricante;
 				}
-			});
+				if(typeof($scope.fornecedor) != "undefined"&& $scope.fornecedor != ""){
+					$rootScope.produto.fornecedor = $scope.fornecedor;
+				}
+				
+				$("[id$='-message']").text("");
+				$http({
+					url : 'api/produto',
+					method : $rootScope.produto.id ? "PUT" : "POST",
+					data : $rootScope.produto,
+					headers : {
+						'Content-Type' : 'application/json;charset=utf8'
+					}
+				
+				}).success(function(data) {
+					AlertService.addWithTimeout('success','Produto salvo com sucesso');
+					$location.path('produto');
+				}).error(function(data, status) {
+					if(status == 401){
+						AlertService.addWithTimeout('warning',data.message);
+						$location.path('/produto');
+					} else if (status == 412) {
+						$.each(data, function(i, violation) {
+							$("#" + violation.property + "-message").text(violation.message);
+						});
+					} else {
+						AlertService.addWithTimeout('danger','Não foi possível executar a operação');
+					}
+				});
+			}			
 		}
 	};
 	
@@ -198,15 +201,19 @@ controllers.controller('ProdutoEdit', function Produto($scope, $http,
 	};
 	
 	$scope.adicionaCategoria = function() {
-		if(typeof($scope.categoria) == "undefined" || $scope.categoria == ""){
-			AlertService.addWithTimeout('danger','Selecione uma categoria');
+		if(typeof($scope.tecnologia) == "undefined" || $scope.tecnologia == ""){
+			AlertService.addWithTimeout('danger','Selecione uma tecnologia para que as categorias sejam carregadas');
 		}else{
-			var index = buscaElemento($scope.categoria,$scope.categoriasSelecionadas);
-			
-			if (index !== -1) {
-				AlertService.addWithTimeout('danger','Categoria já foi adicionada!');
-	        }else{
-				$scope.categoriasSelecionadas.push($scope.categoria);
+			if(typeof($scope.categoria) == "undefined" || $scope.categoria == ""){
+				AlertService.addWithTimeout('danger','Selecione uma categoria');
+			}else{
+				var index = buscaElemento($scope.categoria,$scope.categoriasSelecionadas);
+				
+				if (index !== -1) {
+					AlertService.addWithTimeout('danger','Categoria já foi adicionada!');
+		        }else{
+					$scope.categoriasSelecionadas.push($scope.categoria);
+				}
 			}
 		}
 	};

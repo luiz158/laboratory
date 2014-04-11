@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 @Entity
 public class Tecnologia {
 
@@ -15,8 +17,10 @@ public class Tecnologia {
 	@SequenceGenerator(name = "tecnologia_seq", sequenceName = "tecnologia_id_seq", allocationSize=1)
 	private Long id;
 	
+	@NotEmpty
 	private String nome;
 	
+	@NotEmpty
 	private String descricao;
 
 	public Long getId() {
