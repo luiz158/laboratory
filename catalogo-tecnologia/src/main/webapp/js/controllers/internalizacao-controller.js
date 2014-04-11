@@ -4,7 +4,7 @@
 var controllers = angular.module('catalogo.controllers');
 
 
-controllers.controller('InternalizacaoCtrl', function InternalizacaoCtrl($scope, $rootScope, $http,$location, $routeParams, AlertService, OrigemDemandaService, ValidationService, DocumentoService) {
+controllers.controller('InternalizacaoCtrl', function InternalizacaoCtrl($scope, $rootScope, $http,$location, $routeParams, AlertService, OrigemDemandaService, ValidationService, DocumentoService, FaseService) {
 
 	$(window).scrollTop(0);
 	
@@ -26,7 +26,6 @@ controllers.controller('InternalizacaoCtrl', function InternalizacaoCtrl($scope,
 
 	function atualizarCiclo(newValue){	
 		var ciclo = $scope.ciclo.numero * $scope.ciclo.fator;
-		console.log(ciclo);
 		$scope.fase.proximaFaseCiclo = ciclo;
 	}
    
@@ -49,6 +48,10 @@ controllers.controller('InternalizacaoCtrl', function InternalizacaoCtrl($scope,
 					origemReferencia: 	data.faseAnterior.origemReferencia,
 					codigoReferencia: 	data.faseAnterior.codigoReferencia
 			};
+			$scope.fase.faseInicial = {
+					id: 				data.faseInicial.id, 
+					fase: 				data.faseInicial.fase
+			};
 			if($scope.fase.proximaFaseCiclo){
 				$scope.ciclo.numero = $scope.fase.proximaFaseCiclo;
 			}
@@ -66,6 +69,7 @@ controllers.controller('InternalizacaoCtrl', function InternalizacaoCtrl($scope,
 		var url = 'api/internalizacao';
 		if(finalizar) url = url+"/finalizar";
 		ValidationService.clear();
+		console.log($scope.fase);
 		$http({
 			url : url,
 			method : $scope.fase.id ? "PUT" : "POST",
@@ -121,6 +125,17 @@ controllers.controller('InternalizacaoCtrl', function InternalizacaoCtrl($scope,
 	
 	$scope.removerDocumento = function() {
 		
+	};
+	
+	$scope.excluir = function(id) {
+		FaseService.excluir(id).then(
+			function(data) {
+				AlertService.addWithTimeout('success','Análise excluída com sucesso');
+				$location.path('/pesquisa/fases');
+			},function(data) {
+				ValidationService.registrarViolacoes(data);				
+			}
+		);
 	};
 
 });

@@ -4,7 +4,7 @@
 var controllers = angular.module('catalogo.controllers');
 
 
-controllers.controller('ProspeccaoCtrl', function ProspeccaoCtrl($scope, $rootScope, $http,$location, $routeParams, AlertService, OrigemDemandaService, ValidationService) {
+controllers.controller('ProspeccaoCtrl', function ProspeccaoCtrl($scope, $rootScope, $http,$location, $routeParams, AlertService, OrigemDemandaService, ValidationService, FaseService) {
 
 	$(window).scrollTop(0);
 	
@@ -25,6 +25,10 @@ controllers.controller('ProspeccaoCtrl', function ProspeccaoCtrl($scope, $rootSc
 					fase: 				data.faseAnterior.fase, 
 					origemReferencia: 	data.faseAnterior.origemReferencia,
 					codigoReferencia: 	data.faseAnterior.codigoReferencia
+			};
+			$scope.fase.faseInicial = {
+					id: 				data.faseInicial.id, 
+					fase: 				data.faseInicial.fase
 			};
 		}).error( function(data, status) {
 			AlertService.addWithTimeout('danger','Não foi possível encontrar a prospecção');
@@ -52,9 +56,8 @@ controllers.controller('ProspeccaoCtrl', function ProspeccaoCtrl($scope, $rootSc
 			}else{
 				AlertService.addWithTimeout('success','Prospecção salva com sucesso');
 			}
-			$location.path('/pesquisa/fases/2');
+			//$location.path('/pesquisa/fases/2');
 		}).error( function(data, status) {
-			console.log(data);
 			if (status = 412) {
 				ValidationService.registrarViolacoes(data);
 			}
@@ -68,6 +71,17 @@ controllers.controller('ProspeccaoCtrl', function ProspeccaoCtrl($scope, $rootSc
 	
 	$scope.finalizar = function() {
 		$scope.salvar(true);
+	};
+	
+	$scope.excluir = function(id) {
+		FaseService.excluir(id).then(
+			function(data) {
+				AlertService.addWithTimeout('success','Análise excluída com sucesso');
+				$location.path('/pesquisa/fases');
+			},function(data) {
+				ValidationService.registrarViolacoes(data);				
+			}
+		);
 	};
 	
 

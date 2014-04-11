@@ -7,7 +7,6 @@ services.factory('DocumentoService', function($http, $q) {
 	var service = {};				
 
 	service.inserir = function(doc) {
-		console.log(doc);
 	   var deferred = $q.defer();
 	   $http({
 			url : 'api/documento/fase/'+doc.fase.id+'/add',
@@ -25,7 +24,6 @@ services.factory('DocumentoService', function($http, $q) {
 	};
 	
 	service.getDocumentos = function(id) {
-		console.log(id);
 		var deferred = $q.defer();
     	$http({
 			url : 'api/documento/fase/'+id,

@@ -3,8 +3,8 @@ package br.gov.serpro.catalogo.persistence;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
 
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -19,7 +19,14 @@ import br.gov.frameworkdemoiselle.stereotype.PersistenceController;
 import br.gov.frameworkdemoiselle.template.JPACrud;
 import br.gov.serpro.catalogo.entity.Fase;
 import br.gov.serpro.catalogo.entity.FaseEnum;
-import br.gov.serpro.catalogo.entity.FaseMembro;
+import br.gov.serpro.catalogo.entity.FaseHistorico;
+import br.gov.serpro.catalogo.entity.Situacao;
+import br.gov.serpro.catalogo.entity.StatusEnum;
+import br.gov.serpro.catalogo.entity.FaseHistorico.OPERACAO;
+import br.gov.serpro.catalogo.event.FaseEvent;
+import br.gov.serpro.catalogo.event.FaseEvent.ATUALIZAR;
+import br.gov.serpro.catalogo.event.FaseEvent.CRIAR;
+import br.gov.serpro.catalogo.event.FaseEvent.FINALIZAR;
 import br.gov.serpro.catalogo.rest.FaseDTO;
 
 @PersistenceController
@@ -32,9 +39,7 @@ public class FaseDAO extends JPACrud<Fase, Long> {
 	
 	@Override
 	public void delete(Long id) {
-		// TODO Exclusão lógica
-		logger.debug("Implementar a exclusão lógica..");
-		super.delete(id);
+		logger.debug("Implementar a exclusão lógica..");		
 	}
 	
 	public List<Fase> pesquisar(FaseDTO dto) {
@@ -45,6 +50,8 @@ public class FaseDAO extends JPACrud<Fase, Long> {
 	    query.select(fase);
 	 
 	    List<Predicate> predicateList = new ArrayList<Predicate>();	 
+	    	    
+	    predicateList.add(builder.notEqual(fase.<StatusEnum>get("status"), StatusEnum.EXCLUIDO.ordinal()));	    
 	 
 	    if (dto.getId() != null) {
 	    	Predicate p = builder.equal(fase.<Long>get("id"), dto.getId());
@@ -116,13 +123,20 @@ public class FaseDAO extends JPACrud<Fase, Long> {
 		return fase;
 	}
 
-	public List<Fase> obterCadeiaApartirDafaseInicial(Long id) {
-		String jpql = "select f from Fase f where f.fase.id = :id or f.faseInicial.id = :id order by id ASC";
+	public List<Fase> obterCadeiaApartirDafaseInicialComExcluidos(Long id) {
+		String jpql = "select f from Fase f where (f.fase.id = :id or f.faseInicial.id = :id) order by id ASC";
 		TypedQuery<Fase> query = getEntityManager().createQuery(jpql, Fase.class);
 		query.setParameter("id", id);
 		return query.getResultList();
 	}	
 	
-	
+	public List<Fase> obterCadeiaApartirDafaseInicial(Long id) {
+		String jpql = "select f from Fase f where (f.fase.id = :id or f.faseInicial.id = :id) and f.status <> :status order by id ASC";
+		TypedQuery<Fase> query = getEntityManager().createQuery(jpql, Fase.class);
+		query.setParameter("id", id);
+		query.setParameter("status", StatusEnum.EXCLUIDO);
+		return query.getResultList();
+	}	
+		
 	
 }

@@ -44,7 +44,7 @@ controllers.controller('AnaliseList',
 		});
 
 controllers.controller('AnaliseEdit', function Analise($scope, $http,
-		$location, $routeParams, $upload, $rootScope, AlertService, OrigemDemandaService, ValidationService) {
+		$location, $routeParams, $upload, $rootScope, AlertService, OrigemDemandaService, ValidationService, FaseService) {
 
 	
 	$scope.fase = {};
@@ -80,11 +80,11 @@ controllers.controller('AnaliseEdit', function Analise($scope, $http,
 
 		}).success(function(data) {
 			AlertService.addWithTimeout('success','Análise salva com sucesso');
-			$location.path('analise');
+			//$location.path('analise');
 		}).error(function(data, status) {
 			if (status == 401) {
 				AlertService.addWithTimeout('warning',data.message);
-				$location.path('/analise');
+				//$location.path('/analise');
 			} else if(status == 412){
 				ValidationService.registrarViolacoes(data);
 			}else{
@@ -113,7 +113,7 @@ controllers.controller('AnaliseEdit', function Analise($scope, $http,
 		}).error(function(data, status) {
 			if (status == 401) {
 				AlertService.addWithTimeout('warning',data.message);
-				$location.path('/analise');
+				//$location.path('/analise');
 			} else if(status == 412){
 				ValidationService.registrarViolacoes(data);
 			}else{
@@ -123,22 +123,14 @@ controllers.controller('AnaliseEdit', function Analise($scope, $http,
 	};
 	
 	$scope.excluir = function(id) {
-		console.log("Excluir");
-		$http({
-			url : 'api/fase/excluir/'+id,
-			method : "DELETE"
-		}).success(function(data) {
-			AlertService.addWithTimeout('success','Análise excluída com sucesso');
-			$location.path('analise');
-		}).error(function(data, status) {
-			if (status == 401) {
-				AlertService.addWithTimeout('warning',data.message);
-			} else if(status == 412){
-				ValidationService.registrarViolacoes(data);
-			}else{
-				AlertService.addWithTimeout('danger','Não foi possível executar a operação');
+		FaseService.excluir(id).then(
+			function(data) {
+				AlertService.addWithTimeout('success','Análise excluída com sucesso');
+				$location.path('/pesquisa/fases');
+			},function(data) {
+				ValidationService.registrarViolacoes(data);				
 			}
-		});
+		);
 	};
 	
 });

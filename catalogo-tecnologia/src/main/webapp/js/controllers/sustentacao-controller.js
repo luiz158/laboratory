@@ -4,7 +4,7 @@
 var controllers = angular.module('catalogo.controllers');
 
 
-controllers.controller('SustentacaoCtrl', function SustentacaoCtrl($scope, $rootScope, $http,$location, $routeParams, AlertService, OrigemDemandaService, ValidationService, DocumentoService) {
+controllers.controller('SustentacaoCtrl', function SustentacaoCtrl($scope, $rootScope, $http,$location, $routeParams, AlertService, OrigemDemandaService, ValidationService, DocumentoService, FaseService) {
 	
 	$scope.fase = {};
 	$scope.fase.id = $routeParams.id;
@@ -28,6 +28,10 @@ controllers.controller('SustentacaoCtrl', function SustentacaoCtrl($scope, $root
 					fase: 				data.faseAnterior.fase, 
 					origemReferencia: 	data.faseAnterior.origemReferencia,
 					codigoReferencia: 	data.faseAnterior.codigoReferencia
+			};
+			$scope.fase.faseInicial = {
+					id: 				data.faseInicial.id, 
+					fase: 				data.faseInicial.fase
 			};
 			listarDocumentos();
 		}).error( function(data, status) {
@@ -98,6 +102,17 @@ controllers.controller('SustentacaoCtrl', function SustentacaoCtrl($scope, $root
 	
 	$scope.removerDocumento = function() {
 		
+	};
+	
+	$scope.excluir = function(id) {
+		FaseService.excluir(id).then(
+			function(data) {
+				AlertService.addWithTimeout('success','Análise excluída com sucesso');
+				$location.path('/pesquisa/fases');
+			},function(data) {
+				ValidationService.registrarViolacoes(data);				
+			}
+		);
 	};
 
 });

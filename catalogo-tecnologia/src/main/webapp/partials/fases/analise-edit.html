@@ -10,7 +10,7 @@
 	<ng-fluxo ng-model="fase"></ng-fluxo>
 	
 	
-	<form name="formAnalise" role="form" has-role="ANALISE">
+	<form name="formAnalise" role="form" has-role="ANALISE" novalidate>
 		<ul class="nav nav-tabs" ng:init="selected=1">
 			<li class="ng-class: selected == 1 ? 'active':'';"><a
 				ng:click="selected=1">Análise</a></li>
@@ -200,7 +200,7 @@
 		</div>
 
 		<div ng-include src="'partials/fases/toolbar.html'"></div>
-
+	
 	</form>
 
 </div>

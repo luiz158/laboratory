@@ -45,7 +45,7 @@ public class FaseService {
 	@Path("excluir/{id}")
 	@Transactional
 	public void excluir(@NotNull @PathParam("id") Long id) {
-		faseBC.excluir(id);
+		faseBC.delete(id);
 	}
 
 	@GET

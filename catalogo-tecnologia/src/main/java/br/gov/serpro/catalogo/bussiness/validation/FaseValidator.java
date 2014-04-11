@@ -12,7 +12,9 @@ import br.gov.serpro.catalogo.entity.FaseEnum;
 import br.gov.serpro.catalogo.entity.Internalizacao;
 import br.gov.serpro.catalogo.entity.Prospeccao;
 import br.gov.serpro.catalogo.entity.Situacao;
+import br.gov.serpro.catalogo.entity.StatusEnum;
 import br.gov.serpro.catalogo.entity.Sustentacao;
+import br.gov.serpro.catalogo.persistence.FaseDAO;
 import br.gov.serpro.catalogo.persistence.FaseProdutoDAO;
 
 @BusinessController
@@ -21,6 +23,8 @@ public class FaseValidator {
 	@Inject 
 	private FaseProdutoDAO faseProdutoDAO;
 	
+	@Inject 
+	private FaseDAO faseDAO;
 	
 	public void validarSalvar(final Fase fase) {		
 		if (fase.getDataFinalizacao()!=null){
@@ -185,6 +189,14 @@ public class FaseValidator {
 						.addViolation(null,
 								"Para finalizar é preciso definir a próxima fase.");
 		}
+	}
+
+	public void validarExcluir(Fase fase) {		
+		Fase fasePosterior = faseDAO.obterFasePosterior(fase.getId());		
+		if(fasePosterior!=null && !fasePosterior.getStatus().equals(StatusEnum.EXCLUIDO)){
+			throw new ValidationException()
+			.addViolation(null,"Não é possível excluir a "+fase.getFase()+". Pois existe uma "+fasePosterior.getFase()+" em sequência.");
+		}		
 	}
 
 }
