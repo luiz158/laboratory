@@ -14,6 +14,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 @Entity
 @Table(name="usuario")
 public class User implements br.gov.frameworkdemoiselle.security.User {
@@ -26,8 +28,10 @@ public class User implements br.gov.frameworkdemoiselle.security.User {
 	private Long id;
 
 	@Column(unique = true)
+	@NotEmpty
 	private String cpf;
 
+	@NotEmpty
 	private String name;
 
 	private String email;
