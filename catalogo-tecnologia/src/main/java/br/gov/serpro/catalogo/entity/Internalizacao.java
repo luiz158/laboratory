@@ -1,5 +1,6 @@
 package br.gov.serpro.catalogo.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Entity
@@ -12,21 +13,28 @@ public class Internalizacao extends Fase {
 
 	// Restricoes de uso
 	private Integer restricao;
+	@Column(length=2000)
 	private String restricaoQuemPode;
+	@Column(length=2000)
 	private String restricaoJustificativa;
 
 	// Aquisições para a internalização
 	private Integer aquisicaoNecessaria;
+	@Column(length=2000)
 	private String aquisicaoItens;
+	@Column(length=2000)
 	private String aquisicaoResultado;
 	
 	// capacitacoes
 	private Integer capacitacao;
+	@Column(length=2000)
 	private String capacitacaoNecessarias;
+	@Column(length=2000)
 	private String capacitacaoRealizadas;
 	
 	// capacitacoes
 	private Integer analiseDeRiscos;
+	@Column(length=2000)
 	private String analiseDeRiscosJustificativa;
 	
 	public Integer getRestricao() {

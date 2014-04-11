@@ -5,6 +5,7 @@ import static javax.persistence.GenerationType.SEQUENCE;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -44,6 +45,7 @@ public class FaseHistorico {
 	@Enumerated(EnumType.STRING)
 	private OPERACAO operacao;
 	
+	@Column(length=2000)
 	private String descricao;
 	
 	@Transient

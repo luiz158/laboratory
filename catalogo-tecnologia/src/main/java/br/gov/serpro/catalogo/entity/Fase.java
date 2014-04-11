@@ -5,6 +5,7 @@ import static javax.persistence.GenerationType.SEQUENCE;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
@@ -42,6 +43,7 @@ public class Fase {
 	@ManyToOne
 	private OrigemDemanda origemReferencia;
 	
+	@Column(length=2000)
 	private String objetivo;
 
 	private Date dataRealizacao;
@@ -52,15 +54,18 @@ public class Fase {
 	@Enumerated(STRING)
 	private Situacao situacao;
 	
+	@Column(length=2000)
 	private String situacaoJustificativa;
 
 	private Date dataFinalizacao;
 	
+	@Column(length=2000)
 	private String conclusao;
 	
 	@Enumerated(EnumType.STRING)
 	private FaseEnum proximaFase;
 			
+	@Column(length=2000)
 	private String proximaFaseJustificativa;
 
 	private String proximaFaseUnidadeGestora;

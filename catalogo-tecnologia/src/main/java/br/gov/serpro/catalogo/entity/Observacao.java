@@ -5,6 +5,7 @@ import static javax.persistence.GenerationType.SEQUENCE;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -32,6 +33,7 @@ public class Observacao {
     @JoinColumn(nullable=false, updatable=false)
 	private Fase fase;
 
+	@Column(length=2000)
 	private String observacao;
 
 	@Temporal(TemporalType.TIMESTAMP)
