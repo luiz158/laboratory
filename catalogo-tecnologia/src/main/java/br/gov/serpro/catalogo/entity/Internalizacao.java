@@ -8,7 +8,7 @@ public class Internalizacao extends Fase {
 
 	public Internalizacao() {
 		this.setFase(FaseEnum.INTERNALIZACAO);
-		//this.setProximaFase(FaseEnum.SUSTENTACAO);
+		this.setProximaFase(FaseEnum.SUSTENTACAO);
 	}
 
 	// Restricoes de uso

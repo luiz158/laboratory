@@ -8,6 +8,7 @@ public class Sustentacao extends Fase {
 
 	public Sustentacao() {
 		this.setFase(FaseEnum.SUSTENTACAO);
+		this.setProximaFase(FaseEnum.DECLINIO);
 	}
 
 	// Restricoes de uso
