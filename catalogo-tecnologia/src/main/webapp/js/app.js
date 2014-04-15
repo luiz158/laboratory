@@ -73,3 +73,13 @@ var services = angular.module('catalogo.services',[]);
 services.value('version', '${project.version}');
 
 console.log("Versão: ${version}");
+
+setInterval(function(){
+	var service = angular.injector(['catalogo.services', 'ng']).get('AuthService');
+	service.getLoggedUserService().then(function(data) {
+		if (data == "") {
+			var urlOriginal = location.href;
+			location.href = "index.html?destino="+urlOriginal;
+		}
+	});
+},(5*60*1000));
