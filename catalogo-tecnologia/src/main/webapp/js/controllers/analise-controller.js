@@ -3,45 +3,6 @@
 /* Controllers */
 var controllers = angular.module('catalogo.controllers');
 
-controllers.controller('AnaliseList',
-		function Analise($scope, $http, $location) {
-	
-	
-			$scope.analises = [];
-			function carregarAnalises() {
-				$http.get('api/analise').success(function(data) {
-					$scope.analises = data;
-				});
-			}
-
-			$scope.novo = function() {
-				$location.path('/analise/edit');
-			};
-
-			$scope.editar = function(analise) {
-				$location.path('/analise/edit/' + analise.id);
-			};
-
-			$scope.excluir = function(id) {
-				$http({
-					url : 'api/analise/' + id,
-					method : "DELETE"
-
-				}).success(function(data) {
-					carregarAnalises();
-
-				}).error(function(data, status) {
-					if(status == 401){
-						AlertService.addWithTimeout('warning',data.message);
-						$location.path('/analise');
-					}else{
-						AlertService.addWithTimeout('danger','Não foi possível executar a operação');
-					}
-				});
-			};
-
-			carregarAnalises();
-		});
 
 controllers.controller('AnaliseEdit', function Analise($scope, $http,
 		$location, $routeParams, $upload, $rootScope, AlertService, OrigemDemandaService, ValidationService, FaseService) {
@@ -49,7 +10,6 @@ controllers.controller('AnaliseEdit', function Analise($scope, $http,
 	
 	$scope.fase = {};
 	$scope.fase.id = $routeParams.id;
-	$scope.fase.fase = 1;	
 	$scope.origemDemanda = [];
 	
 	OrigemDemandaService.getItens().then(function(data) {
@@ -67,7 +27,9 @@ controllers.controller('AnaliseEdit', function Analise($scope, $http,
 		carregar();	
 	} else {
 		$scope.fase  = {};
-		$scope.fase .situacao = 'Rascunho';
+		$scope.fase.situacao = 'Rascunho';
+		$scope.fase.fase = 'ANALISE';
+		$scope.fase.executarProximaFase = 0;
 	}
 		
 
@@ -140,3 +102,51 @@ controllers.controller('AnaliseEdit', function Analise($scope, $http,
 	};
 	
 });
+
+
+
+
+
+
+
+
+controllers.controller('AnaliseList',
+		function Analise($scope, $http, $location) {
+	
+	
+			$scope.analises = [];
+			function carregarAnalises() {
+				$http.get('api/analise').success(function(data) {
+					$scope.analises = data;
+				});
+			}
+
+			$scope.novo = function() {
+				$location.path('/analise/edit');
+			};
+
+			$scope.editar = function(analise) {
+				$location.path('/analise/edit/' + analise.id);
+			};
+
+			$scope.excluir = function(id) {
+				$http({
+					url : 'api/analise/' + id,
+					method : "DELETE"
+
+				}).success(function(data) {
+					carregarAnalises();
+
+				}).error(function(data, status) {
+					if(status == 401){
+						AlertService.addWithTimeout('warning',data.message);
+						$location.path('/analise');
+					}else{
+						AlertService.addWithTimeout('danger','Não foi possível executar a operação');
+					}
+				});
+			};
+
+			carregarAnalises();
+		});
+

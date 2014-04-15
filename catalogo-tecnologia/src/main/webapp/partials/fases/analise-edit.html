@@ -103,20 +103,25 @@
 
 				<div class="form-group row">
 					<div class="col-md-6">
-						<label for="unidadeGestora">Unidade gestora de {{fase.fase | nomeFase}}:<font color="#FF0000"> *</font></label> <input
+						<label for="unidadeGestora">Unidade gestora de Análise:<font color="#FF0000"> *</font></label> <input
 							class="form-control" required type="text" id="unidadeGestora"
 							ng-model="fase.unidadeGestora" >
 						<validation-msg propriedade="unidadeGestora"></validation-msg>
 					</div>
 				</div>
 				
-				<div class="form-group row">
+				<div class="form-group row" ng:show="fase.id">
 					<div class="col-md-6" id="membros">
 						<ng-membros ng-model="fase" has-role="ANALISE"></ng-membros>
 					</div>
 					<div class="col-md-6" id="interessados">
 						<ng-interessados ng-model="fase" has-role="ANALISE"></ng-interessados>
 					</div>
+				</div>
+				<div class="form-group" ng:hide="fase.id">
+					<div class="alert alert-warning">
+                         Após salvar a análise você poderá criar a Equipe e identificar os interessados.
+                   </div>
 				</div>
 
 				<div class="form-group">

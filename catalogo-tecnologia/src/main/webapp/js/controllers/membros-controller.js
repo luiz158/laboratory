@@ -9,6 +9,7 @@ controllers.controller('MembrosCtrl', function MembrosCtrl($scope, $rootScope, $
 	
 	/* Pega a fase diretamente da diretiva*/
 	$scope.fase = $scope.$parent.ngModel;
+	
 	$scope.membros = [];
 	$scope.resultadoPesquisa = [];
 	

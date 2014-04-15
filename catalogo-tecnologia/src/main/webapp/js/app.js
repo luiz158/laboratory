@@ -74,8 +74,11 @@ services.value('version', '${project.version}');
 
 console.log("Versão: ${version}");
 
+/**
+ * Controla a sessão do usuário continuamente.
+ */
 setInterval(function(){
-	var service = angular.injector(['catalogo.services']).get('AuthService');
+	var service = angular.injector(['catalogo.services','ng']).get('AuthService');
 	service.getLoggedUserService().then(function(data) {
 		console.log(data);
 		if (data == "") {
