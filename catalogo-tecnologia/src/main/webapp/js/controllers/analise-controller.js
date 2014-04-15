@@ -56,11 +56,15 @@ controllers.controller('AnaliseEdit', function Analise($scope, $http,
 		$scope.origemDemanda = data;
 	});	
 	
-	if ($scope.fase.id) {
+	function carregar(){
 		$http.get('api/analise/' + $scope.fase.id).success(function(data) {
 			$scope.analise = data;
 			$scope.fase = data;
-		});		
+		});	
+	}
+	
+	if ($scope.fase.id) {
+		carregar();	
 	} else {
 		$scope.fase  = {};
 		$scope.fase .situacao = 'Rascunho';
@@ -79,8 +83,10 @@ controllers.controller('AnaliseEdit', function Analise($scope, $http,
 			}
 
 		}).success(function(data) {
+			$scope.fase.id = data;
+			carregar();
 			AlertService.addWithTimeout('success','Análise salva com sucesso');
-			//$location.path('analise');
+			$location.path('/analise/edit/'+data);
 		}).error(function(data, status) {
 			if (status == 401) {
 				AlertService.addWithTimeout('warning',data.message);

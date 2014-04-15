@@ -11,12 +11,12 @@
 	
 	
 	<form name="formAnalise" role="form" has-role="ANALISE" novalidate>
-		<ul class="nav nav-tabs" ng:init="selected=1">
+		<ul class="nav nav-tabs nav-justified" ng:init="selected=1">
 			<li class="ng-class: selected == 1 ? 'active':'';"><a
 				ng:click="selected=1">Análise</a></li>
-			<li class="ng-class: selected == 2 ? 'active':'';"
-				ng-show="fase.situacao != 'Rascunho'"><a
-				ng:click="selected=2">Próxima Fase</a></li>
+			<li class="ng-class: selected == PF ? 'active':'';"
+				ng-show="fase.executarProximaFase"><a
+				ng:click="selected=PF">Próxima Fase</a></li>
 			<li ng:show="fase.id" class="ng-class: selected == 3 ? 'active':'';"><a
 				ng:click="selected=3">Anexos</a></li>
 			<li ng:show="fase.id" class="ng-class: selected == 4 ? 'active':'';"><a
@@ -56,7 +56,7 @@
 						<label for="demandante">Unidade Demandante:<font color="#FF0000"> *</font></label> <input type="text"
 							class="form-control" id="demandante" ng-model="fase.demandanteUnidade"
 							required> 
-							<validation-msg propriedade="demandante" fase="fase.id"></validation-msg>
+							<validation-msg propriedade="demandanteUnidade"></validation-msg>
 					</div>
 					<div class="col-md-6">
 						<label for="demandante">Representante da Unidade:<font color="#FF0000"> *</font></label> 
@@ -70,8 +70,9 @@
 				<div class="form-group">
 					<label for="detalhamento">Detalhamento:<font color="#FF0000"> *</font></label>
 					<textarea rows="4" class="form-control" id="detalhamento"
-						ng-model="fase.objetivo" required></textarea>
-					<validation-msg propriedade="detalhamento"></validation-msg>
+						ng-model="fase.objetivo" required maxlength="2000">
+					</textarea>
+					<validation-msg propriedade="objetivo"></validation-msg>
 				</div>
 
 
@@ -137,7 +138,7 @@
 					<div class="form-group">
 						<label for="justificativa">Justificativa:<font color="#FF0000"> **</font></label>
 						<textarea rows="4" class="form-control" id="justificativa"
-							ng-model="fase.situacaoJustificativa"></textarea>
+							ng-model="fase.situacaoJustificativa" maxlength="2000"></textarea>
 						<validation-msg propriedade="justificativa"></validation-msg>
 					</div>
 				</div>
@@ -146,42 +147,8 @@
 		</div>
 
 		<!-- Próxima fase -->
-		<div ng-show="selected == 2" class="panel panel-default">
-			<div class="panel-body">
-				<div class="form-group">
-					<label for="proximaFase">Próxima fase a ser executada:<font color="#FF0000"> **</font></label> 
-					<select
-						class="form-control" ng-model="fase.proximaFase">
-						<option value="PROSPECCAO">Prospeccao</option>
-						<option value="INTERNALIZACAO">Internalização</option>
-						<option value="SUSTENTACAO">Sustentação</option>
-						<option value="DECLINIO">Declínio</option>	
-					</select>
-					<validation-msg propriedade="proximaFase"></validation-msg>
-				</div>
-
-				<div class="form-group">
-					<label for="justificativaProximaFase">Justificativa:<font color="#FF0000"> **</font></label>
-					<textarea rows="4" class="form-control"
-						id="justificativaProximaFase"
-						ng-model="fase.proximaFaseJustificativa"
-						></textarea>
-					<validation-msg propriedade="proximaFaseJustificativa"></validation-msg>
-				</div>
-
-				<div class="form-group row">
-					<div class="col-md-6">
-						<label for="detalhamento">Unidade Gestora:<font color="#FF0000"> **</font></label> <input
-							class="form-control" type="text" id="id"
-							ng-model="fase.proximaFaseUnidadeGestora">
-					</div>
-					<div class="col-md-6">
-						<label for="detalhamento">Líder da equipe:<font color="#FF0000"> **</font></label> 
-							<ng-campo-usuario ng-model="fase.proximaFaseLider" name="proximaFaseLider"></ng-campo-usuario>
-							<validation-msg propriedade="proximaFaseLider"></validation-msg>
-					</div>					
-				</div>
-			</div>
+		<div ng-show="selected == PF" class="panel panel-default">
+			<ng-proxima-fase ng-model="fase" has-role="ANALISE"></ng-proxima-fase>
 		</div>
 
 		<!-- Anexos -->

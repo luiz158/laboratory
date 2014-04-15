@@ -83,11 +83,16 @@ controllers.controller('InternalizacaoCtrl', function InternalizacaoCtrl($scope,
 			}else{
 				AlertService.addWithTimeout('success','Internalização salva com sucesso');
 			}
-			$location.path('/pesquisa/fases/3');
+			//$location.path('/pesquisa/fases/3');
 		}).error( function(data, status) {
-			console.log(data);
-			if (status = 412) {
+			if (status == 401) {
+				AlertService.addWithTimeout('warning',data.message);
+				//$location.path('/analise');
+			} else if(status == 412){
 				ValidationService.registrarViolacoes(data);
+				AlertService.addWithTimeout('danger','Verifique os campos obrigatórios');
+			}else{
+				AlertService.addWithTimeout('danger','Não foi possível executar a operação');
 			}
 		});
 

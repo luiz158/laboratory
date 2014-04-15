@@ -6,15 +6,15 @@
 	<ng-alerts></ng-alerts>
 
 
-	<ul class="nav nav-tabs" ng:init="selected=1">
+	<ul class="nav nav-tabs nav-justified" ng:init="selected=1">
 		<li class="ng-class: selected == 1 ? 'active':'';"><a
 			ng:click="selected=1">Sustentação</a></li>
 		<li class="ng-class: selected == 2 ? 'active':'';"><a
 			ng:click="selected=2">Resultado</a></li>
 		<li class="ng-class: selected == 3 ? 'active':'';"><a
 			ng:click="selected=3">Produtos</a></li>
-		<li class="ng-class: selected == 4 ? 'active':'';"
-			ng-show="fase.situacao == 'Aprovado'"><a ng:click="selected=4">Próxima
+		<li class="ng-class: selected == PF ? 'active':'';"
+			ng-show="fase.executarProximaFase"><a ng:click="selected=PF">Próxima
 				fase</a></li>
 		<li ng:show="fase.id" class="ng-class: selected == 5 ? 'active':'';"><a
 			ng:click="selected=5">Anexos</a></li>
@@ -334,31 +334,7 @@
 				</div>
 				<!-- /Risco -->
 
-
-				<div class="form-group">
-					<label for="situacao">Situação:</label><br> <span
-						id="situacao" class="btn-group" ng-analise-situacao-button
-						situacao="{{fase.situacao}}">
-						<li ng-if="fase.situacao != 'Aprovado'"><a
-							ng-click="aprovar(true)"><i class="fa fa-thumbs-o-up"> </i>
-								Aprovar</a></li>
-						<li ng-if="fase.situacao != 'Reprovado'"><a
-							ng-click="aprovar(false)"><i class="fa fa-thumbs-o-down">
-							</i> Rejeitar</a></li>
-					</span>
-					<validation-msg propriedade="situacao"></validation-msg>
-				</div>
-
-
-				<div ng-if="fase.situacao != 'Rascunho'">
-					<div class="form-group">
-						<label for="justificativa">Justificativa:<font color="#FF0000"> **</font></label>
-						<textarea rows="4" class="form-control" id="justificativa"
-							ng-model="fase.situacaoJustificativa" required></textarea>
-						<span id="situacaoJustificativa-message" class="text-danger"></span>
-						<validation-msg propriedade="justificativa"></validation-msg>
-					</div>
-				</div>
+				
 
 			</div>
 		
@@ -384,7 +360,7 @@
 
 
 	<!-- Próxima fase -->
-	<div ng-show="selected == 4" class="panel panel-default">
+	<div ng-show="selected == PF" class="panel panel-default">
 		<ng-proxima-fase ng-model="fase" has-role="SUSTENTACAO"></ng-proxima-fase>
 	</div>
 

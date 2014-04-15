@@ -102,18 +102,17 @@ public class FaseBC {
 			throw new ValidationException().addViolation(null,
 					"Esta fase ("+fase.getFase()+") já foi finalizada em "+format.format(fase.getDataFinalizacao()));
 		}
-
-		fase.setDataFinalizacao(new Date());
+		
 		Fase proximafase = null;
-
 		faseValidator.validarFinalizar(fase);	
 		
+		fase.setDataFinalizacao(new Date());
 		faseDAO.update(fase);		
 		eventoFaseFinalizar.fire(new FaseEvent(fase));
 		
 		
 		// Se foi aprovado tem uma proxima fase;
-		if (fase.getSituacao().equals(Situacao.APROVADO)) {			
+		if (fase.getExecutarProximaFase()>0) {			
 			proximafase = getProximaFase(fase);
 			faseDAO.insert(proximafase);	
 			eventoFaseCriar.fire(new FaseEvent(proximafase));

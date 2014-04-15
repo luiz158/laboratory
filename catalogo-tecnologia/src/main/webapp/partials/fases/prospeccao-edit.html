@@ -8,15 +8,15 @@
 	<div><ng-alerts></ng-alerts></div>
 
 	<form name="formAnalise" role="form" has-role="PROSPECCAO">
-		<ul class="nav nav-tabs" ng:init="selected=1">
+		<ul class="nav nav-tabs nav-justified" ng:init="selected=1">
 			<li class="ng-class: selected == 1 ? 'active':'';"><a
 				ng:click="selected=1">Prospecção</a></li>
 			<li class="ng-class: selected == 2 ? 'active':'';"><a
 				ng:click="selected=2">Resultado</a></li>
 			<li class="ng-class: selected == 3 ? 'active':'';"><a
 				ng:click="selected=3">Produtos</a></li>
-			<li class="ng-class: selected == 4 ? 'active':'';"
-				ng-show="fase.situacao == 'Aprovado'"><a ng:click="selected=4">Próxima
+			<li class="ng-class: selected == PF ? 'active':'';"
+				ng-show="fase.executarProximaFase"><a ng:click="selected=PF">Próxima
 					fase</a></li>
 			<li ng:show="fase.id" class="ng-class: selected == 5 ? 'active':'';"><a
 				ng:click="selected=5">Anexos</a></li>
@@ -110,30 +110,7 @@
 					</div>
 				</div>
 
-				<div class="form-group">
-					<label for="situacao">Situação:</label><br> <span
-						id="situacao" class="btn-group" ng-analise-situacao-button
-						situacao="{{fase.situacao}}">
-						<li ng-if="fase.situacao != 'Aprovado'"><a
-							ng-click="aprovar(true)"><i class="fa fa-thumbs-o-up"> </i>
-								Aprovar</a></li>
-						<li ng-if="fase.situacao != 'Reprovado'"><a
-							ng-click="aprovar(false)"><i class="fa fa-thumbs-o-down">
-							</i> Rejeitar</a></li>
-					</span>
-					<validation-msg propriedade="situacao"></validation-msg>
-				</div>
-
-
-				<div ng-if="fase.situacao != 'Rascunho'">
-					<div class="form-group">
-						<label for="justificativa">Justificativa:<font color="#FF0000"> **</font></label>
-						<textarea rows="4" class="form-control" id="justificativa"
-							ng-model="fase.situacaoJustificativa" required></textarea>
-						<span id="situacaoJustificativa-message" class="text-danger"></span>
-						<validation-msg propriedade="situacaoJustificativa"></validation-msg>
-					</div>
-				</div>
+				
 
 			</div>
 		</div>
@@ -164,40 +141,10 @@
 
 
 		<!-- Próxima fase -->
-		<div ng-show="selected == 4" class="panel panel-default">
-			<div class="panel-heading">Próxima fase</div>
-			<div class="panel-body">
-				<div class="form-group">
-					<label for="proximaFase">Próxima fase a ser executada:<font color="#FF0000"> **</font></label> <select
-						id="proximaFase" class="form-control" ng-model="fase.proximaFase" disabled=disabled>
-						<option selected value="INTERNALIZACAO">Internalização</option>					
-					</select>
-					<validation-msg propriedade="proximaFase"></validation-msg>					
-				</div>
-
-				<div class="form-group">
-					<label for="justificativaProximaFase">Justificativa:<font color="#FF0000"> **</font></label>
-					<textarea rows="4" class="form-control"
-						id="justificativaProximaFase"
-						ng-model="fase.proximaFaseJustificativa" required></textarea>
-					<validation-msg propriedade="proximaFaseJustificativa"></validation-msg>
-				</div>
-
-				<div class="form-group row">
-					<div class="col-md-6">
-						<label for="detalhamento">Unidade Gestora:<font color="#FF0000"> **</font></label> <input
-							class="form-control" type="text" id="id"
-							ng-model="fase.proximaFaseUnidadeGestora">
-					</div>
-					<div class="col-md-6">
-						<label for="detalhamento">Líder da equipe:<font color="#FF0000"> **</font></label> 
-							<ng-campo-usuario ng-model="fase.proximaFaseLider" name="proximaFaseLider"  has-role="fase.fase"></ng-campo-usuario>
-							<validation-msg propriedade="proximaFaseLider"></validation-msg>
-					</div>					
-				</div>
-			</div>
+		<div ng-show="selected == PF" class="panel panel-default">
+			<ng-proxima-fase ng-model="fase" has-role="PROSPECCAO"></ng-proxima-fase>
 		</div>
-
+	
 		<!-- Anexos -->
 		<div ng:show="selected == 5 && fase.id" class="panel panel-default">
 			<div class="panel-heading">Anexos</div>

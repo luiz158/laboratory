@@ -52,7 +52,11 @@ public class Fase {
 	
 	@NotNull
 	@Enumerated(STRING)
-	private Situacao situacao;
+	/**
+	 * Campo utilizado apenas para a fase de ANalise.
+	 * Mantido na tabela principal para evitar uma grande refatoração no banco.
+	 */
+	private Situacao situacao = Situacao.RASCUNHO;
 	
 	@Column(length=2000)
 	private String situacaoJustificativa;
@@ -61,6 +65,9 @@ public class Fase {
 	
 	@Column(length=2000)
 	private String conclusao;
+	
+	
+	private Integer executarProximaFase = 0;
 	
 	@Enumerated(EnumType.STRING)
 	private FaseEnum proximaFase;
@@ -239,6 +246,14 @@ public class Fase {
 
 	public void setStatus(StatusEnum status) {
 		this.status = status;
+	}
+
+	public Integer getExecutarProximaFase() {
+		return executarProximaFase;
+	}
+
+	public void setExecutarProximaFase(Integer executarProximaFase) {
+		this.executarProximaFase = executarProximaFase;
 	}
 
 	

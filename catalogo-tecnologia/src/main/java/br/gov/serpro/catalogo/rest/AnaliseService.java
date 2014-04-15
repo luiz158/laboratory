@@ -60,8 +60,8 @@ public class AnaliseService {
 	@PUT
 	@Transactional
 	@RequiredRole({ADMINISTRADOR, ANALISE})
-	public void alterar(@Valid Analise analise) {
-		faseBC.salvar(analise).getId();
+	public Long alterar(@Valid Analise analise) {
+		return faseBC.salvar(analise).getId();
 	}
 	
 	@PUT
