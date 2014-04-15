@@ -23,166 +23,235 @@ import br.gov.serpro.catalogo.persistence.FaseProdutoDAO;
 
 @BusinessController
 public class FaseValidator {
-		
-	@Inject 
+
+	@Inject
 	private FaseProdutoDAO faseProdutoDAO;
-	
-	@Inject 
+
+	@Inject
 	private FaseDAO faseDAO;
-	
-	public Set<Violation> validarSalvar(final Fase fase) {	
+
+	public Set<Violation> validarSalvar(final Fase fase) {
 		Set<Violation> violacoes = new LinkedHashSet<Violation>();
-		if (fase.getDataFinalizacao()!=null){
+		if (fase.getDataFinalizacao() != null) {
 			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-			
+
 			throw new ValidationException().addViolation(null,
-					"Esta fase ("+fase.getFase()+") já foi finalizada em "+format.format(fase.getDataFinalizacao()));
+					"Esta fase (" + fase.getFase() + ") já foi finalizada em "
+							+ format.format(fase.getDataFinalizacao()));
 		}
-		
+
 		if (fase.getObjetivo() == null || fase.getObjetivo().isEmpty())
-			violacoes.add(new Violation("objetivo", "Favor informar o objetivo."));
-		
+			violacoes.add(new Violation("objetivo",
+					"Favor informar o objetivo."));
+
 		if (fase.getDataRealizacao() == null)
-			violacoes.add(new Violation("dataRealizacao", "Favor informar a data de realização."));
-		
-		if (fase.getUnidadeGestora() == null || fase.getUnidadeGestora().isEmpty())
-			violacoes.add(new Violation("unidadeGestora", "É preciso definir a unidade gestora."));		
+			violacoes.add(new Violation("dataRealizacao",
+					"Favor informar a data de realização."));
+
+		if (fase.getUnidadeGestora() == null
+				|| fase.getUnidadeGestora().isEmpty())
+			violacoes.add(new Violation("unidadeGestora",
+					"É preciso definir a unidade gestora."));
 		return violacoes;
 	}
-	
-	
+
 	public Set<Violation> validarSalvar(Analise fase) {
-		Set<Violation> violacoes = validarSalvar((Fase)fase);
+		Set<Violation> violacoes = validarSalvar((Fase) fase);
 
-		if (fase.getDemandanteUnidade()== null || fase.getDemandanteUnidade().isEmpty())
-			violacoes.add(new Violation("demandanteUnidade", "Favor informar oa unidade demandante."));
+		if (fase.getDemandanteUnidade() == null
+				|| fase.getDemandanteUnidade().isEmpty())
+			violacoes.add(new Violation("demandanteUnidade",
+					"Favor informar oa unidade demandante."));
 
-		if (fase.getDemandanteRepresentante()== null)
-			violacoes.add(new Violation("demandanteRepresentante", "Favor informar o representante."));
+		if (fase.getDemandanteRepresentante() == null)
+			violacoes.add(new Violation("demandanteRepresentante",
+					"Favor informar o representante."));
 		lancarExcecoesDeViolacao(violacoes);
 		return violacoes;
 	}
-	
+
 	public Set<Violation> validarSalvar(Internalizacao fase) {
-		Set<Violation> violacoes = validarSalvar((Fase)fase);
-		if (fase.getAquisicaoNecessaria() == null )
-			violacoes.add(new Violation("aquisicaoNecessaria", "Favor informar a necessidade de aquisição."));
+		Set<Violation> violacoes = validarSalvar((Fase) fase);
+		if (fase.getAquisicaoNecessaria() == null)
+			violacoes.add(new Violation("aquisicaoNecessaria",
+					"Favor informar a necessidade de aquisição."));
 
-		if (fase.getCapacitacao() == null )
-			violacoes.add(new Violation("capacitacao", "Favor informar a necessidade de capacitação."));
-		
+		if (fase.getCapacitacao() == null)
+			violacoes.add(new Violation("capacitacao",
+					"Favor informar a necessidade de capacitação."));
+
 		lancarExcecoesDeViolacao(violacoes);
 		return violacoes;
 	}
-	
+
 	/**
 	 * Valida os campos obrigatórios para finalizar uma fase.
 	 * 
 	 * @param fase
 	 */
-	public void validarFinalizar(final Fase fase) {	
+	public void validarFinalizar(final Fase fase) {
 		Set<Violation> violacoes = new LinkedHashSet<Violation>();
-		if(fase.getFase().equals(FaseEnum.ANALISE)){
-			violacoes.addAll(validarSalvar((Analise)fase));
-			
+		if (fase.getFase().equals(FaseEnum.ANALISE)) {
+			violacoes.addAll(validarSalvar((Analise) fase));
+
 			if (fase.getSituacao() == null
 					|| fase.getSituacao().equals(Situacao.RASCUNHO))
-				violacoes.add(new Violation("situacao", "Favor informar a situação desta análise."));
-			
+				violacoes.add(new Violation("situacao",
+						"Favor informar a situação desta análise."));
+
 			if (fase.getSituacaoJustificativa() == null
 					|| fase.getSituacaoJustificativa().isEmpty())
 				violacoes.add(new Violation("justificativa",
 						"Favor informar uma justificativa."));
-			
-		} 		
-		if(fase.getFase().equals(FaseEnum.PROSPECCAO)){
-			Prospeccao p = (Prospeccao)fase;
+
+		}
+		if (fase.getFase().equals(FaseEnum.PROSPECCAO)) {
+			Prospeccao p = (Prospeccao) fase;
 			violacoes.addAll(validarSalvar(p));
-			if (p.getTestes() == null || p.getTestes().isEmpty())
-				violacoes.add(new Violation("testes", "Favor informar os testes realizados."));
-				violacoes.add(new Violation(null, "Favor informar os testes realizados."));
-			if (fase.getConclusao() == null || fase.getConclusao().isEmpty())
-				violacoes.add(new Violation("conclusao", "Favor informar a conclusão."));
-				violacoes.add(new Violation(null, "Favor informar a conclusão."));	
-					
-			if (faseProdutoDAO.produtosDaFase(fase).isEmpty())
-				violacoes.add(new Violation(null, "Ao menos um produto deve ter sido prospectado."));	
+			if (p.getTestes() == null || p.getTestes().isEmpty()) {
+				violacoes.add(new Violation("testes",
+						"Favor informar os testes realizados."));
+				violacoes.add(new Violation(null,
+						"Favor informar os testes realizados."));
+			}
+			if (fase.getConclusao() == null || fase.getConclusao().isEmpty()) {
+				violacoes.add(new Violation("conclusao",
+						"Favor informar a conclusão."));
+				violacoes
+						.add(new Violation(null, "Favor informar a conclusão."));
+			}
+
+			if (faseProdutoDAO.produtosDaFase(fase).isEmpty()) {
+				violacoes.add(new Violation(null,
+						"Ao menos um produto deve ter sido prospectado."));
+			}
 		}
-		
-		if(fase.getFase().equals(FaseEnum.INTERNALIZACAO)){
-			Internalizacao i = (Internalizacao)fase;
+
+		if (fase.getFase().equals(FaseEnum.INTERNALIZACAO)) {
+			Internalizacao i = (Internalizacao) fase;
 			violacoes.addAll(validarSalvar(i));
-			if(i.getAquisicaoNecessaria()>0){
-				if (i.getAquisicaoItens() == null || i.getAquisicaoItens().isEmpty())
-					violacoes.add(new Violation("aquisicaoItens", "Favor as aquisições necessárias"));
-					violacoes.add(new Violation(null, "Favor as aquisições necessárias"));
+			if (i.getAquisicaoNecessaria() > 0) {
+				if (i.getAquisicaoItens() == null
+						|| i.getAquisicaoItens().isEmpty()) {
+					violacoes.add(new Violation("aquisicaoItens",
+							"Favor as aquisições necessárias"));
+					violacoes.add(new Violation(null,
+							"Favor as aquisições necessárias"));
+				}
 			}
-			
-			if(i.getCapacitacao()>0){
-				if (i.getCapacitacaoNecessarias()== null || i.getCapacitacaoNecessarias().isEmpty())
-					violacoes.add(new Violation("capacitacaoNecessarias", "Favor as capacitações necessárias"));
-					violacoes.add(new Violation(null, "Favor as capacitações necessárias"));
+
+			if (i.getCapacitacao() > 0) {
+				if (i.getCapacitacaoNecessarias() == null
+						|| i.getCapacitacaoNecessarias().isEmpty()) {
+					violacoes.add(new Violation("capacitacaoNecessarias",
+							"Favor as capacitações necessárias"));
+					violacoes.add(new Violation(null,
+							"Favor as capacitações necessárias"));
+				}
 			}
-			
-			if(i.getRestricao()>0){
-				if (i.getRestricaoQuemPode()== null || i.getRestricaoQuemPode().isEmpty())
-					violacoes.add(new Violation("restricaoQuemPode", "Favor informar quais clientes e/ou áreas internas podem utilizar o Produto"));
-					violacoes.add(new Violation(null, "Favor informar quais clientes e/ou áreas internas podem utilizar o Produto"));
-				if (i.getRestricaoJustificativa()== null || i.getRestricaoJustificativa().isEmpty())
-					violacoes.add(new Violation("restricaoJustificativa", "Favor informar a justificativa da restrição de uso."));
-					violacoes.add(new Violation(null, "Favor informar a justificativa da restrição de uso."));
+
+			if (i.getRestricao() > 0) {
+				if (i.getRestricaoQuemPode() == null
+						|| i.getRestricaoQuemPode().isEmpty()) {
+					violacoes
+							.add(new Violation("restricaoQuemPode",
+									"Favor informar quais clientes e/ou áreas internas podem utilizar o Produto"));
+					violacoes
+							.add(new Violation(null,
+									"Favor informar quais clientes e/ou áreas internas podem utilizar o Produto"));
+				}
+
+				if (i.getRestricaoJustificativa() == null
+						|| i.getRestricaoJustificativa().isEmpty()) {
+					violacoes
+							.add(new Violation("restricaoJustificativa",
+									"Favor informar a justificativa da restrição de uso."));
+					violacoes
+							.add(new Violation(null,
+									"Favor informar a justificativa da restrição de uso."));
+				}
 			}
-			
-			if(i.getAnaliseDeRiscos()<1){
-				if (i.getAnaliseDeRiscosJustificativa()== null || i.getAnaliseDeRiscosJustificativa().isEmpty())
-					violacoes.add(new Violation("analiseDeRiscosJustificativa", "Favor justificar a inexistencia da Análise de riscos."));
-					violacoes.add(new Violation(null, "Favor justificar a inexistencia da Análise de riscos."));
+
+			if (i.getAnaliseDeRiscos() < 1) {
+				if (i.getAnaliseDeRiscosJustificativa() == null
+						|| i.getAnaliseDeRiscosJustificativa().isEmpty()) {
+					violacoes
+							.add(new Violation("analiseDeRiscosJustificativa",
+									"Favor justificar a inexistencia da Análise de riscos."));
+					violacoes
+							.add(new Violation(null,
+									"Favor justificar a inexistencia da Análise de riscos."));
+				}
 			}
 		}
-		
-		if(fase.getFase().equals(FaseEnum.SUSTENTACAO)){
-			Sustentacao i = (Sustentacao)fase;
+
+		if (fase.getFase().equals(FaseEnum.SUSTENTACAO)) {
+			Sustentacao i = (Sustentacao) fase;
 			violacoes.addAll(validarSalvar(i));
-			if(i.getAquisicaoNecessaria()>0){
-				if (i.getAquisicaoItens() == null || i.getAquisicaoItens().isEmpty())
-					violacoes.add(new Violation("aquisicaoItens", "Favor as aquisições necessárias"));
-					violacoes.add(new Violation(null, "Favor as aquisições necessárias"));
+			if (i.getAquisicaoNecessaria() > 0) {
+				if (i.getAquisicaoItens() == null
+						|| i.getAquisicaoItens().isEmpty())
+					violacoes.add(new Violation("aquisicaoItens",
+							"Favor as aquisições necessárias"));
+				violacoes.add(new Violation(null,
+						"Favor as aquisições necessárias"));
 			}
-			
-			if(i.getCapacitacao()>0){
-				if (i.getCapacitacaoNecessarias()== null || i.getCapacitacaoNecessarias().isEmpty())
-					violacoes.add(new Violation("capacitacaoNecessarias", "Favor as capacitações necessárias"));
-					violacoes.add(new Violation(null, "Favor as capacitações necessárias"));
+
+			if (i.getCapacitacao() > 0) {
+				if (i.getCapacitacaoNecessarias() == null
+						|| i.getCapacitacaoNecessarias().isEmpty()) {
+					violacoes.add(new Violation("capacitacaoNecessarias",
+							"Favor as capacitações necessárias"));
+					violacoes.add(new Violation(null,
+							"Favor as capacitações necessárias"));
+				}
 			}
-			
-			if(i.getRestricao()>0){
-				if (i.getRestricaoQuemPode()== null || i.getRestricaoQuemPode().isEmpty())
-					violacoes.add(new Violation("restricaoQuemPode", "Favor informar quais clientes e/ou áreas internas podem utilizar o Produto"));
-					violacoes.add(new Violation(null, "Favor informar quais clientes e/ou áreas internas podem utilizar o Produto"));
-				if (i.getRestricaoJustificativa()== null || i.getRestricaoJustificativa().isEmpty())
-					violacoes.add(new Violation("restricaoJustificativa", "Favor informar a justificativa da restrição de uso."));
-					violacoes.add(new Violation(null, "Favor informar a justificativa da restrição de uso."));
+
+			if (i.getRestricao() > 0) {
+				if (i.getRestricaoQuemPode() == null
+						|| i.getRestricaoQuemPode().isEmpty()) {
+					violacoes
+							.add(new Violation("restricaoQuemPode",
+									"Favor informar quais clientes e/ou áreas internas podem utilizar o Produto"));
+					violacoes
+							.add(new Violation(null,
+									"Favor informar quais clientes e/ou áreas internas podem utilizar o Produto"));
+				}
+				if (i.getRestricaoJustificativa() == null
+						|| i.getRestricaoJustificativa().isEmpty()) {
+					violacoes
+							.add(new Violation("restricaoJustificativa",
+									"Favor informar a justificativa da restrição de uso."));
+					violacoes
+							.add(new Violation(null,
+									"Favor informar a justificativa da restrição de uso."));
+				}
 			}
-			
-			if(i.getAnaliseDeRiscos()<1){
-				if (i.getAnaliseDeRiscosJustificativa()== null || i.getAnaliseDeRiscosJustificativa().isEmpty())
-					violacoes.add(new Violation("analiseDeRiscosJustificativa", "Favor justificar a inexistencia da Análise de riscos."));
-					violacoes.add(new Violation(null, "Favor justificar a inexistencia da Análise de riscos."));
+
+			if (i.getAnaliseDeRiscos() < 1) {
+				if (i.getAnaliseDeRiscosJustificativa() == null
+						|| i.getAnaliseDeRiscosJustificativa().isEmpty())
+					violacoes
+							.add(new Violation("analiseDeRiscosJustificativa",
+									"Favor justificar a inexistencia da Análise de riscos."));
+				violacoes
+						.add(new Violation(null,
+								"Favor justificar a inexistencia da Análise de riscos."));
 			}
 		}
-		
-		if(fase.getFase().equals(FaseEnum.DECLINIO)){
-			violacoes.addAll(validarSalvar((Declinio)fase));
+
+		if (fase.getFase().equals(FaseEnum.DECLINIO)) {
+			violacoes.addAll(validarSalvar((Declinio) fase));
 		}
-		
+
 		violacoes.addAll(validarFinalizarCamposProximaFase(fase));
-		
+
 		lancarExcecoesDeViolacao(violacoes);
-				
+
 	}
 
 	private void lancarExcecoesDeViolacao(Set<Violation> violacoes) {
-		if(!violacoes.isEmpty()){
+		if (!violacoes.isEmpty()) {
 			ValidationException ex = new ValidationException();
 			for (Violation v : violacoes) {
 				ex.addViolation(v.property, v.message);
@@ -190,49 +259,62 @@ public class FaseValidator {
 			throw ex;
 		}
 	}
-	
+
 	/**
 	 * Valida os campos da proxima fase apenas se a mesma tiver sido aprovada.
+	 * 
 	 * @param fase
 	 */
 	private Set<Violation> validarFinalizarCamposProximaFase(final Fase fase) {
 		Set<Violation> violacoes = new LinkedHashSet<ValidationException.Violation>();
-		if (fase.getExecutarProximaFase()>0) {
-			if (fase.getProximaFase() == null)
+		if (fase.getExecutarProximaFase() > 0) {
+			if (fase.getProximaFase() == null) {
 				violacoes.add(new Violation("proximaFase",
-								"Para finalizar é preciso definir a próxima fase."));
+						"Para finalizar é preciso definir a próxima fase."));
 				violacoes.add(new Violation(null,
-								"Para finalizar é preciso definir a próxima fase."));
-			
-			
-			if (fase.getProximaFaseUnidadeGestora() == null || fase.getProximaFaseUnidadeGestora().isEmpty())
-				violacoes.add(new Violation("proximaFaseUnidadeGestora",
+						"Para finalizar é preciso definir a próxima fase."));
+			}
+
+			if (fase.getProximaFaseUnidadeGestora() == null
+					|| fase.getProximaFaseUnidadeGestora().isEmpty()) {
+				violacoes
+						.add(new Violation("proximaFaseUnidadeGestora",
 								"Para finalizar é preciso definir a unidade gestora da próxima fase."));
-			violacoes.add(new Violation(null,
+				violacoes
+						.add(new Violation(null,
 								"Para finalizar é preciso definir a unidade gestora da próxima fase."));
-			
-			if (fase.getProximaFaseLider() == null)
-				violacoes.add(new Violation("proximaFaseLider",
+			}
+
+			if (fase.getProximaFaseLider() == null) {
+				violacoes
+						.add(new Violation("proximaFaseLider",
 								"Para finalizar é preciso definir o lider da unidade gestora da próxima fase."));
-				violacoes.add(new Violation(null,
+				violacoes
+						.add(new Violation(null,
 								"Para finalizar é preciso definir o lider da unidade gestora da próxima fase."));
+			}
 
 			if (fase.getProximaFaseJustificativa() == null
-					|| fase.getProximaFaseJustificativa().isEmpty())
-				violacoes.add(new Violation("proximaFaseJustificativa",
+					|| fase.getProximaFaseJustificativa().isEmpty()) {
+				violacoes
+						.add(new Violation("proximaFaseJustificativa",
 								"Para finalizar é preciso preencher a justificativa da próxima fase."));
 				violacoes.add(new Violation(null,
-								"Para finalizar é preciso definir a próxima fase."));
+						"Para finalizar é preciso definir a próxima fase."));
+			}
 		}
 		return violacoes;
 	}
 
-	public void validarExcluir(Fase fase) {		
-		Fase fasePosterior = faseDAO.obterFasePosterior(fase.getId());		
-		if(fasePosterior!=null && !fasePosterior.getStatus().equals(StatusEnum.EXCLUIDO)){
-			throw new ValidationException()
-			.addViolation(null,"Não é possível excluir a "+fase.getFase()+". Pois existe uma "+fasePosterior.getFase()+" em sequência.");
-		}		
+	public void validarExcluir(Fase fase) {
+		Fase fasePosterior = faseDAO.obterFasePosterior(fase.getId());
+		if (fasePosterior != null
+				&& !fasePosterior.getStatus().equals(StatusEnum.EXCLUIDO)) {
+			throw new ValidationException().addViolation(null,
+					"Não é possível excluir a " + fase.getFase()
+							+ ". Pois existe uma " + fasePosterior.getFase()
+							+ " em sequência.");
+		}
 	}
 
 }
