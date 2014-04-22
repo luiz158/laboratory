@@ -10,6 +10,7 @@ controllers.controller('AnaliseEdit', function Analise($scope, $http,
 	
 	$scope.fase = {};
 	$scope.fase.id = $routeParams.id;
+	$scope.fase.fase = 'ANALISE';
 	$scope.origemDemanda = [];
 	
 	OrigemDemandaService.getItens().then(function(data) {

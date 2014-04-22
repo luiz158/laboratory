@@ -82,6 +82,7 @@ filters.filter('nomeFase', function() {
 			'DECLINIO': 'Declínio'
 	};		
 	return function(fase){	
+		console.log(fase);
 		if(!isNaN(parseFloat(fase)) && isFinite(fase)){
 			return nomes[Object.keys(nomes)[fase-1]];
 		}
