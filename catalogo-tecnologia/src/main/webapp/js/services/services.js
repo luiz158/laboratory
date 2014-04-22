@@ -141,3 +141,23 @@ services.factory('ValidationService', function(AlertService) {
 	
 	return service;
 });
+
+
+services.factory('DashboardService', function($http, $q) {
+	var service = {};				
+
+	service.obterDemandas = function() {
+	    var deferred = $q.defer();
+	    $http({
+			url : 'api/dashboard/minhasDemandas',
+			method : "GET"
+		}).success(function(data) {
+			deferred.resolve(data);
+		}).error(function(data, status) {	
+			console.log(data, status);
+		});		
+
+	    return deferred.promise;
+	  };
+	return service;
+});

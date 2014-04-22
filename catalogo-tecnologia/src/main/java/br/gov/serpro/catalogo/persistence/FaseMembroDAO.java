@@ -31,6 +31,13 @@ public class FaseMembroDAO extends JPACrud<FaseMembro, Long> {
 		return !query.getResultList().isEmpty();
 	}
 
+	public List<FaseMembro> fasesComoMembro(User usuario) {
+		String jpql = "select fm from FaseMembro fm JOIN fetch fm.fase where fm.user.id = :id";
+		TypedQuery<FaseMembro> query = getEntityManager().createQuery(jpql, FaseMembro.class);
+		query.setParameter("id", Long.valueOf(usuario.getId()));
+		return query.getResultList();
+	}
+
 
 	
 }

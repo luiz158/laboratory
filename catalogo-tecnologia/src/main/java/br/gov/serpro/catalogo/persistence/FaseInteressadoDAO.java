@@ -9,6 +9,8 @@ import br.gov.frameworkdemoiselle.stereotype.PersistenceController;
 import br.gov.frameworkdemoiselle.template.JPACrud;
 import br.gov.serpro.catalogo.entity.Fase;
 import br.gov.serpro.catalogo.entity.FaseInteressado;
+import br.gov.serpro.catalogo.entity.FaseMembro;
+import br.gov.serpro.catalogo.entity.User;
 
 @PersistenceController
 public class FaseInteressadoDAO extends JPACrud<FaseInteressado, Long> {
@@ -28,6 +30,13 @@ public class FaseInteressadoDAO extends JPACrud<FaseInteressado, Long> {
 		query.setParameter("cpf", cpf);
 		query.setParameter("fase", fase);
 		return !query.getResultList().isEmpty();
+	}
+
+	public List<FaseInteressado> fasesComoInteressado(User usuario) {
+		String jpql = "select fm from FaseInteressado fm JOIN fetch fm.fase where fm.user.id = :id";
+		TypedQuery<FaseInteressado> query = getEntityManager().createQuery(jpql, FaseInteressado.class);
+		query.setParameter("id", Long.valueOf(usuario.getId()));
+		return query.getResultList();
 	}
 
 

@@ -61,6 +61,8 @@ var operacoes = {
 		EXCLUIR: {icone: "fa fa-warning", badge: "danger"}
 };
 
+
+
 filters.filter('operacaoIcone', function() {    
 		return function(operacao){
 			return operacoes[operacao].icone;
@@ -70,6 +72,22 @@ filters.filter('operacaoIcone', function() {
 filters.filter('operacaoClass', function() {    
 	return function(operacao){
 		return operacoes[operacao].badge;
+	};	
+  });
+
+filters.filter('tipoInteresseIcone', function() {    
+	return function(i){
+		if(i == 'I') return "fa fa-eye";
+		if(i == 'M') return "fa fa-group";
+		return "";
+	};	
+  });
+
+filters.filter('tipoInteresseNome', function() {    
+	return function(i){
+		if(i == 'I') return "Interessado";
+		if(i == 'M') return "Membro da equipe";
+		return "";
 	};	
   });
 
@@ -137,4 +155,24 @@ filters.filter('version', function(version) {
     return function(text) {
         return String(text).replace(/\%VERSION\%/mg, version);
       };
+});
+
+filters.filter('trunk', function () {
+    return function (value, wordwise, max, tail) {
+        if (!value) return '';
+
+        max = parseInt(max, 10);
+        if (!max) return value;
+        if (value.length <= max) return value;
+
+        value = value.substr(0, max);
+        if (wordwise) {
+            var lastspace = value.lastIndexOf(' ');
+            if (lastspace != -1) {
+                value = value.substr(0, lastspace);
+            }
+        }
+
+        return value + (tail || ' …');
+    };
 });

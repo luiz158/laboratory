@@ -1,7 +1,6 @@
 package br.gov.serpro.catalogo.bussiness;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -272,6 +271,14 @@ public class FaseBC {
 
 	public Fase load(Long id) {
 		return faseDAO.load(id);
+	}
+
+	public List<FaseMembro> obterFasesDoUsuarioComoMembro(User usuario) {
+		return faseMembroDAO.fasesComoMembro(usuario);
+	}
+
+	public List<FaseInteressado> obterFasesDoUsuarioComoInteressado(User usuario) {
+		return faseInteressadoDAO.fasesComoInteressado(usuario);
 	}
 
 	
