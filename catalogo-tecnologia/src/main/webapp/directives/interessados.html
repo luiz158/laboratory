@@ -2,30 +2,25 @@
 <div ng-controller="InteressadosCtrl" has-role="fase.fase">	
 	<div class="panel panel-default">	
 		<div class="panel-heading">
-			<h4 class="panel-title">Partes Interessadas - {{fase.fase | nomeFase}}
+			<div class="panel-title">Partes Interessadas
 			<span class="pull-right">
 				<a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#pesquisarInteressadosModal"> 
 					<i class="fa fa-search-plus"> Pesquisar</i>
 				</a>
 			</span>
-			</h4>
+			</div>
 		</div>
 	<div class="panel-body">
-		<table
-			class="table table-striped table-bordered table-hover dataTable no-footer">
-			<tbody>
-				<tr role="row" ng-repeat="faseMembro in membros">
-					<td>{{faseMembro.user.name}}</td>
-					<td> {{faseMembro.user.setor}}</td>
-					<td style="width: 10%">
-						<button ng-click="remover(faseMembro)"
-							has-role="fase.fase" 
-						class="btn btn-danger btn-xs"><i class="fa fa-trash-o">
-								Remover</i></button>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+		
+		<div class="list-group row" ng-if="membros.length">
+			<a ng-repeat="faseMembro in membros" class="list-group-item"> 
+				{{faseMembro.user.name}} - <small>{{faseMembro.user.setor}}</small> 
+				<button ng-click="remover(faseMembro)" has-role="fase.fase" class="btn btn-danger btn-xs pull-right">
+						<i class="fa fa-trash-o "> Remover</i>
+				</button>
+			</a> 
+		</div>	
+		
 		<small ng-if="!membros.length">Clique no botão pesquisar para selecionar os interessados.</small>
 	</div>
 
