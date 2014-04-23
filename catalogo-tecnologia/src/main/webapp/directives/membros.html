@@ -10,18 +10,19 @@
 			</span>
 			</h4>
 		</div>
-	<div class="panel-body">
-		<div class="list-group" ng-if="membros.length">
-			<a ng-repeat="faseMembro in membros" class="list-group-item"> 
-				{{faseMembro.user.name}} - <small>{{faseMembro.user.setor}}</small> 
-				<button ng-click="remover(faseMembro)" has-role="fase.fase" class="btn btn-danger btn-xs pull-right">
-						<i class="fa fa-trash-o "> Remover</i>
-				</button>
-			</a> 
-		</div>	
-		
-		<small ng-if="!membros.length">Clique no botão pesquisar para selecionar os membros.</small>
-	</div>
+		<div class="panel-body">
+			<div class="list-group" ng-if="membros.length">
+				<a ng-repeat="faseMembro in membros" class="list-group-item"> 
+					 <h5><span>{{faseMembro.user.name}} <br/> <small>{{faseMembro.user.setor}}</small></span>
+					<button ng-click="remover(faseMembro)" has-role="fase.fase" class="btn btn-danger btn-xs pull-right">
+							<i class="fa fa-trash-o "> Remover</i>
+					</button>
+					</h5>
+				</a> 
+			</div>	
+			
+			<small ng-if="!membros.length">Clique no botão pesquisar para selecionar os membros.</small>
+		</div>
 
 
 	<div class="modal fade" id="pesquisarMembrosModal" tabindex="-1"
@@ -45,20 +46,18 @@
 							</span>
 						</div>
 
-						<!-- Table -->
-						<table class="table">
-							<tbody>
-								<tr role="row" ng-repeat="m in resultadoPesquisa">
-									<td >{{m.name}} - {{m.setor}}</td>	
-									<td> 
-										<button class="btn btn-primary" type="button" ng-click="adicionar(m)">
-											Adicionar <i class="fa fa-plus-circle"></i>
-										</button> 
-									</td>									
-								</tr>
-							</tbody>
-						</table>
 
+						<div class="list-group" ng-if="membros.length">
+							<a ng-repeat="m in resultadoPesquisa" class="list-group-item row"> 
+								<h5>{{m.name}}								
+								<button class="btn btn-primary  pull-right" type="button" ng-click="adicionar(m)">
+									Adicionar <i class="fa fa-plus-circle"></i>
+								</button> 
+								</h5>
+								<p> <small> {{m.setor}} <br/> {{m.telephoneNumber}} </small></p>
+								
+							</a>
+						</div>
 					</div>
 				</div>
 				<div class="modal-footer">

@@ -153,47 +153,43 @@
 						
 						<div class="form-group">
 							<label for="documentos">Documentos Relacionados:</label>
-							<div class="table-responsive">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>
-	                                           	<div class="form-group">
-													<label for="documentoOficial">Documento Oficial:</label>
-													<input id="documentoOficial" type="text" class="form-control" 
-														ng-model="documento.documentoOficialDemanada">
-												</div> 
-                                            </th>
-                                            <th>
-                                            	<div class="form-group">
-													<label for="rgContrato">RG Contrato:</label>
-													<input id="rgContrato" type="text" class="form-control" 
-														ng-model="documento.rgContrato">
-												</div>                                             
-                                            </th>
-                                            <th>
-                                            	<div class="form-group btn-group">
-				                                    <button ng-click="adicionarDocumento()"
-														 type="button" class="btn btn-primary btn-xs">
-														<i class="fa fa-plus-circle"> </i>  Adicionar
-													</button>
-				                                </div>                                            
-                                            	
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="c in documentos">
-                                            <td>{{c.documentoOficialDemanada}}</td>
-                                            <td>{{c.rgContrato}}</td>
-                                            <td><button class="btn btn-danger btn-xs" ng-click="removerDocumento(c)" has-role="SUSTENTACAO"> 
+							<div class="panel panel-default">	
+								<div class="panel-heading">
+									<div class="row ">
+										<div class="form-group col-md-4">
+											<label for="documentoOficial">Documento Oficial:</label>
+											<input id="documentoOficial" type="text" class="form-control" 
+												ng-model="documento.documentoOficialDemanada">
+										</div> 
+										<div class="form-group col-md-4">
+											<label for="rgContrato">RG Contrato:</label>
+											<input id="rgContrato" type="text" class="form-control" 
+												ng-model="documento.rgContrato">
+										</div> 
+										<div class="form-group btn-group col-md-2">
+		                                    <button ng-click="adicionarDocumento()"
+												 type="button" class="btn btn-primary btn-xs">
+												<i class="fa fa-plus-circle"> </i>  Adicionar
+											</button>
+		                                </div>   
+									</div>
+								</div>
+								<div class="panel-body">
+									<div class="list-group">
+										<a ng-repeat="c in documentos" class="list-group-item row"> 										
+											<div class="form-group col-md-4">{{c.documentoOficialDemanada}}</div> 
+											<div class="form-group col-md-4">{{c.rgContrato}}</div> 
+											<div class="form-group btn-group col-md-2">
+			                                    <button class="btn btn-danger btn-xs" ng-click="removerDocumento(c)" has-role="SUSTENTACAO"> 
                                             		<i class="fa fa-trash-o"> Excluir</i>
                                             	</button>
-                                            </td>
-                                        </tr>                                        
-                                    </tbody>
-                                </table>
-                            </div>
+			                                </div>   
+										</a> 
+									</div>	
+								</div>
+							</div>
+							
+							
 						</div>
 
 					</div>

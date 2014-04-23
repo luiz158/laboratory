@@ -23,6 +23,23 @@ services.factory('DocumentoService', function($http, $q) {
 	   return deferred.promise;
 	};
 	
+	service.excluir = function(doc) {
+		   var deferred = $q.defer();
+		   $http({
+				url : 'api/documento/'+doc.id,
+				method : "DELETE",
+				data : doc,
+				headers : {
+					'Content-Type' : 'application/json;charset=utf8'
+				}
+			}).success(function(data) {
+				deferred.resolve(data);
+			}).error(function(data, status) {	
+				deferred.reject(data);
+			});		   
+		   return deferred.promise;
+		};
+	
 	service.getDocumentos = function(id) {
 		var deferred = $q.defer();
     	$http({

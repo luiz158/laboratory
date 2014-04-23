@@ -90,7 +90,6 @@ controllers.controller('InternalizacaoCtrl', function InternalizacaoCtrl($scope,
 				//$location.path('/analise');
 			} else if(status == 412){
 				ValidationService.registrarViolacoes(data);
-				AlertService.addWithTimeout('danger','Verifique os campos obrigatórios');
 			}else{
 				AlertService.addWithTimeout('danger','Não foi possível executar a operação');
 			}

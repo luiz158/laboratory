@@ -5,6 +5,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -41,6 +42,12 @@ public class DocumentoService {
 		if(doc.getFase()==null) doc.setFase(new Fase());
 		doc.getFase().setId(id);
 		return documentoDAO.insert(doc);
+	}
+	
+	@DELETE
+	@Path("{id}")
+	public void excluir(@PathParam("id") Long id) {
+		documentoDAO.delete(id);
 	}
 
 }

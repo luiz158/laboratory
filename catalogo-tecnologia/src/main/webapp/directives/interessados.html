@@ -14,10 +14,11 @@
 		
 		<div class="list-group row" ng-if="membros.length">
 			<a ng-repeat="faseMembro in membros" class="list-group-item"> 
-				{{faseMembro.user.name}} - <small>{{faseMembro.user.setor}}</small> 
+				 <h5><span>{{faseMembro.user.name}} <br/> <small>{{faseMembro.user.setor}}</small></span>
 				<button ng-click="remover(faseMembro)" has-role="fase.fase" class="btn btn-danger btn-xs pull-right">
 						<i class="fa fa-trash-o "> Remover</i>
 				</button>
+				</h5>
 			</a> 
 		</div>	
 		
@@ -46,22 +47,18 @@
 							</span>
 						</div>
 
-						<!-- Table -->
-						<table class="table">
-							<tbody>
-								<tr role="row" ng-repeat="m in resultadoPesquisa">
-									<td >{{m.name}}</td>
-									<td> {{m.setor}}</td>
-									<td> {{m.telephoneNumber}}</td>	
-									<td> 
-										<button class="btn btn-primary" type="button" ng-click="adicionar(m)">
-											Adicionar <i class="fa fa-plus-circle"></i>
-										</button> 
-									</td>									
-								</tr>
-							</tbody>
-						</table>
 
+						<div class="list-group" ng-if="membros.length">
+							<a ng-repeat="m in resultadoPesquisa" class="list-group-item"> 
+								<h5>{{m.name}}								
+								<button class="btn btn-primary  pull-right" type="button" ng-click="adicionar(m)">
+									Adicionar <i class="fa fa-plus-circle"></i>
+								</button> 
+								</h5>
+								<p> <small> {{m.setor}} <br/> {{m.telephoneNumber}} </small></p>
+								
+							</a>
+						</div>
 					</div>
 				</div>
 				<div class="modal-footer">

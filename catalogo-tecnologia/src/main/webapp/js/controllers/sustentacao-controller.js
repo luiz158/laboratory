@@ -100,8 +100,17 @@ controllers.controller('SustentacaoCtrl', function SustentacaoCtrl($scope, $root
   		});
 	};
 	
-	$scope.removerDocumento = function() {
-		
+	$scope.removerDocumento = function(doc) {
+		DocumentoService.excluir(doc).then(
+			function(){
+				listarDocumentos();
+				$scope.documento = {};
+			}, function(reason) {
+	    		console.log('Failed: ' + reason);
+	  		}, function(update) {
+	    		console.log('Got notification: ' + update);
+	  		}
+	  	);
 	};
 	
 	$scope.excluir = function(id) {
