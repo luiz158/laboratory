@@ -136,7 +136,7 @@
 				        		<div class="col-md-2">
 				        			<b>Fase:</b> {{f.fase | nomeFase}}</span>
 				        		</div>
-				        		<div class="col-md-4">
+				        		<div class="col-md-3">
 				        			<b>Situação: </b>
 			        				<span ng-if="f.fase == 'ANALISE'" ng-analise-situacao situacao="{{f.situacao}}"></span>
 			        				<span ng-if="f.fase != 'ANALISE'">
@@ -149,24 +149,25 @@
 			        				</span>
 				        							        			
 				        		</div>
-				        		<div class="col-md-4">
-				        			<b>Referência:</b> {{f.origemReferencia.nome}} {{f.codigoReferencia}} 
+				        		<div class="col-md-4" ng-if="f.dataFinalizacao">
+				        			<b>Finalização:</b> {{f.dataFinalizacao | date}} 
 				        		</div>
 				        	</div>
 		                    <div class="row">
 				        		<div class="col-md-3">
 				        			<b>Unidade Gestora:</b> {{f.unidadeGestora}} 
 				        		</div>
-				        		<div class="col-md-4">
+				        		<div class="col-md-3">
 				        			<b>Registro:</b> {{f.dataRealizacao | date}}  
 				        		</div>
-				        		<div class="col-md-4">
-				        			<b>Finalização:</b> {{f.dataFinalizacao | date}} 
+				        		
+				        		<div class="col-md-3" ng-if="f.origemReferencia">
+				        			<b>Referência:</b> {{f.origemReferencia.nome}} {{f.codigoReferencia}} 
 				        		</div>
 				        	</div>
-	                         <p>
+	                         <div>
 	                             <b>Objetivo:</b> {{f.objetivo | trunk:true:250}}
-	                         </p>
+	                         </div>
 	                     </div>
 	                    </a>
 	                 </li>
