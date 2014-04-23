@@ -54,8 +54,8 @@
 				<div class="col-md-4">
 					<label for="finalizada">Finalizada:</label> <select
 						class="form-control" ng-model="fase.finalizada" id="finalizada">
-						<option value='1'>SIM</option>
-						<option value='0'>NÃO</option>
+						<option value='1'>Finalizada</option>
+						<option value='0'>Em curso</option>
 					</select>
 				</div>
 				<div class="col-md-4">
@@ -137,7 +137,17 @@
 				        			<b>Fase:</b> {{f.fase | nomeFase}}</span>
 				        		</div>
 				        		<div class="col-md-4">
-				        			<b>Situação: <span ng-analise-situacao situacao="{{f.situacao}}"></span>
+				        			<b>Situação: </b>
+			        				<span ng-if="f.fase == 'ANALISE'" ng-analise-situacao situacao="{{f.situacao}}"></span>
+			        				<span ng-if="f.fase != 'ANALISE'">
+			        					<span ng-hide="f.dataFinalizacao" class="label label-warning">
+			        						<i class="fa fa-road"> </i> Em curso
+			        					</span>
+			        					<span ng-show="f.dataFinalizacao" class="label label-success">
+			        						<i class="fa fa-check-square"> </i> Finalizada
+			        					</span>
+			        				</span>
+				        							        			
 				        		</div>
 				        		<div class="col-md-4">
 				        			<b>Referência:</b> {{f.origemReferencia.nome}} {{f.codigoReferencia}} 
@@ -148,14 +158,14 @@
 				        			<b>Unidade Gestora:</b> {{f.unidadeGestora}} 
 				        		</div>
 				        		<div class="col-md-4">
-				        			<b>Registro:</b> {{f.dataRealizacao}}  
+				        			<b>Registro:</b> {{f.dataRealizacao | date}}  
 				        		</div>
 				        		<div class="col-md-4">
-				        			<b>Finalização:</b> {{f.dataFinalizacao}} 
+				        			<b>Finalização:</b> {{f.dataFinalizacao | date}} 
 				        		</div>
 				        	</div>
 	                         <p>
-	                             <b>Objetivo:</b> {{f.objetivo}}
+	                             <b>Objetivo:</b> {{f.objetivo | trunk:true:250}}
 	                         </p>
 	                     </div>
 	                    </a>

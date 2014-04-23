@@ -16,6 +16,7 @@ filters.filter('tamanho', function() {
     };
   });
 
+
 filters.filter('tipoArquivo', function() {    
 	var tipos = {};
 	var path = "images/filetypes/";
