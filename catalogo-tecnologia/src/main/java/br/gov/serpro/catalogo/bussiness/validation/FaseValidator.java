@@ -44,14 +44,6 @@ public class FaseValidator {
 			violacoes.add(new Violation("objetivo",
 					"Favor informar o objetivo."));
 
-		if (fase.getDataRealizacao() == null)
-			violacoes.add(new Violation("dataRealizacao",
-					"Favor informar a data de realização."));
-
-		if (fase.getUnidadeGestora() == null
-				|| fase.getUnidadeGestora().isEmpty())
-			violacoes.add(new Violation("unidadeGestora",
-					"É preciso definir a unidade gestora."));
 		return violacoes;
 	}
 
@@ -72,14 +64,6 @@ public class FaseValidator {
 
 	public Set<Violation> validarSalvar(Internalizacao fase) {
 		Set<Violation> violacoes = validarSalvar((Fase) fase);
-		if (fase.getAquisicaoNecessaria() == null)
-			violacoes.add(new Violation("aquisicaoNecessaria",
-					"Favor informar a necessidade de aquisição."));
-
-		if (fase.getCapacitacao() == null)
-			violacoes.add(new Violation("capacitacao",
-					"Favor informar a necessidade de capacitação."));
-
 		lancarExcecoesDeViolacao(violacoes);
 		return violacoes;
 	}
@@ -91,6 +75,15 @@ public class FaseValidator {
 	 */
 	public void validarFinalizar(final Fase fase) {
 		Set<Violation> violacoes = new LinkedHashSet<Violation>();
+		if (fase.getDataRealizacao() == null)
+			violacoes.add(new Violation("dataRealizacao",
+					"Favor informar a data de realização."));
+
+		if (fase.getUnidadeGestora() == null
+				|| fase.getUnidadeGestora().isEmpty())
+			violacoes.add(new Violation("unidadeGestora",
+					"É preciso definir a unidade gestora."));
+		
 		if (fase.getFase().equals(FaseEnum.ANALISE)) {
 			violacoes.addAll(validarSalvar((Analise) fase));
 
@@ -130,6 +123,15 @@ public class FaseValidator {
 		if (fase.getFase().equals(FaseEnum.INTERNALIZACAO)) {
 			Internalizacao i = (Internalizacao) fase;
 			violacoes.addAll(validarSalvar(i));
+			
+			if (i.getAquisicaoNecessaria() == null)
+				violacoes.add(new Violation("aquisicaoNecessaria",
+						"Favor informar a necessidade de aquisição."));
+
+			if (i.getCapacitacao() == null)
+				violacoes.add(new Violation("capacitacao",
+						"Favor informar a necessidade de capacitação."));
+			
 			if (i.getAquisicaoNecessaria() > 0) {
 				if (i.getAquisicaoItens() == null
 						|| i.getAquisicaoItens().isEmpty()) {
