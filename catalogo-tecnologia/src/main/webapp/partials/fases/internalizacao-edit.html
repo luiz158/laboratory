@@ -38,8 +38,8 @@
 					<div class="col-md-6">
 						<a
 							href="#{{fase.faseAnterior.fase | faseUrl}}/{{fase.faseAnterior.id}}">
-							<label for="faseAnterior">Fase anterior:
-								{{fase.faseAnterior.fase | nomeFase}}<font color="#FF0000"> *</font></label> <input
+							<label for="faseAnterior">Fase anterior à Internalização:
+								{{fase.faseAnterior.fase | nomeFase}}<font color="#FF0000"> **</font></label> <input
 							class="form-control" disabled=disabled type="text"
 							id="faseAnterior"
 							value="{{fase.faseAnterior.id}} - {{fase.faseAnterior.origemReferencia.nome}}[{{fase.faseAnterior.codigoReferencia}}]" />
@@ -62,7 +62,7 @@
 				</div>
 
 				<div class="form-group">
-					<label for="objetivo">Objetivo:<font color="#FF0000"> *</font></label>
+					<label for="objetivo">Objetivo da Internalização:<font color="#FF0000"> *</font></label>
 					<textarea rows="4" class="form-control" id="objetivo"
 						ng-model="fase.objetivo" required></textarea>
 					<validation-msg propriedade="objetivo"></validation-msg>
@@ -73,7 +73,7 @@
 					<div class="col-md-6">
 						<div date-picker="start"></div>
 						<label class="dataAnalise"><i class="fa fa-calendar"></i>
-							Data de início <small>(dd/mm/aaaa)</small>:<font color="#FF0000"> *</font></label> <input type="text"
+							Data de início <small>(dd/mm/aaaa)</small>:<font color="#FF0000"> **</font></label> <input type="text"
 							class="form-control" id="data" name="data"
 							ng-model="fase.dataRealizacao" data-date-type="number"
 							data-min-date="01/01/2010" data-autoclose="1"
@@ -83,7 +83,7 @@
 					<div class="col-md-6">
 						<div date-picker="start"></div>
 						<label class="dataFinalizacao"><i class="fa fa-calendar"></i>
-							Data da finalização:</label> <input type="text" disabled=disabled
+							Data da finalização:<font color="#FF0000"> **</font></label> <input type="text" disabled=disabled
 							class="form-control" id="dataFinalizacao" name="dataFinalizacao"
 							ng-model="fase.dataFinalizacao" data-date-format="dd/MM/yyyy">
 						<validation-msg propriedade="dataFinalizacao"></validation-msg>
@@ -93,7 +93,7 @@
 				<div class="form-group row">
 					<div class="col-md-6">
 						<label for="gestor">Unidade gestora de {{fase.fase |
-							nomeFase}}:<font color="#FF0000"> *</font></label> <input class="form-control" required type="text"
+							nomeFase}}:<font color="#FF0000"> **</font></label> <input class="form-control" required type="text"
 							id="gestor" ng-model="fase.unidadeGestora">
 						<validation-msg propriedade="unidadeGestora"></validation-msg>
 					</div>
@@ -119,7 +119,7 @@
 					<div class="panel-body">
 						<div class="form-group">
 							<label for="aquisicaoNecessaria">Há necessidade de
-								aquisições para a Internalização?<font color="#FF0000"> *</font></label>
+								aquisições para a Internalização?<font color="#FF0000"> **</font></label>
 							<div class="form-control" id="aquisicaoNecessaria">
 								<div class="radio-inline">
 									<label> <input type="radio" name="aquisicaoNecessaria"
@@ -143,7 +143,7 @@
 							</div>
 							<div class="form-group">
 								<label for="aquisicaoResultado">Resultados das
-									Aquisições:</label>
+									Aquisições:<font color="#FF0000"> **</font></label>
 								<textarea rows="4" class="form-control" id="aquisicaoResultado"
 									ng-model="fase.aquisicaoResultado"></textarea>
 								<validation-msg propriedade="aquisicaoResultado"></validation-msg>
@@ -211,7 +211,7 @@
 					<div class="panel-body">
 						<div class="form-group">
 							<label for="capacitacao">Há necessidade de capacitações
-								para a Internalização?<font color="#FF0000"> *</font></label>
+								para a Internalização?<font color="#FF0000"> **</font></label>
 							<div class="form-control" id="capacitacao">
 								<div class="radio-inline">
 									<label> <input type="radio" name="capacitacao"
@@ -236,8 +236,7 @@
 								<validation-msg propriedade="capacitacaoNecessarias"></validation-msg>
 							</div>
 							<div class="form-group">
-								<label for="capacitacaoRealizadas">Capacitações
-									Realizadas:</label>
+								<label for="capacitacaoRealizadas">Resultado da Capacitação:<font color="#FF0000"> **</font></label>
 								<textarea rows="4" class="form-control"
 									id="capacitacaoRealizadas"
 									ng-model="fase.capacitacaoRealizadas"></textarea>
@@ -327,7 +326,7 @@
 									ng-model="fase.analiseDeRiscosJustificativa"></textarea>
 								<validation-msg propriedade="analiseDeRiscosJustificativa"></validation-msg>
 							</div>
-							<div ng-show="fase.analiseDeRiscos" class="alert alert-warning">Anexe o GRS na aba "Anexos".</div>
+							<div ng-show="fase.analiseDeRiscos" class="alert alert-warning">Favor, anexar documentos referentes à análise de riscos.</div>
 
 						</div>
 

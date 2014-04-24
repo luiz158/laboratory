@@ -143,45 +143,49 @@ controllers.controller('ProdutoEdit', function Produto($scope, $http,
 		}else{
 			if($scope.categoriasSelecionadas.length == 0){
 				AlertService.addWithTimeout('danger','É necessário adicionar pelo menos uma categoria!');
-			}else{	
-				console.log("ProdutoController " + $rootScope.produto);
-				
-				$rootScope.produto.plataformasSuportadas = $scope.plataformasSuportadas;
-				$rootScope.produto.categorias = $scope.categoriasSelecionadas;
-				if(typeof($scope.licenciamento) != "undefined" && $scope.licenciamento != ""){
-					$rootScope.produto.licenciamento = $scope.licenciamento;
-				}
-				if(typeof($scope.fabricante) != "undefined"&& $scope.fabricante != ""){
-					$rootScope.produto.fabricante = $scope.fabricante;
-				}
-				if(typeof($scope.fornecedor) != "undefined"&& $scope.fornecedor != ""){
-					$rootScope.produto.fornecedor = $scope.fornecedor;
-				}
-				
-				$("[id$='-message']").text("");
-				$http({
-					url : 'api/produto',
-					method : $rootScope.produto.id ? "PUT" : "POST",
-					data : $rootScope.produto,
-					headers : {
-						'Content-Type' : 'application/json;charset=utf8'
+			}else{
+				if(typeof($scope.fabricante) == "undefined" || $scope.fabricante == ""){
+					AlertService.addWithTimeout('danger','É necessário selecionar o fabricante do produto!');
+				}else{
+					console.log("ProdutoController " + $rootScope.produto);
+					
+					$rootScope.produto.plataformasSuportadas = $scope.plataformasSuportadas;
+					$rootScope.produto.categorias = $scope.categoriasSelecionadas;
+					if(typeof($scope.licenciamento) != "undefined" && $scope.licenciamento != ""){
+						$rootScope.produto.licenciamento = $scope.licenciamento;
 					}
-				
-				}).success(function(data) {
-					AlertService.addWithTimeout('success','Produto salvo com sucesso');
-					$location.path('produto');
-				}).error(function(data, status) {
-					if(status == 401){
-						AlertService.addWithTimeout('warning',data.message);
-						$location.path('/produto');
-					} else if (status == 412) {
-						$.each(data, function(i, violation) {
-							$("#" + violation.property + "-message").text(violation.message);
-						});
-					} else {
-						AlertService.addWithTimeout('danger','Não foi possível executar a operação');
+					if(typeof($scope.fabricante) != "undefined" && $scope.fabricante != ""){
+						$rootScope.produto.fabricante = $scope.fabricante;
 					}
-				});
+					if(typeof($scope.fornecedor) != "undefined" && $scope.fornecedor != ""){
+						$rootScope.produto.fornecedor = $scope.fornecedor;
+					}
+					
+					$("[id$='-message']").text("");
+					$http({
+						url : 'api/produto',
+						method : $rootScope.produto.id ? "PUT" : "POST",
+						data : $rootScope.produto,
+						headers : {
+							'Content-Type' : 'application/json;charset=utf8'
+						}
+					
+					}).success(function(data) {
+						AlertService.addWithTimeout('success','Produto salvo com sucesso');
+						$location.path('produto');
+					}).error(function(data, status) {
+						if(status == 401){
+							AlertService.addWithTimeout('warning',data.message);
+							$location.path('/produto');
+						} else if (status == 412) {
+							$.each(data, function(i, violation) {
+								$("#" + violation.property + "-message").text(violation.message);
+							});
+						} else {
+							AlertService.addWithTimeout('danger','Não foi possível executar a operação');
+						}
+					});
+				}
 			}			
 		}
 	};

@@ -1,6 +1,6 @@
 <div class="painel painel-default">
 	<h1 class="page-header">
-		Categoria <small>edição</small>
+		<small>Manter</small> Categoria
 	</h1>
 
 	<div>
@@ -26,9 +26,13 @@
 							disabled=disabled type="text" id="id" ng-model="catecoria.id">
 					</div>
 				</div>
-
 				<div class="form-group">
-					<label for="nome">Nome:<font color="#FF0000"> *</font></label> 
+					<label for="tecnologia">Tecnologia:<font color="#FF0000"> *</font></label>
+					<select id="tecnologia" class="form-control" ng-model="tecnologia" ng-options="t.nome for t in tecnologias" required>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="nome">Categoria:<font color="#FF0000"> *</font></label> 
 					<input type="text" class="form-control" id="nome" ng-model="categoria.nome"	required> 
 					<span id="nome-message" class="text-danger"></span>
 				</div>
@@ -36,11 +40,6 @@
 					<label for="descricao">Descrição:<font color="#FF0000"> *</font></label> 
 					<textarea rows="4" class="form-control" id="descricao" ng-model="categoria.descricao" required></textarea>
 					<span id="descricao-message" class="text-danger"></span>
-				</div>
-				<div class="form-group">
-					<label for="tecnologia">Tecnologia:<font color="#FF0000"> *</font></label>
-					<select id="tecnologia" class="form-control" ng-model="tecnologia" ng-options="t.nome for t in tecnologias" required>
-					</select>
 				</div>
 			</div>
 		</div>
