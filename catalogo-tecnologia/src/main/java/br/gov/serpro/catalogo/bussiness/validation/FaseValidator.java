@@ -247,7 +247,7 @@ public class FaseValidator {
 		}
 
 		violacoes.addAll(validarFinalizarCamposProximaFase(fase));
-
+		
 		lancarExcecoesDeViolacao(violacoes);
 
 	}
@@ -258,6 +258,7 @@ public class FaseValidator {
 			for (Violation v : violacoes) {
 				ex.addViolation(v.property, v.message);
 			}
+			ex.addViolation(null,"Favor, verificar os campos obrigatórios");
 			throw ex;
 		}
 	}
