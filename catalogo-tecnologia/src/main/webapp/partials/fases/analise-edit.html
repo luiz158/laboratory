@@ -59,7 +59,7 @@
 							<validation-msg propriedade="demandanteUnidade"></validation-msg>
 					</div>
 					<div class="col-md-6">
-						<label for="demandante">Representante da Unidade:<font color="#FF0000"> *</font></label> 
+						<label for="demandante">Representante da Unidade demandante:<font color="#FF0000"> *</font></label> 
 						<ng-campo-usuario ng-model="fase.demandanteRepresentante" name="demandanteRepresentante"></ng-campo-usuario> 
 						<validation-msg propriedade="demandanteRepresentante"></validation-msg>
 					</div>
@@ -68,7 +68,7 @@
 					
 
 				<div class="form-group">
-					<label for="detalhamento">Detalhamento:<font color="#FF0000"> *</font></label>
+					<label for="detalhamento">Detalhamento da demanda:<font color="#FF0000"> *</font></label>
 					<textarea rows="4" class="form-control" id="detalhamento"
 						ng-model="fase.objetivo" required maxlength="2000">
 					</textarea>
@@ -80,7 +80,7 @@
 					<div class="col-md-6">
 						<div date-picker="start"></div>
 						<label class="dataAnalise"><i class="fa fa-calendar"></i>
-							Data da Análise <small>(dd/mm/aaaa)</small>:<font color="#FF0000"> *</font></label> 
+							Data da Análise <small>(dd/mm/aaaa)</small>:<font color="#FF0000"> **</font></label> 
 						<input type="text"
 							class="form-control" id="dataAnalise" name="dataAnalise"
 							ng-model="fase.dataRealizacao" data-date-type="number"
@@ -103,7 +103,7 @@
 
 				<div class="form-group row">
 					<div class="col-md-6">
-						<label for="unidadeGestora">Unidade gestora de Análise:<font color="#FF0000"> *</font></label> <input
+						<label for="unidadeGestora">Unidade gestora de Análise:<font color="#FF0000"> **</font></label> <input
 							class="form-control" required type="text" id="unidadeGestora"
 							ng-model="fase.unidadeGestora" >
 						<validation-msg propriedade="unidadeGestora"></validation-msg>
@@ -125,7 +125,7 @@
 				</div>
 
 				<div class="form-group">
-					<label for="situacao">Situação:<font color="#FF0000"> **</font></label><br> 
+					<label for="situacao">Situação da demanda:<font color="#FF0000"> **</font></label><br> 
 					<span id="situacao" class="btn-group" ng-analise-situacao-button
 						situacao="{{fase.situacao}}">
 						<li ng-if="fase.situacao != 'Aprovado'">

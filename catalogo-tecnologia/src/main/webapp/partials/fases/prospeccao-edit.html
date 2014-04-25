@@ -63,7 +63,7 @@
 				</div>
 
 				<div class="form-group">
-					<label for="objetivo">Objetivo:<font color="#FF0000"> *</font></label>
+					<label for="objetivo">Objetivo da Prospecção:<font color="#FF0000"> *</font></label>
 					<textarea rows="4" class="form-control" id="objetivo"
 						ng-model="fase.objetivo" required></textarea>
 					<validation-msg propriedade="objetivo"></validation-msg>
@@ -74,7 +74,7 @@
 					<div class="col-md-6">
 						<div date-picker="start"></div>
 						<label class="dataAnalise"><i class="fa fa-calendar"></i>
-							Data de início <small>(dd/mm/aaaa)</small>:<font color="#FF0000"> *</font></label> <input type="text"
+							Data de início <small>(dd/mm/aaaa)</small>:<font color="#FF0000"> **</font></label> <input type="text"
 							class="form-control" id="data" name="data"
 							ng-model="fase.dataRealizacao" data-date-type="number"
 							data-min-date="01/01/2010" data-autoclose="1"
@@ -94,7 +94,7 @@
 
 				<div class="form-group row">
 					<div class="col-md-6">
-						<label for="gestor">Unidade gestora de {{fase.fase | nomeFase}}:<font color="#FF0000"> *</font></label> <input
+						<label for="gestor">Unidade gestora de {{fase.fase | nomeFase}}:<font color="#FF0000"> **</font></label> <input
 							class="form-control" required type="text" id="gestor"
 							ng-model="fase.unidadeGestora" >
 						<validation-msg propriedade="unidadeGestora"></validation-msg>
@@ -120,7 +120,7 @@
 			<div class="panel-heading">Resultado da Prospecção</div>
 			<div class="panel-body">
 				<div class="form-group">
-					<label for="testes">Descrição dos testes realizados:<font color="#FF0000"> **</font></label>
+					<label for="testes">Descrição dos testes realizados:</label>
 					<textarea rows="4" class="form-control" id="testes"
 						ng-model="fase.testes"></textarea>
 					<validation-msg propriedade="testes"></validation-msg>

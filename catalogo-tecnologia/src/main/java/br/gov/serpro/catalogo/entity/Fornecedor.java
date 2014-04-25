@@ -20,13 +20,13 @@ public class Fornecedor {
 	@NotEmpty
 	private String nome;
 	
-	@NotEmpty
+	
 	private String representante;
 	
-	@NotEmpty
+	
 	private String telefone;
 	
-	@NotEmpty
+	
 	private String email;
 
 	public Long getId() {

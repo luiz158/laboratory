@@ -20,13 +20,13 @@ public class Fabricante {
 	@NotEmpty
 	private String nome;
 	
-	@NotEmpty
+	
 	private String representante;
 	
-	@NotEmpty
+	
 	private String telefone;
 	
-	@NotEmpty
+	
 	private String email;
 
 	
