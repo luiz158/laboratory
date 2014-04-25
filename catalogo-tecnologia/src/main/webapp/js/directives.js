@@ -478,3 +478,43 @@ diretivas.directive('ngFaseToolbar', function($timeout) {
 		templateUrl : 'partials/fase/toolbar.html'
 	};
 });
+
+
+diretivas.directive('timeline',function() {
+	return {
+		restrict : 'A',
+		require : '^ngModel',
+		scope : {			
+			ngModel : '=',
+			id : '@'
+		},
+		link : function(scope, elem, $attrs) {
+			
+			  var container = document.getElementById($attrs.id);
+			  var chart = new google.visualization.Timeline(container);
+			  var dataTable = new google.visualization.DataTable();
+	
+			  dataTable.addColumn({ type: 'string', id: 'Produto'});
+			  dataTable.addColumn({ type: 'string', id: 'Situação' });
+			  dataTable.addColumn({ type: 'number', id: 'Versão' });
+			  dataTable.addColumn({ type: 'number', id: 'Versão' });
+//			  dataTable.addColumn({ type: 'number', id: 'End' });
+			  
+			  dataTable.addRows([
+			    [ 'Java',  'Prospecção',    4 	,5 ],
+			    [ 'Java',  'defasado',    	5  	,6],
+			    [ 'Java',  'defasado', 		6  	,7],
+			    [ 'Ubunto',  'defasado',    	10  	,10.9],
+			    [ 'Ubunto',  'defasado', 		11  	,11.9]
+			    
+			    ]);
+	
+			  var options = {
+			    timeline: { singleColor: '#8d8'}
+			  };
+	
+			  chart.draw(dataTable, options);
+
+		}
+};
+});

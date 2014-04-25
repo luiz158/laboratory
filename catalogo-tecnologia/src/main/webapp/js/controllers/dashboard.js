@@ -39,5 +39,37 @@ controllers.controller('DashboardCtrl', function DashboardCtrl($scope, Dashboard
 		$scope.paginacaoDemandas.data = data;
 	});
 	
-	
+	$scope.produtos = [
+	    {
+	    	nome: "Java",
+	    	versoes:[
+	    	         {id: 1, versao: "1.4", fase: {id:10, fase: 'SUSTENTACAO'}},
+	    	         {id: 2, versao: "1.5", fase: {id:10, fase: 'INTERNALIZACAO'}},
+	    	         {id: 3, versao: "1.6", fase: {id:10, fase: 'PROSPECCAO'}},
+	    	         {id: 4, versao: "1.7"},
+	    	         {id: 4, versao: "1.8"}
+	    	]
+	    },
+	    {
+	    	nome: "Ubuntu",
+	    	versoes:[
+	    	         {id: 1, versao: "10.04", fase: {id:10, fase: 'SUSTENTACAO'}},
+	    	         {id: 2, versao: "11", fase: {id:10, fase: 'INTERNALIZACAO'}},
+	    	         {id: 3, versao: "12.", fase: {id:10, fase: 'PROSPECCAO'}},
+	    	         {id: 4, versao: "13"},
+	    	         {id: 4, versao: "14"}
+	    	]
+	    },
+	    {
+	    	nome: "Mozilla Firefox",
+	    	versoes:[
+	    	         {id: 1, versao: "109", fase: {id:10, fase: 'SUSTENTACAO'}},
+	    	         {id: 2, versao: "12.0.0"},
+	    	         {id: 3, versao: "14.0.9", fase: {id:10, fase: 'PROSPECCAO'}},
+	    	         {id: 4, versao: "17.0.9"},
+	    	         {id: 4, versao: "28"}
+	    	]
+	    }
+	];
+
 });

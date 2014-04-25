@@ -104,7 +104,9 @@ filters.filter('nomeFase', function() {
 		if(!isNaN(parseFloat(fase)) && isFinite(fase)){
 			return nomes[Object.keys(nomes)[fase-1]];
 		}
-		return nomes[fase];		
+		var nome = nomes[fase];
+		if (nome) return nome;	
+		return "Não existe";
 	};
   });
 
@@ -115,10 +117,14 @@ filters.filter('iconeFase', function() {
 			'PROSPECCAO': 'images/fases/prospeccao.png',
 			'INTERNALIZACAO':'images/fases/internalizacao.png',
 			'SUSTENTACAO':'images/fases/sustentacao.png', 
-			'DECLINIO': 'images/fases/declinio.png'
+			'DECLINIO': 'images/fases/declinio.png',
+			'NENHUMA': 'images/fases/nenhuma.png',
+			
 	};
-	return function(fase){	
-		return url[fase];		
+	return function(fase){
+		var nome = url[fase];
+		if (nome) return nome;
+		return url['NENHUMA'];		
 	};
   });
 
