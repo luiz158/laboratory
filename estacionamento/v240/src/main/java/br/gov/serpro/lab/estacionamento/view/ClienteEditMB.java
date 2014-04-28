@@ -30,17 +30,23 @@
  */
 package br.gov.serpro.lab.estacionamento.view;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.enterprise.context.SessionScoped;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
-
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.TransferEvent;
+import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.DualListModel;
+import org.primefaces.model.StreamedContent;
+import org.primefaces.model.UploadedFile;
 import br.gov.frameworkdemoiselle.annotation.PreviousView;
+import br.gov.frameworkdemoiselle.message.MessageContext;
 import br.gov.frameworkdemoiselle.stereotype.ViewController;
 import br.gov.frameworkdemoiselle.template.AbstractEditPageBean;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
@@ -49,6 +55,7 @@ import br.gov.serpro.lab.estacionamento.domain.*;
 
 @ViewController
 @PreviousView("./cliente_list.jsf")
+@SessionScoped
 public class ClienteEditMB extends AbstractEditPageBean<Cliente, Long> {
 
 	private static final long serialVersionUID = 1L;
@@ -56,6 +63,8 @@ public class ClienteEditMB extends AbstractEditPageBean<Cliente, Long> {
 	private DataModel<Automovel> automoveis;
 
 	private DualListModel<Endereco> enderecoList = null;
+
+	private UploadedFile uploadedFile;
 
 	@Inject
 	private ClienteBC clienteBC;
@@ -65,6 +74,27 @@ public class ClienteEditMB extends AbstractEditPageBean<Cliente, Long> {
 
 	@Inject
 	private EnderecoBC enderecoBC;
+
+	@Inject
+	MessageContext messageContext;
+
+	private StreamedContent fotoVisualizar = null;
+
+	public StreamedContent getFotoVisualizar() {
+   		if (getBean() != null && getBean().getFoto() != null){
+        		try {
+            		setFotoVisualizar(new DefaultStreamedContent(new ByteArrayInputStream(getBean().getFoto())));
+        		}catch(Exception e){
+        			messageContext.add("Erro ao carregar foto");
+        	    	e.printStackTrace();
+        		}
+        	}
+    	return this.fotoVisualizar;
+	}	
+	
+	public void setFotoVisualizar(StreamedContent fotoVisualizar) {		
+		this.fotoVisualizar = fotoVisualizar;
+	}
 
 	public List<SelectItem> getAutomovelTipos() {
 		return this.automovelBC.getAutomovelTipos();
@@ -97,7 +127,7 @@ public class ClienteEditMB extends AbstractEditPageBean<Cliente, Long> {
 
 	@Override
 	protected Cliente handleLoad(Long id) {
-	
+
 		return this.clienteBC.load(id);
 	}
 
@@ -137,11 +167,10 @@ public class ClienteEditMB extends AbstractEditPageBean<Cliente, Long> {
 			}
 			if (target == null) {
 				target = new ArrayList<Endereco>();
-			}else{
+			} else {
 				source.removeAll(target);
 			}
 			this.enderecoList = new DualListModel<Endereco>(source, target);
-
 		}
 		return this.enderecoList;
 	}
@@ -149,19 +178,19 @@ public class ClienteEditMB extends AbstractEditPageBean<Cliente, Long> {
 	public void setEnderecoList(DualListModel<Endereco> enderecoList) {
 		this.enderecoList = enderecoList;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public void onTransfer(TransferEvent event) {
-		
-		if (event.isAdd()){
+		if (event.isAdd()) {
 			this.addEnderecoList((List<Endereco>) event.getItems());
 		}
 		if (event.isRemove()) {
 			this.deleteEnderecoList((List<Endereco>) event.getItems());
-		 }		
-
+		}
 	}
 
-		
-
+	public void handleFileUpload(FileUploadEvent event) {
+		uploadedFile = event.getFile();
+		getBean().setFoto(uploadedFile.getContents());
+	}
 }
