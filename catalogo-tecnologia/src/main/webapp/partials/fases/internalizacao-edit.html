@@ -13,10 +13,9 @@
 			ng:click="selected=2">Resultado</a></li>
 		<li class="ng-class: selected == 3 ? 'active':'';"><a
 			ng:click="selected=3">Produtos</a></li>
-		<li class="ng-class: selected == PF ? 'active':'';"
-			ng-show="fase.executarProximaFase"><a ng:click="selected=PF">Próxima
-				fase</a></li>
-		<li ng:show="fase.id" class="ng-class: selected == 5 ? 'active':'';"><a
+		<li class="ng-class: selected == 'PF' ? 'active':'';">
+				<a	ng:click="selected='PF'">Próxima Fase <small ng-if="fase.proximaFase && fase.executarProximaFase">({{fase.proximaFase | nomeFase}})</small></a></li>
+			<li ng:show="fase.id" class="ng-class: selected == 5 ? 'active':'';"><a
 			ng:click="selected=5">Anexos</a></li>
 
 		<li ng:show="fase.id" class="ng-class: selected == 6 ? 'active':'';">
@@ -35,14 +34,22 @@
 						<label for="id">Id:</label> <input class="form-control"
 							disabled=disabled type="text" id="id" ng-model="fase.id">
 					</div>
-					<div class="col-md-6">
-						<a
-							href="#{{fase.faseAnterior.fase | faseUrl}}/{{fase.faseAnterior.id}}">
-							<label for="faseAnterior">Fase anterior à Internalização:
-								{{fase.faseAnterior.fase | nomeFase}}<font color="#FF0000"> **</font></label> <input
+					<div class="col-md-3">
+						<a href="#{{fase.faseAnterior.fase | faseUrl}}/{{fase.faseAnterior.id}}">
+							<label for="faseAnterior">Fase anterior:</label> 
+							<input
 							class="form-control" disabled=disabled type="text"
 							id="faseAnterior"
-							value="{{fase.faseAnterior.id}} - {{fase.faseAnterior.origemReferencia.nome}}[{{fase.faseAnterior.codigoReferencia}}]" />
+							value="{{fase.faseAnterior.fase | nomeFase}} {{fase.faseAnterior.id}} " />
+						</a>
+					</div>
+					<div class="col-md-3" ng-if="proximafase.id">
+						<a href="#{{proximafase.fase | faseUrl}}/{{proximafase.id}}">
+							<label for="faseAnterior">Fase seguinte:</label> 
+							<input
+							class="form-control" disabled=disabled type="text"
+							id="proximafase"
+							value="{{proximafase.fase | nomeFase}} {{proximafase.id}} " />
 						</a>
 					</div>
 				</div>
@@ -83,10 +90,14 @@
 					<div class="col-md-6">
 						<div date-picker="start"></div>
 						<label class="dataFinalizacao"><i class="fa fa-calendar"></i>
-							Data da finalização:</label> <input type="text" disabled=disabled
+							Data da finalização:</label> 
+						<input type="text" has-hole="ADMINISTRADOR"
 							class="form-control" id="dataFinalizacao" name="dataFinalizacao"
-							ng-model="fase.dataFinalizacao" data-date-format="dd/MM/yyyy">
+							ng-model="fase.dataFinalizacao" data-date-type="number"
+							data-min-date="01/01/2000"
+							data-autoclose="1" data-date-format="dd/MM/yyyy" bs-datepicker>
 						<validation-msg propriedade="dataFinalizacao"></validation-msg>
+							
 					</div>
 				</div>
 
@@ -360,7 +371,7 @@
 
 
 	<!-- Próxima fase -->
-	<div ng-show="selected == PF" class="panel panel-default">
+	<div ng-show="selected == 'PF'" class="panel panel-default">
 		<ng-proxima-fase ng-model="fase" has-role="INTERNALIZACAO"></ng-proxima-fase>
 	</div>
 

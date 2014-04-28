@@ -15,9 +15,8 @@
 				ng:click="selected=2">Resultado</a></li>
 			<li class="ng-class: selected == 3 ? 'active':'';"><a
 				ng:click="selected=3">Produtos</a></li>
-			<li class="ng-class: selected == PF ? 'active':'';"
-				ng-show="fase.executarProximaFase"><a ng:click="selected=PF">Próxima
-					fase</a></li>
+			<li class="ng-class: selected == 'PF' ? 'active':'';">
+				<a	ng:click="selected='PF'">Próxima Fase <small ng-if="fase.proximaFase && fase.executarProximaFase">({{fase.proximaFase | nomeFase}})</small></a></li>
 			<li ng:show="fase.id" class="ng-class: selected == 5 ? 'active':'';"><a
 				ng:click="selected=5">Anexos</a></li>
 
@@ -81,14 +80,17 @@
 							data-date-format="dd/MM/yyyy" bs-datepicker>
 						<validation-msg propriedade="dataRealizacao"></validation-msg>
 					</div>
-					<div class="col-md-6" >
+					<div class="col-md-6">
 						<div date-picker="start"></div>
 						<label class="dataFinalizacao"><i class="fa fa-calendar"></i>
 							Data da finalização:</label> 
-						<input type="text" disabled=disabled
+						<input type="text" has-hole="ADMINISTRADOR"
 							class="form-control" id="dataFinalizacao" name="dataFinalizacao"
-							ng-model="fase.dataFinalizacao" data-date-format="dd/MM/yyyy">
-						<validation-msg propriedade="dataFinalizacao"></validation-msg>							
+							ng-model="fase.dataFinalizacao" data-date-type="number"
+							data-min-date="01/01/2000"
+							data-autoclose="1" data-date-format="dd/MM/yyyy" bs-datepicker>
+						<validation-msg propriedade="dataFinalizacao"></validation-msg>
+							
 					</div>
 				</div>
 
@@ -141,7 +143,7 @@
 
 
 		<!-- Próxima fase -->
-		<div ng-show="selected == PF" class="panel panel-default">
+		<div ng-show="selected == 'PF'" class="panel panel-default">
 			<ng-proxima-fase ng-model="fase" has-role="PROSPECCAO"></ng-proxima-fase>
 		</div>
 	

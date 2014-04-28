@@ -38,6 +38,10 @@ controllers.controller('SustentacaoCtrl', function SustentacaoCtrl($scope, $root
 			AlertService.addWithTimeout('danger','Não foi possível encontrar o registro');
 			history.back();
 		});
+		
+		$http.get('api/fase/proximafase/' + $scope.fase.id).success(function(data) {
+			$scope.proximafase = data;
+		});	
 	} else {
 		AlertService.addWithTimeout('danger','Não foi possível encontrar a Sustentação');
 		history.back();
@@ -122,6 +126,31 @@ controllers.controller('SustentacaoCtrl', function SustentacaoCtrl($scope, $root
 				ValidationService.registrarViolacoes(data);				
 			}
 		);
+	};
+	
+	$scope.criarProximaFase = function() {
+		console.log($scope.fase);
+		ValidationService.clear();
+		$http({
+			url : 'api/fase/proximafase/sustentacao',
+			method : "POST",
+			data : $scope.fase ,
+			headers : {
+				'Content-Type' : 'application/json;charset=utf8'
+			}
+		}).success(function(data) {
+			AlertService.addWithTimeout('success','Próxima fase criada com sucesso');
+			var url = $filter("faseUrl")(data.fase);
+			$location.path(url+'/'+data.id);
+		}).error(function(data, status) {
+			if (status == 401) {
+				AlertService.addWithTimeout('warning',data.message);
+			} else if(status == 412){
+				ValidationService.registrarViolacoes(data);
+			}else{
+				AlertService.addWithTimeout('danger','Não foi possível executar a operação');
+			}
+		});
 	};
 
 });

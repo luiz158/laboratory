@@ -114,8 +114,11 @@ public class FaseDAO extends JPACrud<Fase, Long> {
 
 
 	public Fase obterFasePosterior(Long id) {
-		Query query = getEntityManager().createNamedQuery(Fase.OBTER_POR_FASE_ANTERIOR, Fase.class);
-		query.setParameter("id", id);		
+		//Query query = getEntityManager().createNamedQuery(Fase.OBTER_POR_FASE_ANTERIOR, Fase.class);
+		String jpql = "select f from Fase f where (f.faseAnterior.id = :id) and (f.status <> :status)";
+		TypedQuery<Fase> query = getEntityManager().createQuery(jpql, Fase.class);
+		query.setParameter("id", id);
+		query.setParameter("status", StatusEnum.EXCLUIDO);
 		Fase fase = null;
 		try{
 			fase = (Fase) query.getResultList().get(0);

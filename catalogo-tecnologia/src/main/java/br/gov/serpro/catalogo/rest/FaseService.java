@@ -13,15 +13,21 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
+import br.gov.frameworkdemoiselle.security.RequiredRole;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.serpro.catalogo.bussiness.FaseBC;
 import br.gov.serpro.catalogo.bussiness.FaseHistoricoBC;
 import br.gov.serpro.catalogo.bussiness.UsuarioBC;
+import br.gov.serpro.catalogo.entity.Analise;
 import br.gov.serpro.catalogo.entity.Fase;
 import br.gov.serpro.catalogo.entity.FaseHistorico;
 import br.gov.serpro.catalogo.entity.FaseInteressado;
 import br.gov.serpro.catalogo.entity.FaseMembro;
+import br.gov.serpro.catalogo.entity.Internalizacao;
+import br.gov.serpro.catalogo.entity.Prospeccao;
+import br.gov.serpro.catalogo.entity.Sustentacao;
 import br.gov.serpro.catalogo.entity.User;
+import br.gov.serpro.catalogo.security.Roles;
 
 @Path("fase")
 @Produces(APPLICATION_JSON)
@@ -53,6 +59,45 @@ public class FaseService {
 	public List<Fase> obterCadeiaDasFases(@PathParam("id") Long id) {
 		return faseBC.obterCadeiaDasFases(id);
 
+	}
+	
+	@GET
+	@Path("proximafase/{id}")
+	public Fase obterProximaFase(@PathParam("id") Long id) {
+		return faseBC.obterProximaFase(id);
+
+	}
+	
+	@POST
+	@Transactional
+	@Path("proximafase/analise")
+	@RequiredRole({Roles.ADMINISTRADOR})
+	public Fase criarProximaFaseAnalise(Analise fase) {
+		return faseBC.criarProximaFase(faseBC.salvar(fase));
+	}
+	
+	@POST
+	@Transactional
+	@Path("proximafase/prospeccao")
+	@RequiredRole({Roles.ADMINISTRADOR})
+	public Fase criarProximaFaseProspeccao(Prospeccao fase) {
+		return faseBC.criarProximaFase(faseBC.salvar(fase));
+	}
+	
+	@POST
+	@Transactional
+	@Path("proximafase/internalizacao")
+	@RequiredRole({Roles.ADMINISTRADOR})
+	public Fase criarProximaFaseInternalizacao(Internalizacao fase) {
+		return faseBC.criarProximaFase(faseBC.salvar(fase));
+	}
+	
+	@POST
+	@Transactional
+	@Path("proximafase/sustentacao")
+	@RequiredRole({Roles.ADMINISTRADOR})
+	public Fase criarProximaFaseSustentacao(Sustentacao fase) {
+		return faseBC.criarProximaFase(faseBC.salvar(fase));
 	}
 	
 	@GET

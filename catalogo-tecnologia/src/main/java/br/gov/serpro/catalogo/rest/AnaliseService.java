@@ -2,6 +2,8 @@ package br.gov.serpro.catalogo.rest;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
+import static br.gov.serpro.catalogo.security.Roles.*;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -22,14 +24,14 @@ import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.serpro.catalogo.bussiness.FaseBC;
 import br.gov.serpro.catalogo.entity.Analise;
 import br.gov.serpro.catalogo.persistence.AnaliseDAO;
+import br.gov.serpro.catalogo.security.Roles;
 
 @ValidateRequest
 @Path("analise")
 @Produces(APPLICATION_JSON)
 public class AnaliseService {
 
-	static final String ADMINISTRADOR = "ADMINISTRADOR";
-	static final String ANALISE = "ANALISE";
+
 	
 	@Inject
 	private FaseBC faseBC;

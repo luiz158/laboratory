@@ -1,5 +1,24 @@
-<div class="panel-heading">Próxima fase</div>
+<div class="panel">
+<div class="panel-heading">
+	<h4 class="panel-title">Próxima fase</h4>
+</div>
 <div class="panel-body">
+	
+	<div class="form-group btn-group">
+		<div >
+			<label> Executar próxima fase? </label> 
+			<div class="btn-group btn-toggle"> 
+			    <button class="btn btn-xs " 
+			    		ng-class="{'btn-success active': fase.executarProximaFase == 1}" 
+			    		ng-click="fase.executarProximaFase=1; selected='PF'">Sim</button>
+			    <button class="btn btn-xs " 
+			    		ng-class="{'btn-danger active': fase.executarProximaFase == 0}" 
+			    		ng-click="fase.executarProximaFase=0; selected=1">Não</button>
+			  </div>
+		</div>		
+	</div>	 
+
+	<div class="form-group" ng-show="fase.executarProximaFase">
 	<div class="form-group">
 		<label for="proximaFase">Próxima fase a ser executada:<font color="#FF0000"> **</font></label> 
 				
@@ -67,4 +86,7 @@
 		<validation-msg propriedade="proximaFaseCiclo"></validation-msg>
 	</div>
 	
+	</div>
+	
+</div>
 </div>

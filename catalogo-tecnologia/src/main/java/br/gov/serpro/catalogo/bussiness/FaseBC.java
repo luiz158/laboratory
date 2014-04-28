@@ -112,17 +112,23 @@ public class FaseBC {
 		
 		// Se foi aprovado tem uma proxima fase;
 		if (fase.getExecutarProximaFase()>0) {			
-			proximafase = getProximaFase(fase);
-			faseDAO.insert(proximafase);	
-			eventoFaseCriar.fire(new FaseEvent(proximafase));
-		
-			FaseMembro fm = new FaseMembro();
-			fm.setFase(proximafase);
-			fm.setUser(fase.getProximaFaseLider());			
-			faseMembroDAO.insert(fm);						
-			eventoFaseAdicionarMembro.fire(new FaseEvent(fm.getUser(), fm.getFase()));
+			proximafase = criarProximaFase(fase);
 		}
 
+		return proximafase;
+	}
+
+	public Fase criarProximaFase(Fase fase) {		
+		Fase proximafase;
+		faseValidator.validarCriarProximaFase(fase);
+		this.salvar(fase);
+		
+		proximafase = getProximaFase(fase);		
+		faseDAO.insert(proximafase);	
+		eventoFaseCriar.fire(new FaseEvent(proximafase));
+
+		faseMembroDAO.insert(new FaseMembro(proximafase,fase.getProximaFaseLider()));						
+		eventoFaseAdicionarMembro.fire(new FaseEvent(fase.getProximaFaseLider(), proximafase));
 		return proximafase;
 	}
 
@@ -279,6 +285,10 @@ public class FaseBC {
 
 	public List<FaseInteressado> obterFasesDoUsuarioComoInteressado(User usuario) {
 		return faseInteressadoDAO.fasesComoInteressado(usuario);
+	}
+
+	public Fase obterProximaFase(Long id) {
+		return faseDAO.obterFasePosterior(id);
 	}
 
 	

@@ -34,6 +34,15 @@ public class FaseMembro {
 	@NotNull
 	@ManyToOne
 	private User user;
+	
+	public FaseMembro() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public FaseMembro(Fase proximafase, User proximaFaseLider) {
+		this.fase = proximafase;
+		this.user = proximaFaseLider;
+	}
 
 	public Long getId() {
 		return id;

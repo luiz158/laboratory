@@ -14,9 +14,8 @@
 		<ul class="nav nav-tabs nav-justified" ng:init="selected=1">
 			<li class="ng-class: selected == 1 ? 'active':'';"><a
 				ng:click="selected=1">Análise</a></li>
-			<li class="ng-class: selected == PF ? 'active':'';"
-				ng-show="fase.executarProximaFase"><a
-				ng:click="selected=PF">Próxima Fase</a></li>
+			<li class="ng-class: selected == 'PF' ? 'active':'';">
+				<a	ng:click="selected='PF'">Próxima Fase <small ng-if="fase.proximaFase && fase.executarProximaFase">({{fase.proximaFase | nomeFase}})</small></a></li>
 			<li ng:show="fase.id" class="ng-class: selected == 3 ? 'active':'';"><a
 				ng:click="selected=3">Anexos</a></li>
 			<li ng:show="fase.id" class="ng-class: selected == 4 ? 'active':'';"><a
@@ -84,7 +83,7 @@
 						<input type="text"
 							class="form-control" id="dataAnalise" name="dataAnalise"
 							ng-model="fase.dataRealizacao" data-date-type="number"
-							data-min-date="01/01/2010" data-max-date="today"
+							data-min-date="01/01/2000"
 							data-autoclose="1" data-date-format="dd/MM/yyyy" bs-datepicker>
 						<validation-msg propriedade="dataRealizacao"></validation-msg>
 							
@@ -93,9 +92,11 @@
 						<div date-picker="start"></div>
 						<label class="dataFinalizacao"><i class="fa fa-calendar"></i>
 							Data da finalização:</label> 
-						<input type="text" disabled=disabled
+						<input type="text" has-hole="ADMINISTRADOR"
 							class="form-control" id="dataFinalizacao" name="dataFinalizacao"
-							ng-model="fase.dataFinalizacao" data-date-format="dd/MM/yyyy" bs-datepicker>
+							ng-model="fase.dataFinalizacao" data-date-type="number"
+							data-min-date="01/01/2000"
+							data-autoclose="1" data-date-format="dd/MM/yyyy" bs-datepicker>
 						<validation-msg propriedade="dataFinalizacao"></validation-msg>
 							
 					</div>
@@ -152,7 +153,7 @@
 		</div>
 
 		<!-- Próxima fase -->
-		<div ng-show="selected == PF" class="panel panel-default">
+		<div ng-show="selected == 'PF'" class="panel panel-default">
 			<ng-proxima-fase ng-model="fase" has-role="ANALISE"></ng-proxima-fase>
 		</div>
 

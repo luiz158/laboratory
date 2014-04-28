@@ -4,7 +4,7 @@
 var controllers = angular.module('catalogo.controllers');
 
 
-controllers.controller('AnaliseEdit', function Analise($scope, $http,
+controllers.controller('AnaliseEdit', function Analise($scope, $http, $filter,
 		$location, $routeParams, $upload, $rootScope, AlertService, OrigemDemandaService, ValidationService, FaseService) {
 
 	
@@ -22,6 +22,11 @@ controllers.controller('AnaliseEdit', function Analise($scope, $http,
 			$scope.analise = data;
 			$scope.fase = data;
 		});	
+		
+		$http.get('api/fase/proximafase/' + $scope.fase.id).success(function(data) {
+			$scope.proximafase = data;
+		});	
+		
 	}
 	
 	if ($scope.fase.id) {
@@ -83,6 +88,31 @@ controllers.controller('AnaliseEdit', function Analise($scope, $http,
 			if (status == 401) {
 				AlertService.addWithTimeout('warning',data.message);
 				//$location.path('/analise');
+			} else if(status == 412){
+				ValidationService.registrarViolacoes(data);
+			}else{
+				AlertService.addWithTimeout('danger','Não foi possível executar a operação');
+			}
+		});
+	};
+	
+	$scope.criarProximaFase = function() {
+		console.log($scope.fase);
+		ValidationService.clear();
+		$http({
+			url : 'api/fase/proximafase/analise',
+			method : "POST",
+			data : $scope.fase ,
+			headers : {
+				'Content-Type' : 'application/json;charset=utf8'
+			}
+		}).success(function(data) {
+			AlertService.addWithTimeout('success','Próxima fase criada com sucesso');
+			var url = $filter("faseUrl")(data.fase);
+			$location.path(url+'/'+data.id);
+		}).error(function(data, status) {
+			if (status == 401) {
+				AlertService.addWithTimeout('warning',data.message);
 			} else if(status == 412){
 				ValidationService.registrarViolacoes(data);
 			}else{

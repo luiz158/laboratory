@@ -14,7 +14,7 @@
 		<div ng-if="exibirCiclos && f.fase=='SUSTENTACAO'" class="breadcrumbmenu">
 			<ul class="">
 				<li ng-repeat="s in f.sustentacoes">
-					<a href="#{{s.fase | faseUrl}}/{{s.id}}"> Data de realização: {{s.dataRealizacao}} </a>	
+					<a href="#{{s.fase | faseUrl}}/{{s.id}}"> Ciclo {{f.sustentacoes.length - $index}}</a>	
 				</li>
 			</ul>
 		</div>

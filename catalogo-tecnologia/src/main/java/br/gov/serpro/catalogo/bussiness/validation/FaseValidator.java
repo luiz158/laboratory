@@ -8,6 +8,7 @@ import javax.inject.Inject;
 
 import br.gov.frameworkdemoiselle.resteasy.util.ValidationException;
 import br.gov.frameworkdemoiselle.resteasy.util.ValidationException.Violation;
+import br.gov.frameworkdemoiselle.security.SecurityContext;
 import br.gov.frameworkdemoiselle.stereotype.BusinessController;
 import br.gov.serpro.catalogo.entity.Analise;
 import br.gov.serpro.catalogo.entity.Declinio;
@@ -20,6 +21,7 @@ import br.gov.serpro.catalogo.entity.StatusEnum;
 import br.gov.serpro.catalogo.entity.Sustentacao;
 import br.gov.serpro.catalogo.persistence.FaseDAO;
 import br.gov.serpro.catalogo.persistence.FaseProdutoDAO;
+import br.gov.serpro.catalogo.security.Roles;
 
 @BusinessController
 public class FaseValidator {
@@ -29,10 +31,13 @@ public class FaseValidator {
 
 	@Inject
 	private FaseDAO faseDAO;
+	
+	@Inject
+	private SecurityContext securityCtx;
 
-	public Set<Violation> validarSalvar(final Fase fase) {
+	private Set<Violation> validarSalvar(final Fase fase) {
 		Set<Violation> violacoes = new LinkedHashSet<Violation>();
-		if (fase.getDataFinalizacao() != null) {
+		if (fase.getDataFinalizacao() != null && !securityCtx.hasRole(Roles.ADMINISTRADOR)) {
 			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
 			throw new ValidationException().addViolation(null,
@@ -41,19 +46,18 @@ public class FaseValidator {
 		}
 
 		if (fase.getObjetivo() == null || fase.getObjetivo().isEmpty())
-			violacoes.add(new Violation("objetivo",
-					"Favor informar o objetivo."));
+			violacoes.add(new Violation("objetivo", "Favor informar o objetivo."));
 
 		return violacoes;
 	}
 
 	public Set<Violation> validarSalvar(Analise fase) {
 		Set<Violation> violacoes = validarSalvar((Fase) fase);
-
+				
 		if (fase.getDemandanteUnidade() == null
 				|| fase.getDemandanteUnidade().isEmpty())
 			violacoes.add(new Violation("demandanteUnidade",
-					"Favor informar oa unidade demandante."));
+					"Favor informar a unidade demandante."));
 
 		if (fase.getDemandanteRepresentante() == null)
 			violacoes.add(new Violation("demandanteRepresentante",
@@ -61,8 +65,26 @@ public class FaseValidator {
 		lancarExcecoesDeViolacao(violacoes);
 		return violacoes;
 	}
+	
+	public Set<Violation> validarSalvar(Prospeccao fase) {
+		Set<Violation> violacoes = validarSalvar((Fase) fase);
+		lancarExcecoesDeViolacao(violacoes);
+		return violacoes;
+	}
 
 	public Set<Violation> validarSalvar(Internalizacao fase) {
+		Set<Violation> violacoes = validarSalvar((Fase) fase);
+		lancarExcecoesDeViolacao(violacoes);
+		return violacoes;
+	}
+	
+	public Set<Violation> validarSalvar(Sustentacao fase) {
+		Set<Violation> violacoes = validarSalvar((Fase) fase);
+		lancarExcecoesDeViolacao(violacoes);
+		return violacoes;
+	}
+	
+	public Set<Violation> validarSalvar(Declinio fase) {
 		Set<Violation> violacoes = validarSalvar((Fase) fase);
 		lancarExcecoesDeViolacao(violacoes);
 		return violacoes;
@@ -232,13 +254,14 @@ public class FaseValidator {
 
 			if (i.getAnaliseDeRiscos() < 1) {
 				if (i.getAnaliseDeRiscosJustificativa() == null
-						|| i.getAnaliseDeRiscosJustificativa().isEmpty())
+						|| i.getAnaliseDeRiscosJustificativa().isEmpty()) {
 					violacoes
 							.add(new Violation("analiseDeRiscosJustificativa",
 									"Favor justificar a inexistencia da Análise de riscos."));
-				violacoes
-						.add(new Violation(null,
-								"Favor justificar a inexistencia da Análise de riscos."));
+					violacoes
+							.add(new Violation(null,
+									"Favor justificar a inexistencia da Análise de riscos."));
+				}
 			}
 		}
 
@@ -263,6 +286,11 @@ public class FaseValidator {
 		}
 	}
 
+	
+	public void validarCriarProximaFase(final Fase pf){
+		lancarExcecoesDeViolacao(validarFinalizarCamposProximaFase(pf));
+	}
+	
 	/**
 	 * Valida os campos da proxima fase apenas se a mesma tiver sido aprovada.
 	 * 

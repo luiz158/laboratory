@@ -4,7 +4,7 @@
 var controllers = angular.module('catalogo.controllers');
 
 
-controllers.controller('ProspeccaoCtrl', function ProspeccaoCtrl($scope, $rootScope, $http,$location, $routeParams, AlertService, OrigemDemandaService, ValidationService, FaseService) {
+controllers.controller('ProspeccaoCtrl', function ProspeccaoCtrl($scope,$filter, $rootScope, $http,$location, $routeParams, AlertService, OrigemDemandaService, ValidationService, FaseService) {
 
 	$(window).scrollTop(0);
 	
@@ -34,6 +34,9 @@ controllers.controller('ProspeccaoCtrl', function ProspeccaoCtrl($scope, $rootSc
 			AlertService.addWithTimeout('danger','Não foi possível encontrar a prospecção');
 			history.back();
 		});
+		$http.get('api/fase/proximafase/' + $scope.fase.id).success(function(data) {
+			$scope.proximafase = data;
+		});	
 	} else {
 		AlertService.addWithTimeout('danger','Não foi possível encontrar a prospecção');
 		history.back();
@@ -84,5 +87,29 @@ controllers.controller('ProspeccaoCtrl', function ProspeccaoCtrl($scope, $rootSc
 		);
 	};
 	
+	$scope.criarProximaFase = function() {
+		console.log($scope.fase);
+		ValidationService.clear();
+		$http({
+			url : 'api/fase/proximafase/prospeccao',
+			method : "POST",
+			data : $scope.fase ,
+			headers : {
+				'Content-Type' : 'application/json;charset=utf8'
+			}
+		}).success(function(data) {
+			AlertService.addWithTimeout('success','Próxima fase criada com sucesso');
+			var url = $filter("faseUrl")(data.fase);
+			$location.path(url+'/'+data.id);
+		}).error(function(data, status) {
+			if (status == 401) {
+				AlertService.addWithTimeout('warning',data.message);
+			} else if(status == 412){
+				ValidationService.registrarViolacoes(data);
+			}else{
+				AlertService.addWithTimeout('danger','Não foi possível executar a operação');
+			}
+		});
+	};
 
 });
