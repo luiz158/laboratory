@@ -69,6 +69,9 @@ public class Cliente implements Serializable {
 
 	@Column(nullable = false, length = 15)
 	private String telefone;
+	
+	@Lob
+	private byte[] foto;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval=true)
 	@JoinColumn(name = "cliente_fk")
@@ -175,6 +178,14 @@ public class Cliente implements Serializable {
 
 	public void setEnderecos(List<Endereco> enderecos) {
 		this.enderecos = enderecos;
+	}
+
+	public byte[] getFoto() {
+		return foto;
+	}
+
+	public void setFoto(byte[] foto) {
+		this.foto = foto;
 	}
 
 }
