@@ -32,8 +32,22 @@
 			        	</div>
 			        </div>
 			        <div class="well well-small">
-		                {{o.observacao}} 
+		               <textarea rows="4" class="form-control" id="detalhamento" ng-disabled="{{!podeEditar(o)}}"
+							ng-model="o.observacao" required maxlength="2000">
+						</textarea>	 
 		            </div>		
+		            <div class="btn-toolbar pull-right" role="toolbar" ng-if="podeEditar(o)">
+		            	 <div class="btn-group">	
+		            	<button class="btn btn-success btn-xs" ng-click="salvar(o)">
+							<i class="fa fa-pencil-square-o"> </i> Alterar
+						</button>
+						</div>
+						<div class="btn-group">	
+						<button class="btn btn-danger btn-xs" ng-click="excluir(o)">
+							<i class="fa fa-trash-o"> </i> Excluir
+						</button>
+						</div>
+					</div>
 				</li>
 			</ul>
 		</div>
