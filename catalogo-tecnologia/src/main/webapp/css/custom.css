@@ -115,3 +115,26 @@ body {
 .produto-even{
 	background-color: #f5f5f5;
 }
+
+
+div.version1{
+	background-color: gold;
+    border-color: orange;
+    
+}
+
+div.version2{
+	background-color: gray;
+    border-color: aqua;
+}
+
+div.version3{
+	background-color: lime;
+    border-color: olive;
+}
+
+div.version4{
+	background-color: orange;
+    border-color: teal;
+}
+
