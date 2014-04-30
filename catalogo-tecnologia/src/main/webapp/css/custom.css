@@ -124,17 +124,58 @@ div.version1{
 }
 
 div.version2{
-	background-color: gray;
-    border-color: aqua;
+	background-color: #EBE1C0;
+    border-color: #E0D722;
 }
 
 div.version3{
-	background-color: lime;
-    border-color: olive;
+	background-color: #66D9C9;
+    border-color: #005E91;
 }
 
 div.version4{
-	background-color: orange;
-    border-color: teal;
+	background-color: #E1D5D5;
+    border-color: #BC9DBF;
+}
+
+div.version5{
+	background-color: #07B9A5;
+    border-color: #07D965;
+}
+
+div.version6{
+	background-color: #65856B;
+    border-color: #008518;
+}
+
+div.version7{
+	background-color: #ABF5FF;
+    border-color: #3CCCE6;
+}
+
+div.version8{
+	background-color: #FA9D41;
+    border-color: #DBD366;
+}
+
+div.version9{
+	background-color: #C6BB8D;
+    border-color: #848355;
+}
+
+div.version10{
+	background-color: #FF5030;
+    border-color: #DC7E1A;
+}
+
+.timelinefase{	
+	border-width: 1px;
+	border-style: dotted;
+	border-color: #ffffff;
+	display: inline-flex;
+	border-radius:2px;
+	margin-left: 0.5em;
+	padding-left: 0.5em;
+	
 }
 

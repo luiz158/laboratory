@@ -500,9 +500,10 @@ diretivas.directive('timeline', function($timeout) {
 				var container = document.getElementById($attrs.id);
 	            var options = {
 	                'width':  '100%',
-	                'height': '300px',
+	                'height': 'auto',
 	                'locale': 'br',
-	                'editable': false
+	                'editable': false,
+	                'showNavigation': true
 	            };
 	            var timeline = new links.Timeline(container);
 	            timeline.draw(scope.ngModel, options);

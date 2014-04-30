@@ -3,7 +3,29 @@
 /* Controllers */
 var controllers = angular.module('catalogo.controllers');
 
-controllers.controller('DashboardCtrl', function DashboardCtrl($scope, DashboardService, $filter) {
+controllers.controller('DashboardCtrl', function DashboardCtrl($scope, DashboardService, $filter, $http) {
+	
+	$scope.tecnologia = "";
+	$scope.categoria = "";
+	$scope.resultadoProdutos = [];
+	$scope.tecnologias = [];
+	
+	$http.get('api/tecnologia').success(function(data) {
+		$scope.tecnologias = data;
+	});
+	
+	$scope.carregarCategorias = function() {
+		$scope.resultadoProdutos = [];
+		$http.get('api/categoria/listarCategoriaPorTecnologia/'+$scope.tecnologia.id).success(function(data) {
+			$scope.categorias = data;
+		});
+	};
+	
+	$scope.carregarProdutos = function() {
+		$http.get('api/produto/listarProdutosUnicosPorCategoria/'+$scope.categoria.id).success(function(data) {
+			$scope.resultadoProdutos = data;
+		});
+	};
 	
 	/* Paginação */
 	$scope.paginacaoDemandas = {
@@ -75,10 +97,17 @@ controllers.controller('DashboardCtrl', function DashboardCtrl($scope, Dashboard
 	
 	
 	var templateMercado = '<img src="images/Rocket.png"> {version} ';
-	var templateSerpro = '<img src="images/serpro.png"> 1.5 - {fases}';
+	var templateSerpro = '<img src="images/serpro.png"> {version} - {fases}';
 	
-	function getFasesUrl(f){
-		return '<a href="#'+$filter("faseUrl")(f)+'/'+f.id+'"></a>';
+	function getFasesUrl(fluxo){
+
+		var html = "";
+		for (var i=0; i<fluxo.length; i++){
+			var f = fluxo[i];
+			var percentual = 80 / fluxo.length;
+			html+= '<div class="timelinefase" style="width: '+percentual+'%; "> <a href="#/'+$filter("faseUrl")(f.fase)+'/'+f.id+'">'+$filter("nomeFase")(f.fase)+'</a> </div>';
+		}
+		return html;
 	}
 	
 	$scope.dados  = [
@@ -110,33 +139,28 @@ controllers.controller('DashboardCtrl', function DashboardCtrl($scope, Dashboard
         },
         {
             'start': new Date(2010,7,23),
-            'end': new Date(2011,6,23),
-            'content': '1.4 - Prospecção',
-            'className': 'version1'
-        },
-        {
-            'start': new Date(2011,6,24),
-            'end': new Date(2011,12,23),
-            'content': '1.4 - Internalização',
-            'className': 'version1'
-        },
-        {
-            'start': new Date(2011,12,24),
             'end': new Date(2013,12,23),
-            'content': '1.4 - Sustentação',
+            'content': templateSerpro.replace("{version}", "1.4")
+            						.replace("{fases}",getFasesUrl([
+            						                                {id: 31, fase: 'PROSPECCAO'},
+            						                                {id: 32, fase: 'INTERNALIZACAO'},
+            						                                {id: 33, fase: 'SUSTENTACAO'}
+            						                                ]) ),
             'className': 'version1'
         },
         {
             'start': new Date(2012,7,23),
             'end': new Date(2014,12,23),
-            'content': templateSerpro.replace("{version}", "1.8").replace("{fases}",getFasesUrl({id: 32, fase: 'INTERNALIZACAO'}) ),
+            'content': templateSerpro.replace("{version}", "1.5")
+            						.replace("{fases}",getFasesUrl([{id: 31, fase: 'PROSPECCAO'},{id: 32, fase: 'INTERNALIZACAO'}]) ),
             'className': 'version2'
         },
         {
             'start': new Date(2014,1,1),
             'end': new Date(2014,4,23),
-            'content': '1.6 - Prospecção',
-            'className': 'version3'
+            'content': templateSerpro.replace("{version}", "1.6")
+							.replace("{fases}",getFasesUrl([{id: 31, fase: 'PROSPECCAO'}]) ),
+			'className': 'version3'
         },
     ];
 	
