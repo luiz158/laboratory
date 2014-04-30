@@ -105,7 +105,8 @@ controllers.controller('DashboardCtrl', function DashboardCtrl($scope, Dashboard
 		for (var i=0; i<fluxo.length; i++){
 			var f = fluxo[i];
 			var percentual = 80 / fluxo.length;
-			html+= '<div class="timelinefase" style="width: '+percentual+'%; "> <a href="#/'+$filter("faseUrl")(f.fase)+'/'+f.id+'">'+$filter("nomeFase")(f.fase)+'</a> </div>';
+			html+= '<a href="#/'+$filter("faseUrl")(f.fase)+'/'+f.id+'">'+$filter("nomeFase")(f.fase)+'</a>';
+			//html+= '<div class="timelinefase" style="width: '+percentual+'%; "> <a href="#/'+$filter("faseUrl")(f.fase)+'/'+f.id+'">'+$filter("nomeFase")(f.fase)+'</a> </div>';
 		}
 		return html;
 	}
@@ -139,20 +140,37 @@ controllers.controller('DashboardCtrl', function DashboardCtrl($scope, Dashboard
         },
         {
             'start': new Date(2010,7,23),
-            'end': new Date(2013,12,23),
+            'end': new Date(2010,12,23),
             'content': templateSerpro.replace("{version}", "1.4")
-            						.replace("{fases}",getFasesUrl([
-            						                                {id: 31, fase: 'PROSPECCAO'},
-            						                                {id: 32, fase: 'INTERNALIZACAO'},
-            						                                {id: 33, fase: 'SUSTENTACAO'}
-            						                                ]) ),
+            						.replace("{fases}",getFasesUrl([{id: 31, fase: 'PROSPECCAO'}]) ),
+            'className': 'version1'
+        },
+        {
+            'start': new Date(2010,12,23),
+            'end': new Date(2011,6,23),
+            'content': templateSerpro.replace("{version}", "1.4")
+            						.replace("{fases}",getFasesUrl([{id: 31, fase: 'INTERNALIZACAO'}]) ),
+            'className': 'version1'
+        },
+        {
+            'start': new Date(2011,6,23),
+            'end': new Date(2014,12,23),
+            'content': templateSerpro.replace("{version}", "1.4")
+            						.replace("{fases}",getFasesUrl([{id: 31, fase: 'SUSTENTACAO'}]) ),
             'className': 'version1'
         },
         {
             'start': new Date(2012,7,23),
+            'end': new Date(2013,12,23),
+            'content': templateSerpro.replace("{version}", "1.5")
+            						.replace("{fases}",getFasesUrl([{id: 31, fase: 'PROSPECCAO'}]) ),
+            'className': 'version2'
+        },
+        {
+            'start': new Date(2013,12,23),
             'end': new Date(2014,12,23),
             'content': templateSerpro.replace("{version}", "1.5")
-            						.replace("{fases}",getFasesUrl([{id: 31, fase: 'PROSPECCAO'},{id: 32, fase: 'INTERNALIZACAO'}]) ),
+            						.replace("{fases}",getFasesUrl([{id: 31, fase: 'INTERNALIZACAO'}]) ),
             'className': 'version2'
         },
         {

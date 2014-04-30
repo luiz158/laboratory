@@ -501,7 +501,7 @@ diretivas.directive('timeline', function($timeout) {
 	            var options = {
 	                'width':  '100%',
 	                'height': 'auto',
-	                'locale': 'br',
+	                'locale': 'pt-BR',
 	                'editable': false,
 	                'showNavigation': true
 	            };

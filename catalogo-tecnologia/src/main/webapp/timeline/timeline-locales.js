@@ -7,7 +7,7 @@ if (typeof links === 'undefined') {
 
 //Português ===================================================
 links.locales['pt'] = {
-    'MONTHS': ["Janeiro", "Fevereito", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
+    'MONTHS': ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
     'MONTHS_SHORT': ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
     'DAYS': ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
     'DAYS_SHORT': ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
