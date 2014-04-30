@@ -3,32 +3,32 @@
  * Copyright (C) 2014 SERPRO
  * ----------------------------------------------------------------------------
  * This file is part of Demoiselle Framework.
- * 
+ *
  * Demoiselle Framework is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License version 3
  * as published by the Free Software Foundation.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License version 3
  * along with this program; if not,  see <http://www.gnu.org/licenses/>
  * or write to the Free Software Foundation, Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA  02110-1301, USA.
  * ----------------------------------------------------------------------------
  * Este arquivo é parte do Framework Demoiselle.
- * 
+ *
  * O Framework Demoiselle é um software livre; você pode redistribuí-lo e/ou
  * modificá-lo dentro dos termos da GNU LGPL versão 3 como publicada pela Fundação
  * do Software Livre (FSF).
- * 
+ *
  * Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA
  * GARANTIA; sem uma garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou
  * APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/LGPL em português
  * para maiores detalhes.
- * 
+ *
  * Você deve ter recebido uma cópia da GNU LGPL versão 3, sob o título
  * "LICENCA.txt", junto com esse programa. Se não, acesse <http://www.gnu.org/licenses/>
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
@@ -53,77 +53,76 @@ import br.gov.frameworkdemoiselle.template.AbstractEditPageBean;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 
 /**
- * 
+ *
  * @author SERPRO
- * 
+ *
  */
 @ViewController
 @PreviousView("./usuario_list.jsf")
 public class UsuarioEditMB extends AbstractEditPageBean<Usuario, Long> {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Inject
-	private MessageContext messageContext;
+    @Inject
+    private MessageContext messageContext;
 
-	@Inject
-	private UsuarioBC usuarioBC;
+    @Inject
+    private UsuarioBC usuarioBC;
 
-	@Inject
-	private SecurityBC securityBC;
+    @Inject
+    private SecurityBC securityBC;
 
     @Override
-	@Transactional
-	public String delete() {
-		throw new UnsupportedOperationException();
-	}
-
     @Transactional
-    public String ativar(){
-		getBean().setIsAtivo(Boolean.TRUE);
-    	this.usuarioBC.update(getBean());
-
-    	messageContext.add("{usuario-ativo-ok}");
-
-    	return getPreviousView();
+    public String delete() {
+        throw new UnsupportedOperationException();
     }
 
     @Transactional
-    public String inativar(){
-    	getBean().setIsAtivo(Boolean.FALSE);
-    	this.usuarioBC.update(getBean());
+    public String ativar() {
+        getBean().setIsAtivo(Boolean.TRUE);
+        this.usuarioBC.update(getBean());
 
-    	messageContext.add("{usuario-inativo-ok}");
+        messageContext.add("{usuario-ativo-ok}");
 
-    	return getPreviousView();
+        return getPreviousView();
+    }
+
+    @Transactional
+    public String inativar() {
+        getBean().setIsAtivo(Boolean.FALSE);
+        this.usuarioBC.update(getBean());
+
+        messageContext.add("{usuario-inativo-ok}");
+
+        return getPreviousView();
     }
 
     @Override
-	@Transactional
-	public String insert() {
-    	getBean().setSenha("123");
-    	getBean().setAminesia("123");
+    @Transactional
+    public String insert() {
+        getBean().setSenha("123");
+        getBean().setAminesia("123");
         getBean().setIsAtivo(Boolean.FALSE);
 
-		this.usuarioBC.insert(getBean());
+        this.usuarioBC.insert(getBean());
 
-		messageContext.add("{usuario-insert-ok}", getBean().getUsuario());
+        messageContext.add("{usuario-insert-ok}", getBean().getUsuario());
 
-		try {
-			securityBC.enviarMensagemLembrandoSenha(getBean());
-		}
-        catch (Exception e) {
-			messageContext.add("{email.exception.generico}", e.getMessage());
-		}
+        try {
+            securityBC.enviarMensagemLembrandoSenha(getBean());
+        } catch (Exception e) {
+            messageContext.add("{email.exception.generico}", e.getMessage());
+        }
 
-		return getPreviousView();
-	}
+        return getPreviousView();
+    }
 
     @Override
-	@Transactional
-	public String update() {
-    	getBean().setSenha("123");
-    	getBean().setAminesia("123");
+    @Transactional
+    public String update() {
+        getBean().setSenha("123");
+        getBean().setAminesia("123");
         getBean().setIsAtivo(Boolean.FALSE);
 
         this.usuarioBC.update(getBean());
@@ -131,30 +130,27 @@ public class UsuarioEditMB extends AbstractEditPageBean<Usuario, Long> {
         messageContext.add("{usuario-update-ok}", getBean().getUsuario());
 
         try {
-			securityBC.enviarMensagemLembrandoSenha(getBean());
-		}
-        catch (Exception e) {
-			messageContext.add("{email.exception.generico}", e.getMessage());
-		}
+            securityBC.enviarMensagemLembrandoSenha(getBean());
+        } catch (Exception e) {
+            messageContext.add("{email.exception.generico}", e.getMessage());
+        }
 
         return getPreviousView();
-	}
+    }
 
-    public HashMap<Short, String> getPapeis(){
-		return Roles.getRolesListAsMap();
-	}
+    public HashMap<Short, String> getPapeis() {
+        return Roles.getRolesListAsMap();
+    }
 
-
-	@ExceptionHandler
-	private void tratarExcecao(Exception e){
-		messageContext.add("{guddi.erro.generico}", SeverityType.ERROR);
-	}
+    @ExceptionHandler
+    private void tratarExcecao(Exception e) {
+        messageContext.add("{guddi.erro.generico}", SeverityType.ERROR);
+    }
 
     @Override
     protected Usuario handleLoad(Long id) {
-      	setBean(this.usuarioBC.load(getId()));
+        setBean(this.usuarioBC.load(getId()));
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
 
 }

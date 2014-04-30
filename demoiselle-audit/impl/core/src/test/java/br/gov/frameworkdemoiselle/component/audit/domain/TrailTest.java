@@ -6,13 +6,11 @@
 
 package br.gov.frameworkdemoiselle.component.audit.domain;
 
-import java.util.Date;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -20,21 +18,36 @@ import static org.junit.Assert.*;
  */
 public class TrailTest {
 
-    public TrailTest() {
-    }
-
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
 
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
 
+    /**
+     *
+     */
+    public TrailTest() {
+        }
+
+    /**
+     *
+     */
     @Before
     public void setUp() {
     }
 
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }
@@ -44,8 +57,6 @@ public class TrailTest {
      */
     @Test
     public void testGetIdaudit() {
-        System.out.println("getIdaudit");
-
     }
 
 

@@ -37,10 +37,10 @@
 package br.gov.frameworkdemoiselle.component.audit.processors.rest;
 
 import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
-import br.gov.frameworkdemoiselle.component.audit.internal.AuditConfig;
-import br.gov.frameworkdemoiselle.component.audit.internal.processor.AbstractProcessor;
-import br.gov.frameworkdemoiselle.component.audit.internal.qualifier.AuditProcessorQualifier;
-import br.gov.frameworkdemoiselle.component.audit.util.Util;
+import br.gov.frameworkdemoiselle.component.audit.implementation.AuditConfig;
+import br.gov.frameworkdemoiselle.component.audit.implementation.processor.AbstractProcessor;
+import br.gov.frameworkdemoiselle.component.audit.implementation.qualifier.AuditProcessor;
+import br.gov.frameworkdemoiselle.component.audit.internal.util.Util;
 import br.gov.frameworkdemoiselle.util.Beans;
 import javax.enterprise.event.Observes;
 import javax.ws.rs.core.MediaType;
@@ -62,14 +62,14 @@ public class RESTProcessors extends AbstractProcessor {
      * @param trail
      */
     @Override
-    public void execute(@Observes @AuditProcessorQualifier Trail trail) {
+    public void execute(@Observes @AuditProcessor Trail trail) {
 
         super.execute(trail);
 
         try {
             //TODO Verificar alternativas para superar a depreciação das classes abaixo
 
-            ClientRequest request = new ClientRequest(config.getUrlServer() + "/rest/trail/create");
+            ClientRequest request = new ClientRequest(config.getServerUrl()+ "/rest/trail/create");
             request.body(MediaType.APPLICATION_JSON, Util.jsonSerializer(trail));
             ClientResponse response = null;
 

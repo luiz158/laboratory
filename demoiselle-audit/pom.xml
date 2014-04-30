@@ -53,6 +53,7 @@
         <module>parent/audit</module>
         <module>impl/core</module>
         <module>impl/processors/rest</module>
+        <module>impl/processors/mongo</module>
         <module>impl/auditors/persistence</module>
         <!--<module>impl/dashboard</module>-->
     </modules>
@@ -134,5 +135,7 @@
     <properties>
         <release.goals>deploy wagon:upload site site:deploy</release.goals>
         <project.alias>demoiselle-audit</project.alias>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
     </properties>
 </project>
