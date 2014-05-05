@@ -3,7 +3,29 @@
 /* Controllers */
 var controllers = angular.module('catalogo.controllers');
 
-controllers.controller('DashboardCtrl', function DashboardCtrl($scope, DashboardService) {
+controllers.controller('DashboardCtrl', function DashboardCtrl($scope, DashboardService, $filter, $http) {
+	
+	$scope.tecnologia = "";
+	$scope.categoria = "";
+	$scope.resultadoProdutos = [];
+	$scope.tecnologias = [];
+	
+	$http.get('api/tecnologia').success(function(data) {
+		$scope.tecnologias = data;
+	});
+	
+	$scope.carregarCategorias = function() {
+		$scope.resultadoProdutos = [];
+		$http.get('api/categoria/listarCategoriaPorTecnologia/'+$scope.tecnologia.id).success(function(data) {
+			$scope.categorias = data;
+		});
+	};
+	
+	$scope.carregarProdutos = function() {
+		$http.get('api/produto/listarProdutosUnicosPorCategoria/'+$scope.categoria.id).success(function(data) {
+			$scope.resultadoProdutos = data;
+		});
+	};
 	
 	/* Paginação */
 	$scope.paginacaoDemandas = {
@@ -71,5 +93,95 @@ controllers.controller('DashboardCtrl', function DashboardCtrl($scope, Dashboard
 	    	]
 	    }
 	];
+	
+	
+	
+	var templateMercado = '<img src="images/Rocket.png"> {version} ';
+	var templateSerpro = '<img src="images/serpro.png"> {version} - {fases}';
+	
+	function getFasesUrl(fluxo){
+
+		var html = "";
+		for (var i=0; i<fluxo.length; i++){
+			var f = fluxo[i];
+			var percentual = 80 / fluxo.length;
+			html+= '<a href="#/'+$filter("faseUrl")(f.fase)+'/'+f.id+'">'+$filter("nomeFase")(f.fase)+'</a>';
+			//html+= '<div class="timelinefase" style="width: '+percentual+'%; "> <a href="#/'+$filter("faseUrl")(f.fase)+'/'+f.id+'">'+$filter("nomeFase")(f.fase)+'</a> </div>';
+		}
+		return html;
+	}
+	
+	$scope.dados  = [
+        {
+            'start': new Date(2010,2,23),
+            'content': templateMercado.replace("{version}", "1.4"),
+            'className': 'version1'
+            	
+        },
+        {
+            'start': new Date(2011,2,23),
+            'content': templateMercado.replace("{version}", "1.5"),
+            'className': 'version2'
+        },
+        {
+            'start': new Date(2012,2,23),
+            'content': templateMercado.replace("{version}", "1.6"),
+            'className': 'version3'
+        },
+        {
+            'start': new Date(2013,2,23),
+            'content': templateMercado.replace("{version}", "1.7"),
+            'className': 'version4'
+        },
+        {
+            'start': new Date(2014,2,23),
+            'content': templateMercado.replace("{version}", "1.8"),
+            'className': 'version5'
+        },
+        {
+            'start': new Date(2010,7,23),
+            'end': new Date(2010,12,23),
+            'content': templateSerpro.replace("{version}", "1.4")
+            						.replace("{fases}",getFasesUrl([{id: 31, fase: 'PROSPECCAO'}]) ),
+            'className': 'version1'
+        },
+        {
+            'start': new Date(2010,12,23),
+            'end': new Date(2011,6,23),
+            'content': templateSerpro.replace("{version}", "1.4")
+            						.replace("{fases}",getFasesUrl([{id: 31, fase: 'INTERNALIZACAO'}]) ),
+            'className': 'version1'
+        },
+        {
+            'start': new Date(2011,6,23),
+            'end': new Date(2014,12,23),
+            'content': templateSerpro.replace("{version}", "1.4")
+            						.replace("{fases}",getFasesUrl([{id: 31, fase: 'SUSTENTACAO'}]) ),
+            'className': 'version1'
+        },
+        {
+            'start': new Date(2012,7,23),
+            'end': new Date(2013,12,23),
+            'content': templateSerpro.replace("{version}", "1.5")
+            						.replace("{fases}",getFasesUrl([{id: 31, fase: 'PROSPECCAO'}]) ),
+            'className': 'version2'
+        },
+        {
+            'start': new Date(2013,12,23),
+            'end': new Date(2014,12,23),
+            'content': templateSerpro.replace("{version}", "1.5")
+            						.replace("{fases}",getFasesUrl([{id: 31, fase: 'INTERNALIZACAO'}]) ),
+            'className': 'version2'
+        },
+        {
+            'start': new Date(2014,1,1),
+            'end': new Date(2014,4,23),
+            'content': templateSerpro.replace("{version}", "1.6")
+							.replace("{fases}",getFasesUrl([{id: 31, fase: 'PROSPECCAO'}]) ),
+			'className': 'version3'
+        },
+    ];
+	
+	
 
 });

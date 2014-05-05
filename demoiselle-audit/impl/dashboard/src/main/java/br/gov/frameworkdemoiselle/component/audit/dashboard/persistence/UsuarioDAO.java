@@ -63,6 +63,7 @@ public class UsuarioDAO extends JPACrud<Usuario, Long> {
      *
      * @param usuario
      * @return
+     * @throws java.lang.Exception
      */
     public Usuario findById(Long id) throws Exception{
             return (Usuario) getEntityManager().createNamedQuery("Usuario.findById").setParameter("id", id).getSingleResult();
@@ -81,6 +82,7 @@ public class UsuarioDAO extends JPACrud<Usuario, Long> {
      * @param idUsuario
      * @param idRole
      * @return
+     * @throws java.lang.Exception
      */
     public Boolean hasRole(Long idUsuario, Short idRole) throws Exception{
         return (Boolean) getEntityManager().createNativeQuery("SELECT COUNT(1) > 0 FROM guddi.usuario WHERE id = :idUser AND papel = :papel")
@@ -94,6 +96,7 @@ public class UsuarioDAO extends JPACrud<Usuario, Long> {
      * @param idUsuario
      * @param idResource
      * @return
+     * @throws java.lang.Exception
      */
     public Integer hasPermission(Long idUsuario, Long idResource) throws Exception{
         return (Integer) getEntityManager().createNativeQuery("SELECT operacao FROM usuario_recursos ur WHERE id_usuario = :idUser AND id_recursos = :resource")
@@ -107,6 +110,7 @@ public class UsuarioDAO extends JPACrud<Usuario, Long> {
      *
      * @param usuario
      * @return
+     * @throws java.lang.Exception
      */
     public void updatePassWithAminesia(String aminesia, String senhaNova) throws Exception {
         try {

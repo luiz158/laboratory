@@ -5,32 +5,54 @@
 		<div class="col-md-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<i class="fa fa-bar-chart-o fa-fw"></i> Produtos
+					<i class="fa fa-bar-chart-o fa-fw"></i> Linha do tempo dos Produtos e o Serpro
 				</div>
 				
 				<div class="panel-body">
 				
-					<div ng-repeat="produto in produtos" class="row" 
-						ng-class-even="'produto-even'"
-					>
-						<div class="col-md-1">
-							<h3>{{produto.nome}}</h3>
-						</div>
-						<div class="col-md-11">
-							<div class="produto-bar"></div>
-							<div class="produto-timeline">
-								<div ng-repeat="versao in produto.versoes" 
-									class="versao" 									
-									ng-class="{'label-danger': ! versao.fase, 'label-success': versao.fase}">
-									<img ng-src="{{versao.fase.fase | iconeFase}}" 
-										class="img-circle" width="20px" 
-										title="{{versao.fase.fase | nomeFase}}">
-									<span class="badge">{{versao.versao}}</span>								
-								</div>
+					<form>
+						<div class="form-group row">
+							<div class="col-md-4">
+								<label for="tecnologia">Tecnologia:</label>
+								<select id="tecnologia" class="form-control" 
+										ng-model="tecnologia" 
+										ng-change="carregarCategorias()" 
+										ng-options="t.nome for t in tecnologias" required>
+										<option value="" disabled>--</option>
+								</select>
+							</div>			
+							<div class="col-md-4">
+								<label for="categoria">Categoria:</label>
+								<select id="categoria" class="form-control" 
+										ng-model="categoria" 
+										ng-change="carregarProdutos()" 
+										ng-options="c.nome for c in categorias" required>
+										<option value="" disabled>--</option>
+								</select>
+							</div>
+							<div class="col-md-4">
+								<label for="produto">Produto:</label> 
+								<select id="produto" class="form-control" 
+									ng-model="produto"
+									ng-options="p.nome for p in resultadoProdutos">
+									<option value="" disabled>-- Selecione um produto --</option>
+								</select>
 							</div>
 						</div>
+					</form>
+				
+					<div id="prod-timeline" ng-model="dados" timeline></div>
+							
+				</div>
+				<div class="panel-footer">
+					<div class="row" >
+					<div class="col-md-4">
+						<img src="images/Rocket.png"> - Lançamento no mercado
 					</div>
-									
+					<div class="col-md-4">
+						<img src="images/serpro.png"> - Ciclo de vida no Serpro
+					</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -53,5 +75,7 @@
 			<div ng-include src="'partials/dashboard/meusProjetos.html'"></div>
 		</div>
 	</div>
+	
+
 
 </div>

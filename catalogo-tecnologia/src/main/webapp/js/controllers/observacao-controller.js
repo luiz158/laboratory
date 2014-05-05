@@ -42,7 +42,42 @@ controllers.controller('ObservacaoCtrl', function ObservacaoCtrl($scope, $rootSc
 		});
 	};
 	
+	$scope.salvar = function(obs){		
+		obs.fase = {id: obs.fase.id};		
+		$http({
+			url : 'api/observacao',
+			method : "PUT",
+			data : obs,
+			headers : {
+				'Content-Type' : 'application/json;charset=utf8'
+			}
+		}).success(function(data) {
+			$scope.observacao.observacao="";
+			carregarObservacoes();
+			AlertService.addWithTimeout('success','Observação salva');			
+		}).error( function(data, status) {
+			AlertService.addWithTimeout('danger','Não foi possível salvar a observação.');
+		});
+	};
 	
+	$scope.podeEditar = function(obs){
+		return AuthService.getUsuario().id == obs.usuario.id;
+	};
+	
+	$scope.excluir = function(obs) {
+		$http({
+			url : 'api/observacao/'+obs.id,
+			method : "DELETE",
+			headers : {
+				'Content-Type' : 'application/json;charset=utf8'
+			}
+		}).success(function(data) {
+			carregarObservacoes();
+			AlertService.addWithTimeout('success','Observação excluída');			
+		}).error( function(data, status) {
+			AlertService.addWithTimeout('danger','Não foi possível excluir a observação.');
+		});
+	};
 		
 
 });

@@ -3,32 +3,32 @@
  * Copyright (C) 2014 SERPRO
  * ----------------------------------------------------------------------------
  * This file is part of Demoiselle Framework.
- * 
+ *
  * Demoiselle Framework is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License version 3
  * as published by the Free Software Foundation.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License version 3
  * along with this program; if not,  see <http://www.gnu.org/licenses/>
  * or write to the Free Software Foundation, Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA  02110-1301, USA.
  * ----------------------------------------------------------------------------
  * Este arquivo é parte do Framework Demoiselle.
- * 
+ *
  * O Framework Demoiselle é um software livre; você pode redistribuí-lo e/ou
  * modificá-lo dentro dos termos da GNU LGPL versão 3 como publicada pela Fundação
  * do Software Livre (FSF).
- * 
+ *
  * Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA
  * GARANTIA; sem uma garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou
  * APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/LGPL em português
  * para maiores detalhes.
- * 
+ *
  * Você deve ter recebido uma cópia da GNU LGPL versão 3, sob o título
  * "LICENCA.txt", junto com esse programa. Se não, acesse <http://www.gnu.org/licenses/>
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
@@ -47,17 +47,18 @@ import org.primefaces.extensions.event.timeline.TimelineSelectEvent;
 import org.primefaces.extensions.model.timeline.TimelineEvent;
 import org.primefaces.extensions.model.timeline.TimelineModel;
 
-import br.gov.frameworkdemoiselle.component.audit.dashboard.business.TrailBC;
+import br.gov.frameworkdemoiselle.component.audit.dashboard.business.TrilhaBC;
 import br.gov.frameworkdemoiselle.component.audit.dashboard.domain.SerialObject;
+import br.gov.frameworkdemoiselle.component.audit.dashboard.domain.Trilha;
 import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
-import br.gov.frameworkdemoiselle.component.audit.util.Util;
+import br.gov.frameworkdemoiselle.component.audit.internal.util.Util;
 import br.gov.frameworkdemoiselle.stereotype.ViewController;
 import br.gov.frameworkdemoiselle.template.AbstractPageBean;
 
 /**
- * 
+ *
  * @author SERPRO
- * 
+ *
  */
 
 @ViewController
@@ -66,15 +67,15 @@ public class DashboardMB extends AbstractPageBean implements DashboardNavigation
 	private static final long serialVersionUID = 4565271684849353654L;
 
 	@Inject
-	protected TrailBC trailBC;
+	protected TrilhaBC trailBC;
 
 	protected int currentLevel = 1;
 
-	protected List<Trail> trails;
+	protected List<Trilha> trails;
 
 	protected TimelineEvent event;
 	protected SerialObject serialObject;
-	
+
 	protected TimelineModel systems;
 	protected TimelineModel features;
 	protected TimelineModel users;
@@ -116,30 +117,30 @@ public class DashboardMB extends AbstractPageBean implements DashboardNavigation
 		this.currentLevel = currentLevel;
 	}
 
-	public List<Trail> getTrilhas() {
+	public List<Trilha> getTrilhas() {
 		return trails;
 	}
 
-	public void setTrails(List<Trail> trails) {
+	public void setTrails(List<Trilha> trails) {
 		this.trails = trails;
 	}
 
 	public TimelineEvent getEvent() {
-		
+
 		if(event != null && event.getData() != null){
-			
+
 			Trail trail = (Trail) event.getData();
 			Map<String, String> map = Util.jsonToMap(trail.getObjSerial());
-			
+
 			serialObject = new SerialObject(trail.getClassName(), map);
 		}
-		
+
 		return event;
 	}
-	
+
 	public List<String> getKeys(){
 		List<String> keys = new ArrayList<String>();
-		
+
 		if(serialObject != null && serialObject.getMap() != null){
 			for(String key : serialObject.getMap().keySet()){
 				if(!key.equals("class")){
@@ -147,7 +148,7 @@ public class DashboardMB extends AbstractPageBean implements DashboardNavigation
 				}
 			}
 		}
-		
+
 		return keys;
 	}
 
@@ -155,7 +156,7 @@ public class DashboardMB extends AbstractPageBean implements DashboardNavigation
 		this.event = event;
 	}
 
-	public TrailBC getTrailBC() {
+	public TrilhaBC getTrailBC() {
 		return trailBC;
 	}
 

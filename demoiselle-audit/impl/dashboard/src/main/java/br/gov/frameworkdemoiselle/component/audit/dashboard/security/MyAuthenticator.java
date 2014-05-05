@@ -119,6 +119,7 @@ public class MyAuthenticator implements Authenticator {
 
     /**
      *
+     * @throws java.lang.Exception
      */
     @Override
     public void unauthenticate() throws Exception {

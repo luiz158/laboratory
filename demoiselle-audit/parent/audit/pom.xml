@@ -48,11 +48,6 @@
         <artifactId>demoiselle-component-build-parent</artifactId>
         <version>9</version>
     </parent>
-    <!--    <parent>
-        <groupId>br.gov.frameworkdemoiselle</groupId>
-        <artifactId>demoiselle-minimal-parent</artifactId>
-        <version>2.4.0</version>
-    </parent>-->
 
     <name>Demoiselle Audit Parent</name>
     <description> Contém as informações de build comum a todos os projetos do Demoiselle Audit. Se você é usuário do audit, certamente este POM não servirá para você.</description>

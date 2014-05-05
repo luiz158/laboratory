@@ -36,19 +36,17 @@
  */
 package br.gov.frameworkdemoiselle.component.audit.auditors.persistence;
 
+import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
+import br.gov.frameworkdemoiselle.component.audit.implementation.AuditConfig;
+import br.gov.frameworkdemoiselle.component.audit.implementation.auditors.AbstractAuditor;
+import br.gov.frameworkdemoiselle.component.audit.internal.util.Util;
+import br.gov.frameworkdemoiselle.security.User;
+import br.gov.frameworkdemoiselle.util.Beans;
 import java.util.Date;
-
 import javax.persistence.PostLoad;
 import javax.persistence.PostPersist;
 import javax.persistence.PostRemove;
 import javax.persistence.PostUpdate;
-
-import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
-import br.gov.frameworkdemoiselle.component.audit.internal.AuditConfig;
-import br.gov.frameworkdemoiselle.component.audit.internal.auditors.AbstractAuditor;
-import br.gov.frameworkdemoiselle.component.audit.util.Util;
-import br.gov.frameworkdemoiselle.security.User;
-import br.gov.frameworkdemoiselle.util.Beans;
 
 /**
  *
@@ -89,6 +87,10 @@ public class PersistenceAuditor extends AbstractAuditor {
         return trailBean;
     }
 
+    /**
+     *
+     * @param object
+     */
     @PostLoad
     public void postLoad(Object object) {
 
@@ -99,6 +101,10 @@ public class PersistenceAuditor extends AbstractAuditor {
 
     }
 
+    /**
+     *
+     * @param object
+     */
     @PostRemove
     public void postRemove(Object object) {
         Trail trailBean = createTrailBean(object);
@@ -108,6 +114,10 @@ public class PersistenceAuditor extends AbstractAuditor {
 
     }
 
+    /**
+     *
+     * @param object
+     */
     @PostUpdate
     public void postUpdate(Object object) {
         Trail trailBean = createTrailBean(object);
@@ -117,6 +127,10 @@ public class PersistenceAuditor extends AbstractAuditor {
 
     }
 
+    /**
+     *
+     * @param object
+     */
     @PostPersist
     public void postPersist(Object object) {
 

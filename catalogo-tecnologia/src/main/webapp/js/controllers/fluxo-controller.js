@@ -5,6 +5,8 @@ var controllers = angular.module('catalogo.controllers');
 
 
 controllers.controller('FluxoCtrl', function FluxoCtrl($scope, $http, $routeParams) {
+	console.log("Fluxo");
+	console.log($scope.ngModel);
 	$scope.fase = $scope.$parent.ngModel;
 	$scope.fluxo = [];
 	if($scope.fase.id){

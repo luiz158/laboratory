@@ -23,24 +23,39 @@ import org.junit.runner.RunWith;
 @RunWith(DemoiselleRunner.class)
 public class PersistenceAuditorTest {
 
-    @Inject
-    PersistenceAuditor instance;
-
-    public PersistenceAuditorTest() {
-    }
-
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
 
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
 
+    @Inject
+    PersistenceAuditor instance;
+
+    /**
+     *
+     */
+    public PersistenceAuditorTest() {
+    }
+
+    /**
+     *
+     */
     @Before
     public void setUp() {
     }
 
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }
@@ -50,10 +65,8 @@ public class PersistenceAuditorTest {
      */
     @Test
     public void testPostLoad() {
-        System.out.println("testPostLoad");
-        Trail trail = new Trail(1L, "Teste4Aba", "Usuario1", "id", "Perfil4Aba", "Criou", "Tela inicial", "10.200.255.26", new Date(), "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\":  \"1\", \"nome\": \"Henrique\", \"filho\": \"Rafael\"}", null, null);
+        Trail trail = new Trail("Teste4Aba", "Usuario1", "id", "Perfil4Aba", "Criou", "Tela inicial", "10.200.255.26", new Date(), "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\":  \"1\", \"nome\": \"Henrique\", \"filho\": \"Rafael\"}", null, null);
         instance.postLoad(trail);
-
     }
 
     /**
@@ -61,10 +74,8 @@ public class PersistenceAuditorTest {
      */
     @Test
     public void testPostRemove() {
-        System.out.println("testPostRemove");
-        Trail trail = new Trail(1L, "Teste4Aba", "Usuario1", "id", "Perfil4Aba", "Criou", "Tela inicial", "10.200.255.26", new Date(), "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\":  \"1\", \"nome\": \"Henrique\", \"filho\": \"Rafael\"}", null, null);
+        Trail trail = new Trail("Teste4Aba", "Usuario1", "id", "Perfil4Aba", "Criou", "Tela inicial", "10.200.255.26", new Date(), "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\":  \"1\", \"nome\": \"Henrique\", \"filho\": \"Rafael\"}", null, null);
         instance.postRemove(trail);
-
     }
 
     /**
@@ -72,8 +83,7 @@ public class PersistenceAuditorTest {
      */
     @Test
     public void testPostUpdate() {
-        System.out.println("testPostUpdate");
-        Trail trail = new Trail(1L, "Teste4Aba", "Usuario1", "id", "Perfil4Aba", "Criou", "Tela inicial", "10.200.255.26", new Date(), "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\":  \"1\", \"nome\": \"Henrique\", \"filho\": \"Rafael\"}", null, null);
+        Trail trail = new Trail("Teste4Aba", "Usuario1", "id", "Perfil4Aba", "Criou", "Tela inicial", "10.200.255.26", new Date(), "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\":  \"1\", \"nome\": \"Henrique\", \"filho\": \"Rafael\"}", null, null);
         instance.postUpdate(trail);
 
     }
@@ -83,8 +93,7 @@ public class PersistenceAuditorTest {
      */
     @Test
     public void testPostPersist() {
-        System.out.println("testPostPersist");
-        Trail trail = new Trail(1L, "Teste4Aba", "Usuario1", "id", "Perfil4Aba", "Criou", "Tela inicial", "10.200.255.26", new Date(), "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\":  \"1\", \"nome\": \"Henrique\", \"filho\": \"Rafael\"}", null, null);
+        Trail trail = new Trail("Teste4Aba", "Usuario1", "id", "Perfil4Aba", "Criou", "Tela inicial", "10.200.255.26", new Date(), "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\":  \"1\", \"nome\": \"Henrique\", \"filho\": \"Rafael\"}", null, null);
         instance.postPersist(trail);
 
     }

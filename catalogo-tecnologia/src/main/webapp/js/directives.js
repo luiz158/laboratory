@@ -1,73 +1,79 @@
 var diretivas = angular.module('catalogo.directives', []);
 
-diretivas.directive('ngAnaliseSituacao',function() {
-	return {
-		scope : {
-			situacao : '@'
-		},
-		template : '<span class="label"><i class="fa"> </i> {{situacao}}</span>',
-		link : function(scope, elem, $attrs) {
-			$attrs.$observe('situacao', function(situacao) {
-				var labelType = 'label-primary';
-				var icon = 'fa-pencil-square-o';
-				if (situacao == 'Aprovado') {
-					var labelType = 'label-success';
-					var icon = 'fa-thumbs-o-up';
-				} else if (situacao == 'Reprovado') {
-					var labelType = 'label-danger';
-					var icon = 'fa-thumbs-o-down';
-				}
-				$(elem).children().first().addClass(labelType)
-						.children().first().addClass(icon);
-			});
-
-		}
-	};
-});
-
-diretivas.directive('ngAnaliseSituacaoButton',function() {
-	return {
-		scope : {
-			situacao : '@'
-		},
-		transclude : true,
-		template : '<a data-toggle="dropdown" class="btn btn-sm  dropdown-toggle">'
-				+ '<i class="fa"></i> {{situacao}} <span class="caret"></span>'
-				+ '</a>'
-				+ '<ul class="dropdown-menu dropdown" ng-transclude>'
-				+ '</ul>',
-
-		link : function(scope, elem, $attrs) {
-
-			$attrs
-					.$observe(
-							'situacao',
-							function(situacao) {
-								var btnClasses = 'btn-primary btn-success btn-danger';
-								var iconClasses = 'fa-pencil-square-o fa-thumbs-o-up fa-thumbs-o-down';
-								var btnType = 'btn-primary';
+diretivas
+		.directive(
+				'ngAnaliseSituacao',
+				function() {
+					return {
+						scope : {
+							situacao : '@'
+						},
+						template : '<span class="label"><i class="fa"> </i> {{situacao}}</span>',
+						link : function(scope, elem, $attrs) {
+							$attrs.$observe('situacao', function(situacao) {
+								var labelType = 'label-primary';
 								var icon = 'fa-pencil-square-o';
 								if (situacao == 'Aprovado') {
-									var btnType = 'btn-success';
+									var labelType = 'label-success';
 									var icon = 'fa-thumbs-o-up';
 								} else if (situacao == 'Reprovado') {
-									var btnType = 'btn-danger';
+									var labelType = 'label-danger';
 									var icon = 'fa-thumbs-o-down';
 								}
-								$(elem)
-										.children()
-										.first()
-										.removeClass(btnClasses)
-										.addClass(btnType)
-										.children().first()
-										.removeClass(
-												iconClasses)
-										.addClass(icon);
+								$(elem).children().first().addClass(labelType)
+										.children().first().addClass(icon);
 							});
 
-		}
-	};
-});
+						}
+					};
+				});
+
+diretivas
+		.directive(
+				'ngAnaliseSituacaoButton',
+				function() {
+					return {
+						scope : {
+							situacao : '@'
+						},
+						transclude : true,
+						template : '<a data-toggle="dropdown" class="btn btn-sm  dropdown-toggle">'
+								+ '<i class="fa"></i> {{situacao}} <span class="caret"></span>'
+								+ '</a>'
+								+ '<ul class="dropdown-menu dropdown" ng-transclude>'
+								+ '</ul>',
+
+						link : function(scope, elem, $attrs) {
+
+							$attrs
+									.$observe(
+											'situacao',
+											function(situacao) {
+												var btnClasses = 'btn-primary btn-success btn-danger';
+												var iconClasses = 'fa-pencil-square-o fa-thumbs-o-up fa-thumbs-o-down';
+												var btnType = 'btn-primary';
+												var icon = 'fa-pencil-square-o';
+												if (situacao == 'Aprovado') {
+													var btnType = 'btn-success';
+													var icon = 'fa-thumbs-o-up';
+												} else if (situacao == 'Reprovado') {
+													var btnType = 'btn-danger';
+													var icon = 'fa-thumbs-o-down';
+												}
+												$(elem)
+														.children()
+														.first()
+														.removeClass(btnClasses)
+														.addClass(btnType)
+														.children().first()
+														.removeClass(
+																iconClasses)
+														.addClass(icon);
+											});
+
+						}
+					};
+				});
 
 diretivas.directive('ngAnexos', function() {
 	return {
@@ -87,28 +93,31 @@ diretivas.directive('ngProximaFase', function() {
 		restrict : 'E',
 		require : '^ngModel',
 		scope : {
-			fase : '=ngModel'			
+			fase : '=ngModel'
 		},
 		templateUrl : 'directives/proximaFase.html',
 		controller : function($scope) {
-			
-			$scope.ciclo = {numero: $scope.fase.proximaFaseCiclo, fator: 1};
-			
-			function atualizarCiclo(newValue){	
-				if(!isNaN($scope.ciclo.numero) && !isNaN($scope.ciclo.fator)){
+
+			$scope.ciclo = {
+				numero : $scope.fase.proximaFaseCiclo,
+				fator : 1
+			};
+
+			function atualizarCiclo(newValue) {
+				if (!isNaN($scope.ciclo.numero) && !isNaN($scope.ciclo.fator)) {
 					var total = $scope.ciclo.numero * $scope.ciclo.fator;
 					$scope.fase.proximaFaseCiclo = total;
 				}
 			}
-			
+
 			$scope.$watch('ciclo.numero', function(newValue, oldValue) {
 				atualizarCiclo(newValue);
-		     });
-			
+			});
+
 			$scope.$watch('ciclo.fator', function(newValue, oldValue) {
 				atualizarCiclo(newValue);
-		     });
-			
+			});
+
 		}
 	};
 });
@@ -278,8 +287,7 @@ diretivas.directive('ngFluxo', function($timeout) {
 		},
 		templateUrl : 'directives/fluxo.html',
 		link : function(scope, elem, $attrs) {
-			
-			
+
 		}
 	};
 });
@@ -335,7 +343,7 @@ diretivas.directive('loggedIn', function(AuthService) {
 			AuthService.getLoggedUserService().then(function(data) {
 				if (data == "") {
 					var urlOriginal = location.href;
-					location.href = "index.html?destino="+urlOriginal;
+					location.href = "index.html?destino=" + urlOriginal;
 				}
 				logado = true;
 			});
@@ -346,16 +354,16 @@ diretivas.directive('loggedIn', function(AuthService) {
 /**
  * Se o elemento for um botão, vai desabilitalo
  */
-diretivas.directive('hasRole', function(AuthService) {		
+diretivas.directive('hasRole', function(AuthService) {
 	return {
 		restrict : 'A',
 		link : function(scope, elem, $attrs) {
 			var paramRoles = $attrs.hasRole.split(",");
-			AuthService.getLoggedUserService().then(function(user) {							
+			AuthService.getLoggedUserService().then(function(user) {
 				var estaHabilitado = hasRoles(user, paramRoles);
 				if (!estaHabilitado) {
 					elem.attr('disabled', true);
-					elem.find("*").attr("disabled", "disabled");//.off('click');
+					elem.find("*").attr("disabled", "disabled");// .off('click');
 				} else {
 					elem.attr('disabled', false);
 				}
@@ -364,21 +372,20 @@ diretivas.directive('hasRole', function(AuthService) {
 	};
 });
 
-diretivas.directive('ifHasRole', function(AuthService) {		
+diretivas.directive('ifHasRole', function(AuthService) {
 	return {
 		restrict : 'A',
 		link : function(scope, elem, $attrs) {
 			var paramRoles = $attrs.ifHasRole.split(",");
-			AuthService.getLoggedUserService().then(function(user) {							
+			AuthService.getLoggedUserService().then(function(user) {
 				var estaHabilitado = hasRoles(user, paramRoles);
 				if (!estaHabilitado) {
 					elem.remove();
-				} 
+				}
 			});
 		}
 	};
 });
-
 
 /**
  * Testa a intercecao entre as roles do usuario e as roles informadas.
@@ -389,7 +396,7 @@ diretivas.directive('ifHasRole', function(AuthService) {
  * @param roles
  * @returns {Boolean}
  */
-function hasRoles(user, roles){
+function hasRoles(user, roles) {
 	roles.push("ADMINISTRADOR");
 	var userRoles = [];
 	var grupos = [];
@@ -400,7 +407,7 @@ function hasRoles(user, roles){
 				userRoles.push(perfil);
 			});
 		});
-	}	
+	}
 	userRoles = _.uniq(userRoles);
 	return _.intersection(userRoles, roles).length > 0;
 }
@@ -410,61 +417,62 @@ function hasRoles(user, roles){
  * podem não sincronizar com o angular, por isso deve-se utilizar esta diretiva
  * nestes campos...
  */
-diretivas.directive("autofill", function () {
-    return {
-        require: "ngModel",
-        link: function (scope, element, attrs, ngModel) {
-            scope.$on("autofill:update", function() {
-                ngModel.$setViewValue(element.val());
-            });
-        }
-    };
+diretivas.directive("autofill", function() {
+	return {
+		require : "ngModel",
+		link : function(scope, element, attrs, ngModel) {
+			scope.$on("autofill:update", function() {
+				ngModel.$setViewValue(element.val());
+			});
+		}
+	};
 });
 
-diretivas.directive('appVersion', ['version', function(version) {
-    return function(scope, elm, attrs) {
-        elm.text(version);
-      };
- }]);
+diretivas.directive('appVersion', [ 'version', function(version) {
+	return function(scope, elm, attrs) {
+		elm.text(version);
+	};
+} ]);
 
 diretivas.directive("confirmButton", function($timeout) {
 	return {
-	    restrict: 'A',
-	    scope: {
-	        confirm: '&'
-	    },
-	    link: function(scope, element, attrs) {
-	      var buttonId, html, message, nope, title, yep;	      
-	      buttonId = Math.floor(Math.random() * 10000000000);	      
-	      attrs.buttonId = buttonId;	      
-	      message = attrs.message || "Tem certeza?";
-	      yep = attrs.yes || "Sim";
-	      nope = attrs.no || "Não";
-	      title = attrs.title || "Confirm";	      
-	    	      
-	      element.bind('click', function(e) {
-	    	  var box = bootbox.dialog({
-	    		  message: message,
-	    		  title: title,
-	    		  buttons: {
-	    			  success: {
-		    		      label: yep,
-		    		      className: "btn-success",
-		    		      callback: function() {
-		    		    	  $timeout(function(){
-		    		    		  scope.confirm();
-		    		    	  });
-		    		      }
-	    			  },
-	    			  danger: {
-		    		      label: nope,
-		    		      className: "btn-danger",
-		    		      callback: function() {}
-	    			  }
-	    		  }
-	    	  });	      
-	      });
-	    }
+		restrict : 'A',
+		scope : {
+			confirm : '&'
+		},
+		link : function(scope, element, attrs) {
+			var buttonId, html, message, nope, title, yep;
+			buttonId = Math.floor(Math.random() * 10000000000);
+			attrs.buttonId = buttonId;
+			message = attrs.message || "Tem certeza?";
+			yep = attrs.yes || "Sim";
+			nope = attrs.no || "Não";
+			title = attrs.title || "Confirm";
+
+			element.bind('click', function(e) {
+				var box = bootbox.dialog({
+					message : message,
+					title : title,
+					buttons : {
+						success : {
+							label : yep,
+							className : "btn-success",
+							callback : function() {
+								$timeout(function() {
+									scope.confirm();
+								});
+							}
+						},
+						danger : {
+							label : nope,
+							className : "btn-danger",
+							callback : function() {
+							}
+						}
+					}
+				});
+			});
+		}
 	};
 });
 
@@ -479,42 +487,28 @@ diretivas.directive('ngFaseToolbar', function($timeout) {
 	};
 });
 
-
-diretivas.directive('timeline',function() {
+diretivas.directive('timeline', function($timeout) {
 	return {
 		restrict : 'A',
 		require : '^ngModel',
-		scope : {			
+		scope : {
 			ngModel : '=',
 			id : '@'
 		},
 		link : function(scope, elem, $attrs) {
-			
-			  var container = document.getElementById($attrs.id);
-			  var chart = new google.visualization.Timeline(container);
-			  var dataTable = new google.visualization.DataTable();
-	
-			  dataTable.addColumn({ type: 'string', id: 'Produto'});
-			  dataTable.addColumn({ type: 'string', id: 'Situação' });
-			  dataTable.addColumn({ type: 'number', id: 'Versão' });
-			  dataTable.addColumn({ type: 'number', id: 'Versão' });
-//			  dataTable.addColumn({ type: 'number', id: 'End' });
-			  
-			  dataTable.addRows([
-			    [ 'Java',  'Prospecção',    4 	,5 ],
-			    [ 'Java',  'defasado',    	5  	,6],
-			    [ 'Java',  'defasado', 		6  	,7],
-			    [ 'Ubunto',  'defasado',    	10  	,10.9],
-			    [ 'Ubunto',  'defasado', 		11  	,11.9]
-			    
-			    ]);
-	
-			  var options = {
-			    timeline: { singleColor: '#8d8'}
-			  };
-	
-			  chart.draw(dataTable, options);
+			 $timeout(function(){			      
+				var container = document.getElementById($attrs.id);
+	            var options = {
+	                'width':  '100%',
+	                'height': 'auto',
+	                'locale': 'pt-BR',
+	                'editable': false,
+	                'showNavigation': true
+	            };
+	            var timeline = new links.Timeline(container);
+	            timeline.draw(scope.ngModel, options);
+			 }); 
 
 		}
-};
+	};
 });

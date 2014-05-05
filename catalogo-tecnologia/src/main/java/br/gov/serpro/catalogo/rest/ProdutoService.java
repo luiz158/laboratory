@@ -72,6 +72,13 @@ public class ProdutoService {
 		return produtoDAO.listarProdutoPorCategoria(categoriaId);
 	}
 	
+	
+	@GET
+	@Path("listarProdutosUnicosPorCategoria/{categoriaId}")
+	public List<Produto> listarProdutosUnicosPorCategoria(@NotNull @PathParam("categoriaId") Long categoriaId) {
+		return produtoDAO.listarProdutosUnicosPorCategoria(categoriaId);
+	}
+	
 	@GET @Path("listarProdutosSemFase/{produto}")
 	public List<Produto> produtosSemFase(@PathParam("produto") String nomeProduto) {
 		return produtoDAO.listarProdutosSemFase(nomeProduto);

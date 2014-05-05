@@ -25,4 +25,9 @@ public class ProdutoDAO extends JPACrud<Produto, Long> {
 		String jpql = "SELECT p FROM Produto p WHERE upper(p.nome) like upper('%"+nomeProduto+"%')";
 		return super.findByJPQL(jpql);
 	}
+
+	public List<Produto> listarProdutosUnicosPorCategoria(Long categoriaId) {
+		String jpql = "select p from Produto p inner join p.categorias s where s.id = "+categoriaId+" and p.atualizacao = false";
+		return super.findByJPQL(jpql);
+	}
 }

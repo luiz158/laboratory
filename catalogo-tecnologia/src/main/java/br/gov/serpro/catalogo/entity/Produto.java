@@ -2,6 +2,7 @@ package br.gov.serpro.catalogo.entity;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -29,6 +30,8 @@ public class Produto {
 	
 	@NotEmpty
 	private String versao;
+	
+	private Date dataLancamento;
 	
 	@ManyToOne
 	private Licenciamento licenciamento;
@@ -156,5 +159,13 @@ public class Produto {
 
 	public void setProdutoAnterior(String produtoAnterior) {
 		this.produtoAnterior = produtoAnterior;
+	}
+
+	public Date getDataLancamento() {
+		return dataLancamento;
+	}
+
+	public void setDataLancamento(Date dataLancamento) {
+		this.dataLancamento = dataLancamento;
 	}
 }

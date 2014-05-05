@@ -161,6 +161,8 @@ controllers.controller('ProdutoEdit', function Produto($scope, $http,
 						$rootScope.produto.fornecedor = $scope.fornecedor;
 					}
 					
+					console.log($rootScope.produto);
+					
 					$("[id$='-message']").text("");
 					$http({
 						url : 'api/produto',
