@@ -55,6 +55,7 @@
         <module>impl/processors/rest</module>
         <module>impl/processors/mongo</module>
         <module>impl/auditors/persistence</module>
+        <module>impl/auditors/view</module>
         <!--<module>impl/dashboard</module>-->
     </modules>
 
