@@ -6,17 +6,22 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.persistence.Query;
 
 import br.gov.frameworkdemoiselle.stereotype.PersistenceController;
 import br.gov.frameworkdemoiselle.template.JPACrud;
 import br.gov.serpro.catalogo.entity.Fase;
 import br.gov.serpro.catalogo.entity.FaseProduto;
+import br.gov.serpro.catalogo.entity.Produto;
 
 @PersistenceController
 public class FaseProdutoDAO extends JPACrud<FaseProduto, Long> {
 	
 	private static final long serialVersionUID = 1L;
+	
+	@Inject
+	private ProdutoDAO produtoDAO;
 		
 	@SuppressWarnings("unchecked")
 	public List<FaseProduto> produtosDaFase(Fase fase) {
@@ -31,63 +36,69 @@ public class FaseProdutoDAO extends JPACrud<FaseProduto, Long> {
 		return super.findByJPQL(jpql);
 	}
 
-	public Map<String, Object> versoesDosProdutosPorNomeProduto(String nomeProduto) {
-		String jpql = "select fp from FaseProduto fp where fp.id in "
-				+ "(select max(fp2.id) from FaseProduto fp2 where fp2.produto.nome = '"+nomeProduto+"' and fp2.fase.fase <> 'ANALISE' group by fp2.fase.faseInicial.id) ORDER BY fp.produto.versao";
-		
-		List<FaseProduto> listaFaseProduto = super.findByJPQL(jpql);
-		
-		Map<String, Object> produtoMap = new HashMap<String,Object>();
-		List<Map<String,Object>> listaVersoes = new ArrayList<Map<String,Object>>();
-		
-		Iterator i = listaFaseProduto.iterator();
-		while (i.hasNext()) {
-			FaseProduto fp = (FaseProduto)i.next();
-			
-			Map<String, Object> faseMap = new HashMap<String,Object>();
-			faseMap.put("id",fp.getId());
-			faseMap.put("fase", fp.getFase().getFase());
-			
-			Map<String, Object> versaoMap = new HashMap<String,Object>();
-			versaoMap.put("id", fp.getProduto().getId());
-			versaoMap.put("versao", fp.getProduto().getVersao());
-			versaoMap.put("fase", faseMap);
-			
-			listaVersoes.add(versaoMap);
-		}
-		produtoMap.put("nome", nomeProduto);
-		produtoMap.put("versoes", listaVersoes);
-		return produtoMap;
-	}
-
-	public List<Map<String,Object>> versoesEFasesDosProdutosPorNomeProduto(String nomeProduto) {
+	public List<Map<String, Object>> produtoComVersoesEFases(String nomeProduto) {
 		String jpql = "select fp from FaseProduto fp where fp.produto.nome = '"+nomeProduto+"' and fp.fase.fase <> 'ANALISE' ORDER BY fp.produto.versao, fp.fase.id";
 		
 		List<FaseProduto> listaFaseProduto = super.findByJPQL(jpql);
 		
-		List<Map<String,Object>> listaFases = new ArrayList<Map<String,Object>>();
+		List<Map<String,Object>> listaProdutoVersaoFases = new ArrayList<Map<String,Object>>();
 		
-		Iterator i = listaFaseProduto.iterator();
-		while (i.hasNext()) {
+		for (int x=0; x<listaFaseProduto.size(); x++){
 			
+			FaseProduto fp = (FaseProduto)listaFaseProduto.get(x);
+			
+			List<Map<String,Object>> listaFases = new ArrayList<Map<String,Object>>();
 			Map<String, Object> faseMap = new HashMap<String,Object>();
-			List<Map<String,Object>> listaFasesPorChave = new ArrayList<Map<String,Object>>();
+			Map<String, Object> produtoVersaoFases = new HashMap<String,Object>();
 			
-			FaseProduto fp = (FaseProduto)i.next();
+			produtoVersaoFases.put("id", fp.getProduto().getId());
+			produtoVersaoFases.put("versao", fp.getProduto().getVersao());
+			produtoVersaoFases.put("nome", fp.getProduto().getNome());
 			
-			Map<String, Object> fasesMap = new HashMap<String,Object>();
-			fasesMap.put("id",fp.getId());
-			fasesMap.put("fase", fp.getFase().getFase());
-			
-			listaFasesPorChave.add(fasesMap);
-			
-			faseMap.put("start", fp.getFase().getDataRealizacao());
-			faseMap.put("end", fp.getFase().getDataFinalizacao());
-			faseMap.put("versao", fp.getProduto().getVersao());
-			faseMap.put("fases", listaFasesPorChave);
+			faseMap.put("id",fp.getFase().getId());
+			faseMap.put("fase", fp.getFase().getFase());
+			faseMap.put("dataRealizacao", fp.getFase().getDataRealizacao());
+			faseMap.put("dataFinalizacao", fp.getFase().getDataFinalizacao());
 			listaFases.add(faseMap);
+			
+			for (int y=x+1; y<listaFaseProduto.size(); y++){
+				FaseProduto fp2 = (FaseProduto)listaFaseProduto.get(y);
+				if(fp2.getProduto().getVersao().equals(fp.getProduto().getVersao())) {
+					faseMap = new HashMap<String,Object>();
+					faseMap.put("id",fp2.getFase().getId());
+					faseMap.put("fase", fp2.getFase().getFase());
+					faseMap.put("dataRealizacao", fp2.getFase().getDataRealizacao());
+					faseMap.put("dataFinalizacao", fp2.getFase().getDataFinalizacao());
+					listaFases.add(faseMap);
+					if(y == listaFaseProduto.size() -1) {
+						x = listaFaseProduto.size();
+					}
+				
+				}else {
+					x = y;
+					break;
+				}
+			}
+			produtoVersaoFases.put("fases", listaFases);
+			listaProdutoVersaoFases.add(produtoVersaoFases);
 		}
-		return listaFases;
+		
+		jpql = "select p from FaseProduto fp right outer join fp.produto p where fp IS NULL and p.nome='"+nomeProduto+"'";
+		List<Produto> produtosSemFase = produtoDAO.findByJPQL(jpql);
+		
+		Iterator<Produto> i = produtosSemFase.iterator();
+		while(i.hasNext()) {
+			Produto p = (Produto)i.next();
+			Map<String, Object> produtoVersaoFases = new HashMap<String,Object>();
+			
+			produtoVersaoFases.put("id", p.getId());
+			produtoVersaoFases.put("versao", p.getVersao());
+			produtoVersaoFases.put("nome", p.getNome());
+			produtoVersaoFases.put("fases", null);
+			listaProdutoVersaoFases.add(produtoVersaoFases);
+		}
+		
+		return listaProdutoVersaoFases;
 	}
 	
 }

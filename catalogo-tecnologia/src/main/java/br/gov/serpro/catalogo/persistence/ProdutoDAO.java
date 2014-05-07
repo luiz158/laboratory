@@ -30,4 +30,8 @@ public class ProdutoDAO extends JPACrud<Produto, Long> {
 		String jpql = "select p from Produto p inner join p.categorias s where s.id = "+categoriaId+" and p.atualizacao = false";
 		return super.findByJPQL(jpql);
 	}
+	
+	public List<Produto> findByJPQL(String jpql){
+		return super.findByJPQL(jpql);
+	}
 }

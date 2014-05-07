@@ -3,6 +3,7 @@ package br.gov.serpro.catalogo.rest;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
@@ -24,6 +25,12 @@ public class FaseProdutoService {
 	
 	@Inject
 	private FaseProdutoDAO faseProdutoDAO;
+	
+	@GET
+	@Path("/produtoComVersoesEFases/{nomeProduto}")
+    public List<Map<String,Object>> versoesDosProdutosPorNomeProduto(@PathParam("nomeProduto") String nomeProduto) {
+			return faseProdutoDAO.produtoComVersoesEFases(nomeProduto);
+    }
 	
 	@GET @Path("{fase}")
 	public List<FaseProduto> produtosDaFase(@PathParam("fase") Long fase) {
