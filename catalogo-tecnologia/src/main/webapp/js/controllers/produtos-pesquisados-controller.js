@@ -14,7 +14,6 @@ controllers.controller('ProdutosPesquisados', function ProdutosPesquisados($scop
 	carregarProdutos();
 
 	function carregarProdutos() {
-
 		$http.get('api/fase/produto/listarProdutoFasePorNomeProduto/'+$scope.variavel).success(function(data) {
 			$scope.produtosFase = data;
 			$http.get('api/produto/listarProdutosSemFase/'+$scope.variavel).success(function(data) {
