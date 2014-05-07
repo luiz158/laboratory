@@ -2,7 +2,6 @@ package br.gov.serpro.catalogo.rest;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -19,6 +18,7 @@ import org.jboss.resteasy.spi.validation.ValidateRequest;
 import br.gov.frameworkdemoiselle.security.SecurityContext;
 import br.gov.serpro.catalogo.bussiness.FaseBC;
 import br.gov.serpro.catalogo.entity.Fase;
+import br.gov.serpro.catalogo.entity.FaseEnum;
 import br.gov.serpro.catalogo.entity.FaseInteressado;
 import br.gov.serpro.catalogo.entity.FaseMembro;
 import br.gov.serpro.catalogo.entity.User;
@@ -37,6 +37,13 @@ public class DashboardService {
     
     @Inject
     FaseProdutoDAO faseProdutoDAO;
+    
+    @GET
+	@Path("totalfases")
+	public Map<FaseEnum, Integer> totalPorFase() {
+    	Map<FaseEnum, Integer> map = faseBC.totalPorFase();
+		return map;
+	}
 	
     @GET
 	@Path("/versoesProdutoPorNomeProduto/{nomeProduto}")

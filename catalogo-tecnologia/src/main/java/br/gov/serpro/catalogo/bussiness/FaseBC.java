@@ -3,6 +3,7 @@ package br.gov.serpro.catalogo.bussiness;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
@@ -291,7 +292,9 @@ public class FaseBC {
 		return faseDAO.obterFasePosterior(id);
 	}
 
-	
+	public Map<FaseEnum, Integer> totalPorFase(){
+		return faseDAO.totalPorFase();
+	}
 
 
 }

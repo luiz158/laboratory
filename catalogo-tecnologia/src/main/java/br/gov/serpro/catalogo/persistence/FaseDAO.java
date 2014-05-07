@@ -2,11 +2,11 @@ package br.gov.serpro.catalogo.persistence;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
-import javax.enterprise.event.Observes;
 import javax.inject.Inject;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -19,14 +19,7 @@ import br.gov.frameworkdemoiselle.stereotype.PersistenceController;
 import br.gov.frameworkdemoiselle.template.JPACrud;
 import br.gov.serpro.catalogo.entity.Fase;
 import br.gov.serpro.catalogo.entity.FaseEnum;
-import br.gov.serpro.catalogo.entity.FaseHistorico;
-import br.gov.serpro.catalogo.entity.Situacao;
 import br.gov.serpro.catalogo.entity.StatusEnum;
-import br.gov.serpro.catalogo.entity.FaseHistorico.OPERACAO;
-import br.gov.serpro.catalogo.event.FaseEvent;
-import br.gov.serpro.catalogo.event.FaseEvent.ATUALIZAR;
-import br.gov.serpro.catalogo.event.FaseEvent.CRIAR;
-import br.gov.serpro.catalogo.event.FaseEvent.FINALIZAR;
 import br.gov.serpro.catalogo.rest.FaseDTO;
 
 @PersistenceController
@@ -121,25 +114,38 @@ public class FaseDAO extends JPACrud<Fase, Long> {
 		query.setParameter("status", StatusEnum.EXCLUIDO);
 		Fase fase = null;
 		try{
-			fase = (Fase) query.getResultList().get(0);
+			fase = query.getResultList().get(0);
 		}catch(IndexOutOfBoundsException e){}
 		return fase;
 	}
 
 	public List<Fase> obterCadeiaApartirDafaseInicialComExcluidos(Long id) {
-		String jpql = "select f from Fase f where (f.fase.id = :id or f.faseInicial.id = :id) order by id ASC";
+		String jpql = "select f from Fase f where (f.id = :id or f.faseInicial.id = :id) order by id ASC";
 		TypedQuery<Fase> query = getEntityManager().createQuery(jpql, Fase.class);
 		query.setParameter("id", id);
 		return query.getResultList();
 	}	
 	
 	public List<Fase> obterCadeiaApartirDafaseInicial(Long id) {
-		String jpql = "select f from Fase f where (f.fase.id = :id or f.faseInicial.id = :id) and f.status <> :status order by id ASC";
+		String jpql = "select f from Fase f where (f.id = :id or f.faseInicial.id = :id) and f.status <> :status order by id ASC";
 		TypedQuery<Fase> query = getEntityManager().createQuery(jpql, Fase.class);
 		query.setParameter("id", id);
 		query.setParameter("status", StatusEnum.EXCLUIDO);
 		return query.getResultList();
 	}	
+	
+	
+	@SuppressWarnings("unchecked")
+	public Map<FaseEnum, Integer> totalPorFase(){
+		Map<FaseEnum, Integer> map = new LinkedHashMap<FaseEnum, Integer>();
+		String jpql = "SELECT f.fase, count(f) FROM Fase f where f.status <> :status  GROUP BY f.fase";
+		List<Object[]> results = getEntityManager().createQuery(jpql).setParameter("status", StatusEnum.EXCLUIDO).getResultList();
+		for (Object[] result : results) {
+			map.put((FaseEnum) result[0], ((Number) result[1]).intValue());
+		}
+		return map;
+		
+	}
 		
 	
 }

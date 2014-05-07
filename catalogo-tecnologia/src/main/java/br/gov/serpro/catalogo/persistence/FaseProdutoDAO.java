@@ -40,9 +40,9 @@ public class FaseProdutoDAO extends JPACrud<FaseProduto, Long> {
 		Map<String, Object> produtoMap = new HashMap<String,Object>();
 		List<Map<String,Object>> listaVersoes = new ArrayList<Map<String,Object>>();
 		
-		Iterator i = listaFaseProduto.iterator();
+		Iterator<FaseProduto> i = listaFaseProduto.iterator();
 		while (i.hasNext()) {
-			FaseProduto fp = (FaseProduto)i.next();
+			FaseProduto fp = i.next();
 			
 			Map<String, Object> faseMap = new HashMap<String,Object>();
 			faseMap.put("id",fp.getId());
@@ -67,13 +67,13 @@ public class FaseProdutoDAO extends JPACrud<FaseProduto, Long> {
 		
 		List<Map<String,Object>> listaFases = new ArrayList<Map<String,Object>>();
 		
-		Iterator i = listaFaseProduto.iterator();
+		Iterator<FaseProduto> i = listaFaseProduto.iterator();
 		while (i.hasNext()) {
 			
 			Map<String, Object> faseMap = new HashMap<String,Object>();
 			List<Map<String,Object>> listaFasesPorChave = new ArrayList<Map<String,Object>>();
 			
-			FaseProduto fp = (FaseProduto)i.next();
+			FaseProduto fp = i.next();
 			
 			Map<String, Object> fasesMap = new HashMap<String,Object>();
 			fasesMap.put("id",fp.getId());

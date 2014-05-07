@@ -27,6 +27,18 @@ controllers.controller('DashboardCtrl', function DashboardCtrl($scope, Dashboard
 		});
 	};
 	
+	
+	/* Gráfico das fases*/
+	$http.get('api/dashboard/totalfases').success(function(data) {
+		$scope.data = [];
+		$scope.colors = ['#228B22','#483D8B','#FFD700','#1E90FF', '#DC143C'];
+		angular.forEach(data, function(value, key) {
+		    $scope.data.push({label: key, value: value});		    
+		});
+	});
+	/* Gráfico das fases*/
+	
+	
 	/* Paginação */
 	$scope.paginacaoDemandas = {
 			paginaAtual :0, 
@@ -46,15 +58,7 @@ controllers.controller('DashboardCtrl', function DashboardCtrl($scope, Dashboard
 	};	
 	
 	$scope.demandas = [];
-	$scope.data = [
-	               {label: "Análise", value: 12},
-	               {label: "Prospecção", value: 18},
-	               {label: "Internalização", value: 15},
-	               {label: "Sustentação", value: 50},
-	               {label: "Declínio", value: 6}
-	             ];
 	
-	$scope.colors = ['#228B22','#483D8B','#FFD700','#1E90FF', '#DC143C'];
 	
 	DashboardService.obterDemandas().then(function(data){
 		$scope.demandas = data;	
