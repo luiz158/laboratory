@@ -59,5 +59,35 @@ public class FaseProdutoDAO extends JPACrud<FaseProduto, Long> {
 		produtoMap.put("versoes", listaVersoes);
 		return produtoMap;
 	}
+
+	public List<Map<String,Object>> versoesEFasesDosProdutosPorNomeProduto(String nomeProduto) {
+		String jpql = "select fp from FaseProduto fp where fp.produto.nome = '"+nomeProduto+"' and fp.fase.fase <> 'ANALISE' ORDER BY fp.produto.versao, fp.fase.id";
+		
+		List<FaseProduto> listaFaseProduto = super.findByJPQL(jpql);
+		
+		List<Map<String,Object>> listaFases = new ArrayList<Map<String,Object>>();
+		
+		Iterator i = listaFaseProduto.iterator();
+		while (i.hasNext()) {
+			
+			Map<String, Object> faseMap = new HashMap<String,Object>();
+			List<Map<String,Object>> listaFasesPorChave = new ArrayList<Map<String,Object>>();
+			
+			FaseProduto fp = (FaseProduto)i.next();
+			
+			Map<String, Object> fasesMap = new HashMap<String,Object>();
+			fasesMap.put("id",fp.getId());
+			fasesMap.put("fase", fp.getFase().getFase());
+			
+			listaFasesPorChave.add(fasesMap);
+			
+			faseMap.put("start", fp.getFase().getDataRealizacao());
+			faseMap.put("end", fp.getFase().getDataFinalizacao());
+			faseMap.put("versao", fp.getProduto().getVersao());
+			faseMap.put("fases", listaFasesPorChave);
+			listaFases.add(faseMap);
+		}
+		return listaFases;
+	}
 	
 }

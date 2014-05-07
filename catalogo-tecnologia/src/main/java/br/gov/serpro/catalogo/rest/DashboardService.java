@@ -44,6 +44,12 @@ public class DashboardService {
 			return faseProdutoDAO.versoesDosProdutosPorNomeProduto(nomeProduto);
     }
     
+    @GET
+	@Path("/versoesEFasesDosProdutosPorNomeProduto/{nomeProduto}")
+    public List<Map<String,Object>> versoesEFasesDosProdutosPorNomeProduto(@PathParam("nomeProduto") String nomeProduto) {
+			return faseProdutoDAO.versoesEFasesDosProdutosPorNomeProduto(nomeProduto);
+    }
+    
 	@GET
 	@Path("minhasDemandas")
 	public List<DemandaDTO> minhasDemandas() {
