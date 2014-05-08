@@ -90,7 +90,6 @@ controllers.controller('DashboardCtrl', function DashboardCtrl($scope, Dashboard
 		$scope.versoes = null;
 		$http.get('api/fase/produto/produtoComVersoesEFases/'+$scope.produto.nome).success(function(data) {			
 			$scope.versoes = [];
-			console.log(data);
 			for (var x = 0; x < data.length; x++) {
 				var v = data[x];
 				var classe = 'version'+(x+1);
