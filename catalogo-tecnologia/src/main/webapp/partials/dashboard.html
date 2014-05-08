@@ -34,14 +34,15 @@
 								<label for="produto">Produto:</label> 
 								<select id="produto" class="form-control" 
 									ng-model="produto"
-									ng-options="p.nome for p in resultadoProdutos">
+									ng-options="p.nome for p in resultadoProdutos"
+									ng-change="carregarTimeline()">
 									<option value="" disabled>-- Selecione um produto --</option>
 								</select>
 							</div>
 						</div>
 					</form>
 				
-					<div id="prod-timeline" ng-model="dados" timeline></div>
+					<div id="prod-timeline" ng-if="versoes" ng-model="versoes" timeline></div>
 							
 				</div>
 				<div class="panel-footer">

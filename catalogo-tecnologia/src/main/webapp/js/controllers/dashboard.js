@@ -57,135 +57,64 @@ controllers.controller('DashboardCtrl', function DashboardCtrl($scope, Dashboard
 		    }
 	};	
 	
-	$scope.demandas = [];
-	
-	
+	$scope.demandas = [];	
 	DashboardService.obterDemandas().then(function(data){
 		$scope.demandas = data;	
 		$scope.paginacaoDemandas.data = data;
 	});
 	
-	$scope.produtos = [
-	    {
-	    	nome: "Java",
-	    	versoes:[
-	    	         {id: 1, versao: "1.4", fase: {id:10, fase: 'SUSTENTACAO'}},
-	    	         {id: 2, versao: "1.5", fase: {id:10, fase: 'INTERNALIZACAO'}},
-	    	         {id: 3, versao: "1.6", fase: {id:10, fase: 'PROSPECCAO'}},
-	    	         {id: 4, versao: "1.7"},
-	    	         {id: 4, versao: "1.8"}
-	    	]
-	    },
-	    {
-	    	nome: "Ubuntu",
-	    	versoes:[
-	    	         {id: 1, versao: "10.04", fase: {id:10, fase: 'SUSTENTACAO'}},
-	    	         {id: 2, versao: "11", fase: {id:10, fase: 'INTERNALIZACAO'}},
-	    	         {id: 3, versao: "12.", fase: {id:10, fase: 'PROSPECCAO'}},
-	    	         {id: 4, versao: "13"},
-	    	         {id: 4, versao: "14"}
-	    	]
-	    },
-	    {
-	    	nome: "Mozilla Firefox",
-	    	versoes:[
-	    	         {id: 1, versao: "109", fase: {id:10, fase: 'SUSTENTACAO'}},
-	    	         {id: 2, versao: "12.0.0"},
-	    	         {id: 3, versao: "14.0.9", fase: {id:10, fase: 'PROSPECCAO'}},
-	    	         {id: 4, versao: "17.0.9"},
-	    	         {id: 4, versao: "28"}
-	    	]
-	    }
-	];
+		
 	
 	
-	
-	var templateMercado = '<img src="images/Rocket.png"> {version} ';
-	var templateSerpro = '<img src="images/serpro.png"> {version} - {fases}';
 	
 	function getFasesUrl(fluxo){
-
 		var html = "";
 		for (var i=0; i<fluxo.length; i++){
 			var f = fluxo[i];
-			var percentual = 80 / fluxo.length;
 			html+= '<a href="#/'+$filter("faseUrl")(f.fase)+'/'+f.id+'">'+$filter("nomeFase")(f.fase)+'</a>';
-			//html+= '<div class="timelinefase" style="width: '+percentual+'%; "> <a href="#/'+$filter("faseUrl")(f.fase)+'/'+f.id+'">'+$filter("nomeFase")(f.fase)+'</a> </div>';
 		}
 		return html;
 	}
 	
-	$scope.dados  = [
-        {
-            'start': new Date(2010,2,23),
-            'content': templateMercado.replace("{version}", "1.4"),
-            'className': 'version1'
-            	
-        },
-        {
-            'start': new Date(2011,2,23),
-            'content': templateMercado.replace("{version}", "1.5"),
-            'className': 'version2'
-        },
-        {
-            'start': new Date(2012,2,23),
-            'content': templateMercado.replace("{version}", "1.6"),
-            'className': 'version3'
-        },
-        {
-            'start': new Date(2013,2,23),
-            'content': templateMercado.replace("{version}", "1.7"),
-            'className': 'version4'
-        },
-        {
-            'start': new Date(2014,2,23),
-            'content': templateMercado.replace("{version}", "1.8"),
-            'className': 'version5'
-        },
-        {
-            'start': new Date(2010,7,23),
-            'end': new Date(2010,12,23),
-            'content': templateSerpro.replace("{version}", "1.4")
-            						.replace("{fases}",getFasesUrl([{id: 31, fase: 'PROSPECCAO'}]) ),
-            'className': 'version1'
-        },
-        {
-            'start': new Date(2010,12,23),
-            'end': new Date(2011,6,23),
-            'content': templateSerpro.replace("{version}", "1.4")
-            						.replace("{fases}",getFasesUrl([{id: 31, fase: 'INTERNALIZACAO'}]) ),
-            'className': 'version1'
-        },
-        {
-            'start': new Date(2011,6,23),
-            'end': new Date(2014,12,23),
-            'content': templateSerpro.replace("{version}", "1.4")
-            						.replace("{fases}",getFasesUrl([{id: 31, fase: 'SUSTENTACAO'}]) ),
-            'className': 'version1'
-        },
-        {
-            'start': new Date(2012,7,23),
-            'end': new Date(2013,12,23),
-            'content': templateSerpro.replace("{version}", "1.5")
-            						.replace("{fases}",getFasesUrl([{id: 31, fase: 'PROSPECCAO'}]) ),
-            'className': 'version2'
-        },
-        {
-            'start': new Date(2013,12,23),
-            'end': new Date(2014,12,23),
-            'content': templateSerpro.replace("{version}", "1.5")
-            						.replace("{fases}",getFasesUrl([{id: 31, fase: 'INTERNALIZACAO'}]) ),
-            'className': 'version2'
-        },
-        {
-            'start': new Date(2014,1,1),
-            'end': new Date(2014,4,23),
-            'content': templateSerpro.replace("{version}", "1.6")
-							.replace("{fases}",getFasesUrl([{id: 31, fase: 'PROSPECCAO'}]) ),
-			'className': 'version3'
-        },
-    ];
 	
+	function formatarData(date){
+		if(date == null) return new Date();
+		var from = date.split("-");
+		var f = new Date(from[0], from[1]-1, from[2]);
+		return f;
+	}
+	
+	var templateMercado = '<img src="images/Rocket.png"> {version} ';
+	var templateSerpro = '<img src="images/serpro.png"> {version} - {fases}';
+	$scope.carregarTimeline = function(){		
+		$scope.versoes = null;
+		$http.get('api/fase/produto/produtoComVersoesEFases/'+$scope.produto.nome).success(function(data) {			
+			$scope.versoes = [];
+			console.log(data);
+			for (var x = 0; x < data.length; x++) {
+				var v = data[x];
+				var classe = 'version'+(x+1);
+				$scope.versoes.push({
+                    'start': formatarData(v.data),
+                    'content': templateMercado.replace("{version}", v.versao),
+                    'className': classe                    	
+                });
+				if(v.fases){
+					for (var y = 0; y < v.fases.length; y++) {
+						var fase = v.fases[y];
+						$scope.versoes.push({
+		                     'start': formatarData(fase.dataRealizacao),
+		                     'end': formatarData(fase.dataFinalizacao),
+		                     'content': templateSerpro.replace("{version}", v.versao)
+		                     						.replace("{fases}",getFasesUrl([{id: fase.id, fase: fase.fase}]) ),
+		                     'className': classe
+		                 });
+					}					
+				}
+			}
+
+		});
+	};
 	
 
 });

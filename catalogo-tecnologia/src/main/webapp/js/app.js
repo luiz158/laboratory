@@ -86,4 +86,4 @@ setInterval(function(){
 			location.href = "index.html?destino="+urlOriginal;
 		}
 	});
-},(5*60*1000));
+},(35*60*1000));

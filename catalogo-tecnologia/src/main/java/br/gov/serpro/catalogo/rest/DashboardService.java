@@ -10,7 +10,6 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import org.jboss.resteasy.spi.validation.ValidateRequest;
@@ -22,7 +21,6 @@ import br.gov.serpro.catalogo.entity.FaseEnum;
 import br.gov.serpro.catalogo.entity.FaseInteressado;
 import br.gov.serpro.catalogo.entity.FaseMembro;
 import br.gov.serpro.catalogo.entity.User;
-import br.gov.serpro.catalogo.persistence.FaseProdutoDAO;
 
 @ValidateRequest
 @Path("dashboard")
@@ -35,27 +33,12 @@ public class DashboardService {
     @Inject
     private SecurityContext securityContext;
     
-    @Inject
-    FaseProdutoDAO faseProdutoDAO;
-    
     @GET
 	@Path("totalfases")
 	public Map<FaseEnum, Integer> totalPorFase() {
     	Map<FaseEnum, Integer> map = faseBC.totalPorFase();
 		return map;
 	}
-	
-    @GET
-	@Path("/versoesProdutoPorNomeProduto/{nomeProduto}")
-    public Map<String,Object> versoesDosProdutosPorNomeProduto(@PathParam("nomeProduto") String nomeProduto) {
-			return faseProdutoDAO.versoesDosProdutosPorNomeProduto(nomeProduto);
-    }
-    
-    @GET
-	@Path("/versoesEFasesDosProdutosPorNomeProduto/{nomeProduto}")
-    public List<Map<String,Object>> versoesEFasesDosProdutosPorNomeProduto(@PathParam("nomeProduto") String nomeProduto) {
-			return faseProdutoDAO.versoesEFasesDosProdutosPorNomeProduto(nomeProduto);
-    }
     
 	@GET
 	@Path("minhasDemandas")
