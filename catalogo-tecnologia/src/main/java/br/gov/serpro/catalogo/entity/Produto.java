@@ -14,6 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -31,7 +32,10 @@ public class Produto {
 	@NotEmpty
 	private String versao;
 	
+	@NotNull
 	private Date dataLancamento;
+	
+	private Date dataDescontinuidade;
 	
 	@ManyToOne
 	private Licenciamento licenciamento;
@@ -168,4 +172,13 @@ public class Produto {
 	public void setDataLancamento(Date dataLancamento) {
 		this.dataLancamento = dataLancamento;
 	}
+
+	public Date getDataDescontinuidade() {
+		return dataDescontinuidade;
+	}
+
+	public void setDataDescontinuidade(Date dataDescontinuidade) {
+		this.dataDescontinuidade = dataDescontinuidade;
+	}
+	
 }

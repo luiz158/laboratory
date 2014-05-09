@@ -83,7 +83,7 @@
 					<div class="col-md-3">
 						<div date-picker="start"></div>
 						<label class="dataLancamento"><i class="fa fa-calendar"></i>
-							Data da lançamento:</label> 
+							Data da lançamento:<font color="#FF0000"> *</font></label> 
 						<input type="text"
 							class="form-control" id="dataLancamento" name="dataLancamento"
 							ng-model="produto.dataLancamento" data-date-type="date"
@@ -91,7 +91,18 @@
 							data-autoclose="1" data-date-format="dd/MM/yyyy" bs-datepicker>
 						<span id="dataLancamento-message" class="text-danger"></span>
 					</div>
-					<div class="col-md-6">
+					<div class="col-md-3">
+						<div date-picker="start"></div>
+						<label class="dataDescontinuidade"><i class="fa fa-calendar"></i>
+							Data de descontinuidade:</label> 
+						<input type="text"
+							class="form-control" id="dataDescontinuidade" name="dataDescontinuidade"
+							ng-model="produto.dataDescontinuidade" data-date-type="date"
+							data-min-date="01/01/1980"
+							data-autoclose="1" data-date-format="dd/MM/yyyy" bs-datepicker>
+						<span id="dataDescontinuidade-message" class="text-danger"></span>
+					</div>
+					<div class="col-md-3">
 						<label for="licenciamento">Licenciamento:</label>
 						<select id="licenciamento" class="form-control" ng-model="licenciamento" ng-options="l.nome for l in licenciamentos">
 						</select>

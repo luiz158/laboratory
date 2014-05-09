@@ -122,6 +122,7 @@ public class FaseProdutoDAO extends JPACrud<FaseProduto, Long> {
 			produtoVersaoFases.put("versao", produto.getVersao());
 			produtoVersaoFases.put("nome", produto.getNome());
 			produtoVersaoFases.put("data", produto.getDataLancamento());
+			produtoVersaoFases.put("dataDescontinuidade", produto.getDataDescontinuidade());
 			produtoVersaoFases.put("fases", listaFases);
 			versoes.add(produtoVersaoFases);
 		}

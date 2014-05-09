@@ -85,6 +85,7 @@ controllers.controller('DashboardCtrl', function DashboardCtrl($scope, Dashboard
 	}
 	
 	var templateMercado = '<img src="images/Rocket.png"> {version} ';
+	var templateMercadoDescontinuidade= '<img src="images/Grave.png"> {version} ';	
 	var templateSerpro = '<img src="images/serpro.png"> {version} - {fases}';
 	$scope.carregarTimeline = function(){		
 		$scope.versoes = null;
@@ -93,11 +94,22 @@ controllers.controller('DashboardCtrl', function DashboardCtrl($scope, Dashboard
 			for (var x = 0; x < data.length; x++) {
 				var v = data[x];
 				var classe = 'version'+(x+1);
-				$scope.versoes.push({
-                    'start': formatarData(v.data),
-                    'content': templateMercado.replace("{version}", v.versao),
-                    'className': classe                    	
-                });
+				if(v.data!=null){
+					$scope.versoes.push({
+	                    'start': formatarData(v.data),
+	                    'content': templateMercado.replace("{version}", v.versao),
+	                    'className': classe                    	
+	                });
+				}
+				if(v.dataDescontinuidade!=null){
+					$scope.versoes.push({
+		                'start': formatarData(v.dataDescontinuidade),
+		                'content': templateMercadoDescontinuidade.replace("{version}", v.versao),
+		                'className': classe                    	
+		            });
+				}
+			
+			
 				if(v.fases){
 					for (var y = 0; y < v.fases.length; y++) {
 						var fase = v.fases[y];
