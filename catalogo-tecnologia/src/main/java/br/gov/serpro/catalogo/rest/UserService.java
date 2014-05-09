@@ -4,6 +4,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 import java.util.List;
 
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.naming.SizeLimitExceededException;
 import javax.validation.Valid;
@@ -21,6 +22,8 @@ import br.gov.frameworkdemoiselle.resteasy.util.ValidationException;
 import br.gov.frameworkdemoiselle.security.RequiredRole;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.serpro.catalogo.entity.User;
+import br.gov.serpro.catalogo.event.GrupoEvent;
+import br.gov.serpro.catalogo.event.GrupoEvent.INSERIR_USUARIO;
 import br.gov.serpro.catalogo.persistence.UserDAO;
 import br.gov.serpro.catalogo.security.LDAPAuthenticator;
 
@@ -36,7 +39,9 @@ public class UserService {
 	
 	@Inject
 	private LDAPAuthenticator ldapAuthenticator;
-	
+
+	@Inject @INSERIR_USUARIO private Event<GrupoEvent> eventoGrupoInserirUsuario;
+
 	@GET
 	public List<User> listar() {
 		List<User> users = userDAO.findAll();
@@ -70,6 +75,9 @@ public class UserService {
 	@RequiredRole(ADMINISTRADOR)
 	public void alterar(@Valid User user) {
 		userDAO.update(user);
+		if((user.getGrupos() != null) && (user.getGrupos().size() > 0)){
+			eventoGrupoInserirUsuario.fire(new GrupoEvent(user.getGrupos(),user));
+		}
 	}
 	
 	@POST
@@ -82,6 +90,9 @@ public class UserService {
 			throw ve;
 		}else {
 			userDAO.insert(user);
+			if((user.getGrupos() != null) && (user.getGrupos().size() > 0)){
+				eventoGrupoInserirUsuario.fire(new GrupoEvent(user.getGrupos(),user));
+			}
 		}
 	}
 	
