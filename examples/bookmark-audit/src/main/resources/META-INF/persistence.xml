@@ -8,7 +8,7 @@
 	<persistence-unit name="bookmark-ds" transaction-type="RESOURCE_LOCAL">
 		<non-jta-data-source>java:jboss/datasources/ExampleDS</non-jta-data-source>
 
-		<class>br.gov.frameworkdemoiselle.serpro.exemploaudit.domain.Bookmark</class>
+		<class>br.gov.frameworkdemoiselle.serpro.bookmarkaudit.domain.Bookmark</class>
 
 		<properties>
 			<property name="hibernate.show_sql" value="true" />
