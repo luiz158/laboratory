@@ -34,63 +34,79 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package br.gov.frameworkdemoiselle.component.audit.implementation.auditors;
+package br.gov.frameworkdemoiselle.component.audit.implementation.util;
 
 import static java.util.logging.Logger.getLogger;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 
-import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
-import br.gov.frameworkdemoiselle.component.audit.implementation.qualifier.AuditProcessor;
-import br.gov.frameworkdemoiselle.component.audit.implementation.util.Util;
-import br.gov.frameworkdemoiselle.util.Beans;
-import javax.enterprise.inject.spi.BeanManager;
-import javax.enterprise.util.AnnotationLiteral;
-
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.type.TypeReference;
 
 /**
  *
  * @author SERPRO
  *
  */
-public abstract class AbstractAuditor {
-
-    private final BeanManager beanManager = Beans.getBeanManager();
+public class Util {
 
     /**
      *
-     * @param trail
+     * @param string
+     * @return
      */
-    public void consume(final Trail trail) {
-
-        new Thread(
-                new Runnable() {
-                    public void run() {
-                        beanManager.fireEvent(trail, new AnnotationLiteral<AuditProcessor>() {
-                        });
-                    }
-                }
-        ).start();
+    public static Map<String, String> jsonToMap(String string) {
+        
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, String> retorno = new HashMap<String, String>();
+        
+        try {
+            retorno = mapper.readValue(string, new TypeReference<HashMap<String, String>>() {
+            });
+        } catch (IOException e) {
+            retorno = new HashMap<String, String>();
+        }
+        
+        return retorno;
+    }
+    
+    public static String jsonSerializer(Object object) {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.writeValueAsString(object);
+            
+        } catch (IOException ex) {
+            getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "";
     }
     
     /**
     *
     * @return
     */
-   public List<String> className() {
-       Set<String> lista = new HashSet<String>();
-       StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
-       for (StackTraceElement stackTraceElement : stackTraceElements) {
-          lista.add(stackTraceElement.toString());
-       }
-       return new ArrayList<String>(lista);
+   public static String getFolderPathDefault() {
+       return System.getProperty("user.dir") + File.separatorChar + "demoiselle-audit-log" + File.separatorChar;
    }
-   
+
+
+
+ /*   private String getValueOfParameterInMethodAnnotation(Class<?> clazz, StackTraceElement stackTraceElement) {
+
+        Method[] methods = clazz.getMethods();
+        String methodName = stackTraceElement.getMethodName();
+
+        for (Method method : methods) {
+            Annotation annotation = method.getAnnotation(Audit.class);
+            if (annotation != null && method.getName().equals(methodName)) {
+                return ((Audit) annotation).description();
+            }
+        }
+        return null;
+    }*/
+
 }

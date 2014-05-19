@@ -36,17 +36,14 @@
  */
 package br.gov.frameworkdemoiselle.component.audit.auditors.view;
 
+import java.util.Date;
+
 import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
 import br.gov.frameworkdemoiselle.component.audit.implementation.AuditConfig;
 import br.gov.frameworkdemoiselle.component.audit.implementation.auditors.AbstractAuditor;
-import br.gov.frameworkdemoiselle.component.audit.internal.util.Util;
+import br.gov.frameworkdemoiselle.component.audit.implementation.util.Util;
 import br.gov.frameworkdemoiselle.security.User;
 import br.gov.frameworkdemoiselle.util.Beans;
-import java.util.Date;
-import javax.persistence.PostLoad;
-import javax.persistence.PostPersist;
-import javax.persistence.PostRemove;
-import javax.persistence.PostUpdate;
 
 /**
  *
@@ -71,10 +68,9 @@ public class ViewAuditor extends AbstractAuditor {
     	identity = Beans.getReference(User.class);
     	config = Beans.getReference(AuditConfig.class);
 
-        Util util = new Util();
         Trail trailBean = new Trail();
-        trailBean.setHow(util.className().toString());
-        trailBean.setIdName(util.idName(object.getClass().getName()));
+        trailBean.setHow(className().toString());
+        trailBean.setIdName(null);
         trailBean.setProfile(identity.getId().equalsIgnoreCase("demoiselle") ? "PROFILE" : identity.getAttribute("PROFILE").toString());
         trailBean.setWhere(identity.getId().equalsIgnoreCase("demoiselle") ? "IP" : identity.getAttribute("IP").toString());
         trailBean.setUserName(identity.getId().equalsIgnoreCase("demoiselle") ? "NAME" : identity.getAttribute("NAME").toString());
@@ -91,7 +87,6 @@ public class ViewAuditor extends AbstractAuditor {
      *
      * @param object
      */
-    @PostLoad
     public void postLoad(Object object) {
 
         Trail trailBean = createTrailBean(object);
@@ -105,7 +100,6 @@ public class ViewAuditor extends AbstractAuditor {
      *
      * @param object
      */
-    @PostRemove
     public void postRemove(Object object) {
         Trail trailBean = createTrailBean(object);
         trailBean.setWhat("Deleted");
@@ -118,7 +112,6 @@ public class ViewAuditor extends AbstractAuditor {
      *
      * @param object
      */
-    @PostUpdate
     public void postUpdate(Object object) {
         Trail trailBean = createTrailBean(object);
         trailBean.setWhat("Changed");
@@ -131,7 +124,6 @@ public class ViewAuditor extends AbstractAuditor {
      *
      * @param object
      */
-    @PostPersist
     public void postPersist(Object object) {
 
         Trail trailBean = createTrailBean(object);

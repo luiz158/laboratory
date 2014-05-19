@@ -36,17 +36,25 @@
  */
 package br.gov.frameworkdemoiselle.component.audit.auditors.persistence;
 
-import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
-import br.gov.frameworkdemoiselle.component.audit.implementation.AuditConfig;
-import br.gov.frameworkdemoiselle.component.audit.implementation.auditors.AbstractAuditor;
-import br.gov.frameworkdemoiselle.component.audit.internal.util.Util;
-import br.gov.frameworkdemoiselle.security.User;
-import br.gov.frameworkdemoiselle.util.Beans;
+import static java.lang.Class.forName;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.persistence.PostLoad;
 import javax.persistence.PostPersist;
 import javax.persistence.PostRemove;
 import javax.persistence.PostUpdate;
+
+import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
+import br.gov.frameworkdemoiselle.component.audit.implementation.AuditConfig;
+import br.gov.frameworkdemoiselle.component.audit.implementation.auditors.AbstractAuditor;
+import br.gov.frameworkdemoiselle.component.audit.implementation.util.Util;
+import br.gov.frameworkdemoiselle.security.User;
+import br.gov.frameworkdemoiselle.util.Beans;
 
 /**
  *
@@ -71,10 +79,9 @@ public class PersistenceAuditor extends AbstractAuditor {
     	identity = Beans.getReference(User.class);
     	config = Beans.getReference(AuditConfig.class);
     	
-        Util util = new Util();
         Trail trailBean = new Trail();
-        trailBean.setHow(util.className().toString());
-        trailBean.setIdName(util.idName(object.getClass().getName()));
+        trailBean.setHow(className().toString());
+        trailBean.setIdName(idName(object.getClass().getName()));
         trailBean.setProfile(identity.getId().equalsIgnoreCase("demoiselle") ? "PROFILE" : identity.getAttribute("PROFILE").toString());
         trailBean.setWhere(identity.getId().equalsIgnoreCase("demoiselle") ? "IP" : identity.getAttribute("IP").toString());
         trailBean.setUserName(identity.getId().equalsIgnoreCase("demoiselle") ? "NAME" : identity.getAttribute("NAME").toString());
@@ -140,5 +147,40 @@ public class PersistenceAuditor extends AbstractAuditor {
         consume(trailBean);
 
     }
+    
+    /**
+    *
+    * @param className
+    * @return
+    */
+   public String idName(String className) {
+
+       Field[] fields;
+       String idName = "";
+       try {
+           fields = forName(className).getDeclaredFields();
+
+           for (Field field : fields) {
+
+               if (!"".equals(idName)) {
+                   break;
+               }
+
+               field.setAccessible(true);
+
+               for(Annotation annotation : field.getAnnotations()){
+	                if("javax.persistence.Id".equals(annotation.annotationType().getName())){
+	                	idName = field.getName();
+	                }
+               }
+               
+               field.setAccessible(false);
+           }
+       } catch (ClassNotFoundException ex) {
+           Logger.getLogger(PersistenceAuditor.class.getName()).log(Level.SEVERE, null, ex);
+       }
+
+       return idName;
+   }
 
 }

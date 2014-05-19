@@ -50,7 +50,7 @@ import org.primefaces.extensions.event.timeline.TimelineLazyLoadEvent;
 import org.primefaces.extensions.model.timeline.TimelineEvent;
 
 import br.gov.frameworkdemoiselle.component.audit.dashboard.domain.Feature;
-import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
+import br.gov.frameworkdemoiselle.component.audit.dashboard.domain.LocalTrail;
 
 /**
  *
@@ -73,7 +73,7 @@ public class FeaturesDashboardMB extends DashboardMB {
 
         featureList = new ArrayList<Feature>();
 
-        for (String feature : trailBC.findByNamedQueryDistinct("Trail.findDistinctWhat")) {
+        for (String feature : trailBC.findByNamedQueryDistinct("LocalTrail.findDistinctWhat")) {
             featureList.add(new Feature(feature));
         }
     }
@@ -105,7 +105,7 @@ public class FeaturesDashboardMB extends DashboardMB {
         dataFinal.set(Calendar.MINUTE, 59);
         dataFinal.set(Calendar.SECOND, 59);
 
-        trails = trailBC.findByNamedQueryWithBetween("Trail.findByWhat", "what", feature.getWhat(), dateBegin.getTime(), dataFinal.getTime());
+        trails = trailBC.findByNamedQueryWithBetween("LocalTrail.findByWhat", "what", feature.getWhat(), dateBegin.getTime(), dataFinal.getTime());
     }
 
     @SuppressWarnings("unchecked")
@@ -116,9 +116,9 @@ public class FeaturesDashboardMB extends DashboardMB {
 
         TimelineUpdater timelineUpdater = TimelineUpdater.getCurrentInstance(":formTabs:tabs:timelineFeature");
 
-        trails = ListUtils.subtract(trailBC.findByNamedQueryWithBetween("Trail.findByWhat", "what", feature.getWhat(), dataInicio, dataFinal), trails);
+        trails = ListUtils.subtract(trailBC.findByNamedQueryWithBetween("LocalTrail.findByWhat", "what", feature.getWhat(), dataInicio, dataFinal), trails);
 
-        for (Trail trail : trails) {
+        for (LocalTrail trail : trails) {
             this.features.add(new TimelineEvent(trail, trail.getWhen(), false), timelineUpdater);
         }
 

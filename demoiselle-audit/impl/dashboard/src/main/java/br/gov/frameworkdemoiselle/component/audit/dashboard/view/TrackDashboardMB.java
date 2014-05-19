@@ -36,7 +36,6 @@
  */
 package br.gov.frameworkdemoiselle.component.audit.dashboard.view;
 
-import br.gov.frameworkdemoiselle.component.audit.dashboard.business.TrilhaBC;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,10 +46,10 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.inject.Inject;
 
+import br.gov.frameworkdemoiselle.component.audit.dashboard.business.TrilhaBC;
 import br.gov.frameworkdemoiselle.component.audit.dashboard.domain.SerialObject;
-import br.gov.frameworkdemoiselle.component.audit.dashboard.domain.Trilha;
-import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
-import br.gov.frameworkdemoiselle.component.audit.internal.util.Util;
+import br.gov.frameworkdemoiselle.component.audit.dashboard.domain.LocalTrail;
+import br.gov.frameworkdemoiselle.component.audit.implementation.util.Util;
 import br.gov.frameworkdemoiselle.stereotype.ViewController;
 
 /**
@@ -81,7 +80,7 @@ public class TrackDashboardMB implements Serializable {
 
     @PostConstruct
     public void initialize() {
-        systems = trailBC.findByNamedQueryDistinct("Trail.findDistinctSystemName");
+        systems = trailBC.findByNamedQueryDistinct("LocalTrail.findDistinctSystemName");
         objects = new ArrayList<String>();
         objectIdName = "";
         objectIdValue = "";
@@ -89,14 +88,14 @@ public class TrackDashboardMB implements Serializable {
 
     public void onChangeSystem(ValueChangeEvent event) {
         system = (String) event.getNewValue();
-        objects = trailBC.findByNamedQueryDistinct("Trail.findDistinctClassName", "systemName", system);
+        objects = trailBC.findByNamedQueryDistinct("LocalTrail.findDistinctClassName", "systemName", system);
         objectIdName = "";
         objectIdValue = "";
     }
 
     public void onChangeObject(ValueChangeEvent event) {
         object = (String) event.getNewValue();
-        objectIdName = trailBC.findByNamedQueryIdName("Trail.findIdNameBySystemAndObject", system, object);
+        objectIdName = trailBC.findByNamedQueryIdName("LocalTrail.findIdNameBySystemAndObject", system, object);
         objectIdValue = "";
     }
 
@@ -104,18 +103,18 @@ public class TrackDashboardMB implements Serializable {
 
         if (objectIdValue != null && !"".equals(objectIdValue)) {
 
-            List<Trilha> trails = trailBC.findByNamedQuerySystemAndObjectAndIdName("Trail.findByNamedQuerySystemAndObjectAndIdName", system, object, objectIdName, objectIdValue);
+            List<LocalTrail> trails = trailBC.findByNamedQuerySystemAndObjectAndIdName("LocalTrail.findByNamedQuerySystemAndObjectAndIdName", system, object, objectIdName, objectIdValue);
 
             tracks = new ArrayList<SerialObject>();
 
-            for (Trail trail : trails) {
+            for (LocalTrail trilha : trails) {
                 if (fields == null || fields.size() == 0) {
-                    fillFields(trail);
+                    fillFields(trilha);
                 }
 
                 SerialObject serialObject = new SerialObject();
-                serialObject.setMap(Util.jsonToMap(trail.getObjSerial()));
-                serialObject.setTrail(trail);
+                serialObject.setMap(Util.jsonToMap(trilha.getObjSerial()));
+                serialObject.setTrilha(trilha);
 
                 tracks.add(serialObject);
 
@@ -124,10 +123,10 @@ public class TrackDashboardMB implements Serializable {
 
     }
 
-    private void fillFields(Trail trail) {
+    private void fillFields(LocalTrail trilha) {
         fields = new ArrayList<String>();
 
-        Map<String, String> map = Util.jsonToMap(trail.getObjSerial());
+        Map<String, String> map = Util.jsonToMap(trilha.getObjSerial());
         fields.addAll(map.keySet());
 
         objectFields = new ArrayList<String>();

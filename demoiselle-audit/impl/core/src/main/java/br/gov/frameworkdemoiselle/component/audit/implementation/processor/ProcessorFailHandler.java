@@ -36,12 +36,6 @@
  */
 package br.gov.frameworkdemoiselle.component.audit.implementation.processor;
 
-import br.gov.frameworkdemoiselle.component.audit.AuditException;
-import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
-import br.gov.frameworkdemoiselle.component.audit.implementation.AuditConfig;
-import br.gov.frameworkdemoiselle.component.audit.implementation.qualifier.AuditProcessorFail;
-import br.gov.frameworkdemoiselle.component.audit.internal.util.Util;
-import br.gov.frameworkdemoiselle.util.Beans;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -51,8 +45,16 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
+
+import br.gov.frameworkdemoiselle.component.audit.AuditException;
+import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
+import br.gov.frameworkdemoiselle.component.audit.implementation.AuditConfig;
+import br.gov.frameworkdemoiselle.component.audit.implementation.qualifier.AuditProcessorFail;
+import br.gov.frameworkdemoiselle.component.audit.implementation.util.Util;
+import br.gov.frameworkdemoiselle.util.Beans;
 
 /**
  *
@@ -126,5 +128,5 @@ public class ProcessorFailHandler {
 		}
 
 	}
-
+    
 }

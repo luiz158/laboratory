@@ -41,6 +41,8 @@ import br.gov.frameworkdemoiselle.component.audit.Processor;
 import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
 import br.gov.frameworkdemoiselle.component.audit.implementation.qualifier.AuditProcessorFail;
 import br.gov.frameworkdemoiselle.util.Beans;
+
+import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.inject.spi.BeanManager;

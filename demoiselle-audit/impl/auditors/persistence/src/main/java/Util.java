@@ -34,7 +34,7 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package br.gov.frameworkdemoiselle.component.audit.internal.util;
+
 
 import br.gov.frameworkdemoiselle.component.audit.internal.annotation.Audit;
 import java.io.File;
@@ -128,6 +128,7 @@ public class Util {
      * @param className
      * @return
      */
+    //TODO Mover para JPA
     public String idName(String className) {
 
         Field[] fields;

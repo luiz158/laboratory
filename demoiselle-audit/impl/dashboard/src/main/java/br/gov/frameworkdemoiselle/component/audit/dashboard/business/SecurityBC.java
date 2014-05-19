@@ -36,26 +36,25 @@
  */
 package br.gov.frameworkdemoiselle.component.audit.dashboard.business;
 
-import br.gov.frameworkdemoiselle.component.audit.dashboard.domain.Trilha;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.inject.Inject;
 
+import br.gov.frameworkdemoiselle.component.audit.dashboard.domain.LocalTrail;
 import br.gov.frameworkdemoiselle.component.audit.dashboard.domain.Usuario;
 import br.gov.frameworkdemoiselle.component.audit.dashboard.persistence.RecursoDAO;
 import br.gov.frameworkdemoiselle.component.audit.dashboard.persistence.UsuarioDAO;
 import br.gov.frameworkdemoiselle.component.audit.dashboard.util.CriptografiaUtil;
 import br.gov.frameworkdemoiselle.component.audit.dashboard.util.Trololo;
-import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
 import br.gov.frameworkdemoiselle.lifecycle.Startup;
 import br.gov.frameworkdemoiselle.stereotype.BusinessController;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.frameworkdemoiselle.util.ResourceBundle;
-import java.util.Date;
 
 /**
  *
@@ -89,7 +88,7 @@ public class SecurityBC implements Serializable {
         try {
 
             List<Long> ids = new ArrayList<Long>();
-            for (Trilha trail : trailBC.findAll()) {
+            for (LocalTrail trail : trailBC.findAll()) {
                 ids.add(trail.getIdaudit());
             }
 
@@ -98,14 +97,14 @@ public class SecurityBC implements Serializable {
             Trololo tro = new Trololo();
 
             for (int i = 0; i < 3000; i++) {
-                trailBC.insert(new Trilha(null, tro.getSistema(), tro.getUsuario(), "id", tro.getPerfil(), tro.getOque(), tro.getComo(), tro.getOnde(), tro.getQuando(), "br.gov.frameworkdemoiselle.serpro.audit", tro.getObjetoSerial(), null, null));
+            	trailBC.insert(new LocalTrail(null, tro.getSistema(), tro.getUsuario(), "id", tro.getPerfil(), tro.getOque(), tro.getOnde(), tro.getQuando(),tro.getComo(), "br.gov.frameworkdemoiselle.serpro.audit", tro.getObjetoSerial(), null, null));
             }
 
-            trailBC.insert(new Trilha(null, "Teste4Aba", "Usuario1", "id", "Perfil4Aba", "Criou", "Tela inicial", "10.200.255.26", new Date(), "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\": \"1\", \"nome\": \"Henrique\", \"filho\": \"Rafael\"}", null, null));
-            trailBC.insert(new Trilha(null, "Teste4Aba", "Usuario2", "id", "Perfil4Aba", "Alterou", "Tela inicial", "10.200.255.37", new Date(), "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\": \"1\", \"nome\": \"Rafael\", \"filho\": \"José\"}", null, null));
-            trailBC.insert(new Trilha(null, "Teste4Aba", "Usuario3", "id", "Perfil4Aba", "Alterou", "Tela inicial", "10.200.255.29", new Date(), "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\": \"1\", \"nome\": \"José\", \"filho\": \"Henrique\"}", null, null));
-            trailBC.insert(new Trilha(null, "Teste4Aba", "Usuario4", "id", "Perfil4Aba", "Alterou", "Tela inicial", "10.200.255.44", new Date(), "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\": \"1\", \"nome\": \"Roberto\", \"filho\": \"Silva\"}", null, null));
-            trailBC.insert(new Trilha(null, "Teste4Aba", "Usuario5", "id", "Perfil4Aba", "Excluiu", "Tela inicial", "10.200.255.73", new Date(), "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\": \"1\", \"nome\": \"Roberto\", \"filho\": \"Silva\"}", null, null));
+            trailBC.insert(new LocalTrail(null, "Teste4Aba", "Usuario1", "id", "Perfil4Aba", "Criou", "Tela inicial", new Date(),"10.200.255.26",  "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\": \"1\", \"nome\": \"Henrique\", \"filho\": \"Rafael\"}", null, null));
+            trailBC.insert(new LocalTrail(null, "Teste4Aba", "Usuario2", "id", "Perfil4Aba", "Alterou", "Tela inicial", new Date(), "10.200.255.37", "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\": \"1\", \"nome\": \"Rafael\", \"filho\": \"José\"}", null, null));
+            trailBC.insert(new LocalTrail(null, "Teste4Aba", "Usuario3", "id", "Perfil4Aba", "Alterou", "Tela inicial", new Date(),"10.200.255.29",  "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\": \"1\", \"nome\": \"José\", \"filho\": \"Henrique\"}", null, null));
+            trailBC.insert(new LocalTrail(null, "Teste4Aba", "Usuario4", "id", "Perfil4Aba", "Alterou", "Tela inicial", new Date(),"10.200.255.44",  "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\": \"1\", \"nome\": \"Roberto\", \"filho\": \"Silva\"}", null, null));
+            trailBC.insert(new LocalTrail(null, "Teste4Aba", "Usuario5", "id", "Perfil4Aba", "Excluiu", "Tela inicial", new Date(),"10.200.255.73",  "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\": \"1\", \"nome\": \"Roberto\", \"filho\": \"Silva\"}", null, null));
 
         } catch (Exception e) {
             Logger.getLogger(SecurityBC.class.getName()).log(Level.SEVERE, null, e);

@@ -39,8 +39,6 @@ package br.gov.frameworkdemoiselle.component.audit.dashboard.domain;
 import java.io.Serializable;
 import java.util.Map;
 
-import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
-
 /**
  * 
  * @author SERPRO
@@ -52,7 +50,7 @@ public class SerialObject implements Serializable {
 	
 	private String title;
 	protected Map<String, String> map;
-	private Trail trail;
+	private LocalTrail trilha;
 	
 	public SerialObject(){
 	}
@@ -77,19 +75,19 @@ public class SerialObject implements Serializable {
 	public void setMap(Map<String, String> map) {
 		this.map = map;
 	}
-
-	public Trail getTrail() {
-		return trail;
+	
+	public LocalTrail getTrilha() {
+		return trilha;
 	}
 
-	public void setTrail(Trail trail) {
-		this.trail = trail;
+	public void setTrilha(LocalTrail trilha) {
+		this.trilha = trilha;
 	}
 
 	@Override
 	public String toString() {
-		return "SerialObject [title=" + title + ", map=" + map + ", trail="
-				+ trail + "]";
+		return "SerialObject [title=" + title + ", map=" + map + ", trilha="
+				+ trilha + "]";
 	}
 
 }

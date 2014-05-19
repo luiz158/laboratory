@@ -7,14 +7,15 @@
       
       <jta-data-source>java:jboss/datasources/ExampleDS</jta-data-source>
       
-      <class>br.gov.frameworkdemoiselle.component.audit.domain.Trail</class>
+      <class>br.gov.frameworkdemoiselle.component.audit.dashboard.domain.LocalTrail</class>
       <class>br.gov.frameworkdemoiselle.component.audit.dashboard.domain.Recurso</class>
       <class>br.gov.frameworkdemoiselle.component.audit.dashboard.domain.Usuario</class>
       <class>br.gov.frameworkdemoiselle.component.audit.dashboard.domain.UsuarioRecurso</class>
       <properties>
-        <property name="hibernate.show_sql" value="none"/>
+        <property name="hibernate.show_sql" value="false"/>
         <property name="hibernate.format_sql" value="true"/>
         <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+        <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
         <property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.JBossAppServerJtaPlatform"/>
       </properties>
     </persistence-unit>

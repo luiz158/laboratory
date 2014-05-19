@@ -36,16 +36,17 @@
  */
 package br.gov.frameworkdemoiselle.component.audit.processors.rest;
 
+import javax.enterprise.event.Observes;
+
 import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
-import br.gov.frameworkdemoiselle.component.audit.implementation.AuditConfig;
 import br.gov.frameworkdemoiselle.component.audit.implementation.processor.AbstractProcessor;
 import br.gov.frameworkdemoiselle.component.audit.implementation.qualifier.AuditProcessor;
 import br.gov.frameworkdemoiselle.util.Beans;
+
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
-import javax.enterprise.event.Observes;
 
 /**
  *
@@ -54,7 +55,7 @@ import javax.enterprise.event.Observes;
  */
 public class MONGOProcessors extends AbstractProcessor {
 
-    private final AuditConfig config = Beans.getReference(AuditConfig.class);
+    private final MONGOConfig config = Beans.getReference(MONGOConfig.class);
 
     /**
      *

@@ -1,6 +1,6 @@
 analyseLocally=false
 eclipse.preferences.version=1
 extraProperties=
-projectKey=br.gov.frameworkdemoiselle.component.audit\:demoiselle-audit-processors-rest
+projectKey=br.gov.frameworkdemoiselle.component.audit\:demoiselle-audit-processors-mongo
 serverUrl=http\://localhost\:9000
 version=2

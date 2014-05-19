@@ -36,13 +36,6 @@
  */
 package br.gov.frameworkdemoiselle.component.audit.internal.scheduler;
 
-import br.gov.frameworkdemoiselle.component.audit.AuditException;
-import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
-import br.gov.frameworkdemoiselle.component.audit.implementation.AuditConfig;
-import br.gov.frameworkdemoiselle.component.audit.implementation.processor.AbstractProcessor;
-import br.gov.frameworkdemoiselle.component.audit.implementation.qualifier.AuditProcessorFail;
-import br.gov.frameworkdemoiselle.component.audit.internal.util.Util;
-import br.gov.frameworkdemoiselle.util.Beans;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -52,11 +45,21 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.util.AnnotationLiteral;
+
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+
+import br.gov.frameworkdemoiselle.component.audit.AuditException;
+import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
+import br.gov.frameworkdemoiselle.component.audit.implementation.AuditConfig;
+import br.gov.frameworkdemoiselle.component.audit.implementation.processor.AbstractProcessor;
+import br.gov.frameworkdemoiselle.component.audit.implementation.qualifier.AuditProcessorFail;
+import br.gov.frameworkdemoiselle.component.audit.implementation.util.Util;
+import br.gov.frameworkdemoiselle.util.Beans;
 
 /**
  *

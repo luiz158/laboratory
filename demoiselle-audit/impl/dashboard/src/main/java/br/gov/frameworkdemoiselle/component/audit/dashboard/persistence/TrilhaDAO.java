@@ -36,7 +36,7 @@
  */
 package br.gov.frameworkdemoiselle.component.audit.dashboard.persistence;
 
-import br.gov.frameworkdemoiselle.component.audit.dashboard.domain.Trilha;
+import br.gov.frameworkdemoiselle.component.audit.dashboard.domain.LocalTrail;
 import java.util.Date;
 import java.util.List;
 
@@ -50,7 +50,7 @@ import br.gov.frameworkdemoiselle.template.JPACrud;
  */
 
 @PersistenceController
-public class TrilhaDAO extends JPACrud<Trilha, Long> {
+public class TrilhaDAO extends JPACrud<LocalTrail, Long> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -62,7 +62,7 @@ public class TrilhaDAO extends JPACrud<Trilha, Long> {
      * @return
      */
     @SuppressWarnings("unchecked")
-	public List<Trilha> findByNamedQuery(String namedQuery, String param, String value) {
+	public List<LocalTrail> findByNamedQuery(String namedQuery, String param, String value) {
         return getEntityManager().createNamedQuery(namedQuery).setParameter(param, value).getResultList();
     }
 
@@ -86,7 +86,7 @@ public class TrilhaDAO extends JPACrud<Trilha, Long> {
      * @return
      */
     @SuppressWarnings("unchecked")
-	public List<Trilha> findByNamedQueryWithBetween(String namedQuery, String param, String value, Date dateBegin, Date dateFinal) {
+	public List<LocalTrail> findByNamedQueryWithBetween(String namedQuery, String param, String value, Date dateBegin, Date dateFinal) {
         return getEntityManager().createNamedQuery(namedQuery).
                 setParameter(param, value).
                 setParameter("whenBegin", dateBegin).
@@ -111,7 +111,7 @@ public class TrilhaDAO extends JPACrud<Trilha, Long> {
 		return "";
 	}
 
-	public List<Trilha> findByNamedQuerySystemAndObjectAndIdName(String namedQuery, String system, String object,
+	public List<LocalTrail> findByNamedQuerySystemAndObjectAndIdName(String namedQuery, String system, String object,
 			String objectIdName, String objectIdValue) {
 
 		return getEntityManager().createNamedQuery(namedQuery).

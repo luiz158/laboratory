@@ -49,9 +49,8 @@ import org.primefaces.extensions.model.timeline.TimelineModel;
 
 import br.gov.frameworkdemoiselle.component.audit.dashboard.business.TrilhaBC;
 import br.gov.frameworkdemoiselle.component.audit.dashboard.domain.SerialObject;
-import br.gov.frameworkdemoiselle.component.audit.dashboard.domain.Trilha;
-import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
-import br.gov.frameworkdemoiselle.component.audit.internal.util.Util;
+import br.gov.frameworkdemoiselle.component.audit.dashboard.domain.LocalTrail;
+import br.gov.frameworkdemoiselle.component.audit.implementation.util.Util;
 import br.gov.frameworkdemoiselle.stereotype.ViewController;
 import br.gov.frameworkdemoiselle.template.AbstractPageBean;
 
@@ -71,7 +70,7 @@ public class DashboardMB extends AbstractPageBean implements DashboardNavigation
 
 	protected int currentLevel = 1;
 
-	protected List<Trilha> trails;
+	protected List<LocalTrail> trails;
 
 	protected TimelineEvent event;
 	protected SerialObject serialObject;
@@ -83,7 +82,7 @@ public class DashboardMB extends AbstractPageBean implements DashboardNavigation
 	protected void fillSystems() {
 		systems = new TimelineModel();
 
-		for(Trail trail : trails){
+		for(LocalTrail trail : trails){
 			systems.add(new TimelineEvent(trail, trail.getWhen(), false));
 		}
 	}
@@ -91,7 +90,7 @@ public class DashboardMB extends AbstractPageBean implements DashboardNavigation
 	protected void fillFeatures() {
 		features = new TimelineModel();
 
-		for(Trail trail : trails){
+		for(LocalTrail trail : trails){
 			features.add(new TimelineEvent(trail, trail.getWhen(), false));
 		}
 	}
@@ -99,7 +98,7 @@ public class DashboardMB extends AbstractPageBean implements DashboardNavigation
 	protected void fillUsers() {
 		users = new TimelineModel();
 
-		for(Trail trail : trails){
+		for(LocalTrail trail : trails){
 			users.add(new TimelineEvent(trail, trail.getWhen(), false));
 		}
 
@@ -117,11 +116,11 @@ public class DashboardMB extends AbstractPageBean implements DashboardNavigation
 		this.currentLevel = currentLevel;
 	}
 
-	public List<Trilha> getTrilhas() {
+	public List<LocalTrail> getTrilhas() {
 		return trails;
 	}
 
-	public void setTrails(List<Trilha> trails) {
+	public void setTrails(List<LocalTrail> trails) {
 		this.trails = trails;
 	}
 
@@ -129,7 +128,7 @@ public class DashboardMB extends AbstractPageBean implements DashboardNavigation
 
 		if(event != null && event.getData() != null){
 
-			Trail trail = (Trail) event.getData();
+			LocalTrail trail = (LocalTrail) event.getData();
 			Map<String, String> map = Util.jsonToMap(trail.getObjSerial());
 
 			serialObject = new SerialObject(trail.getClassName(), map);
