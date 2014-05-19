@@ -176,16 +176,32 @@ public class FaseBC {
 	}
 
 	private Fase salvar(Fase fase) {
+		
 		if(fase.getId()!=null){
 			faseDAO.update(fase);
 			eventoFaseAtualizar.fire(new FaseEvent(fase));
 		}else{
-			faseDAO.insert(fase);
+			
+			Fase faseSalva = faseDAO.insert(fase);
+			faseSalva.setIdentificador(formataIdentificador(faseSalva.getId()));
+			faseDAO.update(faseSalva);
 			eventoFaseCriar.fire(new FaseEvent(fase));
 		}				
 		return fase;
 	}
 
+	public String formataIdentificador(Long id) {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy");
+		
+		String idString = String.valueOf(id);
+		
+		for (int x=idString.length(); x<6; x++) {
+			idString = "0" + idString;
+		}
+		
+		return idString+format.format(new Date());
+	}
+	
 	public Fase salvar(Analise fase) {
 		faseValidator.validarSalvar(fase);
 		return salvar((Fase) fase);
