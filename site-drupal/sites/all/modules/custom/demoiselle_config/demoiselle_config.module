@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Demoiselle Config feature.
+ */
+
+include_once 'demoiselle_config.features.inc';
