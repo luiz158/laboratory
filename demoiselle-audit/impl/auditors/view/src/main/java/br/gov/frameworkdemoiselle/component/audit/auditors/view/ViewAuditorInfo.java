@@ -34,60 +34,54 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
+
 package br.gov.frameworkdemoiselle.component.audit.auditors.view;
 
-import java.util.Date;
+import java.util.Map;
 
-import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
-import br.gov.frameworkdemoiselle.component.audit.implementation.AuditConfig;
-import br.gov.frameworkdemoiselle.component.audit.implementation.auditors.AbstractAuditor;
-import br.gov.frameworkdemoiselle.component.audit.implementation.util.Util;
-import br.gov.frameworkdemoiselle.security.User;
-import br.gov.frameworkdemoiselle.util.Beans;
+public class ViewAuditorInfo {
 
-/**
- *
- * @author SERPRO
- *
- */
-public class ViewAuditor extends AbstractAuditor {
+    private String sessionId;
+    private String url;
+    private Map<String, String[]> parameters;
 
-    private User identity;
-
-    private AuditConfig config;
-
-    /**
-     *
-     * Create a Trail Object filling the commons properties
-     *
-     * @param object
-     * @return
-     */
-    private Trail createTrailBean(Object object) {
-
-    	identity = Beans.getReference(User.class);
-    	config = Beans.getReference(AuditConfig.class);
-
-        Trail trailBean = new Trail();
-        trailBean.setHow(className().toString());
-        trailBean.setIdName(null);
-        trailBean.setProfile(identity.getId().equalsIgnoreCase("demoiselle") ? "PROFILE" : identity.getAttribute("PROFILE").toString());
-        trailBean.setWhere(identity.getId().equalsIgnoreCase("demoiselle") ? "IP" : identity.getAttribute("IP").toString());
-        trailBean.setUserName(identity.getId().equalsIgnoreCase("demoiselle") ? "NAME" : identity.getAttribute("NAME").toString());
-        trailBean.setSystemName(config.getSystem());
-        trailBean.setWhen(new Date());
-        trailBean.setWhat("view");
-        trailBean.setObjSerial(Util.jsonSerializer(object));
-        trailBean.setClassName(object.getClass().getName());
-        trailBean.setLayerName(this.getClass().getName());
-
-        return trailBean;
+    public ViewAuditorInfo() {
+        super();
     }
 
-    public void audit(ViewAuditorInfo info){
-    	Trail trail = createTrailBean(info);
-    	consume(trail);
+    public ViewAuditorInfo(String sessionId, String url, Map<String, String[]> parameters) {
+        super();
+        this.sessionId = sessionId;
+        this.url = url;
+        this.parameters = parameters;
     }
-   
 
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public Map<String, String[]> getParameters() {
+        return parameters;
+    }
+
+    public void setParameters(Map<String, String[]> parameters) {
+        this.parameters = parameters;
+    }
+
+    @Override
+    public String toString() {
+        return "ViewAuditorInfo{" + "sessionId=" + sessionId + ", url=" + url + ", parameters=" + parameters + '}';
+    }
 }
