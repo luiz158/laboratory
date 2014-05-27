@@ -36,24 +36,11 @@
  */
 package br.gov.frameworkdemoiselle.component.audit.implementation.auditors;
 
-import static java.util.logging.Logger.getLogger;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.logging.Level;
-
 import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
 import br.gov.frameworkdemoiselle.component.audit.implementation.qualifier.AuditProcessor;
-import br.gov.frameworkdemoiselle.component.audit.implementation.util.Util;
 import br.gov.frameworkdemoiselle.util.Beans;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.util.AnnotationLiteral;
-
-import org.codehaus.jackson.map.ObjectMapper;
 
 /**
  *
@@ -62,7 +49,11 @@ import org.codehaus.jackson.map.ObjectMapper;
  */
 public abstract class AbstractAuditor {
 
-    private final BeanManager beanManager = Beans.getBeanManager();
+    private BeanManager beanManager;
+
+    public AbstractAuditor() {
+        this.beanManager = Beans.getBeanManager();
+    }
 
     /**
      *
@@ -72,6 +63,7 @@ public abstract class AbstractAuditor {
 
         new Thread(
                 new Runnable() {
+                    @Override
                     public void run() {
                         beanManager.fireEvent(trail, new AnnotationLiteral<AuditProcessor>() {
                         });

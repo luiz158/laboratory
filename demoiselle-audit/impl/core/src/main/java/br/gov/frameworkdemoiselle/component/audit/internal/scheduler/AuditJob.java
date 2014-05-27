@@ -112,21 +112,31 @@ public class AuditJob implements Job {
 
                 } catch (IOException e) {
                     notifyFail(isDeleted, trail);
-                    throw new AuditException("Fail reprocessor file '" + file + "' , message error :" + e.getMessage());
+                    throw new AuditException("Fail reprocessor file '" + file + "' , message error :" + e.getMessage(), e);
                 } catch (ClassNotFoundException e) {
                     notifyFail(isDeleted, trail);
-                    throw new AuditException("Fail reprocessor file '" + file + "' , message error :" + e.getMessage());
+                    throw new AuditException("Fail reprocessor file '" + file + "' , message error :" + e.getMessage(), e);
                 } catch (InstantiationException e) {
                     notifyFail(isDeleted, trail);
-                    throw new AuditException("Fail reprocessor file '" + file + "' , message error :" + e.getMessage());
+                    throw new AuditException("Fail reprocessor file '" + file + "' , message error :" + e.getMessage(), e);
                 } catch (IllegalAccessException e) {
                     notifyFail(isDeleted, trail);
-                    throw new AuditException("Fail reprocessor file '" + file + "' , message error :" + e.getMessage());
+                    throw new AuditException("Fail reprocessor file '" + file + "' , message error :" + e.getMessage(), e);
                 } finally {
                     if (is != null) {
                         try {
                             is.close();
                         } catch (IOException e) {
+                            notifyFail(isDeleted, trail);
+                            Logger.getLogger(AuditJob.class.getName()).log(Level.SEVERE, "Fail to close inputstream: " + e.getMessage());
+                        }
+                    }
+                    
+                    if(input != null){
+                        try{
+                            input.close();
+                        }
+                        catch (IOException e) {
                             notifyFail(isDeleted, trail);
                             Logger.getLogger(AuditJob.class.getName()).log(Level.SEVERE, "Fail to close inputstream: " + e.getMessage());
                         }

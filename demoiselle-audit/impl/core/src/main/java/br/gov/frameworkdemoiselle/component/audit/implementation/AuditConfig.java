@@ -47,7 +47,7 @@ import br.gov.frameworkdemoiselle.configuration.Configuration;
 @Configuration(prefix = "frameworkdemoiselle.audit")
 public class AuditConfig {
 
-    private static final Long timeDefault = 3600000L;
+    private static final Long TIME_DEFAULT = 3600000L;
 
     @Name("system")
     private String system;
@@ -98,7 +98,7 @@ public class AuditConfig {
      * @return
      */
     public Long getSchedulerStartTime() {
-        return schedulerStartTime == null ? timeDefault : schedulerStartTime;
+        return schedulerStartTime == null ? TIME_DEFAULT : schedulerStartTime;
     }
 
     /**
@@ -114,7 +114,7 @@ public class AuditConfig {
      * @return
      */
     public Long getSchedulerRepeatInterval() {
-        return schedulerRepeatInterval == null ? timeDefault : schedulerRepeatInterval;
+        return schedulerRepeatInterval == null ? TIME_DEFAULT : schedulerRepeatInterval;
     }
 
     /**

@@ -93,20 +93,4 @@ public class Util {
        return System.getProperty("user.dir") + File.separatorChar + "demoiselle-audit-log" + File.separatorChar;
    }
 
-
-
- /*   private String getValueOfParameterInMethodAnnotation(Class<?> clazz, StackTraceElement stackTraceElement) {
-
-        Method[] methods = clazz.getMethods();
-        String methodName = stackTraceElement.getMethodName();
-
-        for (Method method : methods) {
-            Annotation annotation = method.getAnnotation(Audit.class);
-            if (annotation != null && method.getName().equals(methodName)) {
-                return ((Audit) annotation).description();
-            }
-        }
-        return null;
-    }*/
-
 }

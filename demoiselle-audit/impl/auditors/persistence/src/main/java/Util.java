@@ -63,6 +63,10 @@ import org.codehaus.jackson.type.TypeReference;
  */
 public class Util {
 
+    private Util(){
+        
+    }
+    
     /**
      *
      * @param object
