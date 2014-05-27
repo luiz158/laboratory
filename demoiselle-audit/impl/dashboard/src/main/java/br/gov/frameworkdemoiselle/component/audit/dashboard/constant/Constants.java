@@ -44,10 +44,10 @@ package br.gov.frameworkdemoiselle.component.audit.dashboard.constant;
 public interface Constants {
 
 
-    public static final String PERSISTENCE_UNIT = "dash-ds";
+    String PERSISTENCE_UNIT = "dash-ds";
 
-    public static final String SCHEMA = "dash";
+    String SCHEMA = "dash";
 
-    public static final Long CONVERSATION_TIMEOUT = 600000L;
+    Long CONVERSATION_TIMEOUT = 600000L;
 
 }

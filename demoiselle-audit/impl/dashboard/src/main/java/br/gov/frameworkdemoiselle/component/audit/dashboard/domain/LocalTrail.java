@@ -51,6 +51,7 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
+import java.util.Objects;
 import javax.persistence.Temporal;
 
 /**
@@ -86,7 +87,7 @@ public class LocalTrail implements Serializable {
     @Basic(optional = false)
     @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long idaudit;
+    private Long idaudit;
     private String systemName;
     private String userName;
     private String idName;
@@ -115,7 +116,7 @@ public class LocalTrail implements Serializable {
 
     public LocalTrail(Long idaudit, String systemName, String userName,
             String idName, String profile, String what, String where,
-            Date when, String how, String className, String objSerial,
+            Date when, String className, String objSerial,
             String layerName, String processorName) {
         super();
         this.idaudit = idaudit;
@@ -156,7 +157,7 @@ public class LocalTrail implements Serializable {
         this.profile = trail.getProfile();
         this.what = trail.getWhat();
         this.where = trail.getWhere();
-        this.when = trail.getWhen();
+        this.setWhen(trail.getWhen());
         this.className = trail.getClassName();
         this.objSerial = trail.getObjSerial();
         this.layerName = trail.getLayerName();
@@ -220,11 +221,11 @@ public class LocalTrail implements Serializable {
     }
 
     public Date getWhen() {
-        return when;
+        return (Date) when.clone();
     }
 
     public void setWhen(Date when) {
-        this.when = when;
+        this.when = new Date(when.getTime());
     }
 
     public String getClassName() {
@@ -261,125 +262,45 @@ public class LocalTrail implements Serializable {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result
-                + ((className == null) ? 0 : className.hashCode());        
-        result = prime * result + ((idName == null) ? 0 : idName.hashCode());
-        result = prime * result + ((idaudit == null) ? 0 : idaudit.hashCode());
-        result = prime * result
-                + ((layerName == null) ? 0 : layerName.hashCode());
-        result = prime * result
-                + ((objSerial == null) ? 0 : objSerial.hashCode());
-        result = prime * result
-                + ((processorName == null) ? 0 : processorName.hashCode());
-        result = prime * result + ((profile == null) ? 0 : profile.hashCode());
-        result = prime * result
-                + ((systemName == null) ? 0 : systemName.hashCode());
-        result = prime * result
-                + ((userName == null) ? 0 : userName.hashCode());
-        result = prime * result + ((what == null) ? 0 : what.hashCode());
-        result = prime * result + ((when == null) ? 0 : when.hashCode());
-        result = prime * result + ((where == null) ? 0 : where.hashCode());
-        return result;
+        int hash = 5;
+        hash = 41 * hash + Objects.hashCode(this.idaudit);
+        hash = 41 * hash + Objects.hashCode(this.systemName);
+        hash = 41 * hash + Objects.hashCode(this.idName);
+        hash = 41 * hash + Objects.hashCode(this.when);
+        hash = 41 * hash + Objects.hashCode(this.objSerial);
+        hash = 41 * hash + Objects.hashCode(this.processorName);
+        return hash;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
         if (obj == null) {
             return false;
         }
         if (getClass() != obj.getClass()) {
             return false;
         }
-        LocalTrail other = (LocalTrail) obj;
-        if (className == null) {
-            if (other.className != null) {
-                return false;
-            }
-        } else if (!className.equals(other.className)) {
-            return false;
-        }        
-        if (idName == null) {
-            if (other.idName != null) {
-                return false;
-            }
-        } else if (!idName.equals(other.idName)) {
+        final LocalTrail other = (LocalTrail) obj;
+        if (!Objects.equals(this.idaudit, other.idaudit)) {
             return false;
         }
-        if (idaudit == null) {
-            if (other.idaudit != null) {
-                return false;
-            }
-        } else if (!idaudit.equals(other.idaudit)) {
+        if (!Objects.equals(this.systemName, other.systemName)) {
             return false;
         }
-        if (layerName == null) {
-            if (other.layerName != null) {
-                return false;
-            }
-        } else if (!layerName.equals(other.layerName)) {
+        if (!Objects.equals(this.idName, other.idName)) {
             return false;
         }
-        if (objSerial == null) {
-            if (other.objSerial != null) {
-                return false;
-            }
-        } else if (!objSerial.equals(other.objSerial)) {
+        if (!Objects.equals(this.when, other.when)) {
             return false;
         }
-        if (processorName == null) {
-            if (other.processorName != null) {
-                return false;
-            }
-        } else if (!processorName.equals(other.processorName)) {
+        if (!Objects.equals(this.objSerial, other.objSerial)) {
             return false;
         }
-        if (profile == null) {
-            if (other.profile != null) {
-                return false;
-            }
-        } else if (!profile.equals(other.profile)) {
-            return false;
-        }
-        if (systemName == null) {
-            if (other.systemName != null) {
-                return false;
-            }
-        } else if (!systemName.equals(other.systemName)) {
-            return false;
-        }
-        if (userName == null) {
-            if (other.userName != null) {
-                return false;
-            }
-        } else if (!userName.equals(other.userName)) {
-            return false;
-        }
-        if (what == null) {
-            if (other.what != null) {
-                return false;
-            }
-        } else if (!what.equals(other.what)) {
-            return false;
-        }
-        if (when == null) {
-            if (other.when != null) {
-                return false;
-            }
-        } else if (!when.equals(other.when)) {
-            return false;
-        }
-        if (where == null) {
-            if (other.where != null) {
-                return false;
-            }
-        } else if (!where.equals(other.where)) {
+        if (!Objects.equals(this.processorName, other.processorName)) {
             return false;
         }
         return true;
     }
+
+    
 }

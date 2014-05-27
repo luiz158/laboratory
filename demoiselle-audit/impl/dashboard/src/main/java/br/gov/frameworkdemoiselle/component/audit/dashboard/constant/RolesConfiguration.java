@@ -53,18 +53,18 @@ public class RolesConfiguration {
     /**
      *
      */
-    public Long USER;
+    public static Long USER;
     /**
      *
      */
-    public Long MANAGER;
+    public static Long MANAGER;
     /**
      *
      */
-    public Long ADMINISTRATOR;
+    public static Long ADMINISTRATOR;
     /**
      *
      */
-    public Long INVALID;
+    public static Long INVALID;
 
 }

@@ -46,18 +46,18 @@ public interface IRoles {
     /**
      *
      */
-    static final String USER = "USER";
+    final String USER = "USER";
     /**
      *
      */
-    static final String MANAGER = "MANAGER";
+    final String MANAGER = "MANAGER";
     /**
      *
      */
-    static final String ADMINISTRATOR = "ADMINISTRATOR";
+    final String ADMINISTRATOR = "ADMINISTRATOR";
     /**
      *
      */
-    static final String INVALID = "INVALID";
+    final String INVALID = "INVALID";
 
 }

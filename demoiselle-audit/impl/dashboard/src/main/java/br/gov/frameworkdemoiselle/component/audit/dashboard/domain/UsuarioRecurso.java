@@ -66,7 +66,7 @@ public class UsuarioRecurso implements Serializable {
      *
      */
     @EmbeddedId
-    protected UsuarioRecursoPK usuarioRecursoPK;
+    private UsuarioRecursoPK usuarioRecursoPK;
     @Basic(optional = false)
     @NotNull
     @Column(nullable = false)

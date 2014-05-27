@@ -57,6 +57,7 @@ import br.gov.frameworkdemoiselle.util.Beans;
 public class RESTProcessors extends AbstractProcessor {
 
     private final RESTConfig config = Beans.getReference(RESTConfig.class);
+    private final int HTTP_OK = 200;
 
     /**
      *
@@ -68,8 +69,6 @@ public class RESTProcessors extends AbstractProcessor {
         super.execute(trail);
 
         try {
-            //TODO Verificar alternativas para superar a depreciação das classes abaixo
-        	
             ClientRequest request = new ClientRequest(config.getServerUrl()+ "/rest/trail/create");
             request.body(MediaType.APPLICATION_JSON, Util.jsonSerializer(trail));
             ClientResponse response = null;
@@ -77,7 +76,7 @@ public class RESTProcessors extends AbstractProcessor {
             response = request.post();
 
             int apiResponseCode = response.getResponseStatus().getStatusCode();
-            if (response.getResponseStatus().getStatusCode() != 200) {
+            if (response.getResponseStatus().getStatusCode() != HTTP_OK) {
                 fail("Failed with HTTP error code : " + apiResponseCode, trail);
             }
 

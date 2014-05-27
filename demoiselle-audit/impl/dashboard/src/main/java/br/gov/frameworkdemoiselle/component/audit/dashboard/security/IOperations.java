@@ -46,22 +46,22 @@ public interface IOperations {
     /**
      *
      */
-    static final String LIST = "LIST";
+    final String LIST = "LIST";
     /**
      *
      */
-    static final String UPDATE = "UPDATE";
+    final String UPDATE = "UPDATE";
     /**
      *
      */
-    static final String INSERT = "INSERT";
+    final String INSERT = "INSERT";
     /**
      *
      */
-    static final String DELETE = "DELETE";
+    final String DELETE = "DELETE";
     /**
      *
      */
-    static final String INVALID = "INVALID";
+    final String INVALID = "INVALID";
 
 }
