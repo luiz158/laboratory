@@ -87,7 +87,7 @@ public class Util {
     public static Map<String, String> jsonToMap(String string) {
         
         ObjectMapper mapper = new ObjectMapper();
-        Map<String, String> retorno = new HashMap<String, String>();
+        Map<String, String> retorno;
         
         try {
             retorno = mapper.readValue(string, new TypeReference<HashMap<String, String>>() {
@@ -109,30 +109,13 @@ public class Util {
 
     /**
      *
-     * @return
-     */
-    public List<String> className() {
-        Set<String> lista = new HashSet<String>();
-        StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
-        for (StackTraceElement stackTraceElement : stackTraceElements) {
-            System.out.println("----------------------------------------------------------------------------");
-            System.out.println("stackTraceElement.getClassName() " + stackTraceElement.getClassName());
-            System.out.println("stackTraceElement.getFileName() " + stackTraceElement.getFileName());
-            System.out.println("stackTraceElement.getMethodName() " + stackTraceElement.getMethodName());
-        }
-        return new ArrayList<String>(lista);
-    }
-
-    /**
-     *
      * @param className
      * @return
      */
-    //TODO Mover para JPA
     public String idName(String className) {
 
         Field[] fields;
-        String idName = "";;
+        String idName = null;
         try {
             fields = forName(className).getDeclaredFields();
 
@@ -157,20 +140,6 @@ public class Util {
         }
 
         return idName;
-    }
-
-    private String getValueOfParameterInMethodAnnotation(Class<?> clazz, StackTraceElement stackTraceElement) {
-
-        Method[] methods = clazz.getMethods();
-        String methodName = stackTraceElement.getMethodName();
-
-        for (Method method : methods) {
-            Annotation annotation = method.getAnnotation(Audit.class);
-            if (annotation != null && method.getName().equals(methodName)) {
-                return ((Audit) annotation).description();
-            }
-        }
-        return null;
     }
 
 }
