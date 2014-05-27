@@ -57,7 +57,7 @@ import br.gov.frameworkdemoiselle.util.Beans;
 public class RESTProcessors extends AbstractProcessor {
 
     private final RESTConfig config = Beans.getReference(RESTConfig.class);
-    private final int HTTP_OK = 200;
+    private static final int HTTP_OK = 200;
 
     /**
      *

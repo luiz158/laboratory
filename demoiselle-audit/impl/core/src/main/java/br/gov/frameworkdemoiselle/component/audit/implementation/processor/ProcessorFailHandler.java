@@ -91,41 +91,35 @@ public class ProcessorFailHandler {
                 dirCreated = dir.mkdirs();
             }
 
-            if(dirCreated){
+            if (dirCreated) {
                 os = new FileOutputStream(folder + fileName);
                 OutputStream buffer = new BufferedOutputStream(os);
 
-                try {
-                    output = new ObjectOutputStream(buffer);
-                    output.writeObject(trail);
-                    Logger.getLogger(ProcessorFailHandler.class.getName()).log(Level.INFO, "Object Trail wrote into file ''{0}{1}''", new Object[]{folder, fileName});
-                } catch (IOException e) {
-                    throw new AuditException("Fail writing Trail object into file '" + folder + fileName + "', message error :" + e.getMessage(), e);
-                }
-            }
-            else{
+                output = new ObjectOutputStream(buffer);
+                output.writeObject(trail);
+                Logger.getLogger(ProcessorFailHandler.class.getName()).log(Level.INFO, "Object Trail wrote into file ''{0}{1}''", new Object[]{folder, fileName});
+
+            } else {
                 throw new AuditException("Fail writing Trail object into file '" + folder + fileName, new IOException());
             }
         } catch (IOException e) {
             throw new AuditException("Fail writing Trail object into file '" + folder + fileName + "', message error :" + e.getMessage(), e);
         } finally {
-
-            if (output != null) {
-                try {
+            try {
+                if(output != null){
                     output.close();
-                } catch (IOException e) {
-                    throw new AuditException("Fail writing Trail object into file '" + folder + fileName + "', message error :" + e.getMessage(), e);
                 }
+            } catch (IOException e) {
+                throw new AuditException("Fail writing Trail object into file '" + folder + fileName + "', message error :" + e.getMessage(), e);
             }
 
-            if (os != null) {
-                try {
+            try {
+                if(os != null){
                     os.close();
-                } catch (IOException e) {
-                    throw new AuditException("Fail writing Trail object into file '" + folder + fileName + "', message error :" + e.getMessage(), e);
                 }
+            } catch (IOException e) {
+                throw new AuditException("Fail writing Trail object into file '" + folder + fileName + "', message error :" + e.getMessage(), e);
             }
         }
-
     }
 }

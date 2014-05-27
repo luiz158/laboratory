@@ -52,7 +52,7 @@ import org.codehaus.jackson.type.TypeReference;
  * @author SERPRO
  *
  */
-public class Util {
+public final class Util {
 
     /**
      *
@@ -62,7 +62,7 @@ public class Util {
     public static Map<String, String> jsonToMap(String string) {
         
         ObjectMapper mapper = new ObjectMapper();
-        Map<String, String> retorno = new HashMap<String, String>();
+        Map<String, String> retorno;
         
         try {
             retorno = mapper.readValue(string, new TypeReference<HashMap<String, String>>() {
