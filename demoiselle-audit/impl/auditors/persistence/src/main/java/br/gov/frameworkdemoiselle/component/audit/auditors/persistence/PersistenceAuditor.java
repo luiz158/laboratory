@@ -79,8 +79,7 @@ public class PersistenceAuditor extends AbstractAuditor {
     	identity = Beans.getReference(User.class);
     	config = Beans.getReference(AuditConfig.class);
     	
-        Trail trailBean = new Trail();
-        trailBean.setHow(className().toString());
+        Trail trailBean = new Trail();       
         trailBean.setIdName(idName(object.getClass().getName()));
         trailBean.setProfile(identity.getId().equalsIgnoreCase("demoiselle") ? "PROFILE" : identity.getAttribute("PROFILE").toString());
         trailBean.setWhere(identity.getId().equalsIgnoreCase("demoiselle") ? "IP" : identity.getAttribute("IP").toString());

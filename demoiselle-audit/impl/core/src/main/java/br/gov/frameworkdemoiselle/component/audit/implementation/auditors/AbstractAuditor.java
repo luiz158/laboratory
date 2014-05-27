@@ -79,18 +79,5 @@ public abstract class AbstractAuditor {
                 }
         ).start();
     }
-    
-    /**
-    *
-    * @return
-    */
-   public List<String> className() {
-       Set<String> lista = new HashSet<String>();
-       StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
-       for (StackTraceElement stackTraceElement : stackTraceElements) {
-          lista.add(stackTraceElement.toString());
-       }
-       return new ArrayList<String>(lista);
-   }
    
 }

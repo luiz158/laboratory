@@ -49,10 +49,7 @@
 								</tr>
 								<tr>
 									<td>#{messages['detail.field.what']}</td>
-								</tr>
-								<tr>
-									<td>#{messages['detail.field.how']}</td>
-								</tr>
+								</tr>								
 								<tr>
 									<td>#{messages['detail.field.where']}</td>
 								</tr>
@@ -88,23 +85,20 @@
 							<table>
 								<thead>
 									<tr>
-										<td>#{track.trail.userName}</td>
+										<td>#{track.trilha.userName}</td>
 									</tr>
 									<tr>
-										<td>#{track.trail.what}</td>
+										<td>#{track.trilha.what}</td>
+									</tr>									
+									<tr>
+										<td>#{track.trilha.where}</td>
 									</tr>
 									<tr>
-										<td>#{track.trail.how}</td>
-									</tr>
-									<tr>
-										<td>#{track.trail.where}</td>
-									</tr>
-									<tr>
-										<td>#{track.trail.profile}</td>
+										<td>#{track.trilha.profile}</td>
 									</tr>
 									<tr>
 										<td>
-											<h:outputText value="#{track.trail.when}">
+											<h:outputText value="#{track.trilha.when}">
 												<f:convertDateTime dateStyle="full" pattern="dd/MM/yyyy HH:mm:ss" type="both" locale="pt_BR" timeZone="America/Sao_Paulo"/>
 											</h:outputText>
 										</td>

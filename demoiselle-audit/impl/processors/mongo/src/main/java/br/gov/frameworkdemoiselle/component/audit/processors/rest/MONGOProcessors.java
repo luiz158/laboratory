@@ -73,8 +73,7 @@ public class MONGOProcessors extends AbstractProcessor {
             DBCollection table = db.getCollection(config.getTableName());
 
             BasicDBObject document = new BasicDBObject();
-            document.put("ClassName", trail.getClassName());
-            document.put("How", trail.getHow());
+            document.put("ClassName", trail.getClassName());            
             document.put("IdName", trail.getIdName());
             document.put("LayerName", trail.getLayerName());
             document.put("ObjSerial", trail.getObjSerial());

@@ -67,11 +67,11 @@ public class MONGOProcessorsTest {
     @Test
     public void testExecute() throws Exception {
 
-        instance.execute(new Trail("Teste4Aba", "Usuario1", "id", "Perfil4Aba", "Criou", "Tela inicial", "10.200.255.26", new Date(), "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\":  \"1\", \"nome\": \"Henrique\", \"filho\": \"Rafael\"}", null, null));
-        instance.execute(new Trail("Teste4Aba", "Usuario2", "id", "Perfil4Aba", "Alterou", "Tela inicial", "10.200.255.37", new Date(), "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\": \"1\", \"nome\": \"Rafael\", \"filho\": \"José\"}", null, null));
-        instance.execute(new Trail("Teste4Aba", "Usuario3", "id", "Perfil4Aba", "Alterou", "Tela inicial", "10.200.255.29", new Date(), "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\": \"1\", \"nome\": \"José\", \"filho\": \"Henrique\"}", null, null));
-        instance.execute(new Trail("Teste4Aba", "Usuario4", "id", "Perfil4Aba", "Alterou", "Tela inicial", "10.200.255.44", new Date(), "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\": \"1\", \"nome\": \"Roberto\", \"filho\": \"Silva\"}", null, null));
-        instance.execute(new Trail("Teste4Aba", "Usuario5", "id", "Perfil4Aba", "Excluiu", "Tela inicial", "10.200.255.73", new Date(), "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\": \"1\", \"nome\": \"Roberto\", \"filho\": \"Silva\"}", null, null));
+        instance.execute(new Trail("Teste4Aba", "Usuario1", "id", "Perfil4Aba", "Criou", "10.200.255.26", new Date(), "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\":  \"1\", \"nome\": \"Henrique\", \"filho\": \"Rafael\"}", null, null));
+        instance.execute(new Trail("Teste4Aba", "Usuario2", "id", "Perfil4Aba", "Alterou", "10.200.255.37", new Date(), "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\": \"1\", \"nome\": \"Rafael\", \"filho\": \"José\"}", null, null));
+        instance.execute(new Trail("Teste4Aba", "Usuario3", "id", "Perfil4Aba", "Alterou", "10.200.255.29", new Date(), "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\": \"1\", \"nome\": \"José\", \"filho\": \"Henrique\"}", null, null));
+        instance.execute(new Trail("Teste4Aba", "Usuario4", "id", "Perfil4Aba", "Alterou", "10.200.255.44", new Date(), "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\": \"1\", \"nome\": \"Roberto\", \"filho\": \"Silva\"}", null, null));
+        instance.execute(new Trail("Teste4Aba", "Usuario5", "id", "Perfil4Aba", "Excluiu", "10.200.255.73", new Date(), "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\": \"1\", \"nome\": \"Roberto\", \"filho\": \"Silva\"}", null, null));
 
     }
 

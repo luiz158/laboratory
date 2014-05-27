@@ -48,13 +48,12 @@ import br.gov.frameworkdemoiselle.template.JPACrud;
  * @author SERPRO
  *
  */
-
 @PersistenceController
 public class TrilhaDAO extends JPACrud<LocalTrail, Long> {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
+    /**
      *
      * @param namedQuery
      * @param param
@@ -62,7 +61,7 @@ public class TrilhaDAO extends JPACrud<LocalTrail, Long> {
      * @return
      */
     @SuppressWarnings("unchecked")
-	public List<LocalTrail> findByNamedQuery(String namedQuery, String param, String value) {
+    public List<LocalTrail> findByNamedQuery(String namedQuery, String param, String value) {
         return getEntityManager().createNamedQuery(namedQuery).setParameter(param, value).getResultList();
     }
 
@@ -72,7 +71,7 @@ public class TrilhaDAO extends JPACrud<LocalTrail, Long> {
      * @return
      */
     @SuppressWarnings("unchecked")
-	public List<String> findByNamedQueryDistinct(String namedQuery) {
+    public List<String> findByNamedQueryDistinct(String namedQuery) {
         return getEntityManager().createNamedQuery(namedQuery).getResultList();
     }
 
@@ -86,7 +85,7 @@ public class TrilhaDAO extends JPACrud<LocalTrail, Long> {
      * @return
      */
     @SuppressWarnings("unchecked")
-	public List<LocalTrail> findByNamedQueryWithBetween(String namedQuery, String param, String value, Date dateBegin, Date dateFinal) {
+    public List<LocalTrail> findByNamedQueryWithBetween(String namedQuery, String param, String value, Date dateBegin, Date dateFinal) {
         return getEntityManager().createNamedQuery(namedQuery).
                 setParameter(param, value).
                 setParameter("whenBegin", dateBegin).
@@ -94,31 +93,30 @@ public class TrilhaDAO extends JPACrud<LocalTrail, Long> {
                 getResultList();
     }
 
-	public List<String> findByNamedQueryDistinct(String namedQuery, String param, String value) {
-		return getEntityManager().createNamedQuery(namedQuery).setParameter(param, value).getResultList();
-	}
+    public List<String> findByNamedQueryDistinct(String namedQuery, String param, String value) {
+        return getEntityManager().createNamedQuery(namedQuery).setParameter(param, value).getResultList();
+    }
 
-	public String findByNamedQueryIdName(String namedQuery, String systemName, String className) {
-		List<String> idNames = (List<String>) getEntityManager().createNamedQuery(namedQuery).
-				setParameter("systemName", systemName).
-				setParameter("className", className).
-				getResultList();
+    public String findByNamedQueryIdName(String namedQuery, String systemName, String className) {
+        List<String> idNames = (List<String>) getEntityManager().createNamedQuery(namedQuery).
+                setParameter("systemName", systemName).
+                setParameter("className", className).
+                getResultList();
 
-		if(idNames != null && idNames.size() > 0){
-			return idNames.get(0);
-		}
+        if (idNames != null && idNames.size() > 0) {
+            return idNames.get(0);
+        }
 
-		return "";
-	}
+        return "";
+    }
 
-	public List<LocalTrail> findByNamedQuerySystemAndObjectAndIdName(String namedQuery, String system, String object,
-			String objectIdName, String objectIdValue) {
+    public List<LocalTrail> findByNamedQuerySystemAndObjectAndIdName(String namedQuery, String system, String object,
+            String objectIdName, String objectIdValue) {
 
-		return getEntityManager().createNamedQuery(namedQuery).
-				setParameter("systemName", system).
-				setParameter("className", object).
-				setParameter("value", "%\"" + objectIdName + "\":" + objectIdValue + "%").
-				getResultList();
-	}
-
+        return getEntityManager().createNamedQuery(namedQuery).
+                setParameter("systemName", system).
+                setParameter("className", object).
+                setParameter("value", "%\"" + objectIdName + "\":" + objectIdValue + "%").
+                getResultList();
+    }
 }

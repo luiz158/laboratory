@@ -59,7 +59,6 @@ public class Trail implements Serializable {
     private String what;
     private String where;
     private Date when;
-    private String how;
     private String className;
     private String objSerial;
     private String layerName;
@@ -87,7 +86,7 @@ public class Trail implements Serializable {
      * @param processorName
      */
     public Trail(String systemName, String userName, String idName,
-                 String profile, String what, String how, String where, Date when,
+                 String profile, String what, String where, Date when,
                  String className, String objSerial, String layerName,
                  String processorName) {
         this.systemName = systemName;
@@ -95,7 +94,6 @@ public class Trail implements Serializable {
         this.idName = idName;
         this.profile = profile;
         this.what = what;
-        this.how = how;
         this.where = where;
         this.when = when;
         this.className = className;
@@ -166,22 +164,6 @@ public class Trail implements Serializable {
      */
     public void setWhat(String what) {
         this.what = what;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getHow() {
-        return how;
-    }
-
-    /**
-     *
-     * @param how
-     */
-    public void setHow(String how) {
-        this.how = how;
     }
 
     /**
@@ -298,7 +280,7 @@ public class Trail implements Serializable {
 
     @Override
     public String toString() {
-        return "Trail{" + "systemName=" + systemName + ", userName=" + userName + ", idName=" + idName + ", profile=" + profile + ", what=" + what + ", where=" + where + ", when=" + when + ", how=" + how + ", className=" + className + ", objSerial=" + objSerial + ", layerName=" + layerName + ", processorName=" + processorName + '}';
+        return "Trail{" + "systemName=" + systemName + ", userName=" + userName + ", idName=" + idName + ", profile=" + profile + ", what=" + what + ", where=" + where + ", when=" + when + ", className=" + className + ", objSerial=" + objSerial + ", layerName=" + layerName + ", processorName=" + processorName + '}';
     }
 
     @Override
@@ -310,8 +292,7 @@ public class Trail implements Serializable {
         hash = 53 * hash + (this.profile != null ? this.profile.hashCode() : 0);
         hash = 53 * hash + (this.what != null ? this.what.hashCode() : 0);
         hash = 53 * hash + (this.where != null ? this.where.hashCode() : 0);
-        hash = 53 * hash + (this.when != null ? this.when.hashCode() : 0);
-        hash = 53 * hash + (this.how != null ? this.how.hashCode() : 0);
+        hash = 53 * hash + (this.when != null ? this.when.hashCode() : 0);        
         hash = 53 * hash + (this.className != null ? this.className.hashCode() : 0);
         hash = 53 * hash + (this.objSerial != null ? this.objSerial.hashCode() : 0);
         hash = 53 * hash + (this.layerName != null ? this.layerName.hashCode() : 0);
@@ -348,10 +329,7 @@ public class Trail implements Serializable {
         }
         if (this.when != other.when && (this.when == null || !this.when.equals(other.when))) {
             return false;
-        }
-        if ((this.how == null) ? (other.how != null) : !this.how.equals(other.how)) {
-            return false;
-        }
+        }       
         if ((this.className == null) ? (other.className != null) : !this.className.equals(other.className)) {
             return false;
         }
