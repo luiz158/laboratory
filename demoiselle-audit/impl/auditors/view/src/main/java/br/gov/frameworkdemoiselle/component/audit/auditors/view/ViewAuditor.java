@@ -52,10 +52,6 @@ import br.gov.frameworkdemoiselle.util.Beans;
  */
 public class ViewAuditor extends AbstractAuditor {
 
-    private User identity;
-
-    private AuditConfig config;
-
     /**
      *
      * Create a Trail Object filling the commons properties
@@ -65,8 +61,8 @@ public class ViewAuditor extends AbstractAuditor {
      */
     private Trail createTrailBean(Object object) {
 
-    	identity = Beans.getReference(User.class);
-    	config = Beans.getReference(AuditConfig.class);
+    	User identity = Beans.getReference(User.class);
+    	AuditConfig config = Beans.getReference(AuditConfig.class);
 
         Trail trailBean = new Trail();        
         trailBean.setIdName(null);

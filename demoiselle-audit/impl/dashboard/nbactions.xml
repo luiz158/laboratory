@@ -8,5 +8,8 @@
                 <goal>package</goal>
                 <goal>sonar:sonar</goal>
             </goals>
+            <properties>
+                <skipTests>true</skipTests>
+            </properties>
         </action>
     </actions>
