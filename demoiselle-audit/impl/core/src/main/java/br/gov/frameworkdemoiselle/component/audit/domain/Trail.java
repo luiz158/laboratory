@@ -48,18 +48,20 @@ import java.util.Date;
 public class Trail implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
+    private final int HASH_CODE_5 = 5;
+    private final int HASH_CODE_37 = 37;
 
     /**
      *
      */
-    protected String systemName;
+    private String systemName;
     private String userName;
     private String idName;
     private String profile;
     private String what;
     private String where;
     private Date when;
-    private String how;
     private String className;
     private String objSerial;
     private String layerName;
@@ -87,7 +89,7 @@ public class Trail implements Serializable {
      * @param processorName
      */
     public Trail(String systemName, String userName, String idName,
-                 String profile, String what, String how, String where, Date when,
+                 String profile, String what, String where, Date when,
                  String className, String objSerial, String layerName,
                  String processorName) {
         this.systemName = systemName;
@@ -95,9 +97,8 @@ public class Trail implements Serializable {
         this.idName = idName;
         this.profile = profile;
         this.what = what;
-        this.how = how;
         this.where = where;
-        this.when = when;
+        this.setWhen(when);
         this.className = className;
         this.objSerial = objSerial;
         this.layerName = layerName;
@@ -172,22 +173,6 @@ public class Trail implements Serializable {
      *
      * @return
      */
-    public String getHow() {
-        return how;
-    }
-
-    /**
-     *
-     * @param how
-     */
-    public void setHow(String how) {
-        this.how = how;
-    }
-
-    /**
-     *
-     * @return
-     */
     public String getWhere() {
         return where;
     }
@@ -205,7 +190,7 @@ public class Trail implements Serializable {
      * @return
      */
     public Date getWhen() {
-        return when;
+        return (Date) when.clone();
     }
 
     /**
@@ -213,7 +198,7 @@ public class Trail implements Serializable {
      * @param when
      */
     public void setWhen(Date when) {
-        this.when = when;
+        this.when = new Date(when.getTime());
     }
 
     /**
@@ -298,24 +283,17 @@ public class Trail implements Serializable {
 
     @Override
     public String toString() {
-        return "Trail{" + "systemName=" + systemName + ", userName=" + userName + ", idName=" + idName + ", profile=" + profile + ", what=" + what + ", where=" + where + ", when=" + when + ", how=" + how + ", className=" + className + ", objSerial=" + objSerial + ", layerName=" + layerName + ", processorName=" + processorName + '}';
+        return "Trail{" + "systemName=" + systemName + ", userName=" + userName + ", idName=" + idName + ", profile=" + profile + ", what=" + what + ", where=" + where + ", when=" + when + ", className=" + className + ", objSerial=" + objSerial + ", layerName=" + layerName + ", processorName=" + processorName + '}';
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 53 * hash + (this.systemName != null ? this.systemName.hashCode() : 0);
-        hash = 53 * hash + (this.userName != null ? this.userName.hashCode() : 0);
-        hash = 53 * hash + (this.idName != null ? this.idName.hashCode() : 0);
-        hash = 53 * hash + (this.profile != null ? this.profile.hashCode() : 0);
-        hash = 53 * hash + (this.what != null ? this.what.hashCode() : 0);
-        hash = 53 * hash + (this.where != null ? this.where.hashCode() : 0);
-        hash = 53 * hash + (this.when != null ? this.when.hashCode() : 0);
-        hash = 53 * hash + (this.how != null ? this.how.hashCode() : 0);
-        hash = 53 * hash + (this.className != null ? this.className.hashCode() : 0);
-        hash = 53 * hash + (this.objSerial != null ? this.objSerial.hashCode() : 0);
-        hash = 53 * hash + (this.layerName != null ? this.layerName.hashCode() : 0);
-        hash = 53 * hash + (this.processorName != null ? this.processorName.hashCode() : 0);
+        int hash = HASH_CODE_5;
+        hash = HASH_CODE_37 * hash + (this.userName != null ? this.userName.hashCode() : 0);
+        hash = HASH_CODE_37 * hash + (this.idName != null ? this.idName.hashCode() : 0);
+        hash = HASH_CODE_37 * hash + (this.className != null ? this.className.hashCode() : 0);
+        hash = HASH_CODE_37 * hash + (this.objSerial != null ? this.objSerial.hashCode() : 0);
+        hash = HASH_CODE_37 * hash + (this.layerName != null ? this.layerName.hashCode() : 0);
         return hash;
     }
 
@@ -328,28 +306,10 @@ public class Trail implements Serializable {
             return false;
         }
         final Trail other = (Trail) obj;
-        if ((this.systemName == null) ? (other.systemName != null) : !this.systemName.equals(other.systemName)) {
-            return false;
-        }
         if ((this.userName == null) ? (other.userName != null) : !this.userName.equals(other.userName)) {
             return false;
         }
         if ((this.idName == null) ? (other.idName != null) : !this.idName.equals(other.idName)) {
-            return false;
-        }
-        if ((this.profile == null) ? (other.profile != null) : !this.profile.equals(other.profile)) {
-            return false;
-        }
-        if ((this.what == null) ? (other.what != null) : !this.what.equals(other.what)) {
-            return false;
-        }
-        if ((this.where == null) ? (other.where != null) : !this.where.equals(other.where)) {
-            return false;
-        }
-        if (this.when != other.when && (this.when == null || !this.when.equals(other.when))) {
-            return false;
-        }
-        if ((this.how == null) ? (other.how != null) : !this.how.equals(other.how)) {
             return false;
         }
         if ((this.className == null) ? (other.className != null) : !this.className.equals(other.className)) {
@@ -361,9 +321,8 @@ public class Trail implements Serializable {
         if ((this.layerName == null) ? (other.layerName != null) : !this.layerName.equals(other.layerName)) {
             return false;
         }
-        return !((this.processorName == null) ? (other.processorName != null) : !this.processorName.equals(other.processorName));
+        return true;
     }
 
-
-
+   
 }

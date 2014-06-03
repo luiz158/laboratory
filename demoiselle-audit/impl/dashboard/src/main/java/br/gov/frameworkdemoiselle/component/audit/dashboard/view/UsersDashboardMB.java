@@ -60,6 +60,9 @@ import br.gov.frameworkdemoiselle.component.audit.dashboard.domain.User;
 public class UsersDashboardMB extends DashboardMB {
 
     private static final long serialVersionUID = 1L;
+    private final int HOUR = 23;
+    private final int MINUTE = 59;
+    private final int SECOND = 59;
 
     private List<User> usersList;
 
@@ -98,9 +101,9 @@ public class UsersDashboardMB extends DashboardMB {
         dateBegin.set(Calendar.SECOND, 0);
 
         Calendar dateFinal = Calendar.getInstance();
-        dateFinal.set(Calendar.HOUR_OF_DAY, 23);
-        dateFinal.set(Calendar.MINUTE, 59);
-        dateFinal.set(Calendar.SECOND, 59);
+        dateFinal.set(Calendar.HOUR_OF_DAY, HOUR);
+        dateFinal.set(Calendar.MINUTE, MINUTE);
+        dateFinal.set(Calendar.SECOND, SECOND);
 
         trails = trailBC.findByNamedQueryWithBetween("LocalTrail.findByUserName", "userName", user.getUserName(), dateBegin.getTime(), dateFinal.getTime());
     }

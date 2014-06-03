@@ -43,6 +43,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import br.gov.frameworkdemoiselle.component.audit.dashboard.constant.RolesConfiguration;
+import java.util.Map;
 
 
 /**
@@ -109,7 +110,7 @@ public class Roles implements IRoles {
         return list;
     }
 
-    public static HashMap<Short, String> getRolesListAsMap(){
+    public static Map<Short, String> getRolesListAsMap(){
 
     	HashMap<Short, String> papeis = new HashMap<Short, String>();
 

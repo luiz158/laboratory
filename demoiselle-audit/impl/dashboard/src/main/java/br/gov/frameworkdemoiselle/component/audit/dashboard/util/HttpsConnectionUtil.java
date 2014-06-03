@@ -89,25 +89,12 @@ public class HttpsConnectionUtil {
       URL url = new URL(host + ":"+port);
 
       HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
-      /*
-      InputStream in = urlConnection.getInputStream();
-      BufferedReader br = new BufferedReader(new InputStreamReader(in));
-      String input;
-
-      while ((input = br.readLine()) != null) {
-        System.out.println(input);
-      }
- */
 
       return urlConnection;
 
     } catch (MalformedURLException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
       return null;
     } catch (IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
       return null;
     }
 

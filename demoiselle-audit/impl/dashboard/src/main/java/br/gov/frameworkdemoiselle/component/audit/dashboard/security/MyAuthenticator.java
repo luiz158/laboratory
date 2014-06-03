@@ -85,36 +85,40 @@ public class MyAuthenticator implements Authenticator {
 
         try {
             user = usuarioDAO.findById(Long.getLong(identity.getId()));
+            
+            if(user != null){
 
-            List<UsuarioRecurso> recursosUsuario = usuarioRecursoDAO.findByUsuario(user.getId());
+                List<UsuarioRecurso> recursosUsuario = usuarioRecursoDAO.findByUsuario(user.getId());
 
-            Iterator<UsuarioRecurso> it = recursosUsuario.iterator();
+                if(recursosUsuario != null){
 
-            while (it.hasNext()) {
-                UsuarioRecurso usuarioRecurso = it.next();
-                recursosOperacoes.put(usuarioRecurso.getUsuarioRecursosPK().getRecursos(), usuarioRecurso.getOperacao());
+                    Iterator<UsuarioRecurso> it = recursosUsuario.iterator();
+
+                    while (it.hasNext()) {
+                        UsuarioRecurso usuarioRecurso = it.next();
+                        recursosOperacoes.put(usuarioRecurso.getUsuarioRecursosPK().getRecursos(), usuarioRecurso.getOperacao());
+                    }
+                }
+                else{
+                    throw new AuthenticationException(rb.getString("login.usuario.nao.existe"), new Exception());   
+                }
+            }
+            else{
+                throw new AuthenticationException(rb.getString("login.usuario.nao.existe"), new Exception());   
             }
 
         } catch (Exception ex) {
             throw new AuthenticationException(rb.getString("login.usuario.nao.existe"), ex);
         }
 
-        if (user == null) {
-            throw new AuthenticationException(rb.getString("login.falhou"));
-        } else {
-            if (!user.getAminesia().isEmpty() && user.getSenha().equals(user.getAminesia().substring(21, 27))) {
-                throw new AuthenticationException(rb.getString("login.alteracao.por.email"));
-            }
-//            if (!user.getSenha().equals(CriptografiaUtil.getCodigoMd5(identity.getPassword()))) {
-//                throw new AuthenticationException(rb.getString("login.falhou"));
-//            }
+        
+        if (!user.getAminesia().isEmpty() && user.getSenha().equals(user.getAminesia().substring(21, 27))) {
+            throw new AuthenticationException(rb.getString("login.alteracao.por.email"));
         }
 
-        //this.identity.setId(user.getId().toString());
         this.identity.setAttribute("Nome", user.getNome());
         this.identity.setAttribute("Papel", Roles.getRole(user.getPapel()).get(0));
         this.identity.setAttribute("Recurso", recursosOperacoes);
-        //this.identity.setIsLogged(true);
     }
 
     /**

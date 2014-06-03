@@ -36,19 +36,13 @@
  */
 
 
-import br.gov.frameworkdemoiselle.component.audit.internal.annotation.Audit;
 import java.io.File;
 import java.io.IOException;
 import static java.lang.Class.forName;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static java.util.logging.Logger.getLogger;
@@ -61,8 +55,12 @@ import org.codehaus.jackson.type.TypeReference;
  * @author SERPRO
  *
  */
-public class Util {
+public final class Util {
 
+    private Util(){
+        
+    }
+    
     /**
      *
      * @param object
@@ -87,7 +85,7 @@ public class Util {
     public static Map<String, String> jsonToMap(String string) {
         
         ObjectMapper mapper = new ObjectMapper();
-        Map<String, String> retorno = new HashMap<String, String>();
+        Map<String, String> retorno;
         
         try {
             retorno = mapper.readValue(string, new TypeReference<HashMap<String, String>>() {
@@ -109,30 +107,13 @@ public class Util {
 
     /**
      *
-     * @return
-     */
-    public List<String> className() {
-        Set<String> lista = new HashSet<String>();
-        StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
-        for (StackTraceElement stackTraceElement : stackTraceElements) {
-            System.out.println("----------------------------------------------------------------------------");
-            System.out.println("stackTraceElement.getClassName() " + stackTraceElement.getClassName());
-            System.out.println("stackTraceElement.getFileName() " + stackTraceElement.getFileName());
-            System.out.println("stackTraceElement.getMethodName() " + stackTraceElement.getMethodName());
-        }
-        return new ArrayList<String>(lista);
-    }
-
-    /**
-     *
      * @param className
      * @return
      */
-    //TODO Mover para JPA
     public String idName(String className) {
 
         Field[] fields;
-        String idName = "";;
+        String idName = null;
         try {
             fields = forName(className).getDeclaredFields();
 
@@ -157,20 +138,6 @@ public class Util {
         }
 
         return idName;
-    }
-
-    private String getValueOfParameterInMethodAnnotation(Class<?> clazz, StackTraceElement stackTraceElement) {
-
-        Method[] methods = clazz.getMethods();
-        String methodName = stackTraceElement.getMethodName();
-
-        for (Method method : methods) {
-            Annotation annotation = method.getAnnotation(Audit.class);
-            if (annotation != null && method.getName().equals(methodName)) {
-                return ((Audit) annotation).description();
-            }
-        }
-        return null;
     }
 
 }

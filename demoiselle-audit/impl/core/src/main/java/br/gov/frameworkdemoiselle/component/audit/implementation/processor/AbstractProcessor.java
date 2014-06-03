@@ -74,7 +74,7 @@ public abstract class AbstractProcessor implements Processor {
     @SuppressWarnings("serial")
     protected void fail(String message, Trail trail) {
         beanManager.fireEvent(trail, new AnnotationLiteral<AuditProcessorFail>() {});
-        Logger.getLogger(AbstractProcessor.class.getName()).log(Level.SEVERE, null, new AuditProcessorException(message));
+        Logger.getLogger(AbstractProcessor.class.getName()).log(Level.SEVERE, null, new AuditProcessorException(message, new Exception()));
     }
 
 }

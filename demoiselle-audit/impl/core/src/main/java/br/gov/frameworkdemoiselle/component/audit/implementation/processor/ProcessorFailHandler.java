@@ -61,11 +61,10 @@ import br.gov.frameworkdemoiselle.util.Beans;
  * @author SERPRO
  *
  */
-
 @ApplicationScoped
 public class ProcessorFailHandler {
 
-	private final AuditConfig config = Beans.getReference(AuditConfig.class);
+    private final AuditConfig config = Beans.getReference(AuditConfig.class);
 
     /**
      *
@@ -73,60 +72,54 @@ public class ProcessorFailHandler {
      */
     protected void onFailProcessor(@Observes @AuditProcessorFail Trail trail) {
 
-		String folder = config.getFolderFailObjects();
+        String folder = config.getFolderFailObjects();
 
-		if(folder == null || folder.isEmpty() || "".equals(folder)){
-			folder = Util.getFolderPathDefault();
-		}
+        if (folder == null || folder.isEmpty() || "".equals(folder)) {
+            folder = Util.getFolderPathDefault();
+        }
 
-		String fileName = File.separatorChar + System.currentTimeMillis()+""+trail.toString().hashCode()+ "trail" + ".ser";
+        String fileName = File.separatorChar + System.currentTimeMillis() + "" + trail.toString().hashCode() + "trail" + ".ser";
 
-		ObjectOutput output = null;
-		OutputStream os = null;
+        ObjectOutput output = null;
+        OutputStream os = null;
 
-		try {
-			File dir = new File(folder);
+        try {
+            File dir = new File(folder);
+            boolean dirCreated = true;
 
-			if(!dir.exists()){
-				dir.mkdirs();
-			}
+            if (!dir.exists()) {
+                dirCreated = dir.mkdirs();
+            }
 
-			os = new FileOutputStream(folder + fileName);
-			OutputStream buffer = new BufferedOutputStream(os);
+            if (dirCreated) {
+                os = new FileOutputStream(folder + fileName);
+                OutputStream buffer = new BufferedOutputStream(os);
 
-			try{
-				output = new ObjectOutputStream(buffer);
-				output.writeObject(trail);
-				Logger.getLogger(ProcessorFailHandler.class.getName()).log(Level.INFO, "Object Trail wrote into file '" + folder + fileName + "'");
-			}
-			catch(IOException e){
-				throw new AuditException("Fail writing Trail object into file '" + folder + fileName + "', message error :" + e.getMessage());
-			}
-		}
-		catch (IOException e) {
-			throw new AuditException("Fail writing Trail object into file '" + folder + fileName + "', message error :" + e.getMessage());
-		}
-		finally{
+                output = new ObjectOutputStream(buffer);
+                output.writeObject(trail);
+                Logger.getLogger(ProcessorFailHandler.class.getName()).log(Level.INFO, "Object Trail wrote into file ''{0}{1}''", new Object[]{folder, fileName});
 
-			if(output != null){
-				try{
-					output.close();
-				}
-				catch(IOException e){
-					throw new AuditException("Fail writing Trail object into file '" + folder + fileName + "', message error :" + e.getMessage());
-				}
-			}
+            } else {
+                throw new AuditException("Fail writing Trail object into file '" + folder + fileName, new IOException());
+            }
+        } catch (IOException e) {
+            throw new AuditException("Fail writing Trail object into file '" + folder + fileName + "', message error :" + e.getMessage(), e);
+        } finally {
+            try {
+                if(output != null){
+                    output.close();
+                }
+            } catch (IOException e) {
+                throw new AuditException("Fail writing Trail object into file '" + folder + fileName + "', message error :" + e.getMessage(), e);
+            }
 
-			if(os != null){
-				try{
-					os.close();
-				}
-				catch(IOException e){
-					throw new AuditException("Fail writing Trail object into file '" + folder + fileName + "', message error :" + e.getMessage());
-				}
-			}
-		}
-
-	}
-    
+            try {
+                if(os != null){
+                    os.close();
+                }
+            } catch (IOException e) {
+                throw new AuditException("Fail writing Trail object into file '" + folder + fileName + "', message error :" + e.getMessage(), e);
+            }
+        }
+    }
 }

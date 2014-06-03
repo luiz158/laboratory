@@ -79,7 +79,7 @@ public class AuditScheduler {
             scheduler.start();
             scheduler.scheduleJob(job, trigger);
         } catch (SchedulerException e) {
-            throw new AuditException("Fail start Audit Job, message error :" + e.getMessage());
+            throw new AuditException("Fail start Audit Job, message error :" + e.getMessage(), e);
         }
 
     }

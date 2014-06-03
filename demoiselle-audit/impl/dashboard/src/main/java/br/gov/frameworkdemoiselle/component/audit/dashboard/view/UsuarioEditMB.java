@@ -36,7 +36,6 @@
  */
 package br.gov.frameworkdemoiselle.component.audit.dashboard.view;
 
-import java.util.HashMap;
 
 import javax.inject.Inject;
 
@@ -51,6 +50,7 @@ import br.gov.frameworkdemoiselle.message.SeverityType;
 import br.gov.frameworkdemoiselle.stereotype.ViewController;
 import br.gov.frameworkdemoiselle.template.AbstractEditPageBean;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
+import java.util.Map;
 
 /**
  *
@@ -138,7 +138,7 @@ public class UsuarioEditMB extends AbstractEditPageBean<Usuario, Long> {
         return getPreviousView();
     }
 
-    public HashMap<Short, String> getPapeis() {
+    public Map<Short, String> getPapeis() {
         return Roles.getRolesListAsMap();
     }
 
@@ -150,7 +150,7 @@ public class UsuarioEditMB extends AbstractEditPageBean<Usuario, Long> {
     @Override
     protected Usuario handleLoad(Long id) {
         setBean(this.usuarioBC.load(getId()));
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }

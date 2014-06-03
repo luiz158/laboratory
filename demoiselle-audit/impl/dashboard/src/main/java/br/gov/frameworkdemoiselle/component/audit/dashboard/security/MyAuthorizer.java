@@ -99,7 +99,7 @@ public class MyAuthorizer implements Authorizer {
         	Integer operacao = Operations.getOperation(operacoes);
 
         	for (Map.Entry<Integer, Integer> entry : recursoOperacoes.entrySet()){
-        		if(recurso == entry.getKey() && operacao == entry.getValue()){
+        		if(recurso.equals(entry.getKey()) && operacao.equals(entry.getValue())){
         			return true;
         		}
         	}

@@ -46,54 +46,54 @@ public interface IResources {
     /**
      *
      */
-    static final String ATRIBUTO = "ATRIBUTO";
+    final String ATRIBUTO = "ATRIBUTO";
     /**
      *
      */
-    static final String DESCRITOR = "DESCRITOR";
+    final String DESCRITOR = "DESCRITOR";
     /**
      *
      */
-    static final String EXCECAO = "EXCECAO";
+    final String EXCECAO = "EXCECAO";
     /**
      *
      */
-    static final String ORGAO = "ORGAO";
+    final String ORGAO = "ORGAO";
     /**
      *
      */
-    static final String PAPEL = "PAPEL";
+    final String PAPEL = "PAPEL";
     /**
      *
      */
-    static final String PESQUISAR = "PESQUISAR";
+    final String PESQUISAR = "PESQUISAR";
     /**
      *
      */
-    static final String RECURSO = "RECURSO";
+    final String RECURSO = "RECURSO";
     /**
      *
      */
-    static final String SECURITY = "SECURITY";
+    final String SECURITY = "SECURITY";
     /**
      *
      */
-    static final String SERVICO = "SERVICO";
+    final String SERVICO = "SERVICO";
     /**
      *
      */
-    static final String SISTEMA = "SISTEMA";
+    final String SISTEMA = "SISTEMA";
     /**
      *
      */
-    static final String MARCACAO = "MARCACAO";
+    final String MARCACAO = "MARCACAO";
     /**
      *
      */
-    static final String USUARIO = "USUARIO";
+    final String USUARIO = "USUARIO";
 
     /**
      *
      */
-    static final String INVALID = "INVALID";
+    final String INVALID = "INVALID";
 }
