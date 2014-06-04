@@ -16,12 +16,56 @@ Então esse componente serve para você.
 
 Esse componente foi desenhado para ser multi-sistemas podendo ser instalado em um servidor a parte e vários sistemas enviarem para ele as trilhas de auditoria.
 
-## Conceitos
-
-### Processors
+## Processors
 Um Processor tem como finalidade dar um destino que você deseja para o objeto que representa a trilha de auditoria.
 
-Atualmente estamos disponibilizando um Processor de REST para atender a questão de ser multi-sistema.
+Atualmente estamos disponibilizando um Processor de REST para atender a questão de ser multi-sistema e outro Processor para MONGO.
+
+### Processor REST
+
+Para utilizar esse Processor é necessário adicionar no pom.xml do seu projeto o seguinte trecho:
+
+```xml
+    <dependency>
+        <groupId>br.gov.frameworkdemoiselle.component.audit</groupId>
+        <artifactId>demoiselle-audit-processors-rest</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+```
+
+#### Configuração demoiselle.properties
+
+Para o correto funcionamento é necessário adicionar no demoiselle.properties as seguintes configurações:
+
+Chave     | Descrição
+----------|------------------------------------------------
+frameworkdemoiselle.audit.processor.rest.server.url | URL onde se encontra o serviço REST para o envio das trilhas.
+
+### Processor MONGO
+
+Para utilizar esse Processor é necessário adicionar no pom.xml do seu projeto o seguinte trecho:
+
+```xml
+    <dependency>
+        <groupId>br.gov.frameworkdemoiselle.component.audit</groupId>
+        <artifactId>demoiselle-audit-processors-mongo</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+```
+
+#### Configuração demoiselle.properties
+
+Para o correto funcionamento é necessário adicionar no demoiselle.properties as seguintes configurações:
+
+Chave     | Descrição
+----------|------------------------------------------------
+frameworkdemoiselle.audit.processor.mongo.server.url        | URL do servidor onde se encontra o MongoDB
+frameworkdemoiselle.audit.processor.mongo.database.name     | Nome do databse
+frameworkdemoiselle.audit.processor.mongo.collection.name   | Nome da coleção
+frameworkdemoiselle.audit.processor.mongo.database.user     | Usuário (se necessário)
+frameworkdemoiselle.audit.processor.mongo.database.password | Senha
+    
+### Criando seu próprio Processor
 
 Você poderá criar o seu próprio ponto de extensão, podendo ser um JMS, FTP, Banco de Dados NoSql, você tem a liberdade de criar, para que isso sejá possível você deve criar um projeto Maven e utilizar o parent no seu pom.xml:
 
@@ -35,20 +79,22 @@ Você poderá criar o seu próprio ponto de extensão, podendo ser um JMS, FTP, 
 
 Criar uma classe que extenda de **br.gov.frameworkdemoiselle.component.audit.internal.processor.AbstractProcessor** e implementar o método **public void execute(@Observes @AuditProcessorQualifier Trail trail);**.
 
-É dentro dentro do bloco de código você implementará o destino que você deseja dar ao objeto Trail.
+É dentro do bloco de código você implementará o destino que você deseja dar ao objeto Trail.
 
 Para o bom funcionamento do seu Processor você deverá seguir as seguintes recomendações:
 
-- Antes de implementar seu código chamar o método **super.execute(trail)** para que o componente possa saber qual é a classe do Processor que esta sendo processada, isso é necessário para a situação de falha na execução do seu Processor e o componente possa reprocessar novamente no futuro;
+- Antes de implementar seu código é necessário chamar o método **super.execute(trail)** para que o componente possa saber qual é a classe do Processor que esta sendo processada, isso é necessário para a situação de falha na execução do seu Processor e o componente possa reprocessar novamente no futuro;
 - Quando houver algum tratamento de exceção no seu código como blocos try e catch você deverá além de realizar seu próprio tratamento a chamada do método **fail([String com a mensagem de Erro], [Objeto Trail]);** para que o componente possa reprocessar novamente no futuro;
 
 Você pode basear sua implementação no código do RESTProcessor no caminnho *impl/processors/rest/src/main/java/br/gov/frameworkdemoiselle/component/audit/processors/rest/RESTProcessors.java*
 
-### Auditors
+## Auditors
 
-A idéia dos Auditors é estabelecer a camada que será auditada, nesse primeiro momento estamos entregando apenas um Auditor para a camada de Persistência chamada PersistenceAuditor.
+A idéia dos Auditors é estabelecer a camada que será auditada, atualmente exste dois Auditors: camada de Persistência chamada PersistenceAuditor e para Visão chamado ViewAuditor.
 
-O PersistenceAuditor é utilizado como um EventListener do JPA para capturar o ciclo de vida e executar algumas procedimentos como preencher o objeto Trail com dados sobre:
+Um Auditor tem como objetivo executar a coleta de dados, preenchimento do objeto Trail com dados e disparar evento para o Processors.
+
+Os dados coletados pelos Auditor são:
 
 - Quem fez a operação?
 - Horário da operação?
@@ -58,9 +104,35 @@ O PersistenceAuditor é utilizado como um EventListener do JPA para capturar o c
 - Qual objeto foi manipulado?
 - Quais foram os dados atingidos pela operação?
 
-Se você tiver interesse em auditar, por exemplo a camada de visão do JSF, você deverá:
+### Auditor de Persistência
 
-- Você deve criar um projeto Maven e utilizar o parent no seu pom.xml
+Para utilizar esse Auditor é necessário adicionar no pom.xml do seu projeto o seguinte trecho:
+
+```xml
+    <dependency>
+        <groupId>br.gov.frameworkdemoiselle.component.audit</groupId>
+        <artifactId>demoiselle-audit-auditors-persistence</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+```
+
+### Auditor de Visão
+
+Para utilizar esse Auditor é necessário adicionar no pom.xml do seu projeto o seguinte trecho:
+
+```xml
+    <dependency>
+        <groupId>br.gov.frameworkdemoiselle.component.audit</groupId>
+        <artifactId>demoiselle-audit-auditors-view</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+```
+
+### Criando seu próprio Auditor
+
+Se você tiver interesse em auditar outra camada da sua aplicação você deverá:
+
+- Criar um projeto Maven e utilizar o parent no seu pom.xml
 
 ```xml
 <parent>
@@ -75,7 +147,7 @@ Se você tiver interesse em auditar, por exemplo a camada de visão do JSF, voc�
 - Criar um objeto do tipo Trail e preencher seus dados básicos;
 - Chamar o método da **consume([Objeto Trail])**;
 
-Apartir desse momento o componente estará apto a repassar esse objeto para os Processors definidos no seu pom.xml do seu projeto.
+Apartir desse momento o componente estará apto a repassar esse objeto para os Processors definidos no pom.xml do seu projeto.
 
 Na sua implementação do seu sistema você deverá informar as seguintes informações:
 
@@ -87,7 +159,6 @@ UserName  | user.setAttribute("NAME", [Login/Nome/Identificador do usuário no s
 
 Maiores informações no link http://demoiselle.sourceforge.net/docs/framework/reference/2.4.0/html/security.html
 
-
 Um exemplo de um Auditor esta na classe *impl/auditors/persistence/src/main/java/br/gov/frameworkdemoiselle/component/audit/auditors/persistence/PersistenceAuditor.java*
 
 ## Como utilizar
@@ -98,15 +169,28 @@ Em seu projeto que você deseja auditar, você deve adicionar no seu pom.xml no 
 ```xml
 <dependencies>
     ...
+    <!-- Auditor -->
     <dependency>
         <groupId>br.gov.frameworkdemoiselle.component.audit</groupId>
         <artifactId>demoiselle-audit-auditors-persistence</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </dependency>
     <dependency>
+        <groupId>br.gov.frameworkdemoiselle.component.audit</groupId>
+        <artifactId>demoiselle-audit-auditors-view</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+
+    <!-- Processor -->
+    <dependency>
        	<groupId>br.gov.frameworkdemoiselle.component.audit</groupId>
       	<artifactId>demoiselle-audit-processors-rest</artifactId>
        	<version>1.0.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+        <groupId>br.gov.frameworkdemoiselle.component.audit</groupId>
+        <artifactId>demoiselle-audit-processors-mongo</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
     </dependency>
     ...
 </dependencies>
@@ -127,41 +211,19 @@ frameworkdemoiselle.audit.folder.fail.objects       | Pasta onde a aplicação t
 
 Para o RESTProcessor você deverá adicionar a seguinte linha:
 
-Propriedade                         | Valor
-------------------------------------| --------------------------
-frameworkdemoiselle.audit.urlServer | Endereço do Serviço REST (Ex.: http://localhost:8080/dash)
+Chave                         | Valor
+------------------------------| --------------------------
+frameworkdemoiselle.audit.processor.rest.server.url | Endereço do Serviço REST (Ex.: http://localhost:8080/dash)
 
-### @Audit
+Para o MONGOProcessor você deverá adicionar a seguinte linha:
 
-Você poderá anotar os métodos que você tem a intenção de auditar adicionando uma descrição, por exemplo, o nome do Caso de Uso em execução.
-
-Exemplo:
-
-```java
-@BusinessController
-public class BookmarkBC extends DelegateCrud<Bookmark, Long, BookmarkDAO> {
-
-    private static final long serialVersionUID = 1L;
-
-    @Startup
-    @Transactional
-    @Audit(description = "Carga Automática")
-    public void load() {
-
-        for (Bookmark bookmark : findAll()) {
-            delete(bookmark.getId());
-        }
-
-        if (findAll().isEmpty()) {
-            insert(new Bookmark("Demoiselle Portal", "http://www.frameworkdemoiselle.gov.br"));
-            ...
-        }
-    }
-
-}
-```
-
-Quando o componente receber o objeto Trail ele irá identificar a anotação @Audit e com o texto do campo Description e armazenará no atributo "how" essa informação.
+Chave                         | Valor
+------------------------------| --------------------------
+frameworkdemoiselle.audit.processor.mongo.server.url      | Endereço do MongoDB
+frameworkdemoiselle.audit.processor.mongo.database.name   | Nome do Database
+frameworkdemoiselle.audit.processor.mongo.collection.name | Nome da Coleção
+frameworkdemoiselle.audit.processor.mongo.database.user     | Usuário (se necessário)
+frameworkdemoiselle.audit.processor.mongo.database.password | Senha
 
 ### PersistenceAuditor
 Você poderá escolher quais serão suas Entidades JPA que serão auditadas na camada de persistência, para isso adicione a anotação do JPA @EntityListeners com o valor de PersistenceAuditor.class.
@@ -226,14 +288,7 @@ A publicar
 ## Todo
 
 - Melhoria nos testes;
-- Criação da documentação no formato docbook;
-- Criar validações iniciais;
 - Arquétipos para Auditors e Processors;
-- Melhorar a extração das descrições da anotação @Audit;
-
-## Problemas Conhecidos
-
-- Métodos encadeados com @Audit retorna apenas a descrição do primeiro método anotado com @Audit;
 
 ## Contribuindo
 
