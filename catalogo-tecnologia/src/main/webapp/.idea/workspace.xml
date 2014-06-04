@@ -26,7 +26,7 @@
       <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="330" column="47" selection-start="15929" selection-end="15929" vertical-scroll-proportion="0.62587905" vertical-offset="4505" max-vertical-offset="5295">
+            <state line="54" column="47" selection-start="2022" selection-end="2022" vertical-scroll-proportion="0.80110496" vertical-offset="230" max-vertical-offset="1155">
               <folding />
             </state>
           </provider>
@@ -80,6 +80,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -88,55 +89,13 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="lib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../../challenge-toptennists" />
     <property name="FullScreen" value="false" />
   </component>
   <component name="RunManager">
@@ -153,13 +112,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1375" height="876" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24945454" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24945454" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -188,6 +147,13 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="330" column="47" selection-start="15929" selection-end="15929" vertical-scroll-proportion="0.0" vertical-offset="4505" max-vertical-offset="5295">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
         <state line="322" column="47" selection-start="15446" selection-end="15446" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5160">
           <folding />
         </state>
@@ -195,35 +161,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/lib/angular.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8538" column="24" selection-start="296545" selection-end="296545" vertical-scroll-proportion="0.0" vertical-offset="130413" max-vertical-offset="312045">
-          <folding />
-        </state>
+        <state line="8538" column="24" selection-start="296545" selection-end="296545" vertical-scroll-proportion="0.0" vertical-offset="130413" max-vertical-offset="312045" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/lib/angular-locale_pt-br.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="104" selection-start="169" selection-end="169" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="135">
-          <folding />
-        </state>
+        <state line="1" column="104" selection-start="169" selection-end="169" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="135" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/lib/angular-locale_pt-br.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="104" selection-start="169" selection-end="169" vertical-scroll-proportion="0.020408163" vertical-offset="0" max-vertical-offset="735">
-          <folding />
-        </state>
+        <state line="1" column="104" selection-start="169" selection-end="169" vertical-scroll-proportion="0.020408163" vertical-offset="0" max-vertical-offset="735" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/lib/angular.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8538" column="24" selection-start="296545" selection-end="296545" vertical-scroll-proportion="-3.187755" vertical-offset="130413" max-vertical-offset="312045">
-          <folding />
-        </state>
+        <state line="8538" column="24" selection-start="296545" selection-end="296545" vertical-scroll-proportion="-3.187755" vertical-offset="130413" max-vertical-offset="312045" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="330" column="47" selection-start="15929" selection-end="15929" vertical-scroll-proportion="0.62587905" vertical-offset="4505" max-vertical-offset="5295">
+        <state line="54" column="47" selection-start="2022" selection-end="2022" vertical-scroll-proportion="0.80110496" vertical-offset="230" max-vertical-offset="1155">
           <folding />
         </state>
       </provider>

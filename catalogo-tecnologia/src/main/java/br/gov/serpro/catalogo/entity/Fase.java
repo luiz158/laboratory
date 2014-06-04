@@ -46,6 +46,8 @@ public class Fase {
 	@Column(length=2000)
 	private String objetivo;
 
+	private Date dataCriacao = new Date();
+	
 	private Date dataRealizacao;
 	
 	private String unidadeGestora;
@@ -256,6 +258,12 @@ public class Fase {
 		this.executarProximaFase = executarProximaFase;
 	}
 
-	
+	public Date getDataCriacao() {
+		return dataCriacao;
+	}
+
+	public void setDataCriacao(Date dataCriacao) {
+		this.dataCriacao = dataCriacao;
+	}	
 	
 }
