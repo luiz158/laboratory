@@ -1,6 +1,6 @@
 analyseLocally=false
 eclipse.preferences.version=1
 extraProperties=
-projectKey=br.gov.frameworkdemoiselle.component.audit\:demoiselle-audit-auditors-persistence
+projectKey=br.gov.frameworkdemoiselle.component.audit\:demoiselle-audit-auditors-view
 serverUrl=http\://localhost\:9000
 version=2

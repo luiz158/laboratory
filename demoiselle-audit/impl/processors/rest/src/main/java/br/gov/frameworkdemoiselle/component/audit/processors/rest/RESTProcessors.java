@@ -36,16 +36,17 @@
  */
 package br.gov.frameworkdemoiselle.component.audit.processors.rest;
 
-import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
-import br.gov.frameworkdemoiselle.component.audit.implementation.AuditConfig;
-import br.gov.frameworkdemoiselle.component.audit.implementation.processor.AbstractProcessor;
-import br.gov.frameworkdemoiselle.component.audit.implementation.qualifier.AuditProcessor;
-import br.gov.frameworkdemoiselle.component.audit.internal.util.Util;
-import br.gov.frameworkdemoiselle.util.Beans;
 import javax.enterprise.event.Observes;
 import javax.ws.rs.core.MediaType;
+
 import org.jboss.resteasy.client.ClientRequest;
 import org.jboss.resteasy.client.ClientResponse;
+
+import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
+import br.gov.frameworkdemoiselle.component.audit.implementation.processor.AbstractProcessor;
+import br.gov.frameworkdemoiselle.component.audit.implementation.qualifier.AuditProcessor;
+import br.gov.frameworkdemoiselle.component.audit.implementation.util.Util;
+import br.gov.frameworkdemoiselle.util.Beans;
 
 /**
  *
@@ -55,7 +56,8 @@ import org.jboss.resteasy.client.ClientResponse;
 
 public class RESTProcessors extends AbstractProcessor {
 
-    private final AuditConfig config = Beans.getReference(AuditConfig.class);
+    private final RESTConfig config = Beans.getReference(RESTConfig.class);
+    private static final int HTTP_OK = 200;
 
     /**
      *
@@ -67,8 +69,6 @@ public class RESTProcessors extends AbstractProcessor {
         super.execute(trail);
 
         try {
-            //TODO Verificar alternativas para superar a depreciação das classes abaixo
-
             ClientRequest request = new ClientRequest(config.getServerUrl()+ "/rest/trail/create");
             request.body(MediaType.APPLICATION_JSON, Util.jsonSerializer(trail));
             ClientResponse response = null;
@@ -76,7 +76,7 @@ public class RESTProcessors extends AbstractProcessor {
             response = request.post();
 
             int apiResponseCode = response.getResponseStatus().getStatusCode();
-            if (response.getResponseStatus().getStatusCode() != 200) {
+            if (response.getResponseStatus().getStatusCode() != HTTP_OK) {
                 fail("Failed with HTTP error code : " + apiResponseCode, trail);
             }
 

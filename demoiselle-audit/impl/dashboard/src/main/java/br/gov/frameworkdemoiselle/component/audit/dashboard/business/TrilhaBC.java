@@ -36,7 +36,7 @@
  */
 package br.gov.frameworkdemoiselle.component.audit.dashboard.business;
 
-import br.gov.frameworkdemoiselle.component.audit.dashboard.domain.Trilha;
+import br.gov.frameworkdemoiselle.component.audit.dashboard.domain.LocalTrail;
 import java.util.Date;
 import java.util.List;
 
@@ -50,11 +50,11 @@ import br.gov.frameworkdemoiselle.template.DelegateCrud;
  *
  */
 @BusinessController
-public class TrilhaBC extends DelegateCrud<Trilha, Long, TrilhaDAO> {
+public class TrilhaBC extends DelegateCrud<LocalTrail, Long, TrilhaDAO> {
 
     private static final long serialVersionUID = 1L;
 
-    public List<Trilha> findByNamedQuery(String namedQuery, String param, String value) {
+    public List<LocalTrail> findByNamedQuery(String namedQuery, String param, String value) {
         return getDelegate().findByNamedQuery(namedQuery, param, value);
     }
 
@@ -66,7 +66,7 @@ public class TrilhaBC extends DelegateCrud<Trilha, Long, TrilhaDAO> {
         return getDelegate().findByNamedQueryDistinct(namedQuery, param, value);
     }
 
-    public List<Trilha> findByNamedQueryWithBetween(String namedQuery, String param, String value, Date dateBegin, Date dateFinal) {
+    public List<LocalTrail> findByNamedQueryWithBetween(String namedQuery, String param, String value, Date dateBegin, Date dateFinal) {
         return getDelegate().findByNamedQueryWithBetween(namedQuery, param, value, dateBegin, dateFinal);
     }
 
@@ -74,7 +74,7 @@ public class TrilhaBC extends DelegateCrud<Trilha, Long, TrilhaDAO> {
         return getDelegate().findByNamedQueryIdName(namedQuery, systemName, className);
     }
 
-    public List<Trilha> findByNamedQuerySystemAndObjectAndIdName(String namedQuery,
+    public List<LocalTrail> findByNamedQuerySystemAndObjectAndIdName(String namedQuery,
                                                                  String system, String object, String objectIdName,
                                                                  String objectIdValue) {
         return getDelegate().findByNamedQuerySystemAndObjectAndIdName(namedQuery, system, object, objectIdName, objectIdValue);

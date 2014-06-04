@@ -36,17 +36,14 @@
  */
 package br.gov.frameworkdemoiselle.component.audit.auditors.view;
 
+import java.util.Date;
+
 import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
 import br.gov.frameworkdemoiselle.component.audit.implementation.AuditConfig;
 import br.gov.frameworkdemoiselle.component.audit.implementation.auditors.AbstractAuditor;
-import br.gov.frameworkdemoiselle.component.audit.internal.util.Util;
+import br.gov.frameworkdemoiselle.component.audit.implementation.util.Util;
 import br.gov.frameworkdemoiselle.security.User;
 import br.gov.frameworkdemoiselle.util.Beans;
-import java.util.Date;
-import javax.persistence.PostLoad;
-import javax.persistence.PostPersist;
-import javax.persistence.PostRemove;
-import javax.persistence.PostUpdate;
 
 /**
  *
@@ -54,10 +51,6 @@ import javax.persistence.PostUpdate;
  *
  */
 public class ViewAuditor extends AbstractAuditor {
-
-    private User identity;
-
-    private AuditConfig config;
 
     /**
      *
@@ -68,18 +61,17 @@ public class ViewAuditor extends AbstractAuditor {
      */
     private Trail createTrailBean(Object object) {
 
-    	identity = Beans.getReference(User.class);
-    	config = Beans.getReference(AuditConfig.class);
+    	User identity = Beans.getReference(User.class);
+    	AuditConfig config = Beans.getReference(AuditConfig.class);
 
-        Util util = new Util();
-        Trail trailBean = new Trail();
-        trailBean.setHow(util.className().toString());
-        trailBean.setIdName(util.idName(object.getClass().getName()));
+        Trail trailBean = new Trail();        
+        trailBean.setIdName(null);
         trailBean.setProfile(identity.getId().equalsIgnoreCase("demoiselle") ? "PROFILE" : identity.getAttribute("PROFILE").toString());
         trailBean.setWhere(identity.getId().equalsIgnoreCase("demoiselle") ? "IP" : identity.getAttribute("IP").toString());
         trailBean.setUserName(identity.getId().equalsIgnoreCase("demoiselle") ? "NAME" : identity.getAttribute("NAME").toString());
         trailBean.setSystemName(config.getSystem());
         trailBean.setWhen(new Date());
+        trailBean.setWhat("view");
         trailBean.setObjSerial(Util.jsonSerializer(object));
         trailBean.setClassName(object.getClass().getName());
         trailBean.setLayerName(this.getClass().getName());
@@ -87,58 +79,10 @@ public class ViewAuditor extends AbstractAuditor {
         return trailBean;
     }
 
-    /**
-     *
-     * @param object
-     */
-    @PostLoad
-    public void postLoad(Object object) {
-
-        Trail trailBean = createTrailBean(object);
-        trailBean.setWhat("Consulted");
-
-        consume(trailBean);
-
+    public void audit(ViewAuditorInfo info){
+    	Trail trail = createTrailBean(info);
+    	consume(trail);
     }
-
-    /**
-     *
-     * @param object
-     */
-    @PostRemove
-    public void postRemove(Object object) {
-        Trail trailBean = createTrailBean(object);
-        trailBean.setWhat("Deleted");
-
-        consume(trailBean);
-
-    }
-
-    /**
-     *
-     * @param object
-     */
-    @PostUpdate
-    public void postUpdate(Object object) {
-        Trail trailBean = createTrailBean(object);
-        trailBean.setWhat("Changed");
-
-        consume(trailBean);
-
-    }
-
-    /**
-     *
-     * @param object
-     */
-    @PostPersist
-    public void postPersist(Object object) {
-
-        Trail trailBean = createTrailBean(object);
-        trailBean.setWhat("Created");
-
-        consume(trailBean);
-
-    }
+   
 
 }

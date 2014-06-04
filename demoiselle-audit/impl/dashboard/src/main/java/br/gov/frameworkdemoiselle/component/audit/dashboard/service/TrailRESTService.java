@@ -48,7 +48,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import br.gov.frameworkdemoiselle.component.audit.dashboard.business.TrilhaBC;
-import br.gov.frameworkdemoiselle.component.audit.dashboard.domain.Trilha;
+import br.gov.frameworkdemoiselle.component.audit.dashboard.domain.LocalTrail;
 import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
 
 /**
@@ -56,7 +56,7 @@ import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
  * @author SERPRO
  *
  */
-@Path("/rest/trail")
+@Path("/trail")
 public class TrailRESTService{
 
     @Inject
@@ -70,7 +70,7 @@ public class TrailRESTService{
     @GET
     @Path("/find/{name}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Trilha> find(@PathParam("name") String name) {
+    public List<LocalTrail> find(@PathParam("name") String name) {
         return bbc.findAll();
 
     }
@@ -85,7 +85,14 @@ public class TrailRESTService{
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public String create(Trail trail) {
-        Trilha trilha = new Trilha(trail);
+        LocalTrail trilha = new LocalTrail(trail);
         return ""+bbc.insert(trilha).getIdaudit();
+    }
+    
+    @GET
+    @Path("/version")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String version(){
+    	return "1.0.0-SNAPSHOT";
     }
 }

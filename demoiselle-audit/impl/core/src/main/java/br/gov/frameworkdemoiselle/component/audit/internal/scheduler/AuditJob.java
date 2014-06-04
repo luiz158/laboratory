@@ -36,13 +36,6 @@
  */
 package br.gov.frameworkdemoiselle.component.audit.internal.scheduler;
 
-import br.gov.frameworkdemoiselle.component.audit.AuditException;
-import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
-import br.gov.frameworkdemoiselle.component.audit.implementation.AuditConfig;
-import br.gov.frameworkdemoiselle.component.audit.implementation.processor.AbstractProcessor;
-import br.gov.frameworkdemoiselle.component.audit.implementation.qualifier.AuditProcessorFail;
-import br.gov.frameworkdemoiselle.component.audit.internal.util.Util;
-import br.gov.frameworkdemoiselle.util.Beans;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -52,11 +45,21 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.util.AnnotationLiteral;
+
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+
+import br.gov.frameworkdemoiselle.component.audit.AuditException;
+import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
+import br.gov.frameworkdemoiselle.component.audit.implementation.AuditConfig;
+import br.gov.frameworkdemoiselle.component.audit.implementation.processor.AbstractProcessor;
+import br.gov.frameworkdemoiselle.component.audit.implementation.qualifier.AuditProcessorFail;
+import br.gov.frameworkdemoiselle.component.audit.implementation.util.Util;
+import br.gov.frameworkdemoiselle.util.Beans;
 
 /**
  *
@@ -109,17 +112,27 @@ public class AuditJob implements Job {
 
                 } catch (IOException e) {
                     notifyFail(isDeleted, trail);
-                    throw new AuditException("Fail reprocessor file '" + file + "' , message error :" + e.getMessage());
+                    throw new AuditException("Fail reprocessor file '" + file + "' , message error :" + e.getMessage(), e);
                 } catch (ClassNotFoundException e) {
                     notifyFail(isDeleted, trail);
-                    throw new AuditException("Fail reprocessor file '" + file + "' , message error :" + e.getMessage());
+                    throw new AuditException("Fail reprocessor file '" + file + "' , message error :" + e.getMessage(), e);
                 } catch (InstantiationException e) {
                     notifyFail(isDeleted, trail);
-                    throw new AuditException("Fail reprocessor file '" + file + "' , message error :" + e.getMessage());
+                    throw new AuditException("Fail reprocessor file '" + file + "' , message error :" + e.getMessage(), e);
                 } catch (IllegalAccessException e) {
                     notifyFail(isDeleted, trail);
-                    throw new AuditException("Fail reprocessor file '" + file + "' , message error :" + e.getMessage());
+                    throw new AuditException("Fail reprocessor file '" + file + "' , message error :" + e.getMessage(), e);
                 } finally {
+                     if(input != null){
+                        try{
+                            input.close();
+                        }
+                        catch (IOException e) {
+                            notifyFail(isDeleted, trail);
+                            Logger.getLogger(AuditJob.class.getName()).log(Level.SEVERE, "Fail to close inputstream: " + e.getMessage());
+                        }
+                    }
+                     
                     if (is != null) {
                         try {
                             is.close();
@@ -128,6 +141,8 @@ public class AuditJob implements Job {
                             Logger.getLogger(AuditJob.class.getName()).log(Level.SEVERE, "Fail to close inputstream: " + e.getMessage());
                         }
                     }
+                    
+                   
                 }
             }
 

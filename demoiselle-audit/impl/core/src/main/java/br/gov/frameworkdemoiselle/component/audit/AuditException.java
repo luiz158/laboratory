@@ -37,28 +37,26 @@
 package br.gov.frameworkdemoiselle.component.audit;
 
 /**
- * 
+ *
  * @author SERPRO
- * 
+ *
  */
-
 public class AuditException extends RuntimeException {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     /**
      *
      */
-    public AuditException(){
-		super();
-	}
+    public AuditException() {
+        super();
+    }
 
     /**
      *
      * @param msg
      */
-    public AuditException(String msg){
-		super(msg);
-	}
-
+    public AuditException(String msg, Exception e) {
+        super(msg, e);
+    }
 }

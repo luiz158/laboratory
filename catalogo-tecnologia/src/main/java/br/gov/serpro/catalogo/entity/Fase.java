@@ -35,6 +35,8 @@ public class Fase {
 	@SequenceGenerator(name = "fase_seq", sequenceName = "fase_id_seq", allocationSize=1)
 	private Long id;
 	
+	private String identificador;
+	
 	@Enumerated(EnumType.STRING)
 	private FaseEnum fase;	
 	
@@ -258,12 +260,12 @@ public class Fase {
 		this.executarProximaFase = executarProximaFase;
 	}
 
-	public Date getDataCriacao() {
-		return dataCriacao;
-	}
 
-	public void setDataCriacao(Date dataCriacao) {
-		this.dataCriacao = dataCriacao;
-	}	
+	public void setIdentificador(String identificador) {
+		this.identificador = identificador;
+	}
 	
+	public String getIdentificador() {
+		return this.identificador;
+	}
 }

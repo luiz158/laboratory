@@ -42,10 +42,14 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import br.gov.frameworkdemoiselle.component.audit.auditors.persistence.PersistenceAuditor;
+
 @Entity
+@EntityListeners(PersistenceAuditor.class)
 public class Bookmark implements Serializable {
 
     private static final long serialVersionUID = 1L;

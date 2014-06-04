@@ -52,6 +52,6 @@ public interface Processor {
      *
      * @param trail
      */
-    public void execute(@Observes @AuditProcessor Trail trail);
+    void execute(@Observes @AuditProcessor Trail trail);
 
 }

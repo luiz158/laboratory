@@ -29,7 +29,8 @@
         <class>br.gov.frameworkdemoiselle.serpro.audit.dash.domain.Usuario</class>
         <class>br.gov.frameworkdemoiselle.serpro.audit.dash.domain.UsuarioRecurso</class>
         -->
-        <class>br.gov.frameworkdemoiselle.component.audit.domain.Trail</class>
+        <class>br.gov.frameworkdemoiselle.component.audit.dashboard.domain.LocalTrail</class>
+        
         <shared-cache-mode>ALL</shared-cache-mode>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver" />

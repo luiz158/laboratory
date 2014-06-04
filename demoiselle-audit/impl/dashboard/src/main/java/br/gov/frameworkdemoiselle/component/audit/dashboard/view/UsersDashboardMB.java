@@ -49,8 +49,8 @@ import org.primefaces.extensions.component.timeline.TimelineUpdater;
 import org.primefaces.extensions.event.timeline.TimelineLazyLoadEvent;
 import org.primefaces.extensions.model.timeline.TimelineEvent;
 
+import br.gov.frameworkdemoiselle.component.audit.dashboard.domain.LocalTrail;
 import br.gov.frameworkdemoiselle.component.audit.dashboard.domain.User;
-import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
 
 /**
  *
@@ -60,6 +60,9 @@ import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
 public class UsersDashboardMB extends DashboardMB {
 
     private static final long serialVersionUID = 1L;
+    private final int HOUR = 23;
+    private final int MINUTE = 59;
+    private final int SECOND = 59;
 
     private List<User> usersList;
 
@@ -69,7 +72,7 @@ public class UsersDashboardMB extends DashboardMB {
     public void initialize() {
         usersList = new ArrayList<User>();
 
-        for (String user : trailBC.findByNamedQueryDistinct("Trail.findDistinctUserName")) {
+        for (String user : trailBC.findByNamedQueryDistinct("LocalTrail.findDistinctUserName")) {
             usersList.add(new User(user));
         }
 
@@ -98,11 +101,11 @@ public class UsersDashboardMB extends DashboardMB {
         dateBegin.set(Calendar.SECOND, 0);
 
         Calendar dateFinal = Calendar.getInstance();
-        dateFinal.set(Calendar.HOUR_OF_DAY, 23);
-        dateFinal.set(Calendar.MINUTE, 59);
-        dateFinal.set(Calendar.SECOND, 59);
+        dateFinal.set(Calendar.HOUR_OF_DAY, HOUR);
+        dateFinal.set(Calendar.MINUTE, MINUTE);
+        dateFinal.set(Calendar.SECOND, SECOND);
 
-        trails = trailBC.findByNamedQueryWithBetween("Trail.findByUserName", "userName", user.getUserName(), dateBegin.getTime(), dateFinal.getTime());
+        trails = trailBC.findByNamedQueryWithBetween("LocalTrail.findByUserName", "userName", user.getUserName(), dateBegin.getTime(), dateFinal.getTime());
     }
 
     @SuppressWarnings("unchecked")
@@ -113,9 +116,9 @@ public class UsersDashboardMB extends DashboardMB {
 
         TimelineUpdater timelineUpdater = TimelineUpdater.getCurrentInstance(":formTabs:tabs:timelineUser");
 
-        trails = ListUtils.subtract(trailBC.findByNamedQueryWithBetween("Trail.findByUserName", "userName", user.getUserName(), dateBegin, dateFinal), trails);
+        trails = ListUtils.subtract(trailBC.findByNamedQueryWithBetween("LocalTrail.findByUserName", "userName", user.getUserName(), dateBegin, dateFinal), trails);
 
-        for (Trail trail : trails) {
+        for (LocalTrail trail : trails) {
             this.users.add(new TimelineEvent(trail, trail.getWhen(), false), timelineUpdater);
         }
 

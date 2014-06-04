@@ -65,7 +65,7 @@ public class PersistenceAuditorTest {
      */
     @Test
     public void testPostLoad() {
-        Trail trail = new Trail("Teste4Aba", "Usuario1", "id", "Perfil4Aba", "Criou", "Tela inicial", "10.200.255.26", new Date(), "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\":  \"1\", \"nome\": \"Henrique\", \"filho\": \"Rafael\"}", null, null);
+        Trail trail = new Trail("Teste4Aba", "Usuario1", "id", "Perfil4Aba", "Criou", "10.200.255.26", new Date(), "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\":  \"1\", \"nome\": \"Henrique\", \"filho\": \"Rafael\"}", null, null);
         instance.postLoad(trail);
     }
 
@@ -74,7 +74,7 @@ public class PersistenceAuditorTest {
      */
     @Test
     public void testPostRemove() {
-        Trail trail = new Trail("Teste4Aba", "Usuario1", "id", "Perfil4Aba", "Criou", "Tela inicial", "10.200.255.26", new Date(), "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\":  \"1\", \"nome\": \"Henrique\", \"filho\": \"Rafael\"}", null, null);
+        Trail trail = new Trail("Teste4Aba", "Usuario1", "id", "Perfil4Aba", "Criou", "10.200.255.26", new Date(), "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\":  \"1\", \"nome\": \"Henrique\", \"filho\": \"Rafael\"}", null, null);
         instance.postRemove(trail);
     }
 
@@ -83,7 +83,7 @@ public class PersistenceAuditorTest {
      */
     @Test
     public void testPostUpdate() {
-        Trail trail = new Trail("Teste4Aba", "Usuario1", "id", "Perfil4Aba", "Criou", "Tela inicial", "10.200.255.26", new Date(), "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\":  \"1\", \"nome\": \"Henrique\", \"filho\": \"Rafael\"}", null, null);
+        Trail trail = new Trail("Teste4Aba", "Usuario1", "id", "Perfil4Aba", "Criou", "10.200.255.26", new Date(), "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\":  \"1\", \"nome\": \"Henrique\", \"filho\": \"Rafael\"}", null, null);
         instance.postUpdate(trail);
 
     }
@@ -93,7 +93,7 @@ public class PersistenceAuditorTest {
      */
     @Test
     public void testPostPersist() {
-        Trail trail = new Trail("Teste4Aba", "Usuario1", "id", "Perfil4Aba", "Criou", "Tela inicial", "10.200.255.26", new Date(), "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\":  \"1\", \"nome\": \"Henrique\", \"filho\": \"Rafael\"}", null, null);
+        Trail trail = new Trail("Teste4Aba", "Usuario1", "id", "Perfil4Aba", "Criou", "10.200.255.26", new Date(), "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\":  \"1\", \"nome\": \"Henrique\", \"filho\": \"Rafael\"}", null, null);
         instance.postPersist(trail);
 
     }

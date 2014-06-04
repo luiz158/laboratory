@@ -36,16 +36,17 @@
  */
 package br.gov.frameworkdemoiselle.component.audit.processors.rest;
 
+import javax.enterprise.event.Observes;
+
 import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
-import br.gov.frameworkdemoiselle.component.audit.implementation.AuditConfig;
 import br.gov.frameworkdemoiselle.component.audit.implementation.processor.AbstractProcessor;
 import br.gov.frameworkdemoiselle.component.audit.implementation.qualifier.AuditProcessor;
 import br.gov.frameworkdemoiselle.util.Beans;
+
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
-import javax.enterprise.event.Observes;
 
 /**
  *
@@ -54,7 +55,7 @@ import javax.enterprise.event.Observes;
  */
 public class MONGOProcessors extends AbstractProcessor {
 
-    private final AuditConfig config = Beans.getReference(AuditConfig.class);
+    private final MONGOConfig config = Beans.getReference(MONGOConfig.class);
 
     /**
      *
@@ -69,24 +70,36 @@ public class MONGOProcessors extends AbstractProcessor {
             //TODO Verificar alternativas para superar a depreciação das classes abaixo
             MongoClient mongo = new MongoClient(config.getServerUrl());
             DB db = mongo.getDB(config.getDataBaseName());
-            DBCollection table = db.getCollection(config.getTableName());
+            Boolean authentication = Boolean.TRUE;
+            
+            if(!"".equals(config.getDatabaseUser())){
+                authentication = db.authenticate(config.getDatabaseUser(), config.getDatabasePass().toCharArray());
+            }
+            
+            if(authentication){
+                DBCollection table = db.getCollection(config.getCollectionName());
 
-            BasicDBObject document = new BasicDBObject();
-            document.put("ClassName", trail.getClassName());
-            document.put("How", trail.getHow());
-            document.put("IdName", trail.getIdName());
-            document.put("LayerName", trail.getLayerName());
-            document.put("ObjSerial", trail.getObjSerial());
-            document.put("ProcessorName", trail.getProcessorName());
-            document.put("Profile", trail.getProfile());
-            document.put("SystemName", trail.getSystemName());
-            document.put("UserName", trail.getUserName());
-            document.put("What", trail.getWhat());
-            document.put("When", trail.getWhen());
-            document.put("Where", trail.getWhere());
-            table.insert(document);
+                BasicDBObject document = new BasicDBObject();
+                document.put("ClassName", trail.getClassName());            
+                document.put("IdName", trail.getIdName());
+                document.put("LayerName", trail.getLayerName());
+                document.put("ObjSerial", trail.getObjSerial());
+                document.put("ProcessorName", trail.getProcessorName());
+                document.put("Profile", trail.getProfile());
+                document.put("SystemName", trail.getSystemName());
+                document.put("UserName", trail.getUserName());
+                document.put("What", trail.getWhat());
+                document.put("When", trail.getWhen());
+                document.put("Where", trail.getWhere());
+                table.insert(document);
+            }
+            else{
+                fail("MONGOProcessors : Authentication failed!", trail);
+                throw new RuntimeException("Authentication failed!");
+            }
 
-        } catch (Exception e) {
+        } 
+        catch (Exception e) {
             fail("MONGOProcessors :" + e.getMessage(), trail);
         }
     }

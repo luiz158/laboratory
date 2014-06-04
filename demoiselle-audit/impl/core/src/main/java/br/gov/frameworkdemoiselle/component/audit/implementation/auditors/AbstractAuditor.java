@@ -49,7 +49,11 @@ import javax.enterprise.util.AnnotationLiteral;
  */
 public abstract class AbstractAuditor {
 
-    private final BeanManager beanManager = Beans.getBeanManager();
+    private BeanManager beanManager;
+
+    public AbstractAuditor() {
+        this.beanManager = Beans.getBeanManager();
+    }
 
     /**
      *
@@ -59,6 +63,7 @@ public abstract class AbstractAuditor {
 
         new Thread(
                 new Runnable() {
+                    @Override
                     public void run() {
                         beanManager.fireEvent(trail, new AnnotationLiteral<AuditProcessor>() {
                         });
@@ -66,5 +71,5 @@ public abstract class AbstractAuditor {
                 }
         ).start();
     }
-
+   
 }

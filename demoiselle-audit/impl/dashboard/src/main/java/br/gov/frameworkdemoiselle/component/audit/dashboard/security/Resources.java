@@ -62,7 +62,7 @@ public class Resources implements IResources {
      * @return
      */
     public static Integer getResource(String resource) {
-        Integer number = new Integer(0);
+        Integer number = Integer.valueOf(0);
 
         if (resource.equals(ATRIBUTO)) {
             number = 1;

@@ -47,180 +47,19 @@ import br.gov.frameworkdemoiselle.configuration.Configuration;
 @Configuration(prefix = "frameworkdemoiselle.audit")
 public class AuditConfig {
 
-    private static final Long timeDefault = 3600000L;
+    private static final Long TIME_DEFAULT = 3600000L;
 
+    @Name("system")
+    private String system;
+    
     @Name("folder.fail.objects")
     private String folderFailObjects;
+    
     @Name("scheduler.start.time")
     private Long schedulerStartTime;
+    
     @Name("scheduler.repeat.interval")
     private Long schedulerRepeatInterval;
-
-    @Name("server.url")
-    private String serverUrl;
-    @Name("server.port")
-    private String serverPort;
-    @Name("server.param")
-    private String serverParam;
-    @Name("server.user")
-    private String serverUser;
-    @Name("server.password")
-    private String serverPass;
-
-    @Name("database.name")
-    private String dataBaseName;
-    @Name("database.user")
-    private String databaseUser;
-    @Name("database.password")
-    private String databasePass;
-    @Name("table.name")
-    private String tableName;
-
-    private String system;
-
-    /**
-     *
-     * @return
-     */
-    public String getServerUrl() {
-        return serverUrl;
-    }
-
-    /**
-     *
-     * @param serverUrl
-     */
-    public void setServerUrl(String serverUrl) {
-        this.serverUrl = serverUrl;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getServerPort() {
-        return serverPort;
-    }
-
-    /**
-     *
-     * @param serverPort
-     */
-    public void setServerPort(String serverPort) {
-        this.serverPort = serverPort;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getServerParam() {
-        return serverParam;
-    }
-
-    /**
-     *
-     * @param serverParam
-     */
-    public void setServerParam(String serverParam) {
-        this.serverParam = serverParam;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getServerUser() {
-        return serverUser;
-    }
-
-    /**
-     *
-     * @param serverUser
-     */
-    public void setServerUser(String serverUser) {
-        this.serverUser = serverUser;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getServerPass() {
-        return serverPass;
-    }
-
-    /**
-     *
-     * @param serverPass
-     */
-    public void setServerPass(String serverPass) {
-        this.serverPass = serverPass;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getDataBaseName() {
-        return dataBaseName;
-    }
-
-    /**
-     *
-     * @param dataBaseName
-     */
-    public void setDataBaseName(String dataBaseName) {
-        this.dataBaseName = dataBaseName;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getDatabaseUser() {
-        return databaseUser;
-    }
-
-    /**
-     *
-     * @param databaseUser
-     */
-    public void setDatabaseUser(String databaseUser) {
-        this.databaseUser = databaseUser;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getDatabasePass() {
-        return databasePass;
-    }
-
-    /**
-     *
-     * @param databasePass
-     */
-    public void setDatabasePass(String databasePass) {
-        this.databasePass = databasePass;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getTableName() {
-        return tableName;
-    }
-
-    /**
-     *
-     * @param tableName
-     */
-    public void setTableName(String tableName) {
-        this.tableName = tableName;
-    }
 
     /**
      *
@@ -259,7 +98,7 @@ public class AuditConfig {
      * @return
      */
     public Long getSchedulerStartTime() {
-        return schedulerStartTime == null ? timeDefault : schedulerStartTime;
+        return schedulerStartTime == null ? TIME_DEFAULT : schedulerStartTime;
     }
 
     /**
@@ -275,7 +114,7 @@ public class AuditConfig {
      * @return
      */
     public Long getSchedulerRepeatInterval() {
-        return schedulerRepeatInterval == null ? timeDefault : schedulerRepeatInterval;
+        return schedulerRepeatInterval == null ? TIME_DEFAULT : schedulerRepeatInterval;
     }
 
     /**
@@ -285,10 +124,10 @@ public class AuditConfig {
     public void setSchedulerRepeatInterval(Long schedulerRepeatInterval) {
         this.schedulerRepeatInterval = schedulerRepeatInterval;
     }
-
-    @Override
+    
+	@Override
     public String toString() {
-        return "AuditConfig{" + "folderFailObjects=" + folderFailObjects + ", schedulerStartTime=" + schedulerStartTime + ", schedulerRepeatInterval=" + schedulerRepeatInterval + ", serverUrl=" + serverUrl + ", serverPort=" + serverPort + ", serverParam=" + serverParam + ", serverUser=" + serverUser + ", serverPass=" + serverPass + ", dataBaseName=" + dataBaseName + ", databaseUser=" + databaseUser + ", databasePass=" + databasePass + ", tableName=" + tableName + ", system=" + system + '}';
+        return "AuditConfig{" + "folderFailObjects=" + folderFailObjects + ", schedulerStartTime=" + schedulerStartTime + ", schedulerRepeatInterval=" + schedulerRepeatInterval + ", system=" + system + '}';
     }
 
 }

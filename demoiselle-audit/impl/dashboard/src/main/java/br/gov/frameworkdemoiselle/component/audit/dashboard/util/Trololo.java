@@ -53,7 +53,6 @@ public class Trololo {
     private String[] usuario = {"Maria", "João", "José", "Francisco", "Roberto"};
     private String[] perfil = {"Admin", "Guest", "Gerente", "Básico", "Completo"};
     private String[] oque = {"Incluiu", "Alterou", "Consultou", "Excluiu", "Entrou"};
-    private String[] como = {"Manter contas", "Vincular valor", "Manter cadastro", "Gerar relatório", "Gerenciar acesso"};
     private String[] idname = {"id", "codigo", "tabctidcta", "tb_ct_cod", "idobjecto"};
 
     private String[] clazz = {"br.gov.serpro.siscop.domain.Usuario", "br.gov.serpro.siafi.domain.Trilha", "br.gov.serpro.siscop.Ponto", "br.gov.serpro.Geral"};
@@ -75,10 +74,6 @@ public class Trololo {
 
     public String getOque() {
         return oque[random(oque)];
-    }
-
-    public String getComo() {
-        return como[random(como)];
     }
 
     public String getOnde() {

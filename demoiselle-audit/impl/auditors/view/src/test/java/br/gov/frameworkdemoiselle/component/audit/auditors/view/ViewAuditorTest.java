@@ -1,14 +1,46 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Demoiselle Framework
+ * Copyright (C) 2014 SERPRO
+ * ----------------------------------------------------------------------------
+ * This file is part of Demoiselle Framework.
+ *
+ * Demoiselle Framework is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License version 3
+ * as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License version 3
+ * along with this program; if not,  see <http://www.gnu.org/licenses/>
+ * or write to the Free Software Foundation, Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA  02110-1301, USA.
+ * ----------------------------------------------------------------------------
+ * Este arquivo é parte do Framework Demoiselle.
+ *
+ * O Framework Demoiselle é um software livre; você pode redistribuí-lo e/ou
+ * modificá-lo dentro dos termos da GNU LGPL versão 3 como publicada pela Fundação
+ * do Software Livre (FSF).
+ *
+ * Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA
+ * GARANTIA; sem uma garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou
+ * APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/LGPL em português
+ * para maiores detalhes.
+ *
+ * Você deve ter recebido uma cópia da GNU LGPL versão 3, sob o título
+ * "LICENCA.txt", junto com esse programa. Se não, acesse <http://www.gnu.org/licenses/>
+ * ou escreva para a Fundação do Software Livre (FSF) Inc.,
+ * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 package br.gov.frameworkdemoiselle.component.audit.auditors.view;
 
-import br.gov.frameworkdemoiselle.component.audit.auditors.view.ViewAuditor;
 import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
 import br.gov.frameworkdemoiselle.junit.DemoiselleRunner;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import javax.inject.Inject;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -19,25 +51,11 @@ import org.junit.runner.RunWith;
 
 /**
  *
- * @author 70744416353
+ * @author SERPRO
  */
 @RunWith(DemoiselleRunner.class)
 public class ViewAuditorTest {
-
-    /**
-     *
-     */
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    /**
-     *
-     */
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
+    
     @Inject
     ViewAuditor instance;
 
@@ -61,42 +79,16 @@ public class ViewAuditorTest {
     public void tearDown() {
     }
 
-    /**
-     * Test of postLoad method, of class PersistenceAuditor.
-     */
     @Test
-    public void testPostLoad() {
-        Trail trail = new Trail("Teste4Aba", "Usuario1", "id", "Perfil4Aba", "Criou", "Tela inicial", "10.200.255.26", new Date(), "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\":  \"1\", \"nome\": \"Henrique\", \"filho\": \"Rafael\"}", null, null);
-        instance.postLoad(trail);
+    public void testCreateObject(){
+        
+        Map<String, String[]> map = new HashMap<String, String[]>();
+        map.put("id", new String[]{"10"});    
+        
+        ViewAuditorInfo info = new ViewAuditorInfo("4nbDfEZiJbW7OIypq5KNkn-y.undefined", "http://localhost:8080/bookmarkaudit/bookmark_list.jsf", map);
+        
+        instance.audit(info);
     }
-
-    /**
-     * Test of postRemove method, of class PersistenceAuditor.
-     */
-    @Test
-    public void testPostRemove() {
-        Trail trail = new Trail("Teste4Aba", "Usuario1", "id", "Perfil4Aba", "Criou", "Tela inicial", "10.200.255.26", new Date(), "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\":  \"1\", \"nome\": \"Henrique\", \"filho\": \"Rafael\"}", null, null);
-        instance.postRemove(trail);
-    }
-
-    /**
-     * Test of postUpdate method, of class PersistenceAuditor.
-     */
-    @Test
-    public void testPostUpdate() {
-        Trail trail = new Trail("Teste4Aba", "Usuario1", "id", "Perfil4Aba", "Criou", "Tela inicial", "10.200.255.26", new Date(), "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\":  \"1\", \"nome\": \"Henrique\", \"filho\": \"Rafael\"}", null, null);
-        instance.postUpdate(trail);
-
-    }
-
-    /**
-     * Test of postPersist method, of class PersistenceAuditor.
-     */
-    @Test
-    public void testPostPersist() {
-        Trail trail = new Trail("Teste4Aba", "Usuario1", "id", "Perfil4Aba", "Criou", "Tela inicial", "10.200.255.26", new Date(), "br.gov.frameworkdemoiselle.serpro.teste4aba", "{\"class\": \"br.gov.serpro.siafi.domain.Trilha\",\"id\":  \"1\", \"nome\": \"Henrique\", \"filho\": \"Rafael\"}", null, null);
-        instance.postPersist(trail);
-
-    }
-
+    
+    
 }

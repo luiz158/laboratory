@@ -48,8 +48,8 @@ import org.primefaces.extensions.component.timeline.TimelineUpdater;
 import org.primefaces.extensions.event.timeline.TimelineLazyLoadEvent;
 import org.primefaces.extensions.model.timeline.TimelineEvent;
 
+import br.gov.frameworkdemoiselle.component.audit.dashboard.domain.LocalTrail;
 import br.gov.frameworkdemoiselle.component.audit.dashboard.domain.System;
-import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
 
 /**
  *
@@ -67,7 +67,7 @@ public class SystemDashboardMB extends DashboardMB {
     @PostConstruct
     public void initialize() {
         systemList = new ArrayList<System>();
-        for (String system : trailBC.findByNamedQueryDistinct("Trail.findDistinctSystemName")) {
+        for (String system : trailBC.findByNamedQueryDistinct("LocalTrail.findDistinctSystemName")) {
             systemList.add(new System(system));
         }
     }
@@ -100,7 +100,7 @@ public class SystemDashboardMB extends DashboardMB {
         dateFinal.set(Calendar.MINUTE, 59);
         dateFinal.set(Calendar.SECOND, 59);
 
-        trails = trailBC.findByNamedQueryWithBetween("Trail.findBySystemName", "systemName", system.getSystemName(), dateBegin.getTime(), dateFinal.getTime());
+        trails = trailBC.findByNamedQueryWithBetween("LocalTrail.findBySystemName", "systemName", system.getSystemName(), dateBegin.getTime(), dateFinal.getTime());
     }
 
     public void onLazyLoad(TimelineLazyLoadEvent e) {
@@ -110,9 +110,9 @@ public class SystemDashboardMB extends DashboardMB {
 
         TimelineUpdater timelineUpdater = TimelineUpdater.getCurrentInstance(":formTabs:tabs:timelineSystem");
 
-        trails = trailBC.findByNamedQueryWithBetween("Trail.findBySystemName", "systemName", system.getSystemName(), dateBegin, dateFinal);
+        trails = trailBC.findByNamedQueryWithBetween("LocalTrail.findBySystemName", "systemName", system.getSystemName(), dateBegin, dateFinal);
 
-        for (Trail trail : trails) {
+        for (LocalTrail trail : trails) {
             this.systems.add(new TimelineEvent(trail, trail.getWhen(), false), timelineUpdater);
         }
 
