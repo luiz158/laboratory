@@ -23,11 +23,6 @@
 
         <itemizedlist>
             <listitem>
-                <ulink url="https://github.com/demoiselle/behave/pull/101">
-                    <emphasis>[Melhoria]</emphasis>
-                    Tratamento da exceção StaleElementReferenceException por meio de um
-                    proxy
-                </ulink>
             </listitem>
         </itemizedlist>
     </para>

@@ -39,7 +39,7 @@ Para o correto funcionamento é necessário adicionar no demoiselle.properties a
 
 Chave     | Descrição
 ----------|------------------------------------------------
-frameworkdemoiselle.audit.processor.rest.server.url | URL onde se encontra o serviço REST para o envio das trilhas.
+frameworkdemoiselle.audit.processor.rest.server.url | URL do serviço REST para o envio das trilhas.
 
 ### Processor MONGO
 
@@ -60,7 +60,7 @@ Para o correto funcionamento é necessário adicionar no demoiselle.properties a
 Chave     | Descrição
 ----------|------------------------------------------------
 frameworkdemoiselle.audit.processor.mongo.server.url        | URL do servidor onde se encontra o MongoDB
-frameworkdemoiselle.audit.processor.mongo.database.name     | Nome do databse
+frameworkdemoiselle.audit.processor.mongo.database.name     | Nome do database
 frameworkdemoiselle.audit.processor.mongo.collection.name   | Nome da coleção
 frameworkdemoiselle.audit.processor.mongo.database.user     | Usuário (se necessário)
 frameworkdemoiselle.audit.processor.mongo.database.password | Senha
@@ -77,7 +77,7 @@ Você poderá criar o seu próprio ponto de extensão, podendo ser um JMS, FTP, 
 </parent>
 ```
 
-Criar uma classe que extenda de **br.gov.frameworkdemoiselle.component.audit.internal.processor.AbstractProcessor** e implementar o método **public void execute(@Observes @AuditProcessorQualifier Trail trail);**.
+Criar uma classe que extenda de **br.gov.frameworkdemoiselle.component.audit.implementation.processor.AbstractProcessor** e implementar o método **public void execute(@Observes @AuditProcessor Trail trail)**.
 
 É dentro do bloco de código você implementará o destino que você deseja dar ao objeto Trail.
 
@@ -90,7 +90,7 @@ Você pode basear sua implementação no código do RESTProcessor no caminnho *i
 
 ## Auditors
 
-A idéia dos Auditors é estabelecer a camada que será auditada, atualmente exste dois Auditors: camada de Persistência chamada PersistenceAuditor e para Visão chamado ViewAuditor.
+O objetivo dos Auditors é estabelecer a camada que será auditada, atualmente exste dois Auditors: camada de Persistência chamada PersistenceAuditor e para Visão chamado ViewAuditor.
 
 Um Auditor tem como objetivo executar a coleta de dados, preenchimento do objeto Trail com dados e disparar evento para o Processors.
 
@@ -142,10 +142,13 @@ Se você tiver interesse em auditar outra camada da sua aplicação você dever�
 </parent>
 ```
 
-- Criar uma classe que extenda de **br.gov.frameworkdemoiselle.component.audit.internal.auditors.AbstractAuditor**;
+- Criar uma classe que extenda de **br.gov.frameworkdemoiselle.component.audit.implementation.auditors.AbstractAuditor**;
 - Implementar os métodos que irão interceptar o ciclo de vida da camada;
 - Criar um objeto do tipo Trail e preencher seus dados básicos;
 - Chamar o método da **consume([Objeto Trail])**;
+
+Caso seu Processor precise ser configurado, você deverá criar uma Classe que utilize a funcionalidade @Configuration do Demoiselle http://demoiselle.sourceforge.net/docs/framework/reference/2.4.0/html/configuracao.html, 
+como exemplo você poderá se basear na classe *impl/processors/rest/src/main/java/br/gov/frameworkdemoiselle/component/audit/processors/rest/RESTConfig.java*
 
 Apartir desse momento o componente estará apto a repassar esse objeto para os Processors definidos no pom.xml do seu projeto.
 
@@ -196,26 +199,26 @@ Em seu projeto que você deseja auditar, você deve adicionar no seu pom.xml no 
 </dependencies>
 ```
 
-No código acima estamos utilizando apenas um Auditor para a camada de Persistência **demoiselle-audit-auditors-persistence** e apenas um Processor baseado em REST **demoiselle-audit-processors-rest**, você poderá adicionar quantos Processors e quantos Auditors você quiser.
+No código acima estamos utilizando o Auditor para a camada de Persistência e para a camada de Visão e o Processor para REST e o Processor para MONGO, você poderá adicionar quantos Processors e quantos Auditors você quiser.
 
 ### demoiselle.properties
 
 No seu arquivo demoiselle.properties você precisará adicionar as seguintes linhas:
 
-Propriedade                                         | Valor
+Chave                                         | Valor
 --------------------------------------------------- | --------------------------
 frameworkdemoiselle.audit.system                    | Nome do seu Sistema
 frameworkdemoiselle.audit.scheduler.repeat.interval | Intervalo de tempo em milisegundos para o reprocessamento das trilhas
 frameworkdemoiselle.audit.scheduler.start.time      | Tempo em milisegundos de quando será executado o primeiro reprocessamento após o inicio da aplicação
 frameworkdemoiselle.audit.folder.fail.objects       | Pasta onde a aplicação terá direito de escrita e leitura para o armazenamento das trilhas que apresentaram problemas no processamento
 
-Para o RESTProcessor você deverá adicionar a seguinte linha:
+Para o Processor de REST você deverá adicionar a seguinte linha:
 
 Chave                         | Valor
 ------------------------------| --------------------------
 frameworkdemoiselle.audit.processor.rest.server.url | Endereço do Serviço REST (Ex.: http://localhost:8080/dash)
 
-Para o MONGOProcessor você deverá adicionar a seguinte linha:
+Para o Processor de MONGO você deverá adicionar a seguinte linha:
 
 Chave                         | Valor
 ------------------------------| --------------------------
@@ -279,7 +282,7 @@ http://csrc.nist.gov/publications/nistpubs/800-92/SP800-92.pdf
 - [Fórum](https://github.com/demoiselle/laboratory/issues): Abra um issue para discutirmos um assunto.
 - [Bugs e Sugestões](https://github.com/demoiselle/laboratory/issues): Abra um issue para submeter e acompanhar Bugs, enviar dúvidas, propor melhorias ou novas funcionalidades
 - Catálogo de Arquétipos Snapshot: Para versões de desenvolvimento (snapshot)
-- [Aplicação de Exemplo](https://github.com/demoiselle/laboratory/tree/master/examples)
+- [Aplicação de Exemplo](https://github.com/demoiselle/laboratory/tree/master/examples/bookmark-audit)
 
 ## Repositório Maven
 
