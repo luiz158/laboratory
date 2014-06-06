@@ -123,7 +123,7 @@
 				<ul class="chat list-group">
 	                 <li ng-repeat="f in paginacao.data | startFrom:paginacao.paginaAtual*paginacao.registrosPorPagina | limitTo:paginacao.registrosPorPagina"  
 	        	title="{{f.fase | nomeFase}}" class="left list-group-item clearfix">
-	        			<a href="#{{f.fase | faseUrl}}/{{f.identificador}}">
+	        			<a href="#{{f.fase | faseUrl}}/{{f.id}}">
 		                    <span class="chat-img pull-left">
 		                         <img ng-src="{{f.fase | iconeFase}}" class="img-circle" width="30px">
 		                    </span>
