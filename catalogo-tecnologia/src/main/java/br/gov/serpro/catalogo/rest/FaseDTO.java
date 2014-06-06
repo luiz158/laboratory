@@ -8,6 +8,7 @@ import br.gov.serpro.catalogo.entity.OrigemDemanda;
 public class FaseDTO{
 	/* Campos de pesquisa */
 	private Long id;
+	private String identificador;
 	private String palavraChave;
 	private Integer fase;
 	private OrigemDemanda origemReferencia;
@@ -112,8 +113,14 @@ public class FaseDTO{
 	public void setObjetivo(String objetivo) {
 		this.objetivo = objetivo;
 	}
+
 	
+	public String getIdentificador() {
+		return identificador;
+	}
+
 	
-	
-	
+	public void setIdentificador(String identificador) {
+		this.identificador = identificador;
+	}
 }

@@ -63,11 +63,12 @@ public class UserService {
 	@GET
 	@Path("nome/{nome}")
 	public List<User> carregarByNome(@NotNull @PathParam("nome") String nome) throws Exception {
-		try {
-			return ldapAuthenticator.searchUserByDisplayName(nome);
-		}catch(SizeLimitExceededException sizeLimitExceededException) {
-			throw sizeLimitExceededException;
-		}
+//		try {
+//			return ldapAuthenticator.searchUserByDisplayName(nome);
+			return userDAO.findAll();
+//		}catch(SizeLimitExceededException sizeLimitExceededException) {
+//			throw sizeLimitExceededException;
+//		}
 	}
 	
 	@PUT

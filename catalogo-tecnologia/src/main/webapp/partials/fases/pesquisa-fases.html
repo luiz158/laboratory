@@ -28,7 +28,7 @@
 				</div>
 				<div class="col-md-4">
 					<label for="id">ID:</label> <input class="form-control" type="text"
-						id="id" ng-model="fase.id">
+						id="id" ng-model="fase.identificador">
 				</div>
 			</div>
 			<div class="form-group row">
@@ -123,20 +123,20 @@
 				<ul class="chat list-group">
 	                 <li ng-repeat="f in paginacao.data | startFrom:paginacao.paginaAtual*paginacao.registrosPorPagina | limitTo:paginacao.registrosPorPagina"  
 	        	title="{{f.fase | nomeFase}}" class="left list-group-item clearfix">
-	        			<a href="#{{f.fase | faseUrl}}/{{f.id}}">
+	        			<a href="#{{f.fase | faseUrl}}/{{f.identificador}}">
 		                    <span class="chat-img pull-left">
 		                         <img ng-src="{{f.fase | iconeFase}}" class="img-circle" width="30px">
 		                    </span>
 		                    <div class="chat-body clearfix">
 		                        <div class="header">
 		                         	<div class="row">
-				        		<div class="col-md-1">
-				        			<b>ID:</b> {{f| identificador}}
+				        		<div class="col-md-4">
+				        			<b>ID:</b> {{f.identificador}}
 				        		</div>
-				        		<div class="col-md-2">
+				        		<div class="col-md-4">
 				        			<b>Fase:</b> {{f.fase | nomeFase}}</span>
 				        		</div>
-				        		<div class="col-md-3">
+				        		<div class="col-md-4">
 				        			<b>Situação: </b>
 			        				<span ng-if="f.fase == 'ANALISE'" ng-analise-situacao situacao="{{f.situacao}}"></span>
 			        				<span ng-if="f.fase != 'ANALISE'">
@@ -149,24 +149,27 @@
 			        				</span>
 				        							        			
 				        		</div>
-				        		<div class="col-md-4" ng-if="f.dataFinalizacao">
-				        			<b>Finalização:</b> {{f.dataFinalizacao | date}} 
-				        		</div>
 				        	</div>
 		                    <div class="row">
-				        		<div class="col-md-3">
+		                        <div class="col-md-4" ng-if="f.dataFinalizacao">
+				        			<b>Finalização:</b> {{f.dataFinalizacao | date}} 
+				        		</div>
+				        		<div class="col-md-4">
 				        			<b>Unidade Gestora:</b> {{f.unidadeGestora}} 
 				        		</div>
-				        		<div class="col-md-3">
+				        		<div class="col-md-4">
 				        			<b>Registro:</b> {{f.dataRealizacao | date}}  
 				        		</div>
-				        		
-				        		<div class="col-md-3" ng-if="f.origemReferencia">
-				        			<b>Referência:</b> {{f.origemReferencia.nome}} {{f.codigoReferencia}} 
-				        		</div>
 				        	</div>
-	                         <div>
-	                             <b>Objetivo:</b> {{f.objetivo | trunk:true:250}}
+				        	<div class="row">
+					        	 <div class="col-md-12" ng-if="f.origemReferencia">
+					        			<b>Referência:</b> {{f.origemReferencia.nome}} {{f.codigoReferencia}} 
+					        	 </div>
+					        </div>	 
+					        <div class="row">	 
+		                         <div class="col-md-12">
+		                             <b>Objetivo:</b> {{f.objetivo | trunk:true:250}}
+		                         </div>
 	                         </div>
 	                     </div>
 	                    </a>
