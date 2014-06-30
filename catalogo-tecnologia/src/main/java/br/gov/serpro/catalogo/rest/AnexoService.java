@@ -96,9 +96,11 @@ public class AnexoService {
 
 	@GET
 	@Path("{id}")
-	@Produces("application/force-download")
+	@Transactional
+	@Produces("application/force-download")	
 	public Response download(@PathParam("id") Long id) {
 		Anexo  anexo = anexoDAO.load(id);
+		
 		return Response.ok(anexo.getArquivo(), MediaType.APPLICATION_OCTET_STREAM)
 				.header("content-disposition", "attachment; filename = '"+anexo.getNomeArquivo()+"'").build();
 	}
