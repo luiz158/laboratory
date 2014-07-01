@@ -30,13 +30,13 @@
 						<tbody>
 							<tr ng-repeat="a in anexos">
 								<td>
-									<a ng-href="api/anexo/{{a.id}}"> 
+									<a ng-href="api/anexo/download/{{a.id}}"> 
 										<img alt="Tipo do arquivo" ng-src="{{a.tipoArquivo | tipoArquivo}}" width="35px"> 
 										{{a.nomeArquivo}} <i>({{a.tamanhoArquivo | tamanho}})</i>
 									</a>
 								</td>
 								<td style="width: 20%">
-									<a ng-href="api/anexo/{{a.id}}" class="btn btn-primary btn-sm">
+									<a ng-href="api/anexo/download/{{a.id}}" class="btn btn-primary btn-sm">
 										<i class="fa fa-download"></i> download</a> 
 									<button ng-click-confirm="excluir(a.id)" has-role="fase.fase" class="btn btn-danger btn-sm">
 										<i class="fa fa-trash-o"></i> excluir

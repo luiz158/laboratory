@@ -3,6 +3,7 @@ package br.gov.serpro.catalogo.rest;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.MULTIPART_FORM_DATA;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -95,13 +96,13 @@ public class AnexoService {
 	}
 
 	@GET
-	@Path("{id}")
+	@Path("download/{id}")
 	@Transactional
 	@Produces("application/force-download")	
 	public Response download(@PathParam("id") Long id) {
 		Anexo  anexo = anexoDAO.load(id);
-		
-		return Response.ok(anexo.getArquivo(), MediaType.APPLICATION_OCTET_STREAM)
+		final ByteArrayInputStream in = new ByteArrayInputStream(anexo.getArquivo());
+		return Response.ok(in, MediaType.APPLICATION_OCTET_STREAM)
 				.header("content-disposition", "attachment; filename = '"+anexo.getNomeArquivo()+"'").build();
 	}
 }
