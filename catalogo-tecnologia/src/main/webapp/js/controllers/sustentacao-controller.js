@@ -25,6 +25,7 @@ controllers.controller('SustentacaoCtrl', function SustentacaoCtrl($scope, $root
 			$scope.fase = data;
 			$scope.fase.faseAnterior = {
 					id: 				data.faseAnterior.id, 
+					identificador: 		data.faseAnterior.identificador, 
 					fase: 				data.faseAnterior.fase, 
 					origemReferencia: 	data.faseAnterior.origemReferencia,
 					codigoReferencia: 	data.faseAnterior.codigoReferencia

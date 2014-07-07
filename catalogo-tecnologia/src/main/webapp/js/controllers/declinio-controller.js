@@ -17,7 +17,8 @@ controllers.controller('DeclinioCtrl', function DeclinioCtrl($scope, $http,$loca
 	if ($scope.fase.id) {
 		$http.get('api/declinio/' + $scope.fase.id).success(function(data) {
 			$scope.fase = data;
-			$scope.fase.faseAnterior = {id: data.faseAnterior.id, 
+			$scope.fase.faseAnterior = {id: data.faseAnterior.id,
+					identificador: 		data.faseAnterior.identificador, 
 					fase: data.faseAnterior.fase, 
 					origemReferencia: data.faseAnterior.origemReferencia,
 					codigoReferencia: data.faseAnterior.codigoReferencia

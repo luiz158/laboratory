@@ -43,7 +43,8 @@ controllers.controller('InternalizacaoCtrl', function InternalizacaoCtrl($scope,
 		$http.get('api/internalizacao/' + $scope.fase.id).success(function(data) {
 			$scope.fase = data;
 			$scope.fase.faseAnterior = {
-					id: 				data.faseAnterior.id, 
+					id: 				data.faseAnterior.id,
+					identificador: 		data.faseAnterior.identificador,  
 					fase: 				data.faseAnterior.fase, 
 					origemReferencia: 	data.faseAnterior.origemReferencia,
 					codigoReferencia: 	data.faseAnterior.codigoReferencia
