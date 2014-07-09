@@ -183,3 +183,15 @@ filters.filter('trunk', function () {
         return value + (tail || ' …');
     };
 });
+
+filters.filter('identificador', function() {    
+	return function(fase){
+		console.log(fase);
+		var ano = new Date(fase.dataCriacao).getFullYear();
+		console.log(ano);
+		var id = ""+fase.id;
+		var zeros = "000000";
+		var identificador = ano+zeros.substring(0, zeros.length - id.length)+id;
+		return identificador;
+	};	
+});

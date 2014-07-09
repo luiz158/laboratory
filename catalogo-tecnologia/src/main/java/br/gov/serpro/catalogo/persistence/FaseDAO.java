@@ -46,8 +46,8 @@ public class FaseDAO extends JPACrud<Fase, Long> {
 	    	    
 	    predicateList.add(builder.notEqual(fase.<StatusEnum>get("status"), StatusEnum.EXCLUIDO.ordinal()));	    
 	 
-	    if (dto.getId() != null) {
-	    	Predicate p = builder.equal(fase.<Long>get("id"), dto.getId());
+	    if (dto.getIdentificador() != null) {
+	    	Predicate p = builder.equal(fase.<String>get("identificador"), dto.getIdentificador());
 	        predicateList.add(p);
 	    }
 	    

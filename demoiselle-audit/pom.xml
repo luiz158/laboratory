@@ -56,6 +56,7 @@
         <module>impl/processors/mongo</module>
         <module>impl/auditors/persistence</module>
         <module>impl/auditors/view</module>
+        <module>documentation/reference</module>
         <!--<module>impl/dashboard</module>-->
     </modules>
 

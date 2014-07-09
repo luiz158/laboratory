@@ -1,0 +1,655 @@
+﻿--
+-- PostgreSQL database dump
+--
+
+-- Started on 2014-05-07 12:11:28 BRT
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = off;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET escape_string_warning = off;
+
+SET search_path = public, pg_catalog;
+
+--
+-- TOC entry 2034 (class 0 OID 0)
+-- Dependencies: 167
+-- Name: anexo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('anexo_id_seq', 1, false);
+
+
+--
+-- TOC entry 2035 (class 0 OID 0)
+-- Dependencies: 168
+-- Name: categoria_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('categoria_id_seq', 6, true);
+
+
+--
+-- TOC entry 2036 (class 0 OID 0)
+-- Dependencies: 169
+-- Name: documento_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('documento_id_seq', 1, false);
+
+
+--
+-- TOC entry 2037 (class 0 OID 0)
+-- Dependencies: 170
+-- Name: fabricante_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('fabricante_id_seq', 3, true);
+
+
+--
+-- TOC entry 2038 (class 0 OID 0)
+-- Dependencies: 171
+-- Name: fase_historico_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('fase_historico_id_seq', 93, true);
+
+
+--
+-- TOC entry 2039 (class 0 OID 0)
+-- Dependencies: 172
+-- Name: fase_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('fase_id_seq', 28, true);
+
+
+--
+-- TOC entry 2040 (class 0 OID 0)
+-- Dependencies: 173
+-- Name: fase_interessado_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('fase_interessado_id_seq', 1, false);
+
+
+--
+-- TOC entry 2041 (class 0 OID 0)
+-- Dependencies: 174
+-- Name: fase_membro_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('fase_membro_id_seq', 19, true);
+
+
+--
+-- TOC entry 2042 (class 0 OID 0)
+-- Dependencies: 175
+-- Name: fase_produto_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('fase_produto_id_seq', 25, true);
+
+
+--
+-- TOC entry 2043 (class 0 OID 0)
+-- Dependencies: 176
+-- Name: fornecedor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('fornecedor_id_seq', 3, true);
+
+
+--
+-- TOC entry 2044 (class 0 OID 0)
+-- Dependencies: 177
+-- Name: grupo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('grupo_id_seq', 2, true);
+
+
+--
+-- TOC entry 2045 (class 0 OID 0)
+-- Dependencies: 178
+-- Name: licenciamento_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('licenciamento_id_seq', 2, true);
+
+
+--
+-- TOC entry 2046 (class 0 OID 0)
+-- Dependencies: 179
+-- Name: observacao_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('observacao_id_seq', 1, true);
+
+
+--
+-- TOC entry 2047 (class 0 OID 0)
+-- Dependencies: 180
+-- Name: origem_demanda_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('origem_demanda_id_seq', 4, true);
+
+
+--
+-- TOC entry 2048 (class 0 OID 0)
+-- Dependencies: 181
+-- Name: plataforma_tecnologica_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('plataforma_tecnologica_id_seq', 4, true);
+
+
+--
+-- TOC entry 2049 (class 0 OID 0)
+-- Dependencies: 182
+-- Name: produto_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('produto_id_seq', 21, true);
+
+
+--
+-- TOC entry 2050 (class 0 OID 0)
+-- Dependencies: 183
+-- Name: tecnologia_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('tecnologia_id_seq', 4, true);
+
+
+--
+-- TOC entry 2051 (class 0 OID 0)
+-- Dependencies: 184
+-- Name: usuario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('usuario_id_seq', 2, true);
+
+
+--
+-- TOC entry 2022 (class 0 OID 38745)
+-- Dependencies: 157
+-- Data for Name: origemdemanda; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO origemdemanda (id, descricao, nome) VALUES (1, 'SPECX...', 'SPECX');
+INSERT INTO origemdemanda (id, descricao, nome) VALUES (2, 'ALM...', 'ALM');
+INSERT INTO origemdemanda (id, descricao, nome) VALUES (3, 'Demandas RFB...', 'Demandas RFB');
+INSERT INTO origemdemanda (id, descricao, nome) VALUES (4, 'Solicita...', 'Solicita');
+
+
+--
+-- TOC entry 2030 (class 0 OID 38796)
+-- Dependencies: 165
+-- Data for Name: usuario; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO usuario (id, cpf, email, name, setor, telephonenumber) VALUES (1, 'admin', 'admin@catalogotecnologia.serpro', 'ADMIN', '', '');
+INSERT INTO usuario (id, cpf, email, name, setor, telephonenumber) VALUES (2, '82546010549', 'robson.ximenes@serpro.gov.br', 'Robson Saraiva Ximenes', 'CETEC/CTSDR', NULL);
+
+
+--
+-- TOC entry 2011 (class 0 OID 38671)
+-- Dependencies: 146 2022 2030
+-- Data for Name: fase; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO fase (id, codigoreferencia, conclusao, datafinalizacao, datarealizacao, executarproximafase, fase, objetivo, proximafase, proximafaseciclo, proximafasejustificativa, proximafaseunidadegestora, situacao, situacaojustificativa, status, unidadegestora, faseanterior_id, faseinicial_id, origemreferencia_id, proximafaselider_id) VALUES (1, 'R173', NULL, '2014-04-09 09:36:21.4', '2014-04-09 09:36:21.375', NULL, 'ANALISE', 'Precise de uma ferramenta que facilite a geração de lero-lero para piadas', 'PROSPECCAO', NULL, 'Precisamos que este estudo seja prospectado com no mínimo 3 tecnologias.', 'CETEC/CTSDR', 'APROVADO', 'Me parece ser bem plausível. Devemos selecionar algumas tecnologias para isso.', NULL, 'CTSDR', NULL, NULL, 1, 2);
+INSERT INTO fase (id, codigoreferencia, conclusao, datafinalizacao, datarealizacao, executarproximafase, fase, objetivo, proximafase, proximafaseciclo, proximafasejustificativa, proximafaseunidadegestora, situacao, situacaojustificativa, status, unidadegestora, faseanterior_id, faseinicial_id, origemreferencia_id, proximafaselider_id) VALUES (2, 'R174', 'A prospecção foi bem sucedida em que, pelos testes realizados, o Ubuntu 12 foi selecionado para ser internalizado.', '2014-04-09 09:37:35.867', '2014-04-09 09:37:35.82', NULL, 'PROSPECCAO', 'Selecionar os tipos de bolas de futsal na copa do mundo.', 'INTERNALIZACAO', NULL, 'Precisamos que este estudo seja prospectado com no mínimo 3 tecnologias.', 'CETEC/CTSDR', 'APROVADO', 'Aprovei pois a prospeccao foi bem sucedida.', NULL, 'CETEC/CTSDR', 1, 1, 1, 2);
+INSERT INTO fase (id, codigoreferencia, conclusao, datafinalizacao, datarealizacao, executarproximafase, fase, objetivo, proximafase, proximafaseciclo, proximafasejustificativa, proximafaseunidadegestora, situacao, situacaojustificativa, status, unidadegestora, faseanterior_id, faseinicial_id, origemreferencia_id, proximafaselider_id) VALUES (3, 'R175', NULL, '2014-04-09 09:38:43.208', '2014-04-09 09:38:43.198', NULL, 'INTERNALIZACAO', 'Fornecer as bolas que já foram prospectadas com seus devidos condicionamentos', 'SUSTENTACAO', NULL, 'Precisamos que este estudo seja prospectado com no mínimo 3 tecnologias.', 'CETEC/CTSDR', 'APROVADO', 'asahkajhakj', NULL, 'CETEC/CTSDR', 2, 1, 1, 2);
+INSERT INTO fase (id, codigoreferencia, conclusao, datafinalizacao, datarealizacao, executarproximafase, fase, objetivo, proximafase, proximafaseciclo, proximafasejustificativa, proximafaseunidadegestora, situacao, situacaojustificativa, status, unidadegestora, faseanterior_id, faseinicial_id, origemreferencia_id, proximafaselider_id) VALUES (4, 'R175', NULL, '2014-04-09 09:39:49.715', '2014-04-09 09:39:49.704', NULL, 'SUSTENTACAO', 'Fornecer as bolas que já foram prospectadas com seus devidos condicionamentos', 'DECLINIO', NULL, 'Precisamos que este estudo seja prospectado com no mínimo 3 tecnologias.', 'CETEC/CTSDR', 'APROVADO', 'asahkajhakj', NULL, 'CETEC/CTSDR', 3, 1, 1, 2);
+INSERT INTO fase (id, codigoreferencia, conclusao, datafinalizacao, datarealizacao, executarproximafase, fase, objetivo, proximafase, proximafaseciclo, proximafasejustificativa, proximafaseunidadegestora, situacao, situacaojustificativa, status, unidadegestora, faseanterior_id, faseinicial_id, origemreferencia_id, proximafaselider_id) VALUES (5, NULL, NULL, NULL, NULL, NULL, 'DECLINIO', NULL, NULL, NULL, NULL, NULL, 'RASCUNHO', NULL, NULL, 'CETEC/CTSDR', 4, 1, NULL, NULL);
+INSERT INTO fase (id, codigoreferencia, conclusao, datafinalizacao, datarealizacao, executarproximafase, fase, objetivo, proximafase, proximafaseciclo, proximafasejustificativa, proximafaseunidadegestora, situacao, situacaojustificativa, status, unidadegestora, faseanterior_id, faseinicial_id, origemreferencia_id, proximafaselider_id) VALUES (6, '????????', NULL, '2014-04-09 00:00:00', '2014-04-09 00:00:00', NULL, 'ANALISE', 'Nonono nononon ononononon ononononon onononono non', 'PROSPECCAO', NULL, 'dfbdb', 'CETEC/CTSDR', 'APROVADO', 'nonononono nonononono nononononon onononon on', NULL, 'CTSDR', NULL, NULL, 1, 2);
+INSERT INTO fase (id, codigoreferencia, conclusao, datafinalizacao, datarealizacao, executarproximafase, fase, objetivo, proximafase, proximafaseciclo, proximafasejustificativa, proximafaseunidadegestora, situacao, situacaojustificativa, status, unidadegestora, faseanterior_id, faseinicial_id, origemreferencia_id, proximafaselider_id) VALUES (7, '????????', NULL, NULL, '2014-04-09 09:40:56.011', NULL, 'ANALISE', 'Nonono nononon ononononon ononononon onononono non', NULL, NULL, NULL, NULL, 'REPROVADO', 'nonononono nonononono nononononon onononon on', NULL, 'CTSDR', NULL, NULL, 1, NULL);
+INSERT INTO fase (id, codigoreferencia, conclusao, datafinalizacao, datarealizacao, executarproximafase, fase, objetivo, proximafase, proximafaseciclo, proximafasejustificativa, proximafaseunidadegestora, situacao, situacaojustificativa, status, unidadegestora, faseanterior_id, faseinicial_id, origemreferencia_id, proximafaselider_id) VALUES (8, 'Completo', NULL, NULL, '2014-04-09 09:40:56.023', NULL, 'ANALISE', 'Completo', NULL, NULL, NULL, NULL, 'RASCUNHO', NULL, NULL, 'CTSDR', NULL, NULL, 1, NULL);
+INSERT INTO fase (id, codigoreferencia, conclusao, datafinalizacao, datarealizacao, executarproximafase, fase, objetivo, proximafase, proximafaseciclo, proximafasejustificativa, proximafaseunidadegestora, situacao, situacaojustificativa, status, unidadegestora, faseanterior_id, faseinicial_id, origemreferencia_id, proximafaselider_id) VALUES (9, NULL, NULL, '2014-04-09 00:00:00', '2014-04-09 00:00:00', NULL, 'PROSPECCAO', 'TTTTTT', 'INTERNALIZACAO', NULL, 'TTTTTT', 'CETEC/CTSDR', 'APROVADO', 'TTTT', NULL, 'CETEC/CTSDR', 6, 6, 1, 2);
+INSERT INTO fase (id, codigoreferencia, conclusao, datafinalizacao, datarealizacao, executarproximafase, fase, objetivo, proximafase, proximafaseciclo, proximafasejustificativa, proximafaseunidadegestora, situacao, situacaojustificativa, status, unidadegestora, faseanterior_id, faseinicial_id, origemreferencia_id, proximafaselider_id) VALUES (10, NULL, NULL, '2014-04-09 00:00:00', '2010-04-09 00:00:00', NULL, 'INTERNALIZACAO', 'TTTTTTT', 'SUSTENTACAO', NULL, 'TTTTTTT', 'CETEC/CTSDR', 'APROVADO', 'TTTTTTT', NULL, 'CETEC/CTSDR', 9, 6, 1, 2);
+INSERT INTO fase (id, codigoreferencia, conclusao, datafinalizacao, datarealizacao, executarproximafase, fase, objetivo, proximafase, proximafaseciclo, proximafasejustificativa, proximafaseunidadegestora, situacao, situacaojustificativa, status, unidadegestora, faseanterior_id, faseinicial_id, origemreferencia_id, proximafaselider_id) VALUES (11, NULL, NULL, NULL, '2014-04-09 00:00:00', NULL, 'SUSTENTACAO', 'TTTTT', 'DECLINIO', NULL, 'TTTTTT', 'CETEC/CTSDR', 'RASCUNHO', 'TTTTTTT', NULL, 'CETEC/CTSDR', 10, 6, 1, 2);
+INSERT INTO fase (id, codigoreferencia, conclusao, datafinalizacao, datarealizacao, executarproximafase, fase, objetivo, proximafase, proximafaseciclo, proximafasejustificativa, proximafaseunidadegestora, situacao, situacaojustificativa, status, unidadegestora, faseanterior_id, faseinicial_id, origemreferencia_id, proximafaselider_id) VALUES (12, NULL, NULL, NULL, '2014-04-09 00:00:00', NULL, 'DECLINIO', 'TTTTTT', NULL, NULL, 'TTTTT', 'CETEC/CTSDR', 'RASCUNHO', 'TTTTT', NULL, 'CETEC/CTSDR', 11, 6, 1, 2);
+INSERT INTO fase (id, codigoreferencia, conclusao, datafinalizacao, datarealizacao, executarproximafase, fase, objetivo, proximafase, proximafaseciclo, proximafasejustificativa, proximafaseunidadegestora, situacao, situacaojustificativa, status, unidadegestora, faseanterior_id, faseinicial_id, origemreferencia_id, proximafaselider_id) VALUES (14, '56496459', NULL, NULL, '2014-04-24 00:00:00', 0, 'ANALISE', 'JKGVKUVKGUI', NULL, NULL, NULL, NULL, 'RASCUNHO', NULL, 0, 'CETEC', NULL, NULL, 1, NULL);
+INSERT INTO fase (id, codigoreferencia, conclusao, datafinalizacao, datarealizacao, executarproximafase, fase, objetivo, proximafase, proximafaseciclo, proximafasejustificativa, proximafaseunidadegestora, situacao, situacaojustificativa, status, unidadegestora, faseanterior_id, faseinicial_id, origemreferencia_id, proximafaselider_id) VALUES (15, NULL, NULL, '2014-04-24 12:59:41.268', '2014-04-24 00:00:00', 1, 'ANALISE', 'CRVEVRTWETG', 'PROSPECCAO', NULL, 'FGNFGHGNHG', 'CETEC', 'APROVADO', 'DFVBFSBDFBDTHYT', 1, 'CETEC', NULL, NULL, NULL, 2);
+INSERT INTO fase (id, codigoreferencia, conclusao, datafinalizacao, datarealizacao, executarproximafase, fase, objetivo, proximafase, proximafaseciclo, proximafasejustificativa, proximafaseunidadegestora, situacao, situacaojustificativa, status, unidadegestora, faseanterior_id, faseinicial_id, origemreferencia_id, proximafaselider_id) VALUES (17, '1619494651', 'RHEYTRHYTHTYHETYH', '2014-04-24 13:06:03.137', '2014-04-24 00:00:00', 1, 'PROSPECCAO', 'DGVSDAGTHRTHRTF', 'INTERNALIZACAO', NULL, 'GTRHEHTTYY', 'CETEC', 'RASCUNHO', NULL, 1, 'CETEC', 15, 15, 1, 2);
+INSERT INTO fase (id, codigoreferencia, conclusao, datafinalizacao, datarealizacao, executarproximafase, fase, objetivo, proximafase, proximafaseciclo, proximafasejustificativa, proximafaseunidadegestora, situacao, situacaojustificativa, status, unidadegestora, faseanterior_id, faseinicial_id, origemreferencia_id, proximafaselider_id) VALUES (18, 'FHYTJHTRYJTY', NULL, '2014-04-24 13:20:43.278', '2014-04-24 00:00:00', 1, 'INTERNALIZACAO', 'ETYJTYJTYJ', 'SUSTENTACAO', 2, 'K,J,HL,J,KJ', 'CETEC', 'RASCUNHO', NULL, 1, 'CETEC', 17, 15, 1, 2);
+INSERT INTO fase (id, codigoreferencia, conclusao, datafinalizacao, datarealizacao, executarproximafase, fase, objetivo, proximafase, proximafaseciclo, proximafasejustificativa, proximafaseunidadegestora, situacao, situacaojustificativa, status, unidadegestora, faseanterior_id, faseinicial_id, origemreferencia_id, proximafaselider_id) VALUES (19, NULL, NULL, NULL, NULL, 0, 'SUSTENTACAO', NULL, 'DECLINIO', NULL, NULL, NULL, 'RASCUNHO', NULL, 0, 'CETEC', 18, 15, NULL, NULL);
+INSERT INTO fase (id, codigoreferencia, conclusao, datafinalizacao, datarealizacao, executarproximafase, fase, objetivo, proximafase, proximafaseciclo, proximafasejustificativa, proximafaseunidadegestora, situacao, situacaojustificativa, status, unidadegestora, faseanterior_id, faseinicial_id, origemreferencia_id, proximafaselider_id) VALUES (20, NULL, NULL, NULL, NULL, 0, 'SUSTENTACAO', NULL, 'DECLINIO', NULL, NULL, NULL, 'RASCUNHO', NULL, 0, 'CETEC', 18, 15, NULL, NULL);
+INSERT INTO fase (id, codigoreferencia, conclusao, datafinalizacao, datarealizacao, executarproximafase, fase, objetivo, proximafase, proximafaseciclo, proximafasejustificativa, proximafaseunidadegestora, situacao, situacaojustificativa, status, unidadegestora, faseanterior_id, faseinicial_id, origemreferencia_id, proximafaselider_id) VALUES (21, '65161561', NULL, '2014-04-24 13:27:43.545', '2014-04-24 00:00:00', 1, 'ANALISE', 'FDSVRTGRTVRT', 'PROSPECCAO', NULL, 'EFVRTVRTBR', 'CETEC', 'APROVADO', 'TRJH76J6J56J67J', 1, 'CETEC', NULL, NULL, 1, 2);
+INSERT INTO fase (id, codigoreferencia, conclusao, datafinalizacao, datarealizacao, executarproximafase, fase, objetivo, proximafase, proximafaseciclo, proximafasejustificativa, proximafaseunidadegestora, situacao, situacaojustificativa, status, unidadegestora, faseanterior_id, faseinicial_id, origemreferencia_id, proximafaselider_id) VALUES (22, '161561911', 'rthrthr6th6rth6rt', '2014-04-24 13:37:02.709', '2014-04-24 00:00:00', 1, 'PROSPECCAO', 'VRADGERGERSGRTGT', 'INTERNALIZACAO', NULL, 'cfbdbfgb', 'cetec', 'RASCUNHO', NULL, 1, 'CETEC', 21, 21, 1, 2);
+INSERT INTO fase (id, codigoreferencia, conclusao, datafinalizacao, datarealizacao, executarproximafase, fase, objetivo, proximafase, proximafaseciclo, proximafasejustificativa, proximafaseunidadegestora, situacao, situacaojustificativa, status, unidadegestora, faseanterior_id, faseinicial_id, origemreferencia_id, proximafaselider_id) VALUES (23, NULL, NULL, NULL, NULL, 0, 'PROSPECCAO', NULL, 'INTERNALIZACAO', NULL, NULL, NULL, 'RASCUNHO', NULL, 0, 'CETEC', 21, 21, NULL, NULL);
+INSERT INTO fase (id, codigoreferencia, conclusao, datafinalizacao, datarealizacao, executarproximafase, fase, objetivo, proximafase, proximafaseciclo, proximafasejustificativa, proximafaseunidadegestora, situacao, situacaojustificativa, status, unidadegestora, faseanterior_id, faseinicial_id, origemreferencia_id, proximafaselider_id) VALUES (24, NULL, NULL, NULL, NULL, 0, 'INTERNALIZACAO', NULL, 'SUSTENTACAO', NULL, NULL, NULL, 'RASCUNHO', NULL, 1, 'cetec', 22, 21, NULL, NULL);
+INSERT INTO fase (id, codigoreferencia, conclusao, datafinalizacao, datarealizacao, executarproximafase, fase, objetivo, proximafase, proximafaseciclo, proximafasejustificativa, proximafaseunidadegestora, situacao, situacaojustificativa, status, unidadegestora, faseanterior_id, faseinicial_id, origemreferencia_id, proximafaselider_id) VALUES (25, 'xyz123', NULL, '2014-04-24 13:47:03.356', '2014-04-24 00:00:00', 1, 'ANALISE', 'FGERGRTGRT', 'PROSPECCAO', NULL, 'XVDRVDRGR', 'CETEC', 'APROVADO', 'UJYYUJKYUKU', 1, 'CETEC', NULL, NULL, 1, 2);
+INSERT INTO fase (id, codigoreferencia, conclusao, datafinalizacao, datarealizacao, executarproximafase, fase, objetivo, proximafase, proximafaseciclo, proximafasejustificativa, proximafaseunidadegestora, situacao, situacaojustificativa, status, unidadegestora, faseanterior_id, faseinicial_id, origemreferencia_id, proximafaselider_id) VALUES (26, 'xyz123', 'fgdrfbrtsfd', '2014-04-24 14:01:41.024', '2014-04-24 00:00:00', 1, 'PROSPECCAO', 'fdhgrtshrth', 'INTERNALIZACAO', NULL, 'fbdfgbrt', 'cetec', 'RASCUNHO', NULL, 1, 'CETEC', 25, 25, 1, 2);
+INSERT INTO fase (id, codigoreferencia, conclusao, datafinalizacao, datarealizacao, executarproximafase, fase, objetivo, proximafase, proximafaseciclo, proximafasejustificativa, proximafaseunidadegestora, situacao, situacaojustificativa, status, unidadegestora, faseanterior_id, faseinicial_id, origemreferencia_id, proximafaselider_id) VALUES (27, NULL, NULL, '2014-04-24 14:05:15.443', '2014-04-24 00:00:00', 1, 'INTERNALIZACAO', 'dgfesrgrthrhr6t', 'SUSTENTACAO', 3, 'gvbrdgsrtgrt', 'cetec', 'RASCUNHO', NULL, 1, 'cetec', 26, 25, NULL, 2);
+INSERT INTO fase (id, codigoreferencia, conclusao, datafinalizacao, datarealizacao, executarproximafase, fase, objetivo, proximafase, proximafaseciclo, proximafasejustificativa, proximafaseunidadegestora, situacao, situacaojustificativa, status, unidadegestora, faseanterior_id, faseinicial_id, origemreferencia_id, proximafaselider_id) VALUES (28, NULL, NULL, NULL, NULL, 0, 'SUSTENTACAO', NULL, 'DECLINIO', NULL, NULL, NULL, 'RASCUNHO', NULL, 1, 'cetec', 27, 25, NULL, NULL);
+
+
+
+
+
+
+--
+-- TOC entry 2005 (class 0 OID 38629)
+-- Dependencies: 140 2030 2011
+-- Data for Name: analise; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO analise (demandanteunidade, id, demandanterepresentante_id) VALUES ('CETEC/CTSDR', 1, 2);
+INSERT INTO analise (demandanteunidade, id, demandanterepresentante_id) VALUES ('CETEC/CTSDR', 6, 2);
+INSERT INTO analise (demandanteunidade, id, demandanterepresentante_id) VALUES ('CETEC/CTSDR', 7, 2);
+INSERT INTO analise (demandanteunidade, id, demandanterepresentante_id) VALUES ('CETEC/Completo', 8, 2);
+INSERT INTO analise (demandanteunidade, id, demandanterepresentante_id) VALUES ('CETEC', 14, 2);
+INSERT INTO analise (demandanteunidade, id, demandanterepresentante_id) VALUES ('CETEC', 15, 2);
+INSERT INTO analise (demandanteunidade, id, demandanterepresentante_id) VALUES ('CETEC', 21, 2);
+INSERT INTO analise (demandanteunidade, id, demandanterepresentante_id) VALUES ('CETEC', 25, 2);
+
+
+--
+-- TOC entry 2006 (class 0 OID 38634)
+-- Dependencies: 141 2011
+-- Data for Name: anexo; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2027 (class 0 OID 38782)
+-- Dependencies: 162
+-- Data for Name: tecnologia; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO tecnologia (id, descricao, nome) VALUES (1, 'tecn de software', 'Software');
+INSERT INTO tecnologia (id, descricao, nome) VALUES (4, 'ddddddd', 'dddddd');
+
+
+--
+-- TOC entry 2007 (class 0 OID 38642)
+-- Dependencies: 142 2027
+-- Data for Name: categoria; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO categoria (id, descricao, nome, tecnologia_id) VALUES (1, 'Categoriax', 'Liguagem de programação', 1);
+INSERT INTO categoria (id, descricao, nome, tecnologia_id) VALUES (2, 'Banco de dados', 'Banco de dados', 1);
+INSERT INTO categoria (id, descricao, nome, tecnologia_id) VALUES (3, 'Navegador Web', 'Navegador web', 1);
+INSERT INTO categoria (id, descricao, nome, tecnologia_id) VALUES (6, 'fffffff', 'fffffff', 1);
+
+
+--
+-- TOC entry 2008 (class 0 OID 38650)
+-- Dependencies: 143 2011
+-- Data for Name: declinio; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO declinio (novaanaliseriscos, id) VALUES (NULL, 5);
+INSERT INTO declinio (novaanaliseriscos, id) VALUES (NULL, 12);
+
+
+--
+-- TOC entry 2009 (class 0 OID 38655)
+-- Dependencies: 144 2011
+-- Data for Name: documento; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2010 (class 0 OID 38663)
+-- Dependencies: 145
+-- Data for Name: fabricante; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO fabricante (id, email, nome, representante, telefone) VALUES (1, 'mariano.thiago@gmail.com', 'Arno', 'Thiago', '(75)9128-0410');
+INSERT INTO fabricante (id, email, nome, representante, telefone) VALUES (3, NULL, 'Sun', NULL, NULL);
+
+
+--
+-- TOC entry 2012 (class 0 OID 38679)
+-- Dependencies: 147 2011 2030
+-- Data for Name: fasehistorico; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (1, '2014-04-09 09:36:21.387', 'Executou a ação: CRIAR com a situação: APROVADO', 'CRIAR', 1, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (2, '2014-04-09 09:36:32.555', 'Executou a ação: APROVAR com a situação: APROVADO', 'APROVAR', 1, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (3, '2014-04-09 09:36:32.567', 'Executou a ação: CRIAR com a situação: RASCUNHO', 'CRIAR', 2, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (4, '2014-04-09 09:37:35.827', 'Executou a ação: ATUALIZAR com a situação: APROVADO', 'ATUALIZAR', 2, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (5, '2014-04-09 09:37:35.827', 'Executou a ação: ATUALIZAR com a situação: APROVADO', 'ATUALIZAR', 2, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (6, '2014-04-09 09:37:40.027', 'Executou a ação: APROVAR com a situação: APROVADO', 'APROVAR', 2, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (7, '2014-04-09 09:37:40.037', 'Executou a ação: CRIAR com a situação: RASCUNHO', 'CRIAR', 3, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (8, '2014-04-09 09:38:43.202', 'Executou a ação: ATUALIZAR com a situação: APROVADO', 'ATUALIZAR', 3, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (9, '2014-04-09 09:38:43.202', 'Executou a ação: ATUALIZAR com a situação: APROVADO', 'ATUALIZAR', 3, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (10, '2014-04-09 09:38:46.523', 'Executou a ação: APROVAR com a situação: APROVADO', 'APROVAR', 3, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (11, '2014-04-09 09:38:46.533', 'Executou a ação: CRIAR com a situação: RASCUNHO', 'CRIAR', 4, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (12, '2014-04-09 09:39:49.709', 'Executou a ação: ATUALIZAR com a situação: APROVADO', 'ATUALIZAR', 4, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (13, '2014-04-09 09:39:49.709', 'Executou a ação: ATUALIZAR com a situação: APROVADO', 'ATUALIZAR', 4, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (14, '2014-04-09 09:39:52.8', 'Executou a ação: APROVAR com a situação: APROVADO', 'APROVAR', 4, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (15, '2014-04-09 09:39:52.809', 'Executou a ação: CRIAR com a situação: RASCUNHO', 'CRIAR', 5, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (16, '2014-04-09 09:40:56.006', 'Executou a ação: CRIAR com a situação: APROVADO', 'CRIAR', 6, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (17, '2014-04-09 09:40:56.018', 'Executou a ação: CRIAR com a situação: REPROVADO', 'CRIAR', 7, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (18, '2014-04-09 09:40:56.03', 'Executou a ação: CRIAR com a situação: RASCUNHO', 'CRIAR', 8, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (19, '2014-04-09 10:34:37.011', 'Executou a ação: ATUALIZAR com a situação: APROVADO', 'ATUALIZAR', 6, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (20, '2014-04-09 10:34:37.011', 'Executou a ação: ATUALIZAR com a situação: APROVADO', 'ATUALIZAR', 6, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (21, '2014-04-09 00:00:00', 'Executou a ação:', 'APROVAR', 6, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (23, '2014-04-09 00:00:00', 'Executou a ação:', 'APROVAR', 9, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (24, '2014-04-09 00:00:00', 'Executou a ação:', 'CRIAR', 10, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (25, '2014-04-09 00:00:00', 'Executou a ação:', 'APROVAR', 10, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (26, '2014-04-09 00:00:00', 'Executou a ação:', 'CRIAR', 11, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (22, '2014-04-09 00:00:00', 'Executou a ação:', 'CRIAR', 9, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (27, '2014-04-09 00:00:00', 'Executou a ação:', 'CRIAR', 12, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (28, '2014-04-24 12:36:29.769', 'Executou a ação: CRIAR com a situação: RASCUNHO', 'CRIAR', 14, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (29, '2014-04-24 12:39:20.05', 'Executou a ação: EXCLUIR com a situação: RASCUNHO', 'EXCLUIR', 14, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (30, '2014-04-24 12:44:55.735', 'Executou a ação: CRIAR com a situação: RASCUNHO', 'CRIAR', 15, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (31, '2014-04-24 12:56:26.276', 'Executou a ação: ATUALIZAR com a situação: RASCUNHO', 'ATUALIZAR', 15, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (32, '2014-04-24 12:56:48', 'Executou a ação: ATUALIZAR com a situação: RASCUNHO', 'ATUALIZAR', 15, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (33, '2014-04-24 12:56:58.037', 'Executou a ação: ATUALIZAR com a situação: APROVADO', 'ATUALIZAR', 15, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (36, '2014-04-24 12:59:41.285', 'Executou a ação: APROVAR com a situação: APROVADO', 'APROVAR', 15, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (37, '2014-04-24 12:59:41.307', 'Executou a ação: CRIAR com a situação: RASCUNHO', 'CRIAR', 17, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (38, '2014-04-24 13:01:46.923', 'Executou a ação: ATUALIZAR com a situação: RASCUNHO', 'ATUALIZAR', 17, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (39, '2014-04-24 13:03:43.019', 'Executou a ação: ATUALIZAR com a situação: RASCUNHO', 'ATUALIZAR', 17, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (40, '2014-04-24 13:04:10.959', 'Executou a ação: ATUALIZAR com a situação: RASCUNHO', 'ATUALIZAR', 17, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (41, '2014-04-24 13:04:41.309', 'Executou a ação: ATUALIZAR com a situação: RASCUNHO', 'ATUALIZAR', 17, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (42, '2014-04-24 13:06:03.153', 'Executou a ação: REPROVAR com a situação: RASCUNHO', 'REPROVAR', 17, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (43, '2014-04-24 13:07:06.3', 'Executou a ação: CRIAR com a situação: RASCUNHO', 'CRIAR', 18, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (44, '2014-04-24 13:09:13.578', 'Executou a ação: ATUALIZAR com a situação: RASCUNHO', 'ATUALIZAR', 18, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (45, '2014-04-24 13:12:18.171', 'Executou a ação: REPROVAR com a situação: RASCUNHO', 'REPROVAR', 18, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (46, '2014-04-24 13:13:22.08', 'Executou a ação: ATUALIZAR com a situação: RASCUNHO', 'ATUALIZAR', 18, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (47, '2014-04-24 13:15:28.855', 'Executou a ação: ATUALIZAR com a situação: RASCUNHO', 'ATUALIZAR', 18, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (48, '2014-04-24 13:16:00.084', 'Executou a ação: ATUALIZAR com a situação: RASCUNHO', 'ATUALIZAR', 18, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (49, '2014-04-24 13:16:53.376', 'Executou a ação: REPROVAR com a situação: RASCUNHO', 'REPROVAR', 18, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (50, '2014-04-24 13:17:56.553', 'Executou a ação: CRIAR com a situação: RASCUNHO', 'CRIAR', 19, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (51, '2014-04-24 13:20:43.306', 'Executou a ação: REPROVAR com a situação: RASCUNHO', 'REPROVAR', 18, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (52, '2014-04-24 13:21:46.491', 'Executou a ação: CRIAR com a situação: RASCUNHO', 'CRIAR', 20, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (53, '2014-04-24 13:25:06.25', 'Executou a ação: EXCLUIR com a situação: RASCUNHO', 'EXCLUIR', 19, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (54, '2014-04-24 13:25:37.839', 'Executou a ação: EXCLUIR com a situação: RASCUNHO', 'EXCLUIR', 20, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (55, '2014-04-24 13:26:35.086', 'Executou a ação: CRIAR com a situação: RASCUNHO', 'CRIAR', 21, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (56, '2014-04-24 13:26:49.409', 'Executou a ação: ATUALIZAR com a situação: RASCUNHO', 'ATUALIZAR', 21, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (57, '2014-04-24 13:26:57.197', 'Executou a ação: ATUALIZAR com a situação: APROVADO', 'ATUALIZAR', 21, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (58, '2014-04-24 13:27:09.896', 'Executou a ação: APROVAR com a situação: APROVADO', 'APROVAR', 21, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (59, '2014-04-24 13:27:09.915', 'Executou a ação: CRIAR com a situação: RASCUNHO', 'CRIAR', 22, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (60, '2014-04-24 13:27:43.555', 'Executou a ação: APROVAR com a situação: APROVADO', 'APROVAR', 21, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (61, '2014-04-24 13:27:43.571', 'Executou a ação: CRIAR com a situação: RASCUNHO', 'CRIAR', 23, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (62, '2014-04-24 13:29:08.345', 'Executou a ação: EXCLUIR com a situação: RASCUNHO', 'EXCLUIR', 23, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (63, '2014-04-24 13:29:32.852', 'Executou a ação: ATUALIZAR com a situação: RASCUNHO', 'ATUALIZAR', 22, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (64, '2014-04-24 13:30:26.291', 'Executou a ação: ATUALIZAR com a situação: RASCUNHO', 'ATUALIZAR', 22, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (65, '2014-04-24 13:35:46.547', 'Executou a ação: ATUALIZAR com a situação: RASCUNHO', 'ATUALIZAR', 22, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (66, '2014-04-24 13:36:00.71', 'Executou a ação: ATUALIZAR com a situação: RASCUNHO', 'ATUALIZAR', 22, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (67, '2014-04-24 13:36:20.12', 'Executou a ação: ATUALIZAR com a situação: RASCUNHO', 'ATUALIZAR', 22, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (68, '2014-04-24 13:36:31.023', 'Executou a ação: ATUALIZAR com a situação: RASCUNHO', 'ATUALIZAR', 22, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (69, '2014-04-24 13:36:46.245', 'Executou a ação: ATUALIZAR com a situação: RASCUNHO', 'ATUALIZAR', 22, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (70, '2014-04-24 13:37:02.718', 'Executou a ação: REPROVAR com a situação: RASCUNHO', 'REPROVAR', 22, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (71, '2014-04-24 13:37:02.744', 'Executou a ação: CRIAR com a situação: RASCUNHO', 'CRIAR', 24, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (72, '2014-04-24 13:45:29.16', 'Executou a ação: CRIAR com a situação: RASCUNHO', 'CRIAR', 25, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (73, '2014-04-24 13:45:49.309', 'Executou a ação: ATUALIZAR com a situação: RASCUNHO', 'ATUALIZAR', 25, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (74, '2014-04-24 13:46:39.483', 'Executou a ação: ATUALIZAR com a situação: RASCUNHO', 'ATUALIZAR', 25, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (75, '2014-04-24 13:46:52.066', 'Executou a ação: ATUALIZAR com a situação: APROVADO', 'ATUALIZAR', 25, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (76, '2014-04-24 13:47:03.381', 'Executou a ação: APROVAR com a situação: APROVADO', 'APROVAR', 25, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (77, '2014-04-24 13:47:03.412', 'Executou a ação: CRIAR com a situação: RASCUNHO', 'CRIAR', 26, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (78, '2014-04-24 13:54:26.933', 'Executou a ação: ATUALIZAR com a situação: RASCUNHO', 'ATUALIZAR', 26, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (79, '2014-04-24 13:56:03.457', 'Executou a ação: ATUALIZAR com a situação: RASCUNHO', 'ATUALIZAR', 26, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (80, '2014-04-24 13:59:16.35', 'Executou a ação: ATUALIZAR com a situação: RASCUNHO', 'ATUALIZAR', 26, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (81, '2014-04-24 13:59:52.633', 'Executou a ação: ATUALIZAR com a situação: RASCUNHO', 'ATUALIZAR', 26, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (82, '2014-04-24 14:00:06.973', 'Executou a ação: ATUALIZAR com a situação: RASCUNHO', 'ATUALIZAR', 26, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (83, '2014-04-24 14:00:25.935', 'Executou a ação: ATUALIZAR com a situação: RASCUNHO', 'ATUALIZAR', 26, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (84, '2014-04-24 14:00:38.813', 'Executou a ação: ATUALIZAR com a situação: RASCUNHO', 'ATUALIZAR', 26, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (85, '2014-04-24 14:00:51.188', 'Executou a ação: ATUALIZAR com a situação: RASCUNHO', 'ATUALIZAR', 26, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (86, '2014-04-24 14:01:32.344', 'Executou a ação: ATUALIZAR com a situação: RASCUNHO', 'ATUALIZAR', 26, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (87, '2014-04-24 14:01:41.036', 'Executou a ação: REPROVAR com a situação: RASCUNHO', 'REPROVAR', 26, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (88, '2014-04-24 14:01:41.06', 'Executou a ação: CRIAR com a situação: RASCUNHO', 'CRIAR', 27, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (89, '2014-04-24 14:02:09.609', 'Executou a ação: ATUALIZAR com a situação: RASCUNHO', 'ATUALIZAR', 27, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (90, '2014-04-24 14:03:33.065', 'Executou a ação: ATUALIZAR com a situação: RASCUNHO', 'ATUALIZAR', 27, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (91, '2014-04-24 14:05:00.45', 'Executou a ação: ATUALIZAR com a situação: RASCUNHO', 'ATUALIZAR', 27, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (92, '2014-04-24 14:05:15.469', 'Executou a ação: REPROVAR com a situação: RASCUNHO', 'REPROVAR', 27, 1);
+INSERT INTO fasehistorico (id, data, descricao, operacao, fase_id, usuario_id) VALUES (93, '2014-04-24 14:05:15.492', 'Executou a ação: CRIAR com a situação: RASCUNHO', 'CRIAR', 28, 1);
+
+
+--
+-- TOC entry 2013 (class 0 OID 38687)
+-- Dependencies: 148 2011 2030
+-- Data for Name: faseinteressado; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2014 (class 0 OID 38692)
+-- Dependencies: 149 2011 2030
+-- Data for Name: fasemembro; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO fasemembro (id, fase_id, user_id) VALUES (1, 2, 2);
+INSERT INTO fasemembro (id, fase_id, user_id) VALUES (2, 3, 2);
+INSERT INTO fasemembro (id, fase_id, user_id) VALUES (3, 4, 2);
+INSERT INTO fasemembro (id, fase_id, user_id) VALUES (4, 5, 2);
+INSERT INTO fasemembro (id, fase_id, user_id) VALUES (5, 6, 2);
+INSERT INTO fasemembro (id, fase_id, user_id) VALUES (6, 9, 2);
+INSERT INTO fasemembro (id, fase_id, user_id) VALUES (7, 10, 2);
+INSERT INTO fasemembro (id, fase_id, user_id) VALUES (8, 11, 2);
+INSERT INTO fasemembro (id, fase_id, user_id) VALUES (9, 12, 2);
+INSERT INTO fasemembro (id, fase_id, user_id) VALUES (10, 17, 2);
+INSERT INTO fasemembro (id, fase_id, user_id) VALUES (11, 18, 2);
+INSERT INTO fasemembro (id, fase_id, user_id) VALUES (12, 19, 2);
+INSERT INTO fasemembro (id, fase_id, user_id) VALUES (13, 20, 2);
+INSERT INTO fasemembro (id, fase_id, user_id) VALUES (14, 22, 2);
+INSERT INTO fasemembro (id, fase_id, user_id) VALUES (15, 23, 2);
+INSERT INTO fasemembro (id, fase_id, user_id) VALUES (16, 24, 2);
+INSERT INTO fasemembro (id, fase_id, user_id) VALUES (17, 26, 2);
+INSERT INTO fasemembro (id, fase_id, user_id) VALUES (18, 27, 2);
+INSERT INTO fasemembro (id, fase_id, user_id) VALUES (19, 28, 2);
+
+
+--
+-- TOC entry 2016 (class 0 OID 38702)
+-- Dependencies: 151
+-- Data for Name: fornecedor; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO fornecedor (id, email, nome, representante, telefone) VALUES (1, 'mariano.thiago@gmail.com', 'Mozilla', 'Thiago', '(75)9128-0410');
+INSERT INTO fornecedor (id, email, nome, representante, telefone) VALUES (2, 'mariano.thiago@gmail.com', 'Microsoft', 'Thiago Mariano', '(75) 9128 - 0410');
+INSERT INTO fornecedor (id, email, nome, representante, telefone) VALUES (3, 'mariano.thiago@gmail.com', 'Google', 'Thiago Mariano', '(75) 9128 - 0410');
+
+
+--
+-- TOC entry 2020 (class 0 OID 38729)
+-- Dependencies: 155
+-- Data for Name: licenciamento; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO licenciamento (id, descricao, nome) VALUES (1, 'GPL', 'GPL');
+INSERT INTO licenciamento (id, descricao, nome) VALUES (2, 'LGPL', 'LGPL');
+
+
+--
+-- TOC entry 2024 (class 0 OID 38761)
+-- Dependencies: 159 2010 2016 2020
+-- Data for Name: produto; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO produto (id, atualizacao, descricao, legado, nome, produtoanterior, versao, fabricante_id, fornecedor_id, licenciamento_id, datalancamento) VALUES (1, false, 'Melhor produto educativo dos ultimos 20 anos.', false, 'Havaianas de Pau', NULL, '2.0', 1, NULL, 2, NULL);
+INSERT INTO produto (id, atualizacao, descricao, legado, nome, produtoanterior, versao, fabricante_id, fornecedor_id, licenciamento_id, datalancamento) VALUES (2, false, 'Maior trocador de porcaria via telefones modernos que tem internê', false, 'Uotsap', NULL, '2.0', 1, NULL, 2, NULL);
+INSERT INTO produto (id, atualizacao, descricao, legado, nome, produtoanterior, versao, fabricante_id, fornecedor_id, licenciamento_id, datalancamento) VALUES (3, false, 'Firefox', false, 'Firefox', NULL, '12', NULL, 1, 1, NULL);
+INSERT INTO produto (id, atualizacao, descricao, legado, nome, produtoanterior, versao, fabricante_id, fornecedor_id, licenciamento_id, datalancamento) VALUES (4, false, 'IE8', false, 'Internet Explorer', NULL, '8', NULL, 2, 1, NULL);
+INSERT INTO produto (id, atualizacao, descricao, legado, nome, produtoanterior, versao, fabricante_id, fornecedor_id, licenciamento_id, datalancamento) VALUES (5, false, 'Google Chrome', false, 'Chrome', NULL, '27', NULL, 3, 1, NULL);
+INSERT INTO produto (id, atualizacao, descricao, legado, nome, produtoanterior, versao, fabricante_id, fornecedor_id, licenciamento_id, datalancamento) VALUES (6, false, 'FireX', false, 'FireX', NULL, '13', NULL, 1, 1, NULL);
+INSERT INTO produto (id, atualizacao, descricao, legado, nome, produtoanterior, versao, fabricante_id, fornecedor_id, licenciamento_id, datalancamento) VALUES (7, false, 'Fire', false, 'Fire', NULL, '14', NULL, 1, 1, NULL);
+INSERT INTO produto (id, atualizacao, descricao, legado, nome, produtoanterior, versao, fabricante_id, fornecedor_id, licenciamento_id, datalancamento) VALUES (15, false, 'xxxxxx', false, 'xxxxxxx', NULL, 'xxxxxxxx', 1, NULL, NULL, NULL);
+INSERT INTO produto (id, atualizacao, descricao, legado, nome, produtoanterior, versao, fabricante_id, fornecedor_id, licenciamento_id, datalancamento) VALUES (16, false, 'xxxxxxxx', false, 'xxxxxx', NULL, 'xxxxxx', 1, NULL, NULL, NULL);
+INSERT INTO produto (id, atualizacao, descricao, legado, nome, produtoanterior, versao, fabricante_id, fornecedor_id, licenciamento_id, datalancamento) VALUES (17, false, 'Java 1.4', false, 'Java', NULL, '1.4', 3, NULL, 1, '2010-01-01 00:00:00');
+INSERT INTO produto (id, atualizacao, descricao, legado, nome, produtoanterior, versao, fabricante_id, fornecedor_id, licenciamento_id, datalancamento) VALUES (18, true, 'Java 1.5', false, 'Java', 'Java - 1.4', '1.5', 3, NULL, 1, '2011-01-01 00:00:00');
+INSERT INTO produto (id, atualizacao, descricao, legado, nome, produtoanterior, versao, fabricante_id, fornecedor_id, licenciamento_id, datalancamento) VALUES (19, true, 'Java 1.6', false, 'Java', 'Java - 1.5', '1.6', 3, NULL, 1, '2012-01-01 00:00:00');
+INSERT INTO produto (id, atualizacao, descricao, legado, nome, produtoanterior, versao, fabricante_id, fornecedor_id, licenciamento_id, datalancamento) VALUES (20, true, 'Java 1.7', false, 'Java', 'Java - 1.6', '1.7', 3, NULL, 1, '2013-01-01 00:00:00');
+INSERT INTO produto (id, atualizacao, descricao, legado, nome, produtoanterior, versao, fabricante_id, fornecedor_id, licenciamento_id, datalancamento) VALUES (21, true, 'Java 1.8', false, 'Java', 'Java - 1.7', '1.8', 3, NULL, 1, '2014-01-01 00:00:00');
+
+
+--
+-- TOC entry 2015 (class 0 OID 38697)
+-- Dependencies: 150 2011 2024
+-- Data for Name: faseproduto; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO faseproduto (id, fase_id, produto_id) VALUES (1, 2, 1);
+INSERT INTO faseproduto (id, fase_id, produto_id) VALUES (2, 2, 2);
+INSERT INTO faseproduto (id, fase_id, produto_id) VALUES (3, 2, 3);
+INSERT INTO faseproduto (id, fase_id, produto_id) VALUES (4, 2, 4);
+INSERT INTO faseproduto (id, fase_id, produto_id) VALUES (5, 2, 5);
+INSERT INTO faseproduto (id, fase_id, produto_id) VALUES (6, 3, 3);
+INSERT INTO faseproduto (id, fase_id, produto_id) VALUES (7, 3, 4);
+INSERT INTO faseproduto (id, fase_id, produto_id) VALUES (8, 3, 5);
+INSERT INTO faseproduto (id, fase_id, produto_id) VALUES (9, 9, 5);
+INSERT INTO faseproduto (id, fase_id, produto_id) VALUES (10, 9, 3);
+INSERT INTO faseproduto (id, fase_id, produto_id) VALUES (11, 9, 4);
+INSERT INTO faseproduto (id, fase_id, produto_id) VALUES (12, 10, 3);
+INSERT INTO faseproduto (id, fase_id, produto_id) VALUES (13, 11, 3);
+INSERT INTO faseproduto (id, fase_id, produto_id) VALUES (14, 9, 6);
+INSERT INTO faseproduto (id, fase_id, produto_id) VALUES (15, 17, 1);
+INSERT INTO faseproduto (id, fase_id, produto_id) VALUES (16, 17, 2);
+INSERT INTO faseproduto (id, fase_id, produto_id) VALUES (17, 17, 15);
+INSERT INTO faseproduto (id, fase_id, produto_id) VALUES (18, 18, 1);
+INSERT INTO faseproduto (id, fase_id, produto_id) VALUES (19, 22, 1);
+INSERT INTO faseproduto (id, fase_id, produto_id) VALUES (20, 22, 2);
+INSERT INTO faseproduto (id, fase_id, produto_id) VALUES (21, 22, 15);
+INSERT INTO faseproduto (id, fase_id, produto_id) VALUES (22, 26, 1);
+INSERT INTO faseproduto (id, fase_id, produto_id) VALUES (23, 26, 2);
+INSERT INTO faseproduto (id, fase_id, produto_id) VALUES (24, 26, 15);
+INSERT INTO faseproduto (id, fase_id, produto_id) VALUES (25, 27, 1);
+
+
+--
+-- TOC entry 2017 (class 0 OID 38710)
+-- Dependencies: 152
+-- Data for Name: grupo; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO grupo (id, descricao, nome) VALUES (1, 'Grupo para os administradores do sistema.', 'ADMIN');
+INSERT INTO grupo (id, descricao, nome) VALUES (2, 'grupo 1', 'Grupo 1');
+
+
+--
+-- TOC entry 2018 (class 0 OID 38718)
+-- Dependencies: 153 2017
+-- Data for Name: grupo_perfis; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO grupo_perfis (grupo_id, perfis) VALUES (1, 5);
+INSERT INTO grupo_perfis (grupo_id, perfis) VALUES (2, 0);
+INSERT INTO grupo_perfis (grupo_id, perfis) VALUES (2, 1);
+INSERT INTO grupo_perfis (grupo_id, perfis) VALUES (2, 5);
+
+
+--
+-- TOC entry 2019 (class 0 OID 38721)
+-- Dependencies: 154 2011
+-- Data for Name: internalizacao; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO internalizacao (analisederiscos, analisederiscosjustificativa, aquisicaoitens, aquisicaonecessaria, aquisicaoresultado, capacitacao, capacitacaonecessarias, capacitacaorealizadas, restricao, restricaojustificativa, restricaoquempode, id) VALUES (0, 'nada', NULL, 0, NULL, 0, NULL, NULL, 1, 'Ele é o único com habilidade suficiente para isso.', 'Apenas robgol pode usar este tipo de bola', 3);
+INSERT INTO internalizacao (analisederiscos, analisederiscosjustificativa, aquisicaoitens, aquisicaonecessaria, aquisicaoresultado, capacitacao, capacitacaonecessarias, capacitacaorealizadas, restricao, restricaojustificativa, restricaoquempode, id) VALUES (0, 'NADA', NULL, 0, NULL, 0, NULL, NULL, 1, 'TTTTTTT', 'TTTTTTT', 10);
+INSERT INTO internalizacao (analisederiscos, analisederiscosjustificativa, aquisicaoitens, aquisicaonecessaria, aquisicaoresultado, capacitacao, capacitacaonecessarias, capacitacaorealizadas, restricao, restricaojustificativa, restricaoquempode, id) VALUES (0, 'H67JUJYJTJUUT', NULL, 0, NULL, 0, NULL, NULL, 0, NULL, NULL, 18);
+INSERT INTO internalizacao (analisederiscos, analisederiscosjustificativa, aquisicaoitens, aquisicaonecessaria, aquisicaoresultado, capacitacao, capacitacaonecessarias, capacitacaorealizadas, restricao, restricaojustificativa, restricaoquempode, id) VALUES (NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 24);
+INSERT INTO internalizacao (analisederiscos, analisederiscosjustificativa, aquisicaoitens, aquisicaonecessaria, aquisicaoresultado, capacitacao, capacitacaonecessarias, capacitacaorealizadas, restricao, restricaojustificativa, restricaoquempode, id) VALUES (0, 'cgfbfgbnfgngnhg', NULL, 0, NULL, 0, NULL, NULL, 0, NULL, NULL, 27);
+
+
+--
+-- TOC entry 2021 (class 0 OID 38737)
+-- Dependencies: 156 2011 2030
+-- Data for Name: observacao; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO observacao (id, data, observacao, fase_id, usuario_id) VALUES (1, '2014-04-09 09:36:21.393', 'Apenas observando como ficou legal.', 1, 2);
+INSERT INTO observacao (id, data, observacao, fase_id, usuario_id) VALUES (2, '2014-04-09 00:00:00', 'XXXXX', 6, 2);
+
+
+--
+-- TOC entry 2023 (class 0 OID 38753)
+-- Dependencies: 158
+-- Data for Name: plataformatecnologica; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO plataformatecnologica (id, descricao, nome) VALUES (1, 'Plataforma 1', 'Ubuntu 12');
+INSERT INTO plataformatecnologica (id, descricao, nome) VALUES (2, 'Plataforma 2', 'Windows 97');
+INSERT INTO plataformatecnologica (id, descricao, nome) VALUES (3, 'Plataforma 3', 'MacOSX');
+INSERT INTO plataformatecnologica (id, descricao, nome) VALUES (4, 'tttttt', 'tttt');
+
+
+--
+-- TOC entry 2028 (class 0 OID 38790)
+-- Dependencies: 163 2007 2024
+-- Data for Name: produto_categoria; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO produto_categoria (produto_id, categoria_id) VALUES (1, 1);
+INSERT INTO produto_categoria (produto_id, categoria_id) VALUES (2, 1);
+INSERT INTO produto_categoria (produto_id, categoria_id) VALUES (2, 2);
+INSERT INTO produto_categoria (produto_id, categoria_id) VALUES (3, 3);
+INSERT INTO produto_categoria (produto_id, categoria_id) VALUES (4, 3);
+INSERT INTO produto_categoria (produto_id, categoria_id) VALUES (5, 3);
+INSERT INTO produto_categoria (produto_id, categoria_id) VALUES (6, 3);
+INSERT INTO produto_categoria (produto_id, categoria_id) VALUES (7, 3);
+INSERT INTO produto_categoria (produto_id, categoria_id) VALUES (15, 1);
+INSERT INTO produto_categoria (produto_id, categoria_id) VALUES (16, 1);
+INSERT INTO produto_categoria (produto_id, categoria_id) VALUES (17, 1);
+INSERT INTO produto_categoria (produto_id, categoria_id) VALUES (18, 1);
+INSERT INTO produto_categoria (produto_id, categoria_id) VALUES (19, 1);
+INSERT INTO produto_categoria (produto_id, categoria_id) VALUES (20, 1);
+INSERT INTO produto_categoria (produto_id, categoria_id) VALUES (21, 1);
+
+
+--
+-- TOC entry 2029 (class 0 OID 38793)
+-- Dependencies: 164 2023 2024
+-- Data for Name: produto_plataforma_tecnologica; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO produto_plataforma_tecnologica (produto_id, plataforma_tecnologica_id) VALUES (1, 1);
+INSERT INTO produto_plataforma_tecnologica (produto_id, plataforma_tecnologica_id) VALUES (1, 2);
+INSERT INTO produto_plataforma_tecnologica (produto_id, plataforma_tecnologica_id) VALUES (1, 3);
+
+
+--
+-- TOC entry 2025 (class 0 OID 38769)
+-- Dependencies: 160 2011
+-- Data for Name: prospeccao; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO prospeccao (testes, id) VALUES ('Os testes realizados foram feitos na regional Salvador em laboratório isolado. Foram averiguados testes de blablablabla. Maiores detalhes sobre os testes realizados podem ser encontrados em Arquivo1.odt.', 2);
+INSERT INTO prospeccao (testes, id) VALUES ('TTTTT', 9);
+INSERT INTO prospeccao (testes, id) VALUES ('FGWE GRTHRTH', 17);
+INSERT INTO prospeccao (testes, id) VALUES (NULL, 23);
+INSERT INTO prospeccao (testes, id) VALUES ('dfgergrtghr', 22);
+INSERT INTO prospeccao (testes, id) VALUES ('thrtshrtshrtsh', 26);
+
+
+--
+-- TOC entry 2026 (class 0 OID 38774)
+-- Dependencies: 161 2011
+-- Data for Name: sustentacao; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO sustentacao (analisederiscos, analisederiscosjustificativa, aquisicaoitens, aquisicaonecessaria, aquisicaoresultado, capacitacao, capacitacaonecessarias, capacitacaorealizadas, restricao, restricaojustificativa, restricaoquempode, id) VALUES (0, 'nada', NULL, 0, NULL, 0, NULL, NULL, 1, 'Ele é o único com habilidade suficiente para isso.', 'Apenas robgol pode usar este tipo de bola', 4);
+INSERT INTO sustentacao (analisederiscos, analisederiscosjustificativa, aquisicaoitens, aquisicaonecessaria, aquisicaoresultado, capacitacao, capacitacaonecessarias, capacitacaorealizadas, restricao, restricaojustificativa, restricaoquempode, id) VALUES (0, 'NADA', NULL, 0, NULL, 0, NULL, NULL, 1, 'TTTTT', 'TTTTTT', 11);
+INSERT INTO sustentacao (analisederiscos, analisederiscosjustificativa, aquisicaoitens, aquisicaonecessaria, aquisicaoresultado, capacitacao, capacitacaonecessarias, capacitacaorealizadas, restricao, restricaojustificativa, restricaoquempode, id) VALUES (NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 19);
+INSERT INTO sustentacao (analisederiscos, analisederiscosjustificativa, aquisicaoitens, aquisicaonecessaria, aquisicaoresultado, capacitacao, capacitacaonecessarias, capacitacaorealizadas, restricao, restricaojustificativa, restricaoquempode, id) VALUES (NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 20);
+INSERT INTO sustentacao (analisederiscos, analisederiscosjustificativa, aquisicaoitens, aquisicaonecessaria, aquisicaoresultado, capacitacao, capacitacaonecessarias, capacitacaorealizadas, restricao, restricaojustificativa, restricaoquempode, id) VALUES (NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 28);
+
+
+--
+-- TOC entry 2031 (class 0 OID 38804)
+-- Dependencies: 166 2017 2030
+-- Data for Name: usuario_grupo; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO usuario_grupo (usuario_id, grupo_id) VALUES (1, 1);
+INSERT INTO usuario_grupo (usuario_id, grupo_id) VALUES (2, 2);
+
+
+-- Completed on 2014-05-07 12:11:29 BRT
+
+--
+-- PostgreSQL database dump complete
+--
+

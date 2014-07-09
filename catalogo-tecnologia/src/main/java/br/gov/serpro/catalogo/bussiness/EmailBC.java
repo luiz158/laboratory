@@ -113,76 +113,76 @@ public class EmailBC{
 	}
 	
 	private void enviarEmail(String para, String titulo, String corpo){				
-		Properties properties = System.getProperties();
-		properties.setProperty("mail.smtp.host", HOST);
-		Session session = Session.getInstance(properties, null);	
-		try {
-			MimeMessage message = new MimeMessage(session);
-			message.setFrom(new InternetAddress(FROM));
-			message.addRecipient(Message.RecipientType.TO, new InternetAddress(para));
-			message.setSubject(titulo);
-			message.setText(corpo);
-			Transport transport = session.getTransport(PROTOCOL);
-			transport.connect();
-			if(!config.isDebug()){
-				transport.sendMessage(message, message.getAllRecipients());
-			}else{
-				logger.warn("Enviaria e-mail: "+para);
-				logger.warn(corpo);
-			}
-			transport.close();
-			logger.debug("Enviando finalizado");
-		} catch (MessagingException mex) {
-			mex.printStackTrace();
-		}
+//		Properties properties = System.getProperties();
+//		properties.setProperty("mail.smtp.host", HOST);
+//		Session session = Session.getInstance(properties, null);	
+//		try {
+//			MimeMessage message = new MimeMessage(session);
+//			message.setFrom(new InternetAddress(FROM));
+//			message.addRecipient(Message.RecipientType.TO, new InternetAddress(para));
+//			message.setSubject(titulo);
+//			message.setText(corpo);
+//			Transport transport = session.getTransport(PROTOCOL);
+//			transport.connect();
+//			if(!config.isDebug()){
+//				transport.sendMessage(message, message.getAllRecipients());
+//			}else{
+//				logger.warn("Enviaria e-mail: "+para);
+//				logger.warn(corpo);
+//			}
+//			transport.close();
+//			logger.debug("Enviando finalizado");
+//		} catch (MessagingException mex) {
+//			mex.printStackTrace();
+//		}
 	}
 	
 	private void enviarEmail(List<String> para, String titulo, String corpo){	
-		Properties properties = System.getProperties();
-		properties.setProperty("mail.smtp.host", HOST);
-		Session session = Session.getInstance(properties, null);	
-		try {
-			MimeMessage message = new MimeMessage(session);
-			message.setFrom(new InternetAddress(FROM));
-			for (String email : para) {
-				message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
-			}			
-			message.setSubject(titulo);
-			message.setText(corpo);
-			Transport transport = session.getTransport(PROTOCOL);
-			transport.connect();
-			if(!config.isDebug()){
-				transport.sendMessage(message, message.getAllRecipients());
-			}else{
-				logger.warn("Enviaria e-mail: "+para);
-				logger.warn(corpo);
-			}
-			transport.close();
-			logger.debug("Enviando finalizado");
-		} catch (MessagingException mex) {
-			mex.printStackTrace();
-		}
+//		Properties properties = System.getProperties();
+//		properties.setProperty("mail.smtp.host", HOST);
+//		Session session = Session.getInstance(properties, null);	
+//		try {
+//			MimeMessage message = new MimeMessage(session);
+//			message.setFrom(new InternetAddress(FROM));
+//			for (String email : para) {
+//				message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
+//			}			
+//			message.setSubject(titulo);
+//			message.setText(corpo);
+//			Transport transport = session.getTransport(PROTOCOL);
+//			transport.connect();
+//			if(!config.isDebug()){
+//				transport.sendMessage(message, message.getAllRecipients());
+//			}else{
+//				logger.warn("Enviaria e-mail: "+para);
+//				logger.warn(corpo);
+//			}
+//			transport.close();
+//			logger.debug("Enviando finalizado");
+//		} catch (MessagingException mex) {
+//			mex.printStackTrace();
+//		}
 	}
 	
 	
 	private void enviarEmailMembrosInteressados(Fase fase, OPERACAO operacao){
-		List<String> emails = new ArrayList<String>();
-		List<FaseMembro> membros =  faseMemebroDAO.membrosDaFase(fase);
-		for (FaseMembro f : membros) {
-			emails.add(f.getUser().getEmail());
-		}
-		
-		List<FaseInteressado> interessados =  faseInteressadoDAO.interessados(fase);
-		for (FaseInteressado f : interessados) {
-			emails.add(f.getUser().getEmail());
-		}
-		
-		if (!emails.isEmpty()) {
-			enviarEmail(
-					emails,
-					getAssunto("Ocorreram mudanças em uma "+ fase.getFase().name()),
-					gerarTextoMembrosInteressados(fase));
-		}
+//		List<String> emails = new ArrayList<String>();
+//		List<FaseMembro> membros =  faseMemebroDAO.membrosDaFase(fase);
+//		for (FaseMembro f : membros) {
+//			emails.add(f.getUser().getEmail());
+//		}
+//		
+//		List<FaseInteressado> interessados =  faseInteressadoDAO.interessados(fase);
+//		for (FaseInteressado f : interessados) {
+//			emails.add(f.getUser().getEmail());
+//		}
+//		
+//		if (!emails.isEmpty()) {
+//			enviarEmail(
+//					emails,
+//					getAssunto("Ocorreram mudanças em uma "+ fase.getFase().name()),
+//					gerarTextoMembrosInteressados(fase));
+//		}
 		
 	}
 

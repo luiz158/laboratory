@@ -199,7 +199,7 @@ public class FaseBC {
 			idString = "0" + idString;
 		}
 		
-		return idString+format.format(new Date());
+		return format.format(new Date())+idString;
 	}
 	
 	public Fase salvar(Analise fase) {

@@ -20,7 +20,6 @@
             apenas uma peça no conjunto de procedimentos que garantem uma boa auditoria, apenas o uso do componente não é suficiente
             em casos de ações judiciais, a confiabialidade e invioalabilidade devem ser garantidas para que essas informações sejam
             consideradas relevantes.
-
         </para>
         <para>
             O Demoiselle Audit é dividido em três módulos e uma implementação de um dashboard para auxilio no desenvolvimento.
@@ -88,41 +87,17 @@
                 </caption>
             </mediaobject>
         </para>
-        <para>
-            Trilha
-        </para>
-        <para>
-            <mediaobject>
-                <imageobject role="fo">
-                    <imagedata fileref="images/parsertamanhoreduzido.png"
-                                                   align="center" format="PNG" scalefit="1" width="75%" />
-                </imageobject>
-                <imageobject role="html">
-                    <imagedata fileref="images/parsertamanhoreduzido.png"
-                                                   align="center" format="PNG" scalefit="1" width="75%" />
-                </imageobject>
-                <caption>
-                    <para>Modelo de Funcionamento do Parser.
-                    </para>
-                </caption>
-            </mediaobject>
-        </para>
      </preface>
-
 
     <!-- índice -->
     <toc />
 
     <!-- capítulos -->
-
-    <xi:include href="core.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
     <xi:include href="auditors.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
     <xi:include href="processors.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
     <xi:include href="configuracao.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
-
-    <xi:include href="colaboracao.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+    <xi:include href="exemplo.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+    <xi:include href="recomendacoes.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
     <xi:include href="releasenotes.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
-
-    <xi:include href="quickstart.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 
 </book>

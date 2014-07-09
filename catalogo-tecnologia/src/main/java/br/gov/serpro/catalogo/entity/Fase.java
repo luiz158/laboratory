@@ -48,6 +48,8 @@ public class Fase {
 	@Column(length=2000)
 	private String objetivo;
 
+	private Date dataCriacao = new Date();
+	
 	private Date dataRealizacao;
 	
 	private String unidadeGestora;
@@ -257,6 +259,7 @@ public class Fase {
 	public void setExecutarProximaFase(Integer executarProximaFase) {
 		this.executarProximaFase = executarProximaFase;
 	}
+
 
 	public void setIdentificador(String identificador) {
 		this.identificador = identificador;
