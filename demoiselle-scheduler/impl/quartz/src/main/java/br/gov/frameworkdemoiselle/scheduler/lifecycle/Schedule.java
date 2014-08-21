@@ -33,18 +33,17 @@ public @interface Schedule {
 
     public String cron();
 
-    public String second() default "0";
-
-    public String minute() default "0";
-
-    public String hour() default "0";
-
-    public String dayOfMonth() default "*";
-
-    public String month() default "*";
-
-    public String dayOfWeek() default "*";
-
-    public String year() default "*";
-
+//    public String second() default "*";
+//
+//    public String minute() default "*";
+//
+//    public String hour() default "*";
+//
+//    public String dayOfMonth() default "*";
+//
+//    public String month() default "*";
+//
+//    public String dayOfWeek() default "*";
+//
+//    public String year() default "*";
 }

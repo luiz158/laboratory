@@ -59,21 +59,11 @@ public abstract class AbstractLifecycleScheduler<A extends Annotation> implement
     private List<AnnotatedMethodProcessor> processors = Collections
             .synchronizedList(new ArrayList<AnnotatedMethodProcessor>());
 
-    private transient static ResourceBundle bundle;
-
-    Scheduler scheduler;
+    protected Scheduler scheduler;
 
     protected abstract Logger getLogger();
 
     private final static String DEMOISELLE_JOB = "DEMOISELLE_JOB";
-
-    protected static ResourceBundle getBundle() {
-        if (bundle == null) {
-            bundle = Beans.getReference(ResourceBundle.class, new NameQualifier("demoiselle-core-bundle"));
-        }
-
-        return bundle;
-    }
 
     protected <T> AnnotatedMethodProcessor<T> newProcessorInstance(AnnotatedMethod<T> annotatedMethod) {
 
@@ -103,8 +93,6 @@ public abstract class AbstractLifecycleScheduler<A extends Annotation> implement
     @SuppressWarnings({"unchecked", "rawtypes"})
     protected synchronized void proccessEvent() {
 
-        getLogger().debug(getBundle().getString("executing-all", getAnnotationClass().getSimpleName()));
-
         Collections.sort(processors);
         Exception failure = null;
 
@@ -125,7 +113,7 @@ public abstract class AbstractLifecycleScheduler<A extends Annotation> implement
                     return;
                 }
 
-                JobDetail job = newJob(CdiJob.class).usingJobData(DEMOISELLE_JOB, jobClass.getName()).build();
+                JobDetail job = newJob(CdiJob.class).usingJobData(DEMOISELLE_JOB, processor.getAnnotatedMethod().toString()).build();
                 Trigger trigger = newTrigger().withSchedule(cronSchedule(schedule.cron())).build();
                 scheduler.scheduleJob(job, trigger);
 

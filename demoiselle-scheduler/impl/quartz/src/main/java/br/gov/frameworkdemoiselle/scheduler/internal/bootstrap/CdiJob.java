@@ -56,24 +56,28 @@ public class CdiJob implements org.quartz.Job {
     public void execute(JobExecutionContext context) {
         try {
 
-            startContexts();
-
             JobDataMap jobData = context.getJobDetail().getJobDataMap();
-            String className = jobData.getString(DEMOISELLE_JOB);
-            System.out.println(className);
+            String source = jobData.getString(DEMOISELLE_JOB);
+            String className = getClassName(source);
+            String methodName = getMethodName(source);
 
-            Class<Serializable> jobClass = (Class<Serializable>) Class.forName(className).asSubclass(Serializable.class);
+            if (!className.isEmpty() && !methodName.isEmpty()) {
 
-            BeanManager bm = Beans.getBeanManager();
-            Set<Bean<?>> jobBeans = bm.getBeans(jobClass);
-            Bean<?> jobBean = bm.resolve(jobBeans);
-            CreationalContext c = bm.createCreationalContext(jobBean);
-            Serializable job = (Serializable) bm.getReference(jobBean, Serializable.class, c);
+                Class<Serializable> jobClass = (Class<Serializable>) Class.forName(className).asSubclass(Serializable.class);
 
-            Method method = jobClass.getMethod("insertCDI");
-            method.invoke(job);
-
-            stopContexts();
+                BeanManager bm = Beans.getBeanManager();
+                Set<Bean<?>> jobBeans = bm.getBeans(jobClass);
+                Bean<?> jobBean = bm.resolve(jobBeans);
+                CreationalContext c = bm.createCreationalContext(jobBean);
+                Serializable job = (Serializable) bm.getReference(jobBean, Serializable.class, c);
+                Method method = jobClass.getMethod(methodName);
+                try {
+                    startContexts();
+                    method.invoke(job);
+                } finally {
+                    stopContexts();
+                }
+            }
 
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(CdiJob.class.getName()).log(Level.SEVERE, null, ex);
@@ -88,6 +92,28 @@ public class CdiJob implements org.quartz.Job {
         } catch (InvocationTargetException ex) {
             Logger.getLogger(CdiJob.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private String getClassName(String source) {
+        String[] trash = source.split(" ");
+        String[] array = trash[trash.length - 1].split("\\.");
+        for (String string : array) {
+            if (string.contains("()")) {
+                return trash[trash.length - 1].replace("." + string, "");
+            }
+        }
+        return "";
+    }
+
+    private String getMethodName(String source) {
+        String[] trash = source.split(" ");
+        String[] array = trash[trash.length - 1].split("\\.");
+        for (String string : array) {
+            if (string.contains("()")) {
+                return string.replace("()", "");
+            }
+        }
+        return "";
     }
 
     private void startContexts() {
