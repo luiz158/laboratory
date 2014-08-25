@@ -5,3 +5,6 @@
 /demoiselle-easyqueryfilter/target/
 /examples/bookmark-audit/target/
 /trololo/target/
+/demoiselle-scheduler/impl/SchedulerManager/target/
+/demoiselle-scheduler/impl/quartz/target/
+/demoiselle-scheduler/impl/manager/target/

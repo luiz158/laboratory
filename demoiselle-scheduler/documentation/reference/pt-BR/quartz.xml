@@ -11,18 +11,8 @@
     <section>
         <title>Conceitos</title>
         <para>
-            Pedaços
-            <itemizedlist>
-                <listitem>
-                    Core
-                </listitem>
-                <listitem>
-                    scheduleror
-                </listitem>
-                <listitem>
-                    Processor
-                </listitem>
-            </itemizedlist>
+            Quartz
+
         </para>
         <para>
 
