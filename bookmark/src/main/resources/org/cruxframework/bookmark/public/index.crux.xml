@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:c="http://www.cruxframework.org/crux" 
+	xmlns:crux="http://www.cruxframework.org/crux/widgets"
+	xmlns:gwt="http://www.cruxframework.org/crux/gwt"
+	xmlns:faces="http://www.cruxframework.org/crux/smart-faces">
+
+	
+	<head>
+		<title>Bookmark</title>
+	</head>
+	
+	<body>
+		<script type="text/javascript" src="../bookmark/bookmark.nocache.js"></script>
+		<c:screen useView="**/views/*" 
+			smallViewport="user-scalable=no, width=320" 
+			largeViewport="user-scalable=no, width=device-width, height=device-height"
+			useResource="smartFacesResources, xStandardResources, bookmarkResources" 
+			height="100%"
+			title="${commonMessages.title}"
+			useController="indexController"
+			onActivate="indexController.onActivate"/>
+		<crux:simpleViewContainer id="header" />
+		<crux:simpleViewContainer id="container" styleName="container"/>
+	</body>
+</html>

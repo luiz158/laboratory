@@ -1,0 +1,43 @@
+<v:view 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:v="http://www.cruxframework.org/view" 
+	xmlns:core="http://www.cruxframework.org/crux" 
+	xmlns:crux="http://www.cruxframework.org/crux/widgets"
+	xmlns:gwt="http://www.cruxframework.org/crux/gwt"
+	xmlns:faces="http://www.cruxframework.org/crux/smart-faces" 
+	onActivate="listBookmarkController.onActivate"
+	useController="listBookmarkController"
+	useDataSource="bookmarkDS"> 
+
+		<crux:styledPanel  id="outerPanel">		
+			<gwt:flowPanel id="wrapper">
+				
+				<!-- 'New' and 'Delete' buttons  -->
+				<faces:navPanel id="commandButtonNav" styleName="header-menu">
+					<crux:button id="bookmarkAddButton" text="${commonMessages.listNew}" onSelect="listBookmarkController.add"/>
+					<crux:button id="bookmarkDeleteButton" text="${commonMessages.listDelete}" onSelect="listBookmarkController.delete"/>
+				</faces:navPanel>
+				
+				<!-- Listing grid -->
+				<crux:adaptiveGrid id="gridSample" width="100%" styleName="grid"
+					dataSource="bookmarkDS" rowSelection="multipleCheckBox"> 
+					<crux:largeColumns>
+						<crux:dataColumn key="id" label="${commonMessages.listId}"/>
+						<crux:dataColumn key="description" label="${commonMessages.listDescription}"/>
+						<crux:dataColumn key="link" label="${commonMessages.listLink}"/>
+						<crux:widgetColumn key="actionColumn" label="${commonMessages.listAction}">
+							<gwt:flowPanel id="btnGroup" styleName="action-btns">
+								<crux:button id="edit" onSelect="listBookmarkController.update"
+									text="${commonMessages.listEdit}"/>
+							</gwt:flowPanel>
+						</crux:widgetColumn>
+					</crux:largeColumns>
+					<crux:smallColumns>
+						<crux:dataColumn key="id" label="Id"/>
+					</crux:smallColumns>
+				</crux:adaptiveGrid>
+				
+			</gwt:flowPanel>			
+		</crux:styledPanel>
+		
+</v:view>
