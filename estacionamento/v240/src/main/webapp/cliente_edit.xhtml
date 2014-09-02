@@ -125,21 +125,21 @@
 					
 					
 					<h:outputLabel value="#{messages['cliente.label.foto']}:" for="foto"  styleClass="text-input" />
-					<p:fileUpload id="foto" fileUploadListener="#{clienteEditMB.handleFileUpload}" mode="advanced" dragDropSupport="false"
+					<p:fileUpload id="foto" fileUploadListener="#{clientePhotoUploader.handleFileUpload}" mode="advanced" dragDropSupport="false"
                    update="verFoto" auto="true" multiple="false" allowTypes="/(\.|\/)(jpe?g|png|jpg|gif)$/" label="#{messages['cliente.label.foto.select']}:" >                   
                    </p:fileUpload>
-                   
                    <p:message for="foto" />
 
-                   <p:graphicImage id="verFoto"  cache="false" value="#{clienteEditMB.fotoVisualizar}" /> 
-					
+                   <p:graphicImage id="verFoto" value="#{clientePhotoUploader.photoView}"/>
+                   <p:message for="verFoto" />
+				
                    
 				</h:panelGrid>
 			</p:fieldset>			
 			<p:fieldset legend="#{messages['menu.endereco']}" toggleable="true">
 				<p:pickList id="pickListEndereco" value="#{clienteEditMB.enderecoList}"
 					var="varEndereco" effect="bounce" itemValue="#{varEndereco}"
-					itemLabel="#{varEndereco.codigo}" converter="ConversorEndereco"
+					itemLabel="#{varEndereco.logradouro}" converter="ConversorEndereco"
 					showSourceControls="true" showTargetControls="true" showCheckbox="true"
 					showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" immediate="true">
 					<f:facet name="sourceCaption">#{messages['menu.endereco']}</f:facet>
