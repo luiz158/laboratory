@@ -23,14 +23,14 @@ import org.cruxframework.crux.core.client.rest.RestProxy;
 import org.cruxframework.crux.core.client.rest.RestProxy.TargetRestService;
 
 /**
- * Class description:
+ * Interface que define os métodos de serviço Rest.
  * @author bruno.rafael
  */
 @TargetRestService("bookmarkService")
 public interface BookmarkRestClient extends RestProxy
 {
-	void list(Callback<List<BookmarkDTO>> callback);
-	void add(String description, String link, Callback<String> callback);
-	void remove(List<BookmarkDTO> list, Callback<String> callback);
-	void updateData(Long id, String description, String link, Callback<String> callback);
+	void get(Callback<List<BookmarkDTO>> callback);
+	void add(BookmarkDTO dto, Callback<Void> callback);
+	void deleteBookmarks(List<Long> list, Callback<Void> callback);
+	void update(Long id, BookmarkDTO dto, Callback<Void> callback);
 }

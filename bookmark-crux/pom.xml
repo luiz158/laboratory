@@ -4,19 +4,20 @@
 	<groupId>org.cruxframework</groupId>
 	<artifactId>bookmark</artifactId>
 	<name>Bookmark</name>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<description>New Crux Generated Module</description>
-	
+
 	<!-- Parent Demoiselle -->
 	<parent>
 		<groupId>br.gov.frameworkdemoiselle</groupId>
-		<artifactId>demoiselle-jsf-parent</artifactId>
+		<artifactId>demoiselle-servlet-parent</artifactId>
 		<version>2.4.1</version>
 	</parent>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<cruxVersion>5.2-RC-SNAPSHOT</cruxVersion>
+		<cruxVersion>5.2.0-RC-SNAPSHOT</cruxVersion>
 		<webappDirectory>${project.build.directory}/${project.artifactId}</webappDirectory>
 		<webinf.folder>${webappDirectory}/WEB-INF/</webinf.folder>
 		<webinf.lib.folder>${webinf.folder}/lib/</webinf.lib.folder>
@@ -28,7 +29,7 @@
 	</properties>
 
 	<dependencies>
-		
+
 		<!-- Crux dependency -->
 		<dependency>
 			<groupId>org.cruxframework</groupId>
@@ -43,7 +44,13 @@
 		<dependency>
 			<groupId>org.cruxframework</groupId>
 			<artifactId>crux-widgets</artifactId>
-			<version>${cruxVersion}</version>
+			<version>5.2-RC-SNAPSHOT</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>crux-dev</artifactId>
+					<groupId>org.cruxframework</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.cruxframework.plugin</groupId>
@@ -63,7 +70,7 @@
 		<dependency>
 			<groupId>org.cruxframework</groupId>
 			<artifactId>crux-smart-faces</artifactId>
-			<version>1.1-RC-SNAPSHOT</version>
+			<version>1.1-SNAPSHOT</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>crux-dev</artifactId>
@@ -71,12 +78,11 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		
+
 		<!-- Demoiselle dependency -->
 		<dependency>
 			<groupId>br.gov.frameworkdemoiselle</groupId>
 			<artifactId>demoiselle-jpa</artifactId>
-			<version>2.4.1</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
@@ -86,28 +92,14 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.6.1</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>apache-log4j-extras</artifactId>
 			<version>1.2.17</version>
 			<type>zip</type>
 			<classifier>source-release</classifier>
 		</dependency>
-		
-		<!-- Database dependencies -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.hsqldb</groupId> -->
-<!-- 			<artifactId>hsqldb</artifactId> -->
-<!-- 			<version>2.3.2</version> -->
-<!-- 			<scope>provided</scope> -->
-<!-- 		</dependency> -->
-		
 	</dependencies>
+
 	<build>
 		<plugins>
 			<!-- Compile -->
@@ -165,39 +157,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			<!-- Generate the war -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>2.4</version>
-				<executions>
-					<execution>
-						<id>generate-war</id>
-						<phase>package</phase>
-						<goals>
-							<goal>war</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<webappDirectory>${webappDirectory}</webappDirectory>
-					<warSourceExcludes>WEB-INF/web.xml</warSourceExcludes>
-					<packagingExcludes>
-						**/gwt-dev*.jar,
-						**/gwt-codeserver*.jar,
-						**/gwt-user*.jar,
-						**/validation-api*.jar,
-						**/crux-dev*.jar,
-						**/crux-widgets*.jar,
-						**/crux-themes*.jar,
-						**/*.view.xml,
-						**/*.crux.xml,
-						**/*.template.xml,
-						**/*.offline.xml,
-						**/*.xdevice.xml
-					</packagingExcludes>
-				</configuration>
-			</plugin>
+
 			<!-- Run Crux Compiler -->
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
@@ -237,6 +197,11 @@
 									<jvmarg value="-Xmx768M" />
 									<jvmarg value="-Xms256M" />
 
+									<!-- <jvmarg value="-Xdebug" /> -->
+									<!-- <jvmarg value="-Xrunjdwp:transport=dt_socket,address=3331,server=y,suspend=y" 
+										/> -->
+
+
 									<arg value="-localWorkers" />
 									<arg value="2" />
 
@@ -252,9 +217,97 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.1.2</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<configuration>
+							<properties combine.self="override">
+							</properties>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 	</build>
 	<profiles>
+		<!-- Dev configurations -->
+		<profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-war-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>generate-war</id>
+								<phase>package</phase>
+								<goals>
+									<goal>war</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<webappDirectory>${webappDirectory}</webappDirectory>
+							<webXml>${webappDirectory}/WEB-INF/web.xml</webXml>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<!-- Prod configurations -->
+		<profile>
+			<id>prod</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-war-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>generate-war</id>
+								<phase>package</phase>
+								<goals>
+									<goal>war</goal>
+								</goals>
+							</execution>
+						</executions>
+<!-- 	O eclipse pode acusar erro em "combine.self="override"" pois a validadação 
+		de xml não reconhece a expressão. Para impedir o eclipse de acusar o erro 
+		basta remover o validade de xml em  project >properties > validation
+	 	e desmarcar XML validation -->
+						<configuration combine.self="override">
+							<webappDirectory>${webappDirectory}</webappDirectory>
+							<warSourceExcludes>WEB-INF/web.xml</warSourceExcludes>
+							<packagingExcludes>
+								**/gwt-dev*.jar,
+								**/gwt-codeserver*.jar,
+								**/gwt-user*.jar,
+								**/validation-api*.jar,
+								**/crux-dev*.jar,
+								**/crux-widgets*.jar,
+								**/crux-themes*.jar,
+								**/*.view.xml,
+								**/*.crux.xml,
+								**/*.template.xml,
+								**/*.offline.xml,
+								**/*.xdevice.xml
+							</packagingExcludes>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 		<!-- Run Schema Generator -->
 		<profile>
 			<id>generate-schemas</id>
@@ -280,41 +333,6 @@
 										<pathelement location="${sourceDir}" />
 									</classpath>
 								</generateSchemas>
-							</target>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-		<!-- Run Code Server -->
-		<profile>
-			<id>run-codeserver</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<artifactId>maven-antrun-plugin</artifactId>
-						<version>1.6</version>
-						<configuration>
-							<target>
-								<echo message="Starting Code server..." />
-								<java classname="org.cruxframework.crux.tools.codeserver.CodeServer"
-									fork="true">
-									<classpath>
-										<path refid="maven.compile.classpath" />
-										<pathelement location="${webinf.classes.folder}" />
-									</classpath>
-									<arg value="-sourceDir" />
-									<arg value="${sourceDir}" />
-
-									<arg value="-moduleName" />
-									<arg value="bookmark" />
-
-									<jvmarg value="-Xmx768M" />
-									<jvmarg value="-Xms256M" />
-								</java>
 							</target>
 						</configuration>
 					</plugin>

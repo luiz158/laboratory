@@ -23,7 +23,7 @@ import org.cruxframework.crux.core.client.screen.Screen;
 import org.cruxframework.crux.widgets.client.simplecontainer.SimpleViewContainer;
 
 /**
- * Class description:
+ * Descrição da classe: Esta classe dispara os eventos dos botões do Menu.
  * @author bruno.rafael
  */
 @Controller("menuController")

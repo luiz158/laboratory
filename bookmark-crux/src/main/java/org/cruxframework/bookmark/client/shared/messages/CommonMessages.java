@@ -55,6 +55,14 @@ public interface CommonMessages extends Messages
 	@DefaultMessage("Fill all fields.")
 	String fillMessage();
 	
+	@DefaultMessage("Successfully saved!")
+	String successfullyMessage();
+	
+	@DefaultMessage("Successfully removed!")
+	String removeMessage();
+	
+	
+	
 	@DefaultMessage("Welcome to the example application Bookmark. This is your starting point, feel free to change this application.")
 	String home();
 	

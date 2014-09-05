@@ -28,6 +28,7 @@ import org.cruxframework.crux.core.shared.rest.annotation.GET;
 import org.cruxframework.crux.core.shared.rest.annotation.POST;
 import org.cruxframework.crux.core.shared.rest.annotation.PUT;
 import org.cruxframework.crux.core.shared.rest.annotation.Path;
+import org.cruxframework.crux.core.shared.rest.annotation.PathParam;
 
 import br.gov.frameworkdemoiselle.lifecycle.Startup;
 import br.gov.frameworkdemoiselle.stereotype.BusinessController;
@@ -35,18 +36,21 @@ import br.gov.frameworkdemoiselle.template.DelegateCrud;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 
 /**
- * Class description: 
+ * Descrição da classe: Esta classe possui os métodos de acesso ao 
+ * banco de dados que são acessados pelos serviços Rest.: 
  * @author alexandre.costa
  */
 @BusinessController
 @RestService("bookmarkService")
-@Path("bookmark")
+@Path("bookmarks")
 public class BookmarkBC extends DelegateCrud<Bookmark, Long, BookmarkDAO>
 {
 	private static final long serialVersionUID = 1L;
 
-	private static final String DEFAULT_SUCCESS_MESSAGE = "Successfully saved!";
-
+	/**
+	 * Povoa o banco de dados no início da aplicação.
+	 * @see Startup
+	 */
 	@Startup
 	@Transactional
 	public void load()
@@ -65,48 +69,51 @@ public class BookmarkBC extends DelegateCrud<Bookmark, Long, BookmarkDAO>
 			insert(new Bookmark("Downloads", "http://download.frameworkdemoiselle.gov.br"));
 		}
 	}
-
-	@PUT
-	@Path("{bookmark}")
-	@Transactional
-	public String add(@FormParam("description") String description, @FormParam("link") String link)
-	{
-		insert(new Bookmark(description, link));
-		return DEFAULT_SUCCESS_MESSAGE;
-	}
-
-	@POST
-	@Path("{id}")
-	@Transactional
-	public String updateData(@FormParam("id") Long id, @FormParam("description") String description,
-			@FormParam("link") String link)
-	{
-		Bookmark bookmark = load(id);
-		bookmark.setDescription(description);
-		bookmark.setLink(link);
-		update(bookmark);
-		return DEFAULT_SUCCESS_MESSAGE;
-	}
-
-	@DELETE
-	@Transactional
-	public String remove(List<BookmarkDTO> list)
-	{
-		for (BookmarkDTO bookmarkDTO : list)
-		{
-			delete(bookmarkDTO.getId());
-		}
-
-		return DEFAULT_SUCCESS_MESSAGE;
-	}
-
+	
+	/******************************************
+	 * Métodos REST
+	 ******************************************/
+	
 	@GET
-	public List<BookmarkDTO> list()
+	public List<BookmarkDTO> get()
 	{
 		List<Bookmark> list = findAll();
 		List<BookmarkDTO> listDTO = parseDTO(list);
 		return listDTO;
 	}
+	
+	@DELETE
+	@Path("batchdelete")
+	@Transactional
+	public void deleteBookmarks(List<Long> ids)
+	{
+		for (Long id : ids)
+		{
+			delete(id);
+		}
+	}
+	
+	@POST
+	@Transactional
+	public void add(BookmarkDTO bookmark)
+	{
+		insert(new Bookmark(bookmark.getDescription(), bookmark.getLink()));
+	}
+	
+	@PUT
+	@Path("{id}")
+	@Transactional
+	public void update(@PathParam("id")Long id, BookmarkDTO dto)
+	{
+		Bookmark bookmark = load(id);
+		bookmark.setDescription(dto.getDescription());
+		bookmark.setLink(dto.getLink());
+		update(bookmark);
+	}
+	
+	/******************************************
+	 * Métodos auxiliares
+	 ******************************************/
 
 	private List<BookmarkDTO> parseDTO(List<Bookmark> list)
 	{

@@ -53,7 +53,7 @@
 	application distribution file. Don't remove those comments.
 	===========================================================================
 	-->
-<!-- 	<listener>
+	<listener>
         <listener-class>org.cruxframework.crux.core.server.DevModeInitializerListener</listener-class>
     </listener>
 	<filter>
@@ -80,7 +80,7 @@
     	<welcome-file>default.html</welcome-file>
     	<welcome-file>default.htm</welcome-file>
     	<welcome-file>default.jsp</welcome-file>
-    </welcome-file-list> -->
+    </welcome-file-list>
 	<!--antReplacementBlockEnd-->
 
 </web-app>

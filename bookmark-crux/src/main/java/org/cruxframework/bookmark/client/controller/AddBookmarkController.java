@@ -15,7 +15,6 @@
  */
 package org.cruxframework.bookmark.client.controller;
 
-import org.apache.commons.lang3.StringUtils;
 import org.cruxframework.bookmark.client.dto.BookmarkDTO;
 import org.cruxframework.bookmark.client.service.BookmarkRestClient;
 import org.cruxframework.bookmark.client.shared.messages.CommonMessages;
@@ -30,24 +29,30 @@ import org.cruxframework.crux.core.client.screen.views.ViewActivateEvent;
 import org.cruxframework.crux.widgets.client.dialog.FlatMessageBox;
 import org.cruxframework.crux.widgets.client.dialog.FlatMessageBox.MessageType;
 
+import com.google.gwt.user.client.Window;
+
 /**
- * Class description: 
+ * Descrição da classe: Está classe possui os métodos de controle da ação de adicionar um bookmark.
+ *  
  * @author bruno.rafael
  */
-
 @Controller("addBookmarkController")
 public class AddBookmarkController
 {
-	private static final String DEFAULT_FILL_FIELDS_MESSAGE = "Fill all fields.";
-
 	@Inject
 	public BookmarkRestClient bookmarkRest;
 	
 	@Inject
 	public CommonMessages message;
 
+	/**Este método recebe um evento de ativação de uma view. Se o event possuir
+	 * algum objeto como parâmetro, este método irar passar para a view as 
+	 * informações do objeto. 
+	 * 
+	 * @param event
+	 */
 	@Expose
-	public void onActivate(ViewActivateEvent event)
+	public void onActivate(ViewActivateEvent event) 
 	{
 		BookmarkDTO dto = event.getParameterObject();
 		if (dto != null)
@@ -57,26 +62,28 @@ public class AddBookmarkController
 		}
 	}
 
+	/**
+	 * Este método processa as informações de um view extraindo um DTO. Se o 
+	 * DTO possuir um Id, então o método executa um serviço rest de update. Se
+	 * o DTO não possuir um id, então o método faz uma chamada rest para inserir
+	 * um novo registro no banco. 
+	 */
 	@Expose
 	public void save()
 	{
 		BindableView<BookmarkDTO> bindableview = View.of(this);
 		BookmarkDTO dto = bindableview.getData();
 
-		String description = dto.getDescription();
-		String link = dto.getLink();
-		Long id = dto.getId();
-
-		if (!description.equals("") && !link.equals(""))
+		if (dto.isValid())
 		{
-			if (id != null)
+			if (dto.getId() != null)
 			{
-				bookmarkRest.updateData(id, description, link, new Callback<String>()
+				bookmarkRest.update(dto.getId(), dto, new Callback<Void>()
 				{
 					@Override
-					public void onSuccess(String result)
+					public void onSuccess(Void result)
 					{
-						FlatMessageBox.show(result, MessageType.SUCCESS);
+						FlatMessageBox.show(message.successfullyMessage(), MessageType.SUCCESS);
 					}
 
 					@Override
@@ -88,12 +95,12 @@ public class AddBookmarkController
 			}
 			else
 			{
-				bookmarkRest.add(description, link, new Callback<String>()
+				bookmarkRest.add(dto, new Callback<Void>()
 				{
 					@Override
-					public void onSuccess(String result)
+					public void onSuccess(Void result)
 					{
-						FlatMessageBox.show(result, MessageType.SUCCESS);
+						FlatMessageBox.show(message.successfullyMessage(), MessageType.SUCCESS);
 					}
 
 					@Override
@@ -106,7 +113,7 @@ public class AddBookmarkController
 		}
 		else
 		{
-			FlatMessageBox.show(DEFAULT_FILL_FIELDS_MESSAGE, MessageType.ERROR);
+			FlatMessageBox.show(message.fillMessage(), MessageType.ERROR);
 		}
 	}
 }

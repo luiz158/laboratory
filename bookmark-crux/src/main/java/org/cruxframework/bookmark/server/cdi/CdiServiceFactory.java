@@ -21,10 +21,15 @@ import org.cruxframework.crux.core.server.rest.core.registry.RestServiceFactoryI
 
 import br.gov.frameworkdemoiselle.util.Beans;
 
-/**
- * Class description: 
- * @author bruno.rafael
- */
+/* Descrição da classe: Esta classe é responsável pela integração dos
+ * frameworks Demoiselle e Crux.  Através dela, o serviço Rest do Crux
+ * captura o contexto do Demoiselle. Esta classe é uma extensão da 
+ * classe RestServiceFactoryImpl do Crux, que é um scanner de serviço Rest.
+ * Foi necessário configurar o Crux para usar essa classe a cada chamada 
+ * Rest, acrescentando no arquivo Crux.properties o código.
+ * restServiceFactory=org.cruxframework.bookmark.server.cdi.CdiServiceFactory 
+ */  
+
 public class CdiServiceFactory extends RestServiceFactoryImpl
 {
 	@Override
