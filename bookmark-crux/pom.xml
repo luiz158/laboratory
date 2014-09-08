@@ -44,13 +44,7 @@
 		<dependency>
 			<groupId>org.cruxframework</groupId>
 			<artifactId>crux-widgets</artifactId>
-			<version>5.2-RC-SNAPSHOT</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>crux-dev</artifactId>
-					<groupId>org.cruxframework</groupId>
-				</exclusion>
-			</exclusions>
+			<version>5.2.0-RC-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.cruxframework.plugin</groupId>
@@ -70,13 +64,7 @@
 		<dependency>
 			<groupId>org.cruxframework</groupId>
 			<artifactId>crux-smart-faces</artifactId>
-			<version>1.1-SNAPSHOT</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>crux-dev</artifactId>
-					<groupId>org.cruxframework</groupId>
-				</exclusion>
-			</exclusions>
+			<version>1.1.0-RC-SNAPSHOT</version>
 		</dependency>
 
 		<!-- Demoiselle dependency -->

@@ -23,7 +23,6 @@ import org.cruxframework.bookmark.server.domain.Bookmark;
 import org.cruxframework.bookmark.server.persistence.BookmarkDAO;
 import org.cruxframework.crux.core.server.rest.annotation.RestService;
 import org.cruxframework.crux.core.shared.rest.annotation.DELETE;
-import org.cruxframework.crux.core.shared.rest.annotation.FormParam;
 import org.cruxframework.crux.core.shared.rest.annotation.GET;
 import org.cruxframework.crux.core.shared.rest.annotation.POST;
 import org.cruxframework.crux.core.shared.rest.annotation.PUT;

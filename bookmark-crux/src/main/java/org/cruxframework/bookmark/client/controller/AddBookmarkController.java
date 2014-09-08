@@ -29,8 +29,6 @@ import org.cruxframework.crux.core.client.screen.views.ViewActivateEvent;
 import org.cruxframework.crux.widgets.client.dialog.FlatMessageBox;
 import org.cruxframework.crux.widgets.client.dialog.FlatMessageBox.MessageType;
 
-import com.google.gwt.user.client.Window;
-
 /**
  * Descrição da classe: Está classe possui os métodos de controle da ação de adicionar um bookmark.
  *  

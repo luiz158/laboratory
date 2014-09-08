@@ -37,6 +37,7 @@ import org.cruxframework.crux.widgets.client.event.SelectEvent;
 import org.cruxframework.crux.widgets.client.grid.DataRow;
 import org.cruxframework.crux.widgets.client.simplecontainer.SimpleViewContainer;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -120,7 +121,7 @@ public class ListBookmarkController
 	{
 		final DeviceAdaptiveGrid grid = gridView.gridSample();
 		final BookmarkDS bookmarkDS = (BookmarkDS) grid.getDataSource();
-
+		
 		bookmarkRest.get(new Callback<List<BookmarkDTO>>()
 		{
 			@Override
