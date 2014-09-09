@@ -21,6 +21,7 @@ import java.util.List;
 import org.cruxframework.bookmark.client.datasource.BookmarkDS;
 import org.cruxframework.bookmark.client.dto.BookmarkDTO;
 import org.cruxframework.bookmark.client.service.BookmarkRestClient;
+import org.cruxframework.bookmark.client.shared.messages.CommonMessages;
 import org.cruxframework.crux.core.client.Crux;
 import org.cruxframework.crux.core.client.controller.Controller;
 import org.cruxframework.crux.core.client.controller.Expose;
@@ -36,10 +37,12 @@ import org.cruxframework.crux.widgets.client.event.SelectEvent;
 import org.cruxframework.crux.widgets.client.grid.DataRow;
 import org.cruxframework.crux.widgets.client.simplecontainer.SimpleViewContainer;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * Class description:
+ * Descrição da classe: Está classe possui os métodos de controle da tela de listagem de bookmark.
+ * 
  * @author bruno.rafael
  */
 @Controller("listBookmarkController")
@@ -51,13 +54,18 @@ public class ListBookmarkController
 	@Inject
 	public BookmarkRestClient bookmarkRest;
 
+	@Inject
+	public CommonMessages message;
+	
 	@Expose
 	public void onActivate()
 	{
 		loadData();
 	}
-
 	
+	/**
+	 * Este método substitui a view que está na SimpleViewContainer container pela view addbookmark.
+	 */
 	@Expose
 	public void add()
 	{
@@ -65,26 +73,30 @@ public class ListBookmarkController
 		container.showView("addbookmark");
 	}
 	
+	/**
+	 * Este método processa quais são os registros marcados no checkbox da grid e 
+	 * executa o serviço rest para deletar os registros selecionados.
+	 */
 	@Expose
 	public void delete()
 	{
 		final DeviceAdaptiveGrid grid = gridView.gridSample();
 		List<DataRow> list = grid.getSelectedRows();
-		List<BookmarkDTO> listdto = new ArrayList<BookmarkDTO>();
+		List<Long> ids = new ArrayList<Long>();
 
 		for (DataRow dataRow : list)
 		{
 			BookmarkDTO dto = (BookmarkDTO) dataRow.getDataSourceRecord().getRecordObject();
-			listdto.add(dto);
+			ids.add(dto.getId());
 		}
 
-		bookmarkRest.remove(listdto, new Callback<String>()
+		bookmarkRest.deleteBookmarks(ids, new Callback<Void>()
 		{
 			@Override
-			public void onSuccess(String result)
+			public void onSuccess(Void result)
 			{
 				loadData();
-				FlatMessageBox.show(result, MessageType.SUCCESS);
+				FlatMessageBox.show(message.removeMessage(), MessageType.SUCCESS);
 			}
 
 			@Override
@@ -109,8 +121,8 @@ public class ListBookmarkController
 	{
 		final DeviceAdaptiveGrid grid = gridView.gridSample();
 		final BookmarkDS bookmarkDS = (BookmarkDS) grid.getDataSource();
-
-		bookmarkRest.list(new Callback<List<BookmarkDTO>>()
+		
+		bookmarkRest.get(new Callback<List<BookmarkDTO>>()
 		{
 			@Override
 			public void onSuccess(List<BookmarkDTO> result)

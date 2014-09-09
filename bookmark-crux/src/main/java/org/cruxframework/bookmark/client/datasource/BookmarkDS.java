@@ -23,7 +23,8 @@ import org.cruxframework.crux.core.client.datasource.annotation.DataSource;
 import org.cruxframework.crux.core.client.datasource.annotation.DataSourceRecordIdentifier;
 
 /**
- * Class description:
+ * Descrição da classe: Este DataSoucer provê a estrutura de um bookmarkDTO. 
+ * É utilizado pela view listbookmark para fornecer dados para a Grid.
  * @author bruno.rafael
  */
 @DataSource("bookmarkDS")

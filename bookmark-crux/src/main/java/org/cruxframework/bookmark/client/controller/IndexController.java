@@ -21,12 +21,17 @@ import org.cruxframework.crux.core.client.screen.Screen;
 import org.cruxframework.crux.widgets.client.simplecontainer.SimpleViewContainer;
 
 /**
- * Class description: 
- * @author bruno.rafael
+ * Descrição da classe: Está classe possui os métodos de controle da tela de index da aplicação.
+ *  
+ * @author bruno.rafael 
  */
 @Controller("indexController")
 public class IndexController
 {
+	/**
+	 * Este método carrega os SimpleViewContainer “heade” e “container” com as view 
+	 * “menu” e “homebookmark” respectivamente. 
+	 */
 	@Expose
 	public void onActivate()
 	{

@@ -20,7 +20,7 @@ import java.io.Serializable;
 import org.cruxframework.crux.core.client.dto.DataObject;
 
 /**
- * Class description:
+ * Descrição da classe: Classe de transferência de dado entre camadas da aplicação. 
  * @author bruno.rafael
  */
 @DataObject("bookmarkDTO")
@@ -85,5 +85,10 @@ public class BookmarkDTO implements Serializable
 		setId(id);
 		setDescription(description);
 		setLink(link);
+	}
+	
+	public boolean isValid()
+	{
+		return description != null && !description.trim().equals("") && link != null && !link.trim().equals("");
 	}
 }

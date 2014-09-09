@@ -19,12 +19,8 @@
 		
 	<!-- To enable superdevmode -->
 	<inherits name='org.cruxframework.crux.tools.codeserver.CruxCodeServer' />
-    <set-configuration-property name="devModeUrlWhitelistRegexp" value="http://(10\.1\.2\.177)(:\d+)?/.*" />
-<!-- 	<set-property name="user.agent" value="safari" />
-	<set-property name="device.features" value="largeDisplayMouse"/> -->
-    
-    <!-- Compilations options -->    
-<!--<set-property name="device.features" value="largeDisplayMouse"/>
-    <set-property name="device.features" value="smallDisplayTouch"/> -->
+	<set-property name="locale" value="en_US" />
+	<set-property name="user.agent" value="safari" />
+	<set-property name="device.features" value="largeDisplayMouse"/>
 
 </module>
