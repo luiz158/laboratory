@@ -9,22 +9,19 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 
-/**
- *
- * @author 70744416353
- */
-public class CreatePersistence {
+public class Domain {
 
-    public CreatePersistence(String dominio, PrintWriter out) {
+    public static void create(String dominio) {
 
         try {
             /*  first, get and initialize an engine  */
             VelocityEngine ve = new VelocityEngine();
             ve.init();
-            org.apache.velocity.Template t = ve.getTemplate("");
+            Template t = ve.getTemplate("helloworld.vm");
             /*  create a context and add data */
             VelocityContext context = new VelocityContext();
             context.put("name", "World");
@@ -33,9 +30,8 @@ public class CreatePersistence {
             t.merge(context, writer);
             /* show the World */
             System.out.println(writer.toString());
-
         } catch (Exception ex) {
-            Logger.getLogger(CreateDomain.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Domain.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

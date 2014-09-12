@@ -25,7 +25,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>br.gov.frameworkdemoiselle.drails.app</mainClass>
+                            <mainClass>org.demoiselle.drails.App</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
