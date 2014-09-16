@@ -35,14 +35,14 @@ public class Applications {
 
             if (!appDir.exists()) {
                 Runtime run = Runtime.getRuntime();
-                String command = mavenDir + "/mvn -DarchetypeGroupId=org.demoiselle.archetypes -DarchetypeArtifactId=demoiselle-jsf-jpa -DarchetypeVersion=" + Config.version + " -DarchetypeRepository=https://oss.sonatype.org/content/repositories/snapshots -DgroupId=org.demoiselle -DartifactId=" + nameApp + " -Dversion=1.0.0 -Dpackage=org.demoiselle." + nameApp + " -Dbasedir=" + demoiselleDir + " -Darchetype.interactive=false --batch-mode archetype:generate";
-                run.exec(command);
+                String command = mavenDir + "/mvn -DarchetypeGroupId=br.gov.frameworkdemoiselle.archetypes -DarchetypeArtifactId=demoiselle-jsf-jpa -DarchetypeVersion=" + Config.version + " -DarchetypeRepository=https://oss.sonatype.org/content/repositories/snapshots -DgroupId=org.demoiselle -DartifactId=" + nameApp + " -Dversion=1.0.0 -Dpackage=org.demoiselle." + nameApp + " -Dbasedir=" + demoiselleDir + " -Darchetype.interactive=false --batch-mode archetype:generate";
+                run.exec(command, null, demoiselleDir);
                 App.out.println("Criou o Projeto " + nameApp);
             } else {
                 App.out.println("Já existe " + nameApp);
             }
 
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             Logger.getLogger(Applications.class.getName()).log(Level.SEVERE, null, ex);
         }
 

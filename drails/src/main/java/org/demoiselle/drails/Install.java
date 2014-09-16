@@ -9,7 +9,7 @@ import java.io.File;
 
 public class Install {
 
-    public static void version(String version) {
+    protected static void version(String version) {
 
         File demoiselleDir = new File("/opt/demoiselle");
 

@@ -18,7 +18,7 @@ import org.apache.velocity.app.VelocityEngine;
  */
 public class Persistence {
 
-    public static void create(String dominio) {
+    protected static void create(String dominio) {
 
         try {
             /*  first, get and initialize an engine  */
@@ -27,6 +27,7 @@ public class Persistence {
             org.apache.velocity.Template t = ve.getTemplate("");
             /*  create a context and add data */
             VelocityContext context = new VelocityContext();
+
             context.put("name", "World");
             /* now render the template into a StringWriter */
             StringWriter writer = new StringWriter();

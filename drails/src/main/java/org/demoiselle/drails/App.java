@@ -57,60 +57,68 @@ public class App {
                 String[] param = line.split(" ");
                 String command = param[0].trim();
 
-                if (command.equalsIgnoreCase("install")) {
+                if (param.length > 1) {
 
-                }
+                    if (command.equalsIgnoreCase("install")) {
 
-                if (!line.isEmpty()) {
-                    if (command.equalsIgnoreCase("status")) {
-                        out.println("Informe os valores");
-                        out.println("Application: " + Config.nameApp);
-                        out.println("version: " + Config.version);
                     }
-                }
 
-                if (command.equalsIgnoreCase("create-app")) {
-                    if (Config.version == null || Config.version.isEmpty()) {
-                        out.println("Escolha a versão do Demoiselle: ");
-                    } else {
-                        Applications.newApp(param[1].trim());
-                        Config.nameApp = param[1].trim();
-                    }
-                }
-
-                if (!line.isEmpty()) {
-                    if (command.equalsIgnoreCase("application")) {
-                        if (Applications.existApps(param[1].trim())) {
-                            Config.nameApp = param[1].trim();
+                    if (!line.isEmpty()) {
+                        if (command.equalsIgnoreCase("status")) {
+                            out.println("Informe os valores");
+                            out.println("Application: " + Config.nameApp);
+                            out.println("version: " + Config.version);
                         }
-                        out.println("Aplicação não existe");
-                    }
-                }
-
-                if (!line.isEmpty()) {
-                    if (command.equalsIgnoreCase("version")) {
-                        Config.version = param[1].trim();
-                        out.println("version " + Config.version);
-                    }
-                }
-
-                if ((Config.nameApp != null && !Config.nameApp.isEmpty()) &&
-                    (Config.version != null && !Config.version.isEmpty())) {
-
-                    Config.save();
-
-                    for (Completer c : completors) {
-                        reader.removeCompleter(c);
                     }
 
-                    break;
-                }
+                    if (command.equalsIgnoreCase("create-app")) {
+                        if (Config.version == null || Config.version.isEmpty()) {
+                            out.println("Escolha a versão do Demoiselle: ");
+                        } else {
+                            if (param[1].trim() != null && !param[1].trim().isEmpty()) {
+                                Applications.newApp(param[1].trim());
+                                Config.nameApp = param[1].trim();
+                            } else {
+                                out.println("Escolha o nome do sistema");
+                            }
 
-                if (command.equalsIgnoreCase("exit")) {
-                    return;
-                }
+                        }
+                    }
 
-                out.flush();
+                    if (!line.isEmpty()) {
+                        if (command.equalsIgnoreCase("application")) {
+                            if (Applications.existApps(param[1].trim())) {
+                                Config.nameApp = param[1].trim();
+                            }
+                            out.println("Aplicação não existe");
+                        }
+                    }
+
+                    if (!line.isEmpty()) {
+                        if (command.equalsIgnoreCase("version")) {
+                            Config.version = param[1].trim();
+                            out.println("version " + Config.version);
+                        }
+                    }
+
+                    if ((Config.nameApp != null && !Config.nameApp.isEmpty()) &&
+                        (Config.version != null && !Config.version.isEmpty())) {
+
+                        Config.save();
+
+                        for (Completer c : completors) {
+                            reader.removeCompleter(c);
+                        }
+
+                        break;
+                    }
+
+                    if (command.equalsIgnoreCase("exit")) {
+                        return;
+                    }
+
+                    out.flush();
+                }
             }
         }
 
@@ -121,7 +129,7 @@ public class App {
                 new AggregateCompleter(
                         new ArgumentCompleter(new StringsCompleter("clean"), new NullCompleter()),
                         new ArgumentCompleter(new StringsCompleter("status"), new NullCompleter()),
-                        new ArgumentCompleter(new StringsCompleter("persistence"), new FileNameCompleter(), new NullCompleter()),
+                        new ArgumentCompleter(new StringsCompleter("persistence"), new StringsCompleter(Config.listDomains()), new NullCompleter()),
                         new ArgumentCompleter(new StringsCompleter("business"), new FileNameCompleter(), new NullCompleter()),
                         new ArgumentCompleter(new StringsCompleter("view"), new FileNameCompleter(), new NullCompleter()),
                         new ArgumentCompleter(new StringsCompleter("prime"), new FileNameCompleter(), new NullCompleter())
@@ -152,38 +160,24 @@ public class App {
                     }
                 }
                 if (command.equalsIgnoreCase("persistence")) {
-                    if (Validations.existsApp(Config.nameApp)) {
 
-                    }
                 }
                 if (command.equalsIgnoreCase("business")) {
-                    if (Validations.existsApp(Config.nameApp)) {
 
-                    }
                 }
                 if (command.equalsIgnoreCase("view")) {
-                    if (Validations.existsApp(Config.nameApp)) {
 
-                    }
                 }
                 if (command.equalsIgnoreCase("domain")) {
-                    if (Validations.existsApp(Config.nameApp)) {
 
-                    }
                 }
                 if (command.equalsIgnoreCase("prime")) {
-                    if (Validations.existsApp(Config.nameApp)) {
 
-                    }
                 }
                 if (command.equalsIgnoreCase("prime-mobile")) {
-                    if (Validations.existsApp(Config.nameApp)) {
-
-                    }
                 }
             }
-            out.flush();
         }
+        out.flush();
     }
-
 }

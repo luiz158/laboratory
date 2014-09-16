@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 
 public class Validations {
 
-    public static void installation() {
+    protected static void installation() {
 
         File demoiselleDir = new File("/opt/demoiselle");
 
@@ -37,12 +37,4 @@ public class Validations {
 
     }
 
-    public static boolean existsApp(String nameApp) {
-        if (nameApp.isEmpty()) {
-            App.out.print("Escolha uma app digitando: Use <tab>");
-            return false;
-        }
-        App.out.print("App " + nameApp);
-        return true;
-    }
 }

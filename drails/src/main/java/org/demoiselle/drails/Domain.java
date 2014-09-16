@@ -15,7 +15,7 @@ import org.apache.velocity.app.VelocityEngine;
 
 public class Domain {
 
-    public static void create(String dominio) {
+    protected static void create(String dominio) {
 
         try {
             /*  first, get and initialize an engine  */

@@ -10,7 +10,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -66,6 +68,27 @@ public class Config {
     protected static String[] listVersions() {
         File appsDir = new File("/opt/demoiselle/tool/drails/");
         return appsDir.list();
+    }
+
+    protected static String[] listDomains() {
+        File appsDir = new File("/opt/demoiselle/apps/" + nameApp + "/src/main/java");
+        List<String> result = listFiles(appsDir, new ArrayList<String>());
+        String[] listStrings = new String[result.size()];
+        return result.toArray(listStrings);
+    }
+
+    private static List<String> listFiles(File dir, List<String> filesName) {
+        File[] files = dir.listFiles();
+        for (File file : files) {
+            if (file.isDirectory()) {
+                if (file.getName().equalsIgnoreCase("domain")) {
+                    filesName.addAll(Arrays.asList(file.list()));
+                    return filesName;
+                }
+                listFiles(file, filesName);
+            }
+        }
+        return filesName;
     }
 
 }
