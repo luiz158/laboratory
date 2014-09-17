@@ -30,15 +30,15 @@ public class Applications {
                 }
             }
 
-            File appDir = new File("/opt/demoiselle/apps/" + Config.nameApp);
+            File appDir = new File("/opt/demoiselle/apps/" + Config.getNameApp());
 
             if (!appDir.exists()) {
                 Runtime run = Runtime.getRuntime();
-                String command = mavenDir + "/mvn -DarchetypeGroupId=br.gov.frameworkdemoiselle.archetypes -DarchetypeArtifactId=demoiselle-jsf-jpa -DarchetypeVersion=" + Config.version + " -DarchetypeRepository=https://oss.sonatype.org/content/repositories/snapshots -DgroupId=" + Config.packageApp + " -DartifactId=" + Config.nameApp + " -Dversion=1.0.0 -Dpackage=" + Config.packageApp + "." + Config.nameApp.toLowerCase() + " -Dbasedir=" + demoiselleDir + " -Darchetype.interactive=false --batch-mode archetype:generate";
+                String command = mavenDir + "/mvn -DarchetypeGroupId=br.gov.frameworkdemoiselle.archetypes -DarchetypeArtifactId=demoiselle-jsf-jpa -DarchetypeVersion=" + Config.getVersion() + " -DarchetypeRepository=https://oss.sonatype.org/content/repositories/snapshots -DgroupId=" + Config.getPackageApp() + " -DartifactId=" + Config.getNameApp() + " -Dversion=1.0.0 -Dpackage=" + Config.getPackageApp() + "." + Config.getNameApp().toLowerCase() + " -Dbasedir=" + demoiselleDir + " -Darchetype.interactive=false --batch-mode archetype:generate";
                 run.exec(command, null, demoiselleDir);
-                App.out.println("Criou o Projeto " + Config.nameApp);
+                App.out.println("Criou o Projeto " + Config.getNameApp());
             } else {
-                App.out.println("Já existe " + Config.nameApp);
+                App.out.println("Já existe " + Config.getNameApp());
             }
 
         } catch (IOException ex) {

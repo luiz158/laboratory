@@ -17,19 +17,15 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author 70744416353
- */
 public class Config {
 
     private static Properties properties;
-    protected static String configFileName = "config.properties";
-    protected static String pathDrails = "/opt/demoiselle/tool/drails/";
-    protected static String pathApps = "/opt/demoiselle/apps";
-    protected static String nameApp;
-    protected static String version;
-    protected static String packageApp;
+    private static String configFileName = "config.properties";
+    private static String pathDrails = "/opt/demoiselle/tool/drails/";
+    private static String pathApps = "/opt/demoiselle/apps";
+    private static String nameApp;
+    private static String version;
+    private static String packageApp;
 
     protected static void load() {
 
@@ -85,17 +81,84 @@ public class Config {
         }
     }
 
-//    private static List<String> listFiles(File dir, List<String> filesName) {
-//        File[] files = dir.listFiles();
-//        for (File file : files) {
-//            if (file.isDirectory()) {
-//                if (file.getName().equalsIgnoreCase("domain")) {
-//                    filesName.addAll(Arrays.asList(file.list()));
-//                    return filesName;
-//                }
-//                listFiles(file, filesName);
-//            }
-//        }
-//        return filesName;
-//    }
+    public static Properties getProperties() {
+        return properties;
+    }
+
+    public static void setProperties(Properties properties) {
+        Config.properties = properties;
+    }
+
+    public static String getConfigFileName() {
+        return configFileName;
+    }
+
+    public static void setConfigFileName(String configFileName) {
+        Config.configFileName = configFileName;
+    }
+
+    public static String getPathDrails() {
+        return pathDrails;
+    }
+
+    public static void setPathDrails(String pathDrails) {
+        Config.pathDrails = pathDrails;
+    }
+
+    public static String getPathApps() {
+        return pathApps;
+    }
+
+    public static void setPathApps(String pathApps) {
+        Config.pathApps = pathApps;
+    }
+
+    public static String getPathDomain() {
+        return new StringBuilder().append(pathApps).append("/").append(nameApp).append("/src/main/java/").append(packageApp.replace(".", "/")).append("/").append(nameApp.toLowerCase()).append("/domain/").toString();
+    }
+
+    public static String getPathPersistence() {
+        return new StringBuilder().append(pathApps).append("/").append(nameApp).append("/src/main/java/").append(packageApp.replace(".", "/")).append("/").append(nameApp.toLowerCase()).append("/persistence/").toString();
+    }
+
+    public static String getPathBusiness() {
+        return new StringBuilder().append(pathApps).append("/").append(nameApp).append("/src/main/java/").append(packageApp.replace(".", "/")).append("/").append(nameApp.toLowerCase()).append("/business/").toString();
+    }
+
+    public static String getPathView() {
+        return new StringBuilder().append(pathApps).append("/").append(nameApp).append("/src/main/java/").append(packageApp.replace(".", "/")).append("/").append(nameApp.toLowerCase()).append("/view/").toString();
+    }
+
+    public static String getPathPrime() {
+        return new StringBuilder().append(pathApps).append("/").append(nameApp).append("/src/main/java/").append(packageApp.replace(".", "/")).append("/").append(nameApp.toLowerCase()).append("/prime/").toString();
+    }
+
+    public static String getPathTemplates() {
+        return new StringBuilder().append(pathDrails).append("/").append(version).append("/templates/").toString();
+    }
+
+    public static String getNameApp() {
+        return nameApp;
+    }
+
+    public static void setNameApp(String nameApp) {
+        Config.nameApp = nameApp;
+    }
+
+    public static String getVersion() {
+        return version;
+    }
+
+    public static void setVersion(String version) {
+        Config.version = version;
+    }
+
+    public static String getPackageApp() {
+        return packageApp;
+    }
+
+    public static void setPackageApp(String packageApp) {
+        Config.packageApp = packageApp;
+    }
+
 }

@@ -28,10 +28,10 @@ public class Validations {
             }
         }
 
-        if (Config.nameApp != null && !Config.nameApp.isEmpty()) {
-            File appDir = new File("/opt/demoiselle/apps/" + Config.nameApp);
+        if (Config.getNameApp() != null && !Config.getNameApp().isEmpty()) {
+            File appDir = new File("/opt/demoiselle/apps/" + Config.getNameApp());
             if (!appDir.exists()) {
-                Config.nameApp = "";
+                Config.setNameApp("");
             }
         }
 

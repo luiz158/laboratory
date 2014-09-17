@@ -5,8 +5,9 @@
  */
 package org.demoiselle.drails;
 
-import java.io.PrintWriter;
+import java.io.FileWriter;
 import java.io.StringWriter;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.velocity.Template;
@@ -20,18 +21,22 @@ public class Domain {
         try {
             /*  first, get and initialize an engine  */
             VelocityEngine ve = new VelocityEngine();
+            Properties p = new Properties();
+            p.setProperty("file.resource.loader.path", Config.getPathTemplates());
+            ve.init(p);
 
-            Template t = ve.getTemplate("/opt/demoiselle/tool/drails/240/domain/pojo.java.vm");
+            Template t = ve.getTemplate("pojo.vm");
             /*  create a context and add data */
             VelocityContext context = new VelocityContext();
-            context.put("packageName", Config.packageApp + "/domain");
+            context.put("packageName", Config.getPackageApp());
             context.put("pojo", dominio);
             /* now render the template into a StringWriter */
             StringWriter writer = new StringWriter();
-            ve.init();
             t.merge(context, writer);
+            FileWriter fw = new FileWriter(Config.getPathDomain() + dominio + ".java");
+            fw.write(writer.toString());
+            fw.close();
             /* show the World */
-            System.out.println(writer.toString());
         } catch (Exception ex) {
             Logger.getLogger(Domain.class.getName()).log(Level.SEVERE, null, ex);
         }

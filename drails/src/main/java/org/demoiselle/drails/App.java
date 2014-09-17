@@ -38,9 +38,10 @@ public class App {
         reader.setBellEnabled(true);
         reader.setPrompt(ANSI.CYAN + "Drails> " + ANSI.DARK_WHITE);
 
-        if ((Config.nameApp == null || Config.version == null) ||
-            (Config.nameApp.isEmpty() || Config.version.isEmpty()) ||
-            (Config.packageApp.isEmpty() || Config.packageApp.isEmpty())) {
+        if ((Config.getNameApp() == null || Config.getVersion() == null) ||
+            (Config.getNameApp().isEmpty() || Config.getVersion().isEmpty()) ||
+            (Config.getPackageApp().isEmpty() || Config.getPackageApp().isEmpty())) {
+
             completors.add(
                     new AggregateCompleter(
                             new ArgumentCompleter(new StringsCompleter("create-app"), new NullCompleter()),
@@ -48,7 +49,7 @@ public class App {
                             new ArgumentCompleter(new StringsCompleter("application"), new StringsCompleter(Applications.listApps()), new NullCompleter()),
                             new ArgumentCompleter(new StringsCompleter("status"), new NullCompleter()),
                             new ArgumentCompleter(new StringsCompleter("install"), new NullCompleter()),
-                            new ArgumentCompleter(new StringsCompleter("version"), new StringsCompleter(Config.listVersions()), new NullCompleter())));
+                            new ArgumentCompleter(new StringsCompleter("getVersion"), new StringsCompleter(Config.listVersions()), new NullCompleter())));
 
             for (Completer c : completors) {
                 reader.addCompleter(c);
@@ -66,15 +67,15 @@ public class App {
                     }
 
                     if (command.equalsIgnoreCase("create-app")) {
-                        if (Config.version == null || Config.version.isEmpty()) {
+                        if (Config.getVersion() == null || Config.getVersion().isEmpty()) {
                             out.println("Escolha a versão do Demoiselle: ");
                         } else {
-                            if (Config.packageApp == null || Config.packageApp.isEmpty()) {
+                            if (Config.getPackageApp() == null || Config.getPackageApp().isEmpty()) {
                                 out.println("Escolha o pacote da app: ");
 
                             } else {
                                 if (param[1].trim() != null && !param[1].trim().isEmpty()) {
-                                    Config.nameApp = param[1].trim();
+                                    Config.setNameApp(param[1].trim());
                                     Applications.newApp();
                                 } else {
                                     out.println("Escolha o nome do sistema");
@@ -87,7 +88,7 @@ public class App {
                     if (!line.isEmpty()) {
                         if (command.equalsIgnoreCase("application")) {
                             if (Applications.existApps(param[1].trim())) {
-                                Config.nameApp = param[1].trim();
+                                Config.setNameApp(param[1].trim());
                             }
                             out.println("Aplicação não existe");
                         }
@@ -95,14 +96,14 @@ public class App {
 
                     if (!line.isEmpty()) {
                         if (command.equalsIgnoreCase("package")) {
-                            Config.packageApp = param[1].trim();
+                            Config.setPackageApp(param[1].trim());
                         }
                     }
 
                     if (!line.isEmpty()) {
-                        if (command.equalsIgnoreCase("version")) {
-                            Config.version = param[1].trim();
-                            out.println("version " + Config.version);
+                        if (command.equalsIgnoreCase("getVersion")) {
+                            Config.setVersion(param[1].trim());
+                            out.println("getVersion " + Config.getVersion());
                         }
                     }
 
@@ -111,9 +112,9 @@ public class App {
                 if (!line.isEmpty()) {
                     if (command.equalsIgnoreCase("status")) {
                         out.println("Informe os valores");
-                        out.println("Application: " + Config.nameApp);
-                        out.println("Version: " + Config.version);
-                        out.println("Package: " + Config.packageApp);
+                        out.println("Application: " + Config.getNameApp());
+                        out.println("Version: " + Config.getVersion());
+                        out.println("Package: " + Config.getPackageApp());
                     }
                 }
 
@@ -123,9 +124,9 @@ public class App {
 
                 out.flush();
 
-                if ((Config.nameApp != null && !Config.nameApp.isEmpty()) &&
-                    (Config.version != null && !Config.version.isEmpty()) &&
-                    (Config.packageApp != null && !Config.packageApp.isEmpty())) {
+                if ((Config.getNameApp() != null && !Config.getNameApp().isEmpty()) &&
+                    (Config.getVersion() != null && !Config.getVersion().isEmpty()) &&
+                    (Config.getPackageApp() != null && !Config.getPackageApp().isEmpty())) {
 
                     Config.save();
 
@@ -195,9 +196,9 @@ public class App {
                 }
                 if (!line.isEmpty()) {
                     if (command.equalsIgnoreCase("status")) {
-                        out.println("Application: " + Config.nameApp);
-                        out.println("Version: " + Config.version);
-                        out.println("Package: " + Config.packageApp);
+                        out.println("Application: " + Config.getNameApp());
+                        out.println("Version: " + Config.getVersion());
+                        out.println("Package: " + Config.getPackageApp());
                     }
                 }
 
