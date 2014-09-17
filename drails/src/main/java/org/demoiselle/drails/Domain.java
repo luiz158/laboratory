@@ -20,13 +20,15 @@ public class Domain {
         try {
             /*  first, get and initialize an engine  */
             VelocityEngine ve = new VelocityEngine();
-            ve.init();
-            Template t = ve.getTemplate("helloworld.vm");
+
+            Template t = ve.getTemplate("/opt/demoiselle/tool/drails/240/domain/");
             /*  create a context and add data */
             VelocityContext context = new VelocityContext();
-            context.put("name", "World");
+            context.put("packageName", Config.packageApp + "/domain");
+            context.put("pojo", dominio);
             /* now render the template into a StringWriter */
             StringWriter writer = new StringWriter();
+            ve.init();
             t.merge(context, writer);
             /* show the World */
             System.out.println(writer.toString());

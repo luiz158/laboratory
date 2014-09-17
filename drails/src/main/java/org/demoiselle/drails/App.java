@@ -175,7 +175,9 @@ public class App {
 
                     }
                     if (command.equalsIgnoreCase("domain")) {
-
+                        if (param[1].trim() != null && !param[1].trim().isEmpty()) {
+                            Domain.create(param[1].trim());
+                        }
                     }
                     if (command.equalsIgnoreCase("prime")) {
 

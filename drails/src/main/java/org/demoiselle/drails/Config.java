@@ -24,7 +24,9 @@ import java.util.logging.Logger;
 public class Config {
 
     private static Properties properties;
-    protected static String pathConfigFile = "/opt/demoiselle/tool/drails/config.properties";
+    protected static String configFileName = "config.properties";
+    protected static String pathDrails = "/opt/demoiselle/tool/drails/";
+    protected static String pathApps = "/opt/demoiselle/apps";
     protected static String nameApp;
     protected static String version;
     protected static String packageApp;
@@ -33,7 +35,7 @@ public class Config {
 
         properties = new Properties();
         FileInputStream fis = null;
-        File file = new File(pathConfigFile);
+        File file = new File(pathDrails + configFileName);
         if (file.exists()) {
             try {
                 fis = new FileInputStream(file);
@@ -55,7 +57,7 @@ public class Config {
             properties.setProperty("nameApp", nameApp);
             properties.setProperty("version", version);
             properties.setProperty("packageApp", packageApp);
-            properties.store(new FileOutputStream(pathConfigFile), "Config");
+            properties.store(new FileOutputStream(pathDrails + configFileName), "Config");
         } catch (IOException ex) {
             Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -65,7 +67,7 @@ public class Config {
         version = "";
         nameApp = "";
         packageApp = "";
-        File file = new File(pathConfigFile);
+        File file = new File(pathDrails + configFileName);
         file.delete();
     }
 
@@ -75,7 +77,7 @@ public class Config {
     }
 
     protected static String[] listDomains() {
-        File appsDir = new File("/opt/demoiselle/apps/" + nameApp + "/src/main/java" + packageApp + "domain");
+        File appsDir = new File("/opt/demoiselle/apps/" + nameApp + "/src/main/java/" + packageApp.replace(".", "/") + "/" + nameApp.toLowerCase() + "/domain");
         if (appsDir.exists()) {
             return appsDir.list();
         } else {

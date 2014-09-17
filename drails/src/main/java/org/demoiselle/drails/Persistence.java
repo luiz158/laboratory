@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.demoiselle.drails.system;
+package org.demoiselle.drails;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -17,5 +17,9 @@ import org.apache.velocity.app.VelocityEngine;
  * @author 70744416353
  */
 public class Persistence {
+
+    protected static void create(String dominio) {
+
+    }
 
 }
