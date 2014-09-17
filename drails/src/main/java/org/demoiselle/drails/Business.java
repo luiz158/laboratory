@@ -6,7 +6,6 @@
 package org.demoiselle.drails;
 
 import java.io.FileWriter;
-import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -19,7 +18,7 @@ import org.apache.velocity.app.VelocityEngine;
  *
  * @author 70744416353
  */
-public class Persistence {
+public class Business {
 
     protected static void create(String dominio) {
 
@@ -30,7 +29,7 @@ public class Persistence {
             p.setProperty("file.resource.loader.path", Config.getPathTemplates());
             ve.init(p);
 
-            Template t = ve.getTemplate("pojoDAO.vm");
+            Template t = ve.getTemplate("pojoBC.vm");
             /*  create a context and add data */
             VelocityContext context = new VelocityContext();
             context.put("packageName", Config.getPackageApp());
@@ -40,7 +39,7 @@ public class Persistence {
             /* now render the template into a StringWriter */
             StringWriter writer = new StringWriter();
             t.merge(context, writer);
-            FileWriter fw = new FileWriter(Config.getPathPersistence() + dominio.split("\\.")[0] + "DAO.java");
+            FileWriter fw = new FileWriter(Config.getPathPersistence() + dominio.split("\\.")[0] + "BC.java");
             fw.write(writer.toString());
             fw.close();
             /* show the World */
@@ -59,5 +58,4 @@ public class Persistence {
             }
         }
     }
-
 }

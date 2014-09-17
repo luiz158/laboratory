@@ -147,9 +147,9 @@ public class App {
                         new ArgumentCompleter(new StringsCompleter("clean"), new NullCompleter()),
                         new ArgumentCompleter(new StringsCompleter("status"), new NullCompleter()),
                         new ArgumentCompleter(new StringsCompleter("persistence"), new StringsCompleter(Config.listDomains()), new NullCompleter()),
-                        new ArgumentCompleter(new StringsCompleter("business"), new FileNameCompleter(), new NullCompleter()),
-                        new ArgumentCompleter(new StringsCompleter("view"), new FileNameCompleter(), new NullCompleter()),
-                        new ArgumentCompleter(new StringsCompleter("prime"), new FileNameCompleter(), new NullCompleter())
+                        new ArgumentCompleter(new StringsCompleter("business"), new StringsCompleter(Config.listDomains()), new NullCompleter()),
+                        new ArgumentCompleter(new StringsCompleter("view"), new StringsCompleter(Config.listDomains()), new NullCompleter()),
+                        new ArgumentCompleter(new StringsCompleter("prime"), new StringsCompleter(Config.listDomains()), new NullCompleter())
                 )
         );
 
@@ -167,6 +167,14 @@ public class App {
                 if (param.length > 1) {
 
                     if (command.equalsIgnoreCase("persistence")) {
+                        if (param[1].trim() != null && !param[1].trim().isEmpty()) {
+                            if (param[1].trim().equalsIgnoreCase("all")) {
+                                Persistence.createAll();
+                            } else {
+                                Persistence.create(param[1].trim());
+                            }
+
+                        }
 
                     }
                     if (command.equalsIgnoreCase("business")) {

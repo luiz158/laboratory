@@ -134,7 +134,7 @@ public class Config {
     }
 
     public static String getPathTemplates() {
-        return new StringBuilder().append(pathDrails).append("/").append(version).append("/templates/").toString();
+        return new StringBuilder().append(pathDrails).append(version).append("/templates/").toString();
     }
 
     public static String getNameApp() {

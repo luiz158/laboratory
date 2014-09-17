@@ -29,11 +29,11 @@ public class Domain {
             /*  create a context and add data */
             VelocityContext context = new VelocityContext();
             context.put("packageName", Config.getPackageApp());
-            context.put("pojo", dominio);
+            context.put("pojo", dominio.split("\\.")[0]);
             /* now render the template into a StringWriter */
             StringWriter writer = new StringWriter();
             t.merge(context, writer);
-            FileWriter fw = new FileWriter(Config.getPathDomain() + dominio + ".java");
+            FileWriter fw = new FileWriter(Config.getPathDomain() + dominio.split("\\.")[0]);
             fw.write(writer.toString());
             fw.close();
             /* show the World */
