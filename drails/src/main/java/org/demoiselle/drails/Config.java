@@ -27,6 +27,7 @@ public class Config {
     protected static String pathConfigFile = "/opt/demoiselle/tool/drails/config.properties";
     protected static String nameApp;
     protected static String version;
+    protected static String packageApp;
 
     protected static void load() {
 
@@ -38,6 +39,7 @@ public class Config {
                 fis = new FileInputStream(file);
                 properties.load(fis);
                 nameApp = properties.getProperty("nameApp");
+                packageApp = properties.getProperty("packageApp");
                 version = properties.getProperty("version");
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
@@ -52,6 +54,7 @@ public class Config {
         try {
             properties.setProperty("nameApp", nameApp);
             properties.setProperty("version", version);
+            properties.setProperty("packageApp", packageApp);
             properties.store(new FileOutputStream(pathConfigFile), "Config");
         } catch (IOException ex) {
             Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
@@ -61,6 +64,7 @@ public class Config {
     protected static void clear() {
         version = "";
         nameApp = "";
+        packageApp = "";
         File file = new File(pathConfigFile);
         file.delete();
     }
@@ -71,24 +75,25 @@ public class Config {
     }
 
     protected static String[] listDomains() {
-        File appsDir = new File("/opt/demoiselle/apps/" + nameApp + "/src/main/java");
-        List<String> result = listFiles(appsDir, new ArrayList<String>());
-        String[] listStrings = new String[result.size()];
-        return result.toArray(listStrings);
-    }
-
-    private static List<String> listFiles(File dir, List<String> filesName) {
-        File[] files = dir.listFiles();
-        for (File file : files) {
-            if (file.isDirectory()) {
-                if (file.getName().equalsIgnoreCase("domain")) {
-                    filesName.addAll(Arrays.asList(file.list()));
-                    return filesName;
-                }
-                listFiles(file, filesName);
-            }
+        File appsDir = new File("/opt/demoiselle/apps/" + nameApp + "/src/main/java" + packageApp + "domain");
+        if (appsDir.exists()) {
+            return appsDir.list();
+        } else {
+            return new String[]{""};
         }
-        return filesName;
     }
 
+//    private static List<String> listFiles(File dir, List<String> filesName) {
+//        File[] files = dir.listFiles();
+//        for (File file : files) {
+//            if (file.isDirectory()) {
+//                if (file.getName().equalsIgnoreCase("domain")) {
+//                    filesName.addAll(Arrays.asList(file.list()));
+//                    return filesName;
+//                }
+//                listFiles(file, filesName);
+//            }
+//        }
+//        return filesName;
+//    }
 }

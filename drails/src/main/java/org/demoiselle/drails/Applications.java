@@ -7,13 +7,12 @@ package org.demoiselle.drails;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Applications {
 
-    protected static void newApp(String nameApp) {
+    protected static void newApp() {
         try {
             File demoiselleDir = new File("/opt/demoiselle/apps/");
 
@@ -31,15 +30,15 @@ public class Applications {
                 }
             }
 
-            File appDir = new File("/opt/demoiselle/apps/" + nameApp);
+            File appDir = new File("/opt/demoiselle/apps/" + Config.nameApp);
 
             if (!appDir.exists()) {
                 Runtime run = Runtime.getRuntime();
-                String command = mavenDir + "/mvn -DarchetypeGroupId=br.gov.frameworkdemoiselle.archetypes -DarchetypeArtifactId=demoiselle-jsf-jpa -DarchetypeVersion=" + Config.version + " -DarchetypeRepository=https://oss.sonatype.org/content/repositories/snapshots -DgroupId=org.demoiselle -DartifactId=" + nameApp + " -Dversion=1.0.0 -Dpackage=org.demoiselle." + nameApp + " -Dbasedir=" + demoiselleDir + " -Darchetype.interactive=false --batch-mode archetype:generate";
+                String command = mavenDir + "/mvn -DarchetypeGroupId=br.gov.frameworkdemoiselle.archetypes -DarchetypeArtifactId=demoiselle-jsf-jpa -DarchetypeVersion=" + Config.version + " -DarchetypeRepository=https://oss.sonatype.org/content/repositories/snapshots -DgroupId=" + Config.packageApp + " -DartifactId=" + Config.nameApp + " -Dversion=1.0.0 -Dpackage=" + Config.packageApp + "." + Config.nameApp.toLowerCase() + " -Dbasedir=" + demoiselleDir + " -Darchetype.interactive=false --batch-mode archetype:generate";
                 run.exec(command, null, demoiselleDir);
-                App.out.println("Criou o Projeto " + nameApp);
+                App.out.println("Criou o Projeto " + Config.nameApp);
             } else {
-                App.out.println("Já existe " + nameApp);
+                App.out.println("Já existe " + Config.nameApp);
             }
 
         } catch (IOException ex) {

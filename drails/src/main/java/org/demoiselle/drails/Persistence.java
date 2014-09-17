@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.demoiselle.drails;
+package org.demoiselle.drails.system;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -17,28 +17,5 @@ import org.apache.velocity.app.VelocityEngine;
  * @author 70744416353
  */
 public class Persistence {
-
-    protected static void create(String dominio) {
-
-        try {
-            /*  first, get and initialize an engine  */
-            VelocityEngine ve = new VelocityEngine();
-            ve.init();
-            org.apache.velocity.Template t = ve.getTemplate("");
-            /*  create a context and add data */
-            VelocityContext context = new VelocityContext();
-
-            context.put("name", "World");
-            /* now render the template into a StringWriter */
-            StringWriter writer = new StringWriter();
-            t.merge(context, writer);
-            /* show the World */
-            System.out.println(writer.toString());
-
-        } catch (Exception ex) {
-            Logger.getLogger(Persistence.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
 
 }

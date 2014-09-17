@@ -6,13 +6,6 @@
 package org.demoiselle.drails;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Validations {
 
@@ -32,6 +25,13 @@ public class Validations {
             if (!mavenDir.exists()) {
                 App.out.println("Instale o demoiselle-maven");
                 return;
+            }
+        }
+
+        if (Config.nameApp != null && !Config.nameApp.isEmpty()) {
+            File appDir = new File("/opt/demoiselle/apps/" + Config.nameApp);
+            if (!appDir.exists()) {
+                Config.nameApp = "";
             }
         }
 
