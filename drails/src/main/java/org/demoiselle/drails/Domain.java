@@ -21,7 +21,7 @@ public class Domain {
             /*  first, get and initialize an engine  */
             VelocityEngine ve = new VelocityEngine();
 
-            Template t = ve.getTemplate("/opt/demoiselle/tool/drails/240/domain/");
+            Template t = ve.getTemplate("/opt/demoiselle/tool/drails/240/domain/pojo.java.vm");
             /*  create a context and add data */
             VelocityContext context = new VelocityContext();
             context.put("packageName", Config.packageApp + "/domain");
