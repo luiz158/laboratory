@@ -36,7 +36,7 @@ public class App {
         Validations.installation();
 
         reader.setBellEnabled(true);
-        reader.setPrompt(ANSI.CYAN + "Drails> " + ANSI.DARK_WHITE);
+        reader.setPrompt(ANSI.CYAN + "[" + Config.getNameApp() + "]" + "Drails:> " + ANSI.DARK_WHITE);
 
         if ((Config.getNameApp() == null || Config.getVersion() == null) ||
             (Config.getNameApp().isEmpty() || Config.getVersion().isEmpty()) ||
