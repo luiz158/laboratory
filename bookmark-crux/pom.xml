@@ -17,7 +17,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<cruxVersion>5.2.0-RC-SNAPSHOT</cruxVersion>
+		<cruxVersion>5.2.0</cruxVersion>
 		<webappDirectory>${project.build.directory}/${project.artifactId}</webappDirectory>
 		<webinf.folder>${webappDirectory}/WEB-INF/</webinf.folder>
 		<webinf.lib.folder>${webinf.folder}/lib/</webinf.lib.folder>
@@ -44,12 +44,12 @@
 		<dependency>
 			<groupId>org.cruxframework</groupId>
 			<artifactId>crux-widgets</artifactId>
-			<version>5.2.0-RC-SNAPSHOT</version>
+			<version>5.2.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.cruxframework.plugin</groupId>
 			<artifactId>crux-jboss</artifactId>
-			<version>1.0-RC-SNAPSHOT</version>
+			<version>1.0.0</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>crux-dev</artifactId>
@@ -64,7 +64,7 @@
 		<dependency>
 			<groupId>org.cruxframework</groupId>
 			<artifactId>crux-smart-faces</artifactId>
-			<version>1.1.0-RC-SNAPSHOT</version>
+			<version>1.1.0</version>
 		</dependency>
 
 		<!-- Demoiselle dependency -->
