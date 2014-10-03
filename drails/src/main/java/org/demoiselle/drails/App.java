@@ -1,218 +1,187 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.demoiselle.drails;
 
+
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.util.List;
+
 import jline.console.ConsoleReader;
 import jline.console.completer.AggregateCompleter;
 import jline.console.completer.ArgumentCompleter;
 import jline.console.completer.Completer;
-import jline.console.completer.FileNameCompleter;
 import jline.console.completer.NullCompleter;
 import jline.console.completer.StringsCompleter;
 
-/**
- *
- * @author 70744416353
- */
+import org.demoiselle.drails.commands.CreateAppCommand;
+import org.demoiselle.drails.commands.CreateBusinessCommand;
+import org.demoiselle.drails.commands.CreateDomainCommand;
+import org.demoiselle.drails.commands.CreatePersistenceCommand;
+import org.demoiselle.drails.commands.CreateViewCommand;
+import org.demoiselle.drails.completers.DomainCompleter;
+import org.demoiselle.drails.constants.CommandsConstant;
+import org.demoiselle.drails.exceptions.ValidationException;
+import org.demoiselle.drails.validations.InitialValidations;
+
 public class App {
 
-    protected static PrintWriter out;
-
-    public static void main(String[] args) throws IOException {
-
-        String line;
-        ConsoleReader reader = new ConsoleReader();
-        out = new PrintWriter(reader.getTerminal().wrapOutIfNeeded(System.out));
-        List<Completer> completors = new LinkedList<Completer>();
-
-        Config.load();
-        Validations.installation();
-
-        reader.setBellEnabled(true);
-        reader.setPrompt(ANSI.CYAN + "[" + Config.getNameApp() + "]" + "Drails:> " + ANSI.DARK_WHITE);
-
-        if ((Config.getNameApp() == null || Config.getVersion() == null) ||
-            (Config.getNameApp().isEmpty() || Config.getVersion().isEmpty()) ||
-            (Config.getPackageApp().isEmpty() || Config.getPackageApp().isEmpty())) {
-
-            completors.add(
-                    new AggregateCompleter(
-                            new ArgumentCompleter(new StringsCompleter("create-app"), new NullCompleter()),
-                            new ArgumentCompleter(new StringsCompleter("package"), new NullCompleter()),
-                            new ArgumentCompleter(new StringsCompleter("application"), new StringsCompleter(Applications.listApps()), new NullCompleter()),
-                            new ArgumentCompleter(new StringsCompleter("status"), new NullCompleter()),
-                            new ArgumentCompleter(new StringsCompleter("install"), new NullCompleter()),
-                            new ArgumentCompleter(new StringsCompleter("getVersion"), new StringsCompleter(Config.listVersions()), new NullCompleter())));
-
-            for (Completer c : completors) {
-                reader.addCompleter(c);
+    public static ConsoleReader reader;
+    
+    public static PrintWriter out;
+    
+    private List<Completer> completors = new LinkedList<>();
+    private List<String> domainsList = new LinkedList<>();
+    
+    public static void main(String[] args) throws IOException{
+        App app = new App();
+        app.run(args);
+    }
+    
+    public void run(String[] args){
+    	try{
+    		init();
+    		
+            String line;
+            new InitialValidations(new File(Config.getInstance(new File("")).getDemoisellePath())).validate();
+            
+            try{
+	            if(args != null && args.length > 0){
+	                String values = "";
+	                for(String arg : args){
+	                    values += arg + " ";
+	                }
+	                
+	                createInitialMenu(values);
+	                args = null;
+	            }
+	            else{
+	                while ((line = reader.readLine()) != null) {
+	                    createInitialMenu(line);
+	                }
+	            }
             }
-
-            while ((line = reader.readLine()) != null) {
-
-                String[] param = line.split(" ");
-                String command = param[0].trim();
-
-                if (param.length > 1) {
-
-                    if (command.equalsIgnoreCase("install")) {
-
-                    }
-
-                    if (command.equalsIgnoreCase("create-app")) {
-                        if (Config.getVersion() == null || Config.getVersion().isEmpty()) {
-                            out.println("Escolha a versão do Demoiselle: ");
-                        } else {
-                            if (Config.getPackageApp() == null || Config.getPackageApp().isEmpty()) {
-                                out.println("Escolha o pacote da app: ");
-
-                            } else {
-                                if (param[1].trim() != null && !param[1].trim().isEmpty()) {
-                                    Config.setNameApp(param[1].trim());
-                                    Applications.newApp();
-                                } else {
-                                    out.println("Escolha o nome do sistema");
-                                }
-
-                            }
-                        }
-                    }
-
-                    if (!line.isEmpty()) {
-                        if (command.equalsIgnoreCase("application")) {
-                            if (Applications.existApps(param[1].trim())) {
-                                Config.setNameApp(param[1].trim());
-                            }
-                            out.println("Aplicação não existe");
-                        }
-                    }
-
-                    if (!line.isEmpty()) {
-                        if (command.equalsIgnoreCase("package")) {
-                            Config.setPackageApp(param[1].trim());
-                        }
-                    }
-
-                    if (!line.isEmpty()) {
-                        if (command.equalsIgnoreCase("getVersion")) {
-                            Config.setVersion(param[1].trim());
-                            out.println("getVersion " + Config.getVersion());
-                        }
-                    }
-
-                }
-
-                if (!line.isEmpty()) {
-                    if (command.equalsIgnoreCase("status")) {
-                        out.println("Informe os valores");
-                        out.println("Application: " + Config.getNameApp());
-                        out.println("Version: " + Config.getVersion());
-                        out.println("Package: " + Config.getPackageApp());
-                    }
-                }
-
-                if (command.equalsIgnoreCase("exit")) {
-                    return;
-                }
-
-                out.flush();
-
-                if ((Config.getNameApp() != null && !Config.getNameApp().isEmpty()) &&
-                    (Config.getVersion() != null && !Config.getVersion().isEmpty()) &&
-                    (Config.getPackageApp() != null && !Config.getPackageApp().isEmpty())) {
-
-                    Config.save();
-
-                    for (Completer c : completors) {
-                        reader.removeCompleter(c);
-                    }
-
-                    break;
-                }
+            catch(ValidationException e){
+            	reader.setPrompt(TerminalColor.RED + "ERROR: " + TerminalColor.SANE);
+            	out.println(TerminalColor.RED + "ERROR: " + TerminalColor.SANE + e.getMessage());
+            	out.flush();
+            	run(null);
             }
+                
+        }
+        catch(IOException e){
+        	out.println(TerminalColor.RED + "ERROR: " + TerminalColor.SANE + e.getMessage());
+        	out.flush();
+        	run(null);
         }
 
-        reader.beep();
-
-        completors = new LinkedList<Completer>();
-        completors.add(
+    }
+    
+    private void init() throws IOException {
+    	reader = new ConsoleReader();
+        out = new PrintWriter(reader.getTerminal().wrapOutIfNeeded(System.out));
+        
+    	Config.getInstance(new File("").getAbsoluteFile()).load();
+		domainsList = DomainCompleter.list(new File("").getAbsoluteFile());
+		
+		completors = new LinkedList<>();
+		
+		completors.add(
                 new AggregateCompleter(
-                        new ArgumentCompleter(new StringsCompleter("clean"), new NullCompleter()),
-                        new ArgumentCompleter(new StringsCompleter("status"), new NullCompleter()),
-                        new ArgumentCompleter(new StringsCompleter("persistence"), new StringsCompleter(Config.listDomains()), new NullCompleter()),
-                        new ArgumentCompleter(new StringsCompleter("business"), new StringsCompleter(Config.listDomains()), new NullCompleter()),
-                        new ArgumentCompleter(new StringsCompleter("view"), new StringsCompleter(Config.listDomains()), new NullCompleter()),
-                        new ArgumentCompleter(new StringsCompleter("prime"), new StringsCompleter(Config.listDomains()), new NullCompleter())
-                )
-        );
+                        new ArgumentCompleter(new StringsCompleter(CommandsConstant.CREATE_APP), new NullCompleter()),
+                        new ArgumentCompleter(new StringsCompleter(CommandsConstant.CREATE_DOMAIN), new NullCompleter()),
+                        new ArgumentCompleter(new StringsCompleter(CommandsConstant.CREATE_BUSINESS), new StringsCompleter(domainsList), new NullCompleter()),
+                        new ArgumentCompleter(new StringsCompleter(CommandsConstant.CREATE_PERSISTENCE), new StringsCompleter(domainsList), new NullCompleter()),
+                        new ArgumentCompleter(new StringsCompleter(CommandsConstant.CREATE_VIEW), new StringsCompleter(domainsList), new NullCompleter()),
+                        new ArgumentCompleter(new StringsCompleter(CommandsConstant.EXIT), new NullCompleter())
+                ));
+		
 
         for (Completer c : completors) {
             reader.addCompleter(c);
         }
+        
+        reader.setBellEnabled(true);
+        reader.setPrompt(TerminalColor.CYAN + "Drails> " + TerminalColor.SANE);
+	}
 
-        while ((line = reader.readLine()) != null) {
-
-            String[] param = line.split(" ");
+	private void createInitialMenu(String line) throws ValidationException, IOException{
+        String[] param = line.split(" ");
+                    
+        if (param.length >= 1) {
+            
             String command = param[0].trim();
 
-            if (!line.isEmpty()) {
-
-                if (param.length > 1) {
-
-                    if (command.equalsIgnoreCase("persistence")) {
-                        if (param[1].trim() != null && !param[1].trim().isEmpty()) {
-                            if (param[1].trim().equalsIgnoreCase("all")) {
-                                Persistence.createAll();
-                            } else {
-                                Persistence.create(param[1].trim());
-                            }
-
-                        }
-
-                    }
-                    if (command.equalsIgnoreCase("business")) {
-
-                    }
-                    if (command.equalsIgnoreCase("view")) {
-
-                    }
-                    if (command.equalsIgnoreCase("domain")) {
-                        if (param[1].trim() != null && !param[1].trim().isEmpty()) {
-                            Domain.create(param[1].trim());
-                        }
-                    }
-                    if (command.equalsIgnoreCase("prime")) {
-
-                    }
-                    if (command.equalsIgnoreCase("prime-mobile")) {
-                    }
-                }
-
-                if (command.equalsIgnoreCase("exit")) {
-                    break;
-                }
-                if (command.equalsIgnoreCase("clean")) {
-                    Config.clear();
-                    break;
-                }
-                if (!line.isEmpty()) {
-                    if (command.equalsIgnoreCase("status")) {
-                        out.println("Application: " + Config.getNameApp());
-                        out.println("Version: " + Config.getVersion());
-                        out.println("Package: " + Config.getPackageApp());
-                    }
-                }
-
-                out.flush();
+            if (CommandsConstant.CREATE_APP.equalsIgnoreCase(command)) {
+                new CreateAppCommand(new File("").getAbsoluteFile()).execute(line);
+                System.exit(0);
             }
+            else{
+	            if(CommandsConstant.CREATE_DOMAIN.equalsIgnoreCase(command)){
+	            	Config.getInstance(new File("").getAbsoluteFile()).load();
+	            	new CreateDomainCommand(new File("").getAbsoluteFile()).execute(line);
+	            	out.flush();
+	            	init();
+	            }
+	            else{
+		            if(CommandsConstant.CREATE_BUSINESS.equalsIgnoreCase(command)){            	
+		            	Config.getInstance(new File("").getAbsoluteFile()).load();
+		            	new CreateBusinessCommand(new File("").getAbsoluteFile()).execute(line);
+		            }
+		            else{
+			            if(CommandsConstant.CREATE_PERSISTENCE.equalsIgnoreCase(command)){            	
+			            	Config.getInstance(new File("").getAbsoluteFile()).load();
+			            	new CreatePersistenceCommand(new File("").getAbsoluteFile()).execute(line);
+			            }
+			            else{
+				            if(CommandsConstant.CREATE_VIEW.equalsIgnoreCase(command)){            	
+				            	Config.getInstance(new File("").getAbsoluteFile()).load();
+				            	new CreateViewCommand(new File("").getAbsoluteFile()).execute(line);
+				            }
+				            else{
+					            if(CommandsConstant.EXIT.equalsIgnoreCase(command)){
+					            	System.exit(0);
+					            }
+					            else{
+					            	out.println(TerminalColor.RED + "ERROR: " + TerminalColor.SANE + "Commando '" + command + "' não encontrado");
+					            }
+				            }
+			            }
+		            }
+	            }
+            }
+            
+            out.flush();
         }
-
     }
+   
+	class TerminalColor {
+
+	    public static final String SANE = "\u001B[0m";
+	    public static final String BLACK = "\u001B[0;30m";
+	    public static final String RED = "\u001B[0;31m";
+	    public static final String GREEN = "\u001B[0;32m";
+	    public static final String YELLOW = "\u001B[0;33m";
+	    public static final String BLUE = "\u001B[0;34m";
+	    public static final String MAGENTA = "\u001B[0;35m";
+	    public static final String CYAN = "\u001B[0;36m";
+	    public static final String WHITE = "\u001B[0;37m";
+	    public static final String DARK_BLACK = "\u001B[1;30m";
+	    public static final String DARK_RED = "\u001B[1;31m";
+	    public static final String DARK_GREEN = "\u001B[1;32m";
+	    public static final String DARK_YELLOW = "\u001B[1;33m";
+	    public static final String DARK_BLUE = "\u001B[1;34m";
+	    public static final String DARK_MAGENTA = "\u001B[1;35m";
+	    public static final String DARK_CYAN = "\u001B[1;36m";
+	    public static final String DARK_WHITE = "\u001B[1;37m";
+	    public static final String BACKGROUND_BLACK = "\u001B[40m";
+	    public static final String BACKGROUND_RED = "\u001B[41m";
+	    public static final String BACKGROUND_GREEN = "\u001B[42m";
+	    public static final String BACKGROUND_YELLOW = "\u001B[43m";
+	    public static final String BACKGROUND_BLUE = "\u001B[44m";
+	    public static final String BACKGROUND_MAGENTA = "\u001B[45m";
+	    public static final String BACKGROUND_CYAN = "\u001B[46m";
+	    public static final String BACKGROUND_WHITE = "\u001B[47m";
+	}
+	
 }

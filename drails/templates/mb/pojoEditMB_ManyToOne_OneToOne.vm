@@ -1,0 +1,8 @@
+    
+    @Inject
+    private ${attrValue}BC ${varAttrValueFirstLower}BC;
+
+    public List<${attrValue}> get${attrValue}List(){
+        return ${varAttrValueFirstLower}BC.findAll();
+    }
+    

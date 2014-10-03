@@ -1,0 +1,6 @@
+analyseLocally=false
+eclipse.preferences.version=1
+extraProperties=sonar.jdbc.password\=serpro\r\nsonar.jdbc.username\=root\r\nsonar.jdbc.url\=jdbc\:mysql\://10.200.24.49\:3306/sonar\r\nsonar.jdbc.driver\=com.mysql.jdbc.Driver\r\nsonar.host.url\=http\://10.200.24.50\:9000
+projectKey=br.gov.frameworkdemoiselle\:drails
+serverUrl=http\://localhost\:9000
+version=2
