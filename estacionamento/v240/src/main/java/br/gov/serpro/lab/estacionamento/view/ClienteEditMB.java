@@ -31,15 +31,20 @@
 package br.gov.serpro.lab.estacionamento.view;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
+
 import org.primefaces.event.TransferEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.DualListModel;
+
 import br.gov.frameworkdemoiselle.annotation.PreviousView;
 import br.gov.frameworkdemoiselle.message.MessageContext;
 import br.gov.frameworkdemoiselle.stereotype.ViewController;
@@ -94,6 +99,7 @@ public class ClienteEditMB extends AbstractEditPageBean<Cliente, Long> {
 	public String insert() {
 		if (photoUploader.getUploadedFile()!=null) {
 			getBean().setFoto(photoUploader.getUploadedFile().getContents());
+			this.gravaArquivoTemp();
 		}		
 		this.clienteBC.insert(getBean());
 		this.setBean(null);
@@ -110,6 +116,8 @@ public class ClienteEditMB extends AbstractEditPageBean<Cliente, Long> {
 		this.setBean(null);
 		return getPreviousView();
 	}
+	
+	
 
 	@Override
 	protected Cliente handleLoad(Long id) {
@@ -177,4 +185,24 @@ public class ClienteEditMB extends AbstractEditPageBean<Cliente, Long> {
 			this.deleteEnderecoList((List<Endereco>) event.getItems());
 		}
 	}
+	
+	private void gravaArquivoTemp(){
+		
+		try {  
+			String diretorio = "/tmp/arquivos/";
+			File file = new File(diretorio);  
+			file.mkdirs();  
+
+			byte[] conteudo = photoUploader.getUploadedFile().getContents();  
+			String dirNomeArquivo = diretorio+photoUploader.getUploadedFile().getFileName();  
+
+			FileOutputStream fos = new FileOutputStream(dirNomeArquivo);  
+			fos.write(conteudo);  
+			fos.close();
+		} catch (Exception ex) {  
+			messageContext.add("Erro ao gravar arquivo" + ex);
+
+        }  
+	}
+	
 }
