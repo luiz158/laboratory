@@ -1,0 +1,4 @@
+                    
+                    <h:outputText id="${attrName}" value="#{${beanLower}EditMB.bean.${attrName}}" />
+                    
+                    

@@ -1,0 +1,5 @@
+                    
+                    <p:selectOneMenu id="${varAttrName}" value="#{${attrClassOfValueLower}.${varAttrName}}" effect="fade">
+                        <f:selectItems value="#{${attrClassOfValueLower}EditMB.${varAttrName}}" />
+                    </p:selectOneMenu>
+                    

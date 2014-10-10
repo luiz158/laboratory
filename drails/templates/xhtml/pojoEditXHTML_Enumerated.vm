@@ -1,0 +1,5 @@
+                    
+                    <p:selectOneMenu id="${attrName}" effect="fade" value="#{${beanLower}EditMB.bean.${attrName}}">
+                        <f:selectItems value="#{${beanLower}EditMB.${attrName}}" />
+                    </p:selectOneMenu>
+                    

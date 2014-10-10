@@ -1,0 +1,8 @@
+                    
+                    <h:outputLabel value="#{messages['${attrName}.label']}: " for="${attrName}" styleClass="text-input" />
+                    <p:selectOneMenu id="${attrName}" value="#{${beanLower}EditMB.bean.${attrName}}"  effect="fade" converter="Conversor${attrValue}">
+                        <f:selectItem itemLabel="Selecione" itemValue="" />
+                        <f:selectItems value="#{${beanLower}EditMB.${attrName}List}" var="var${attrValue}" itemLabel="#{var${attrValue}.${varId}}"  itemValue="#{var${attrValue}}" />						
+                    </p:selectOneMenu>
+                    <p:message for="${attrName}" />		
+                    

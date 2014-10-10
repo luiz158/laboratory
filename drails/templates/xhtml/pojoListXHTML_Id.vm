@@ -1,0 +1,6 @@
+                
+                <p:column style="width:5%;" sortBy="#{bean.${attrLow}}">
+                    <f:facet name="header">#{messages['${beanLower}.label.${attrLow}']}</f:facet>
+                    <h:outputText value="#{bean.${attrLow}}" />
+                </p:column>
+                
