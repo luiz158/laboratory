@@ -102,6 +102,7 @@ public class CreatePersistenceCommand implements Command {
 		XMLOutputter xmlOutput = new XMLOutputter();
  
 		xmlOutput.setFormat(Format.getPrettyFormat());
+		
 		xmlOutput.output(doc, new FileWriter(Config.getInstance(project).getPathPersistenceXML()));
 		
 	}

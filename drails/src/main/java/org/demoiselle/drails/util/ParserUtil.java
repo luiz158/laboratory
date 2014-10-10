@@ -12,8 +12,10 @@ import japa.parser.ast.visitor.VoidVisitorAdapter;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class ParserUtil {
 	
@@ -44,6 +46,31 @@ public class ParserUtil {
 		}
 		return fieldsList;
 	}
+	
+	
+	/**
+	 *  Inspects a java source file to find a field annotated with paramAnnotation 
+	 * 
+	 * @param paramFile
+	 * @param paramAnnotation
+	 * @return the name of field or blank
+	 */
+	public static String getFieldAnnotatedWith (File paramFile, String paramAnnotation){
+		
+		new AnnotationDeclarationVisitor().clearFieldAndAnnotationsUtilList();
+		new AnnotationDeclarationVisitor().visit(ParserUtil.getCompilationUnit(paramFile), null);
+		
+		String varPath = paramFile.getParent() + "/";
+		
+		List<String> extendedClasses = getExtendedClassesFiles(paramFile);
+		for (String cls : extendedClasses){
+			File varFile = new File (varPath+cls+".java");
+			new AnnotationDeclarationVisitor().visit(ParserUtil.getCompilationUnit(varFile), null);
+		}
+		return new AnnotationDeclarationVisitor().getFieldWithAnnotation(paramAnnotation);
+	}
+	
+	
 	
 	/**
 	 * Inspects a java source file to find declared attributes 
@@ -262,7 +289,7 @@ public class ParserUtil {
 		 * @return the field name if it is annotated with varAnnotation
 		 */
 		public String  getFieldWithAnnotation(String varAnnotation){
-			for ( FieldAndAnnotationsUtil fieldAndAnnotationsUtil : fieldAndAnnotationsUtilList) {
+			for (FieldAndAnnotationsUtil fieldAndAnnotationsUtil : fieldAndAnnotationsUtilList) {
 				for (String annotated : fieldAndAnnotationsUtil.getFieldAnnotations()){
 						if (annotated.equalsIgnoreCase(varAnnotation)){
 							return fieldAndAnnotationsUtil.getFieldName();
@@ -281,7 +308,7 @@ public class ParserUtil {
 			
 			List<String> annotationsForField = new ArrayList<String>();
 			
-			for ( FieldAndAnnotationsUtil fieldAndAnnotationsUtil : fieldAndAnnotationsUtilList) {
+			for (FieldAndAnnotationsUtil fieldAndAnnotationsUtil : fieldAndAnnotationsUtilList) {
 				if (fieldAndAnnotationsUtil.getFieldName().equalsIgnoreCase(varField)){
 					for (String annotated : fieldAndAnnotationsUtil.getFieldAnnotations()){
 						annotationsForField.add(annotated);						
@@ -290,6 +317,44 @@ public class ParserUtil {
 			}
 			return annotationsForField;
 		}
+	}
+
+
+	public static boolean hasAnnotationForField(File paramFile, String paramField, String paramAnnotation) {
+		
+		new AnnotationDeclarationVisitor().clearFieldAndAnnotationsUtilList();
+		new AnnotationDeclarationVisitor().visit(ParserUtil.getCompilationUnit(paramFile), null);
+		
+		String varPath = paramFile.getParent() + "/";
+		
+		List<String> extendedClasses = getExtendedClassesFiles(paramFile);
+		for (String cls : extendedClasses){
+			File varFile = new File (varPath + cls + ".java");
+			new AnnotationDeclarationVisitor().visit(ParserUtil.getCompilationUnit(varFile), null);
+		}
+		
+		return new AnnotationDeclarationVisitor().hasAnnotationForField(paramField, paramAnnotation);
+	}
+
+
+	public static String getFieldValue(File paramFile, String paramFieldName) {
+			
+		Map<String, String> varFieldList = getAttributesFromClassFile(paramFile);
+		String returnValue = "";
+		
+		Iterator<Entry<String, String>> it = varFieldList.entrySet().iterator();
+		
+		while(it.hasNext()){
+			Map.Entry<String, String> pairs = (Map.Entry<String, String>) it.next();
+			
+			String varFieldName = pairs.getKey();
+			String varFieldValue = pairs.getValue();
+		
+			if (varFieldName.equalsIgnoreCase(paramFieldName)){
+				returnValue =  varFieldValue;
+			}			
+		}
+		return returnValue;
 	}
 
 }

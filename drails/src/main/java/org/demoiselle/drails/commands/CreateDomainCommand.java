@@ -37,7 +37,7 @@ public class CreateDomainCommand implements Command {
             context.put("pojo", nameCamelCase);
             String templateFile = "pojo" + File.separator + "pojo.vm";
             
-            File domainFile = new VelocityTransform(project).transform(context, templateFile, Config.getInstance(project).getPathDomain(), domainName, ".java");
+            File domainFile = new VelocityTransform(project).transform(context, templateFile, Config.getInstance(project).getPathDomain(), nameCamelCase, ".java");
             
             App.out.println("=================================================");
             App.out.println("Domínio " + domainFile + " criado com sucesso !");

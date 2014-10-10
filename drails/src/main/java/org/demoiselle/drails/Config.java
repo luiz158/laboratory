@@ -167,4 +167,46 @@ public class Config {
 		return demoisellePath;
 	}
 
+	public String getPathViewRootXHTML() {
+		
+		String path = new StringBuilder()
+				.append(projectPath)
+				.append(File.separator)
+				.append("src")
+				.append(File.separator)
+				.append("main")
+				.append(File.separator)
+				.append("webapp")
+				.append(File.separator)		
+				.toString();
+
+		return path;
+	}
+
+	public String getPathMenuXHTML() {
+		
+		String viewPath = getPathViewRootXHTML();
+		viewPath += "menu.xhtml";
+		
+		return viewPath;
+	}
+
+	public String getMessagePath() {
+
+		String path = new StringBuilder()
+				.append(projectPath)
+				.append(File.separator)
+				.append("src")
+				.append(File.separator)
+				.append("main")
+				.append(File.separator)
+				.append("resources")
+				.append(File.separator)		
+				.append("messages.properties")
+				.append(File.separator)
+				.toString();
+
+		return path;
+	}
+
 }

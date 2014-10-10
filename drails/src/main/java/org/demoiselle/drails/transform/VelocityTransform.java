@@ -5,7 +5,6 @@ import java.io.FileWriter;
 import java.io.StringWriter;
 import java.util.Properties;
 
-import org.apache.commons.lang3.text.WordUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -30,12 +29,10 @@ public class VelocityTransform {
         
         Template template = ve.getTemplate(templateFile);
 
-        String nameCamelCase = WordUtils.capitalize(domainName.split("\\.")[0]);
-        
         StringWriter writer = new StringWriter();
         template.merge(context, writer);
         
-        String name = nameCamelCase + suffix;
+        String name = domainName + suffix;
         
         File file = new File(targetPath + name);
         

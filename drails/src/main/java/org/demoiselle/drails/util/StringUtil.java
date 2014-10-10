@@ -1,5 +1,7 @@
 package org.demoiselle.drails.util;
 
+import java.util.List;
+
 public class StringUtil {
 	
 	/**
@@ -18,6 +20,17 @@ public class StringUtil {
 	 */
 	public static String lowerCaseFirstLetter(String str) {
 		return str.substring(0, 1).toLowerCase() + str.substring(1);
+	}
+
+	public static String hasOneInList(List<String> annotationsForAField, List<String> relationshipsAnnotations) {
+		
+		for (String element : annotationsForAField){
+			if (relationshipsAnnotations.contains(element)){
+				return element;
+			}			
+		}		
+		
+		return null;
 	}
 
 }
