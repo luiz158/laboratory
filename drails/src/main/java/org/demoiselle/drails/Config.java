@@ -16,6 +16,7 @@ public class Config {
     
     private String demoisellePath;
     private String drailsPath;
+    private String drailsVersion;
     private String nameApp = "";
     private String version;
     private String packageApp;
@@ -23,19 +24,31 @@ public class Config {
     
     private static Config instance;
     
-    private Config(){
+    private Config() throws FileNotFoundException, IOException{
     	//TODO Create Path for windows
     	this.demoisellePath = File.separator + "opt" + File.separator + "demoiselle";
-    	this.drailsPath = demoisellePath + File.separator + "tool" + File.separator + "drails" + File.separator; 
+    	
+    	Properties drailsProperties = new Properties();
+		drailsProperties.load(new FileInputStream(new File(System.getenv("DRAILS_HOME") + File.separator + "bin" + File.separator + "drails.properties")));
+		
+		this.drailsVersion = (String) drailsProperties.get("drails.version");
+    	
+    	this.drailsPath = demoisellePath + File.separator + "tool" + File.separator + "drails-" + drailsVersion + File.separator; 
     }
     
     public static Config getInstance(File projectPath){
-    	if(instance == null){
-    		instance = new Config();
+    	try{
+	    	if(instance == null){
+	    		instance = new Config();
+	    	}
+	    	instance.setProjectPath(projectPath);
+	    	
+	    	return instance;
     	}
-    	instance.setProjectPath(projectPath);
-    	
-    	return instance;
+    	catch(Exception e){
+    		Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, e);
+    		return null;
+    	}
     }
 
     public void load() {
@@ -128,7 +141,7 @@ public class Config {
     }
 	
 	public String getPathDrailsTemplates() {
-        return new StringBuilder().append(drailsPath).append(version).append(File.separator).append("templates").append(File.separator).toString();
+        return new StringBuilder().append(drailsPath).append("templates").append(File.separator).append(version).append(File.separator).toString();
     }
 	
 	public String getPathProjectTemplates() {
@@ -211,6 +224,10 @@ public class Config {
 
 	public String getPathConverters() {
 		return getProjectPath() + File.separator + "converters" + File.separator;		
+	}
+
+	public String getDrailsVersion() {
+		return this.drailsVersion;
 	}
 
 

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,6 +14,7 @@ import org.demoiselle.drails.App;
 import org.demoiselle.drails.Config;
 import org.demoiselle.drails.exceptions.ValidationException;
 import org.demoiselle.drails.transform.VelocityTransform;
+import org.demoiselle.drails.util.ParserUtil;
 import org.demoiselle.drails.validations.CreatePersistenceValidation;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -25,6 +27,8 @@ import org.jdom2.output.XMLOutputter;
 public class CreatePersistenceCommand implements Command {
 
 	private File project;
+	
+	private Map<String, String> atributos;
 
 	public CreatePersistenceCommand(File project) {
 		this.project = project;
@@ -40,13 +44,16 @@ public class CreatePersistenceCommand implements Command {
 		
 		try {
 			
-			VelocityContext context = new VelocityContext();
-			
 			String nameCamelCase = WordUtils.capitalize(domainName.split("\\.")[domainName.split("\\.").length - 1]);
+			
+			File domain = new File(Config.getInstance(project).getPathDomain() + File.separator + nameCamelCase + ".java");
+			atributos = ParserUtil.getAttributesFromClassFile(domain);
+			
+			VelocityContext context = new VelocityContext();
 			
 			context.put("packageName", Config.getInstance(project).getPackageAppWithNameApp());
 			context.put("pojo", nameCamelCase);
-			context.put("idType", "Long");
+			context.put("idType", getDomainType(domain, "Id"));
 			context.put("serialVersionUID", System.currentTimeMillis());
 			
 			String templateFile = "dao" + File.separator + "pojoDAO.vm";
@@ -62,6 +69,26 @@ public class CreatePersistenceCommand implements Command {
             Logger.getLogger(CreateBusinessCommand.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+	}
+	
+	private String getDomainType(File domain, String annotation) {
+		
+		String result = "";
+		
+		for(Map.Entry<String, String> entry : atributos.entrySet()){
+			
+			String key = entry.getKey();
+			String value = entry.getValue();
+			
+			List<String> annotationsForAField = ParserUtil.getAnnotationsForField(domain, key);
+			if(annotationsForAField.contains(annotation)){
+				result = value;
+				break;
+			}
+			
+		}
+		
+		return result;
 	}
 
 	private void appendClassPersistenceXML(String domain) throws JDOMException, IOException {

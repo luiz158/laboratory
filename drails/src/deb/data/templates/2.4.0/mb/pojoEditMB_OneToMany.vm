@@ -1,0 +1,18 @@
+
+    private DataModel<${attrClassOfValue}> ${attrClassFirstLower}List;
+            
+    public void add${attrClassOfValue}() {
+        this.getBean().get${attrNameFirstUp}().add(new ${attrClassOfValue}());
+    }
+
+    public void delete${attrClassOfValue}() {
+       this.getBean().get${attrNameFirstUp}().remove(get${attrClassOfValue}List().getRowData());
+    }
+
+    public DataModel<${attrClassOfValue}> get${attrClassOfValue}List() {
+       if (${attrClassFirstLower}List == null) {
+           ${attrClassFirstLower}List = new ListDataModel<${attrClassOfValue}>(this.getBean().get${attrNameFirstUp}());
+       }
+       return ${attrClassFirstLower}List;
+    }
+    

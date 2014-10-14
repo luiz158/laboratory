@@ -1,0 +1,4 @@
+                    
+                    <h:inputText id="${attrName}" value="#{${beanLower}EditMB.bean.${attrName}}" title="#{messages['${beanLower}.alt.${attrName}']}" />
+                    <p:message for="${attrName}" />
+                    

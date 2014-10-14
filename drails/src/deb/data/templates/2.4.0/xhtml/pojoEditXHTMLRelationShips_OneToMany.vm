@@ -1,0 +1,13 @@
+                    
+                    <p:fieldset legend="#{messages['${attrClassOfValueLower}.label']}" toggleable="true" toggleSpeed="500">
+                        <h:panelGrid id="fields${attrClassOfValueLower}" columns="1"> 
+                            <p:commandButton value="#{messages['button.new']}" action="#{${beanLower}EditMB.add${attrClassOfValue}}" update="list${attrClassOfValue}"/>
+                            <p:dataTable id="list${attrClassOfValue}" var="${attrClassOfValueLower}" value="#{${beanLower}EditMB.${attrClassOfValueLower}List}" rowIndexVar="index">
+                                ${columns}
+                                <p:column>
+                                    <f:facet name="header">#{messages['label.action']}</f:facet>
+                                    <p:commandButton value="#{messages['button.delete']}" action="#{${beanLower}EditMB.delete${attrClassOfValue}}" ajax="false"/>
+                                </p:column>
+                            </p:dataTable>
+                        </h:panelGrid>
+                    </p:fieldset>

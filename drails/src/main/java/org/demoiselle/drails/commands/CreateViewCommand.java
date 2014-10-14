@@ -397,7 +397,7 @@ public class CreateViewCommand implements Command {
 			context.put("packageName", Config.getInstance(project).getPackageAppWithNameApp());
 			context.put("pojo", conversorName);
 			context.put("idNameUpper", WordUtils.capitalize(getDomainProperty(domain, "Id")));
-			context.put("idType", "Long");
+			context.put("idType", getDomainType(domain, "Id"));
 			context.put("beanLower", conversorName.toLowerCase());
 			
 			String templateEditFile = "xhtml" + File.separator + "converters" + File.separator + "Converter.vm";
@@ -424,6 +424,26 @@ public class CreateViewCommand implements Command {
 			List<String> annotationsForAField = ParserUtil.getAnnotationsForField(domain, key);
 			if(annotationsForAField.contains(annotation)){
 				result = key;
+				break;
+			}
+			
+		}
+		
+		return result;
+	}
+	
+	private String getDomainType(File domain, String annotation) {
+		
+		String result = "";
+		
+		for(Map.Entry<String, String> entry : atributos.entrySet()){
+			
+			String key = entry.getKey();
+			String value = entry.getValue();
+			
+			List<String> annotationsForAField = ParserUtil.getAnnotationsForField(domain, key);
+			if(annotationsForAField.contains(annotation)){
+				result = value;
 				break;
 			}
 			
@@ -580,7 +600,7 @@ public class CreateViewCommand implements Command {
 			
 			context.put("packageName", Config.getInstance(project).getPackageAppWithNameApp());
 			context.put("pojo", nameCamelCase);
-			context.put("idType", "Long");
+			context.put("idType", getDomainType(domain, "Id"));
 			context.put("beanLower", nameCamelCase.toLowerCase());
 			context.put("body", generateBodyMB(new File(Config.getInstance(project).getPathDomain() + File.separator + nameCamelCase + ".java"), nameCamelCase));
 			

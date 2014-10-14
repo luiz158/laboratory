@@ -35,6 +35,9 @@ public class App {
     private List<String> domainsList = new LinkedList<>();
     
     public static void main(String[] args) throws IOException{
+    	
+    	System.out.println("Demoiselle on Rails - v" + Config.getInstance(new File("")).getDrailsVersion());
+    	
         App app = new App();
         app.run(args);
     }

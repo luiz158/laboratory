@@ -2,6 +2,7 @@ package org.demoiselle.drails.commands;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
@@ -28,10 +29,6 @@ import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
-/**
- *
- * @author 05081364908
- */
 public class CreateAppCommand implements Command{
 
     private File project;
@@ -219,6 +216,8 @@ public class CreateAppCommand implements Command{
 		prop.put(ConfigConstant.APP_NAME, Config.getInstance(project).getNameApp());
 		prop.put(ConfigConstant.DEMOISELLE_VERSION, Config.getInstance(project).getVersion());
 		prop.put(ConfigConstant.APP_GROUP_ID, Config.getInstance(project).getPackageApp());
+		
+		prop.put(ConfigConstant.DRAILS_VERSION, Config.getInstance(project).getDrailsVersion());
 		
 		prop.store(new FileOutputStream(new File(project.getAbsolutePath() + File.separator + projectName + File.separator + ConfigConstant.APPLICATION_FILE_NAME)), "");
 		
