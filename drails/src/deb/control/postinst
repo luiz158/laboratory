@@ -1,0 +1,11 @@
+#!/bin/bash
+
+echo export DRAILS_HOME=/opt/demoiselle/tool/drails >> /etc/bash.bashrc
+echo export PATH=$PATH:/opt/demoiselle/tool/drails/bin >> /etc/bash.bashrc
+
+chmod +x $DRAILS_HOME/bin -R
+
+export DRAILS_HOME=/opt/demoiselle/tool/drails
+export PATH=$PATH:/opt/demoiselle/tool/drails/bin
+
+exit 0
