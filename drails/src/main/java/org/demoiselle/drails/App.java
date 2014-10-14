@@ -19,6 +19,7 @@ import org.demoiselle.drails.commands.CreateBusinessCommand;
 import org.demoiselle.drails.commands.CreateDomainCommand;
 import org.demoiselle.drails.commands.CreatePersistenceCommand;
 import org.demoiselle.drails.commands.CreateViewCommand;
+import org.demoiselle.drails.commands.GenerateAllCommand;
 import org.demoiselle.drails.completers.DomainCompleter;
 import org.demoiselle.drails.constants.CommandsConstant;
 import org.demoiselle.drails.exceptions.ValidationException;
@@ -93,6 +94,7 @@ public class App {
                         new ArgumentCompleter(new StringsCompleter(CommandsConstant.CREATE_BUSINESS), new StringsCompleter(domainsList), new NullCompleter()),
                         new ArgumentCompleter(new StringsCompleter(CommandsConstant.CREATE_PERSISTENCE), new StringsCompleter(domainsList), new NullCompleter()),
                         new ArgumentCompleter(new StringsCompleter(CommandsConstant.CREATE_VIEW), new StringsCompleter(domainsList), new NullCompleter()),
+                        new ArgumentCompleter(new StringsCompleter(CommandsConstant.GENERATE_ALL), new StringsCompleter(domainsList), new NullCompleter()),
                         new ArgumentCompleter(new StringsCompleter(CommandsConstant.EXIT), new NullCompleter())
                 ));
 		
@@ -111,7 +113,8 @@ public class App {
         if (param.length >= 1) {
             
             String command = param[0].trim();
-
+            printSeparators();
+            
             if (CommandsConstant.CREATE_APP.equalsIgnoreCase(command)) {
                 new CreateAppCommand(new File("").getAbsoluteFile()).execute(line);
                 System.exit(0);
@@ -139,21 +142,31 @@ public class App {
 				            	new CreateViewCommand(new File("").getAbsoluteFile()).execute(line);
 				            }
 				            else{
-					            if(CommandsConstant.EXIT.equalsIgnoreCase(command)){
-					            	System.exit(0);
-					            }
-					            else{
-					            	out.println(TerminalColor.RED + "ERROR: " + TerminalColor.SANE + "Commando '" + command + "' não encontrado");
-					            }
+				            	if(CommandsConstant.GENERATE_ALL.equalsIgnoreCase(command)){
+				            		Config.getInstance(new File("").getAbsoluteFile()).load();
+				            		new GenerateAllCommand(new File("").getAbsoluteFile()).execute(line);
+				            	}
+				            	else{
+						            if(CommandsConstant.EXIT.equalsIgnoreCase(command)){
+						            	System.exit(0);
+						            }
+						            else{
+						            	out.println(TerminalColor.RED + "ERROR: " + TerminalColor.SANE + "Commando '" + command + "' não encontrado");
+						            }
+				            	}
 				            }
 			            }
 		            }
 	            }
             }
-            
+            printSeparators();
             out.flush();
         }
     }
+	
+	private void printSeparators(){
+		out.println("=================================================");
+	}
    
 	class TerminalColor {
 

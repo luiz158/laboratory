@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -19,6 +20,13 @@ import org.demoiselle.drails.Config;
 import org.demoiselle.drails.constants.ConfigConstant;
 import org.demoiselle.drails.exceptions.ValidationException;
 import org.demoiselle.drails.validations.CreateAppValidation;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.Namespace;
+import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 
 /**
  *
@@ -113,6 +121,7 @@ public class CreateAppCommand implements Command{
                 
                 generateProperties(projectName, demoiselleVersion);
                 copyTemplates(projectName);
+                applyBootstrapTheme(projectName);
                 
                 App.out.println("=================================================");
                 App.out.println("Projeto " + Config.getInstance(project).getNameApp() + " criado com sucesso !");
@@ -129,8 +138,72 @@ public class CreateAppCommand implements Command{
         catch (IOException ex) {
             Logger.getLogger(CreateAppCommand.class.getName()).log(Level.SEVERE, null, ex);
         } 
+        catch(JDOMException e){
+        	Logger.getLogger(CreateAppCommand.class.getName()).log(Level.SEVERE, null, e);
+        }
 
     }
+
+	private void applyBootstrapTheme(String projectName) throws JDOMException, IOException {
+			
+		applyBootstrapThemePOM(projectName);
+		applyBootstrapThemeWEBXML(projectName);
+		
+	}
+
+	private void applyBootstrapThemeWEBXML(String projectName) throws JDOMException, IOException {
+		SAXBuilder builder = new SAXBuilder();
+		String path = project.getAbsolutePath() + File.separator + projectName + File.separator + "src" + File.separator + "main" + File.separator + "webapp" + File.separator + "WEB-INF" + File.separator + "web.xml";
+		File xmlFile = new File(path);
+ 
+		Document doc = (Document) builder.build(xmlFile);
+		Element rootNode = doc.getRootElement();
+		
+		Namespace nameSpace = Namespace.getNamespace("", "http://java.sun.com/xml/ns/javaee");
+		
+		Element contextParam = new Element("context-param");
+		contextParam.setNamespace(nameSpace);
+		
+		contextParam.addContent(new Element("param-name", nameSpace).setText("primefaces.THEME"));
+		contextParam.addContent(new Element("param-value", nameSpace).setText("bootstrap"));
+		
+		
+		rootNode.addContent(contextParam);
+ 
+		XMLOutputter xmlOutput = new XMLOutputter();
+ 
+		xmlOutput.setFormat(Format.getPrettyFormat());
+		
+		xmlOutput.output(doc, new FileWriter(path));
+		
+	}
+
+	private void applyBootstrapThemePOM(String projectName)
+			throws JDOMException, IOException {
+		SAXBuilder builder = new SAXBuilder();
+		String path = project.getAbsolutePath() + File.separator + projectName + File.separator + "pom.xml";
+		File xmlFile = new File(path);
+ 
+		Document doc = (Document) builder.build(xmlFile);
+		Element rootNode = doc.getRootElement();
+		
+		Namespace nameSpace = Namespace.getNamespace("", "http://maven.apache.org/POM/4.0.0");
+		Element dependencies = rootNode.getChild("dependencies", nameSpace);
+		Element theme = new Element("dependency");
+		theme.setNamespace(nameSpace);
+		
+		theme.addContent(new Element("groupId", nameSpace).setText("org.primefaces.themes"));
+		theme.addContent(new Element("artifactId", nameSpace).setText("bootstrap"));
+		theme.addContent(new Element("version", nameSpace).setText("1.0.10"));
+		
+		dependencies.addContent(theme);
+ 
+		XMLOutputter xmlOutput = new XMLOutputter();
+ 
+		xmlOutput.setFormat(Format.getPrettyFormat());
+		
+		xmlOutput.output(doc, new FileWriter(path));
+	}
 
 	private void copyTemplates(String projectName) throws IOException {
 		

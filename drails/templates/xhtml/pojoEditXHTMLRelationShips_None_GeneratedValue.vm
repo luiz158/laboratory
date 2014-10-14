@@ -1,3 +1,5 @@
-                    
+                    <p:column>
                     <h:outputText id="${varAttrName}" value="#{${attrClassOfValueLower}.${varAttrName}}" />
+                    <p:message for="${varAttrName}" />
+                    </p:column>
                     

@@ -39,9 +39,7 @@ public class CreateDomainCommand implements Command {
             
             File domainFile = new VelocityTransform(project).transform(context, templateFile, Config.getInstance(project).getPathDomain(), nameCamelCase, ".java");
             
-            App.out.println("=================================================");
             App.out.println("Domínio " + domainFile + " criado com sucesso !");
-            App.out.println("=================================================");
             
         } 
 		catch (Exception ex) {

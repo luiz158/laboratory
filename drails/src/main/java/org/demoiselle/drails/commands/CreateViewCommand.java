@@ -11,8 +11,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Map.Entry;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,6 +38,9 @@ public class CreateViewCommand implements Command {
 	private File project;
 	private Map<String, String> relationshipsFields;
 	private List<String> relationshipsAnnotations;
+	
+	private Map<String, String> atributos;
+	private File domain;
 
 	public CreateViewCommand(File project) {
 		this.project = project;
@@ -58,11 +61,14 @@ public class CreateViewCommand implements Command {
 		relationshipsAnnotations.add("OneToMany");
 		relationshipsAnnotations.add("OneToOne");
 		
-		App.out.println("=================================================");
+		String nameCamelCase = WordUtils.capitalize(domainName.split("\\.")[domainName.split("\\.").length - 1]);
+		domain = new File(Config.getInstance(project).getPathDomain() + File.separator + nameCamelCase + ".java");
+		
+		atributos = ParserUtil.getAttributesFromClassFile(domain);
+		
 		generateMB(domainName);
 		generateXHTML(domainName);
 		addDomainToMenu(domainName);
-		App.out.println("=================================================");
 
 	}
 
@@ -115,6 +121,8 @@ public class CreateViewCommand implements Command {
 				menuBar.addContent(new VelocityTransform(project).transformToString(context, templateFile));
 				menuBar.addContent(new ProcessingInstruction(javax.xml.transform.Result.PI_ENABLE_OUTPUT_ESCAPING));
 				
+				addMessage("menu." + nameCamelCase.toLowerCase(), nameCamelCase);
+				
 			}
 	 
 			XMLOutputter xmlOutput = new XMLOutputter();
@@ -155,7 +163,6 @@ public class CreateViewCommand implements Command {
             
             App.out.println("View " + viewListFile + " criado com sucesso !");
             
-            
         } 
 		catch (Exception ex) {
             Logger.getLogger(CreateViewCommand.class.getName()).log(Level.SEVERE, null, ex);
@@ -166,8 +173,6 @@ public class CreateViewCommand implements Command {
 
 	private String generateBodyListXHTML(File domain, String nameCamelCase) throws Exception {
 		StringBuilder result = new StringBuilder();
-		
-		Map<String, String> atributos = ParserUtil.getAttributesFromClassFile(domain);
 		
 		VelocityContext context = new VelocityContext();
 		
@@ -263,6 +268,7 @@ public class CreateViewCommand implements Command {
 			
 			if("OneToMany".equals(varRelationship)){
 				
+				
 				String varListOfClassValue = ParserUtil.getFieldValue(domain, varField);
 				String attrClassOfValue = StringUtil.getClassNameOfListOf(varListOfClassValue);
 				String varBeanOnetoMany = attrClassOfValue + ".java";
@@ -288,46 +294,49 @@ public class CreateViewCommand implements Command {
 					String varAttrName = pairsOneToMany.getKey();
 					String varAttrValue = pairsOneToMany.getValue();
 					
-					List<String> annotationsForAField = ParserUtil.getAnnotationsForField(varFileOneToMany, varAttrName);
-					String hasRelationship = StringUtil.hasOneInList(annotationsForAField, relationshipsAnnotations);
+					context.put("varAttrName", varAttrName);
 					
-					if (hasRelationship == null){
+					if(!"serialVersionUID".equalsIgnoreCase(varAttrName)){
 						
-						StringBuilder columnsInner = new StringBuilder();
+						List<String> annotationsForAField = ParserUtil.getAnnotationsForField(varFileOneToMany, varAttrName);
+						String hasRelationship = StringUtil.hasOneInList(annotationsForAField, relationshipsAnnotations);
 						
-						context.put("varAttrName", varAttrName);
-						
-						String templateEditFileColumns = "";
-						
-						if (ParserUtil.hasAnnotationForField(varFileOneToMany, varAttrName, "GeneratedValue")) {
-							templateEditFileColumns = "xhtml" + File.separator + "pojoEditXHTMLRelationShips_None_GeneratedValue.vm";
-						}
-						else{
-							if("Date".equalsIgnoreCase(varAttrValue)){ 
-								templateEditFileColumns = "xhtml" + File.separator + "pojoEditXHTMLRelationShips_None_Date.vm";
-								addMessage(attrClassOfValueLower + ".alt." + varAttrName, varAttrName);
+						if (hasRelationship == null){
+							
+							StringBuilder columnsInner = new StringBuilder();
+							
+							String templateEditFileColumns = "";
+							
+							if (ParserUtil.hasAnnotationForField(varFileOneToMany, varAttrName, "GeneratedValue")) {
+								templateEditFileColumns = "xhtml" + File.separator + "pojoEditXHTMLRelationShips_None_GeneratedValue.vm";
 							}
 							else{
-								if(ParserUtil.hasAnnotationForField(varFileOneToMany, varAttrName, "Enumerated")) {
-									templateEditFileColumns = "xhtml" + File.separator + "pojoEditXHTMLRelationShips_None_Enumerated.vm";
-								}
-								else{
-									templateEditFileColumns = "xhtml" + File.separator + "pojoEditXHTMLRelationShips_None_Other.vm";
+								if("Date".equalsIgnoreCase(varAttrValue)){ 
+									templateEditFileColumns = "xhtml" + File.separator + "pojoEditXHTMLRelationShips_None_Date.vm";
 									addMessage(attrClassOfValueLower + ".alt." + varAttrName, varAttrName);
 								}
+								else{
+									if(ParserUtil.hasAnnotationForField(varFileOneToMany, varAttrName, "Enumerated")) {
+										templateEditFileColumns = "xhtml" + File.separator + "pojoEditXHTMLRelationShips_None_Enumerated.vm";
+									}
+									else{
+										templateEditFileColumns = "xhtml" + File.separator + "pojoEditXHTMLRelationShips_None_Other.vm";
+										addMessage(attrClassOfValueLower + ".alt." + varAttrName, varAttrName);
+									}
+								}
 							}
+							
+							columnsInner.append(new VelocityTransform(project).transformToString(context, templateEditFileColumns));
+							
+							templateEditFile = "xhtml" + File.separator + "pojoEditXHTMLRelationShips_None.vm";
+							
+							addMessage(attrClassOfValueLower + ".label." + varAttrName, varAttrName);
+							
+							context.put("columnInner", columnsInner.toString());
+							
+							columns.append(new VelocityTransform(project).transformToString(context, templateEditFileColumns));
+							
 						}
-						
-						columnsInner.append(new VelocityTransform(project).transformToString(context, templateEditFileColumns));
-						
-						templateEditFile = "xhtml" + File.separator + "pojoEditXHTMLRelationShips_None.vm";
-						
-						addMessage(attrClassOfValueLower + ".label." + varAttrName, varAttrName);
-						
-						context.put("columnInner", columnsInner.toString());
-						
-						columns.append(new VelocityTransform(project).transformToString(context, templateEditFileColumns));
-						
 					}
 					
 				}
@@ -364,38 +373,68 @@ public class CreateViewCommand implements Command {
 					
 					result.append(new VelocityTransform(project).transformToString(context, templateEditFile));
 					
-					generateConversor(domain, attrClassOfValue);
+					generateConverters(domain, attrClassOfValue);
 				}
 			}
 			
-			it.remove();
 		}
 		
 		
 		return result.toString();
 	}
 
-	private void generateConversor(File domain, String conversorName) {
+	private void generateConverters(File domain, String conversorName) {
 		
-	/*	Criar pasta converters caso não exista
-		Gerar Template
+		File converterFolder = new File(Config.getInstance(project).getPathConverters());
+		if(!converterFolder.exists()){
+			converterFolder.mkdir();
+		}
 		
+		try {
+			
+			VelocityContext context = new VelocityContext();
+			
+			context.put("packageName", Config.getInstance(project).getPackageAppWithNameApp());
+			context.put("pojo", conversorName);
+			context.put("idNameUpper", WordUtils.capitalize(getDomainProperty(domain, "Id")));
+			context.put("idType", "Long");
+			context.put("beanLower", conversorName.toLowerCase());
+			
+			String templateEditFile = "xhtml" + File.separator + "converters" + File.separator + "Converter.vm";
+			
+			File converterFile = new VelocityTransform(project).transform(context, templateEditFile, Config.getInstance(project).getPathConverters(), conversorName, "Converter.java");
+            
+            App.out.println("Converter " + converterFile + " criado com sucesso !");
+            
+        } 
+		catch (Exception ex) {
+            Logger.getLogger(CreateViewCommand.class.getName()).log(Level.SEVERE, null, ex);
+        }
 		
-		packageName
-		pojo
-		idNameUpper
-		idType
-		beanLower*/
+	}
+
+	private String getDomainProperty(File domain, String annotation) {
 		
+		String result = "";
 		
+		for(Map.Entry<String, String> entry : atributos.entrySet()){
+			
+			String key = entry.getKey();
+			
+			List<String> annotationsForAField = ParserUtil.getAnnotationsForField(domain, key);
+			if(annotationsForAField.contains(annotation)){
+				result = key;
+				break;
+			}
+			
+		}
 		
+		return result;
 	}
 
 	private String generateBodyEditXHTML(File domain, String nameCamelCase) throws Exception {
 		
 		StringBuilder result = new StringBuilder();
-		
-		Map<String, String> atributos = ParserUtil.getAttributesFromClassFile(domain);
 		
 		if(atributos.isEmpty()){
 			
@@ -413,9 +452,12 @@ public class CreateViewCommand implements Command {
 		}
 		else{
 			
+			addMessage(nameCamelCase.toLowerCase() + ".label", nameCamelCase);
+			
 			Iterator<Entry<String, String>> it = atributos.entrySet().iterator();
 			
 			while(it.hasNext()){
+			
 				Map.Entry<String, String> pairs = (Map.Entry<String, String>) it.next();
 				
 				String key = pairs.getKey();
@@ -427,7 +469,6 @@ public class CreateViewCommand implements Command {
 				if(!"serialVersionUID".equalsIgnoreCase(key)){
 				
 					if (varRelationship != null && !varRelationship.isEmpty() ){
-						
 						
 						if("ManyToOne".equals(varRelationship) || "OneToOne".equals(varRelationship)) {
 							
@@ -445,6 +486,7 @@ public class CreateViewCommand implements Command {
 							result.append(new VelocityTransform(project).transformToString(context, templateEditFile));
 							
 							addMessage(key + ".label", key);
+							generateConverters(domain, value);
 								
 						}
 						else{
@@ -490,7 +532,6 @@ public class CreateViewCommand implements Command {
 					}
 				}
 				
-				it.remove();
 			}
 		}
 		
@@ -564,8 +605,6 @@ public class CreateViewCommand implements Command {
 		
 		StringBuilder result = new StringBuilder();
 		
-		Map<String, String> atributos = ParserUtil.getAttributesFromClassFile(domain);
-		
 		Iterator<Entry<String, String>> it = atributos.entrySet().iterator();
 		
 		while(it.hasNext()){
@@ -616,7 +655,6 @@ public class CreateViewCommand implements Command {
 							String attrNameFirstUp = WordUtils.capitalize(key);
 							String attrClassFirstLower =  StringUtil.lowerCaseFirstLetter(attrClassOfValue);
 
-						
 							VelocityContext context = new VelocityContext();
 							context.put("attrClassOfValue", attrClassOfValue);
 							context.put("attrNameFirstUp", attrNameFirstUp);
@@ -647,7 +685,6 @@ public class CreateViewCommand implements Command {
 				
 			}
 			
-			it.remove();
 		}
 		
 		return result.toString();

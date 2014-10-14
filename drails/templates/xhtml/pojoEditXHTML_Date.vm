@@ -2,3 +2,4 @@
                     <p:calendar id="${attrName}" value="#{${beanLower}EditMB.bean.${attrName}}"
                                 pattern="#{messages['label.date.pattern']}" navigator="true" showButtonPanel="true"
                                 locale="#{locales.currentLocale}" title="#{messages['${beanLower}.alt.${attrName}']}" />
+                    <p:message for="${attrName}" />

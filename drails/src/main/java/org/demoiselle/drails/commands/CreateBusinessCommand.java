@@ -43,9 +43,7 @@ public class CreateBusinessCommand implements Command {
 			
 			File businessFile = new VelocityTransform(project).transform(context, templateFile, Config.getInstance(project).getPathBusiness(),  nameCamelCase, "BC.java");
             
-            App.out.println("=================================================");
             App.out.println("Business " + businessFile + " criado com sucesso !");
-            App.out.println("=================================================");
             
         } 
 		catch (Exception ex) {

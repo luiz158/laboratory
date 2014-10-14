@@ -209,4 +209,9 @@ public class Config {
 		return path;
 	}
 
+	public String getPathConverters() {
+		return getProjectPath() + File.separator + "converters" + File.separator;		
+	}
+
+
 }

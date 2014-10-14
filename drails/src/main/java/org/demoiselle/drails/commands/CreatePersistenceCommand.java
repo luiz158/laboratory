@@ -55,9 +55,7 @@ public class CreatePersistenceCommand implements Command {
 			
 			appendClassPersistenceXML(nameCamelCase);
             
-            App.out.println("=================================================");
             App.out.println("Persistence " + persistenceFile + " criado com sucesso !");
-            App.out.println("=================================================");
             
         } 
 		catch (Exception ex) {

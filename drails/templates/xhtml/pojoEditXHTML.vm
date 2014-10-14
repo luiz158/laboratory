@@ -24,7 +24,7 @@
 			<br />
 
 			<p:fieldset legend="#{messages['${beanLower}.label']}" toggleable="true" toggleSpeed="500">
-				<h:panelGrid id="fields${beanLower}" columns="2">
+				<h:panelGrid id="fields${beanLower}" columns="3">
 
 				${body}
 
