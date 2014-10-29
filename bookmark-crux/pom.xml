@@ -87,8 +87,17 @@
 			<classifier>source-release</classifier>
 		</dependency>
 	</dependencies>
+	
+	<pluginRepositories>
+		<pluginRepository>
+			<id>jboss</id>
+			<name>jboss-as</name>
+			<url>http://repository.jboss.org/</url>
+		</pluginRepository>
+	</pluginRepositories>
 
 	<build>
+		<finalName>${artifactId}</finalName>
 		<plugins>
 			<!-- Compile -->
 			<plugin>
@@ -218,7 +227,20 @@
 					</execution>
 				</executions>
 			</plugin>
-
+			
+			<plugin>
+				<groupId>org.jboss.as.plugins</groupId>
+				<artifactId>jboss-as-maven-plugin</artifactId>
+				<version>7.6.Final</version>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 	<profiles>
