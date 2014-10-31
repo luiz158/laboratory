@@ -1,0 +1,162 @@
+@external *;
+
+@url headerLogo headerLogo;
+@url headerPtbr headerPtbr;
+@url headerEn headerEn;
+
+body
+{
+	background: #f1f1f1 !important;
+}
+
+.header
+{
+	margin:0 0 10px;
+	position:relative;
+}
+
+.header-logo
+{
+	background: headerLogo no-repeat;
+	width:60px;
+	height: 60px;
+	display:block;
+	margin:10px 0 10px 10px;
+}
+
+.language-box
+{
+	position:absolute;
+	top:15px;
+	right:10px;
+}
+
+.language-box a
+{
+	display:inline-block;
+	width:32px;
+	height: 32px;
+	margin-left:10px;
+}
+
+.lang-ptbr
+{
+	background: headerPtbr no-repeat;
+}
+
+.lang-en
+{
+	background: headerEn no-repeat;
+}
+
+.header-menu
+{
+	border-bottom:1px dotted #ccc;
+	padding-bottom:15px;
+}
+
+.spanel
+{
+	width: 400px;
+	padding: 20px;
+	float: left;
+}
+
+.spanel .formEntryData input
+{
+	width:100%;
+}
+
+.crux-StyledPanelOuter,
+.grid,
+.grid .crux-Grid > div > table,
+.form
+{
+	width:100% !important;
+}
+
+.faces-MessageBox .faces-Button, .faces-Confirm .faces-Button, .c-btn.stroke
+{
+	border-radius: 4px;
+	border: 1px solid #777;
+	color: #444;
+	padding: 5px 20px;
+	margin: 20px auto 0;
+	background: transparent;
+	font-size:15px;
+}
+.faces-MessageBox .faces-Button:hover, .faces-Confirm .faces-Button:hover, .c-btn.stroke:hover
+{
+	background:rgba(0,0,0,0.1);
+}
+
+.faces-MessageBox .dialogCloseButton
+{
+	display:none;
+}
+
+.faces-MessageBox-success .popupContent
+{
+	background:svgIconSuccess no-repeat center 20px #cdcfd2;
+	background-size:62px auto;
+	padding-top:90px;	
+}
+
+.faces-MessageBox-success .faces-Button, .c-btn.stroke.success
+{
+	border-radius: 4px;
+	border: 1px solid #42A846;
+	color: #1C571E;
+	padding: 5px 20px;
+	margin: 20px auto 0;
+	background: transparent;
+	transition:background 0.1s linear;
+}
+
+.faces-MessageBox-success .faces-Button:hover, .c-btn.stroke.success:hover
+{
+	background: rgba(33, 165, 38, 0.2);
+}
+
+.faces-MessageBox-error .popupContent
+{
+	background:svgIconError no-repeat center 20px #cdcfd2;
+	background-size:62px auto;
+	padding-top:90px;	
+}
+
+.faces-MessageBox-error .faces-Button, .c-btn.stroke.error
+{
+	border-radius: 4px;
+	border: 1px solid #A84242;
+	color: #561313;
+	padding: 5px 20px;
+	margin: 20px auto 0;
+	background: transparent;
+}
+
+.faces-MessageBox-error .faces-Button:hover, .c-btn.stroke.error:hover
+{
+	background: rgba(165, 33, 33, 0.2);
+}
+
+.crux-Grid .row .cellWrapper:first-child
+{
+	text-align:center;
+}
+
+.crux-Grid .row .cellWrapper:first-child .gwt-CheckBox label
+{
+	display:none;
+}
+
+.crux-Grid .columnHeadersRow.row .cellWrapper:first-child
+{
+	background:#eee !important;
+}
+
+.facesMenu a
+{
+	color:#222;
+	text-decoration:none;
+}

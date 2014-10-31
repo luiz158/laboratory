@@ -1,0 +1,13 @@
+Para executar o projeto no Eclipse:
+
+1-  Iniciar o servidor JBoss.
+
+Para Deploy:
+
+2- Executar o comando no Eclipse: Run As -> Maven Build
+3- Na tela de configuração, preecher o campo Goal, preencher: jboss-as:deploy
+
+Para Undeploy
+
+2- Executar o comando no Eclipse: Run As -> Maven Build
+3- Na tela de configuração, preecher o campo Goal, preencher: jboss-as:undeploy

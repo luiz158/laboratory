@@ -1,0 +1,13 @@
+Para testes:
+
+Executar via Eclipse: Run As -> Maven install
+
+Executar em linha de comando:
+
+mvn archetype:generate \
+-DarchetypeGroupId=org.demoiselle.cruxframework \
+-DarchetypeArtifactId=demoiselle-crux-archetype \
+-DarchetypeVersion=1.0.0-SNAPSHOT \
+-DgroupId=br.org.teste \
+-DartifactId=testeCrux \
+-DinteractiveMode=false
