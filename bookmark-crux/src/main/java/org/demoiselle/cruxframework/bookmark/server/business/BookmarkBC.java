@@ -1,26 +1,37 @@
 /*
- * Copyright 2013 cruxframework.org.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
- * 
- * http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
- * the License.
+ Demoiselle Framework
+  ============================================================================
+ This file is part of Demoiselle Framework.
+ Demoiselle Framework is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public License version 3
+ as published by the Free Software Foundation.
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ You should have received a copy of the GNU Lesser General Public License version 3
+ along with this program; if not,  see <http://www.gnu.org/licenses/>
+ or write to the Free Software Foundation, Inc., 51 Franklin Street,
+ Fifth Floor, Boston, MA  02110-1301, USA.
+ ============================================================================
+ Este arquivo é parte do Framework Demoiselle.
+ O Framework Demoiselle é um software livre; você pode redistribuí-lo e/ou
+ modificá-lo dentro dos termos da GNU LGPL versão 3 como publicada pela Fundação
+ do Software Livre (FSF).
+ Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA
+ GARANTIA; sem uma garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou
+ APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/LGPL em português
+ para maiores detalhes.
+ Você deve ter recebido uma cópia da GNU LGPL versão 3, sob o título
+ "LICENCA.txt", junto com esse programa. Se não, acesse <http://www.gnu.org/licenses/>
+ ou escreva para a Fundação do Software Livre (FSF) Inc.,
+ 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package org.cruxframework.bookmark.server.business;
+package org.demoiselle.cruxframework.bookmark.server.business;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.cruxframework.bookmark.client.dto.BookmarkDTO;
-import org.cruxframework.bookmark.server.domain.Bookmark;
-import org.cruxframework.bookmark.server.persistence.BookmarkDAO;
 import org.cruxframework.crux.core.server.rest.annotation.RestService;
 import org.cruxframework.crux.core.shared.rest.annotation.DELETE;
 import org.cruxframework.crux.core.shared.rest.annotation.GET;
@@ -28,6 +39,9 @@ import org.cruxframework.crux.core.shared.rest.annotation.POST;
 import org.cruxframework.crux.core.shared.rest.annotation.PUT;
 import org.cruxframework.crux.core.shared.rest.annotation.Path;
 import org.cruxframework.crux.core.shared.rest.annotation.PathParam;
+import org.demoiselle.cruxframework.bookmark.client.dto.BookmarkDTO;
+import org.demoiselle.cruxframework.bookmark.server.domain.Bookmark;
+import org.demoiselle.cruxframework.bookmark.server.persistence.BookmarkDAO;
 
 import br.gov.frameworkdemoiselle.lifecycle.Startup;
 import br.gov.frameworkdemoiselle.stereotype.BusinessController;

@@ -11,7 +11,7 @@
 	<persistence-unit name="bookmark-ds" transaction-type="RESOURCE_LOCAL">
 		<non-jta-data-source>java:jboss/datasources/ExampleDS</non-jta-data-source>
 
-		<class>org.cruxframework.bookmark.server.domain.Bookmark</class>
+		<class>org.demoiselle.cruxframework.bookmark.server.domain.Bookmark</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 
 		<properties>
