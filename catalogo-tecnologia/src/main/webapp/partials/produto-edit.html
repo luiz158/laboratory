@@ -1,0 +1,212 @@
+<div class="painel painel-default">
+	<h1 class="page-header">
+		<small>Manter</small> Produto
+	</h1>
+
+	<div>
+		<ng-alerts></ng-alerts>
+	</div>
+
+	<form name="formProduto" role="form">
+<!-- 		<ul class="nav nav-tabs" ng:init="selected=1"> -->
+<!-- 			<li class="ng-class: selected == 1 ? 'active':'';"><a -->
+<!-- 				ng:click="selected=1">Produto</a></li> -->
+<!-- 			<li class="ng-class: selected == 2 ? 'active':'';" -->
+<!-- 				ng-show="analise.situacao != 'Rascunho'"><a -->
+<!-- 				ng:click="selected=2">Próxima Fase</a></li> -->
+<!-- 			<li class="ng-class: selected == 3 ? 'active':'';"><a -->
+<!-- 				ng:click="selected=3">Anexos</a></li> -->
+<!-- 		</ul> -->
+
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="form-group row">
+					<div class="col-md-1">
+						<label for="id">Id:</label> <input class="form-control"
+							disabled=disabled type="text" id="id" ng-model="produto.id">
+					</div>
+					<div class="col-md-11">
+						<label for="nome">Produto:<font color="#FF0000"> *</font></label> 
+						<input type="text" class="form-control" id="nome" ng-model="produto.nome"	required> 
+						<span id="nome-message" class="text-danger"></span>
+					</div>
+				</div>
+		
+				<div class="form-group">
+							
+					<div class="form-group row">
+						<div class="col-md-3">
+							<label for="tecnologia">Tecnologia:</label>
+							<select id="tecnologia" class="form-control" ng-model="tecnologia" ng-change="carregarCategorias()" ng-options="t.nome for t in tecnologias">
+							</select>
+						</div>
+						<div class="col-md-3">
+							<label for="categoria">Categoria:<font color="#FF0000"> *</font></label>
+							<select id="categoria" class="form-control" ng-model="categoria" ng-options="c.nome for c in categorias">
+							</select>
+						</div>
+						<div class="col-md-2">
+							<label for="addcionar">  </label>
+							<button id="addcionar" class="form-control btn btn-primary" type="button" ng-click="adicionaCategoria()">
+								Adicionar  <i class="fa fa-plus-circle"></i>
+							</button> 
+						</div>
+					</div>
+					<div class="form-group row" ng:show="categoriasSelecionadas.length > 0">
+						<div class="col-md-6">
+						    <table class="table table-striped table-bordered table-hover dataTable no-footer" id="dataTables-example" aria-describedby="dataTables-example_info" >
+								<thead>
+									<tr role="row">
+										<th tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-sort="ascending"
+											aria-label="Rendering engine: activate to sort column ascending" style="width: 90%;">Categoria</th>
+										<th tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1"
+											aria-label="Platform(s): activate to sort column ascending" style="width: 10%;"></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="c in categoriasSelecionadas">
+										<td>{{c.nome}}</td>
+										<td><a ng-click="removeCategoria(c)" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i></a></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<br/>
+				<div class="form-group row">
+					<div class="col-md-3">
+						<label for="versao">Versão:<font color="#FF0000"> *</font></label>
+						<input type="text" class="form-control" id="versao" ng-model="produto.versao"	required>
+						<span id="versao-message" class="text-danger"></span>
+					</div>
+					<div class="col-md-3">
+						<div date-picker="start"></div>
+						<label class="dataLancamento"><i class="fa fa-calendar"></i>
+							Data da lançamento:<font color="#FF0000"> *</font></label> 
+						<input type="text"
+							class="form-control" id="dataLancamento" name="dataLancamento"
+							ng-model="produto.dataLancamento" data-date-type="date"
+							data-min-date="01/01/1980"
+							data-autoclose="1" data-date-format="dd/MM/yyyy" bs-datepicker>
+						<span id="dataLancamento-message" class="text-danger"></span>
+					</div>
+					<div class="col-md-3">
+						<div date-picker="start"></div>
+						<label class="dataDescontinuidade"><i class="fa fa-calendar"></i>
+							Data de descontinuidade:</label> 
+						<input type="text"
+							class="form-control" id="dataDescontinuidade" name="dataDescontinuidade"
+							ng-model="produto.dataDescontinuidade" data-date-type="date"
+							data-min-date="01/01/1980"
+							data-autoclose="1" data-date-format="dd/MM/yyyy" bs-datepicker>
+						<span id="dataDescontinuidade-message" class="text-danger"></span>
+					</div>
+					<div class="col-md-3">
+						<label for="licenciamento">Licenciamento:</label>
+						<select id="licenciamento" class="form-control" ng-model="licenciamento" ng-options="l.nome for l in licenciamentos">
+						</select>
+					</div>
+				</div>
+				
+				<div class="form-group row">
+					<div class="col-md-6">
+						<label for="fabricante">Fabricante:<font color="#FF0000"> *</font></label>
+						<select id="fabricante" class="form-control" ng-model="fabricante" ng-options="f.nome for f in fabricantes">
+						</select>
+					</div>
+					<div class="col-md-6">
+						<label for="fornecedor">Fornecedor:</label>
+						<select id="fornecedor" class="form-control" ng-model="fornecedor" ng-options="f.nome for f in fornecedores">
+						</select>
+					</div>
+				</div>
+				<br/>
+				<div class="form-group">
+					<div class="form-group row">
+						<div class="col-md-6">
+							<label for="plataformasTecSuportadas">Plataformas tecnológicas suportadas:</label>
+							<select id="plataformasTecSuportadas" class="form-control" ng-model="plataforma" ng-options="p.nome for p in plataformasTecnologicas">
+							</select>
+							<span id="plataformasTecSuportadas-message" class="text-danger"></span>
+						</div>
+						<div class="col-md-6" style='padding-top:0.8cm; padding-left:0cm;'>
+							<a id="btnAddPlataformas" ng-click="adicionaPlataforma()" class="btn btn-primary btn-xs">+</a>
+						</div>
+					</div>
+					<div ng:show="plataformasSuportadas.length > 0">
+					    <table class="table table-striped table-bordered table-hover dataTable no-footer" id="dataTables-example" aria-describedby="dataTables-example_info" style="width: 48.5%;">
+							<thead>
+								<tr role="row">
+									<th tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-sort="ascending"
+										aria-label="Rendering engine: activate to sort column ascending" style="width: 90%;">Plataforma</th>
+									<th tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1"
+										aria-label="Platform(s): activate to sort column ascending" style="width: 10%;"></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="p in plataformasSuportadas">
+									<td>{{p.nome}}</td>
+									<td><a ng-click="removePlataforma(p)" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i></a></td>
+								</tr>
+							</tbody>
+						</table>
+						<br/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="descricao">Descrição:<font color="#FF0000"> *</font></label>
+					<textarea rows="4" class="form-control" id="descricao"
+						ng-model="produto.descricao" required></textarea>
+					<span id="descricao-message" class="text-danger"></span>
+				</div>
+				
+				<div class="form-group">
+					<label for="atualizacao">Atualização</label>
+					<input id="atualizacao" type="checkbox" ng-change="clicaAtualizacao()" ng-model="produto.atualizacao">
+					<span id="atualizacao-message" class="text-danger"></span>
+				</div>
+				
+				<div>
+    				<div class="form-group row" style='padding-left:1cm;' ng:show="produto.atualizacao">
+						<div class="col-md-6">
+							<label for="produtoParaPesquisa">Palavra-chave para pesquisa:</label>
+							<input type="text" class="form-control" id="produtoParaPesquisa" ng-model="produtoParaPesquisa">
+							<span id="produtoParaPesquisa-message" class="text-danger"></span>
+						</div>
+							<div class="col-md-6" style='padding-top:0.5cm; padding-left:0cm;'>
+							<button type="button" class="btn btn-lg btn-primary" data-template="partials/pesquisa-produtos.html" bs-modal="modal">
+								Pesquisar
+							</button>	
+						</div>
+					</div>
+					
+					<div class="form-group" style='padding-left:1cm;' ng:show="produto.produtoAnterior">
+						<label for="nomeProdutoAnterior">Produto:</label> 
+						<input type="text" class="form-control" disabled="disabled" id="nomeProdutoAnterior" ng-model="produto.produtoAnterior"> 
+						<span id="nomeProdutoAnterior-message" class="text-danger"></span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="legado">Legado</label>
+					<input id="legado" type="checkbox" ng-model="produto.legado">
+					<span id="legado-message" class="text-danger"></span>
+				</div>
+
+			</div>
+		</div>
+
+		<div>
+			<button has-role='ADMINISTRADOR,CADASTRADOR' class="btn btn-primary" ng-click="salvarProduto()">
+				<i class="fa fa-save"> </i> Salvar
+			</button>
+			<a class="btn btn-inverse pull-right" back-button>
+				<i class="fa fa-long-arrow-left"></i>
+				Voltar
+			</a>
+		</div>
+
+	</form>
+
+</div>

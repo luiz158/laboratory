@@ -1,0 +1,52 @@
+<div class="panel-body">
+	<div class="panel-body" ng-controller="AnexoCtrl">
+
+		<div class="input-group">
+			<span class="input-group-btn"> <span class="btn btn-primary btn-file"> Escolher arquivos&hellip; <input type="file" multiple
+					ng-file-select="onFileSelect($files)">
+			</span>
+			</span> <input type="text" class="form-control" readonly value={{labelArquivos}}></input>
+		</div>
+		<div>
+			<div class="progress" ng-show="progress > 0">
+				<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100"
+					style="width: {{progress}}%">
+					<span class="sr-only">{{progress}}%</span>
+				</div>
+				<button class="btn btn-danger btn-xs pull-right" ng-click="cancelarUpload()">
+					<i class="fa fa-times-circle"></i> cancelar
+				</button>
+			</div>
+		</div>
+		<br/>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h5 class="panel-title">Arquivos anexos</h5>
+			</div>
+			<!-- /.panel-heading -->
+			<div class="panel-body">
+				<div class="table-responsive">
+					<table class="table table-striped">
+						<tbody>
+							<tr ng-repeat="a in anexos">
+								<td>
+									<a ng-href="api/anexo/download/{{a.id}}"> 
+										<img alt="Tipo do arquivo" ng-src="{{a.tipoArquivo | tipoArquivo}}" width="35px"> 
+										{{a.nomeArquivo}} <i>({{a.tamanhoArquivo | tamanho}})</i>
+									</a>
+								</td>
+								<td style="width: 20%">
+									<a ng-href="api/anexo/download/{{a.id}}" class="btn btn-primary btn-sm">
+										<i class="fa fa-download"></i> download</a> 
+									<button ng-click-confirm="excluir(a.id)" has-role="fase.fase" class="btn btn-danger btn-sm">
+										<i class="fa fa-trash-o"></i> excluir
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

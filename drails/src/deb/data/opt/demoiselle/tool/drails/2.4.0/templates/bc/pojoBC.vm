@@ -1,0 +1,16 @@
+package ${packageName}.business;
+
+import br.gov.frameworkdemoiselle.stereotype.BusinessController;
+import br.gov.frameworkdemoiselle.template.DelegateCrud;
+import java.util.*;
+import javax.faces.model.*;
+import ${packageName}.persistence.${pojo}DAO;
+import ${packageName}.domain.${pojo};
+	
+@BusinessController
+public class ${pojo}BC extends DelegateCrud<${pojo}, ${idType}, ${pojo}DAO> {
+	private static final long serialVersionUID = ${serialVersionUID}L;
+	
+}
+
+

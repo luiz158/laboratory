@@ -1,0 +1,36 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<v:view 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:v="http://www.cruxframework.org/view" 
+	xmlns:core="http://www.cruxframework.org/crux" 
+	xmlns:crux="http://www.cruxframework.org/crux/widgets"
+	xmlns:gwt="http://www.cruxframework.org/crux/gwt"
+	xmlns:faces="http://www.cruxframework.org/crux/smart-faces" 
+	onActivate="addBookmarkController.onActivate"
+	useController="addBookmarkController"
+	dataObject="bookmarkDTO"> 
+	
+	<crux:styledPanel id="sanel">
+		<crux:styledPanel id="sPanel" styleName="spanel">
+			
+			<!-- Form for add new item -->
+			<crux:formDisplay id="form" styleName="form">
+		            <crux:entry label="${symbol_dollar}{commonMessages.addDescription}">
+		                <gwt:textBox id="descricaoTextBox" bindPath="description"/>
+		            </crux:entry>
+		           	<crux:entry label="${symbol_dollar}{commonMessages.addLink}">
+		                <gwt:textBox id="linkTextBox" bindPath="link"/>
+		            </crux:entry>
+		            <crux:entry>
+		            	<gwt:horizontalPanel id="gwtHorizontalpanel">
+		            		<crux:button id="saveButton" text="${symbol_dollar}{commonMessages.addSave}" onSelect="addBookmarkController.save"/>
+		            	</gwt:horizontalPanel>
+		            </crux:entry>
+		     </crux:formDisplay>
+		     
+		</crux:styledPanel>
+	</crux:styledPanel>
+	
+</v:view>

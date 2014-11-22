@@ -1,0 +1,53 @@
+package ${packageName}.view;
+
+import javax.inject.Inject;
+import br.gov.frameworkdemoiselle.annotation.PreviousView;
+import br.gov.frameworkdemoiselle.stereotype.ViewController;
+import br.gov.frameworkdemoiselle.template.AbstractEditPageBean;
+import br.gov.frameworkdemoiselle.transaction.Transactional;
+import ${packageName}.business.*;
+import ${packageName}.domain.*;
+import javax.faces.model.*;
+import org.primefaces.event.TransferEvent;
+import org.primefaces.model.DualListModel;
+import java.util.*;
+
+// To remove unused imports press: Ctrl+Shift+o
+
+@ViewController
+@PreviousView("./${beanLower}_list.jsf")
+public class ${pojo}EditMB extends AbstractEditPageBean<${pojo}, ${idType}> {
+
+    private static final long serialVersionUID = 1L;
+
+    @Inject
+    private ${pojo}BC ${beanLower}BC;
+
+${body}
+
+    @Override
+    @Transactional
+    public String delete() {
+        this.${beanLower}BC.delete(getId());
+        return getPreviousView();
+    }
+
+    @Override
+    @Transactional
+    public String insert() {
+        this.${beanLower}BC.insert(this.getBean());
+        return getPreviousView();
+    }
+
+    @Override
+    @Transactional
+    public String update() {
+        this.${beanLower}BC.update(this.getBean());
+        return getPreviousView();
+    }
+
+    @Override
+    protected ${pojo} handleLoad(${idType} id) {
+    	return this.${beanLower}BC.load(id);
+    }	
+}

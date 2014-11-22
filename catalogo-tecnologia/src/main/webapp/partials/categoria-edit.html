@@ -1,0 +1,57 @@
+<div class="painel painel-default">
+	<h1 class="page-header">
+		<small>Manter</small> Categoria
+	</h1>
+
+	<div>
+		<ng-alerts></ng-alerts>
+	</div>
+
+	<form name="formFornecedor" role="form">
+<!-- 		<ul class="nav nav-tabs" ng:init="selected=1"> -->
+<!-- 			<li class="ng-class: selected == 1 ? 'active':'';"><a -->
+<!-- 				ng:click="selected=1">Produto</a></li> -->
+<!-- 			<li class="ng-class: selected == 2 ? 'active':'';" -->
+<!-- 				ng-show="analise.situacao != 'Rascunho'"><a -->
+<!-- 				ng:click="selected=2">Próxima Fase</a></li> -->
+<!-- 			<li class="ng-class: selected == 3 ? 'active':'';"><a -->
+<!-- 				ng:click="selected=3">Anexos</a></li> -->
+<!-- 		</ul> -->
+
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="form-group row">
+					<div class="col-md-6">
+						<label for="id">Id:</label> <input class="form-control"
+							disabled=disabled type="text" id="id" ng-model="catecoria.id">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="tecnologia">Tecnologia:<font color="#FF0000"> *</font></label>
+					<select id="tecnologia" class="form-control" ng-model="tecnologia" ng-options="t.nome for t in tecnologias" required>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="nome">Categoria:<font color="#FF0000"> *</font></label> 
+					<input type="text" class="form-control" id="nome" ng-model="categoria.nome"	required> 
+					<span id="nome-message" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label for="descricao">Descrição:<font color="#FF0000"> *</font></label> 
+					<textarea rows="4" class="form-control" id="descricao" ng-model="categoria.descricao" required></textarea>
+					<span id="descricao-message" class="text-danger"></span>
+				</div>
+			</div>
+		</div>
+
+		<div>
+			<button has-role='ADMINISTRADOR,CADASTRADOR' class="btn btn-primary" ng-click="salvarCategoria()">
+				<i class="fa fa-save"> </i> Salvar
+			</button>
+			<a class="btn btn-inverse pull-right" href="#/categoria"><i
+				class="fa fa-long-arrow-left"></i> Voltar</a>
+		</div>
+
+	</form>
+
+</div>

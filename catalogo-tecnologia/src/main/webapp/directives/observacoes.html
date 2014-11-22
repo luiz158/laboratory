@@ -1,0 +1,56 @@
+<div class="panel">
+<div class="panel-body" ng-controller="ObservacaoCtrl">
+
+	<div class="panel panel-default">	
+		<div class="panel-heading">
+			<h4 class="panel-title">Observações <small>{{fase.fase | nomeFase}}</small></h4>
+		</div>
+		
+		<div class="panel-body">
+	
+			<div class="form-group">
+				<label for="Observacao">Observação:</label>
+				<textarea rows="2" class="form-control" id="Observacao"
+					ng-model="observacao.observacao" required></textarea>			
+			</div>
+			<div class="form-actions">	
+				<button class="btn btn-primary" ng-click="adicionar()">
+					<i class="fa fa-pencil-square-o"> </i> Registrar
+				</button>
+			</div>
+		
+			<br >
+	
+			<ul class="list-group">
+				<li ng-repeat="o in observacoes" class="left list-group-item clearfix">
+		            <div class="header">
+		                <div class="row">
+			        		<div class="col-md-4">
+			        			<small><b>Autor:</b> {{o.usuario.name}}</small>  
+			        			<small><b>Data:</b> {{o.data | date:'MM/dd/yyyy'}} {{o.horario}}</small> 
+			        		</div>			        		
+			        	</div>
+			        </div>
+			        <div class="well well-small">
+		               <textarea rows="4" class="form-control" id="detalhamento" ng-disabled="{{!podeEditar(o)}}"
+							ng-model="o.observacao" required maxlength="2000">
+						</textarea>	 
+		            </div>		
+		            <div class="btn-toolbar pull-right" role="toolbar" ng-if="podeEditar(o)">
+		            	 <div class="btn-group">	
+		            	<button class="btn btn-success btn-xs" ng-click="salvar(o)">
+							<i class="fa fa-pencil-square-o"> </i> Alterar
+						</button>
+						</div>
+						<div class="btn-group">	
+						<button class="btn btn-danger btn-xs" ng-click="excluir(o)">
+							<i class="fa fa-trash-o"> </i> Excluir
+						</button>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+</div>

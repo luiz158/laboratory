@@ -1,0 +1,48 @@
+
+<br /><br /><br /><br /><br /><br />
+
+
+<div class="well well-sm flutuandodireita" >
+	 
+	 <!-- div class="btn-group">
+		<div class="btn btn-primary" >
+			<i class="fa fa-share"> Executar próxima fase?</i> 
+			<div class="btn-group btn-toggle"> 
+			    <button class="btn btn-xs " 
+			    		ng-class="{'btn-success active': fase.executarProximaFase == 1}" 
+			    		ng-click="fase.executarProximaFase=1; selected='PF'">Sim</button>
+			    <button class="btn btn-xs " 
+			    		ng-class="{'btn-danger active': fase.executarProximaFase == 0}" 
+			    		ng-click="fase.executarProximaFase=0; selected=1">Não</button>
+			  </div>
+		</div>		
+	</div-->	
+	
+	
+	<div class="btn-group" has-role="fase.fase" ng-if="fase.executarProximaFase && (!proximafase.id )">	
+	 	<button class="btn btn-primary" ng-click="criarProximaFase()">
+			<i class="fa fa-code-fork"> Criar próxima fase <small ng-if="fase.proximaFase && fase.executarProximaFase">({{fase.proximaFase | nomeFase}})</small></i> 
+		</button>
+	</div>
+		 
+	 
+	 <div class="btn-group" has-role="fase.fase">
+	 	<button class="btn btn-success" ng-click="salvar()">
+			<i class="fa fa-save"> Salvar</i> 
+		</button>
+	</div>
+		
+						
+	<div class="btn-group" ng-show="fase.id && !fase.dataFinalizacao" has-role="fase.fase">
+		<button class="btn btn-warning" confirm-button confirm="finalizar()"
+			 message="Deseja finalizar os trabalhos desta fase? Se houver uma próxima fase esta será criada, se não houver, a demanda será encerrada.">
+			<i class="fa fa-gavel"> Finalizar</i> 
+		</button>
+	</div>
+	<div class="btn-group" ng-show="fase.id">
+		<button class="btn btn-danger" confirm-button confirm="excluir(fase.id)" message="Confirma a exclusão?">
+			<i class="fa fa-trash-o"> Excluir</i> 
+		</button>
+	</div>
+  
+</div>

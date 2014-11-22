@@ -1,0 +1,171 @@
+<div class="painel painel-default">
+	<h3 class="page-header">
+		Prospecção <small>edição</small>
+	</h3>
+	
+	<ng-fluxo ng-model="fase"> </ng-fluxo>
+	
+	<div><ng-alerts></ng-alerts></div>
+
+	<form name="formAnalise" role="form" has-role="PROSPECCAO" novalidate>
+		<ul class="nav nav-tabs nav-justified" ng:init="selected=1">
+			<li class="ng-class: selected == 1 ? 'active':'';"><a
+				ng:click="selected=1">Prospecção</a></li>
+			<li class="ng-class: selected == 2 ? 'active':'';"><a
+				ng:click="selected=2">Resultado</a></li>
+			<li class="ng-class: selected == 3 ? 'active':'';"><a
+				ng:click="selected=3">Produtos</a></li>
+			<li class="ng-class: selected == 'PF' ? 'active':'';">
+				<a	ng:click="selected='PF'">Próxima Fase <small ng-if="fase.proximaFase && fase.executarProximaFase">({{fase.proximaFase | nomeFase}})</small></a></li>
+			<li ng:show="fase.id" class="ng-class: selected == 5 ? 'active':'';"><a
+				ng:click="selected=5">Anexos</a></li>
+
+			<li ng:show="fase.id" class="ng-class: selected == 6 ? 'active':'';">
+				<a ng:click="selected=6">Observações</a>
+			</li>
+			<li ng:show="fase.id" class="ng-class: selected == 7 ? 'active':'';">
+				<a ng:click="selected=7">Histórico</a>
+			</li>
+		</ul>
+
+		<div class="panel panel-default" ng:show="selected == 1">
+			<div class="panel-body">
+				<div class="form-group row">
+					<div class="col-md-6">
+						<label for="id">Id:</label> <input class="form-control"
+							disabled=disabled type="text" id="id" ng-model="fase.identificador">
+					</div>
+					<div class="col-md-6">
+						<a
+							href="#{{fase.faseAnterior.fase | faseUrl}}/{{fase.faseAnterior.id}}">
+							<label for="faseAnterior">Fase anterior:
+								{{fase.faseAnterior.fase | nomeFase}}<font color="#FF0000"> *</font></label> <input
+							class="form-control" disabled=disabled type="text"
+							id="faseAnterior"
+							value="{{fase.faseAnterior.identificador}} - {{fase.faseAnterior.origemReferencia.nome}}[{{fase.faseAnterior.codigoReferencia}}]" />
+						</a>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-md-6">
+						<label for="origemReferencia">Referência:</label> 
+						<select id="origemReferencia" class="form-control" 
+							ng-model="fase.origemReferencia" 
+							ng-options="origem.nome for origem in origemDemanda track by origem.id">
+							<option value="" disabled>-- Selecione --</option>
+						</select>
+					</div>
+					<div class="col-md-6">
+						<label for="codigo">Código:</label> <input class="form-control"
+							type="text" id="codigo" ng-model="fase.codigoReferencia">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="objetivo">Objetivo da Prospecção:<font color="#FF0000"> *</font></label>
+					<textarea rows="4" class="form-control" id="objetivo"
+						ng-model="fase.objetivo" required></textarea>
+					<validation-msg propriedade="objetivo"></validation-msg>
+				</div>
+
+
+				<div class="form-group row">
+					<div class="col-md-6">
+						<div date-picker="start"></div>
+						<label class="dataAnalise"><i class="fa fa-calendar"></i>
+							Data de início <small>(dd/mm/aaaa)</small>:<font color="#FF0000"> **</font></label> <input type="text"
+							class="form-control" id="data" name="data"
+							ng-model="fase.dataRealizacao" data-date-type="number"
+							data-min-date="01/01/2010" data-autoclose="1"
+							data-date-format="dd/MM/yyyy" bs-datepicker>
+						<validation-msg propriedade="dataRealizacao"></validation-msg>
+					</div>
+					<div class="col-md-6">
+						<div date-picker="start"></div>
+						<label class="dataFinalizacao"><i class="fa fa-calendar"></i>
+							Data da finalização:</label> 
+						<input type="text" has-hole="ADMINISTRADOR"
+							class="form-control" id="dataFinalizacao" name="dataFinalizacao"
+							ng-model="fase.dataFinalizacao" data-date-type="number"
+							data-min-date="01/01/2000"
+							data-autoclose="1" data-date-format="dd/MM/yyyy" bs-datepicker>
+						<validation-msg propriedade="dataFinalizacao"></validation-msg>
+							
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<div class="col-md-6">
+						<label for="gestor">Unidade gestora de {{fase.fase | nomeFase}}:<font color="#FF0000"> **</font></label> <input
+							class="form-control" required type="text" id="gestor"
+							ng-model="fase.unidadeGestora" >
+						<validation-msg propriedade="unidadeGestora"></validation-msg>
+					</div>
+				</div>
+				
+				<div class="form-group row">
+					<div class="col-md-6" id="membros">
+						<ng-membros ng-model="fase" has-role="fase.fase"></ng-membros>
+					</div>
+					<div class="col-md-6" id="interessados">
+						<ng-interessados ng-model="fase" has-role="fase.fase"></ng-interessados>
+					</div>
+				</div>
+
+				
+
+			</div>
+		</div>
+
+		<!-- Resultado da Prospecção -->
+		<div ng-show="selected == 2" class="panel panel-default">
+			<div class="panel-heading">Resultado da Prospecção</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label for="testes">Descrição dos testes realizados:</label>
+					<textarea rows="4" class="form-control" id="testes"
+						ng-model="fase.testes"></textarea>
+					<validation-msg propriedade="testes"></validation-msg>
+				</div>
+				<div class="form-group">
+					<label for="conclusao">Conclusão:<font color="#FF0000"> **</font></label>
+					<textarea rows="4" class="form-control" id="conclusao"
+						ng-model="fase.conclusao"></textarea>
+					<validation-msg propriedade="conclusao"></validation-msg>
+				</div>
+			</div>
+		</div>
+
+		<!-- Produtos -->
+		<div ng-if="selected == 3" class="panel panel-default">
+			<ng-produtos ng-model="fase"  has-role="fase.fase"></ng-produtos>
+		</div>
+
+
+		<!-- Próxima fase -->
+		<div ng-show="selected == 'PF'" class="panel panel-default">
+			<ng-proxima-fase ng-model="fase" has-role="PROSPECCAO"></ng-proxima-fase>
+		</div>
+	
+		<!-- Anexos -->
+		<div ng:show="selected == 5 && fase.id" class="panel panel-default">
+			<div class="panel-heading">Anexos</div>
+			<ng-anexos ng-model="fase" has-role="fase.fase"></ng-anexos>
+		</div>
+		
+		<!-- Observações -->
+		<div ng:show="selected == 6 && fase.id" class="panel panel-default">
+			<ng-observacoes ng-model="fase" has-role="fase.fase"></ng-observacoes>
+		</div>
+		
+		<!-- Historico -->
+		<div ng:show="selected == 7" class="panel panel-default">
+			<ng-historico-fase ng-model="fase" has-role="fase.fase"></ng-historico-fase>
+		</div>
+
+		<div ng-include src="'partials/fases/toolbar.html'"></div>
+
+
+	</form>
+
+</div>

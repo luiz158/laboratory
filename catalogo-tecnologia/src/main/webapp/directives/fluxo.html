@@ -1,0 +1,22 @@
+
+<a class="btn btn-inverse pull-right" back-button><i
+				class="fa fa-long-arrow-left"></i> Voltar</a>
+
+
+
+<ol ng-controller="FluxoCtrl" class="breadcrumb">
+	<li ng-repeat="f in fluxo" ng-class="{'active': f.id != fase.id}">		
+		<a ng-if="f.id != fase.id" href="#{{f.fase | faseUrl}}/{{f.id}}">{{f.fase | nomeFase}} </a>
+		<span ng-if="f.id == fase.id">{{f.fase | nomeFase}} </span>
+		<a id="popover" ng-if="f.ciclos>1" class="badge" ng-click="toggleCiclos()"
+			data-toggle="popover" 
+			data-placement="bottom"> {{f.ciclos}} </a>		
+		<div ng-if="exibirCiclos && f.fase=='SUSTENTACAO'" class="breadcrumbmenu">
+			<ul class="">
+				<li ng-repeat="s in f.sustentacoes">
+					<a href="#{{s.fase | faseUrl}}/{{s.id}}"> Ciclo {{f.sustentacoes.length - $index}}</a>	
+				</li>
+			</ul>
+		</div>
+	</li>
+</ol>

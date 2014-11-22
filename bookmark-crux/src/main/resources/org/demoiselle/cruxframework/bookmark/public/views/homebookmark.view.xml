@@ -1,0 +1,13 @@
+<v:view 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:v="http://www.cruxframework.org/view" 
+	xmlns:core="http://www.cruxframework.org/crux" 
+	xmlns:crux="http://www.cruxframework.org/crux/widgets"
+	xmlns:gwt="http://www.cruxframework.org/crux/gwt"
+	xmlns:faces="http://www.cruxframework.org/crux/smart-faces"> 
+	
+	<crux:styledPanel id="spanel">
+		<gwt:label id="flabel" text="${commonMessages.home}" />
+	</crux:styledPanel>
+	
+</v:view>

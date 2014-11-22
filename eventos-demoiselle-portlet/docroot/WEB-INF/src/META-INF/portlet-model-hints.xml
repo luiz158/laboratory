@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="br.gov.demoiselle.portal.evento.model.EventoConfiguracao">
+		<field name="eventoConfiguracaoId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="eventoId" type="long" />
+		<field name="abertoAoPublico" type="boolean" />
+		<field name="cidadeDoEvento" type="String" />
+	</model>
+	<model name="br.gov.demoiselle.portal.evento.model.EventoConvite">
+		<field name="eventoConviteId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="eventoId" type="long" />
+		<field name="textoConvite" type="String" />
+	</model>
+	<model name="br.gov.demoiselle.portal.evento.model.EventoParticipante">
+		<field name="eventoParticipanteId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="eventoId" type="long" />
+		<field name="nome" type="String" />
+		<field name="email" type="String" />
+		<field name="instituicaoEmpresa" type="String" />
+		<field name="conviteEnviado" type="boolean" />
+		<field name="certificadoImpresso" type="boolean" />
+		<field name="inscricaoConfirmada" type="boolean" />
+		<field name="participacaoConfirmada" type="boolean" />
+	</model>
+</model-hints>

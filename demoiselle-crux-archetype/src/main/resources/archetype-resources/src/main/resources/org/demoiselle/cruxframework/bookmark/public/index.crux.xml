@@ -1,0 +1,30 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<!DOCTYPE html>
+<html 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:c="http://www.cruxframework.org/crux" 
+	xmlns:crux="http://www.cruxframework.org/crux/widgets"
+	xmlns:gwt="http://www.cruxframework.org/crux/gwt"
+	xmlns:faces="http://www.cruxframework.org/crux/smart-faces">
+
+	
+	<head>
+		<title>Bookmark</title>
+	</head>
+	
+	<body>
+		<script type="text/javascript" src="../${artifactId}/bookmark.nocache.js"></script>
+		<c:screen useView="**/views/*" 
+			smallViewport="user-scalable=no, width=320" 
+			largeViewport="user-scalable=no, width=device-width, height=device-height"
+			useResource="smartFacesResources, xStandardResources, boookmarkResources" 
+			height="100%"
+			title="${symbol_dollar}{commonMessages.title}"
+			useController="indexController"
+			onActivate="indexController.onActivate"/>
+		<crux:simpleViewContainer id="header" />
+		<crux:simpleViewContainer id="container" styleName="container"/>
+	</body>
+</html>

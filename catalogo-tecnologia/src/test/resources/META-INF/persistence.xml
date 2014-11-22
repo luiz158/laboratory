@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+
+
+	<persistence-unit name="pu" transaction-type="RESOURCE_LOCAL">
+
+		<class>br.gov.serpro.catalogo.entity.Fase</class>
+		<class>br.gov.serpro.catalogo.entity.Analise</class>
+		<class>br.gov.serpro.catalogo.entity.Prospeccao</class>
+		<class>br.gov.serpro.catalogo.entity.Documento</class>
+		<class>br.gov.serpro.catalogo.entity.Internalizacao</class>
+		<class>br.gov.serpro.catalogo.entity.Sustentacao</class>
+		<class>br.gov.serpro.catalogo.entity.Declinio</class>
+		<class>br.gov.serpro.catalogo.entity.Produto</class>
+		<class>br.gov.serpro.catalogo.entity.Licenciamento</class>
+		<class>br.gov.serpro.catalogo.entity.Fornecedor</class>
+		<class>br.gov.serpro.catalogo.entity.Fabricante</class>
+		<class>br.gov.serpro.catalogo.entity.PlataformaTecnologica</class>
+		<class>br.gov.serpro.catalogo.entity.Tecnologia</class>
+		<class>br.gov.serpro.catalogo.entity.Categoria</class>
+		<class>br.gov.serpro.catalogo.entity.OrigemDemanda</class>
+		<class>br.gov.serpro.catalogo.entity.FaseProduto</class>
+		<class>br.gov.serpro.catalogo.entity.FaseMembro</class>
+		<class>br.gov.serpro.catalogo.entity.FaseInteressado</class>
+		<class>br.gov.serpro.catalogo.entity.FaseHistorico</class>
+		<class>br.gov.serpro.catalogo.entity.Anexo</class>
+		<class>br.gov.serpro.catalogo.entity.Observacao</class>
+		<class>br.gov.serpro.catalogo.entity.Grupo</class>
+		<class>br.gov.serpro.catalogo.entity.User</class>
+
+		<properties>
+			<property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver" />
+			<property name="javax.persistence.jdbc.user" value="sa" />
+			<property name="javax.persistence.jdbc.password" value="" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:mem:." />
+
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="false" />
+			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
+		</properties>
+	</persistence-unit>
+
+	
+</persistence>

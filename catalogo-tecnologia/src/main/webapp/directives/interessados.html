@@ -1,0 +1,76 @@
+
+<div ng-controller="InteressadosCtrl" has-role="fase.fase">	
+	<div class="panel panel-default">	
+		<div class="panel-heading">
+			<div class="panel-title">Partes Interessadas
+			<span class="pull-right">
+				<a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#pesquisarInteressadosModal"> 
+					<i class="fa fa-search-plus"> Pesquisar</i>
+				</a>
+			</span>
+			</div>
+		</div>
+	<div class="panel-body">
+		
+		<div class="list-group row" ng-if="membros.length">
+			<a ng-repeat="faseMembro in membros" class="list-group-item"> 
+				 <h5><span>{{faseMembro.user.name}} <br/> <small>{{faseMembro.user.setor}}</small></span>
+				<button ng-click="remover(faseMembro)" has-role="fase.fase" class="btn btn-danger btn-xs pull-right">
+						<i class="fa fa-trash-o "> Remover</i>
+				</button>
+				</h5>
+			</a> 
+		</div>	
+		
+		<small ng-if="!membros.length">Clique no botão pesquisar para selecionar os interessados.</small>
+	</div>
+
+
+	<div class="modal fade" id="pesquisarInteressadosModal" tabindex="-1"
+		role="dialog" aria-labelledby="interessadoLabel" aria-hidden="true"
+		style="display: none;">
+		<form>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h4 class="modal-title" id=""interessadoLabel"">Pesquisar por interessado</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<div class="form-group input-group">
+							<input type="text" class="form-control" ng-model="palavraChave" autofocus="autofocus">
+							<span class="input-group-btn">
+								<button class="btn btn-primary" ng-click="pesquisar()">
+									Pesquisar <i class="fa fa-search"></i>
+								</button>
+							</span>
+						</div>
+
+
+						<div class="list-group" ng-if="resultadoPesquisa.length">
+							<a ng-repeat="m in resultadoPesquisa" class="list-group-item"> 
+								<h5>{{m.name}}								
+								<button class="btn btn-primary  pull-right" type="button" ng-click="adicionar(m)">
+									Adicionar <i class="fa fa-plus-circle"></i>
+								</button> 
+								</h5>
+								<p> <small> {{m.setor}} <br/> {{m.telephoneNumber}} </small></p>
+								
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+		</form>
+	</div>
+	<!-- /.modal -->
+	
+
+</div>

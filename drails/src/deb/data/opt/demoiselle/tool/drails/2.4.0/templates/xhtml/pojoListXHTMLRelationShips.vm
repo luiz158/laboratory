@@ -1,0 +1,13 @@
+                
+                <p:column style="width:5%;" sortBy="#{beanLower.id}">
+                    <f:facet name="header">#{messages['${beanLower}.label.id']}</f:facet>
+                    <h:outputText value="#{bean.id}" />
+                </p:column>
+                <p:column sortBy="#{bean.text}">
+                    <f:facet name="header">#{messages['${beanLower}.label.text']}</f:facet>
+                    <h:commandLink action="#{${beanLower}ListMB.getNextView}" actionListener="#{${beanLower}ListMB.clear}">
+                        <h:outputText value="#{bean.text}" />
+                        <f:param name="id" value="#{bean.id}" />
+                    </h:commandLink>
+                </p:column>
+                

@@ -1,0 +1,9 @@
+                    
+                    <h:outputLabel value="#{messages['${beanLower}.label.id']}: " for="id" styleClass="text-input" />
+                    <h:outputText id="id" value="#{${beanLower}EditMB.bean.id}" />
+                    <p:message for="id" />
+
+                    <h:outputLabel value="#{messages['${beanLower}.label.text']}: " for="text" styleClass="text-input" />
+                    <h:inputText id="text" value="#{${beanLower}EditMB.bean.text}" title="#{messages['${beanLower}.alt.text']}" />
+                    <p:message for="text" />	
+                    

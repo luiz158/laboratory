@@ -1,0 +1,30 @@
+<div class="modal" tabindex="-1" role="dialog" ng-controller="DemoCtrl">
+	
+	<div ng-show="!produtosPesquisados">Loading ...</div>
+	
+	<div class="modal-dialog" ng-show="produtosPesquisados">
+		<div class="modal-content">
+			<div class="modal-header" ng-show="title">
+				<h3>Lista dos produtos encontrados</h3>
+			</div>
+			<div class="modal-body" ng-show="content">
+
+				<ul>
+					<li ng-repeat="produto in produtosPesquisados">
+						<a ng-click="seleciona(produto)">{{ produto.nome }} - {{produto.versao}}</a>
+					</li>
+				</ul>
+			</div>
+			<div class="modal-footer">
+				<div class="form-group row">
+					<div class="col-md-6">
+						Produto: <b>{{ selected.nome }} - {{selected.versao}}</b>
+					</div>	
+					<div class="col-md-6" style="padding-left: 34%;">					
+						<button class="btn btn-primary" ng-click="$hide()">OK</button>
+					</div>
+				</div>	
+			</div>
+		</div>
+	</div>
+</div>

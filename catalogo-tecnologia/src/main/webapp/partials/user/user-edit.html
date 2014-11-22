@@ -1,0 +1,65 @@
+<div class="painel painel-default" has-role='ADMINISTRADOR'>
+	<h1 class="page-header">
+		<small>Manter</small> Usuários
+	</h1>
+
+	<form role="form">
+		<div class="form-group row">
+			<div class="col-md-4">
+				<label for="ID">ID:</label> 
+				<input class="form-control" type="text" id="ID" ng-model="user.id" disabled='disabled'>
+			</div>			
+			<div class="col-md-4">
+				<label for="CPF">CPF:<font color="#FF0000"> *</font></label> 
+				<input class="form-control" type="text" id="CPF" ng-model="user.cpf" disabled='disabled' required>
+			</div>	
+		</div>
+		<div class="form-group row">
+		
+			<div class="col-md-4">
+				<label for="Nome">Nome:<font color="#FF0000"> *</font></label> 
+				<input class="form-control" type="text" id="Nome" ng-model="user.name" required>
+			</div>			
+			<div class="col-md-4">
+				<label for="Telefone">Telefone:</label> 
+				<input class="form-control" type="text" id="Telefone" ng-model="user.telephoneNumber">
+			</div>	
+		
+		</div>
+		<div class="form-group row">
+		
+			<div class="col-md-4">
+				<label for="Email">Email:</label> 
+				<input class="form-control" type="text" id="Email" ng-model="user.email">
+			</div>			
+			<div class="col-md-4">
+				<label for="Setor">Setor:</label> 
+				<input class="form-control" type="text" id="Setor" ng-model="user.setor">
+			</div>	
+		</div>
+
+		<label>Marque os Grupos para o usuário</label>
+		<!-- 
+		 -->
+		<div class="form-group row">
+			<div class="col-md-3" ng-repeat="grupo in grupos">
+				<input type="checkbox" name="grupos[]"
+					ng-checked="isGrupoInGrupos(grupo) > -1"
+					ng-click="toggleSelection(grupo)" has-role='ADMINISTRADOR'> {{grupo.nome}}<br />
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<div class="col-md-12">
+				<button has-role='ADMINISTRADOR' class="btn btn-primary"
+					ng-click="salvar()">
+					<i class="fa fa-save"> </i> Salvar
+				</button>
+				<a class="btn btn-inverse pull-right" href="#/user"> <i
+					class="fa fa-long-arrow-left"></i> Voltar
+				</a>
+			</div>
+		</div>
+
+	</form>
+</div>

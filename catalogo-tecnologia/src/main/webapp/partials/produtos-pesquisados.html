@@ -1,0 +1,100 @@
+<div id="mensagemSemProduto" class="painel painel-default" ng-if="qtdRegistrosEncontrados <= 0">
+	<h1 class="page-header">
+		<small>- Nenhuma referência encontrada para o produto </small> {{variavel}}
+	</h1>
+</div>	
+<div id="produtosFase" class="painel painel-default" ng-if="qtdRegistrosEncontrados > 0">
+	<h1 class="page-header" ng-if="qtdRegistrosEncontrados > 1">
+		<small>Foram encontradas {{qtdRegistrosEncontrados}} referências para o produto </small> {{variavel}}
+	</h1>
+	<h1 class="page-header" ng-if="qtdRegistrosEncontrados == 1">
+		<small>Foi encontrada apenas {{qtdRegistrosEncontrados}} referência para o produto </small> {{variavel}}
+	</h1>
+	<div class="panel-body">
+		<div>
+			<ul class="chat list-group">
+	        	<li ng-repeat="f in produtosFase" title="{{f.fase.fase | nomeFase}}" class="left list-group-item clearfix">
+	        		<a href="#{{f.fase.fase | faseUrl}}/{{f.fase.id}}">
+		            	<span class="chat-img pull-left">
+		                	<img ng-src="{{f.fase.fase | iconeFase}}" class="img-circle" width="30px"/>
+		                </span>
+		                <div class="chat-body clearfix">
+		                	<div class="header">
+		                    	<div class="row">
+				        			<div class="col-md-1">
+				        				<b>ID:</b> {{f.fase.id}} 
+				        			</div>
+				        			<div class="col-md-6">
+				        				<b>Fase:</b> {{f.fase.fase | nomeFase}}
+				        			</div>
+				        			<div class="col-md-4">
+				        				<b>Situação: <span ng-analise-situacao situacao="{{f.fase.situacao}}"></span></b>
+				        			</div>
+				        		</div>
+		                    	<div class="row">
+		                    		<div class="col-md-1"></div>
+				        			<div class="col-md-6">
+				        				<b>Unidade Gestora:</b> {{f.fase.unidadeGestora}} 
+				        			</div>
+				        			<div class="col-md-4">
+				        				<b>Referência:</b> {{f.fase.origemReferencia.nome}} {{f.fase.codigoReferencia}} 
+				        			</div>
+				        		</div>
+				        		<div class="row">
+				        		    <div class="col-md-1"></div>
+				        			<div class="col-md-6">
+				        				<b>Registro:</b> {{f.fase.dataRealizacao}}  
+				        			</div>
+				        			<div class="col-md-4">
+				        				<b>Finalização:</b> {{f.fase.dataFinalizacao}} 
+				        			</div>
+				        		</div>
+								<div class="row">
+									<div class="col-md-1"></div>
+				        			<div class="col-md-6">
+				        				<b>Produto:</b> {{f.produto.nome}} 
+				        			</div>
+				        			<div class="col-md-4">
+				        				<b>Versao:</b> {{f.produto.versao}}  
+				        			</div>
+				        		</div>	
+	                         	<div class="row">
+	                         		<div class="col-md-11">
+	                            		<b>Objetivo:</b> {{f.fase.objetivo}}
+	                         		</div>
+	                         	</div>
+	                     	</div>
+	                    </div>	
+	                </a>
+	            </li>
+	            <li ng-repeat="p in produtosSemFase" title="Produto Cadastrado" class="left list-group-item clearfix">
+	        		<a href="#produto/edit/{{p.id}}">
+		            	<span class="chat-img pull-left">
+		                	<img ng-src="images/fases/cadastrado.png" class="img-circle" width="30px"/>
+		                </span>
+		                <div class="chat-body clearfix">
+		                	<div class="header">
+		                    	<div class="row">
+				        			<div class="col-md-1">
+				        				<b>ID:</b> {{p.id}} 
+				        			</div>
+				        			<div class="col-md-6">
+				        				<b>Nome:</b> {{p.nome}}
+				        			</div>
+				        			<div class="col-md-4">
+				        				<b>Versão:</b> {{p.versao}}
+				        			</div>
+				        		</div>
+				        		<div class="row">
+	                         		<div class="col-md-11">
+	                            		<b>Obs:</b> Produto apenas cadastrado! Não foi utilizado em nenhuma fase.
+	                         		</div>
+	                         	</div>
+	                     	</div>
+	                    </div>	
+	                </a>
+	            </li>
+	        </ul>			
+		</div>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+body {
+  color: $cinza-escuro;
+}
+
+#page {
+  margin-top: 10px;
+}
+
+#header {
+  margin-bottom: 10px;
+}
+
+#main-menu {
+  background-color: $musgo;
+  padding: 10px;
+  a {
+    color: $branco;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+}

@@ -1,0 +1,8 @@
+                    
+                    <p:fieldset legend="#{messages['${attrClassOfValueLower}.label']}" toggleable="true">
+                        <p:pickList id="pickList${attrClassOfValue}" value="#{${beanLower}EditMB.${attrClassOfValueLower}List}" var="var${attrClassOfValue}" effect="bounce" itemValue="#{var${attrClassOfValue}}" itemLabel="#{var${attrClassOfValue}.${varId}}" converter="Conversor${attrClassOfValue}" showSourceControls="true" showTargetControls="true" showCheckbox="true" showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" immediate="true">
+                            <f:facet name="sourceCaption">"#{messages['${attrClassOfValueLower}.label']}"</f:facet>
+                            <f:facet name="targetCaption"> #{messages['${attrClassOfValueLower}.label']} "do(a)" #{messages['${beanLower}.label']} </f:facet>
+                            <p:ajax  event="transfer" listener="#{${beanLower}EditMB.onTransfer}" update="pickList${attrClassOfValue}" />
+                        </p:pickList>
+                    </p:fieldset>

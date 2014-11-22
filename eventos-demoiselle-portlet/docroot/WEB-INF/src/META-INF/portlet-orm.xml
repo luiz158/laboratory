@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd">
+	<persistence-unit-metadata>
+		<xml-mapping-metadata-complete/>
+		<persistence-unit-defaults>
+			<access>PROPERTY</access>
+		</persistence-unit-defaults>
+	</persistence-unit-metadata>
+	<mapped-superclass class="br.gov.demoiselle.portal.evento.model.impl.EventoConfiguracaoModelImpl">
+		<attributes>
+			<id name="eventoConfiguracaoId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="eventoId" />
+			<basic name="abertoAoPublico" />
+			<basic name="cidadeDoEvento" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="br.gov.demoiselle.portal.evento.model.impl.EventoConviteModelImpl">
+		<attributes>
+			<id name="eventoConviteId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="eventoId" />
+			<basic name="textoConvite" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="br.gov.demoiselle.portal.evento.model.impl.EventoParticipanteModelImpl">
+		<attributes>
+			<id name="eventoParticipanteId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="eventoId" />
+			<basic name="nome" />
+			<basic name="email" />
+			<basic name="instituicaoEmpresa" />
+			<basic name="conviteEnviado" />
+			<basic name="certificadoImpresso" />
+			<basic name="inscricaoConfirmada" />
+			<basic name="participacaoConfirmada" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<entity class="br.gov.demoiselle.portal.evento.model.impl.EventoConfiguracaoImpl" name="EventoConfiguracao">
+		<table name="demoiselle_EventoConfiguracao" />
+		<attributes />
+	</entity>
+	<entity class="br.gov.demoiselle.portal.evento.model.impl.EventoConviteImpl" name="EventoConvite">
+		<table name="demoiselle_EventoConvite" />
+		<attributes />
+	</entity>
+	<entity class="br.gov.demoiselle.portal.evento.model.impl.EventoParticipanteImpl" name="EventoParticipante">
+		<table name="demoiselle_EventoParticipante" />
+		<attributes />
+	</entity>
+</entity-mappings>

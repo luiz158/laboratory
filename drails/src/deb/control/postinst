@@ -1,0 +1,14 @@
+#!/bin/bash
+
+echo export DRAILS_HOME=/opt/demoiselle/tool/drails-[[version]] >> /etc/bash.bashrc
+echo export PATH=$PATH:/opt/demoiselle/tool/drails-[[version]]/bin >> /etc/bash.bashrc
+
+chmod +x $DRAILS_HOME/bin -R
+
+export DRAILS_HOME=/opt/demoiselle/tool/drails-[[version]]
+export PATH=$PATH:/opt/demoiselle/tool/drails-[[version]]/bin
+
+echo drails.version=[[version]] > /opt/demoiselle/tool/drails-[[version]]/bin/drails.properties
+chmod 755 /opt/demoiselle/tool/drails-[[version]]/bin/drails.properties
+
+exit 0

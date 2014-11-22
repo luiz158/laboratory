@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">GCM Sample Mobile</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    
+    <!-- <string name="server_url">http://192.168.0.107:8080/gcmsample/api/bookmark</string> -->
+    <string name="server_url">http://10.32.112.94:8080/gcmsample/bookmark</string>
+
+</resources>

@@ -1,0 +1,22 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+    <h:form>
+        <p:menubar id="menu_admin" rendered="#{securityContext.hasRole('ADMINISTRATOR')}">
+
+            <p:menuitem value="#{messages['menu.usuario']}" url="/usuario_list.jsf"></p:menuitem>
+
+            <p:menuitem value="#{messages['menu.papel']}" url="/papel_list.jsf"></p:menuitem>
+
+        </p:menubar>
+
+        <p:menubar id="menu_usuario" rendered="#{securityContext.hasRole('MANAGER')}">
+
+            <!--<p:menuitem value="#{messages['menu.sistema']}" url="/sistema_list.jsf"></p:menuitem>-->
+
+        </p:menubar>
+
+    </h:form>
+</ui:composition>

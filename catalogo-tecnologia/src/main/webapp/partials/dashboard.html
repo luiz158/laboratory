@@ -1,0 +1,85 @@
+<div class="painel painel-default" ng-controller="DashboardCtrl">
+	<h3 class="page-header">Painel de controle</h3>
+
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<i class="fa fa-bar-chart-o fa-fw"></i> Linha do tempo dos Produtos e o Serpro
+				</div>
+				
+				<div class="panel-body">
+				
+					<form>
+						<div class="form-group row">
+							<div class="col-md-4">
+								<label for="tecnologia">Tecnologia:</label>
+								<select id="tecnologia" class="form-control" 
+										ng-model="tecnologia" 
+										ng-change="carregarCategorias()" 
+										ng-options="t.nome for t in tecnologias" required>
+										<option value="" disabled>--</option>
+								</select>
+							</div>			
+							<div class="col-md-4">
+								<label for="categoria">Categoria:</label>
+								<select id="categoria" class="form-control" 
+										ng-model="categoria" 
+										ng-change="carregarProdutos()" 
+										ng-options="c.nome for c in categorias" required>
+										<option value="" disabled>--</option>
+								</select>
+							</div>
+							<div class="col-md-4">
+								<label for="produto">Produto:</label> 
+								<select id="produto" class="form-control" 
+									ng-model="produto"
+									ng-options="p.nome for p in resultadoProdutos"
+									ng-change="carregarTimeline()">
+									<option value="" disabled>-- Selecione um produto --</option>
+								</select>
+							</div>
+						</div>
+					</form>
+				
+					<div id="prod-timeline" ng-if="versoes" ng-model="versoes" timeline></div>
+							
+				</div>
+				<div class="panel-footer">
+					<div class="row" >
+					<div class="col-md-3">
+						<img src="images/Rocket.png"> Lançamento no mercado
+					</div>
+					<div class="col-md-3">
+						<img src="images/Grave.png"> Descontinuidade
+					</div>
+					<div class="col-md-3">
+						<img src="images/serpro.png"> Ciclo de vida no Serpro
+					</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-4">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<i class="fa fa-bar-chart-o fa-fw"></i> Fases das demandas
+				</div>
+				<div class="panel-body" ng-if="data">
+					<div id="morris-donut-chart" donut donut-data="data"
+						donut-colors="colors"></div>
+				</div>
+				<!-- /.panel-body -->
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div ng-include src="'partials/dashboard/meusProjetos.html'"></div>
+		</div>
+	</div>
+	
+
+
+</div>

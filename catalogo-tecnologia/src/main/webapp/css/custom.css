@@ -1,0 +1,181 @@
+.btn-file {
+	position: relative;
+	overflow: hidden;
+}
+
+.btn-file input[type=file] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	min-width: 100%;
+	min-height: 100%;
+	font-size: 999px;
+	text-align: right;
+	filter: alpha(opacity = 0);
+	opacity: 0;
+	background: red;
+	cursor: inherit;
+	display: block;
+}
+
+input[readonly] {
+	background-color: white !important;
+	cursor: text !important;
+}
+
+body {
+	padding-top: 0px;
+}
+
+
+.floatmessage {
+    position: fixed;
+    top: 20px;
+    right: 50px;
+    margin-left: -150px;
+    width: 300px;
+    z-index: 9999;
+}
+
+
+.breadcrumbmenu {
+	position: absolute;
+	width: auto;
+	z-index: 5;
+	background-color: #f5f5f5;
+	margin:3px;
+	padding: 3px;
+    border-radius: 5px;
+}
+
+.flutuandodireita {
+    position: fixed;
+    bottom: 0.3em;
+    right: 2em;
+}
+
+.produto-timeline {
+	width: auto;
+    white-space:nowrap;
+    padding:30px 0 10px 0;
+    position:relative;    
+    overflow-x: auto;
+}
+
+.produto-bar {
+	width: auto;
+    height:5px;
+    background:#aaa;
+    position:relative;
+    top:13px;
+    left:0;
+}
+
+.versao {
+    display: inline-block;
+    vertical-align: top;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    position: relative;
+    border-radius: 3px;
+    min-width: 4em;
+    max-width: 12em;
+    max-height: 100px;
+	margin-right: 3em;
+}
+
+
+.versao:after {
+    content:'';
+    display:block;
+    background:#eee;
+    width:7px;
+    height:7px;
+    border-radius:6px;
+    border:3px solid #06182E;
+    position:absolute;
+    left:50%;
+    top:-1.8em;
+    margin-left:-0.23em;
+}
+
+.versao:before {
+    content:'';
+    display:block;
+    background:#06182E;
+    width:5px;
+    height:20px;
+    position:absolute;
+    left:50%;
+    top:-1.4em;
+    margin-left:-2px;
+}
+
+.produto-even{
+	background-color: #f5f5f5;
+}
+
+
+div.version1{
+	background-color: gold;
+    border-color: orange;
+    
+}
+
+div.version2{
+	background-color: #EBE1C0;
+    border-color: #E0D722;
+}
+
+div.version3{
+	background-color: #66D9C9;
+    border-color: #005E91;
+}
+
+div.version4{
+	background-color: #E1D5D5;
+    border-color: #BC9DBF;
+}
+
+div.version5{
+	background-color: #07B9A5;
+    border-color: #07D965;
+}
+
+div.version6{
+	background-color: #65856B;
+    border-color: #008518;
+}
+
+div.version7{
+	background-color: #ABF5FF;
+    border-color: #3CCCE6;
+}
+
+div.version8{
+	background-color: #FA9D41;
+    border-color: #DBD366;
+}
+
+div.version9{
+	background-color: #C6BB8D;
+    border-color: #848355;
+}
+
+div.version10{
+	background-color: #FF5030;
+    border-color: #DC7E1A;
+}
+
+.timelinefase{	
+	border-width: 1px;
+	border-style: dotted;
+	border-color: #ffffff;
+	display: inline-flex;
+	border-radius:2px;
+	margin-left: 0.5em;
+	padding-left: 0.5em;
+	
+}
+

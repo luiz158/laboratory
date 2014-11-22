@@ -1,0 +1,399 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.demoiselle.cruxframework</groupId>
+	<artifactId>bookmark</artifactId>
+	<name>Bookmark</name>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<description>New Crux Generated Module</description>
+
+	<!-- Parent Demoiselle -->
+	<parent>
+		<groupId>br.gov.frameworkdemoiselle</groupId>
+		<artifactId>demoiselle-servlet-parent</artifactId>
+		<version>2.4.1</version>
+	</parent>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<cruxVersion>5.2.0</cruxVersion>
+		<webappDirectory>${project.build.directory}/${project.artifactId}</webappDirectory>
+		<webinf.folder>${webappDirectory}/WEB-INF/</webinf.folder>
+		<webinf.lib.folder>${webinf.folder}/lib/</webinf.lib.folder>
+		<webinf.classes.folder>${webinf.folder}/classes/</webinf.classes.folder>
+		<webappSourceDir>${basedir}/src/main/webapp</webappSourceDir>
+		<sourceDir>${project.build.sourceDirectory}</sourceDir>
+		<xsd.dir>${basedir}/xsd</xsd.dir>
+		<crawling.dir>${basedir}/crawling</crawling.dir>
+	</properties>
+
+	<dependencies>
+
+		<!-- Crux dependency -->
+		<dependency>
+			<groupId>org.cruxframework</groupId>
+			<artifactId>crux-dev</artifactId>
+			<version>${cruxVersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.cruxframework</groupId>
+			<artifactId>crux-runtime</artifactId>
+			<version>${cruxVersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.cruxframework</groupId>
+			<artifactId>crux-widgets</artifactId>
+			<version>5.2.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.cruxframework.plugin</groupId>
+			<artifactId>crux-jboss</artifactId>
+			<version>1.0.0</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>crux-dev</artifactId>
+					<groupId>org.cruxframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>crux-runtime</artifactId>
+					<groupId>org.cruxframework</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.cruxframework</groupId>
+			<artifactId>crux-smart-faces</artifactId>
+			<version>1.1.0</version>
+		</dependency>
+
+		<!-- Demoiselle dependency -->
+		<dependency>
+			<groupId>br.gov.frameworkdemoiselle</groupId>
+			<artifactId>demoiselle-jpa</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>br.gov.frameworkdemoiselle.component</groupId>
+			<artifactId>demoiselle-junit</artifactId>
+			<version>2.3.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>apache-log4j-extras</artifactId>
+			<version>1.2.17</version>
+			<type>zip</type>
+			<classifier>source-release</classifier>
+		</dependency>
+	</dependencies>
+	
+	<pluginRepositories>
+		<pluginRepository>
+			<id>jboss</id>
+			<name>jboss-as</name>
+			<url>http://repository.jboss.org/</url>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<build>
+		<finalName>${artifactId}</finalName>
+		<plugins>
+			<!-- Compile -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<!-- Update webapp folders -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.4.3</version>
+				<executions>
+					<execution>
+						<id>copy-web-resources</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${webappDirectory}</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${webappSourceDir}</directory>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy-classes</id>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${webinf.classes.folder}</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${project.build.outputDirectory}</directory>
+									<excludes>
+										<exclude>**/*.crux.xml</exclude>
+										<exclude>**/*.template.xml</exclude>
+										<exclude>**/*.view.xml</exclude>
+										<exclude>**/*.offline.xml</exclude>
+										<exclude>**/*.xdevice.xml</exclude>
+									</excludes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Run Crux Compiler -->
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<id>crux-compiler</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<target>
+								<taskdef resource="org/cruxframework/crux/tools/crux-module-tools.xml">
+									<classpath>
+										<path refid="maven.compile.classpath" />
+									</classpath>
+								</taskdef>
+
+								<blockremove beginmarker="&lt;!--antReplacementBlockBegin--&gt;"
+									endmarker="&lt;!--antReplacementBlockEnd--&gt;" file="${webinf.folder}/web.xml" />
+
+								<serviceMapper projectDir="${webappDirectory}">
+									<classpath>
+										<path refid="maven.compile.classpath" />
+										<pathelement path="${webinf.classes.folder}" />
+									</classpath>
+								</serviceMapper>
+
+								<cruxmodulecompiler srcDir="${sourceDir}"
+									keepPagesGeneratedFiles="true" outputDir="${webappDirectory}"
+									webDir="${webappDirectory}" pagesOutputDir="${webappDirectory}"
+									outputCharset="UTF-8" doNotPreCompileJavaSource="true"
+									pageFileExtension="html">
+									<classpath>
+										<path refid="maven.compile.classpath" />
+									</classpath>
+
+									<!-- change these two parameters if you need to modify memory settings -->
+									<jvmarg value="-Xmx768M" />
+									<jvmarg value="-Xms256M" />
+
+									<!-- <jvmarg value="-Xdebug" /> -->
+									<!-- <jvmarg value="-Xrunjdwp:transport=dt_socket,address=3331,server=y,suspend=y" 
+										/> -->
+
+
+									<arg value="-localWorkers" />
+									<arg value="2" />
+
+									<!-- use these parameters if you want to modify GWT output settings 
+										<arg value="-style"/> <arg value="DETAILED"/> <arg value="-logLevel"/> <arg 
+										value="DEBUG"/> -->
+								</cruxmodulecompiler>
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.1.2</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<configuration>
+							<properties combine.self="override">
+							</properties>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.jboss.as.plugins</groupId>
+				<artifactId>jboss-as-maven-plugin</artifactId>
+				<version>7.6.Final</version>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	<profiles>
+		<!-- Dev configurations -->
+		<profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-war-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>generate-war</id>
+								<phase>package</phase>
+								<goals>
+									<goal>war</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<webappDirectory>${webappDirectory}</webappDirectory>
+							<webXml>${webappDirectory}/WEB-INF/web.xml</webXml>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<!-- Prod configurations -->
+		<profile>
+			<id>prod</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-war-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>generate-war</id>
+								<phase>package</phase>
+								<goals>
+									<goal>war</goal>
+								</goals>
+							</execution>
+						</executions>
+<!-- 	O eclipse pode acusar erro em "combine.self="override"" pois a validadação 
+		de xml não reconhece a expressão. Para impedir o eclipse de acusar o erro 
+		basta remover o validade de xml em  project >properties > validation
+	 	e desmarcar XML validation -->
+						<configuration combine.self="override">
+							<webappDirectory>${webappDirectory}</webappDirectory>
+							<warSourceExcludes>WEB-INF/web.xml</warSourceExcludes>
+							<packagingExcludes>
+								**/gwt-dev*.jar,
+								**/gwt-codeserver*.jar,
+								**/gwt-user*.jar,
+								**/validation-api*.jar,
+								**/crux-dev*.jar,
+								**/crux-widgets*.jar,
+								**/crux-themes*.jar,
+								**/*.view.xml,
+								**/*.crux.xml,
+								**/*.template.xml,
+								**/*.offline.xml,
+								**/*.xdevice.xml
+							</packagingExcludes>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<!-- Run Schema Generator -->
+		<profile>
+			<id>generate-schemas</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<version>1.6</version>
+						<configuration>
+							<target>
+								<taskdef resource="org/cruxframework/crux/tools/crux-module-tools.xml">
+									<classpath>
+										<path refid="maven.compile.classpath" />
+									</classpath>
+								</taskdef>
+								<generateSchemas outputDir="${xsd.dir}"
+									inputCharset="UTF-8">
+									<classpath>
+										<path refid="maven.compile.classpath" />
+										<pathelement location="${sourceDir}" />
+									</classpath>
+								</generateSchemas>
+							</target>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<!-- Run Crawling Tool -->
+		<profile>
+			<id>run-crawling-tool</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<version>1.6</version>
+						<configuration>
+							<target>
+								<echo message="Running CrawlingTool..." />
+
+								<java classname="org.cruxframework.crux.tools.crawling.CrawlingTool"
+									fork="true">
+									<classpath>
+										<path refid="maven.compile.classpath" />
+										<pathelement location="${webinf.classes.folder}" />
+									</classpath>
+									<arg value="outputDir" />
+									<arg value="${crawling.dir}" />
+
+									<arg value="applicationBaseURL" />
+									<arg value="${webappDirectory}" />
+
+									<arg value="javascriptTime" />
+									<arg value="2000" />
+
+									<arg value="urls" />
+									<arg value="${webappDirectory}/index.html" />
+
+									<arg value="stopOnErrors" />
+									<arg value="false" />
+
+									<jvmarg value="-Xmx768M" />
+									<jvmarg value="-Xms256M" />
+								</java>
+							</target>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+</project>
+		

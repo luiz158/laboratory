@@ -1,0 +1,8 @@
+                    
+                    <p:column>
+                        <h:outputLabel value="#{messages['${attrClassOfValueLower}.label.${varAttrName}']}: " for="${varAttrName}" styleClass="text-input" />
+                        
+                        ${columnInner}
+
+                        <p:message for="${varAttrName}" />
+                    </p:column>	

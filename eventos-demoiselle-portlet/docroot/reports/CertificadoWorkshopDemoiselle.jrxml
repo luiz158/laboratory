@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="CertificadoWorkshopDemoiselle"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Landscape"
+		 pageWidth="842"
+		 pageHeight="620"
+		 columnWidth="802"
+		 columnSpacing="0"
+		 leftMargin="0"
+		 rightMargin="0"
+		 topMargin="0"
+		 bottomMargin="0"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.zoom" value="1.0" />
+	<property name="ireport.x" value="0" />
+	<property name="ireport.y" value="1" />
+	<property name="ireport.background.image.properties" value="true,true,0.25,-8,-8,0,0,853,601" />
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+
+	<field name="participante" class="java.lang.String"/>
+	<field name="evento" class="java.lang.String"/>
+	<field name="data" class="java.lang.String"/>
+	<field name="localData" class="java.lang.String"/>
+	<field name="fundo" class="java.lang.String"/>
+
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="614"  isSplitAllowed="true" >
+				<image  scaleImage="FillFrame" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="850"
+						height="614"
+						key="image"
+						stretchType="RelativeToTallestObject"/>
+					<box></box>
+					<graphicElement stretchType="RelativeToTallestObject"/>
+					<imageExpression class="java.lang.String"><![CDATA[$F{fundo}]]></imageExpression>
+				</image>
+				<staticText>
+					<reportElement
+						x="226"
+						y="209"
+						width="193"
+						height="29"
+						key="staticText"/>
+					<box></box>
+					<textElement>
+						<font fontName="Serif" pdfFontName="Times-Italic" size="22" isItalic="true"/>
+					</textElement>
+				<text><![CDATA[Certificamos que]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="226"
+						y="248"
+						width="157"
+						height="29"
+						key="staticText"/>
+					<box></box>
+					<textElement>
+						<font fontName="Serif" pdfFontName="Times-Italic" size="22" isItalic="true"/>
+					</textElement>
+				<text><![CDATA[participou do]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="226"
+						y="289"
+						width="183"
+						height="29"
+						key="staticText"/>
+					<box></box>
+					<textElement>
+						<font fontName="Serif" pdfFontName="Times-Italic" size="22" isItalic="true"/>
+					</textElement>
+				<text><![CDATA[realizado no dia]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="381"
+						y="195"
+						width="584"
+						height="42"
+						forecolor="#0741D4"
+						key="textField"/>
+					<box></box>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Serif" pdfFontName="Times-BoldItalic" size="28" isBold="true" isItalic="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{participante}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="354"
+						y="248"
+						width="523"
+						height="29"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font fontName="Serif" pdfFontName="Times-Italic" size="22" isBold="false" isItalic="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{evento}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="380"
+						y="289"
+						width="472"
+						height="29"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font fontName="Serif" pdfFontName="Times-Italic" size="22" isBold="false" isItalic="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{data}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="226"
+						y="355"
+						width="612"
+						height="20"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font fontName="Serif" pdfFontName="Times-Italic" size="14" isBold="false" isItalic="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{localData}]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

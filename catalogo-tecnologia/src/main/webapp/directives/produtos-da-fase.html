@@ -1,0 +1,61 @@
+<div class="panel" has-role="fase.fase">
+<div class="panel-body" ng-controller="ProdutosCtrl">
+
+	<div class="panel panel-default">	
+		<div class="panel-heading">
+			<h4 class="panel-title">Produtos de Tecnologia <small>{{fase.fase | nomeFase}}<font color="#FF0000"> **</font></small></h4>
+		</div>		
+	
+	<div class="panel-body">
+	    <div class="form-group row">
+			<div class="col-md-4">
+				<label for="tecnologia">Tecnologia:</label>
+				<select id="tecnologia" class="form-control" ng-model="tecnologia" ng-change="carregarCategorias()" ng-options="t.nome for t in tecnologias" required>
+				</select>
+			</div>			
+			<div class="col-md-4">
+				<label for="categoria">Categoria:</label>
+				<select id="categoria" class="form-control" ng-model="categoria" ng-change="carregarProdutos()" ng-options="c.nome for c in categorias" required>
+				</select>
+			</div>
+		</div>
+		<div class="form-group row">
+			<div class="col-md-8">
+				<label for="produtoAdd">Produtos:</label> 
+				<select id="produtoAdd" class="form-control" 
+					ng-model="produtoAdd"
+					ng-options="p.nome +' v.'+p.versao group by p.nome for p in resultadoProdutos">
+					<option value="" disabled>-- Selecione um produto --</option>
+				</select>
+			</div>
+			<div class="col-md-2">
+				<label for="adicionarProduto"> &nbsp;</label>
+				<button id="adicionarProduto"
+					class="form-control btn btn-primary btn-xl"
+					ng-click="adicionarProduto(produtoAdd)">
+					<i class="fa fa-plus-o"> </i> Adicionar
+				</button>
+			</div>
+		</div>
+
+		<div class="list-group">
+			<a ng-repeat="p in produtos" class="list-group-item">
+				<button class="btn btn-danger btn-xl pull-right"
+					ng-click="removerProduto(p.id)" has-role="fase.fase">
+					<i class="fa fa-trash-o"> </i> Remover 
+				</button>
+				
+				<h5 class="list-group-item-heading">
+					{{p.produto.nome}} <small>{{p.produto.versao}}</small>
+				</h5>
+				<p class="list-group-item-text">{{p.produto.descricao}}</p>
+			</a>
+		</div>
+
+	</div>
+
+</div>
+
+</div>
+
+</div>

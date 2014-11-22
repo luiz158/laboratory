@@ -1,0 +1,44 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<v:view 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:v="http://www.cruxframework.org/view" 
+	xmlns:core="http://www.cruxframework.org/crux" 
+	xmlns:crux="http://www.cruxframework.org/crux/widgets"
+	xmlns:gwt="http://www.cruxframework.org/crux/gwt"
+	xmlns:faces="http://www.cruxframework.org/crux/smart-faces" 
+	useController="menuController"> 
+
+	<faces:headerPanel id="hpHeader" styleName="header">
+	
+		<!-- Logo Icon -->
+		<crux:anchor id="HeaderLogo" styleName="header-logo" href="" />
+		
+		<!-- Language Icons -->
+		<gwt:flowPanel id="langWrapper" styleName="language-box">
+			<crux:anchor id="HeaderPtbr" styleName="lang-ptbr"  href="index.html?locale=pt_BR"/>
+			<crux:anchor id="HeaderEn" styleName="lang-en" href="index.html?locale=en_US" />
+		</gwt:flowPanel>
+		
+		<!-- Menu -->
+		<faces:menu id="menu" largeType="HorizontalDropdown"  >
+			<faces:item id="menuBookmark">
+				<faces:itemLabel>${symbol_dollar}{commonMessages.menuBookmark}</faces:itemLabel>	
+				<faces:item id="new" onSelect="menuController.add">
+					<faces:itemLabel>${symbol_dollar}{commonMessages.menuNew}</faces:itemLabel>
+				</faces:item>
+				<faces:item id="list" onSelect="menuController.list">
+					<faces:itemLabel>${symbol_dollar}{commonMessages.menuList}</faces:itemLabel>
+				</faces:item>
+			</faces:item>
+			<faces:item id="menuBookmark">
+					<faces:itemWidget>
+						<gwt:anchor id="anQuit" href="http://www.frameworkdemoiselle.gov.br" text="${symbol_dollar}{commonMessages.menuQuit}"></gwt:anchor> 
+					</faces:itemWidget>
+			</faces:item>
+		</faces:menu>
+		
+	</faces:headerPanel>
+
+</v:view>

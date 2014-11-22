@@ -1,0 +1,5 @@
+
+    public List<SelectItem> get${attrNameFirstUp}() {
+        return ${beanLower}BC.get${attrNameFirstUp}();
+    }
+    

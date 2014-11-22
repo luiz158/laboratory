@@ -1,0 +1,92 @@
+<div class="panel">
+<div class="panel-heading">
+	<h4 class="panel-title">Próxima fase</h4>
+</div>
+<div class="panel-body">
+	
+	<div class="form-group btn-group">
+		<div >
+			<label> Executar próxima fase? </label> 
+			<div class="btn-group btn-toggle"> 
+			    <button class="btn btn-xs " 
+			    		ng-class="{'btn-success active': fase.executarProximaFase == 1}" 
+			    		ng-click="fase.executarProximaFase=1; selected='PF'">Sim</button>
+			    <button class="btn btn-xs " 
+			    		ng-class="{'btn-danger active': fase.executarProximaFase == 0}" 
+			    		ng-click="fase.executarProximaFase=0; selected=1">Não</button>
+			  </div>
+		</div>		
+	</div>	 
+
+	<div class="form-group" ng-show="fase.executarProximaFase">
+	<div class="form-group">
+		<label for="proximaFase">Próxima fase a ser executada:<font color="#FF0000"> **</font></label> 
+				
+		<select ng-if="fase.fase == 'ANALISE'" id="proximaFase" class="form-control" ng-model="fase.proximaFase">
+			<option value="PROSPECCAO">Prospecção</option>
+			<option value="INTERNALIZACAO">Internalização</option>
+			<option value="SUSTENTACAO">Sustentação</option>
+			<option value="DECLINIO">Declínio</option>
+		</select>
+		<select ng-if="fase.fase == 'PROSPECCAO'" id="proximaFase" class="form-control" ng-model="fase.proximaFase">
+			<option selected value="INTERNALIZACAO">Internalização</option>
+		</select>
+		<select ng-if="fase.fase == 'INTERNALIZACAO'" id="proximaFase" class="form-control" ng-model="fase.proximaFase">
+			<option value="SUSTENTACAO">Sustentação</option>
+		</select>
+		<select ng-if="fase.fase == 'SUSTENTACAO'" id="proximaFase" class="form-control" ng-model="fase.proximaFase">
+			<option value="SUSTENTACAO">Sustentação</option>
+			<option value="DECLINIO">Declínio</option>
+		</select>
+		<validation-msg propriedade="proximaFase"></validation-msg>
+	</div>
+
+	<div class="form-group">
+		<label for="justificativaProximaFase">Justificativa:<font color="#FF0000"> **</font></label>
+		<textarea rows="4" class="form-control" id="justificativaProximaFase"
+			ng-model="fase.proximaFaseJustificativa" required></textarea>
+		<validation-msg propriedade="proximaFaseJustificativa"></validation-msg>
+	</div>
+
+	<div class="form-group row">
+		<div class="col-md-6">
+			<label for="proximaFaseUnidadeGestora">Unidade Gestora da próxima fase:<font color="#FF0000"> **</font></label> <input
+				class="form-control" type="text" id="proximaFaseUnidadeGestora"
+				ng-model="fase.proximaFaseUnidadeGestora">
+			<validation-msg propriedade="proximaFaseUnidadeGestora"></validation-msg>
+		</div>
+		<div class="col-md-6">
+			<label for="proximaFaseLider">Líder da equipe da próxima fase:<font color="#FF0000"> **</font></label>
+			<ng-campo-usuario ng-model="fase.proximaFaseLider" name="proximaFaseLider"></ng-campo-usuario>
+			<validation-msg propriedade="proximaFaseLider"></validation-msg>
+		</div>
+	</div>
+
+	<div class="form-group" ng-if="fase.proximaFase == 'SUSTENTACAO'">
+		<label for="proximaFaseCiclo">Ciclo de Sustentação:<font color="#FF0000"> **</font></label>
+		<div class="form-group row">
+			<form>
+				<div class="col-md-1">
+					<input type="text" class="form-control" ng-model="ciclo.numero">
+				</div>
+				<div class="col-md-2">
+					<select class="form-control" ng-model="ciclo.fator">
+						<option selected value="1">dias</option>
+						<option value="30">meses</option>
+						<option value="365">anos</option>
+					</select>
+				</div>
+				<div class="col-md-3">
+					<input type="text" class="form-control" id="proximaFaseCiclo"
+						disabled="disabled"
+						value="Total de {{fase.proximaFaseCiclo}} dias.">
+				</div>
+			</form>
+		</div>
+		<validation-msg propriedade="proximaFaseCiclo"></validation-msg>
+	</div>
+	
+	</div>
+	
+</div>
+</div>

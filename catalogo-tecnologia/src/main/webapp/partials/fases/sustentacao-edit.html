@@ -1,0 +1,386 @@
+<div class="painel painel-default">
+	<h3 class="page-header">
+		Sustentação <small>edição</small>
+	</h3>
+	<ng-fluxo ng-model="fase"></ng-fluxo>
+	<ng-alerts></ng-alerts>
+
+
+	<ul class="nav nav-tabs nav-justified" ng:init="selected=1">
+		<li class="ng-class: selected == 1 ? 'active':'';"><a
+			ng:click="selected=1">Sustentação</a></li>
+		<li class="ng-class: selected == 2 ? 'active':'';"><a
+			ng:click="selected=2">Resultado</a></li>
+		<li class="ng-class: selected == 3 ? 'active':'';"><a
+			ng:click="selected=3">Produtos</a></li>
+		<li class="ng-class: selected == 'PF' ? 'active':'';">
+				<a	ng:click="selected='PF'">Próxima Fase <small ng-if="fase.proximaFase && fase.executarProximaFase">({{fase.proximaFase | nomeFase}})</small></a></li>
+		<li ng:show="fase.id" class="ng-class: selected == 5 ? 'active':'';"><a
+			ng:click="selected=5">Anexos</a></li>
+
+		<li ng:show="fase.id" class="ng-class: selected == 6 ? 'active':'';">
+			<a ng:click="selected=6">Observações</a>
+		</li>
+		<li ng:show="fase.id" class="ng-class: selected == 7 ? 'active':'';">
+				<a ng:click="selected=7">Histórico</a>
+			</li>
+	</ul>
+<form name="formInternalizacao" role="form" has-role="SUSTENTACAO" novalidate>
+	<div class="panel panel-default" ng:show="selected == 1">
+		
+			<div class="panel-body">
+				<div class="form-group row">
+					<div class="col-md-6">
+						<label for="id">Id:</label> <input class="form-control"
+							disabled=disabled type="text" id="id" ng-model="fase.identificador">
+					</div>
+					<div class="col-md-6">
+						<a
+							href="#{{fase.faseAnterior.fase | faseUrl}}/{{fase.faseAnterior.id}}">
+							<label for="faseAnterior">Fase anterior:
+								{{fase.faseAnterior.fase | nomeFase}}<font color="#FF0000"> *</font></label> <input
+							class="form-control" disabled=disabled type="text"
+							id="faseAnterior"
+							value="{{fase.faseAnterior.identificador}} - {{fase.faseAnterior.origemReferencia.nome}}[{{fase.faseAnterior.codigoReferencia}}]" />
+						</a>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-md-6">
+						<label for="origemReferencia">Referência:</label> <select
+							id="origemReferencia" class="form-control"
+							ng-model="fase.origemReferencia"
+							ng-options="origem.nome for origem in origemDemanda track by origem.id">
+							<option value="" disabled>-- Selecione --</option>
+						</select>
+					</div>
+					<div class="col-md-6">
+						<label for="codigo">Código:</label> <input class="form-control"
+							type="text" id="codigo" ng-model="fase.codigoReferencia">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="objetivo">Objetivo:<font color="#FF0000"> *</font></label>
+					<textarea rows="4" class="form-control" id="objetivo"
+						ng-model="fase.objetivo" required></textarea>
+					<validation-msg propriedade="objetivo"></validation-msg>
+				</div>
+
+
+				<div class="form-group row">
+					<div class="col-md-6">
+						<div date-picker="start"></div>
+						<label class="dataAnalise"><i class="fa fa-calendar"></i>
+							Data de início <small>(dd/mm/aaaa)</small>:<font color="#FF0000"> *</font></label> <input type="text"
+							class="form-control" id="data" name="data"
+							ng-model="fase.dataRealizacao" data-date-type="number"
+							data-min-date="01/01/2010" data-autoclose="1"
+							data-date-format="dd/MM/yyyy" bs-datepicker>
+						<validation-msg propriedade="dataRealizacao"></validation-msg>
+					</div>
+					<div class="col-md-6">
+						<div date-picker="start"></div>
+						<label class="dataFinalizacao"><i class="fa fa-calendar"></i>
+							Data da finalização:</label> 
+						<input type="text" has-hole="ADMINISTRADOR"
+							class="form-control" id="dataFinalizacao" name="dataFinalizacao"
+							ng-model="fase.dataFinalizacao" data-date-type="number"
+							data-min-date="01/01/2000"
+							data-autoclose="1" data-date-format="dd/MM/yyyy" bs-datepicker>
+						<validation-msg propriedade="dataFinalizacao"></validation-msg>
+							
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<div class="col-md-6">
+						<label for="gestor">Unidade gestora de {{fase.fase |
+							nomeFase}}:<font color="#FF0000"> *</font></label> <input class="form-control" required type="text"
+							id="gestor" ng-model="fase.unidadeGestora">
+						<validation-msg propriedade="unidadeGestora"></validation-msg>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<div class="col-md-6" id="membros">
+						<ng-membros ng-model="fase"></ng-membros>
+					</div>
+					<div class="col-md-6" id="interessados">
+						<ng-interessados ng-model="fase"></ng-interessados>
+					</div>
+				</div>
+
+
+				<!-- Aquisições -->
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<i class="fa fa-money"></i> Aquisições para a Internalização
+						</h4>
+					</div>
+					<div class="panel-body">
+						<div class="form-group">
+							<label for="aquisicaoNecessaria">Há necessidade de
+								aquisições para a Internalização?<font color="#FF0000"> *</font></label>
+							<div class="form-control" id="aquisicaoNecessaria">
+								<div class="radio-inline">
+									<label> <input type="radio" name="aquisicaoNecessaria"
+										ng-model="fase.aquisicaoNecessaria" value='1'> Sim
+									</label>
+								</div>
+								<div class="radio-inline">
+									<label> <input type="radio" name="aquisicaoNecessaria"
+										ng-model="fase.aquisicaoNecessaria" value='0'> Não
+									</label>
+								</div>
+							</div>
+							<validation-msg propriedade="aquisicaoNecessaria"></validation-msg>
+						</div>
+						<div ng-show="fase.aquisicaoNecessaria">
+							<div class="form-group">
+								<label for="aquisicaoItens">Aquisições necessárias:<font color="#FF0000"> *</font></label>
+								<textarea rows="4" class="form-control" id="aquisicaoItens"
+									ng-model="fase.aquisicaoItens"></textarea>
+								<validation-msg propriedade="aquisicaoItens"></validation-msg>
+							</div>
+							<div class="form-group">
+								<label for="aquisicaoResultado">Resultados das
+									Aquisições:<font color="#FF0000"> *</font></label>
+								<textarea rows="4" class="form-control" id="aquisicaoResultado"
+									ng-model="fase.aquisicaoResultado"></textarea>
+								<validation-msg propriedade="aquisicaoResultado"></validation-msg>
+							</div>
+
+						</div>
+						
+						<div class="form-group">
+							<label for="documentos">Documentos Relacionados:</label>
+							<div class="panel panel-default">	
+								<div class="panel-heading">
+									<div class="row ">
+										<div class="form-group col-md-4">
+											<label for="documentoOficial">DOD:</label>
+											<input id="documentoOficial" type="text" class="form-control" 
+												ng-model="documento.documentoOficialDemanada">
+										</div> 
+										<div class="form-group col-md-4">
+											<label for="rgContrato">RG Contrato:</label>
+											<input id="rgContrato" type="text" class="form-control" 
+												ng-model="documento.rgContrato">
+										</div> 
+										<div class="form-group btn-group col-md-2">
+		                                    <button ng-click="adicionarDocumento()"
+												 type="button" class="btn btn-primary btn-xs">
+												<i class="fa fa-plus-circle"> </i>  Adicionar
+											</button>
+		                                </div>   
+									</div>
+								</div>
+								<div class="panel-body">
+									<div class="list-group">
+										<a ng-repeat="c in documentos" class="list-group-item row"> 										
+											<div class="form-group col-md-4">{{c.documentoOficialDemanada}}</div> 
+											<div class="form-group col-md-4">{{c.rgContrato}}</div> 
+											<div class="form-group btn-group col-md-2">
+			                                    <button class="btn btn-danger btn-xs" ng-click="removerDocumento(c)" has-role="SUSTENTACAO"> 
+                                            		<i class="fa fa-trash-o"> Excluir</i>
+                                            	</button>
+			                                </div>   
+										</a> 
+									</div>	
+								</div>
+							</div>
+							
+							
+						</div>
+
+					</div>
+				</div>
+				<!-- /Aquisições -->
+
+				<!-- Capacitações -->
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<i class="fa fa-certificate"></i> Capacitações para a
+							Internalização
+						</h4>
+					</div>
+					<div class="panel-body">
+						<div class="form-group">
+							<label for="capacitacao">Há necessidade de capacitações
+								para a Internalização?<font color="#FF0000"> *</font></label>
+							<div class="form-control" id="capacitacao">
+								<div class="radio-inline">
+									<label> <input type="radio" name="capacitacao"
+										ng-model="fase.capacitacao" value='1'> Sim
+									</label>
+								</div>
+								<div class="radio-inline">
+									<label> <input type="radio" name="capacitacao"
+										ng-model="fase.capacitacao" value='0'> Não
+									</label>
+								</div>
+							</div>
+							<validation-msg propriedade="capacitacao"></validation-msg>
+						</div>
+						<div ng-show="fase.capacitacao">
+							<div class="form-group">
+								<label for="capacitacaoNecessarias">Capacitações
+									necessárias:<font color="#FF0000"> *</font></label>
+								<textarea rows="4" class="form-control"
+									id="capacitacaoNecessarias"
+									ng-model="fase.capacitacaoNecessarias"></textarea>
+								<validation-msg propriedade="capacitacaoNecessarias"></validation-msg>
+							</div>
+							<div class="form-group">
+								<label for="capacitacaoRealizadas">Capacitações
+									Realizadas:<font color="#FF0000"> *</font></label>
+								<textarea rows="4" class="form-control"
+									id="capacitacaoRealizadas"
+									ng-model="fase.capacitacaoRealizadas"></textarea>
+								<validation-msg propriedade="capacitacaoRealizadas"></validation-msg>
+							</div>
+						</div>						
+					</div>
+				</div>
+				<!-- /Capacitações -->
+
+				<!-- Restrição -->
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<i class="fa fa-exclamation-triangle"></i> Restrição para Uso
+						</h4>
+					</div>
+					<div class="panel-body">
+						<div class="form-group">
+							<label for="restricao">Há restrição para uso do produto após esta Sustentação?<font color="#FF0000"> **</font></label>
+							<div class="form-control" id="restricao">
+								<div class="radio-inline">
+									<label> <input type="radio" name="restricao"
+										ng-model="fase.restricao" value='1'> Sim
+									</label>
+								</div>
+								<div class="radio-inline">
+									<label> <input type="radio" name="restricao"
+										ng-model="fase.restricao" value='0'> Não
+									</label>
+								</div>
+							</div>
+							<validation-msg propriedade="restricao"></validation-msg>
+						</div>
+						<div ng-show="fase.restricao">
+							<div class="form-group">
+								<label for="restricaoQuemPode">Quais Clientes e/ou Áreas
+									Internas podem utilizar o Produto?<font color="#FF0000"> **</font></label> <input type="text"
+									class="form-control" id="restricaoQuemPode"
+									ng-model="fase.restricaoQuemPode">
+								<validation-msg propriedade="restricaoQuemPode"></validation-msg>
+							</div>
+							<div class="form-group">
+								<label for="restricaoJustificativa">Justificativa:<font color="#FF0000"> **</font></label>
+								<textarea rows="4" class="form-control"
+									id="restricaoJustificativa"
+									ng-model="fase.restricaoJustificativa"></textarea>
+								<validation-msg propriedade="restricaoJustificativa"></validation-msg>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+				<!-- /Restrição -->
+
+				<!-- Risco -->
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<i class="fa fa-bolt"></i> Riscos para a Sustentação
+						</h4>
+					</div>
+					<div class="panel-body">
+						<div class="form-group">
+							<label for="restricao">Foi feita análise de Riscos?<font color="#FF0000"> **</font></label>
+							<div class="form-control" id="analiseDeRiscos">
+								<div class="radio-inline">
+									<label> <input type="radio" name="analiseDeRiscos"
+										ng-model="fase.analiseDeRiscos" value=1> Sim
+									</label>
+								</div>
+								<div class="radio-inline">
+									<label> <input type="radio" name="analiseDeRiscos"
+										ng-model="fase.analiseDeRiscos" value=0> Não
+									</label>
+								</div>
+							</div>
+							<validation-msg propriedade="analiseDeRiscos"></validation-msg>
+						</div>
+						<div>
+							<div ng-show="fase.analiseDeRiscos<1" class="form-group">
+								<label for="analiseDeRiscosJustificativa">Justificativa:<font color="#FF0000"> **</font></label>
+								<textarea rows="4" class="form-control"
+									id="analiseDeRiscosJustificativa"
+									ng-model="fase.analiseDeRiscosJustificativa"></textarea>
+								<validation-msg propriedade="analiseDeRiscosJustificativa"></validation-msg>
+							</div>
+							<div ng-show="fase.analiseDeRiscos" class="alert alert-warning">Anexe o GRS na aba "Anexos".</div>
+
+						</div>
+
+					</div>
+				</div>
+				<!-- /Risco -->
+
+				
+
+			</div>
+		
+	</div>
+
+	<!-- Resultado -->
+	<div ng-show="selected == 2" class="panel panel-default">
+		<div class="panel-heading">Resultado</div>
+		<div class="panel-body">
+			<div class="form-group">
+				<label for="conclusao">Conclusão:<font color="#FF0000"> **</font></label>
+				<textarea rows="4" class="form-control" id="conclusao"
+					ng-model="fase.conclusao"></textarea>
+				<validation-msg propriedade="conclusao"></validation-msg>
+			</div>
+		</div>
+	</div>
+
+	<!-- Produtos -->
+	<div ng-show="selected == 3" class="panel panel-default">
+		<ng-produtos ng-model="fase" has-role="SUSTENTACAO"></ng-produtos>
+	</div>
+
+
+	<!-- Próxima fase -->
+	<div ng-show="selected == 'PF'" class="panel panel-default">
+		<ng-proxima-fase ng-model="fase" has-role="SUSTENTACAO"></ng-proxima-fase>
+	</div>
+
+	<!-- Anexos -->
+	<div ng:show="selected == 5 && fase.id" class="panel panel-default">
+		<div class="panel-heading">Anexos</div>
+		<ng-anexos ng-model="fase"></ng-anexos>
+	</div>
+
+	<!-- Observações -->
+	<div ng:show="selected == 6 && fase.id" class="panel panel-default">
+		<ng-observacoes ng-model="fase"></ng-observacoes>
+	</div>
+	
+	<!-- Historico -->
+	<div ng:show="selected == 7" class="panel panel-default">
+		<ng-historico-fase ng-model="fase"></ng-historico-fase>
+	</div>
+
+	<div ng-include src="'partials/fases/toolbar.html'"></div>
+	
+	</form>
+
+</div>

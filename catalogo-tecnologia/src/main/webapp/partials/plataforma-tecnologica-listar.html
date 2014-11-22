@@ -1,0 +1,38 @@
+<div class="painel painel-default">
+	<h1 class="page-header">
+		Plataforma Tecnologica <small>listagem</small>
+	</h1>
+
+	<div>
+		<ng-alerts></ng-alerts>
+	</div>
+
+	<button has-role='ADMINISTRADOR,CADASTRADOR' class="btn btn-primary" ng-click="novoPlataformaTecnologica()">
+		<i class="fa fa-plus-circle"> </i> Novo
+	</button>
+
+	<div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
+		<table class="table table-striped table-bordered table-hover dataTable no-footer" id="dataTables-example" aria-describedby="dataTables-example_info">
+			<thead>
+				<tr role="row">
+					<th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-sort="ascending"
+						aria-label="Rendering engine: activate to sort column ascending" style="width: 162px;">Id</th>
+					<th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1"
+						aria-label="Browser: activate to sort column ascending">Plataforma Tecnologica</th>
+					<th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1"
+						aria-label="Browser: activate to sort column ascending">Descrição</th>
+					<th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1"
+						aria-label="Platform(s): activate to sort column ascending" style="width: 105px;">Ações</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="p in plataformasTecnologicas">
+					<td><a ng-click="editarPlataformaTecnologica(p)">{{p.id}}</a></td>
+					<td><a ng-click="editarPlataformaTecnologica(p)">{{p.nome}}</a></td>
+					<td><a ng-click="editarPlataformaTecnologica(p)">{{p.descricao}}</a></td>
+					<td><a has-role='ADMINISTRADOR,CADASTRADOR' ng-click="excluirPlataformaTecnologica(p.id)" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> excluir</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

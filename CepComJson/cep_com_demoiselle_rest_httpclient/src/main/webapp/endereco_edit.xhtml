@@ -1,0 +1,91 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets" template="/template/main.xhtml">
+
+	<ui:define name="body">
+		<h:form prependId="false">
+			<p:toolbar>
+				<p:toolbarGroup align="left">
+					<p:commandButton value="#{messages['button.save']}" action="#{enderecoEditMB.insert}"
+						rendered="#{!enderecoEditMB.updateMode}" ajax="false" />
+					<p:commandButton value="#{messages['button.save']}" action="#{enderecoEditMB.update}"
+						rendered="#{enderecoEditMB.updateMode}" ajax="false" />
+					<p:commandButton value="#{messages['button.delete']}" onclick="confirmation.show()"
+						rendered="#{enderecoEditMB.updateMode}" type="button" immediate="true" ajax="false" />
+					<p:confirmDialog message="#{messages['label.confirm.delete']}" showEffect="bounce" hideEffect="explode"
+						header="#{messages['label.dialog.delete']}" severity="alert" widgetVar="confirmation">
+						<h:commandButton value="#{messages['button.dialog.yes']}" action="#{enderecoEditMB.delete}" immediate="true"
+							ajax="false" />
+						<h:commandButton value="#{messages['button.dialog.no']}" onclick="confirmation.hide()" type="button" />
+					</p:confirmDialog>
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<br />
+
+			<p:fieldset legend="#{messages['endereco.label']}" toggleable="true" toggleSpeed="500">
+				<h:panelGrid id="fieldsendereco" columns="3">
+				
+					<h:outputLabel value="#{messages['endereco.label.id']}: " for="id" styleClass="text-input" />
+										
+					<h:outputText id="id" value="#{enderecoEditMB.bean.id}" />
+					
+					<p:message for="id" />
+						
+					<h:outputLabel value="#{messages['endereco.label.cep']}: " for="cep" styleClass="text-input" />
+					
+					<h:inputText id="cep" value="#{enderecoEditMB.bean.cep}" title="#{messages['endereco.alt.cep']}">
+						<p:ajax event="keydown" update="logradouro,tipoDeLogradouro,bairro,estado,cidade"  listener="#{enderecoEditMB.buscaEnderecoCep}"/>
+					</h:inputText>
+					
+					<p:message for="cep" />
+						
+					<h:outputLabel value="#{messages['endereco.label.tipoDeLogradouro']}: " for="tipoDeLogradouro" styleClass="text-input" />
+					
+					<h:inputText id="tipoDeLogradouro" value="#{enderecoEditMB.bean.tipoDeLogradouro}"
+						title="#{messages['endereco.alt.tipoDeLogradouro']}" />
+					
+					<p:message for="tipoDeLogradouro" />
+						
+					<h:outputLabel value="#{messages['endereco.label.logradouro']}: " for="logradouro" styleClass="text-input" />
+					
+					<h:inputText id="logradouro" value="#{enderecoEditMB.bean.logradouro}"
+						title="#{messages['endereco.alt.logradouro']}" />
+					
+					<p:message for="logradouro" />
+						
+					<h:outputLabel value="#{messages['endereco.label.numero']}: " for="numero" styleClass="text-input" />
+					
+					<h:inputText id="numero" value="#{enderecoEditMB.bean.numero}"
+						title="#{messages['endereco.alt.numero']}" />
+					
+					<p:message for="numero" />
+						
+					<h:outputLabel value="#{messages['endereco.label.bairro']}: " for="bairro" styleClass="text-input" />
+					
+					<h:inputText id="bairro" value="#{enderecoEditMB.bean.bairro}"
+						title="#{messages['endereco.alt.bairro']}" />
+					
+					<p:message for="bairro" />
+						
+					<h:outputLabel value="#{messages['endereco.label.cidade']}: " for="cidade" styleClass="text-input" />
+					
+					<h:inputText id="cidade" value="#{enderecoEditMB.bean.cidade}"
+						title="#{messages['endereco.alt.cidade']}" />
+					
+					<p:message for="cidade" />
+						
+					<h:outputLabel value="#{messages['endereco.label.estado']}: " for="estado" styleClass="text-input" />
+					
+					<h:inputText id="estado" value="#{enderecoEditMB.bean.estado}"
+						title="#{messages['endereco.alt.estado']}" />
+					
+					<p:message for="estado" />
+						
+				</h:panelGrid>
+			</p:fieldset>
+			
+		</h:form>
+	</ui:define>
+</ui:composition>

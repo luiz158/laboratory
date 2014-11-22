@@ -1,0 +1,182 @@
+<div class="panel painel-default">
+	<h1 class="page-header">
+		Pesquisa <small>por fases</small>
+	</h1>
+
+	<div>
+		<ng-alerts></ng-alerts>
+	</div>
+
+	<div class="panel-body">
+		<form name="formPesquisa" role="form">
+			<div class="form-group row">
+				<div class="col-md-4">
+					<label for="palavraChave">Palavra-chave:</label> <input
+						class="form-control" type="text" id="palavraChave"
+						ng-model="fase.palavraChave">
+				</div>
+				<div class="col-md-4">
+					<label for="fase">Fase:</label> <select id="fase"
+						class="form-control" ng-model="fase.fase">
+						<option value="" disabled>--</option>
+						<option value="1">Análise</option>
+						<option value="2">Prospecção</option>
+						<option value="3">Internalização</option>
+						<option value="4">Sustentação</option>
+						<option value="5">Declínio</option>
+					</select>
+				</div>
+				<div class="col-md-4">
+					<label for="id">ID:</label> <input class="form-control" type="text"
+						id="id" ng-model="fase.identificador">
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-md-4">
+					<label for="gestor">Unidade gestora:</label> <input
+						class="form-control" type="text" id="gestor"
+						ng-model="fase.unidadeGestora">
+				</div>
+				<div class="col-md-4">
+					<label for="origemReferencia">Referência:</label> 
+					<select id="origemReferencia" class="form-control" 
+							ng-model="fase.origemReferencia" 
+							ng-options="origem.nome for origem in origemDemanda track by origem.id">
+							<option value="" disabled>--</option>
+					</select>
+				</div>
+				<div class="col-md-4">
+					<label for="codigo">Código:</label> <input class="form-control"
+						type="text" id="codigo" ng-model="fase.codigoReferencia">
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-md-4">
+					<label for="finalizada">Finalizada:</label> <select
+						class="form-control" ng-model="fase.finalizada" id="finalizada">
+						<option value='1'>Finalizada</option>
+						<option value='0'>Em curso</option>
+					</select>
+				</div>
+				<div class="col-md-4">
+					<div date-picker="start"></div>
+					<label for="dataFinalizacaoApartir"> <i
+						class="fa fa-calendar"></i> Finalização a partir de:
+					</label> <input type="text" class="form-control"
+						id="dataFinalizacaoApartir" name="dataFinalizacaoApartir"
+						ng-model="fase.finalizacaoApartir" data-date-type="number"
+						data-min-date="01/01/2010" data-max-date="today"
+						data-autoclose="1" data-date-format="dd/MM/yyyy" bs-datepicker>
+				</div>
+				<div class="col-md-4">
+					<div date-picker="start"></div>
+					<label for="dataFinalizacaoAte"> <i class="fa fa-calendar"></i>
+						Finalização até:
+					</label> <input type="text" class="form-control" id="dataFinalizacaoAte"
+						name="dataFinalizacaoAte" ng-model="fase.finalizacaoAte"
+						data-date-type="number" data-min-date="01/01/2010"
+						data-autoclose="1"
+						data-date-format="dd/MM/yyyy" bs-datepicker>
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-md-6">
+					<button class="btn btn-primary" ng-click="pesquisar()">
+						<i class="fa fa-search-plus"> </i> Pesquisar
+					</button>
+					<button class="btn btn-danger" ng-click="limpar()">
+						<i class="fa fa-eraser"> </i> Limpar
+					</button>
+				</div>
+			</div>
+		</form>
+				
+		<div>
+			<div ng-if="paginacao.data.length >0">			
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="dataTables_info">
+							<h5>Total de registros: {{paginacao.data.length}} <small>Exibindo até 
+							<select ng-model="paginacao.registrosPorPagina">
+								<option>5</option>
+								<option>10</option>
+								<option>20</option>
+							</select> itens por página.</small></h5>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="dataTables_paginate paging_simple_numbers">
+							<ul class="pagination">
+								<li>
+									<a ng-click="paginacao.anterior()"> &laquo; </a></li>
+							  	<li ng-repeat="i in [] | range:paginacao.paginas()" 
+							  		ng-class="{'active' : paginacao.paginaAtual == i}">
+							  		<a ng-click="paginacao.paginaAtual = i"> {{i+1}} </a>
+							  	</li>
+							  	<li><a ng-click="paginacao.proxima()"> &raquo; </a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			
+			
+				<ul class="chat list-group">
+	                 <li ng-repeat="f in paginacao.data | startFrom:paginacao.paginaAtual*paginacao.registrosPorPagina | limitTo:paginacao.registrosPorPagina"  
+	        	title="{{f.fase | nomeFase}}" class="left list-group-item clearfix">
+	        			<a href="#{{f.fase | faseUrl}}/{{f.id}}">
+		                    <span class="chat-img pull-left">
+		                         <img ng-src="{{f.fase | iconeFase}}" class="img-circle" width="30px">
+		                    </span>
+		                    <div class="chat-body clearfix">
+		                        <div class="header">
+		                         	<div class="row">
+				        		<div class="col-md-4">
+				        			<b>ID:</b> {{f.identificador}}
+				        		</div>
+				        		<div class="col-md-4">
+				        			<b>Fase:</b> {{f.fase | nomeFase}}</span>
+				        		</div>
+				        		<div class="col-md-4">
+				        			<b>Situação: </b>
+			        				<span ng-if="f.fase == 'ANALISE'" ng-analise-situacao situacao="{{f.situacao}}"></span>
+			        				<span ng-if="f.fase != 'ANALISE'">
+			        					<span ng-hide="f.dataFinalizacao" class="label label-warning">
+			        						<i class="fa fa-road"> </i> Em curso
+			        					</span>
+			        					<span ng-show="f.dataFinalizacao" class="label label-success">
+			        						<i class="fa fa-check-square"> </i> Finalizada
+			        					</span>
+			        				</span>
+				        							        			
+				        		</div>
+				        	</div>
+		                    <div class="row">
+		                        <div class="col-md-4" ng-if="f.dataFinalizacao">
+				        			<b>Finalização:</b> {{f.dataFinalizacao | date}} 
+				        		</div>
+				        		<div class="col-md-4">
+				        			<b>Unidade Gestora:</b> {{f.unidadeGestora}} 
+				        		</div>
+				        		<div class="col-md-4">
+				        			<b>Registro:</b> {{f.dataRealizacao | date}}  
+				        		</div>
+				        	</div>
+				        	<div class="row">
+					        	 <div class="col-md-12" ng-if="f.origemReferencia">
+					        			<b>Referência:</b> {{f.origemReferencia.nome}} {{f.codigoReferencia}} 
+					        	 </div>
+					        </div>	 
+					        <div class="row">	 
+		                         <div class="col-md-12">
+		                             <b>Objetivo:</b> {{f.objetivo | trunk:true:250}}
+		                         </div>
+	                         </div>
+	                     </div>
+	                    </a>
+	                 </li>
+	            </ul>			
+			
+		    </div>
+		</div>
+    </div>
+</div>

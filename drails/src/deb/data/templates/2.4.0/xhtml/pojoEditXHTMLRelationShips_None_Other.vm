@@ -1,0 +1,5 @@
+                    <p:column>
+                    <h:inputText id="${varAttrName}" value="#{${attrClassOfValueLower}.${varAttrName}}" title="#{messages['${attrClassOfValueLower}.alt.${varAttrName}']}" />
+                    <p:message for="${varAttrName}" />
+                    </p:column>
+                    

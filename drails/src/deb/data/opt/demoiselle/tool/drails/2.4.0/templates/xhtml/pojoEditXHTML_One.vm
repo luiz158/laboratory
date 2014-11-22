@@ -1,0 +1,3 @@
+                    
+                    <h:outputLabel value="#{messages['${beanLower}.label.${attrName}']}: " for="${attrName}" styleClass="text-input" />
+                    ${body}

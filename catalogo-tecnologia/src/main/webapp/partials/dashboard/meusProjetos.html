@@ -1,0 +1,28 @@
+<div class="panel panel-default" ng-controller="DashboardCtrl">
+	<div class="panel-heading">
+		<i class="fa fa-bar-chart-o fa-fw"></i> Minhas demandas <span class="badge">{{demandas.length}}</span>
+	</div>
+	<div class="panel-body" >
+
+		<div class="list-group">
+			<a ng-repeat="d in paginacaoDemandas.data | startFrom:paginacaoDemandas.paginaAtual*paginacaoDemandas.registrosPorPagina | limitTo:paginacaoDemandas.registrosPorPagina" 
+				href="#{{d.fase.fase | faseUrl}}/{{d.fase.id}}" class="list-group-item"> 
+				<i title="{{d.tipo | tipoInteresseNome}}" class="{{d.tipo | tipoInteresseIcone}}"></i> {{d.fase.fase | nomeFase}} <br>
+				<span class="small" title="{{d.fase.objetivo}}"><em>{{d.fase.objetivo | trunk:true:50}}</em></span>
+			</a> 
+		</div>	
+		<div class="dataTables_paginate paging_simple_numbers">
+			<ul class="pagination">
+				<li>
+					<a ng-click="paginacaoDemandas.anterior()"> &laquo; </a></li>
+			  	<li ng-repeat="i in [] | range:paginacaoDemandas.paginas()" 
+			  		ng-class="{'active' : paginacaoDemandas.paginaAtual == i}">
+			  		<a ng-click="paginacaoDemandas.paginaAtual = i"> {{i+1}} </a>
+			  	</li>
+			  	<li><a ng-click="paginacaoDemandas.proxima()"> &raquo; </a></li>
+			</ul>
+		</div>	
+	</div>
+	
+
+</div>

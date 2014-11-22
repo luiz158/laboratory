@@ -1,0 +1,179 @@
+<div class="painel painel-default">
+	<h3 class="page-header">
+		Análise <small ng-if="fase.id">edição</small>
+	</h3>
+		
+	<div>
+		<ng-alerts></ng-alerts>
+	</div>
+	
+	<ng-fluxo ng-model="fase"></ng-fluxo>
+	
+	
+	<form name="formAnalise" role="form" has-role="ANALISE" novalidate>
+		<ul class="nav nav-tabs nav-justified" ng:init="selected=1">
+			<li class="ng-class: selected == 1 ? 'active':'';"><a
+				ng:click="selected=1">Análise</a></li>
+			<li class="ng-class: selected == 'PF' ? 'active':'';">
+				<a	ng:click="selected='PF'">Próxima Fase <small ng-if="fase.proximaFase && fase.executarProximaFase">({{fase.proximaFase | nomeFase}})</small></a></li>
+			<li ng:show="fase.id" class="ng-class: selected == 3 ? 'active':'';"><a
+				ng:click="selected=3">Anexos</a></li>
+			<li ng:show="fase.id" class="ng-class: selected == 4 ? 'active':'';"><a
+				ng:click="selected=4">Observações</a></li>
+			<li ng:show="fase.id" class="ng-class: selected == 5 ? 'active':'';"><a
+				ng:click="selected=5">Histórico</a></li>
+		</ul>
+
+		<div class="panel panel-default" ng:show="selected == 1">
+			<div class="panel-body">
+				<div class="form-group row">
+					<div class="col-md-6">
+						<label for="id">Id:</label> <input class="form-control"
+							disabled=disabled type="text" id="id" ng-model="fase.identificador">
+					</div>
+				</div>
+	
+				<div class="form-group row">
+					<div class="col-md-6">
+						<label for="origemReferencia">Referência:</label> 
+						<select id="origemReferencia" class="form-control" 
+							ng-model="fase.origemReferencia" 
+							ng-options="origem.nome for origem in origemDemanda track by origem.id">
+							<option value="" disabled>-- Selecione --</option>
+						</select>
+						<validation-msg propriedade="origemReferencia"></validation-msg>
+					</div>
+					<div class="col-md-6">
+						<label for="codigo">Código:</label> 
+						<input class="form-control" type="text" id="codigo"
+							ng-model="fase.codigoReferencia">
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<div class="col-md-6">
+						<label for="demandante">Unidade Demandante:<font color="#FF0000"> *</font></label> <input type="text"
+							class="form-control" id="demandante" ng-model="fase.demandanteUnidade"
+							required> 
+							<validation-msg propriedade="demandanteUnidade"></validation-msg>
+					</div>
+					<div class="col-md-6">
+						<label for="demandante">Representante da Unidade demandante:<font color="#FF0000"> *</font></label> 
+						<ng-campo-usuario ng-model="fase.demandanteRepresentante" name="demandanteRepresentante"></ng-campo-usuario> 
+						<validation-msg propriedade="demandanteRepresentante"></validation-msg>
+					</div>
+				</div>
+					
+					
+
+				<div class="form-group">
+					<label for="detalhamento">Detalhamento da demanda:<font color="#FF0000"> *</font></label>
+					<textarea rows="4" class="form-control" id="detalhamento"
+						ng-model="fase.objetivo" required maxlength="2000">
+					</textarea>
+					<validation-msg propriedade="objetivo"></validation-msg>
+				</div>
+
+
+				<div class="form-group row">
+					<div class="col-md-6">
+						<div date-picker="start"></div>
+						<label class="dataAnalise"><i class="fa fa-calendar"></i>
+							Data da Análise <small>(dd/mm/aaaa)</small>:<font color="#FF0000"> **</font></label> 
+						<input type="text"
+							class="form-control" id="dataAnalise" name="dataAnalise"
+							ng-model="fase.dataRealizacao" data-date-type="number"
+							data-min-date="01/01/2000"
+							data-autoclose="1" data-date-format="dd/MM/yyyy" bs-datepicker>
+						<validation-msg propriedade="dataRealizacao"></validation-msg>
+							
+					</div>
+					<div class="col-md-6">
+						<div date-picker="start"></div>
+						<label class="dataFinalizacao"><i class="fa fa-calendar"></i>
+							Data da finalização:</label> 
+						<input type="text" has-hole="ADMINISTRADOR"
+							class="form-control" id="dataFinalizacao" name="dataFinalizacao"
+							ng-model="fase.dataFinalizacao" data-date-type="number"
+							data-min-date="01/01/2000"
+							data-autoclose="1" data-date-format="dd/MM/yyyy" bs-datepicker>
+						<validation-msg propriedade="dataFinalizacao"></validation-msg>
+							
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<div class="col-md-6">
+						<label for="unidadeGestora">Unidade gestora de Análise:<font color="#FF0000"> **</font></label> <input
+							class="form-control" required type="text" id="unidadeGestora"
+							ng-model="fase.unidadeGestora" >
+						<validation-msg propriedade="unidadeGestora"></validation-msg>
+					</div>
+				</div>
+				
+				<div class="form-group row" ng:show="fase.id">
+					<div class="col-md-6" id="membros">
+						<ng-membros ng-model="fase" has-role="ANALISE"></ng-membros>
+					</div>
+					<div class="col-md-6" id="interessados">
+						<ng-interessados ng-model="fase" has-role="ANALISE"></ng-interessados>
+					</div>
+				</div>
+				<div class="form-group" ng:hide="fase.id">
+					<div class="alert alert-warning">
+                         Após salvar a análise você poderá criar a Equipe e identificar os interessados.
+                   </div>
+				</div>
+
+				<div class="form-group">
+					<label for="situacao">Situação da demanda:<font color="#FF0000"> **</font></label><br> 
+					<span id="situacao" class="btn-group" ng-analise-situacao-button
+						situacao="{{fase.situacao}}">
+						<li ng-if="fase.situacao != 'Aprovado'">
+							<a ng-click="aprovar(true)"><i class="fa fa-thumbs-o-up"> </i> Aprovar</a>
+						</li>
+						<li ng-if="fase.situacao != 'Reprovado'">
+							<a ng-click="aprovar(false)"><i class="fa fa-thumbs-o-down"></i> Rejeitar</a>
+						</li>
+					</span>
+					<validation-msg propriedade="situacao"></validation-msg>					 
+				</div>
+
+
+				<div ng-show="fase.situacao != 'Rascunho'">
+					<div class="form-group">
+						<label for="justificativa">Justificativa:<font color="#FF0000"> **</font></label>
+						<textarea rows="4" class="form-control" id="justificativa"
+							ng-model="fase.situacaoJustificativa" maxlength="2000"></textarea>
+						<validation-msg propriedade="justificativa"></validation-msg>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<!-- Próxima fase -->
+		<div ng-show="selected == 'PF'" class="panel panel-default">
+			<ng-proxima-fase ng-model="fase" has-role="ANALISE"></ng-proxima-fase>
+		</div>
+
+		<!-- Anexos -->
+		<div ng:show="selected == 3 && fase.id" class="panel panel-default">
+			<ng-anexos ng-model="fase" has-role="ANALISE"></ng-anexos>
+		</div>
+		
+		<!-- Observações -->
+		<div ng:show="selected == 4 && fase.id" class="panel panel-default">
+			<ng-observacoes ng-model="fase" has-role="ANALISE"></ng-observacoes>
+		</div>
+		
+		<!-- Historico -->
+		<div ng:show="selected == 5 && fase.id" class="panel panel-default">
+			<ng-historico-fase ng-model="fase" has-role="ANALISE"></ng-historico-fase>
+		</div>
+
+		<div ng-include src="'partials/fases/toolbar.html'"></div>
+	
+	</form>
+
+</div>

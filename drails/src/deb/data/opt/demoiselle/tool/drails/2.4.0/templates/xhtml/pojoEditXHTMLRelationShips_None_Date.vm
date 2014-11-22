@@ -1,0 +1,5 @@
+                    <p:column>
+                    <p:calendar id="${varAttrName}" value="#{${attrClassOfValueLower}.${varAttrName}}" pattern="#{messages['label.date.pattern']}" navigator="true" showButtonPanel="true" locale="#{locales.currentLocale}" title="#{messages['${attrClassOfValueLower}.alt.${varAttrName}']}" />
+                    <p:message for="${varAttrName}" />
+                    </p:column>
+                    
