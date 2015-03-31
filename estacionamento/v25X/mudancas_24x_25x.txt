@@ -1,0 +1,10 @@
+2.4.x -> 2.5.x
+
+POM.XML:
+- A dependência demoiselle-jsf-parent não faz mais referência ao PrimeFaces, por isso é preciso indicar também a versão.
+
+EstacionamentoAuthenticator
+- br.gov.frameworkdemoiselle.security não fornece a classe User. 
+- O método getUser da inteface br.gov.frameworkdemoiselle.security.Authenticator retorna  java.security.Principal
+
+Upgrade da versão do demoiselle-junit: 2.3.1
