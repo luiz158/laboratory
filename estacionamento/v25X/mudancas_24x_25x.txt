@@ -8,3 +8,23 @@ EstacionamentoAuthenticator
 - O método getUser da inteface br.gov.frameworkdemoiselle.security.Authenticator retorna  java.security.Principal
 
 Upgrade da versão do demoiselle-junit: 2.3.1
+
+
+Retirada:
+
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces-mobile</artifactId>
+			<version>0.9.4</version>
+		</dependency>
+
+Já incluida no primefaces 5.1
+
+Incluido em faces-config.xml:
+
+<application>
+		<navigation-handler>
+			org.primefaces.mobile.application.MobileNavigationHandler
+		</navigation-handler>
+	</application>
+

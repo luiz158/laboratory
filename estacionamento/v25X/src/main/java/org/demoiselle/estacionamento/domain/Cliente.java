@@ -71,7 +71,7 @@ public class Cliente implements Serializable {
 	private String telefone;
 	
 	// Para banco de dados Hsqldb use a anotação @Lob, com PostgreSQL retire a anotação @Lob
-	@Lob
+	//@Lob
 	private byte[] foto;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

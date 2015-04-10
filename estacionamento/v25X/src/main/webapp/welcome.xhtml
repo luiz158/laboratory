@@ -1,4 +1,5 @@
- <!-- 
+
+<!-- 
  Demoiselle Framework
  Copyright (C) 2013 SERPRO
  ============================================================================
@@ -35,14 +36,28 @@
  51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
  -->
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets" template="/template/main.xhtml">
+<html xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+<f:view contentType="text/html" locale="#{locales.currentLocale}" />
 
-	<ui:define name="body"  >
-		<p:panel  rendered="#{securityContext.loggedIn}">
-			#{messages['main.app.welcome']}
-		</p:panel>
-	</ui:define>
+<h:head>
+	<script type="text/javascript">
+      function redirectByClient() {
+         if (navigator.userAgent.match(/Android/i) ||
+               navigator.userAgent.match(/iPad/i) ||
+               navigator.userAgent.match(/iPhone/i) ||
+               navigator.userAgent.match(/iPod/i)
+               ) {
+            document.location = './mobile/navigator.jsf';
+         } else {
+            document.location = 'desktop_welcome.jsf';
+         }
+      }
 
-</ui:composition>
+   </script>
+</h:head>
+
+<h:body onload="redirectByClient();">
+</h:body>
+</html> 

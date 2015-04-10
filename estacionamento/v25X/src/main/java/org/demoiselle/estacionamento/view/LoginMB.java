@@ -31,17 +31,13 @@
 package org.demoiselle.estacionamento.view;
 
 import javax.inject.Inject;
-
 import org.demoiselle.estacionamento.security.EstacionamentoCredentials;
-
-import br.gov.frameworkdemoiselle.annotation.NextView;
 import br.gov.frameworkdemoiselle.message.MessageContext;
 import br.gov.frameworkdemoiselle.security.SecurityContext;
 import br.gov.frameworkdemoiselle.stereotype.ViewController;
 import br.gov.frameworkdemoiselle.template.AbstractPageBean;
 
 @ViewController
-@NextView("./welcome.jsf")
 public class LoginMB extends AbstractPageBean{
 
 	private static final long serialVersionUID = 1L;
@@ -63,7 +59,7 @@ public class LoginMB extends AbstractPageBean{
 			credentials.setUsername(this.getUsuario());
 			credentials.setPassword(this.senha);
 			securityContext.login();
-			return getNextView();
+			return "";
 		}catch (Exception e) {
 			messageContext.add(e.getMessage());
 			//AuthenticationException

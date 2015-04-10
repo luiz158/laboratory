@@ -50,7 +50,7 @@ public class EstacionamentoAuthenticator implements Authenticator {
 	@Inject
 	private ResourceBundle bundle;
 
-	private static boolean authenticated;
+	private static boolean authenticated=false;
 
 	@Override
 	public void authenticate() throws Exception {
@@ -92,5 +92,6 @@ public class EstacionamentoAuthenticator implements Authenticator {
 	@Override
 	public void unauthenticate() throws Exception {
 		credentials.clear();
+		authenticated = false;
 	}
 }

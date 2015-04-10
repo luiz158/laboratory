@@ -1,11 +1,15 @@
-<f:view xmlns="http://www.w3.org/1999/xhtml"
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:pm="http://primefaces.org/mobile"
-	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/template/main_mobile.xhtml" contentType="text/html"
-	renderKitId="PRIMEFACES_MOBILE">
+	xmlns:pm="http://primefaces.org/mobile">
+<h:body>
+	<ui:include src="/mobile/template/main_mobile.xhtml" />
+	<pm:page id="edit_automovel" title="Edição de automovel">
+		<pm:header title="Edição de automovel" swatch="b">
+
 	<pm:page title="Edição de cliente">
 		<!-- Main View -->
 		<pm:view id="main">

@@ -39,7 +39,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<h:form>
-		<p:menubar rendered="#{securityContext.loggedIn}">
+		<p:menubar style="font-weight: bold; font-size: small"  rendered="#{securityContext.loggedIn}">
 		
 			<p:submenu label="#{messages['menu.estacionamento']}">
 				<p:menuitem value="#{messages['menu.menuitem.new']}" url="/estacionamento_edit.jsf" rendered="#{securityContext.hasPermission('estacionamento', 'insert')}" ></p:menuitem>
