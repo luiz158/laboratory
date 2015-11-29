@@ -32,14 +32,23 @@ package br.gov.serpro.lab.estacionamento.view;
 
 import java.util.Iterator;
 import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.inject.Inject;
+import javax.persistence.PostLoad;
+
 import br.gov.frameworkdemoiselle.annotation.NextView;
 import br.gov.frameworkdemoiselle.annotation.PreviousView;
+import br.gov.frameworkdemoiselle.exception.ExceptionHandler;
+import br.gov.frameworkdemoiselle.message.MessageContext;
+import br.gov.frameworkdemoiselle.message.SeverityType;
 import br.gov.frameworkdemoiselle.stereotype.ViewController;
 import br.gov.frameworkdemoiselle.template.AbstractListPageBean;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.serpro.lab.estacionamento.business.EstacionamentoBC;
 import br.gov.serpro.lab.estacionamento.domain.Estacionamento;
+import br.gov.serpro.lab.estacionamento.exception.TesteException;
 
 @ViewController
 @NextView("./estacionamento_edit.jsf")
@@ -48,18 +57,33 @@ public class EstacionamentoListMB extends AbstractListPageBean<Estacionamento, L
 
 	private static final long serialVersionUID = 1L;
 
+	
 	@Inject
 	private EstacionamentoBC estacionamentoBC;
 	
+//	@Inject
+//	private ControleExcecoes controleExcecoes;
+//
+//   @PostConstruct
+//	private final void init() {
+//    	for (int i=0;i<10;i++){
+//    		System.out.println(i);
+//    		if (i == 9) controleExcecoes.chamaExcecao();
+//    	}
+//		
+//	}
+
 	@Override
 	protected List<Estacionamento> handleResultList() {
+		//throw new TesteException();
 		return this.estacionamentoBC.findAll();
 	}
-	
+
 	@Transactional
 	public String deleteSelection() {
 		boolean delete;
-		for (Iterator<Long> iter = getSelection().keySet().iterator(); iter.hasNext();) {
+		for (Iterator<Long> iter = getSelection().keySet().iterator(); iter
+				.hasNext();) {
 			Long id = iter.next();
 			delete = getSelection().get(id);
 			if (delete) {
@@ -69,5 +93,7 @@ public class EstacionamentoListMB extends AbstractListPageBean<Estacionamento, L
 		}
 		return getPreviousView();
 	}
+
+	
 
 }

@@ -13,17 +13,7 @@
 		<class>br.gov.serpro.lab.estacionamento.domain.Cliente</class>
 		<class>br.gov.serpro.lab.estacionamento.domain.Automovel</class>
 		<class>br.gov.serpro.lab.estacionamento.domain.Endereco</class>
-		
-			<class>br.gov.serpro.lab.estacionamento.domain.Cliente</class>
-		
-			<class>br.gov.serpro.lab.estacionamento.domain.Automovel</class>
-		
-			<class>br.gov.serpro.lab.estacionamento.domain.Estacionamento</class>
-		
-			<class>br.gov.serpro.lab.estacionamento.domain.Patio</class>
-		
-			<class>br.gov.serpro.lab.estacionamento.domain.Vaga</class>
-		
+
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver" />
 			<property name="javax.persistence.jdbc.user" value="sa" />
